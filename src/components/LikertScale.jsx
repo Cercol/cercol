@@ -1,13 +1,23 @@
 /**
- * LikertScale — 7-point response selector for a single TIPI item.
+ * LikertScale — configurable N-point response selector for a single item.
  * Props:
- *   value     {number|null} — currently selected value (1–7) or null
- *   onChange  {(value: number) => void}
+ *   value       {number|null} — currently selected value or null
+ *   onChange    {(value: number) => void}
+ *   scalePoints {number}     — number of scale points (default: 5)
  */
-import { SCALE_LABELS } from '../data/tipi'
+import { useTranslation } from 'react-i18next'
 
-export default function LikertScale({ value, onChange }) {
-  const points = [1, 2, 3, 4, 5, 6, 7]
+export default function LikertScale({ value, onChange, scalePoints = 5 }) {
+  const { t } = useTranslation()
+  const points = Array.from({ length: scalePoints }, (_, i) => i + 1)
+
+  // Scale label lookup: uses i18n keys "scale.1" … "scale.N"
+  // Only 1–5 and 1–7 are defined; fallback to numeric string.
+  function getLabel(point) {
+    const key = `scale.${point}`
+    const translated = t(key)
+    return translated !== key ? translated : String(point)
+  }
 
   return (
     <div className="w-full">
@@ -27,7 +37,7 @@ export default function LikertScale({ value, onChange }) {
             <span className={`w-6 h-6 rounded-full border-2 flex items-center justify-center text-xs font-bold shrink-0 ${value === point ? 'border-white text-white' : 'border-gray-400 text-gray-500'}`}>
               {point}
             </span>
-            <span>{SCALE_LABELS[point]}</span>
+            <span>{getLabel(point)}</span>
           </button>
         ))}
       </div>
@@ -35,15 +45,15 @@ export default function LikertScale({ value, onChange }) {
       {/* Desktop: horizontal row */}
       <div className="hidden sm:block">
         <div className="flex justify-between mb-2 text-xs text-gray-400 px-1">
-          <span>Disagree strongly</span>
-          <span>Agree strongly</span>
+          <span>{t('scale.disagreeLabel')}</span>
+          <span>{t('scale.agreeLabel')}</span>
         </div>
         <div className="flex gap-2 justify-between">
           {points.map((point) => (
             <button
               key={point}
               onClick={() => onChange(point)}
-              title={SCALE_LABELS[point]}
+              title={getLabel(point)}
               className={[
                 'flex-1 flex flex-col items-center gap-1 py-3 rounded-xl border text-sm font-semibold transition-all',
                 value === point
@@ -57,7 +67,7 @@ export default function LikertScale({ value, onChange }) {
         </div>
         {value && (
           <p className="mt-2 text-center text-xs text-gray-500">
-            {SCALE_LABELS[value]}
+            {getLabel(value)}
           </p>
         )}
       </div>

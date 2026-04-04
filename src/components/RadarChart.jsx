@@ -1,7 +1,7 @@
 /**
- * RadarChart — Big Five spider chart using Recharts.
+ * RadarChart — Big Five domain spider chart using Recharts.
  * Props:
- *   scores  {Record<string, number>} — dimension → score (1–7)
+ *   scores  {Record<string, number>} — domain → score (1–5)
  */
 import {
   Radar,
@@ -11,15 +11,19 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from 'recharts'
-import { DIMENSION_META } from '../data/tipi'
+import { useTranslation } from 'react-i18next'
+import { DOMAIN_META } from '../data/cercol-big-five'
 import { colors } from '../design/tokens'
-import { scoreToPercent } from '../utils/scoring'
+import { scoreToPercent } from '../utils/cbf-scoring'
 
 export default function RadarChart({ scores }) {
-  const data = Object.entries(scores).map(([key, score]) => ({
-    dimension: DIMENSION_META[key].label,
-    score: scoreToPercent(score),
-    rawScore: score,
+  const { t } = useTranslation()
+
+  const data = Object.keys(DOMAIN_META).map((key) => ({
+    dimension: t(`domains.${key}.label`),
+    domainKey: key,
+    score: scoreToPercent(scores[key] ?? 1),
+    rawScore: scores[key] ?? 1,
   }))
 
   return (
@@ -28,11 +32,11 @@ export default function RadarChart({ scores }) {
         <PolarGrid stroke={colors.border} />
         <PolarAngleAxis
           dataKey="dimension"
-          tick={{ fill: colors.textPrimary, fontSize: 13, fontWeight: 500 }}
+          tick={{ fill: colors.textPrimary, fontSize: 12, fontWeight: 500 }}
         />
         <Tooltip
           formatter={(value, name, props) => [
-            `${props.payload.rawScore} / 7`,
+            `${props.payload.rawScore} / 5`,
             props.payload.dimension,
           ]}
           contentStyle={{

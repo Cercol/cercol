@@ -1,0 +1,88 @@
+{
+  "nav": {
+    "brand": "Cèrcol"
+  },
+  "home": {
+    "subtitle": "Avaluació de Personalitat",
+    "headline": "Descobreix el teu perfil de personalitat Big Five",
+    "body": "Una avaluació científica de 30 preguntes basada en el banc d'ítems IPIP (domini públic). Dura uns 5 minuts. Les teues respostes es processen al teu navegador — no es guarda res.",
+    "startButton": "Fer el test",
+    "footnote": "Basat en Goldberg et al. (2006) · IPIP · Codi obert · ",
+    "viewOnGitHub": "Veure a GitHub"
+  },
+  "test": {
+    "subtitle": "Big Five · 30 ítems",
+    "progress": "Pregunta {{current}} de {{total}}",
+    "instructions": "Indica en quina mesura cada afirmació s'aplica a tu.",
+    "itemPrefix": "Em veig com algú que",
+    "back": "Anterior",
+    "next": "Següent",
+    "seeResults": "Veure els meus resultats"
+  },
+  "scale": {
+    "1": "Totalment en desacord",
+    "2": "Una mica en desacord",
+    "3": "Ni d'acord ni en desacord",
+    "4": "Una mica d'acord",
+    "5": "Totalment d'acord",
+    "disagreeLabel": "Totalment en desacord",
+    "agreeLabel": "Totalment d'acord"
+  },
+  "results": {
+    "title": "El teu perfil de personalitat",
+    "subtitle": "Basat en el model Big Five · IPIP · 30 ítems",
+    "domainSection": "Puntuacions per domini",
+    "facetSection": "Detall per facetes",
+    "scoreLabels": {
+      "low": "Baix",
+      "moderate": "Moderat",
+      "high": "Alt"
+    },
+    "share": "Compartir resultats",
+    "copied": "Copiat!",
+    "retake": "Fer l'avaluació de nou",
+    "disclaimer": "Nota: Aquest és un instrument de cribratge breu. Les puntuacions reflecteixen tendències en el moment de l'avaluació, no trets fixos. Per a una avaluació clínica o de recerca, utilitza un inventari complet validat."
+  },
+  "feedback": {
+    "reportIssue": "Informar d'un problema"
+  },
+  "domains": {
+    "extraversion": {
+      "label": "Extraversió",
+      "description": "Sociabilitat, assertivitat i energia en situacions socials."
+    },
+    "agreeableness": {
+      "label": "Amabilitat",
+      "description": "Compassió, cooperació i confiança envers els altres."
+    },
+    "conscientiousness": {
+      "label": "Responsabilitat",
+      "description": "Organització, productivitat i sentit del deure."
+    },
+    "negativeEmotionality": {
+      "label": "Emotivitat Negativa",
+      "description": "Tendència a l'ansietat, l'estat d'ànim baix i la reactivitat emocional."
+    },
+    "openMindedness": {
+      "label": "Obertura Mental",
+      "description": "Curiositat, creativitat i apreciació per les idees i la bellesa."
+    }
+  },
+  "facets": {
+    "sociability": "Sociabilitat",
+    "assertiveness": "Assertivitat",
+    "energyLevel": "Nivell d'Energia",
+    "compassion": "Compassió",
+    "respectfulness": "Respecte",
+    "trust": "Confiança",
+    "organization": "Organització",
+    "productiveness": "Productivitat",
+    "responsibility": "Responsabilitat",
+    "anxiety": "Ansietat",
+    "depression": "Estat d'Ànim",
+    "emotionalVolatility": "Volatilitat Emocional",
+    "intellectualCuriosity": "Curiositat Intel·lectual",
+    "aestheticSensitivity": "Sensibilitat Estètica",
+    "creativeImagination": "Imaginació Creativa"
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "nav": {
+    "brand": "Cèrcol"
+  },
+  "home": {
+    "subtitle": "Personality Assessment",
+    "headline": "Discover your Big Five personality profile",
+    "body": "A 30-question scientific assessment based on the IPIP item pool (public domain). Takes about 5 minutes. Your answers are processed entirely in your browser — nothing is stored.",
+    "startButton": "Start test",
+    "footnote": "Based on Goldberg et al. (2006) · IPIP · Open source · ",
+    "viewOnGitHub": "View on GitHub"
+  },
+  "test": {
+    "subtitle": "Big Five · 30 items",
+    "progress": "Question {{current}} of {{total}}",
+    "instructions": "Rate the extent to which each statement applies to you.",
+    "itemPrefix": "I see myself as someone who",
+    "back": "Back",
+    "next": "Next",
+    "seeResults": "See my results"
+  },
+  "scale": {
+    "1": "Disagree strongly",
+    "2": "Disagree a little",
+    "3": "Neither agree nor disagree",
+    "4": "Agree a little",
+    "5": "Agree strongly",
+    "disagreeLabel": "Disagree strongly",
+    "agreeLabel": "Agree strongly"
+  },
+  "results": {
+    "title": "Your personality profile",
+    "subtitle": "Based on the Big Five model · IPIP · 30 items",
+    "domainSection": "Domain scores",
+    "facetSection": "Facet breakdown",
+    "scoreLabels": {
+      "low": "Low",
+      "moderate": "Moderate",
+      "high": "High"
+    },
+    "share": "Share results",
+    "copied": "Copied!",
+    "retake": "Take the assessment again",
+    "disclaimer": "Note: This is a brief screening instrument. Scores reflect tendencies at the time of assessment, not fixed traits. For clinical or research-grade assessment, use a validated full-length inventory."
+  },
+  "feedback": {
+    "reportIssue": "Report issue"
+  },
+  "domains": {
+    "extraversion": {
+      "label": "Extraversion",
+      "description": "Sociability, assertiveness, and energy in social situations."
+    },
+    "agreeableness": {
+      "label": "Agreeableness",
+      "description": "Compassion, cooperativeness, and trust toward others."
+    },
+    "conscientiousness": {
+      "label": "Conscientiousness",
+      "description": "Organization, productivity, and sense of responsibility."
+    },
+    "negativeEmotionality": {
+      "label": "Negative Emotionality",
+      "description": "Tendency toward anxiety, low mood, and emotional reactivity."
+    },
+    "openMindedness": {
+      "label": "Open-Mindedness",
+      "description": "Curiosity, creativity, and appreciation for ideas and beauty."
+    }
+  },
+  "facets": {
+    "sociability": "Sociability",
+    "assertiveness": "Assertiveness",
+    "energyLevel": "Energy Level",
+    "compassion": "Compassion",
+    "respectfulness": "Respectfulness",
+    "trust": "Trust",
+    "organization": "Organization",
+    "productiveness": "Productiveness",
+    "responsibility": "Responsibility",
+    "anxiety": "Anxiety",
+    "depression": "Depression",
+    "emotionalVolatility": "Emotional Volatility",
+    "intellectualCuriosity": "Intellectual Curiosity",
+    "aestheticSensitivity": "Aesthetic Sensitivity",
+    "creativeImagination": "Creative Imagination"
+  }
+}
