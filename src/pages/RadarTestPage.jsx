@@ -3,16 +3,15 @@
  * Uses the TIPI instrument, Likert 1-7 scale.
  * On completion, navigates to /radar/results.
  */
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { TIPI_ITEMS } from '../data/tipi'
+import { TIPI_ITEMS, SCALE_LABELS } from '../data/tipi'
 import { computeRadarScores } from '../utils/radar-scoring'
 import QuestionCard from '../components/QuestionCard'
 import ProgressBar from '../components/ProgressBar'
 import LanguageToggle from '../components/LanguageToggle'
 
-// Extend LikertScale to 7 points for TIPI
 const SCALE_POINTS = 7
 
 export default function RadarTestPage() {
@@ -24,6 +23,14 @@ export default function RadarTestPage() {
   const item = TIPI_ITEMS[current]
   const answered = answers[item.id] ?? null
   const isLast = current === TIPI_ITEMS.length - 1
+
+  // Translate scale labels using i18n (scale7 namespace), fall back to English
+  const scaleLabels = Object.fromEntries(
+    Object.entries(SCALE_LABELS).map(([k, fallback]) => {
+      const translated = t(`scale7.${k}`)
+      return [k, translated !== `scale7.${k}` ? translated : fallback]
+    })
+  )
 
   function handleAnswer(value) {
     setAnswers((prev) => ({ ...prev, [item.id]: value }))
@@ -43,6 +50,36 @@ export default function RadarTestPage() {
   function handleBack() {
     if (current > 0) setCurrent((i) => i - 1)
   }
+
+  // Keep refs to handlers so the keydown effect always calls the latest version
+  const handleNextRef = useRef(handleNext)
+  const handleBackRef = useRef(handleBack)
+  handleNextRef.current = handleNext
+  handleBackRef.current = handleBack
+
+  // Keyboard navigation
+  useEffect(() => {
+    function onKeyDown(e) {
+      // Ignore if focus is on an input/textarea
+      if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) return
+
+      const n = parseInt(e.key, 10)
+      if (n >= 1 && n <= SCALE_POINTS) {
+        setAnswers((prev) => ({ ...prev, [item.id]: n }))
+        return
+      }
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault()
+        handleNextRef.current()
+        return
+      }
+      if (e.key === 'Backspace' || e.key === 'ArrowLeft') {
+        handleBackRef.current()
+      }
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [item.id])
 
   return (
     <main className="min-h-screen bg-gray-50 flex flex-col items-center px-4 py-10 sm:py-16">
@@ -77,6 +114,7 @@ export default function RadarTestPage() {
           value={answered}
           onChange={handleAnswer}
           scalePoints={SCALE_POINTS}
+          scaleLabels={scaleLabels}
           prefixKey="radar.itemPrefix"
         />
 

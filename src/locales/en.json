@@ -50,9 +50,19 @@
     "2": "Disagree a little",
     "3": "Neither agree nor disagree",
     "4": "Agree a little",
-    "5": "Agree strongly",
-    "disagreeLabel": "Disagree strongly",
-    "agreeLabel": "Agree strongly"
+    "5": "Agree strongly"
+  },
+  "scale7": {
+    "1": "Disagree strongly",
+    "2": "Disagree moderately",
+    "3": "Disagree a little",
+    "4": "Neither agree nor disagree",
+    "5": "Agree a little",
+    "6": "Agree moderately",
+    "7": "Agree strongly"
+  },
+  "keyboard": {
+    "hint": "Tip: number keys to select · Enter to continue · ← to go back"
   },
   "results": {
     "title": "Your profile",
@@ -84,7 +94,16 @@
     }
   },
   "feedback": {
-    "reportIssue": "Report issue"
+    "reportIssue": "Report issue",
+    "suggestTranslation": "Suggest translation",
+    "panel": {
+      "title": "Suggest a translation",
+      "context": "Context",
+      "placeholder": "What would you change?",
+      "submit": "Send",
+      "cancel": "Cancel",
+      "success": "Thanks! We'll review your suggestion."
+    }
   },
   "domains": {
     "extraversion": {

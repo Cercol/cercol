@@ -7,10 +7,10 @@
  *   answering  — showing a question within a block
  *   transition — brief screen between blocks
  */
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { CBF_ITEMS, DOMAIN_META } from '../data/cercol-big-five'
+import { CBF_ITEMS, DOMAIN_META, SCALE_LABELS } from '../data/cercol-big-five'
 import { computeScores } from '../utils/cbf-scoring'
 import QuestionCard from '../components/QuestionCard'
 import ProgressBar from '../components/ProgressBar'
@@ -33,6 +33,7 @@ const BLOCKS = DOMAIN_ORDER.map((domain) =>
 const ITEMS_PER_BLOCK = 6
 const TOTAL_ITEMS = CBF_ITEMS.length
 const TOTAL_BLOCKS = BLOCKS.length
+const SCALE_POINTS = 5
 
 // Domain → Tailwind accent color for block header dot
 const DOMAIN_ACCENT = {
@@ -64,6 +65,14 @@ export default function TestPage() {
   const domainKey = DOMAIN_ORDER[blockIdx]
   const nextDomainKey = DOMAIN_ORDER[blockIdx + 1]
 
+  // Translate scale labels using i18n (scale namespace), fall back to English
+  const scaleLabels = Object.fromEntries(
+    Object.entries(SCALE_LABELS).map(([k, fallback]) => {
+      const translated = t(`scale.${k}`)
+      return [k, translated !== `scale.${k}` ? translated : fallback]
+    })
+  )
+
   function handleAnswer(value) {
     setAnswers((prev) => ({ ...prev, [item.id]: value }))
   }
@@ -79,7 +88,6 @@ export default function TestPage() {
     }
 
     if (isLastItemInBlock) {
-      // Move to transition screen before next block
       setAnswers(updatedAnswers)
       setShowTransition(true)
     } else {
@@ -91,7 +99,6 @@ export default function TestPage() {
     if (itemInBlockIdx > 0) {
       setItemInBlockIdx((i) => i - 1)
     } else if (blockIdx > 0) {
-      // Go back to last item of previous block
       setShowTransition(false)
       setBlockIdx((b) => b - 1)
       setItemInBlockIdx(ITEMS_PER_BLOCK - 1)
@@ -103,6 +110,36 @@ export default function TestPage() {
     setBlockIdx((b) => b + 1)
     setItemInBlockIdx(0)
   }
+
+  // Keep refs to handlers so the keydown effect always calls the latest version
+  const handleNextRef = useRef(handleNext)
+  const handleBackRef = useRef(handleBack)
+  handleNextRef.current = handleNext
+  handleBackRef.current = handleBack
+
+  // Keyboard navigation — disabled during transition screens
+  useEffect(() => {
+    function onKeyDown(e) {
+      if (showTransition) return
+      if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) return
+
+      const n = parseInt(e.key, 10)
+      if (n >= 1 && n <= SCALE_POINTS) {
+        setAnswers((prev) => ({ ...prev, [item.id]: n }))
+        return
+      }
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault()
+        handleNextRef.current()
+        return
+      }
+      if (e.key === 'Backspace' || e.key === 'ArrowLeft') {
+        handleBackRef.current()
+      }
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [item.id, showTransition])
 
   // ── Transition screen ──────────────────────────────────────────
   if (showTransition) {
@@ -205,7 +242,8 @@ export default function TestPage() {
           index={itemInBlockIdx + 1}
           value={answered}
           onChange={handleAnswer}
-          scalePoints={5}
+          scalePoints={SCALE_POINTS}
+          scaleLabels={scaleLabels}
         />
 
         {/* Navigation */}

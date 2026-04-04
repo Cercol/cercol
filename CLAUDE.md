@@ -108,6 +108,53 @@ Future: migrate to a spreadsheet or translation management tool
 - Recommended approach: { en: '...', ca: '...' } inside data files
 - Do not implement until explicitly requested
 
+### Phase 3.6 — UX improvements + translation feedback (next)
+
+#### 3.6.1 Translation feedback system
+- Add a "Suggest a better translation" option alongside the existing
+  feedback button (shown only when language is not English)
+- Clicking it opens an inline panel (not a modal, not a new page):
+  - Pre-filled read-only fields: current language, current page/instrument,
+    current item text if user is in the middle of a test
+  - Single editable field: "Your suggestion" (free text, max 300 chars)
+  - Submit button → sends via Google Apps Script GET (no-cors, same
+    pattern as logger.js) to a separate Google Sheet tab
+  - Payload: { timestamp, language, instrument, context, suggestion }
+  - context = current route or item id, so we know what text they mean
+- Success: brief inline confirmation, panel closes
+- Failure: silently ignored (fire-and-forget, same as logger)
+- Google Apps Script endpoint URL stored as TRANSLATION_FEEDBACK_URL
+  constant in a new src/utils/translationFeedback.js
+  (placeholder value until configured manually)
+
+#### 3.6.2 Likert scale label bug fix
+- Root cause: LikertScale component has scale labels hardcoded for
+  a 5-point scale. When rendered with scalePoints=7 (Cèrcol Radar),
+  the labels are wrong: position 5 shows "Agree strongly" instead
+  of the correct 7-point label, and positions 6 and 7 have no label.
+- Fix: LikertScale must receive the correct label set as a prop,
+  derived from the active instrument's SCALE_LABELS object.
+  - Cèrcol Radar uses SCALE_LABELS from tipi.js (7-point, keys 1-7)
+  - Cèrcol Test uses SCALE_LABELS from cercol-big-five.js (5-point, keys 1-5)
+- The component must never hardcode labels internally.
+- Additionally, show fixed anchor labels only at the two extremes
+  (first and last), no floating label under the selected button.
+
+##### 3.6.2 Prompt
+- The LikertScale component has scale labels hardcoded for 5 points. When used with 7 points (Cèrcol Radar), labels are wrong.
+- Fix: pass scaleLabels as a prop to LikertScale from the parent page. RadarTestPage passes SCALE_LABELS from tipi.js (7-point) TestPage passes SCALE_LABELS from cercol-big-five.js (5-point) LikertScale must use only what it receives, never internal defaults. Show labels only at extremes (first and last button), fixed position.
+
+#### 3.6.3 Keyboard navigation
+- When test is active, listen for keydown events on the document
+- Number keys 1–7 (or 1–5 for Cèrcol Test): select that option
+  and visually highlight it (same as clicking)
+- Enter or Space: advance to next question (only if an option is selected)
+- Backspace or Left arrow: go to previous question
+- Keyboard hints shown below the scale on desktop:
+  "Tip: use number keys to select, Enter to continue"
+  (hidden on mobile, shown via Tailwind responsive class)
+- All hint copy via i18n keys
+
 ### Phase 4 — Backend + Accounts
 - FastAPI + PostgreSQL (or Supabase)
 - User accounts, result history
