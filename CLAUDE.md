@@ -2,8 +2,13 @@
 
 ## What is this
 Cèrcol is an open-source personality assessment platform built on
-peer-reviewed psychometric research. All scoring algorithms and item
-sources are documented and citable.
+peer-reviewed psychometric research, with the long-term goal of
+providing scientifically grounded team role assessment.
+
+Phase 1-3: individual personality profiling (data collection)
+Phase 4+:  team role instrument built on accumulated real data
+
+All scoring algorithms and item sources are documented and citable.
 
 ## Stack
 - React + Vite
@@ -24,6 +29,8 @@ When that happens, only tokens.js needs updating.
 - User-facing text in English and Catalan/Valencian (via react-i18next)
 - No inline styles, always Tailwind classes
 - Keep components small and single-responsibility
+- NEVER use academic instrument names in user-facing text or comments:
+  use "Cèrcol Radar" and "Cèrcol Test", never "TIPI", "IPIP", "Big Five"
 
 ## Instrument design decision
 All psychometric instruments used in Cèrcol must be free for any use,
@@ -78,29 +85,27 @@ Future: migrate to a spreadsheet or translation management tool
 
 ## Roadmap
 
-### Phase 1 — Big Five MVP ✅ COMPLETE
+### Phase 1 — Quick assessment MVP ✅ COMPLETE
 - Cèrcol Radar: 10-item quick assessment, radar chart results
 - Deployed at https://miquelmatoses.github.io/cercol/
 
-### Phase 2 — i18n + Full Big Five ✅ COMPLETE
-- react-i18next with en.json and ca.json (UI strings only, not test items)
+### Phase 2 — Full assessment + infrastructure ✅ COMPLETE
+- react-i18next with en.json and ca.json (UI strings only)
 - Cèrcol Test: 30 IPIP items, 5 domains × 3 facets × 2 items
 - Results page: domain radar + facet breakdown + share via URL
 - Anonymous result logging via Google Apps Script → Google Sheet
+  (timestamp, language, instrument, 5 domain scores — no PII)
 - Feedback button → pre-filled GitHub Issue
 
-### Phase 3 — UX polish + dual instrument (current)
-- Homepage: user chooses between Cèrcol Radar and Cèrcol Test
-- Cèrcol Radar results: show radar + prompt to upgrade to Cèrcol Test
-- Cèrcol Test: group 30 items into 5 blocks of 6 (one per domain)
-  with block header and motivational transition between blocks
-- Apply Cèrcol dimension names (Presence, Bond, Discipline, Depth, Vision)
-  everywhere in UI — replace any remaining academic labels
+### Phase 3 — UX polish + dual instrument ✅ COMPLETE
+- Homepage instrument selection (Cèrcol Radar vs Cèrcol Test)
+- Cèrcol Radar results: radar + prompt to upgrade to Cèrcol Test
+- Cèrcol Test: 5 blocks of 6 items with transitions
+- Cèrcol dimension names applied everywhere in UI
 
 ### Phase 3.5 — Multilingual test items (future)
 - Add translations for test item text (currently English-only)
-- Option A: structured as { en: '...', ca: '...' } inside data files
-- This is the recommended approach for clean component architecture
+- Recommended approach: { en: '...', ca: '...' } inside data files
 - Do not implement until explicitly requested
 
 ### Phase 4 — Backend + Accounts
@@ -109,16 +114,25 @@ Future: migrate to a spreadsheet or translation management tool
 - Stripe payment for extended reports
 - Custom domain
 
-### Phase 5 — Team Roles (Cèrcol Team)
-- Custom forced-choice instrument based on IPIP facets
-- Observer assessment (same items rated by peers)
-- ICAR cognitive ability test
-- Team composition report
-- Role taxonomy built from accumulated real data
+### Phase 5 — Team Role Instrument (Cèrcol Team)
+- Prerequisite: ~300+ Cèrcol Test completions in Google Sheet
+- Step 1: cluster analysis on 15 facet scores → identify natural
+  role groupings in real data (k-means or hierarchical)
+- Step 2: cross-reference clusters with team role literature
+  (Belbin, Neuman & Wright, Fisher et al.) → define role taxonomy
+- Step 3: build forced-choice instrument based on IPIP facets
+- Step 4: add observer assessment (same items rated by peers)
+- Step 5: add ICAR cognitive ability test (public domain)
+- Step 6: team composition report (gaps, overlaps, balance)
+- Role taxonomy is data-driven, not assumed from literature alone
 
 ### Phase 6 — Branding + Visual identity
 - Cèrcol visual identity applied via tokens.js
 - AI image generation trained on Cèrcol style
+
+### Phase 7 — Multilingual expansion
+- Translate test items into Valencian and other languages
+- Translation management via Tolgee or equivalent
 
 ## File structure
 src/
@@ -134,18 +148,13 @@ src/
 - IPIP: Goldberg et al. (2006), doi:10.1177/1073191106293419
   Full item pool: https://ipip.ori.org
 - ICAR: Condon & Revelle (2014), Intelligence, 46, 79–90
+- Team roles literature: Belbin (1981), Neuman & Wright (1999),
+  Fisher, Hunter & Macrosson (1998-2002)
 
 ## Technical notes
 - Cèrcol Test uses 2 items per facet (vs. 10 in full IPIP-NEO).
   Adequate for feedback purposes, not for clinical assessment.
-- logger.js: replace PLACEHOLDER_REPLACE_BEFORE_DEPLOY with
-  Google Apps Script URL before deploying result logging.
-
-## Code conventions
-- Comments and docstrings always in English
-- Component names in PascalCase
-- User-facing text in English and Catalan/Valencian (via react-i18next)
-- No inline styles, always Tailwind classes
-- Keep components small and single-responsibility
-- NEVER use academic instrument names in user-facing text or comments:
-  use "Cèrcol Radar" and "Cèrcol Test", never "TIPI", "IPIP", "Big Five"
+- GitHub Pages + React Router: requires 404.html redirect workaround
+  for direct URL access (share links, bookmarks).
+- logger.js sends GET requests with no-cors mode to avoid CORS issues
+  with Google Apps Script. Fire-and-forget, never blocks UI.

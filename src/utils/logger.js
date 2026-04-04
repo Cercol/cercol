@@ -21,15 +21,20 @@ export async function logResult(domainScores, language, instrument) {
   if (APPS_SCRIPT_URL === 'PLACEHOLDER_REPLACE_BEFORE_DEPLOY') return
 
   try {
-    await fetch(APPS_SCRIPT_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        timestamp: new Date().toISOString(),
-        language,
-        instrument,
-        scores: domainScores,
-      }),
+    const params = new URLSearchParams({
+      timestamp: new Date().toISOString(),
+      language,
+      instrument,
+      extraversion:         String(domainScores.extraversion),
+      agreeableness:        String(domainScores.agreeableness),
+      conscientiousness:    String(domainScores.conscientiousness),
+      negativeEmotionality: String(domainScores.negativeEmotionality),
+      openMindedness:       String(domainScores.openMindedness),
+    })
+
+    await fetch(`${APPS_SCRIPT_URL}?${params.toString()}`, {
+      method: 'GET',
+      mode: 'no-cors',
     })
   } catch (_) {
     // Silently ignore all errors

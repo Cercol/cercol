@@ -7,66 +7,99 @@
  * Response scale: 1 (Disagree strongly) → 7 (Agree strongly)
  * Items marked reverse: true must be reverse-scored before averaging.
  * Reverse score formula: reversedValue = 8 - rawValue
+ *
+ * item.text is an object { en, ca } — render with:
+ *   item.text[i18n.language] ?? item.text.en
  */
 
 export const TIPI_ITEMS = [
   {
     id: 1,
-    text: 'Extraverted, enthusiastic.',
+    text: {
+      en: 'Extraverted, enthusiastic.',
+      ca: 'Extravertit/da, entusiasta.',
+    },
     dimension: 'extraversion',
     reverse: false,
   },
   {
     id: 2,
-    text: 'Critical, quarrelsome.',
+    text: {
+      en: 'Critical, quarrelsome.',
+      ca: 'Crític/a, conflictiu/va.',
+    },
     dimension: 'agreeableness',
     reverse: true,
   },
   {
     id: 3,
-    text: 'Dependable, self-disciplined.',
+    text: {
+      en: 'Dependable, self-disciplined.',
+      ca: 'De confiança, autodisciplinat/da.',
+    },
     dimension: 'conscientiousness',
     reverse: false,
   },
   {
     id: 4,
-    text: 'Anxious, easily upset.',
+    text: {
+      en: 'Anxious, easily upset.',
+      ca: "Ansiós/a, que s'altera fàcilment.",
+    },
     dimension: 'neuroticism',
     reverse: false,
   },
   {
     id: 5,
-    text: 'Open to new experiences, complex.',
+    text: {
+      en: 'Open to new experiences, complex.',
+      ca: 'Obert/a a noves experiències, complex/a.',
+    },
     dimension: 'openness',
     reverse: false,
   },
   {
     id: 6,
-    text: 'Reserved, quiet.',
+    text: {
+      en: 'Reserved, quiet.',
+      ca: 'Reservat/da, tranquil·la.',
+    },
     dimension: 'extraversion',
     reverse: true,
   },
   {
     id: 7,
-    text: 'Sympathetic, warm.',
+    text: {
+      en: 'Sympathetic, warm.',
+      ca: 'Empàtic/a, càlid/a.',
+    },
     dimension: 'agreeableness',
     reverse: false,
   },
   {
     id: 8,
-    text: 'Disorganized, careless.',
+    text: {
+      en: 'Disorganized, careless.',
+      ca: 'Desorganitzat/da, descurat/da.',
+    },
     dimension: 'conscientiousness',
     reverse: true,
   },
   {
     id: 9,
-    text: 'Calm, emotionally stable.',
+    text: {
+      en: 'Calm, emotionally stable.',
+      ca: 'Calmat/da, emocionalment estable.',
+    },
     dimension: 'neuroticism',
     reverse: true,
   },
   {
     id: 10,
-    text: 'Conventional, uncreative.',
+    text: {
+      en: 'Conventional, uncreative.',
+      ca: 'Convencional, poc creatiu/va.',
+    },
     dimension: 'openness',
     reverse: true,
   },

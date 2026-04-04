@@ -18,6 +18,9 @@
  * Scale: 1 (Disagree strongly) → 5 (Agree strongly)
  * Reverse-scored items: score = 6 - rawValue
  *
+ * item.text is an object { en, ca } — render with:
+ *   item.text[i18n.language] ?? item.text.en
+ *
  * References:
  * - Goldberg et al. (2006). doi:10.1177/1073191106293419
  * - Johnson, J.A. (2014). J. Research in Personality, 51, 78-89.
@@ -31,14 +34,20 @@ export const CBF_ITEMS = [
   // Facet: Sociability
   {
     id: 1,
-    text: 'Am the life of the party.',
+    text: {
+      en: 'Am the life of the party.',
+      ca: "Soc l'animador/a de les festes.",
+    },
     domain: 'extraversion',
     facet: 'sociability',
     reverse: false,
   },
   {
     id: 2,
-    text: "Don't talk a lot.",
+    text: {
+      en: "Don't talk a lot.",
+      ca: 'No parle molt.',
+    },
     domain: 'extraversion',
     facet: 'sociability',
     reverse: true,
@@ -47,14 +56,20 @@ export const CBF_ITEMS = [
   // Facet: Assertiveness
   {
     id: 3,
-    text: 'Take charge.',
+    text: {
+      en: 'Take charge.',
+      ca: 'Prenga la iniciativa.',
+    },
     domain: 'extraversion',
     facet: 'assertiveness',
     reverse: false,
   },
   {
     id: 4,
-    text: 'Wait for others to lead the way.',
+    text: {
+      en: 'Wait for others to lead the way.',
+      ca: 'Espere que altres prenguen la iniciativa.',
+    },
     domain: 'extraversion',
     facet: 'assertiveness',
     reverse: true,
@@ -63,14 +78,20 @@ export const CBF_ITEMS = [
   // Facet: Energy Level
   {
     id: 5,
-    text: 'Am always on the go.',
+    text: {
+      en: 'Am always on the go.',
+      ca: 'Sempre estic en moviment.',
+    },
     domain: 'extraversion',
     facet: 'energyLevel',
     reverse: false,
   },
   {
     id: 6,
-    text: 'Like to take it easy.',
+    text: {
+      en: 'Like to take it easy.',
+      ca: "M'agrada anar a poc a poc.",
+    },
     domain: 'extraversion',
     facet: 'energyLevel',
     reverse: true,
@@ -81,14 +102,20 @@ export const CBF_ITEMS = [
   // Facet: Compassion
   {
     id: 7,
-    text: "Feel others' emotions.",
+    text: {
+      en: "Feel others' emotions.",
+      ca: 'Sent les emocions dels altres.',
+    },
     domain: 'agreeableness',
     facet: 'compassion',
     reverse: false,
   },
   {
     id: 8,
-    text: 'Am not really interested in others.',
+    text: {
+      en: 'Am not really interested in others.',
+      ca: "No m'interessen gaire els altres.",
+    },
     domain: 'agreeableness',
     facet: 'compassion',
     reverse: true,
@@ -97,14 +124,20 @@ export const CBF_ITEMS = [
   // Facet: Respectfulness
   {
     id: 9,
-    text: 'Respect others.',
+    text: {
+      en: 'Respect others.',
+      ca: 'Respecte els altres.',
+    },
     domain: 'agreeableness',
     facet: 'respectfulness',
     reverse: false,
   },
   {
     id: 10,
-    text: 'Insult people.',
+    text: {
+      en: 'Insult people.',
+      ca: 'Insulte la gent.',
+    },
     domain: 'agreeableness',
     facet: 'respectfulness',
     reverse: true,
@@ -113,14 +146,20 @@ export const CBF_ITEMS = [
   // Facet: Trust
   {
     id: 11,
-    text: 'Trust others.',
+    text: {
+      en: 'Trust others.',
+      ca: 'Confie en els altres.',
+    },
     domain: 'agreeableness',
     facet: 'trust',
     reverse: false,
   },
   {
     id: 12,
-    text: 'Suspect hidden motives in others.',
+    text: {
+      en: 'Suspect hidden motives in others.',
+      ca: 'Sospite que els altres tenen motius ocults.',
+    },
     domain: 'agreeableness',
     facet: 'trust',
     reverse: true,
@@ -131,14 +170,20 @@ export const CBF_ITEMS = [
   // Facet: Organization
   {
     id: 13,
-    text: 'Like order.',
+    text: {
+      en: 'Like order.',
+      ca: "M'agrada l'ordre.",
+    },
     domain: 'conscientiousness',
     facet: 'organization',
     reverse: false,
   },
   {
     id: 14,
-    text: 'Leave a mess in my room.',
+    text: {
+      en: 'Leave a mess in my room.',
+      ca: 'Deixe la meua habitació desordenada.',
+    },
     domain: 'conscientiousness',
     facet: 'organization',
     reverse: true,
@@ -147,14 +192,20 @@ export const CBF_ITEMS = [
   // Facet: Productiveness
   {
     id: 15,
-    text: 'Work hard.',
+    text: {
+      en: 'Work hard.',
+      ca: 'Treballe molt.',
+    },
     domain: 'conscientiousness',
     facet: 'productiveness',
     reverse: false,
   },
   {
     id: 16,
-    text: 'Put little time and effort into my work.',
+    text: {
+      en: 'Put little time and effort into my work.',
+      ca: 'Dedique poc temps i esforç a la meua feina.',
+    },
     domain: 'conscientiousness',
     facet: 'productiveness',
     reverse: true,
@@ -163,14 +214,20 @@ export const CBF_ITEMS = [
   // Facet: Responsibility
   {
     id: 17,
-    text: 'Keep my promises.',
+    text: {
+      en: 'Keep my promises.',
+      ca: 'Complesc les meues promeses.',
+    },
     domain: 'conscientiousness',
     facet: 'responsibility',
     reverse: false,
   },
   {
     id: 18,
-    text: 'Break rules.',
+    text: {
+      en: 'Break rules.',
+      ca: 'Trenque les normes.',
+    },
     domain: 'conscientiousness',
     facet: 'responsibility',
     reverse: true,
@@ -181,14 +238,20 @@ export const CBF_ITEMS = [
   // Facet: Anxiety
   {
     id: 19,
-    text: 'Worry about things.',
+    text: {
+      en: 'Worry about things.',
+      ca: 'Em preocupe per les coses.',
+    },
     domain: 'negativeEmotionality',
     facet: 'anxiety',
     reverse: false,
   },
   {
     id: 20,
-    text: 'Am relaxed most of the time.',
+    text: {
+      en: 'Am relaxed most of the time.',
+      ca: 'Estic relaxat/da la major part del temps.',
+    },
     domain: 'negativeEmotionality',
     facet: 'anxiety',
     reverse: true,
@@ -197,14 +260,20 @@ export const CBF_ITEMS = [
   // Facet: Depression
   {
     id: 21,
-    text: 'Often feel blue.',
+    text: {
+      en: 'Often feel blue.',
+      ca: 'Sovint em sent trist/a.',
+    },
     domain: 'negativeEmotionality',
     facet: 'depression',
     reverse: false,
   },
   {
     id: 22,
-    text: 'Feel comfortable with myself.',
+    text: {
+      en: 'Feel comfortable with myself.',
+      ca: 'Em sent còmode/a amb mi mateix/a.',
+    },
     domain: 'negativeEmotionality',
     facet: 'depression',
     reverse: true,
@@ -213,14 +282,20 @@ export const CBF_ITEMS = [
   // Facet: Emotional Volatility
   {
     id: 23,
-    text: 'Get angry easily.',
+    text: {
+      en: 'Get angry easily.',
+      ca: "M'enface fàcilment.",
+    },
     domain: 'negativeEmotionality',
     facet: 'emotionalVolatility',
     reverse: false,
   },
   {
     id: 24,
-    text: 'Rarely get irritated.',
+    text: {
+      en: 'Rarely get irritated.',
+      ca: "Rarament m'irrite.",
+    },
     domain: 'negativeEmotionality',
     facet: 'emotionalVolatility',
     reverse: true,
@@ -231,14 +306,20 @@ export const CBF_ITEMS = [
   // Facet: Intellectual Curiosity
   {
     id: 25,
-    text: 'Am quick to understand things.',
+    text: {
+      en: 'Am quick to understand things.',
+      ca: 'Enténc les coses ràpidament.',
+    },
     domain: 'openMindedness',
     facet: 'intellectualCuriosity',
     reverse: false,
   },
   {
     id: 26,
-    text: 'Have difficulty understanding abstract ideas.',
+    text: {
+      en: 'Have difficulty understanding abstract ideas.',
+      ca: 'Tinc dificultat per entendre idees abstractes.',
+    },
     domain: 'openMindedness',
     facet: 'intellectualCuriosity',
     reverse: true,
@@ -247,14 +328,20 @@ export const CBF_ITEMS = [
   // Facet: Aesthetic Sensitivity
   {
     id: 27,
-    text: 'Believe in the importance of art.',
+    text: {
+      en: 'Believe in the importance of art.',
+      ca: "Crec en la importància de l'art.",
+    },
     domain: 'openMindedness',
     facet: 'aestheticSensitivity',
     reverse: false,
   },
   {
     id: 28,
-    text: 'Do not like art.',
+    text: {
+      en: 'Do not like art.',
+      ca: "No m'agrada l'art.",
+    },
     domain: 'openMindedness',
     facet: 'aestheticSensitivity',
     reverse: true,
@@ -263,14 +350,20 @@ export const CBF_ITEMS = [
   // Facet: Creative Imagination
   {
     id: 29,
-    text: 'Have a vivid imagination.',
+    text: {
+      en: 'Have a vivid imagination.',
+      ca: 'Tinc una imaginació molt viva.',
+    },
     domain: 'openMindedness',
     facet: 'creativeImagination',
     reverse: false,
   },
   {
     id: 30,
-    text: 'Am not interested in theoretical discussions.',
+    text: {
+      en: 'Am not interested in theoretical discussions.',
+      ca: "No m'interessen les discussions teòriques.",
+    },
     domain: 'openMindedness',
     facet: 'creativeImagination',
     reverse: true,
@@ -314,19 +407,19 @@ export const DOMAIN_META = {
 }
 
 export const FACET_META = {
-  sociability:          { label: 'Sociability',            domain: 'extraversion' },
-  assertiveness:        { label: 'Assertiveness',          domain: 'extraversion' },
-  energyLevel:          { label: 'Energy Level',           domain: 'extraversion' },
-  compassion:           { label: 'Compassion',             domain: 'agreeableness' },
-  respectfulness:       { label: 'Respectfulness',         domain: 'agreeableness' },
-  trust:                { label: 'Trust',                  domain: 'agreeableness' },
-  organization:         { label: 'Organization',           domain: 'conscientiousness' },
-  productiveness:       { label: 'Productiveness',         domain: 'conscientiousness' },
-  responsibility:       { label: 'Responsibility',         domain: 'conscientiousness' },
-  anxiety:              { label: 'Anxiety',                domain: 'negativeEmotionality' },
-  depression:           { label: 'Depression',            domain: 'negativeEmotionality' },
-  emotionalVolatility:  { label: 'Emotional Volatility',   domain: 'negativeEmotionality' },
-  intellectualCuriosity:{ label: 'Intellectual Curiosity', domain: 'openMindedness' },
-  aestheticSensitivity: { label: 'Aesthetic Sensitivity',  domain: 'openMindedness' },
-  creativeImagination:  { label: 'Creative Imagination',   domain: 'openMindedness' },
+  sociability:           { label: 'Sociability',            domain: 'extraversion' },
+  assertiveness:         { label: 'Assertiveness',          domain: 'extraversion' },
+  energyLevel:           { label: 'Energy Level',           domain: 'extraversion' },
+  compassion:            { label: 'Compassion',             domain: 'agreeableness' },
+  respectfulness:        { label: 'Respectfulness',         domain: 'agreeableness' },
+  trust:                 { label: 'Trust',                  domain: 'agreeableness' },
+  organization:          { label: 'Organization',           domain: 'conscientiousness' },
+  productiveness:        { label: 'Productiveness',         domain: 'conscientiousness' },
+  responsibility:        { label: 'Responsibility',         domain: 'conscientiousness' },
+  anxiety:               { label: 'Anxiety',                domain: 'negativeEmotionality' },
+  depression:            { label: 'Depression',             domain: 'negativeEmotionality' },
+  emotionalVolatility:   { label: 'Emotional Volatility',   domain: 'negativeEmotionality' },
+  intellectualCuriosity: { label: 'Intellectual Curiosity', domain: 'openMindedness' },
+  aestheticSensitivity:  { label: 'Aesthetic Sensitivity',  domain: 'openMindedness' },
+  creativeImagination:   { label: 'Creative Imagination',   domain: 'openMindedness' },
 }

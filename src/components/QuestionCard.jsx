@@ -19,7 +19,12 @@ export default function QuestionCard({
   scalePoints = 5,
   prefixKey = 'test.itemPrefix',
 }) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+
+  // item.text is { en, ca } — fall back to English if translation missing
+  const itemText = typeof item.text === 'object'
+    ? (item.text[i18n.language] ?? item.text.en)
+    : item.text
 
   return (
     <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 sm:p-8">
@@ -27,7 +32,7 @@ export default function QuestionCard({
         {t(prefixKey)} {index}
       </p>
       <p className="text-lg sm:text-xl font-medium text-gray-900 mb-6 leading-snug italic">
-        "{item.text}"
+        "{itemText}"
       </p>
       <LikertScale value={value} onChange={onChange} scalePoints={scalePoints} />
     </div>
