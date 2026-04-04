@@ -7,7 +7,7 @@
  * before going live with result logging.
  */
 
-const APPS_SCRIPT_URL = 'PLACEHOLDER_REPLACE_BEFORE_DEPLOY'
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbypju_p73n_vRVoTroDDaYj2YewAah4RyPocuc2TIxYnFZB7piP1jGttXfeY1b21osq/exec'
 
 /**
  * Fire-and-forget log of domain scores.

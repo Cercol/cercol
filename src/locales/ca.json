@@ -3,18 +3,44 @@
     "brand": "Cèrcol"
   },
   "home": {
-    "subtitle": "Avaluació de Personalitat",
-    "headline": "Descobreix el teu perfil de personalitat Big Five",
-    "body": "Una avaluació científica de 30 preguntes basada en el banc d'ítems IPIP (domini públic). Dura uns 5 minuts. Les teues respostes es processen al teu navegador — no es guarda res.",
-    "startButton": "Fer el test",
-    "footnote": "Basat en Goldberg et al. (2006) · IPIP · Codi obert · ",
+    "subtitle": "Coneix-te millor.",
+    "headline": "Tria la teua avaluació",
+    "radar": {
+      "name": "Cèrcol Radar",
+      "tagline": "Visió ràpida",
+      "meta": "10 preguntes · ~2 min",
+      "description": "Una mirada ràpida a les teues cinc dimensions."
+    },
+    "test": {
+      "name": "Cèrcol Test",
+      "tagline": "Retrat complet",
+      "meta": "30 preguntes · ~5 min",
+      "description": "Una mirada més profunda, dividida en 15 facetes."
+    },
+    "footnote": "Codi obert · ",
     "viewOnGitHub": "Veure a GitHub"
   },
   "test": {
-    "subtitle": "Big Five · 30 ítems",
+    "subtitle": "Cèrcol Test",
     "progress": "Pregunta {{current}} de {{total}}",
+    "blockProgress": "{{current}} de {{total}} en aquest bloc",
+    "overallProgress": "{{current}} de {{total}} en total",
     "instructions": "Indica en quina mesura cada afirmació s'aplica a tu.",
     "itemPrefix": "Em veig com algú que",
+    "back": "Anterior",
+    "next": "Següent",
+    "seeResults": "Veure els meus resultats",
+    "transition": {
+      "blockDone": "{{name}} completat",
+      "nextUp": "A continuació:",
+      "cta": "Continuar amb {{name}}"
+    }
+  },
+  "radar": {
+    "subtitle": "Cèrcol Radar",
+    "progress": "Pregunta {{current}} de {{total}}",
+    "instructions": "Indica en quina mesura cada parell de trets s'aplica a tu.",
+    "itemPrefix": "Em veig com",
     "back": "Anterior",
     "next": "Següent",
     "seeResults": "Veure els meus resultats"
@@ -29,9 +55,9 @@
     "agreeLabel": "Totalment d'acord"
   },
   "results": {
-    "title": "El teu perfil de personalitat",
-    "subtitle": "Basat en el model Big Five · IPIP · 30 ítems",
-    "domainSection": "Puntuacions per domini",
+    "title": "El teu perfil",
+    "subtitle": "Cèrcol Test · 5 dimensions · 15 facetes",
+    "domainSection": "Cinc dimensions",
     "facetSection": "Detall per facetes",
     "scoreLabels": {
       "low": "Baix",
@@ -40,32 +66,51 @@
     },
     "share": "Compartir resultats",
     "copied": "Copiat!",
-    "retake": "Fer l'avaluació de nou",
-    "disclaimer": "Nota: Aquest és un instrument de cribratge breu. Les puntuacions reflecteixen tendències en el moment de l'avaluació, no trets fixos. Per a una avaluació clínica o de recerca, utilitza un inventari complet validat."
+    "retake": "Tornar a començar",
+    "disclaimer": "Les puntuacions reflecteixen tendències en el moment de l'avaluació. Cada extrem d'una dimensió té els seus punts forts — cap puntuació és bona o dolenta."
+  },
+  "radarResults": {
+    "title": "El teu Radar",
+    "subtitle": "Cèrcol Radar · 5 dimensions d'un cop d'ull",
+    "domainSection": "Cinc dimensions",
+    "share": "Compartir resultats",
+    "copied": "Copiat!",
+    "retake": "Tornar a començar",
+    "disclaimer": "Les puntuacions reflecteixen tendències en el moment de l'avaluació. Cada extrem d'una dimensió té els seus punts forts — cap puntuació és bona o dolenta.",
+    "upgrade": {
+      "heading": "Vols una visió més completa?",
+      "body": "El Cèrcol Test desglossa les 5 dimensions en 15 facetes.",
+      "cta": "Fer el Cèrcol Test"
+    }
   },
   "feedback": {
     "reportIssue": "Informar d'un problema"
   },
   "domains": {
     "extraversion": {
-      "label": "Extraversió",
-      "description": "Sociabilitat, assertivitat i energia en situacions socials."
+      "label": "Presència",
+      "description": "L'energia que portes als espais socials.",
+      "blockIntro": "Aquestes preguntes exploren com et mostres en situacions socials i com connectes amb els altres."
     },
     "agreeableness": {
-      "label": "Amabilitat",
-      "description": "Compassió, cooperació i confiança envers els altres."
+      "label": "Vincle",
+      "description": "Com et relaciones i la calidesa que aportes.",
+      "blockIntro": "Aquestes preguntes exploren com construeixes confiança, mostres cura i et relaciones amb la gent del teu entorn."
     },
     "conscientiousness": {
-      "label": "Responsabilitat",
-      "description": "Organització, productivitat i sentit del deure."
+      "label": "Disciplina",
+      "description": "Com abordes les tasques, els objectius i el compromís.",
+      "blockIntro": "Aquestes preguntes exploren com organitzes el teu temps, compleixes compromisos i mantens el rumb."
     },
     "negativeEmotionality": {
-      "label": "Emotivitat Negativa",
-      "description": "Tendència a l'ansietat, l'estat d'ànim baix i la reactivitat emocional."
+      "label": "Profunditat",
+      "description": "Com processes les emocions i navegues la incertesa.",
+      "blockIntro": "Aquestes preguntes exploren el teu paisatge emocional — com respons a l'estrès, el canvi i la tensió interior."
     },
     "openMindedness": {
-      "label": "Obertura Mental",
-      "description": "Curiositat, creativitat i apreciació per les idees i la bellesa."
+      "label": "Visió",
+      "description": "Com t'impliques amb les idees, la bellesa i el pensament nou.",
+      "blockIntro": "Aquestes preguntes exploren la teua curiositat, imaginació i obertura a noves perspectives."
     }
   },
   "facets": {
@@ -80,7 +125,7 @@
     "responsibility": "Responsabilitat",
     "anxiety": "Ansietat",
     "depression": "Estat d'Ànim",
-    "emotionalVolatility": "Volatilitat Emocional",
+    "emotionalVolatility": "Estabilitat Emocional",
     "intellectualCuriosity": "Curiositat Intel·lectual",
     "aestheticSensitivity": "Sensibilitat Estètica",
     "creativeImagination": "Imaginació Creativa"

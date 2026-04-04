@@ -8,7 +8,7 @@ sources are documented and citable.
 ## Stack
 - React + Vite
 - Tailwind CSS
-- GitHub Pages (static only — no backend until Phase 3)
+- GitHub Pages (static only — no backend until Phase 4)
 - All scoring happens client-side in JavaScript
 
 ## Design system
@@ -31,39 +31,86 @@ including commercial. BFI-2-S was considered but rejected: non-commercial
 only. All instruments are based on IPIP (public domain, no restrictions).
 Never introduce items from copyrighted instruments (NEO-PI-R, BFI-2, etc.)
 
+## Product naming convention
+Cèrcol uses its own product names, not academic instrument names.
+Do not expose "TIPI", "IPIP", "Big Five" or similar as product labels.
+Current product names:
+- "Cèrcol Radar" — 10-item quick assessment (based on TIPI)
+- "Cèrcol Test"  — 30-item full assessment (based on IPIP)
+These names appear in all user-facing copy and i18n files.
+Academic sources are documented in code comments and README only.
+
+## Communication style (user-facing copy)
+- Warm, direct, and non-clinical tone
+- Avoid psychological jargon in results and descriptions
+- Frame all dimensions positively: no score is good or bad,
+  each reflects a tendency or preference
+- Low scores are not failures — describe both ends of each
+  dimension as valid and functional
+- Keep sentences short. No corporate filler.
+- Dimension names use Cèrcol product vocabulary (see below),
+  never academic labels in user-facing text
+
+## Dimension names (user-facing)
+Cèrcol uses its own dimension vocabulary inspired by RPG archetypes.
+These names appear in all UI, i18n files, results, and copy.
+Internal code and data files keep the original academic keys
+for research traceability. Only display labels change.
+
+| Academic key          | Cèrcol name | Valencian   |
+|-----------------------|-------------|-------------|
+| extraversion          | Presence    | Presència   |
+| agreeableness         | Bond        | Vincle      |
+| conscientiousness     | Discipline  | Disciplina  |
+| negativeEmotionality  | Depth       | Profunditat |
+| openMindedness        | Vision      | Visió       |
+
+Facet names follow the same principle: clear, non-clinical,
+no academic jargon in user-facing text. Translations pending.
+
+## i18n
+User-facing strings live in src/locales/{lang}.json (react-i18next).
+One file per language, key-value format.
+Test item text (questions) is currently English-only. Translations
+for test items are a future task — do not block features on this.
+Future: migrate to a spreadsheet or translation management tool
+(Tolgee, Localazy, or Google Sheets export) when languages > 3.
+
 ## Roadmap
 
 ### Phase 1 — Big Five MVP ✅ COMPLETE
-- TIPI (10 items, Likert 1-7), client-side scoring
-- Radar chart results page
+- Cèrcol Radar: 10-item quick assessment, radar chart results
 - Deployed at https://miquelmatoses.github.io/cercol/
 
-### Phase 2 — i18n + Full Big Five (current)
-- Set up react-i18next with en.json and ca.json (Valencian first)
-- Replace TIPI with Cèrcol Big Five (30 IPIP items, public domain)
-  - 5 dimensions × 3 facets × 2 items = 30 items total
-  - Items selected by highest factor loading per facet from IPIP-NEO item pool
-  - Documented in src/data/cercol-big-five.js with full citations
-- Richer results page: facet breakdown + dimension scores
+### Phase 2 — i18n + Full Big Five ✅ COMPLETE
+- react-i18next with en.json and ca.json (UI strings only, not test items)
+- Cèrcol Test: 30 IPIP items, 5 domains × 3 facets × 2 items
+- Results page: domain radar + facet breakdown + share via URL
 - Anonymous result logging via Google Apps Script → Google Sheet
-  (timestamp + scores + language only, no PII)
-- Share results via URL query params (no backend needed)
-- Feedback button → pre-filled GitHub Issue (beta testing log)
+- Feedback button → pre-filled GitHub Issue
 
-### Phase 3 — Backend + Accounts
+### Phase 3 — UX polish + dual instrument (current)
+- Homepage: user chooses between Cèrcol Radar and Cèrcol Test
+- Cèrcol Radar results: show radar + prompt to upgrade to Cèrcol Test
+- Cèrcol Test: group 30 items into 5 blocks of 6 (one per domain)
+  with block header and motivational transition between blocks
+- Apply Cèrcol dimension names (Presence, Bond, Discipline, Depth, Vision)
+  everywhere in UI — replace any remaining academic labels
+
+### Phase 4 — Backend + Accounts
 - FastAPI + PostgreSQL (or Supabase)
 - User accounts, result history
 - Stripe payment for extended reports
 - Custom domain
 
-### Phase 4 — Team Roles (Cèrcol Team)
+### Phase 5 — Team Roles (Cèrcol Team)
 - Custom forced-choice instrument based on IPIP facets
 - Observer assessment (same items rated by peers)
 - ICAR cognitive ability test
 - Team composition report
 - Role taxonomy built from accumulated real data
 
-### Phase 5 — Branding + Visual identity
+### Phase 6 — Branding + Visual identity
 - Cèrcol visual identity applied via tokens.js
 - AI image generation trained on Cèrcol style
 
@@ -82,9 +129,17 @@ src/
   Full item pool: https://ipip.ori.org
 - ICAR: Condon & Revelle (2014), Intelligence, 46, 79–90
 
-## Known deviations from source
-- TIPI dimension 4/9 labelled "Neuroticism" not "Emotional Stability".
-  Acceptable convention, note for future review.
-- Cèrcol Big Five uses 2 items per facet (vs. 10 in full IPIP-NEO).
+## Technical notes
+- Cèrcol Test uses 2 items per facet (vs. 10 in full IPIP-NEO).
   Adequate for feedback purposes, not for clinical assessment.
-  Item selection documented in src/data/cercol-big-five.js.
+- logger.js: replace PLACEHOLDER_REPLACE_BEFORE_DEPLOY with
+  Google Apps Script URL before deploying result logging.
+
+## Code conventions
+- Comments and docstrings always in English
+- Component names in PascalCase
+- User-facing text in English and Catalan/Valencian (via react-i18next)
+- No inline styles, always Tailwind classes
+- Keep components small and single-responsibility
+- NEVER use academic instrument names in user-facing text or comments:
+  use "Cèrcol Radar" and "Cèrcol Test", never "TIPI", "IPIP", "Big Five"

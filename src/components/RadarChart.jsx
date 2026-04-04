@@ -1,7 +1,8 @@
 /**
- * RadarChart — Big Five domain spider chart using Recharts.
+ * RadarChart — domain spider chart using Recharts.
  * Props:
- *   scores  {Record<string, number>} — domain → score (1–5)
+ *   scores    {Record<string, number>} — domain → score
+ *   maxScore  {number}                 — top of scale (5 for CBF, 7 for Radar)
  */
 import {
   Radar,
@@ -14,15 +15,18 @@ import {
 import { useTranslation } from 'react-i18next'
 import { DOMAIN_META } from '../data/cercol-big-five'
 import { colors } from '../design/tokens'
-import { scoreToPercent } from '../utils/cbf-scoring'
 
-export default function RadarChart({ scores }) {
+function scoreToPercent(score, maxScore) {
+  return Math.round(((score - 1) / (maxScore - 1)) * 100)
+}
+
+export default function RadarChart({ scores, maxScore = 5 }) {
   const { t } = useTranslation()
 
   const data = Object.keys(DOMAIN_META).map((key) => ({
     dimension: t(`domains.${key}.label`),
     domainKey: key,
-    score: scoreToPercent(scores[key] ?? 1),
+    score: scoreToPercent(scores[key] ?? 1, maxScore),
     rawScore: scores[key] ?? 1,
   }))
 
@@ -36,7 +40,7 @@ export default function RadarChart({ scores }) {
         />
         <Tooltip
           formatter={(value, name, props) => [
-            `${props.payload.rawScore} / 5`,
+            `${props.payload.rawScore} / ${maxScore}`,
             props.payload.dimension,
           ]}
           contentStyle={{

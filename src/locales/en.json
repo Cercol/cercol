@@ -3,18 +3,44 @@
     "brand": "Cèrcol"
   },
   "home": {
-    "subtitle": "Personality Assessment",
-    "headline": "Discover your Big Five personality profile",
-    "body": "A 30-question scientific assessment based on the IPIP item pool (public domain). Takes about 5 minutes. Your answers are processed entirely in your browser — nothing is stored.",
-    "startButton": "Start test",
-    "footnote": "Based on Goldberg et al. (2006) · IPIP · Open source · ",
+    "subtitle": "Know yourself better.",
+    "headline": "Choose your assessment",
+    "radar": {
+      "name": "Cèrcol Radar",
+      "tagline": "Quick snapshot",
+      "meta": "10 questions · ~2 min",
+      "description": "A fast look at your five core dimensions."
+    },
+    "test": {
+      "name": "Cèrcol Test",
+      "tagline": "Full portrait",
+      "meta": "30 questions · ~5 min",
+      "description": "A deeper look, broken into 15 facets."
+    },
+    "footnote": "Open source · ",
     "viewOnGitHub": "View on GitHub"
   },
   "test": {
-    "subtitle": "Big Five · 30 items",
+    "subtitle": "Cèrcol Test",
     "progress": "Question {{current}} of {{total}}",
+    "blockProgress": "{{current}} of {{total}} in this block",
+    "overallProgress": "{{current}} of {{total}} overall",
     "instructions": "Rate the extent to which each statement applies to you.",
     "itemPrefix": "I see myself as someone who",
+    "back": "Back",
+    "next": "Next",
+    "seeResults": "See my results",
+    "transition": {
+      "blockDone": "{{name}} done",
+      "nextUp": "Up next:",
+      "cta": "Continue to {{name}}"
+    }
+  },
+  "radar": {
+    "subtitle": "Cèrcol Radar",
+    "progress": "Question {{current}} of {{total}}",
+    "instructions": "Rate the extent to which each pair of traits applies to you.",
+    "itemPrefix": "I see myself as",
     "back": "Back",
     "next": "Next",
     "seeResults": "See my results"
@@ -29,9 +55,9 @@
     "agreeLabel": "Agree strongly"
   },
   "results": {
-    "title": "Your personality profile",
-    "subtitle": "Based on the Big Five model · IPIP · 30 items",
-    "domainSection": "Domain scores",
+    "title": "Your profile",
+    "subtitle": "Cèrcol Test · 5 dimensions · 15 facets",
+    "domainSection": "Five dimensions",
     "facetSection": "Facet breakdown",
     "scoreLabels": {
       "low": "Low",
@@ -40,32 +66,51 @@
     },
     "share": "Share results",
     "copied": "Copied!",
-    "retake": "Take the assessment again",
-    "disclaimer": "Note: This is a brief screening instrument. Scores reflect tendencies at the time of assessment, not fixed traits. For clinical or research-grade assessment, use a validated full-length inventory."
+    "retake": "Start over",
+    "disclaimer": "Scores reflect tendencies at the time of assessment. Each end of a dimension has its own strengths — no score is good or bad."
+  },
+  "radarResults": {
+    "title": "Your Radar",
+    "subtitle": "Cèrcol Radar · 5 dimensions at a glance",
+    "domainSection": "Five dimensions",
+    "share": "Share results",
+    "copied": "Copied!",
+    "retake": "Start over",
+    "disclaimer": "Scores reflect tendencies at the time of assessment. Each end of a dimension has its own strengths — no score is good or bad.",
+    "upgrade": {
+      "heading": "Want a fuller picture?",
+      "body": "Cèrcol Test gives you 5 dimensions broken into 15 facets.",
+      "cta": "Start Cèrcol Test"
+    }
   },
   "feedback": {
     "reportIssue": "Report issue"
   },
   "domains": {
     "extraversion": {
-      "label": "Extraversion",
-      "description": "Sociability, assertiveness, and energy in social situations."
+      "label": "Presence",
+      "description": "How much energy you bring to social spaces.",
+      "blockIntro": "These questions explore how you show up in social situations and connect with others."
     },
     "agreeableness": {
-      "label": "Agreeableness",
-      "description": "Compassion, cooperativeness, and trust toward others."
+      "label": "Bond",
+      "description": "How you relate to others and the warmth you bring.",
+      "blockIntro": "These questions explore how you build trust, show care, and relate to the people around you."
     },
     "conscientiousness": {
-      "label": "Conscientiousness",
-      "description": "Organization, productivity, and sense of responsibility."
+      "label": "Discipline",
+      "description": "How you approach tasks, goals, and follow-through.",
+      "blockIntro": "These questions explore how you organise your time, keep commitments, and stay on track."
     },
     "negativeEmotionality": {
-      "label": "Negative Emotionality",
-      "description": "Tendency toward anxiety, low mood, and emotional reactivity."
+      "label": "Depth",
+      "description": "How you process emotions and navigate uncertainty.",
+      "blockIntro": "These questions explore your emotional landscape — how you respond to stress, change, and inner tension."
     },
     "openMindedness": {
-      "label": "Open-Mindedness",
-      "description": "Curiosity, creativity, and appreciation for ideas and beauty."
+      "label": "Vision",
+      "description": "How you engage with ideas, beauty, and new thinking.",
+      "blockIntro": "These questions explore your curiosity, imagination, and openness to new perspectives."
     }
   },
   "facets": {
@@ -79,8 +124,8 @@
     "productiveness": "Productiveness",
     "responsibility": "Responsibility",
     "anxiety": "Anxiety",
-    "depression": "Depression",
-    "emotionalVolatility": "Emotional Volatility",
+    "depression": "Mood",
+    "emotionalVolatility": "Emotional Steadiness",
     "intellectualCuriosity": "Intellectual Curiosity",
     "aestheticSensitivity": "Aesthetic Sensitivity",
     "creativeImagination": "Creative Imagination"

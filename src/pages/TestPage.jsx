@@ -1,26 +1,68 @@
 /**
- * TestPage — renders the Cèrcol Big Five questionnaire one item at a time.
- * 30 items, Likert 1-5 scale.
- * On completion, navigates to /results with scores in location state.
+ * TestPage — Cèrcol Test: 30-item assessment grouped into 5 blocks of 6.
+ * Block order mirrors domain order in cercol-big-five.js:
+ *   Presence · Bond · Discipline · Depth · Vision
+ *
+ * States:
+ *   answering  — showing a question within a block
+ *   transition — brief screen between blocks
  */
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { CBF_ITEMS } from '../data/cercol-big-five'
+import { CBF_ITEMS, DOMAIN_META } from '../data/cercol-big-five'
 import { computeScores } from '../utils/cbf-scoring'
 import QuestionCard from '../components/QuestionCard'
 import ProgressBar from '../components/ProgressBar'
 import LanguageToggle from '../components/LanguageToggle'
 
+// Domain order (mirrors cercol-big-five.js)
+const DOMAIN_ORDER = [
+  'extraversion',
+  'agreeableness',
+  'conscientiousness',
+  'negativeEmotionality',
+  'openMindedness',
+]
+
+// Group CBF items into 5 blocks of 6, one per domain
+const BLOCKS = DOMAIN_ORDER.map((domain) =>
+  CBF_ITEMS.filter((item) => item.domain === domain)
+)
+
+const ITEMS_PER_BLOCK = 6
+const TOTAL_ITEMS = CBF_ITEMS.length
+const TOTAL_BLOCKS = BLOCKS.length
+
+// Domain → Tailwind accent color for block header dot
+const DOMAIN_ACCENT = {
+  extraversion:         'bg-amber-400',
+  agreeableness:        'bg-emerald-500',
+  conscientiousness:    'bg-blue-600',
+  negativeEmotionality: 'bg-red-500',
+  openMindedness:       'bg-purple-500',
+}
+
 export default function TestPage() {
   const navigate = useNavigate()
   const { t } = useTranslation()
-  const [answers, setAnswers] = useState({})
-  const [current, setCurrent] = useState(0)
 
-  const item = CBF_ITEMS[current]
-  const answered = answers[item.id] ?? null
-  const isLast = current === CBF_ITEMS.length - 1
+  const [blockIdx, setBlockIdx] = useState(0)
+  const [itemInBlockIdx, setItemInBlockIdx] = useState(0)
+  const [answers, setAnswers] = useState({})
+  const [showTransition, setShowTransition] = useState(false)
+
+  const currentBlock = BLOCKS[blockIdx]
+  const item = currentBlock[itemInBlockIdx]
+  const answered = answers[item?.id] ?? null
+
+  const isLastItemInBlock = itemInBlockIdx === ITEMS_PER_BLOCK - 1
+  const isLastBlock = blockIdx === TOTAL_BLOCKS - 1
+  const isLastItemOverall = isLastItemInBlock && isLastBlock
+
+  const overallCurrent = blockIdx * ITEMS_PER_BLOCK + itemInBlockIdx + 1
+  const domainKey = DOMAIN_ORDER[blockIdx]
+  const nextDomainKey = DOMAIN_ORDER[blockIdx + 1]
 
   function handleAnswer(value) {
     setAnswers((prev) => ({ ...prev, [item.id]: value }))
@@ -29,39 +71,129 @@ export default function TestPage() {
   function handleNext() {
     if (!answered) return
     const updatedAnswers = { ...answers, [item.id]: answered }
-    if (isLast) {
+
+    if (isLastItemOverall) {
       const { domains, facets } = computeScores(updatedAnswers)
       navigate('/results', { state: { domains, facets, fromTest: true } })
+      return
+    }
+
+    if (isLastItemInBlock) {
+      // Move to transition screen before next block
+      setAnswers(updatedAnswers)
+      setShowTransition(true)
     } else {
-      setCurrent((i) => i + 1)
+      setItemInBlockIdx((i) => i + 1)
     }
   }
 
   function handleBack() {
-    if (current > 0) setCurrent((i) => i - 1)
+    if (itemInBlockIdx > 0) {
+      setItemInBlockIdx((i) => i - 1)
+    } else if (blockIdx > 0) {
+      // Go back to last item of previous block
+      setShowTransition(false)
+      setBlockIdx((b) => b - 1)
+      setItemInBlockIdx(ITEMS_PER_BLOCK - 1)
+    }
   }
+
+  function handleContinueToNextBlock() {
+    setShowTransition(false)
+    setBlockIdx((b) => b + 1)
+    setItemInBlockIdx(0)
+  }
+
+  // ── Transition screen ──────────────────────────────────────────
+  if (showTransition) {
+    return (
+      <main className="min-h-screen bg-gray-50 flex flex-col items-center justify-center px-4 py-16">
+        <div className="w-full max-w-xl flex flex-col items-center text-center gap-6">
+          {/* Completed block badge */}
+          <div className="flex items-center gap-2">
+            <span className={`w-3 h-3 rounded-full ${DOMAIN_ACCENT[domainKey]}`} />
+            <span className="text-sm font-semibold text-gray-500">
+              {t('test.transition.blockDone', { name: t(`domains.${domainKey}.label`) })}
+            </span>
+          </div>
+
+          {/* Next block */}
+          <div>
+            <p className="text-sm text-gray-400 mb-1">{t('test.transition.nextUp')}</p>
+            <div className="flex items-center justify-center gap-2">
+              <span className={`w-3 h-3 rounded-full ${DOMAIN_ACCENT[nextDomainKey]}`} />
+              <h2 className="text-2xl font-bold text-gray-900">
+                {t(`domains.${nextDomainKey}.label`)}
+              </h2>
+            </div>
+            <p className="mt-2 text-gray-500 text-sm max-w-xs mx-auto">
+              {t(`domains.${nextDomainKey}.blockIntro`)}
+            </p>
+          </div>
+
+          {/* CTA */}
+          <button
+            onClick={handleContinueToNextBlock}
+            className="px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-2xl shadow-sm transition-colors"
+          >
+            {t('test.transition.cta', { name: t(`domains.${nextDomainKey}.label`) })}
+          </button>
+
+          {/* Overall progress */}
+          <p className="text-xs text-gray-400">
+            {t('test.overallProgress', { current: overallCurrent, total: TOTAL_ITEMS })}
+          </p>
+        </div>
+      </main>
+    )
+  }
+
+  // ── Answering screen ───────────────────────────────────────────
+  const isFirstItemOfFirstBlock = blockIdx === 0 && itemInBlockIdx === 0
 
   return (
     <main className="min-h-screen bg-gray-50 flex flex-col items-center px-4 py-10 sm:py-16">
       <div className="w-full max-w-xl flex flex-col gap-6">
         {/* Header */}
         <div className="flex items-center justify-between">
-          <div>
+          <div className="flex items-center gap-2">
             <span className="text-lg font-bold text-gray-900">{t('nav.brand')}</span>
-            <span className="ml-2 text-sm text-gray-400">{t('test.subtitle')}</span>
+            <span className="text-gray-300">·</span>
+            <span className="text-sm font-medium text-gray-500">{t('test.subtitle')}</span>
           </div>
           <LanguageToggle />
         </div>
 
-        {/* Progress */}
+        {/* Block header */}
+        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm px-5 py-4">
+          <div className="flex items-center gap-2 mb-0.5">
+            <span className={`w-2.5 h-2.5 rounded-full shrink-0 ${DOMAIN_ACCENT[domainKey]}`} />
+            <span className="text-xs font-semibold uppercase tracking-widest text-gray-500">
+              {t(`domains.${domainKey}.label`)} · {t('test.subtitle')} {blockIdx + 1} / {TOTAL_BLOCKS}
+            </span>
+          </div>
+          <p className="text-sm text-gray-500 pl-5">
+            {t(`domains.${domainKey}.description`)}
+          </p>
+        </div>
+
+        {/* Block progress bar */}
         <ProgressBar
-          current={current + 1}
-          total={CBF_ITEMS.length}
-          label={t('test.progress', { current: current + 1, total: CBF_ITEMS.length })}
+          current={itemInBlockIdx + 1}
+          total={ITEMS_PER_BLOCK}
+          label={t('test.blockProgress', {
+            current: itemInBlockIdx + 1,
+            total: ITEMS_PER_BLOCK,
+          })}
         />
 
-        {/* Instruction (only on first item) */}
-        {current === 0 && (
+        {/* Overall progress indicator */}
+        <p className="text-xs text-gray-400 -mt-3 text-right">
+          {t('test.overallProgress', { current: overallCurrent, total: TOTAL_ITEMS })}
+        </p>
+
+        {/* Instructions banner — first item only */}
+        {isFirstItemOfFirstBlock && (
           <div className="bg-blue-50 border border-blue-100 rounded-xl px-5 py-4 text-sm text-blue-800 leading-relaxed">
             {t('test.instructions')}
           </div>
@@ -70,7 +202,7 @@ export default function TestPage() {
         {/* Question */}
         <QuestionCard
           item={item}
-          index={current + 1}
+          index={itemInBlockIdx + 1}
           value={answered}
           onChange={handleAnswer}
           scalePoints={5}
@@ -78,7 +210,7 @@ export default function TestPage() {
 
         {/* Navigation */}
         <div className="flex gap-3">
-          {current > 0 && (
+          {(blockIdx > 0 || itemInBlockIdx > 0) && (
             <button
               onClick={handleBack}
               className="flex-1 sm:flex-none px-6 py-3 rounded-xl border border-gray-200 text-gray-700 font-medium hover:bg-gray-100 transition-colors"
@@ -96,7 +228,7 @@ export default function TestPage() {
                 : 'bg-gray-200 text-gray-400 cursor-not-allowed',
             ].join(' ')}
           >
-            {isLast ? t('test.seeResults') : t('test.next')}
+            {isLastItemOverall ? t('test.seeResults') : t('test.next')}
           </button>
         </div>
       </div>
