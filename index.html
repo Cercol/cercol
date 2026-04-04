@@ -5,7 +5,18 @@
     <link rel="icon" type="image/svg+xml" href="/cercol/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>cercol</title>
-    <script type="module" crossorigin src="/cercol/assets/index-Cuy_YVmw.js"></script>
+    <script>
+      (function() {
+        const p = new URLSearchParams(window.location.search).get('p')
+        if (p) {
+          window.history.replaceState(
+            null, null,
+            '/cercol' + decodeURIComponent(p)
+          )
+        }
+      })()
+    </script>
+    <script type="module" crossorigin src="/cercol/assets/index-yQJvjwXd.js"></script>
     <link rel="stylesheet" crossorigin href="/cercol/assets/index-DFtKlurU.css">
   </head>
   <body>

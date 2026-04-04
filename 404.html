@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script>
+    const repo = '/cercol'
+    const path = window.location.pathname.replace(repo, '')
+    const search = window.location.search
+    window.location.replace(
+      repo + '/?p=' + encodeURIComponent(path + search)
+    )
+  </script>
+</head>
+</html>
