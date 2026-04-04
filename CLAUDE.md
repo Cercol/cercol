@@ -78,8 +78,7 @@ no academic jargon in user-facing text. Translations pending.
 ## i18n
 User-facing strings live in src/locales/{lang}.json (react-i18next).
 One file per language, key-value format.
-Test item text (questions) is currently English-only. Translations
-for test items are a future task — do not block features on this.
+Test item text (questions) uses { en, ca } structure inside data files.
 Future: migrate to a spreadsheet or translation management tool
 (Tolgee, Localazy, or Google Sheets export) when languages > 3.
 
@@ -103,57 +102,30 @@ Future: migrate to a spreadsheet or translation management tool
 - Cèrcol Test: 5 blocks of 6 items with transitions
 - Cèrcol dimension names applied everywhere in UI
 
-### Phase 3.5 — Multilingual test items (future)
-- Add translations for test item text (currently English-only)
-- Recommended approach: { en: '...', ca: '...' } inside data files
-- Do not implement until explicitly requested
+### Phase 3.5 — Multilingual test items ✅ COMPLETE
+- Test item text uses { en, ca } structure inside data files
+- QuestionCard resolves item.text[i18n.language] ?? item.text.en
+- Valencian translations complete for all 40 items (10 Radar + 30 Test)
 
-### Phase 3.6 — UX improvements + translation feedback (next)
+### Phase 3.6 — UX improvements + translation feedback ✅ COMPLETE
+- Likert scale labels fixed: LikertScale accepts scaleLabels prop,
+  no internal hardcoded labels. Radar uses 7-point, Test uses 5-point.
+  Anchor labels shown only at extremes, fixed position.
+- Keyboard navigation: number keys select option, Enter/Space advances,
+  Backspace/ArrowLeft goes back. Hint shown on desktop only.
+- Translation feedback: "Suggest translation" button (non-English only)
+  opens inline panel with current context, textarea, submit.
+  Sends to Google Sheet via Apps Script (no-cors GET, fire-and-forget).
+  NOTE: context field currently sends only pathname. Needs improvement.
 
-#### 3.6.1 Translation feedback system
-- Add a "Suggest a better translation" option alongside the existing
-  feedback button (shown only when language is not English)
-- Clicking it opens an inline panel (not a modal, not a new page):
-  - Pre-filled read-only fields: current language, current page/instrument,
-    current item text if user is in the middle of a test
-  - Single editable field: "Your suggestion" (free text, max 300 chars)
-  - Submit button → sends via Google Apps Script GET (no-cors, same
-    pattern as logger.js) to a separate Google Sheet tab
-  - Payload: { timestamp, language, instrument, context, suggestion }
-  - context = current route or item id, so we know what text they mean
-- Success: brief inline confirmation, panel closes
-- Failure: silently ignored (fire-and-forget, same as logger)
-- Google Apps Script endpoint URL stored as TRANSLATION_FEEDBACK_URL
-  constant in a new src/utils/translationFeedback.js
-  (placeholder value until configured manually)
-
-#### 3.6.2 Likert scale label bug fix
-- Root cause: LikertScale component has scale labels hardcoded for
-  a 5-point scale. When rendered with scalePoints=7 (Cèrcol Radar),
-  the labels are wrong: position 5 shows "Agree strongly" instead
-  of the correct 7-point label, and positions 6 and 7 have no label.
-- Fix: LikertScale must receive the correct label set as a prop,
-  derived from the active instrument's SCALE_LABELS object.
-  - Cèrcol Radar uses SCALE_LABELS from tipi.js (7-point, keys 1-7)
-  - Cèrcol Test uses SCALE_LABELS from cercol-big-five.js (5-point, keys 1-5)
-- The component must never hardcode labels internally.
-- Additionally, show fixed anchor labels only at the two extremes
-  (first and last), no floating label under the selected button.
-
-##### 3.6.2 Prompt
-- The LikertScale component has scale labels hardcoded for 5 points. When used with 7 points (Cèrcol Radar), labels are wrong.
-- Fix: pass scaleLabels as a prop to LikertScale from the parent page. RadarTestPage passes SCALE_LABELS from tipi.js (7-point) TestPage passes SCALE_LABELS from cercol-big-five.js (5-point) LikertScale must use only what it receives, never internal defaults. Show labels only at extremes (first and last button), fixed position.
-
-#### 3.6.3 Keyboard navigation
-- When test is active, listen for keydown events on the document
-- Number keys 1–7 (or 1–5 for Cèrcol Test): select that option
-  and visually highlight it (same as clicking)
-- Enter or Space: advance to next question (only if an option is selected)
-- Backspace or Left arrow: go to previous question
-- Keyboard hints shown below the scale on desktop:
-  "Tip: use number keys to select, Enter to continue"
-  (hidden on mobile, shown via Tailwind responsive class)
-- All hint copy via i18n keys
+### Phase 3.7 — Translation feedback context improvement (next)
+- FeedbackButton must accept optional props: itemId, itemText
+- RadarTestPage and TestPage pass current item id and English text
+  when user is mid-test; null on other pages
+- Payload gains two new fields: itemId, itemText
+- Manual step (not Claude Code): add columns itemId and itemText
+  to the translation feedback Google Sheet, and update the
+  Google Apps Script to read e.parameter.itemId and e.parameter.itemText
 
 ### Phase 4 — Backend + Accounts
 - FastAPI + PostgreSQL (or Supabase)
@@ -163,22 +135,30 @@ Future: migrate to a spreadsheet or translation management tool
 
 ### Phase 5 — Team Role Instrument (Cèrcol Team)
 - Prerequisite: ~300+ Cèrcol Test completions in Google Sheet
-- Step 1: cluster analysis on 15 facet scores → identify natural
-  role groupings in real data (k-means or hierarchical)
-- Step 2: cross-reference clusters with team role literature
-  (Belbin, Neuman & Wright, Fisher et al.) → define role taxonomy
-- Step 3: build forced-choice instrument based on IPIP facets
-- Step 4: add observer assessment (same items rated by peers)
-- Step 5: add ICAR cognitive ability test (public domain)
-- Step 6: team composition report (gaps, overlaps, balance)
-- Role taxonomy is data-driven, not assumed from literature alone
+- Step 1: represent each user profile in AB5C space
+  (Abridged Big Five Circumplex, Hofstee, De Raad & Goldberg 1992)
+  Each profile becomes a point in a 10-dimensional space
+  (10 pairwise combinations of OCEAN dimensions)
+- Step 2: cluster profiles by Euclidean distance in AB5C space
+  → identify natural role groupings in real data
+- Step 3: cross-reference clusters with team role literature
+  (Belbin 1981, Neuman & Wright 1999, Fisher et al. 1998-2002)
+  → define role taxonomy with empirical + theoretical grounding
+- Step 4: build forced-choice instrument based on IPIP AB5C markers
+  (45 AB5C markers available in IPIP, public domain)
+- Step 5: add observer assessment (same items rated by peers)
+- Step 6: add ICAR cognitive ability test (public domain)
+- Step 7: assign user to role by nearest centroid in AB5C space
+- Step 8: team composition report (gaps, overlaps, balance)
+- Role taxonomy is data-driven + geometrically grounded,
+  not assumed from literature alone
 
 ### Phase 6 — Branding + Visual identity
 - Cèrcol visual identity applied via tokens.js
 - AI image generation trained on Cèrcol style
 
 ### Phase 7 — Multilingual expansion
-- Translate test items into Valencian and other languages
+- Translate test items into additional languages beyond Valencian
 - Translation management via Tolgee or equivalent
 
 ## File structure
@@ -187,7 +167,7 @@ src/
   pages/         # Route-level components
   design/        # tokens.js and global styles
   data/          # test items, scoring keys (always cite source)
-  utils/         # scoring logic
+  utils/         # scoring logic, logger.js, translationFeedback.js
   locales/       # i18n translation files (en.json, ca.json, ...)
 
 ## Academic sources
@@ -195,13 +175,18 @@ src/
 - IPIP: Goldberg et al. (2006), doi:10.1177/1073191106293419
   Full item pool: https://ipip.ori.org
 - ICAR: Condon & Revelle (2014), Intelligence, 46, 79–90
-- Team roles literature: Belbin (1981), Neuman & Wright (1999),
+- AB5C: Hofstee, De Raad & Goldberg (1992),
+  J. Personality and Social Psychology, 63, 146-163
+  IPIP AB5C markers: https://ipip.ori.org
+- Team roles: Belbin (1981), Neuman & Wright (1999),
   Fisher, Hunter & Macrosson (1998-2002)
 
 ## Technical notes
 - Cèrcol Test uses 2 items per facet (vs. 10 in full IPIP-NEO).
   Adequate for feedback purposes, not for clinical assessment.
-- GitHub Pages + React Router: requires 404.html redirect workaround
+- GitHub Pages + React Router: 404.html redirect workaround in place
   for direct URL access (share links, bookmarks).
-- logger.js sends GET requests with no-cors mode to avoid CORS issues
-  with Google Apps Script. Fire-and-forget, never blocks UI.
+- logger.js and translationFeedback.js use GET + no-cors mode to avoid
+  CORS issues with Google Apps Script. Fire-and-forget, never block UI.
+- Google Apps Script changes must be done manually (not via Claude Code).
+  After any Script update, always redeploy as a new version.

@@ -20,7 +20,12 @@ function getInstrument(pathname) {
   return 'none'
 }
 
-export default function FeedbackButton() {
+/**
+ * Props:
+ *   itemId   {number|null} — id of item currently shown (test pages only)
+ *   itemText {string|null} — English text of that item
+ */
+export default function FeedbackButton({ itemId = null, itemText = null }) {
   const { t, i18n } = useTranslation()
   const { pathname } = useLocation()
   const [panelOpen, setPanelOpen] = useState(false)
@@ -63,6 +68,8 @@ export default function FeedbackButton() {
       instrument: getInstrument(pathname),
       context: window.location.pathname,
       suggestion: suggestion.trim(),
+      itemId,
+      itemText,
     })
     setStatus('success')
     setTimeout(closePanel, 2000)
@@ -89,6 +96,16 @@ export default function FeedbackButton() {
               [{i18n.language}] {pathname}
             </p>
           </div>
+
+          {/* Item context — shown only when inside a test */}
+          {itemId != null && itemText && (
+            <p
+              style={{ color: colors.textMuted, borderColor: colors.border }}
+              className="text-xs border rounded-lg px-3 py-2 bg-gray-50 leading-snug"
+            >
+              #{itemId}: <span className="italic">"{itemText}"</span>
+            </p>
+          )}
 
           {/* Suggestion textarea */}
           <form onSubmit={handleSubmit} className="flex flex-col gap-3">

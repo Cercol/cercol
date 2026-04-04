@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { TIPI_ITEMS, SCALE_LABELS } from '../data/tipi'
 import { computeRadarScores } from '../utils/radar-scoring'
+import { useFeedbackContext } from '../context/FeedbackContext'
 import QuestionCard from '../components/QuestionCard'
 import ProgressBar from '../components/ProgressBar'
 import LanguageToggle from '../components/LanguageToggle'
@@ -17,12 +18,19 @@ const SCALE_POINTS = 7
 export default function RadarTestPage() {
   const navigate = useNavigate()
   const { t } = useTranslation()
+  const { setItemContext } = useFeedbackContext()
   const [answers, setAnswers] = useState({})
   const [current, setCurrent] = useState(0)
 
   const item = TIPI_ITEMS[current]
   const answered = answers[item.id] ?? null
   const isLast = current === TIPI_ITEMS.length - 1
+
+  // Publish current item to FeedbackContext so FeedbackButton can include it
+  useEffect(() => {
+    setItemContext({ itemId: item.id, itemText: item.text.en })
+    return () => setItemContext({ itemId: null, itemText: null })
+  }, [item.id]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Translate scale labels using i18n (scale7 namespace), fall back to English
   const scaleLabels = Object.fromEntries(

@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { CBF_ITEMS, DOMAIN_META, SCALE_LABELS } from '../data/cercol-big-five'
 import { computeScores } from '../utils/cbf-scoring'
+import { useFeedbackContext } from '../context/FeedbackContext'
 import QuestionCard from '../components/QuestionCard'
 import ProgressBar from '../components/ProgressBar'
 import LanguageToggle from '../components/LanguageToggle'
@@ -47,6 +48,7 @@ const DOMAIN_ACCENT = {
 export default function TestPage() {
   const navigate = useNavigate()
   const { t } = useTranslation()
+  const { setItemContext } = useFeedbackContext()
 
   const [blockIdx, setBlockIdx] = useState(0)
   const [itemInBlockIdx, setItemInBlockIdx] = useState(0)
@@ -64,6 +66,16 @@ export default function TestPage() {
   const overallCurrent = blockIdx * ITEMS_PER_BLOCK + itemInBlockIdx + 1
   const domainKey = DOMAIN_ORDER[blockIdx]
   const nextDomainKey = DOMAIN_ORDER[blockIdx + 1]
+
+  // Publish current item to FeedbackContext (cleared during transition + on unmount)
+  useEffect(() => {
+    if (showTransition) {
+      setItemContext({ itemId: null, itemText: null })
+    } else {
+      setItemContext({ itemId: item.id, itemText: item.text.en })
+    }
+    return () => setItemContext({ itemId: null, itemText: null })
+  }, [item?.id, showTransition]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Translate scale labels using i18n (scale namespace), fall back to English
   const scaleLabels = Object.fromEntries(
