@@ -97,6 +97,12 @@ Future: migrate to a spreadsheet or translation management tool
 - Apply Cèrcol dimension names (Presence, Bond, Discipline, Depth, Vision)
   everywhere in UI — replace any remaining academic labels
 
+### Phase 3.5 — Multilingual test items (future)
+- Add translations for test item text (currently English-only)
+- Option A: structured as { en: '...', ca: '...' } inside data files
+- This is the recommended approach for clean component architecture
+- Do not implement until explicitly requested
+
 ### Phase 4 — Backend + Accounts
 - FastAPI + PostgreSQL (or Supabase)
 - User accounts, result history

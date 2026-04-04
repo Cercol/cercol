@@ -14,9 +14,10 @@ const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbypju_p73n_vRVo
  * Silently ignores all network or configuration errors.
  *
  * @param {Record<string, number>} domainScores
- * @param {string} language — current i18n language code (e.g. 'en', 'ca')
+ * @param {string} language   — current i18n language code (e.g. 'en', 'ca')
+ * @param {'radar'|'test'} instrument — which instrument was completed
  */
-export async function logResult(domainScores, language) {
+export async function logResult(domainScores, language, instrument) {
   if (APPS_SCRIPT_URL === 'PLACEHOLDER_REPLACE_BEFORE_DEPLOY') return
 
   try {
@@ -26,6 +27,7 @@ export async function logResult(domainScores, language) {
       body: JSON.stringify({
         timestamp: new Date().toISOString(),
         language,
+        instrument,
         scores: domainScores,
       }),
     })

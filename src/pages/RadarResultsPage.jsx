@@ -74,7 +74,7 @@ export default function RadarResultsPage() {
   useEffect(() => {
     if (fromTest && !loggedRef.current) {
       loggedRef.current = true
-      logResult(scores, i18n.language)
+      logResult(scores, i18n.language, 'radar')
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 

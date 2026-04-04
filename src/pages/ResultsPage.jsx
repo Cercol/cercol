@@ -83,7 +83,7 @@ export default function ResultsPage() {
   useEffect(() => {
     if (fromTest && !loggedRef.current) {
       loggedRef.current = true
-      logResult(domains, i18n.language)
+      logResult(domains, i18n.language, 'test')
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
