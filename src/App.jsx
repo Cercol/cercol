@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { FeedbackProvider, useFeedbackContext } from './context/FeedbackContext'
 import HomePage from './pages/HomePage'
-import RadarTestPage from './pages/RadarTestPage'
-import RadarResultsPage from './pages/RadarResultsPage'
-import TestPage from './pages/TestPage'
-import ResultsPage from './pages/ResultsPage'
+import NewMoonPage from './pages/NewMoonPage'
+import NewMoonResultsPage from './pages/NewMoonResultsPage'
+import WaxingCrescentPage from './pages/WaxingCrescentPage'
+import WaxingCrescentResultsPage from './pages/WaxingCrescentResultsPage'
 import FeedbackButton from './components/FeedbackButton'
 
 function AppContent() {
@@ -13,10 +13,15 @@ function AppContent() {
     <>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/radar" element={<RadarTestPage />} />
-        <Route path="/radar/results" element={<RadarResultsPage />} />
-        <Route path="/test" element={<TestPage />} />
-        <Route path="/results" element={<ResultsPage />} />
+        {/* New Moon (formerly Radar) */}
+        <Route path="/new-moon" element={<NewMoonPage />} />
+        <Route path="/new-moon/results" element={<NewMoonResultsPage />} />
+        {/* Legacy radar routes — kept for backward compat with shared links */}
+        <Route path="/radar" element={<NewMoonPage />} />
+        <Route path="/radar/results" element={<NewMoonResultsPage />} />
+        {/* Waxing Crescent */}
+        <Route path="/waxing-crescent" element={<WaxingCrescentPage />} />
+        <Route path="/waxing-crescent/results" element={<WaxingCrescentResultsPage />} />
       </Routes>
       <FeedbackButton itemId={itemContext.itemId} itemText={itemContext.itemText} />
     </>

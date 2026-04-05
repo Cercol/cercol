@@ -1,13 +1,13 @@
 /**
- * RadarTestPage — Cèrcol Radar: 10-item quick assessment.
+ * NewMoonPage — Cèrcol New Moon: 10-item quick assessment.
  * Uses the TIPI instrument, Likert 1-7 scale.
- * On completion, navigates to /radar/results.
+ * On completion, navigates to /new-moon/results.
  */
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { TIPI_ITEMS, SCALE_LABELS } from '../data/tipi'
-import { computeRadarScores } from '../utils/radar-scoring'
+import { TIPI_ITEMS, SCALE_LABELS } from '../data/new-moon'
+import { computeRadarScores } from '../utils/new-moon-scoring'
 import { useFeedbackContext } from '../context/FeedbackContext'
 import QuestionCard from '../components/QuestionCard'
 import ProgressBar from '../components/ProgressBar'
@@ -15,7 +15,7 @@ import LanguageToggle from '../components/LanguageToggle'
 
 const SCALE_POINTS = 7
 
-export default function RadarTestPage() {
+export default function NewMoonPage() {
   const navigate = useNavigate()
   const { t } = useTranslation()
   const { setItemContext } = useFeedbackContext()
@@ -49,7 +49,7 @@ export default function RadarTestPage() {
     const updatedAnswers = { ...answers, [item.id]: answered }
     if (isLast) {
       const scores = computeRadarScores(updatedAnswers)
-      navigate('/radar/results', { state: { scores, fromTest: true } })
+      navigate('/new-moon/results', { state: { scores, fromTest: true } })
     } else {
       setCurrent((i) => i + 1)
     }
@@ -59,16 +59,13 @@ export default function RadarTestPage() {
     if (current > 0) setCurrent((i) => i - 1)
   }
 
-  // Keep refs to handlers so the keydown effect always calls the latest version
   const handleNextRef = useRef(handleNext)
   const handleBackRef = useRef(handleBack)
   handleNextRef.current = handleNext
   handleBackRef.current = handleBack
 
-  // Keyboard navigation
   useEffect(() => {
     function onKeyDown(e) {
-      // Ignore if focus is on an input/textarea
       if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) return
 
       const n = parseInt(e.key, 10)
@@ -96,7 +93,7 @@ export default function RadarTestPage() {
         <div className="flex items-center justify-between">
           <div>
             <span className="text-lg font-bold text-gray-900">{t('nav.brand')}</span>
-            <span className="ml-2 text-sm text-gray-400">{t('radar.subtitle')}</span>
+            <span className="ml-2 text-sm text-gray-400">{t('newMoon.subtitle')}</span>
           </div>
           <LanguageToggle />
         </div>
@@ -105,13 +102,13 @@ export default function RadarTestPage() {
         <ProgressBar
           current={current + 1}
           total={TIPI_ITEMS.length}
-          label={t('radar.progress', { current: current + 1, total: TIPI_ITEMS.length })}
+          label={t('newMoon.progress', { current: current + 1, total: TIPI_ITEMS.length })}
         />
 
         {/* Instruction (only on first item) */}
         {current === 0 && (
           <div className="bg-blue-50 border border-blue-100 rounded-xl px-5 py-4 text-sm text-blue-800 leading-relaxed">
-            {t('radar.instructions')}
+            {t('newMoon.instructions')}
           </div>
         )}
 
@@ -123,7 +120,7 @@ export default function RadarTestPage() {
           onChange={handleAnswer}
           scalePoints={SCALE_POINTS}
           scaleLabels={scaleLabels}
-          prefixKey="radar.itemPrefix"
+          prefixKey="newMoon.itemPrefix"
         />
 
         {/* Navigation */}
@@ -133,7 +130,7 @@ export default function RadarTestPage() {
               onClick={handleBack}
               className="flex-1 sm:flex-none px-6 py-3 rounded-xl border border-gray-200 text-gray-700 font-medium hover:bg-gray-100 transition-colors"
             >
-              {t('radar.back')}
+              {t('newMoon.back')}
             </button>
           )}
           <button
@@ -146,7 +143,7 @@ export default function RadarTestPage() {
                 : 'bg-gray-200 text-gray-400 cursor-not-allowed',
             ].join(' ')}
           >
-            {isLast ? t('radar.seeResults') : t('radar.next')}
+            {isLast ? t('newMoon.seeResults') : t('newMoon.next')}
           </button>
         </div>
       </div>

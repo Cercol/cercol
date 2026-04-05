@@ -8,7 +8,8 @@
  * Range: 1–7 per dimension.
  */
 
-import { TIPI_ITEMS } from '../data/tipi'
+import { TIPI_ITEMS } from '../data/new-moon'
+import { TIPI_TO_CERCOL } from '../data/domains'
 
 /**
  * Compute Big Five scores from raw answers.
@@ -54,6 +55,44 @@ export function scoreToPercent(score) {
  * @returns {'low'|'moderate'|'high'}
  */
 export function scoreLabel(score) {
+  if (score <= 2.9) return 'low'
+  if (score <= 4.9) return 'moderate'
+  return 'high'
+}
+
+/**
+ * Compute New Moon (TIPI) scores, remapped from TIPI keys to Cèrcol display keys.
+ *
+ * @param {Record<number, number>} answers - itemId → raw value (1–7)
+ * @returns {Record<string, number>} Cèrcol display key → score (1–7)
+ */
+export function computeRadarScores(answers) {
+  const raw = computeScores(answers)
+  const remapped = {}
+  for (const [tipiKey, displayKey] of Object.entries(TIPI_TO_CERCOL)) {
+    remapped[displayKey] = raw[tipiKey]
+  }
+  return remapped
+}
+
+/**
+ * Convert a New Moon score (1–7) to 0–100% for progress bars.
+ *
+ * @param {number} score
+ * @returns {number}
+ */
+export function radarScoreToPercent(score) {
+  return Math.round(((score - 1) / 6) * 100)
+}
+
+/**
+ * Return a tier label for a New Moon score (1–7 scale).
+ * Thresholds: ≤2.9 low, ≤4.9 moderate, >4.9 high
+ *
+ * @param {number} score
+ * @returns {'low'|'moderate'|'high'}
+ */
+export function radarScoreLabel(score) {
   if (score <= 2.9) return 'low'
   if (score <= 4.9) return 'moderate'
   return 'high'

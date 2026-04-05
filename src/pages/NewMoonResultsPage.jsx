@@ -8,9 +8,10 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { DOMAIN_META } from '../data/cercol-big-five'
-import { radarScoreToPercent, radarScoreLabel } from '../utils/radar-scoring'
+import { DOMAIN_KEYS } from '../data/domains'
+import { radarScoreToPercent, radarScoreLabel } from '../utils/new-moon-scoring'
 import { logResult } from '../utils/logger'
+import { colors } from '../design/tokens'
 import RadarChart from '../components/RadarChart'
 import LanguageToggle from '../components/LanguageToggle'
 
@@ -21,30 +22,29 @@ const LABEL_STYLES = {
 }
 
 const DOMAIN_BAR_COLOR = {
-  extraversion:          'bg-amber-400',
-  agreeableness:         'bg-emerald-500',
-  conscientiousness:     'bg-blue-600',
-  negativeEmotionality:  'bg-red-500',
-  openMindedness:        'bg-purple-500',
+  presence:   'bg-amber-400',
+  bond:       'bg-emerald-500',
+  discipline: 'bg-blue-600',
+  depth:      'bg-red-500',
+  vision:     'bg-purple-500',
 }
 
 function encodeScores(scores) {
-  const ordered = Object.keys(DOMAIN_META).map((k) => scores[k] ?? 0)
+  const ordered = DOMAIN_KEYS.map((k) => scores[k] ?? 0)
   return btoa(ordered.join(','))
 }
 
 function decodeScores(b64) {
   try {
     const values = atob(b64).split(',').map(Number)
-    const keys = Object.keys(DOMAIN_META)
-    if (values.length !== keys.length) return null
-    return Object.fromEntries(keys.map((k, i) => [k, values[i]]))
+    if (values.length !== DOMAIN_KEYS.length) return null
+    return Object.fromEntries(DOMAIN_KEYS.map((k, i) => [k, values[i]]))
   } catch {
     return null
   }
 }
 
-export default function RadarResultsPage() {
+export default function NewMoonResultsPage() {
   const location = useLocation()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
@@ -74,7 +74,7 @@ export default function RadarResultsPage() {
   useEffect(() => {
     if (fromTest && !loggedRef.current) {
       loggedRef.current = true
-      logResult(scores, i18n.language, 'radar')
+      logResult(scores, i18n.language, 'newMoon')
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -87,7 +87,7 @@ export default function RadarResultsPage() {
     })
   }
 
-  const domainKeys = Object.keys(DOMAIN_META)
+  const domainKeys = DOMAIN_KEYS
 
   return (
     <main className="min-h-screen bg-gray-50 px-4 py-10 sm:py-16">
@@ -97,8 +97,8 @@ export default function RadarResultsPage() {
         <div className="flex items-start justify-between">
           <div>
             <span className="text-lg font-bold text-gray-900">{t('nav.brand')}</span>
-            <h1 className="mt-1 text-2xl sm:text-3xl font-bold text-gray-900">{t('radarResults.title')}</h1>
-            <p className="mt-1 text-gray-500 text-sm">{t('radarResults.subtitle')}</p>
+            <h1 className="mt-1 text-2xl sm:text-3xl font-bold text-gray-900">{t('newMoonResults.title')}</h1>
+            <p className="mt-1 text-gray-500 text-sm">{t('newMoonResults.subtitle')}</p>
           </div>
           <LanguageToggle />
         </div>
@@ -106,10 +106,15 @@ export default function RadarResultsPage() {
         {/* Radar chart */}
         <section>
           <h2 className="text-sm font-semibold uppercase tracking-widest text-gray-400 mb-4">
-            {t('radarResults.domainSection')}
+            {t('newMoonResults.domainSection')}
           </h2>
           <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-            <RadarChart scores={scores} maxScore={7} />
+            <RadarChart
+              scores={scores}
+              maxScore={7}
+              domainKeys={domainKeys}
+              labelFn={(key) => t(`domains.${key}.label`)}
+            />
           </div>
 
           {/* Domain score cards */}
@@ -119,13 +124,14 @@ export default function RadarResultsPage() {
               const pct = radarScoreToPercent(score)
               const label = radarScoreLabel(score)
               const barColor = DOMAIN_BAR_COLOR[key]
+              // New Moon scale is 1–7: low ≤ 2.9, moderate 3.0–4.9, high ≥ 5.0
+              const descVariant = score >= 5.0 ? 'high' : score <= 2.9 ? 'low' : null
 
               return (
                 <div key={key} className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
                   <div className="flex items-center justify-between mb-3">
                     <div>
                       <h3 className="font-semibold text-gray-900">{t(`domains.${key}.label`)}</h3>
-                      <p className="text-sm text-gray-500 mt-0.5">{t(`domains.${key}.description`)}</p>
                     </div>
                     <div className="flex flex-col items-end gap-1 ml-4 shrink-0">
                       <span className="text-xl font-bold text-gray-900">
@@ -136,9 +142,14 @@ export default function RadarResultsPage() {
                       </span>
                     </div>
                   </div>
-                  <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                  <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden mb-3">
                     <div className={`h-full rounded-full transition-all duration-500 ${barColor}`} style={{ width: `${pct}%` }} />
                   </div>
+                  {descVariant && (
+                    <p className="text-sm leading-relaxed" style={{ color: colors.textMuted }}>
+                      {t(`dimensions.${key}.${descVariant}`)}
+                    </p>
+                  )}
                 </div>
               )
             })}
@@ -148,14 +159,14 @@ export default function RadarResultsPage() {
         {/* ── Upgrade prompt ── */}
         <div className="bg-gray-50 border border-gray-200 rounded-2xl px-6 py-5 flex flex-col gap-3">
           <div>
-            <p className="font-semibold text-gray-900">{t('radarResults.upgrade.heading')}</p>
-            <p className="text-sm text-gray-500 mt-1">{t('radarResults.upgrade.body')}</p>
+            <p className="font-semibold text-gray-900">{t('newMoonResults.upgrade.heading')}</p>
+            <p className="text-sm text-gray-500 mt-1">{t('newMoonResults.upgrade.body')}</p>
           </div>
           <button
-            onClick={() => navigate('/test')}
+            onClick={() => navigate('/waxing-crescent')}
             className="self-start px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl transition-colors shadow-sm"
           >
-            {t('radarResults.upgrade.cta')}
+            {t('newMoonResults.upgrade.cta')}
           </button>
         </div>
 
@@ -165,19 +176,19 @@ export default function RadarResultsPage() {
             onClick={handleShare}
             className="w-full py-3 rounded-xl bg-white border border-gray-200 text-gray-700 font-medium hover:bg-gray-50 transition-colors"
           >
-            {copied ? t('radarResults.copied') : t('radarResults.share')}
+            {copied ? t('newMoonResults.copied') : t('newMoonResults.share')}
           </button>
           <button
             onClick={() => navigate('/')}
             className="w-full py-3 rounded-xl border border-gray-200 text-gray-500 text-sm font-medium hover:bg-gray-100 transition-colors"
           >
-            {t('radarResults.retake')}
+            {t('newMoonResults.retake')}
           </button>
         </div>
 
         {/* Disclaimer */}
         <p className="text-xs text-gray-400 leading-relaxed text-center">
-          {t('radarResults.disclaimer')}
+          {t('newMoonResults.disclaimer')}
         </p>
 
       </div>

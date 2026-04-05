@@ -1,6 +1,7 @@
 /**
  * HomePage — instrument selection screen.
- * User chooses between Cèrcol Radar (10 items) and Cèrcol Test (30 items).
+ * User chooses between Cèrcol New Moon (10 items) and
+ * Cèrcol Waxing Crescent (60 items).
  */
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -74,20 +75,20 @@ export default function HomePage() {
         {/* Instrument cards */}
         <div className="flex flex-col gap-4">
           <InstrumentCard
-            name={t('home.radar.name')}
-            tagline={t('home.radar.tagline')}
-            meta={t('home.radar.meta')}
-            description={t('home.radar.description')}
+            name={t('home.newMoon.name')}
+            tagline={t('home.newMoon.tagline')}
+            meta={t('home.newMoon.meta')}
+            description={t('home.newMoon.description')}
             accent="text-amber-500"
-            onClick={() => navigate('/radar')}
+            onClick={() => navigate('/new-moon')}
           />
           <InstrumentCard
-            name={t('home.test.name')}
-            tagline={t('home.test.tagline')}
-            meta={t('home.test.meta')}
-            description={t('home.test.description')}
+            name={t('home.waxingCrescent.name')}
+            tagline={t('home.waxingCrescent.tagline')}
+            meta={t('home.waxingCrescent.meta')}
+            description={t('home.waxingCrescent.description')}
             accent="text-blue-600"
-            onClick={() => navigate('/test')}
+            onClick={() => navigate('/waxing-crescent')}
           />
         </div>
 

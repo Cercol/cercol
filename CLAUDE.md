@@ -30,7 +30,15 @@ When that happens, only tokens.js needs updating.
 - No inline styles, always Tailwind classes
 - Keep components small and single-responsibility
 - NEVER use academic instrument names in user-facing text or comments:
-  use "Cèrcol Radar" and "Cèrcol Test", never "TIPI", "IPIP", "Big Five"
+  use "Cèrcol New Moon" and "Cèrcol Waxing Crescent", never "TIPI", "IPIP", "Big Five", "NEO"
+
+## Claude Code workflow
+After every successful npm run deploy, Claude Code must:
+1. Mark the current phase as ✅ COMPLETE in this file
+2. Update the phase description to reflect exactly what was implemented
+   (remove items not done, add relevant notes if needed)
+3. Do not modify any other section of CLAUDE.md
+This applies to every phase, without exception.
 
 ## Instrument design decision
 All psychometric instruments used in Cèrcol must be free for any use,
@@ -39,13 +47,102 @@ only. All instruments are based on IPIP (public domain, no restrictions).
 Never introduce items from copyrighted instruments (NEO-PI-R, BFI-2, etc.)
 
 ## Product naming convention
-Cèrcol uses its own product names, not academic instrument names.
-Do not expose "TIPI", "IPIP", "Big Five" or similar as product labels.
-Current product names:
-- "Cèrcol Radar" — 10-item quick assessment (based on TIPI)
-- "Cèrcol Test"  — 30-item full assessment (based on IPIP)
-These names appear in all user-facing copy and i18n files.
-Academic sources are documented in code comments and README only.
+Cèrcol uses lunar phase names for all instruments.
+Never expose academic instrument names (TIPI, IPIP, NEO) in user-facing text.
+Never use generic names like "test" or "radar" in user-facing text or filenames.
+
+Current instruments:
+- "Cèrcol New Moon"      — 10-item quick snapshot
+- "Cèrcol Waxing Crescent" — 60-item full portrait, 30 facets
+
+## Lunar phase instrument map
+
+Each phase is a standalone user experience.
+Internal methodologies (AB5C clustering, observer weighting)
+are never exposed to users.
+
+| Phase | Code name | Instrument | Facets | Status |
+|---|---|---|---|---|
+| 🌑 | NewMoon | TIPI — 10 items, 7-point | 5 domains | Live |
+| 🌒 | WaxingCrescent | IPIP-NEO-60 — 60 items, 5-point | 30 facets | Live |
+| 🌓 | FirstQuarter | Reserved | — | — |
+| 🌔 | WaxingGibbous | Reserved | — | — |
+| 🌕 | FullMoon | IPIP-NEO-120 + Observer + ICAR g | 30 facets | Planned |
+| 🌖 | WaningGibbous | Reserved (individual evolution) | — | — |
+| 🌗 | LastQuarter | Team report (members FullMoon) | — | Planned |
+| 🌘 | WaningCrescent | Reserved (team evolution) | — | — |
+
+User journey:
+NewMoon → WaxingCrescent → FullMoon → LastQuarter
+
+## File naming convention
+All instrument pages use English phase names as base:
+NewMoonPage.jsx, WaxingCrescentPage.jsx, FullMoonPage.jsx etc.
+Never use generic names like TestPage.jsx or RadarPage.jsx.
+
+## Dimension names (user-facing)
+Applies to both NewMoon and WaxingCrescent.
+Internal code keys remain unchanged for research traceability.
+
+| Academic key | Cèrcol name | Valencià |
+|---|---|---|
+| extraversion / Extraversion | Presence | Presència |
+| agreeableness / Agreeableness | Bond | Vincle |
+| conscientiousness / Conscientiousness | Discipline | Disciplina |
+| negativeEmotionality / Neuroticism | Depth | Profunditat |
+| openMindedness / Openness | Vision | Visió |
+
+## Facet names (WaxingCrescent — 30 facets)
+
+DEPTH (Neuroticism):
+| NEO facet | Cèrcol name | Valencià |
+|---|---|---|
+| Anxiety | Vigil | Vigília |
+| Angry Hostility | Blaze | Flama |
+| Depression | Hollow | Buit |
+| Self-Consciousness | Veil | Vel |
+| Impulsiveness | Surge | Impuls |
+| Vulnerability | Fracture | Escletxa |
+
+PRESENCE (Extraversion):
+| NEO facet | Cèrcol name | Valencià |
+|---|---|---|
+| Warmth | Hearth | Llar |
+| Gregariousness | Gather | Aplec |
+| Assertiveness | Command | Veu |
+| Activity | Drive | Empenta |
+| Excitement-Seeking | Thrill | Vertigen |
+| Positive Emotions | Radiance | Llum |
+
+VISION (Openness):
+| NEO facet | Cèrcol name | Valencià |
+|---|---|---|
+| Fantasy | Dream | Somni |
+| Aesthetics | Craft | Traç |
+| Feelings | Resonance | Ressò |
+| Actions | Drift | Volta |
+| Ideas | Prism | Prisma |
+| Values | Compass | Brúixola |
+
+BOND (Agreeableness):
+| NEO facet | Cèrcol name | Valencià |
+|---|---|---|
+| Trust | Faith | Fe |
+| Straightforwardness | Edge | Tall |
+| Altruism | Gift | Do |
+| Compliance | Yield | Cessió |
+| Modesty | Shadow | Ombra |
+| Tender-Mindedness | Shield | Escut |
+
+DISCIPLINE (Conscientiousness):
+| NEO facet | Cèrcol name | Valencià |
+|---|---|---|
+| Competence | Mastery | Mestria |
+| Order | Structure | Trama |
+| Dutifulness | Oath | Pacte |
+| Achievement Striving | Quest | Cerca |
+| Self-Discipline | Will | Voluntat |
+| Deliberation | Counsel | Consell |
 
 ## Communication style (user-facing copy)
 - Warm, direct, and non-clinical tone
@@ -58,23 +155,6 @@ Academic sources are documented in code comments and README only.
 - Dimension names use Cèrcol product vocabulary (see below),
   never academic labels in user-facing text
 
-## Dimension names (user-facing)
-Cèrcol uses its own dimension vocabulary inspired by RPG archetypes.
-These names appear in all UI, i18n files, results, and copy.
-Internal code and data files keep the original academic keys
-for research traceability. Only display labels change.
-
-| Academic key          | Cèrcol name | Valencian   |
-|-----------------------|-------------|-------------|
-| extraversion          | Presence    | Presència   |
-| agreeableness         | Bond        | Vincle      |
-| conscientiousness     | Discipline  | Disciplina  |
-| negativeEmotionality  | Depth       | Profunditat |
-| openMindedness        | Vision      | Visió       |
-
-Facet names follow the same principle: clear, non-clinical,
-no academic jargon in user-facing text. Translations pending.
-
 ## i18n
 User-facing strings live in src/locales/{lang}.json (react-i18next).
 One file per language, key-value format.
@@ -83,6 +163,12 @@ Future: migrate to a spreadsheet or translation management tool
 (Tolgee, Localazy, or Google Sheets export) when languages > 3.
 
 ## Roadmap
+
+<!--
+  EPOCH 1 — Individual Assessment
+  Static frontend, GitHub Pages, no backend.
+  Goal: ship both instruments, collect data, validate voice.
+-->
 
 ### Phase 1 — Quick assessment MVP ✅ COMPLETE
 - Cèrcol Radar: 10-item quick assessment, radar chart results
@@ -118,14 +204,116 @@ Future: migrate to a spreadsheet or translation management tool
   Sends to Google Sheet via Apps Script (no-cors GET, fire-and-forget).
   NOTE: context field currently sends only pathname. Needs improvement.
 
-### Phase 3.7 — Translation feedback context improvement (next)
-- FeedbackButton must accept optional props: itemId, itemText
-- RadarTestPage and TestPage pass current item id and English text
-  when user is mid-test; null on other pages
-- Payload gains two new fields: itemId, itemText
-- Manual step (not Claude Code): add columns itemId and itemText
-  to the translation feedback Google Sheet, and update the
-  Google Apps Script to read e.parameter.itemId and e.parameter.itemText
+### Phase 3.7 — Translation feedback context improvement ✅ COMPLETE
+- FeedbackButton accepts itemId and itemText props via FeedbackContext
+- RadarTestPage and TestPage set item context on each item change
+- Payload includes itemId and itemText fields
+- Manual step done: columns added to Google Sheet, Apps Script updated
+
+### Phase 3.8 — Keyboard on block transitions ✅ COMPLETE
+- Enter and Space trigger handleContinueToNextBlock during transition screens
+- Backspace and ArrowLeft do nothing during transitions
+- handleContinueToNextBlockRef added using same useRef pattern as other handlers
+- keydown effect now depends on [item.id, showTransition] to re-register on state change
+
+### Phase 3.9 — Dimension and facet descriptions on results pages ✅ COMPLETE
+- Added "dimensions" namespace to en.json and ca.json: high/low descriptions for all 5 dimensions
+- Restructured "facets" namespace: each facet now has label, high, low keys
+- ResultsPage: domain cards show description text (high if score ≥ 2.5, low otherwise)
+- ResultsPage: facet rows show description text below the bar (muted, xs, same threshold)
+- RadarResultsPage: domain cards show description text (high if score ≥ 4 on 1–7 scale)
+- All copy follows Brand voice guidelines (direct, warm, non-clinical)
+- ca.json descriptions left in English pending Valencian translation
+
+### Phase 3.10 — Instrument rebranding + Waxing Crescent launch ✅ COMPLETE
+- All instruments renamed to lunar phases: "Cèrcol New Moon" (was Radar) and "Cèrcol Waxing Crescent" (new)
+- File renames: tipi.js→new-moon.js, cercol-big-five.js→waxing-crescent-v1.js, scoring.js→new-moon-scoring.js
+- Pages renamed: RadarTestPage→NewMoonPage, RadarResultsPage→NewMoonResultsPage
+- Old TestPage/ResultsPage (30-item v1) retired; replaced by WaxingCrescentPage/WaxingCrescentResultsPage
+- New instrument: waxing-crescent.js — IPIP-NEO-60, 60 items, 5 domains, 30 facets, 5-point scale
+- New scoring: waxing-crescent-scoring.js — computeWCScores, wcScoreToPercent, wcScoreLabel
+- WaxingCrescentPage: 5 blocks of 12 items with transitions, keyboard nav, FeedbackContext
+- WaxingCrescentResultsPage: radar chart, domain cards, 30-facet breakdown, share via URL
+- RadarChart updated to accept optional domainKeys and labelFn props (backward compat maintained)
+- i18n: new wc.*, wcResults.*, wcDomains.*, wcFacets.* namespaces; newMoon.* and newMoonResults.* updated
+- Routes: /new-moon, /new-moon/results, /waxing-crescent, /waxing-crescent/results added
+  Legacy /radar and /radar/results kept for backward compat with shared links
+- CLAUDE.md: Product naming convention replaced with lunar phase map, file naming convention, facet table
+- WaxingCrescent facet names: Vigil, Blaze, Hollow, Veil, Surge, Fracture (Depth);
+  Hearth, Gather, Command, Drive, Thrill, Radiance (Presence);
+  Dream, Craft, Resonance, Drift, Prism, Compass (Vision);
+  Faith, Edge, Gift, Yield, Shadow, Shield (Bond);
+  Mastery, Structure, Oath, Quest, Will, Counsel (Discipline)
+
+### Phase 3.11 — Housekeeping: consolidate scoring utilities ✅ COMPLETE
+- radar-scoring.js deleted; its three exports (computeRadarScores, radarScoreToPercent,
+  radarScoreLabel) merged into new-moon-scoring.js
+- NewMoonPage and NewMoonResultsPage imports updated to new-moon-scoring.js
+- waxing-crescent-v1.js still referenced by NewMoonResultsPage.jsx and RadarChart.jsx
+  (not deleted — cleanup deferred)
+
+### Phase 3.12 — Housekeeping: remove waxing-crescent-v1.js ✅ COMPLETE
+- Added NEW_MOON_DOMAIN_META to new-moon.js (5 remapped display keys, stable order
+  for share URL encoding)
+- NewMoonResultsPage.jsx: import replaced with NEW_MOON_DOMAIN_META from new-moon.js;
+  RadarChart call updated to pass domainKeys and labelFn props explicitly
+- RadarChart.jsx: internal import of waxing-crescent-v1.js removed; DOMAIN_META
+  fallback removed — domainKeys and labelFn are now required props
+- waxing-crescent-v1.js deleted
+
+### Phase 3.13 — Centralise domain naming ✅ COMPLETE
+- Created src/data/domains.js as single source of truth for all domain metadata
+  (DOMAINS object, DOMAIN_KEYS canonical order, TIPI_TO_CERCOL derived map)
+- new-moon.js: removed NEW_MOON_DOMAIN_META and DIMENSION_META (now in domains.js)
+- new-moon-scoring.js: replaced internal KEY_MAP with TIPI_TO_CERCOL from domains.js
+- waxing-crescent.js: WC_DOMAIN_META restructured using DOMAINS spread + facets arrays;
+  key order now matches DOMAIN_KEYS (presence/bond/discipline/depth/vision)
+- logger.js: domain key columns driven by DOMAIN_KEYS.forEach loop, not hardcoded fields
+- NewMoonResultsPage.jsx: imports DOMAIN_KEYS from domains.js; fixed DOMAIN_BAR_COLOR
+  and description lookup (were using stale academic keys, now use Cèrcol keys)
+- WaxingCrescentResultsPage.jsx: imports DOMAIN_KEYS for encoding/display;
+  WC_DOMAIN_META retained only for facet list lookup
+- Share URL encoding order for both instruments now canonically governed by DOMAIN_KEYS
+
+### Phase 3.14 — README ✅ COMPLETE
+- README.md written to repo root (replaced Vite default)
+- Covers: what Cèrcol is, both live instruments with links, dimension table,
+  scientific foundation with full references, privacy policy, roadmap, contributing, MIT license
+- Brand voice applied throughout: direct, warm, no academic jargon in user-facing sections,
+  no corporate filler, no em-dashes
+
+#### Manual tasks (Miquel) ✅ COMPLETE
+- Verify Supabase logs results correctly for both instruments
+- Invite 5-10 known contacts to complete WaxingCrescent
+
+### Phase 3.15 — Credentials to environment variables ✅ COMPLETE
+- .env created at repo root with VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY
+- .env.example created with placeholder values
+- logger.js and translationFeedback.js updated to use import.meta.env.VITE_* variables
+- .env already covered by .gitignore (*.local + explicit .env entry)
+
+### Phase 3.16 — WaxingCrescent display bug fixes ✅ COMPLETE
+- Block header was showing "DEPTH · CÈRCOL WAXING CRESCENT 1 / 5" (wc.subtitle concatenated
+  with blockIdx + 1). Fixed: now uses wc.blockLabel key → "DEPTH · Block 1 of 5"
+- Item prefix was showing "TEST.ITEMPREFIX" (QuestionCard defaulting to test.itemPrefix).
+  Fixed: WaxingCrescentPage now passes prefixKey="wc.itemPrefix" to QuestionCard
+- wc.blockLabel added to en.json ("Block {{current}} of {{total}}")
+  and ca.json ("Bloc {{current}} de {{total}}")
+
+### Phase 3.17 — Suppress moderate score descriptions ✅ COMPLETE
+- Domain and facet descriptions now only shown for clearly high or low scores
+- WaxingCrescent (1-5 scale): description shown if score > 3.5 (high) or < 2.5 (low);
+  hidden for moderate scores (2.5-3.5)
+- NewMoon (1-7 scale): description shown if score ≥ 5.0 (high) or ≤ 2.9 (low);
+  hidden for moderate scores (3.0-4.9)
+- Applies to domain cards in both results pages and facet rows in WaxingCrescentResultsPage
+- Score label (Low / Moderate / High badge) unchanged
+
+<!--
+  EPOCH 2 — Platform & Infrastructure
+  Backend, accounts, payments, custom domain.
+  Prerequisite: Epoch 1 complete + data collected.
+-->
 
 ### Phase 4 — Backend + Accounts
 - FastAPI + PostgreSQL (or Supabase)
@@ -133,25 +321,148 @@ Future: migrate to a spreadsheet or translation management tool
 - Stripe payment for extended reports
 - Custom domain
 
-### Phase 5 — Team Role Instrument (Cèrcol Team)
-- Prerequisite: ~300+ Cèrcol Test completions in Google Sheet
-- Step 1: represent each user profile in AB5C space
-  (Abridged Big Five Circumplex, Hofstee, De Raad & Goldberg 1992)
-  Each profile becomes a point in a 10-dimensional space
-  (10 pairwise combinations of OCEAN dimensions)
-- Step 2: cluster profiles by Euclidean distance in AB5C space
-  → identify natural role groupings in real data
-- Step 3: cross-reference clusters with team role literature
-  (Belbin 1981, Neuman & Wright 1999, Fisher et al. 1998-2002)
-  → define role taxonomy with empirical + theoretical grounding
-- Step 4: build forced-choice instrument based on IPIP AB5C markers
-  (45 AB5C markers available in IPIP, public domain)
-- Step 5: add observer assessment (same items rated by peers)
-- Step 6: add ICAR cognitive ability test (public domain)
-- Step 7: assign user to role by nearest centroid in AB5C space
-- Step 8: team composition report (gaps, overlaps, balance)
-- Role taxonomy is data-driven + geometrically grounded,
-  not assumed from literature alone
+<!--
+  EPOCH 3 — Team Intelligence
+  Role instrument, observer, team reports.
+  Prerequisite: ~300 WaxingCrescent completions analysed.
+-->
+
+### Phase 5 — Team Role Instrument (Cèrcol Full Moon)
+
+<!--
+  Prerequisite: ~300 WaxingCrescent completions in Supabase.
+  Theoretical foundation documented below.
+  Implementation pending data collection.
+-->
+
+#### Scientific foundation
+
+Role taxonomy derived from the AB5C circumplex (Hofstee, De Raad & Goldberg 1992),
+not from Belbin. Belbin is referenced for comparison only, not as a design source.
+The model is empirically grounded: hypothesis defined from literature,
+validated and refined with real accumulated data.
+
+Two meta-axes from Digman (1997) structure the role space:
+  α = (z_A + z_E - z_N) / 3   — socialisation axis (horizontal)
+  β = (z_C + z_O) / 2          — efficacy/growth axis (vertical)
+
+Used for visualisation only. Role assignment always computed in full 5D space.
+
+#### Pipeline: from OCEAN to role (v1 — theoretical centroids)
+
+Step 1 — Normalise OCEAN scores to z-scores
+  (population mean=3, SD=0.6 as prior; replaced by sample stats at N≥300)
+
+Step 2 — Detect AB5C sector
+  Primary factor = highest |z|. Secondary = second highest |z|.
+  If |z_primary| < 0.5 → assign directly to R0 (Integrator)
+  If |z_secondary| < 0.3 → treat as pure pole (no secondary)
+  NOTE: thresholds are calibration parameters, not theoretical constants.
+
+Step 3 — Lookup sector → role candidate(s)
+  34 empirically supported sectors (11 excluded — no robust evidence)
+  Each sector maps to 1 or 2 role candidates:
+
+  | ID | Primary | Typical secondaries | AB5C sectors |
+  |----|---------|---------------------|--------------|
+  | R1 | E+      | C+, O+              | E+/C+, E+/O+, C+/E+, O+/E+ |
+  | R2 | E+      | A+, N-              | E+/A+, A+/E+, E+/N-, N-/E+ |
+  | R3 | E+ or A-| A- or N+            | E+/A-, A-/E+, E+/N+, N-/A- |
+  | R4 | A+ or C+| C+ or A+            | A+/C+, C+/A+, A+/N-, N-/C+ |
+  | R5 | A+      | E-, C-              | A+/E-, E-/A+, A+/C-, C-/A+ |
+  | R6 | C+      | N+, A-              | C+/N+, N+/C+, C+/A-, A-/C+ |
+  | R7 | O+      | C+, A+              | O+/C+, C+/O+, O+/A+, A+/O+ |
+  | R8 | O+      | E+, N-, A-          | O+/E+, O+/N-, O+/A-, E-/O+ |
+  | R0 | —       | all moderate        | residual sectors + centre |
+
+  Boundary sectors (return 2 candidates, resolved at Step 4):
+  E+/O+, O+/E+ → R1, R8
+  A+/O+, O+/A+ → R5, R7
+  N-/E+, E+/N- → R1, R2
+  E+/A-, A-/C+ → R3, R6
+
+  Known fragility: R3 aggregates conductually distant profiles.
+  Likely to split into two roles when real data available.
+
+Step 4 — Tiebreak by 5D Euclidean distance to theoretical centroids
+  d(profile, centroid) = sqrt(Σ(z_i - c_i)²) for i in {E,A,C,N,O}
+  Assign role with minimum distance.
+
+Step 5 — Full probability profile (softmax over negative distances)
+  prob_i = softmax(-distances)[i] for all 9 roles
+  Roles with prob > 15% = personal arc (natural secondary roles)
+
+Step 6 — 2D projection for visualisation (α/β axes, display only)
+
+Output per profile:
+  - Primary role (label + Cèrcol name)
+  - Personal arc (2-3 roles with prob > 15%)
+  - Full probability vector (9 values)
+  - α/β coordinates for wheel visualisation
+  - AB5C sector code (traceable to literature)
+
+#### Theoretical centroids (v1 — to be replaced by empirical centroids at N≥300)
+
+| Role | z_E | z_A | z_C | z_N | z_O |
+|------|-----|-----|-----|-----|-----|
+| R0   |  0.0|  0.0|  0.0|  0.0|  0.0|
+| R1   | +1.2|  0.0| +1.0|  0.0| +0.5|
+| R2   | +1.2| +0.8|  0.0| -0.8|  0.0|
+| R3   | +0.8| -1.0|  0.0| +0.5|  0.0|
+| R4   |  0.0| +1.0| +1.0| -0.5|  0.0|
+| R5   | -0.8| +1.2| -0.5|  0.0|  0.0|
+| R6   |  0.0| -0.5| +1.0| +0.8|  0.0|
+| R7   |  0.0| +0.5| +0.5|  0.0| +1.2|
+| R8   | +0.5|  0.0|  0.0| -0.5| +1.2|
+
+Centroids are theoretical approximations derived from AB5C sector midpoints.
+Replace with k-means centroids when N≥300 real profiles available.
+
+#### Validation plan
+- At N≥100: check sector distribution, flag if R3 shows bimodal pattern
+- At N≥300: run k-means (k=9), compare empirical vs theoretical centroids
+- If empirical k suggests k≠9: revise taxonomy before launch
+- AB5C sector codes preserved in Supabase for full reanalysis at any point
+
+#### Role names (Cèrcol vocabulary)
+
+Each role name follows the same design principles as dimension and facet names:
+one word, evocative, translates naturally to Valencian, no role sounds better
+or worse than another.
+
+| ID | English | Valencian | One-line essence |
+|----|---------|-----------|-----------------|
+| R0 | Opal    | Opàl      | No fixed role. Present in different ways without ceasing to be you. |
+| R1 | Bolt    | Llamp     | You see the exact moment and go for it. When you move, others know it's time. |
+| R2 | Beacon  | Far       | You don't invite anyone. People come because it's easy to let their guard down near you. |
+| R3 | Thorn   | Espina    | You say what should have been said two meetings ago. Without you, the team sleeps in easy consensus. |
+| R4 | Anchor  | Àncora    | When everything shakes, you stay in place. The team notices most when you're not there. |
+| R5 | Heron   | Garça     | You listen to what was left unsaid. The team's harmony runs through you without anyone quite knowing. |
+| R6 | Anvil   | Enclusa   | Quality is tested at your side. You are the tool that stops the team from fooling itself. |
+| R7 | Loom    | Teler     | Where others see loose threads, you see the web. What comes out is better than any of the parts. |
+| R8 | Comet   | Cometa    | You don't ask permission to move outside the expected path. The best decisions passed through your angle first. |
+
+Full descriptions (user-facing, Brand voice) live in src/locales/en.json
+and src/locales/ca.json under the roles namespace (Phase 5 implementation).
+
+#### Implementation steps (when data prerequisite met)
+1. Build role scoring module (scoring/role-scoring.js)
+2. Add role result to WaxingCrescent results page (provisional, labelled as beta)
+3. Build observer assessment instrument (FirstQuarter)
+4. Add ICAR cognitive ability test (public domain, Condon & Revelle 2014)
+5. Build FullMoon integrated report
+6. Replace theoretical centroids with empirical centroids
+7. Build LastQuarter team composition report
+
+#### Academic sources
+- AB5C: Hofstee, De Raad & Goldberg (1992), JPSP 63, 146-163
+- Digman meta-factors: Digman (1997), JPSP 73, 1246-1256
+- Independent team role circumplex: Nestsiarovich & Pons (2020), PMC7071388
+- AB5C short form validation: Lanning et al. (2020), JSCP
+
+<!--
+  EPOCH 4 — Brand & Expansion
+-->
 
 ### Phase 6 — Branding + Visual identity
 - Cèrcol visual identity applied via tokens.js
@@ -160,6 +471,27 @@ Future: migrate to a spreadsheet or translation management tool
 ### Phase 7 — Multilingual expansion
 - Translate test items into additional languages beyond Valencian
 - Translation management via Tolgee or equivalent
+
+## Phase completion criteria
+
+A numbered phase (1, 2, 3, 4...) is considered complete when:
+
+1. All planned features are live at the production URL
+2. No known bugs block the core user journey
+3. Result logging is verified working for all active instruments
+4. CLAUDE.md reflects the actual state of the codebase accurately
+5. The next phase has a defined scope (even if not started)
+
+A sub-phase (3.x) is complete when:
+1. npm run build passes with no errors
+2. npm run deploy succeeds
+3. The specific feature described is verifiable at the production URL
+
+Phase 3 (Epoch 1) closes when:
+- Both NewMoon and WaxingCrescent are fully functional end-to-end
+- Supabase logs all three instrument values correctly
+- README is published and accurate
+- At least one real external user has completed WaxingCrescent
 
 ## File structure
 src/
@@ -182,11 +514,55 @@ src/
   Fisher, Hunter & Macrosson (1998-2002)
 
 ## Technical notes
-- Cèrcol Test uses 2 items per facet (vs. 10 in full IPIP-NEO).
-  Adequate for feedback purposes, not for clinical assessment.
+- Cèrcol Waxing Crescent uses 2 items per facet from the IPIP-NEO-60
+  (Maples-Keller et al. 2019). Adequate for feedback purposes,
+  not for clinical assessment.
+- Cèrcol New Moon uses 10 items across 5 domains (no facets).
+  Designed for quick orientation, not detailed profiling.
 - GitHub Pages + React Router: 404.html redirect workaround in place
   for direct URL access (share links, bookmarks).
-- logger.js and translationFeedback.js use GET + no-cors mode to avoid
-  CORS issues with Google Apps Script. Fire-and-forget, never block UI.
-- Google Apps Script changes must be done manually (not via Claude Code).
-  After any Script update, always redeploy as a new version.
+- Result logging and translation feedback use Supabase (anon key,
+  RLS-protected inserts). Fire-and-forget, never block UI.
+
+## Brand voice
+
+Cèrcol speaks like a knowledgeable friend, not a consultant.
+Direct. A little poetic when it counts. Never cold.
+
+Founding phrase (captures the essence):
+"Tot suma, ningú no és imprescindible, però tots som necessaris."
+
+Four principles:
+
+1. GROUNDED
+   Real science, never academic tone.
+   Sources live in the code, not the interface.
+   ✗ "This instrument assesses interpersonal behavioral tendencies."
+   ✓ "See how you show up when it matters."
+
+2. ALIVE — short sentences, active verbs, no passive voice
+   ✗ "A tendency toward leadership was detected."
+   ✓ "You tend to take charge. Others follow."
+
+3. WARM BUT WITH AN EDGE
+   We gently challenge, not validate.
+   Low scores move you away from mediocrity in a different direction.
+   No sugarcoating with filler: no "amazing", "incredible", "powerful insights."
+   ✗ "Low Discipline may suggest challenges with structure."
+   ✓ "You work best when the goal is clear but the path is yours."
+
+4. VALENCIAN SOUL
+   Born from the land and the collective.
+   Direct, warm, a hint of provocation, community over competition.
+   Ask: would this sound right said out loud in Valencian?
+   If it sounds like a consulting deck, rewrite it.
+
+Voice examples:
+  ✗ "Gain deep insights into your personality profile."
+  ✓ "See yourself more clearly."
+
+  ✗ "Your Presence score indicates high extraverted tendencies."
+  ✓ "You bring energy into a room. People notice."
+
+  ✗ "Congratulations on completing the assessment!"
+  ✓ "That's you, in five dimensions."

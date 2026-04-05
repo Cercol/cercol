@@ -5,25 +5,48 @@
   "home": {
     "subtitle": "Know yourself better.",
     "headline": "Choose your assessment",
-    "radar": {
-      "name": "Cèrcol Radar",
+    "newMoon": {
+      "name": "Cèrcol New Moon",
       "tagline": "Quick snapshot",
       "meta": "10 questions · ~2 min",
       "description": "A fast look at your five core dimensions."
     },
-    "test": {
-      "name": "Cèrcol Test",
+    "waxingCrescent": {
+      "name": "Cèrcol Waxing Crescent",
       "tagline": "Full portrait",
-      "meta": "30 questions · ~5 min",
-      "description": "A deeper look, broken into 15 facets."
+      "meta": "60 questions · ~10 min",
+      "description": "A deeper look, broken into 30 facets."
     },
     "footnote": "Open source · ",
     "viewOnGitHub": "View on GitHub"
   },
-  "test": {
-    "subtitle": "Cèrcol Test",
+  "newMoon": {
+    "subtitle": "Cèrcol New Moon",
     "progress": "Question {{current}} of {{total}}",
+    "instructions": "Rate the extent to which each pair of traits applies to you.",
+    "itemPrefix": "I see myself as",
+    "back": "Back",
+    "next": "Next",
+    "seeResults": "See my results"
+  },
+  "newMoonResults": {
+    "title": "Your Snapshot",
+    "subtitle": "Cèrcol New Moon · 5 dimensions at a glance",
+    "domainSection": "Five dimensions",
+    "share": "Share results",
+    "copied": "Copied!",
+    "retake": "Start over",
+    "disclaimer": "Scores reflect tendencies at the time of assessment. Each end of a dimension has its own strengths — no score is good or bad.",
+    "upgrade": {
+      "heading": "Want a fuller picture?",
+      "body": "Cèrcol Waxing Crescent gives you 5 dimensions broken into 30 facets.",
+      "cta": "Start Cèrcol Waxing Crescent"
+    }
+  },
+  "wc": {
+    "subtitle": "Cèrcol Waxing Crescent",
     "blockProgress": "{{current}} of {{total}} in this block",
+    "blockLabel": "Block {{current}} of {{total}}",
     "overallProgress": "{{current}} of {{total}} overall",
     "instructions": "Rate the extent to which each statement applies to you.",
     "itemPrefix": "I see myself as someone who",
@@ -36,14 +59,20 @@
       "cta": "Continue to {{name}}"
     }
   },
-  "radar": {
-    "subtitle": "Cèrcol Radar",
-    "progress": "Question {{current}} of {{total}}",
-    "instructions": "Rate the extent to which each pair of traits applies to you.",
-    "itemPrefix": "I see myself as",
-    "back": "Back",
-    "next": "Next",
-    "seeResults": "See my results"
+  "wcResults": {
+    "title": "Your profile",
+    "subtitle": "Cèrcol Waxing Crescent · 5 dimensions · 30 facets",
+    "domainSection": "Five dimensions",
+    "facetSection": "Facet breakdown",
+    "scoreLabels": {
+      "low": "Low",
+      "moderate": "Moderate",
+      "high": "High"
+    },
+    "share": "Share results",
+    "copied": "Copied!",
+    "retake": "Start over",
+    "disclaimer": "Scores reflect tendencies at the time of assessment. Each end of a dimension has its own strengths — no score is good or bad."
   },
   "scale": {
     "1": "Disagree strongly",
@@ -66,7 +95,7 @@
   },
   "results": {
     "title": "Your profile",
-    "subtitle": "Cèrcol Test · 5 dimensions · 15 facets",
+    "subtitle": "Cèrcol Waxing Crescent · 5 dimensions · 15 facets",
     "domainSection": "Five dimensions",
     "facetSection": "Facet breakdown",
     "scoreLabels": {
@@ -80,8 +109,8 @@
     "disclaimer": "Scores reflect tendencies at the time of assessment. Each end of a dimension has its own strengths — no score is good or bad."
   },
   "radarResults": {
-    "title": "Your Radar",
-    "subtitle": "Cèrcol Radar · 5 dimensions at a glance",
+    "title": "Your Snapshot",
+    "subtitle": "Cèrcol New Moon · 5 dimensions at a glance",
     "domainSection": "Five dimensions",
     "share": "Share results",
     "copied": "Copied!",
@@ -89,8 +118,8 @@
     "disclaimer": "Scores reflect tendencies at the time of assessment. Each end of a dimension has its own strengths — no score is good or bad.",
     "upgrade": {
       "heading": "Want a fuller picture?",
-      "body": "Cèrcol Test gives you 5 dimensions broken into 15 facets.",
-      "cta": "Start Cèrcol Test"
+      "body": "Cèrcol Waxing Crescent gives you 5 dimensions broken into 30 facets.",
+      "cta": "Start Cèrcol Waxing Crescent"
     }
   },
   "feedback": {
@@ -132,21 +161,142 @@
       "blockIntro": "These questions explore your curiosity, imagination, and openness to new perspectives."
     }
   },
+  "wcDomains": {
+    "depth":      { "name": "Depth",      "description": "How you process emotions and navigate uncertainty.", "blockIntro": "These questions explore your emotional landscape — how you respond to stress, change, and inner tension." },
+    "presence":   { "name": "Presence",   "description": "How much energy you bring to social spaces.", "blockIntro": "These questions explore how you show up in social situations and connect with others." },
+    "vision":     { "name": "Vision",     "description": "How you engage with ideas, beauty, and new thinking.", "blockIntro": "These questions explore your curiosity, imagination, and openness to new perspectives." },
+    "bond":       { "name": "Bond",       "description": "How you relate to others and the warmth you bring.", "blockIntro": "These questions explore how you build trust, show care, and relate to the people around you." },
+    "discipline": { "name": "Discipline", "description": "How you approach tasks, goals, and follow-through.", "blockIntro": "These questions explore how you organise your time, keep commitments, and stay on track." }
+  },
+  "dimensions": {
+    "presence": {
+      "high": "You bring energy into a room before you've said a word. Groups gravitate toward you, not because you try, but because stillness isn't your natural state. You think out loud, and that pulls others in.",
+      "low": "You don't need the room to notice you. Your energy goes inward first, which means when you do speak, it lands. You observe more than most, and that's not a small thing."
+    },
+    "bond": {
+      "high": "You feel what others feel, sometimes before they do. Conflict costs you more than it costs others, and you'll often smooth things over just to keep the air clear. That's a gift, as long as you don't disappear in the process.",
+      "low": "You're not here to be liked, you're here to be useful. You'll say the hard thing when others won't, and you don't need consensus to feel confident. Groups need someone like you, even when they don't admit it."
+    },
+    "discipline": {
+      "high": "You finish what you start. When you say something will be done, it gets done. Structure isn't a constraint for you, it's how you build things that last. Others rely on that more than they say.",
+      "low": "Rules feel like someone else's answer to a problem you'd solve differently. You're better at starting things than finishing them, which means you need people around you who love the last 20%. You probably already know who they are."
+    },
+    "depth": {
+      "high": "You feel things fully. That means the hard moments hit harder, but it also means you pick up on things others miss entirely. Your sensitivity isn't a flaw in the system, it's how the system gets calibrated.",
+      "low": "Pressure doesn't rattle you. When things go sideways, you're often the one others look to, not because you're unaffected, but because you don't show it. That steadiness is rarer than it looks."
+    },
+    "vision": {
+      "high": "You're drawn to the idea before the plan, the question before the answer. New things don't scare you, sameness does. You'll often see where something could go before anyone else has looked up from where they are.",
+      "low": "You trust what works. Not every problem needs a new solution, and you know that. When everyone else is chasing the next thing, you're making sure the current thing actually holds together. That's underrated."
+    }
+  },
   "facets": {
-    "sociability": "Sociability",
-    "assertiveness": "Assertiveness",
-    "energyLevel": "Energy Level",
-    "compassion": "Compassion",
-    "respectfulness": "Respectfulness",
-    "trust": "Trust",
-    "organization": "Organization",
-    "productiveness": "Productiveness",
-    "responsibility": "Responsibility",
-    "anxiety": "Anxiety",
-    "depression": "Mood",
-    "emotionalVolatility": "Emotional Steadiness",
-    "intellectualCuriosity": "Intellectual Curiosity",
-    "aestheticSensitivity": "Aesthetic Sensitivity",
-    "creativeImagination": "Creative Imagination"
+    "sociability": {
+      "label": "Sociability",
+      "high": "You don't do well alone for long. People are where you recharge, where you think, where you come alive. Put you in a room and you'll have talked to half of it before the event starts.",
+      "low": "You're selective about who gets your time and energy. Small talk costs you something. When you do connect, it goes deep, and that tends to matter more than volume."
+    },
+    "assertiveness": {
+      "label": "Assertiveness",
+      "high": "You don't wait for permission. When something needs to be said or decided, you say it or decide it. That clarity cuts through noise, and most groups need more of it than they have.",
+      "low": "You'd rather observe before acting. You give others space to lead, and when you do step in, it's because you've already thought it through. That deliberateness isn't hesitation, it's precision."
+    },
+    "energyLevel": {
+      "label": "Energy Level",
+      "high": "You run hot. Long meetings, back-to-back days, demanding projects, you tend to find a second gear where others are already done. The risk is you don't always notice when the people around you have stopped keeping up.",
+      "low": "You're sustainable. You know your pace and you keep it. You won't burn bright and crash, which makes you someone others can count on when a project runs long."
+    },
+    "compassion": {
+      "label": "Compassion",
+      "high": "When someone in the room is struggling, you notice before they say anything. You adjust. That awareness makes people feel seen, which is one of the most useful things one person can do for another.",
+      "low": "You don't take on other people's emotional weight automatically. That's not coldness, it's a different kind of clarity. You focus on the problem, not the feelings around it, and sometimes that's exactly what's needed."
+    },
+    "respectfulness": {
+      "label": "Respectfulness",
+      "high": "You treat everyone as if they have something worth hearing. That means you listen more carefully than most, disagree without dismissing, and rarely make people feel small. That builds trust faster than almost anything else.",
+      "low": "You're direct, sometimes bluntly so. You don't adjust your tone to make people comfortable, and you don't think you should have to. That can land hard, but it also means people always know where they stand with you."
+    },
+    "trust": {
+      "label": "Trust",
+      "high": "Your default is to believe people mean well. That makes you easy to work with and generous with second chances. The downside is you can be slow to see it when someone isn't playing straight.",
+      "low": "You don't take things at face value. You watch, you test, you verify. That scepticism has probably saved you more than once. It also means trust, when you give it, actually means something."
+    },
+    "organization": {
+      "label": "Organization",
+      "high": "You know where everything is, when everything is due, and what happens if it's not. That mental order frees you to focus, and it makes working with you feel reliable in a way that's hard to replace.",
+      "low": "Your workspace might look like chaos, but you know where things are, mostly. You work in bursts and manage by priority, not by system. What you lose in tidiness you sometimes gain in speed."
+    },
+    "productiveness": {
+      "label": "Productiveness",
+      "high": "You're here to get things done. Not to talk about getting things done, not to plan getting things done. Done. That output orientation is rare and it drives results in ways that are hard to argue with.",
+      "low": "You're not motivated by output for its own sake. You need a reason, a purpose, something that matters. When you have it, you work hard. When you don't, you won't pretend."
+    },
+    "responsibility": {
+      "label": "Responsibility",
+      "high": "If you said you'd do it, it's done. Full stop. People stop worrying about things they've handed to you, and that's a form of trust that takes a long time to build and matters enormously in a team.",
+      "low": "You're better at big commitments than small ones. Rules, deadlines and obligations that feel arbitrary tend to slide. You'll show up for what genuinely matters, but you need to believe it matters first."
+    },
+    "anxiety": {
+      "label": "Anxiety",
+      "high": "You anticipate what could go wrong, often before anyone else has thought to look. That vigilance catches real problems. The cost is that the alarm is sometimes running even when everything is fine.",
+      "low": "You don't lose sleep over what might happen. You deal with what does happen, when it happens. That calm under uncertainty is something teams need more of, especially when things get complicated."
+    },
+    "depression": {
+      "label": "Mood",
+      "high": "You carry things. Setbacks don't just bounce off you, they settle in for a while. That depth of feeling means you take things seriously in a way that shallow people never will. It's worth something, even when it doesn't feel like it.",
+      "low": "You recover fast. Bad days don't trail into bad weeks. That resilience isn't the absence of feeling, it's the ability to move through things without getting stuck. Groups need that kind of ballast."
+    },
+    "emotionalVolatility": {
+      "label": "Emotional Steadiness",
+      "high": "Your reactions are visible. When something's wrong, people know. When something's right, they know that too. That transparency can be unsettling, but it also means you're never performing a mood you don't feel.",
+      "low": "You keep an even keel regardless of what's happening around you. People can't easily read you, which can frustrate them, but it also means you don't add noise when the situation already has enough."
+    },
+    "intellectualCuriosity": {
+      "label": "Intellectual Curiosity",
+      "high": "You want to understand how things work, not just that they work. Give you a problem and you'll pull it apart before you try to fix it. That depth of inquiry finds things that surface-level thinking misses every time.",
+      "low": "You're a practitioner, not a theorist. You want tools that work, explanations that help, answers you can use. Not every question needs to be opened back up, and you know which ones don't."
+    },
+    "aestheticSensitivity": {
+      "label": "Aesthetic Sensitivity",
+      "high": "You notice when something is beautiful and when it isn't. That attention to form isn't superficial, it's how you process quality. You'll often feel that something is wrong before you can say why, and you're usually right.",
+      "low": "Function matters more to you than form. If it works, it works. You're not going to spend time making something beautiful when making it better is still on the table. That focus on substance keeps things moving."
+    },
+    "creativeImagination": {
+      "label": "Creative Imagination",
+      "high": "You think in possibilities. The current situation is always just one version of what could be. That ability to imagine alternatives is where new ideas come from, and new ideas are what teams need when the old answers stop working.",
+      "low": "You're grounded in what exists, not what might. You'd rather improve what's here than invent something new. That realism stops a lot of bad ideas from going too far, which is a more valuable role than people think."
+    }
+  },
+  "wcFacets": {
+    "vigil":     { "label": "Vigil",     "high": "You run threat detection constantly. Most of the time there is nothing there, but sometimes you catch something real before anyone else has looked up. That vigilance is exhausting and occasionally invaluable.", "low": "You don't borrow trouble from the future. You deal with what is in front of you, when it arrives. That groundedness is rarer than it looks, especially when things get uncertain." },
+    "blaze":     { "label": "Blaze",     "high": "Your frustration surfaces quickly and visibly. People always know where they stand with you, which is not nothing. The cost is that small things sometimes get the same reaction as big things.", "low": "It takes a lot to rattle you into anger. You don't escalate, you don't match other people's heat. In tense moments, that steadiness changes the temperature of the whole room." },
+    "hollow":    { "label": "Hollow",    "high": "You carry weight. Setbacks settle in rather than bounce off. That depth of feeling means you take things seriously in a way that lighter people never will. It costs you, and it's worth something.", "low": "You recover fast. Bad days don't become bad weeks. That capacity to move forward isn't indifference, it's a kind of resilience that keeps you functional when others are still processing." },
+    "veil":      { "label": "Veil",      "high": "You're aware of how you come across, sometimes acutely so. That social sensitivity makes you careful and considerate. It also means you spend energy on how things land that others never think about.", "low": "You don't waste much energy worrying about what people think of you. That ease with yourself comes across as confidence, even when it's just comfort. Either way, it tends to put others at ease too." },
+    "surge":     { "label": "Surge",     "high": "You act on what you feel, often before the thought is fully formed. Sometimes that speed is the whole advantage. Sometimes it isn't, and you know that too.", "low": "You don't get swept up easily. Urges pass, reactions get filtered, decisions get considered. That self-regulation is the quiet engine behind a lot of things that actually go well." },
+    "fracture":  { "label": "Fracture",  "high": "When pressure builds, you feel it fully. That sensitivity isn't weakness, it's a signal. You pick up on strain before others do, which means you're often the one who says something needs to change.", "low": "You hold up under pressure without visible cracks. People look to you when things get hard, not because you're unaffected, but because you keep functioning. That's load-bearing work in any team." },
+    "hearth":    { "label": "Hearth",    "high": "People feel welcome around you without knowing exactly why. You make the effort to connect, to remember, to ask. That warmth is not small talk, it's the foundation of trust.", "low": "You don't warm up instantly and you don't pretend to. The connections you do make are genuine and durable. People who know you well know they're getting something real." },
+    "gather":    { "label": "Gather",    "high": "Groups energize you. The more people, the better you tend to function. You're the one who shows up early and leaves late, and the room usually notices when you're not there.", "low": "You can work a room when you need to, but it costs you something. You're better in smaller configurations, where depth is possible. Quality over volume, every time." },
+    "command":   { "label": "Command",   "high": "You don't wait for permission. When something needs deciding, you decide it. When something needs saying, you say it. That directness cuts through noise and most groups need more of it.", "low": "You observe before you act. You let others lead, and when you do step in it's because you've already thought it through. That's not hesitation, it's precision." },
+    "drive":     { "label": "Drive",     "high": "You run at a high tempo. Back-to-back days, multiple projects, long meetings, you find a second gear where others are already done. Just check that the people around you are still keeping up.", "low": "You're sustainable. You know your pace and you keep it. You won't burn bright and crash, which makes you someone others can count on when a project runs longer than expected." },
+    "thrill":    { "label": "Thrill",    "high": "Routine is where your attention goes to die. You need stakes, novelty, something on the line. That drive toward intensity is where a lot of your best work comes from.", "low": "You don't need adrenaline to function well. Calm, steady environments bring out your best. You're the one who keeps working when everyone else is distracted by the drama." },
+    "radiance":  { "label": "Radiance",  "high": "Your enthusiasm is contagious and genuine. You bring energy to things before they've earned it, which sometimes makes them earn it. Groups feel different when you're in them.", "low": "You don't perform enthusiasm you don't feel. Your approval means something because you don't give it automatically. When you say something is good, people believe you." },
+    "dream":     { "label": "Dream",     "high": "Your mind goes places unprompted. Daydreaming isn't distraction for you, it's where ideas come from. The internal world is rich, and it feeds the external one in ways that aren't always visible.", "low": "You stay close to the ground. What's real, what's here, what works. That focus keeps you useful in ways that dreamers sometimes aren't." },
+    "craft":     { "label": "Craft",     "high": "You notice when something is beautiful and when it isn't. That attention to form isn't superficial, it's how you process quality. You feel something is wrong before you can say why, and you're usually right.", "low": "Function matters more to you than form. If it works, it works. You won't spend time making something beautiful when making it better is still on the table." },
+    "resonance": { "label": "Resonance", "high": "You're tuned into emotional register, yours and other people's. That attunement makes you a careful reader of rooms and a thoughtful communicator. It also means you carry more than most.", "low": "You lead with logic rather than feeling. That keeps things clear and uncluttered. In emotionally charged situations, your levelheadedness is often exactly what's needed." },
+    "drift":     { "label": "Drift",     "high": "Variety keeps you engaged. New approaches, different contexts, unfamiliar territory, that's where you do your best thinking. Repetition is where you lose interest fastest.", "low": "You trust what works and you stick with it. Not every problem needs a new solution. When others are chasing novelty, you're making sure the current thing actually holds together." },
+    "prism":     { "label": "Prism",     "high": "You want to understand how things work, not just that they work. Give you a problem and you'll pull it apart before you try to fix it. That depth of inquiry finds things surface-level thinking misses.", "low": "You're a practitioner, not a theorist. You want tools that work, explanations you can use. Not every question needs to be opened back up, and you know which ones don't." },
+    "compass":   { "label": "Compass",   "high": "You question inherited rules and established norms. Not out of rebellion, but because you think things through and don't assume the default is right. That willingness to reconsider is how things improve.", "low": "You value stability, proven systems, and shared norms. Not everything needs to be questioned, and you know which things don't. That conservatism keeps a lot of things from breaking unnecessarily." },
+    "faith":     { "label": "Faith",     "high": "Your default is to believe people mean well. That generosity makes you easy to work with and quick to give second chances. The risk is you're sometimes slow to see it when someone isn't playing straight.", "low": "You don't take things at face value. You watch, you test, you verify. That scepticism has probably saved you more than once. And when you do trust someone, it actually means something." },
+    "edge":      { "label": "Edge",      "high": "What you say is what you mean. No performance, no managing impressions, no strategic ambiguity. People always know where they stand with you, which is more valuable than it sounds.", "low": "You're skilled at navigating social complexity. You know when to hold back, when to frame things carefully, when directness would cost more than it's worth. That's not dishonesty, it's sophistication." },
+    "gift":      { "label": "Gift",      "high": "You make people feel welcome without effort. You notice when someone is on the outside and you do something about it. That generosity of attention is one of the most underrated things a person can bring to a group.", "low": "You're not here to take care of everyone. You focus your energy where it matters and don't spread it thin on obligation. That focus makes what you do give actually count." },
+    "yield":     { "label": "Yield",     "high": "You'd rather find agreement than win the argument. That collaborative instinct keeps things moving and keeps relationships intact. Just make sure you're choosing peace rather than defaulting to it.", "low": "You push back. You don't capitulate to social pressure and you don't pretend to agree when you don't. Groups need that friction, even when they don't enjoy it in the moment." },
+    "shadow":    { "label": "Shadow",    "high": "You don't take up more space than you need. Credit gets shared, achievements don't get announced. That restraint builds a kind of trust that self-promotion never does.", "low": "You know what you're worth and you don't hide it. That confidence in your own value isn't arrogance, it's clarity. And sometimes the room needs someone who's willing to say what they bring." },
+    "shield":    { "label": "Shield",    "high": "You feel the impact of things on people who aren't in the room. That ethical attentiveness means you think about consequences others miss entirely. It slows things down sometimes, for good reason.", "low": "You focus on facts and results rather than feelings. That objectivity keeps analysis clean and decisions grounded. Not every situation needs an emotional audit before moving forward." },
+    "mastery":   { "label": "Mastery",   "high": "You handle things well and you know it. That confidence in your own capability isn't arrogance, it's accurate. You don't second-guess yourself into paralysis because you've usually done the work.", "low": "You're still figuring things out, and you're honest about it. That openness to learning keeps you from the overconfidence that trips up people who think they've already arrived." },
+    "structure": { "label": "Structure", "high": "You know where everything is, when everything is due, and what happens if it's not. That mental order frees you to focus, and it makes working with you feel reliable in a way that's hard to replace.", "low": "Your workspace might look like chaos, but you know where things are, mostly. You manage by priority, not by system. What you lose in tidiness you sometimes gain in speed." },
+    "oath":      { "label": "Oath",      "high": "If you said you'd do it, it's done. People stop worrying about things they've handed to you, and that's a form of trust that takes a long time to build and matters enormously in a team.", "low": "You're better at big commitments than small ones. Obligations that feel arbitrary tend to slide. You'll show up for what genuinely matters, but you need to believe it matters first." },
+    "quest":     { "label": "Quest",     "high": "You're here to get things done. Not to talk about it, not to plan it. Done. That output orientation is rare and it drives results in ways that are hard to argue with.", "low": "You're not motivated by output for its own sake. You need a reason, a purpose, something that matters. When you have it, you work hard. When you don't, you won't pretend." },
+    "will":      { "label": "Will",      "high": "You start things when they need starting, not when you feel like it. That ability to act without waiting for motivation is how things that matter actually get finished.", "low": "You need the right conditions to get going. Pressure, interest, meaning. Without them, starting is hard. With them, you can go deep in ways that people who just grind never reach." },
+    "counsel":   { "label": "Counsel",   "high": "You think before you act. Decisions get considered, words get chosen, consequences get mapped. That care prevents a lot of problems that impulsive people have to clean up later.", "low": "You decide fast and adjust as you go. That speed has a cost sometimes, but it also means you're moving while others are still deliberating. In fast-moving situations, that matters." }
   }
 }

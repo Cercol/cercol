@@ -1,8 +1,10 @@
 /**
  * RadarChart — domain spider chart using Recharts.
  * Props:
- *   scores    {Record<string, number>} — domain → score
- *   maxScore  {number}                 — top of scale (5 for CBF, 7 for Radar)
+ *   scores      {Record<string, number>} — domain → score
+ *   maxScore    {number}                 — top of scale (5 for WC, 7 for New Moon)
+ *   domainKeys  {string[]}               — ordered list of domain keys (required)
+ *   labelFn     {(key: string) => string} — maps a domain key to its display label (required)
  */
 import {
   Radar,
@@ -12,19 +14,15 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from 'recharts'
-import { useTranslation } from 'react-i18next'
-import { DOMAIN_META } from '../data/cercol-big-five'
 import { colors } from '../design/tokens'
 
 function scoreToPercent(score, maxScore) {
   return Math.round(((score - 1) / (maxScore - 1)) * 100)
 }
 
-export default function RadarChart({ scores, maxScore = 5 }) {
-  const { t } = useTranslation()
-
-  const data = Object.keys(DOMAIN_META).map((key) => ({
-    dimension: t(`domains.${key}.label`),
+export default function RadarChart({ scores, maxScore = 5, domainKeys, labelFn }) {
+  const data = domainKeys.map((key) => ({
+    dimension: labelFn(key),
     domainKey: key,
     score: scoreToPercent(scores[key] ?? 1, maxScore),
     rawScore: scores[key] ?? 1,

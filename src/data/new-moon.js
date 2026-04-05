@@ -116,31 +116,3 @@ export const SCALE_LABELS = {
   7: 'Agree strongly',
 }
 
-/** Human-readable dimension labels and short descriptions */
-export const DIMENSION_META = {
-  openness: {
-    label: 'Openness',
-    description: 'Curiosity, creativity, and openness to new experiences.',
-    color: 'openness',
-  },
-  conscientiousness: {
-    label: 'Conscientiousness',
-    description: 'Organization, dependability, and self-discipline.',
-    color: 'conscientiousness',
-  },
-  extraversion: {
-    label: 'Extraversion',
-    description: 'Sociability, assertiveness, and positive emotionality.',
-    color: 'extraversion',
-  },
-  agreeableness: {
-    label: 'Agreeableness',
-    description: 'Compassion, cooperativeness, and trust in others.',
-    color: 'agreeableness',
-  },
-  neuroticism: {
-    label: 'Neuroticism',
-    description: 'Tendency toward negative emotions and emotional instability.',
-    color: 'neuroticism',
-  },
-}
