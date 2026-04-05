@@ -38,6 +38,7 @@ After every successful npm run deploy, Claude Code must:
 2. Update the phase description to reflect exactly what was implemented
    (remove items not done, add relevant notes if needed)
 3. Do not modify any other section of CLAUDE.md
+4. Run: git add -A && git commit -m "chore: complete [phase name]" && git push origin main
 This applies to every phase, without exception.
 
 ## Instrument design decision
