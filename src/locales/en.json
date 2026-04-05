@@ -6,13 +6,13 @@
     "subtitle": "Know yourself better.",
     "headline": "Choose your assessment",
     "newMoon": {
-      "name": "Cèrcol New Moon",
+      "name": "New Moon Cèrcol",
       "tagline": "Quick snapshot",
       "meta": "10 questions · ~2 min",
       "description": "A fast look at your five core dimensions."
     },
-    "waxingCrescent": {
-      "name": "Cèrcol Waxing Crescent",
+    "firstQuarter": {
+      "name": "First Quarter Cèrcol",
       "tagline": "Full portrait",
       "meta": "60 questions · ~10 min",
       "description": "A deeper look, broken into 30 facets."
@@ -21,7 +21,7 @@
     "viewOnGitHub": "View on GitHub"
   },
   "newMoon": {
-    "subtitle": "Cèrcol New Moon",
+    "subtitle": "New Moon Cèrcol",
     "progress": "Question {{current}} of {{total}}",
     "instructions": "Rate the extent to which each pair of traits applies to you.",
     "itemPrefix": "I see myself as",
@@ -31,7 +31,7 @@
   },
   "newMoonResults": {
     "title": "Your Snapshot",
-    "subtitle": "Cèrcol New Moon · 5 dimensions at a glance",
+    "subtitle": "New Moon Cèrcol · 5 dimensions at a glance",
     "domainSection": "Five dimensions",
     "share": "Share results",
     "copied": "Copied!",
@@ -39,12 +39,12 @@
     "disclaimer": "Scores reflect tendencies at the time of assessment. Each end of a dimension has its own strengths — no score is good or bad.",
     "upgrade": {
       "heading": "Want a fuller picture?",
-      "body": "Cèrcol Waxing Crescent gives you 5 dimensions broken into 30 facets.",
-      "cta": "Start Cèrcol Waxing Crescent"
+      "body": "First Quarter Cèrcol gives you 5 dimensions broken into 30 facets.",
+      "cta": "Start First Quarter Cèrcol"
     }
   },
-  "wc": {
-    "subtitle": "Cèrcol Waxing Crescent",
+  "fq": {
+    "subtitle": "First Quarter Cèrcol",
     "blockProgress": "{{current}} of {{total}} in this block",
     "blockLabel": "Block {{current}} of {{total}}",
     "overallProgress": "{{current}} of {{total}} overall",
@@ -59,9 +59,9 @@
       "cta": "Continue to {{name}}"
     }
   },
-  "wcResults": {
+  "fqResults": {
     "title": "Your profile",
-    "subtitle": "Cèrcol Waxing Crescent · 5 dimensions · 30 facets",
+    "subtitle": "First Quarter Cèrcol · 5 dimensions · 30 facets",
     "domainSection": "Five dimensions",
     "facetSection": "Facet breakdown",
     "scoreLabels": {
@@ -95,7 +95,7 @@
   },
   "results": {
     "title": "Your profile",
-    "subtitle": "Cèrcol Waxing Crescent · 5 dimensions · 15 facets",
+    "subtitle": "First Quarter Cèrcol · 5 dimensions · 15 facets",
     "domainSection": "Five dimensions",
     "facetSection": "Facet breakdown",
     "scoreLabels": {
@@ -110,7 +110,7 @@
   },
   "radarResults": {
     "title": "Your Snapshot",
-    "subtitle": "Cèrcol New Moon · 5 dimensions at a glance",
+    "subtitle": "New Moon Cèrcol · 5 dimensions at a glance",
     "domainSection": "Five dimensions",
     "share": "Share results",
     "copied": "Copied!",
@@ -118,8 +118,8 @@
     "disclaimer": "Scores reflect tendencies at the time of assessment. Each end of a dimension has its own strengths — no score is good or bad.",
     "upgrade": {
       "heading": "Want a fuller picture?",
-      "body": "Cèrcol Waxing Crescent gives you 5 dimensions broken into 30 facets.",
-      "cta": "Start Cèrcol Waxing Crescent"
+      "body": "First Quarter Cèrcol gives you 5 dimensions broken into 30 facets.",
+      "cta": "Start First Quarter Cèrcol"
     }
   },
   "feedback": {
@@ -161,7 +161,7 @@
       "blockIntro": "These questions explore your curiosity, imagination, and openness to new perspectives."
     }
   },
-  "wcDomains": {
+  "fqDomains": {
     "depth":      { "name": "Depth",      "description": "How you process emotions and navigate uncertainty.", "blockIntro": "These questions explore your emotional landscape — how you respond to stress, change, and inner tension." },
     "presence":   { "name": "Presence",   "description": "How much energy you bring to social spaces.", "blockIntro": "These questions explore how you show up in social situations and connect with others." },
     "vision":     { "name": "Vision",     "description": "How you engage with ideas, beauty, and new thinking.", "blockIntro": "These questions explore your curiosity, imagination, and openness to new perspectives." },
@@ -267,7 +267,7 @@
       "low": "You're grounded in what exists, not what might. You'd rather improve what's here than invent something new. That realism stops a lot of bad ideas from going too far, which is a more valuable role than people think."
     }
   },
-  "wcFacets": {
+  "fqFacets": {
     "vigil":     { "label": "Vigil",     "high": "You run threat detection constantly. Most of the time there is nothing there, but sometimes you catch something real before anyone else has looked up. That vigilance is exhausting and occasionally invaluable.", "low": "You don't borrow trouble from the future. You deal with what is in front of you, when it arrives. That groundedness is rarer than it looks, especially when things get uncertain." },
     "blaze":     { "label": "Blaze",     "high": "Your frustration surfaces quickly and visibly. People always know where they stand with you, which is not nothing. The cost is that small things sometimes get the same reaction as big things.", "low": "It takes a lot to rattle you into anger. You don't escalate, you don't match other people's heat. In tense moments, that steadiness changes the temperature of the whole room." },
     "hollow":    { "label": "Hollow",    "high": "You carry weight. Setbacks settle in rather than bounce off. That depth of feeling means you take things seriously in a way that lighter people never will. It costs you, and it's worth something.", "low": "You recover fast. Bad days don't become bad weeks. That capacity to move forward isn't indifference, it's a kind of resilience that keeps you functional when others are still processing." },

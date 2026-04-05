@@ -1,5 +1,5 @@
 /**
- * NewMoonPage — Cèrcol New Moon: 10-item quick assessment.
+ * NewMoonPage — New Moon Cèrcol: 10-item quick assessment.
  * Uses the TIPI instrument, Likert 1-7 scale.
  * On completion, navigates to /new-moon/results.
  */

@@ -1,5 +1,5 @@
 /**
- * WaxingCrescentPage — Cèrcol Waxing Crescent: 60-item assessment (IPIP-NEO-60)
+ * FirstQuarterPage — Cèrcol First Quarter: 60-item assessment (IPIP-NEO-60)
  * grouped into 5 blocks of 12, one per domain.
  * Block order: depth, presence, vision, bond, discipline
  *
@@ -10,8 +10,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { WC_ITEMS, WC_SCALE_LABELS } from '../data/waxing-crescent'
-import { computeWCScores } from '../utils/waxing-crescent-scoring'
+import { FQ_ITEMS, FQ_SCALE_LABELS } from '../data/first-quarter'
+import { computeFQScores } from '../utils/first-quarter-scoring'
 import { useFeedbackContext } from '../context/FeedbackContext'
 import QuestionCard from '../components/QuestionCard'
 import ProgressBar from '../components/ProgressBar'
@@ -20,11 +20,11 @@ import LanguageToggle from '../components/LanguageToggle'
 const DOMAIN_ORDER = ['depth', 'presence', 'vision', 'bond', 'discipline']
 
 const BLOCKS = DOMAIN_ORDER.map((domain) =>
-  WC_ITEMS.filter((item) => item.domain === domain)
+  FQ_ITEMS.filter((item) => item.domain === domain)
 )
 
 const ITEMS_PER_BLOCK = 12
-const TOTAL_ITEMS = WC_ITEMS.length
+const TOTAL_ITEMS = FQ_ITEMS.length
 const TOTAL_BLOCKS = BLOCKS.length
 const SCALE_POINTS = 5
 
@@ -36,7 +36,7 @@ const DOMAIN_ACCENT = {
   discipline: 'bg-blue-600',
 }
 
-export default function WaxingCrescentPage() {
+export default function FirstQuarterPage() {
   const navigate = useNavigate()
   const { t, i18n } = useTranslation()
   const { setItemContext } = useFeedbackContext()
@@ -69,7 +69,7 @@ export default function WaxingCrescentPage() {
   }, [item?.id, showTransition]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const scaleLabels = Object.fromEntries(
-    Object.entries(WC_SCALE_LABELS).map(([k, fallback]) => {
+    Object.entries(FQ_SCALE_LABELS).map(([k, fallback]) => {
       const translated = t(`scale.${k}`)
       return [k, translated !== `scale.${k}` ? translated : fallback]
     })
@@ -84,8 +84,8 @@ export default function WaxingCrescentPage() {
     const updatedAnswers = { ...answers, [item.id]: answered }
 
     if (isLastItemOverall) {
-      const { domains, facets } = computeWCScores(updatedAnswers)
-      navigate('/waxing-crescent/results', { state: { domains, facets, fromTest: true } })
+      const { domains, facets } = computeFQScores(updatedAnswers)
+      navigate('/first-quarter/results', { state: { domains, facets, fromTest: true } })
       return
     }
 
@@ -158,20 +158,20 @@ export default function WaxingCrescentPage() {
           <div className="flex items-center gap-2">
             <span className={`w-3 h-3 rounded-full ${DOMAIN_ACCENT[domainKey]}`} />
             <span className="text-sm font-semibold text-gray-500">
-              {t('wc.transition.blockDone', { name: t(`wcDomains.${domainKey}.name`) })}
+              {t('fq.transition.blockDone', { name: t(`fqDomains.${domainKey}.name`) })}
             </span>
           </div>
 
           <div>
-            <p className="text-sm text-gray-400 mb-1">{t('wc.transition.nextUp')}</p>
+            <p className="text-sm text-gray-400 mb-1">{t('fq.transition.nextUp')}</p>
             <div className="flex items-center justify-center gap-2">
               <span className={`w-3 h-3 rounded-full ${DOMAIN_ACCENT[nextDomainKey]}`} />
               <h2 className="text-2xl font-bold text-gray-900">
-                {t(`wcDomains.${nextDomainKey}.name`)}
+                {t(`fqDomains.${nextDomainKey}.name`)}
               </h2>
             </div>
             <p className="mt-2 text-gray-500 text-sm max-w-xs mx-auto">
-              {t(`wcDomains.${nextDomainKey}.blockIntro`)}
+              {t(`fqDomains.${nextDomainKey}.blockIntro`)}
             </p>
           </div>
 
@@ -179,11 +179,11 @@ export default function WaxingCrescentPage() {
             onClick={handleContinueToNextBlock}
             className="px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-2xl shadow-sm transition-colors"
           >
-            {t('wc.transition.cta', { name: t(`wcDomains.${nextDomainKey}.name`) })}
+            {t('fq.transition.cta', { name: t(`fqDomains.${nextDomainKey}.name`) })}
           </button>
 
           <p className="text-xs text-gray-400">
-            {t('wc.overallProgress', { current: overallCurrent, total: TOTAL_ITEMS })}
+            {t('fq.overallProgress', { current: overallCurrent, total: TOTAL_ITEMS })}
           </p>
         </div>
       </main>
@@ -201,7 +201,7 @@ export default function WaxingCrescentPage() {
           <div className="flex items-center gap-2">
             <span className="text-lg font-bold text-gray-900">{t('nav.brand')}</span>
             <span className="text-gray-300">·</span>
-            <span className="text-sm font-medium text-gray-500">{t('wc.subtitle')}</span>
+            <span className="text-sm font-medium text-gray-500">{t('fq.subtitle')}</span>
           </div>
           <LanguageToggle />
         </div>
@@ -211,11 +211,11 @@ export default function WaxingCrescentPage() {
           <div className="flex items-center gap-2 mb-0.5">
             <span className={`w-2.5 h-2.5 rounded-full shrink-0 ${DOMAIN_ACCENT[domainKey]}`} />
             <span className="text-xs font-semibold uppercase tracking-widest text-gray-500">
-              {t(`wcDomains.${domainKey}.name`)} · {t('wc.blockLabel', { current: blockIdx + 1, total: TOTAL_BLOCKS })}
+              {t(`fqDomains.${domainKey}.name`)} · {t('fq.blockLabel', { current: blockIdx + 1, total: TOTAL_BLOCKS })}
             </span>
           </div>
           <p className="text-sm text-gray-500 pl-5">
-            {t(`wcDomains.${domainKey}.description`)}
+            {t(`fqDomains.${domainKey}.description`)}
           </p>
         </div>
 
@@ -223,7 +223,7 @@ export default function WaxingCrescentPage() {
         <ProgressBar
           current={itemInBlockIdx + 1}
           total={ITEMS_PER_BLOCK}
-          label={t('wc.blockProgress', {
+          label={t('fq.blockProgress', {
             current: itemInBlockIdx + 1,
             total: ITEMS_PER_BLOCK,
           })}
@@ -231,13 +231,13 @@ export default function WaxingCrescentPage() {
 
         {/* Overall progress indicator */}
         <p className="text-xs text-gray-400 -mt-3 text-right">
-          {t('wc.overallProgress', { current: overallCurrent, total: TOTAL_ITEMS })}
+          {t('fq.overallProgress', { current: overallCurrent, total: TOTAL_ITEMS })}
         </p>
 
         {/* Instructions banner — first item only */}
         {isFirstItemOfFirstBlock && (
           <div className="bg-blue-50 border border-blue-100 rounded-xl px-5 py-4 text-sm text-blue-800 leading-relaxed">
-            {t('wc.instructions')}
+            {t('fq.instructions')}
           </div>
         )}
 
@@ -249,7 +249,7 @@ export default function WaxingCrescentPage() {
           onChange={handleAnswer}
           scalePoints={SCALE_POINTS}
           scaleLabels={scaleLabels}
-          prefixKey="wc.itemPrefix"
+          prefixKey="fq.itemPrefix"
         />
 
         {/* Navigation */}
@@ -259,7 +259,7 @@ export default function WaxingCrescentPage() {
               onClick={handleBack}
               className="flex-1 sm:flex-none px-6 py-3 rounded-xl border border-gray-200 text-gray-700 font-medium hover:bg-gray-100 transition-colors"
             >
-              {t('wc.back')}
+              {t('fq.back')}
             </button>
           )}
           <button
@@ -272,7 +272,7 @@ export default function WaxingCrescentPage() {
                 : 'bg-gray-200 text-gray-400 cursor-not-allowed',
             ].join(' ')}
           >
-            {isLastItemOverall ? t('wc.seeResults') : t('wc.next')}
+            {isLastItemOverall ? t('fq.seeResults') : t('fq.next')}
           </button>
         </div>
       </div>

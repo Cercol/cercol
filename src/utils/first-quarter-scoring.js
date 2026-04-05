@@ -1,12 +1,12 @@
 /**
- * Scoring utilities for Cèrcol Waxing Crescent (IPIP-NEO-60).
+ * Scoring utilities for Cèrcol First Quarter (IPIP-NEO-60).
  * Scale: 1-5. Reverse items: score = 6 - rawValue.
  * Domain score = mean of 12 items (6 facets × 2 items).
  * Facet score  = mean of 2 items.
  * Scores are rounded to one decimal place.
  */
 
-import { WC_ITEMS, WC_DOMAIN_META } from '../data/waxing-crescent'
+import { FQ_ITEMS, FQ_DOMAIN_META } from '../data/first-quarter'
 
 /**
  * Compute domain and facet scores from raw answers.
@@ -14,10 +14,10 @@ import { WC_ITEMS, WC_DOMAIN_META } from '../data/waxing-crescent'
  * @param {Record<number, number>} answers - itemId → raw value (1–5)
  * @returns {{ domains: Record<string, number>, facets: Record<string, number> }}
  */
-export function computeWCScores(answers) {
+export function computeFQScores(answers) {
   const facetBuckets = {}
 
-  WC_ITEMS.forEach((item) => {
+  FQ_ITEMS.forEach((item) => {
     const raw = answers[item.id]
     if (raw === undefined) return
     const scored = item.reverse ? 6 - raw : raw
@@ -32,7 +32,7 @@ export function computeWCScores(answers) {
   })
 
   const domains = {}
-  Object.entries(WC_DOMAIN_META).forEach(([domain, meta]) => {
+  Object.entries(FQ_DOMAIN_META).forEach(([domain, meta]) => {
     const vals = meta.facets.map((f) => facets[f]).filter(Boolean)
     domains[domain] = Math.round((vals.reduce((a, b) => a + b, 0) / vals.length) * 10) / 10
   })
@@ -46,7 +46,7 @@ export function computeWCScores(answers) {
  * @param {number} score
  * @returns {number}
  */
-export function wcScoreToPercent(score) {
+export function fqScoreToPercent(score) {
   return Math.round(((score - 1) / 4) * 100)
 }
 
@@ -57,7 +57,7 @@ export function wcScoreToPercent(score) {
  * @param {number} score
  * @returns {'low'|'moderate'|'high'}
  */
-export function wcScoreLabel(score) {
+export function fqScoreLabel(score) {
   if (score < 2.5) return 'low'
   if (score <= 3.5) return 'moderate'
   return 'high'

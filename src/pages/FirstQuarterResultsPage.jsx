@@ -1,18 +1,18 @@
 /**
- * WaxingCrescentResultsPage — Cèrcol Waxing Crescent results.
+ * FirstQuarterResultsPage — Cèrcol First Quarter results.
  * 5 domains · 30 facets · IPIP-NEO-60
  *
  * Receives scores via:
- *   a) location.state.{ domains, facets, fromTest } — from WaxingCrescentPage navigation
+ *   a) location.state.{ domains, facets, fromTest } — from FirstQuarterPage navigation
  *   b) ?r=BASE64 query param — encoded domain scores for sharing
  *      (facet scores not available in shared links)
  */
 import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { WC_DOMAIN_META } from '../data/waxing-crescent'
+import { FQ_DOMAIN_META } from '../data/first-quarter'
 import { DOMAIN_KEYS } from '../data/domains'
-import { wcScoreToPercent, wcScoreLabel } from '../utils/waxing-crescent-scoring'
+import { fqScoreToPercent, fqScoreLabel } from '../utils/first-quarter-scoring'
 import { logResult } from '../utils/logger'
 import { colors } from '../design/tokens'
 import RadarChart from '../components/RadarChart'
@@ -47,7 +47,7 @@ function decodeScores(b64) {
   }
 }
 
-export default function WaxingCrescentResultsPage() {
+export default function FirstQuarterResultsPage() {
   const location = useLocation()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
@@ -78,7 +78,7 @@ export default function WaxingCrescentResultsPage() {
   useEffect(() => {
     if (fromTest && !loggedRef.current) {
       loggedRef.current = true
-      logResult(domains, i18n.language, 'waxingCrescent')
+      logResult(domains, i18n.language, 'firstQuarter')
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -101,8 +101,8 @@ export default function WaxingCrescentResultsPage() {
         <div className="flex items-start justify-between">
           <div>
             <span className="text-lg font-bold text-gray-900">{t('nav.brand')}</span>
-            <h1 className="mt-1 text-2xl sm:text-3xl font-bold text-gray-900">{t('wcResults.title')}</h1>
-            <p className="mt-1 text-gray-500 text-sm">{t('wcResults.subtitle')}</p>
+            <h1 className="mt-1 text-2xl sm:text-3xl font-bold text-gray-900">{t('fqResults.title')}</h1>
+            <p className="mt-1 text-gray-500 text-sm">{t('fqResults.subtitle')}</p>
           </div>
           <LanguageToggle />
         </div>
@@ -110,13 +110,13 @@ export default function WaxingCrescentResultsPage() {
         {/* ── Section 1: Domain radar chart ── */}
         <section>
           <h2 className="text-sm font-semibold uppercase tracking-widest text-gray-400 mb-4">
-            {t('wcResults.domainSection')}
+            {t('fqResults.domainSection')}
           </h2>
           <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
             <RadarChart
               scores={domains}
               domainKeys={domainKeys}
-              labelFn={(key) => t(`wcDomains.${key}.name`)}
+              labelFn={(key) => t(`fqDomains.${key}.name`)}
             />
           </div>
 
@@ -124,21 +124,21 @@ export default function WaxingCrescentResultsPage() {
           <div className="flex flex-col gap-3 mt-4">
             {domainKeys.map((key) => {
               const score = domains[key]
-              const pct = wcScoreToPercent(score)
-              const label = wcScoreLabel(score)
+              const pct = fqScoreToPercent(score)
+              const label = fqScoreLabel(score)
               const barColor = DOMAIN_BAR_COLOR[key]
               const descVariant = score > 3.5 ? 'high' : score < 2.5 ? 'low' : null
 
               return (
                 <div key={key} className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
                   <div className="flex items-center justify-between mb-3">
-                    <h3 className="font-semibold text-gray-900">{t(`wcDomains.${key}.name`)}</h3>
+                    <h3 className="font-semibold text-gray-900">{t(`fqDomains.${key}.name`)}</h3>
                     <div className="flex flex-col items-end gap-1 ml-4 shrink-0">
                       <span className="text-xl font-bold text-gray-900">
                         {score}<span className="text-sm font-normal text-gray-400">/5</span>
                       </span>
                       <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${LABEL_STYLES[label]}`}>
-                        {t(`wcResults.scoreLabels.${label}`)}
+                        {t(`fqResults.scoreLabels.${label}`)}
                       </span>
                     </div>
                   </div>
@@ -160,33 +160,33 @@ export default function WaxingCrescentResultsPage() {
         {facets && (
           <section>
             <h2 className="text-sm font-semibold uppercase tracking-widest text-gray-400 mb-4">
-              {t('wcResults.facetSection')}
+              {t('fqResults.facetSection')}
             </h2>
             <div className="flex flex-col gap-6">
               {domainKeys.map((domainKey) => {
-                const domainFacets = WC_DOMAIN_META[domainKey].facets
+                const domainFacets = FQ_DOMAIN_META[domainKey].facets
 
                 return (
                   <div key={domainKey} className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
                     <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
                       <span className={`w-2 h-2 rounded-full inline-block ${DOMAIN_BAR_COLOR[domainKey]}`} />
-                      {t(`wcDomains.${domainKey}.name`)}
+                      {t(`fqDomains.${domainKey}.name`)}
                     </h3>
                     <div className="flex flex-col gap-5">
                       {domainFacets.map((facetKey) => {
                         const facetScore = facets[facetKey]
-                        const facetPct = wcScoreToPercent(facetScore)
-                        const facetLabel = wcScoreLabel(facetScore)
+                        const facetPct = fqScoreToPercent(facetScore)
+                        const facetLabel = fqScoreLabel(facetScore)
                         const facetDescVariant = facetScore > 3.5 ? 'high' : facetScore < 2.5 ? 'low' : null
 
                         return (
                           <div key={facetKey}>
                             <div className="flex items-center justify-between mb-1">
-                              <span className="text-sm text-gray-700">{t(`wcFacets.${facetKey}.label`)}</span>
+                              <span className="text-sm text-gray-700">{t(`fqFacets.${facetKey}.label`)}</span>
                               <div className="flex items-center gap-2">
                                 <span className="text-sm font-semibold text-gray-900">{facetScore}/5</span>
                                 <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${LABEL_STYLES[facetLabel]}`}>
-                                  {t(`wcResults.scoreLabels.${facetLabel}`)}
+                                  {t(`fqResults.scoreLabels.${facetLabel}`)}
                                 </span>
                               </div>
                             </div>
@@ -198,7 +198,7 @@ export default function WaxingCrescentResultsPage() {
                             </div>
                             {facetDescVariant && (
                               <p className="text-xs leading-relaxed" style={{ color: colors.textMuted }}>
-                                {t(`wcFacets.${facetKey}.${facetDescVariant}`)}
+                                {t(`fqFacets.${facetKey}.${facetDescVariant}`)}
                               </p>
                             )}
                           </div>
@@ -218,19 +218,19 @@ export default function WaxingCrescentResultsPage() {
             onClick={handleShare}
             className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold transition-colors shadow-sm"
           >
-            {copied ? t('wcResults.copied') : t('wcResults.share')}
+            {copied ? t('fqResults.copied') : t('fqResults.share')}
           </button>
           <button
             onClick={() => navigate('/')}
             className="w-full py-3 rounded-xl border border-gray-200 text-gray-700 font-medium hover:bg-gray-100 transition-colors"
           >
-            {t('wcResults.retake')}
+            {t('fqResults.retake')}
           </button>
         </div>
 
         {/* Disclaimer */}
         <div className="bg-gray-100 rounded-xl px-5 py-4 text-xs text-gray-500 leading-relaxed">
-          {t('wcResults.disclaimer')}
+          {t('fqResults.disclaimer')}
         </div>
 
       </div>

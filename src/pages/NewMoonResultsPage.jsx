@@ -163,7 +163,7 @@ export default function NewMoonResultsPage() {
             <p className="text-sm text-gray-500 mt-1">{t('newMoonResults.upgrade.body')}</p>
           </div>
           <button
-            onClick={() => navigate('/waxing-crescent')}
+            onClick={() => navigate('/first-quarter')}
             className="self-start px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl transition-colors shadow-sm"
           >
             {t('newMoonResults.upgrade.cta')}

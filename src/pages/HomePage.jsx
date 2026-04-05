@@ -1,7 +1,7 @@
 /**
  * HomePage — instrument selection screen.
- * User chooses between Cèrcol New Moon (10 items) and
- * Cèrcol Waxing Crescent (60 items).
+ * User chooses between New Moon Cèrcol (10 items) and
+ * First Quarter Cèrcol (60 items).
  */
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -83,12 +83,12 @@ export default function HomePage() {
             onClick={() => navigate('/new-moon')}
           />
           <InstrumentCard
-            name={t('home.waxingCrescent.name')}
-            tagline={t('home.waxingCrescent.tagline')}
-            meta={t('home.waxingCrescent.meta')}
-            description={t('home.waxingCrescent.description')}
+            name={t('home.firstQuarter.name')}
+            tagline={t('home.firstQuarter.tagline')}
+            meta={t('home.firstQuarter.meta')}
+            description={t('home.firstQuarter.description')}
             accent="text-blue-600"
-            onClick={() => navigate('/waxing-crescent')}
+            onClick={() => navigate('/first-quarter')}
           />
         </div>
 

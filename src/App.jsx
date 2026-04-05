@@ -3,8 +3,8 @@ import { FeedbackProvider, useFeedbackContext } from './context/FeedbackContext'
 import HomePage from './pages/HomePage'
 import NewMoonPage from './pages/NewMoonPage'
 import NewMoonResultsPage from './pages/NewMoonResultsPage'
-import WaxingCrescentPage from './pages/WaxingCrescentPage'
-import WaxingCrescentResultsPage from './pages/WaxingCrescentResultsPage'
+import FirstQuarterPage from './pages/FirstQuarterPage'
+import FirstQuarterResultsPage from './pages/FirstQuarterResultsPage'
 import FeedbackButton from './components/FeedbackButton'
 
 function AppContent() {
@@ -13,15 +13,12 @@ function AppContent() {
     <>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        {/* New Moon (formerly Radar) */}
+        {/* New Moon */}
         <Route path="/new-moon" element={<NewMoonPage />} />
         <Route path="/new-moon/results" element={<NewMoonResultsPage />} />
-        {/* Legacy radar routes — kept for backward compat with shared links */}
-        <Route path="/radar" element={<NewMoonPage />} />
-        <Route path="/radar/results" element={<NewMoonResultsPage />} />
-        {/* Waxing Crescent */}
-        <Route path="/waxing-crescent" element={<WaxingCrescentPage />} />
-        <Route path="/waxing-crescent/results" element={<WaxingCrescentResultsPage />} />
+        {/* First Quarter */}
+        <Route path="/first-quarter" element={<FirstQuarterPage />} />
+        <Route path="/first-quarter/results" element={<FirstQuarterResultsPage />} />
       </Routes>
       <FeedbackButton itemId={itemContext.itemId} itemText={itemContext.itemText} />
     </>

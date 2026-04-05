@@ -6,13 +6,13 @@
     "subtitle": "Coneix-te millor.",
     "headline": "Tria la teua avaluació",
     "newMoon": {
-      "name": "Cèrcol New Moon",
+      "name": "Cèrcol de Lluna Nova",
       "tagline": "Visió ràpida",
       "meta": "10 preguntes · ~2 min",
       "description": "Una mirada ràpida a les teues cinc dimensions."
     },
-    "waxingCrescent": {
-      "name": "Cèrcol Waxing Crescent",
+    "firstQuarter": {
+      "name": "Cèrcol de Quart Creixent",
       "tagline": "Retrat complet",
       "meta": "60 preguntes · ~10 min",
       "description": "Una mirada més profunda, dividida en 30 facetes."
@@ -21,7 +21,7 @@
     "viewOnGitHub": "Veure a GitHub"
   },
   "newMoon": {
-    "subtitle": "Cèrcol New Moon",
+    "subtitle": "Cèrcol de Lluna Nova",
     "progress": "Pregunta {{current}} de {{total}}",
     "instructions": "Indica en quina mesura cada parell de trets s'aplica a tu.",
     "itemPrefix": "Em veig com",
@@ -31,7 +31,7 @@
   },
   "newMoonResults": {
     "title": "La teua instantània",
-    "subtitle": "Cèrcol New Moon · 5 dimensions d'un cop d'ull",
+    "subtitle": "Cèrcol de Lluna Nova · 5 dimensions d'un cop d'ull",
     "domainSection": "Cinc dimensions",
     "share": "Compartir resultats",
     "copied": "Copiat!",
@@ -39,12 +39,12 @@
     "disclaimer": "Les puntuacions reflecteixen tendències en el moment de l'avaluació. Cada extrem d'una dimensió té els seus punts forts — cap puntuació és bona o dolenta.",
     "upgrade": {
       "heading": "Vols una visió més completa?",
-      "body": "El Cèrcol Waxing Crescent desglossa les 5 dimensions en 30 facetes.",
-      "cta": "Fer el Cèrcol Waxing Crescent"
+      "body": "El Cèrcol de Quart Creixent desglossa les 5 dimensions en 30 facetes.",
+      "cta": "Fer el Cèrcol de Quart Creixent"
     }
   },
-  "wc": {
-    "subtitle": "Cèrcol Waxing Crescent",
+  "fq": {
+    "subtitle": "Cèrcol de Quart Creixent",
     "blockProgress": "{{current}} de {{total}} en aquest bloc",
     "blockLabel": "Bloc {{current}} de {{total}}",
     "overallProgress": "{{current}} de {{total}} en total",
@@ -59,9 +59,9 @@
       "cta": "Continuar amb {{name}}"
     }
   },
-  "wcResults": {
+  "fqResults": {
     "title": "El teu perfil",
-    "subtitle": "Cèrcol Waxing Crescent · 5 dimensions · 30 facetes",
+    "subtitle": "Cèrcol de Quart Creixent · 5 dimensions · 30 facetes",
     "domainSection": "Cinc dimensions",
     "facetSection": "Detall per facetes",
     "scoreLabels": {
@@ -95,7 +95,7 @@
   },
   "results": {
     "title": "El teu perfil",
-    "subtitle": "Cèrcol Waxing Crescent · 5 dimensions · 15 facetes",
+    "subtitle": "Cèrcol de Quart Creixent · 5 dimensions · 15 facetes",
     "domainSection": "Cinc dimensions",
     "facetSection": "Detall per facetes",
     "scoreLabels": {
@@ -110,7 +110,7 @@
   },
   "radarResults": {
     "title": "La teua instantània",
-    "subtitle": "Cèrcol New Moon · 5 dimensions d'un cop d'ull",
+    "subtitle": "Cèrcol de Lluna Nova · 5 dimensions d'un cop d'ull",
     "domainSection": "Cinc dimensions",
     "share": "Compartir resultats",
     "copied": "Copiat!",
@@ -118,8 +118,8 @@
     "disclaimer": "Les puntuacions reflecteixen tendències en el moment de l'avaluació. Cada extrem d'una dimensió té els seus punts forts — cap puntuació és bona o dolenta.",
     "upgrade": {
       "heading": "Vols una visió més completa?",
-      "body": "El Cèrcol Waxing Crescent desglossa les 5 dimensions en 30 facetes.",
-      "cta": "Fer el Cèrcol Waxing Crescent"
+      "body": "El Cèrcol de Quart Creixent desglossa les 5 dimensions en 30 facetes.",
+      "cta": "Fer el Cèrcol de Quart Creixent"
     }
   },
   "feedback": {
@@ -161,7 +161,7 @@
       "blockIntro": "Aquestes preguntes exploren la teua curiositat, imaginació i obertura a noves perspectives."
     }
   },
-  "wcDomains": {
+  "fqDomains": {
     "depth":      { "name": "Profunditat", "description": "Com processes les emocions i navegues la incertesa.", "blockIntro": "Aquestes preguntes exploren el teu paisatge emocional — com respons a l'estrès, el canvi i la tensió interior." },
     "presence":   { "name": "Presència",   "description": "L'energia que portes als espais socials.", "blockIntro": "Aquestes preguntes exploren com et mostres en situacions socials i com connectes amb els altres." },
     "vision":     { "name": "Visió",       "description": "Com t'impliques amb les idees, la bellesa i el pensament nou.", "blockIntro": "Aquestes preguntes exploren la teua curiositat, imaginació i obertura a noves perspectives." },
@@ -267,7 +267,7 @@
       "low": "You're grounded in what exists, not what might. You'd rather improve what's here than invent something new. That realism stops a lot of bad ideas from going too far, which is a more valuable role than people think."
     }
   },
-  "wcFacets": {
+  "fqFacets": {
     "vigil":     { "label": "Vigília",     "high": "You run threat detection constantly. Most of the time there is nothing there, but sometimes you catch something real before anyone else has looked up. That vigilance is exhausting and occasionally invaluable.", "low": "You don't borrow trouble from the future. You deal with what is in front of you, when it arrives. That groundedness is rarer than it looks, especially when things get uncertain." },
     "blaze":     { "label": "Flama",       "high": "Your frustration surfaces quickly and visibly. People always know where they stand with you, which is not nothing. The cost is that small things sometimes get the same reaction as big things.", "low": "It takes a lot to rattle you into anger. You don't escalate, you don't match other people's heat. In tense moments, that steadiness changes the temperature of the whole room." },
     "hollow":    { "label": "Buit",        "high": "You carry weight. Setbacks settle in rather than bounce off. That depth of feeling means you take things seriously in a way that lighter people never will. It costs you, and it's worth something.", "low": "You recover fast. Bad days don't become bad weeks. That capacity to move forward isn't indifference, it's a kind of resilience that keeps you functional when others are still processing." },

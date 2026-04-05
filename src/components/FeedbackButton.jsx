@@ -15,8 +15,8 @@ const ISSUE_URL =
 
 /** Derive instrument from current route pathname */
 function getInstrument(pathname) {
-  if (pathname.includes('/radar')) return 'radar'
-  if (pathname.includes('/test') || pathname.includes('/results')) return 'test'
+  if (pathname.includes('/new-moon')) return 'newMoon'
+  if (pathname.includes('/first-quarter')) return 'firstQuarter'
   return 'none'
 }
 

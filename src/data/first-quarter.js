@@ -1,5 +1,5 @@
 /**
- * Cèrcol Waxing Crescent — IPIP-NEO-60 instrument
+ * Cèrcol First Quarter — IPIP-NEO-60 instrument
  *
  * Source: Maples-Keller, J. L., Williamson, R. L., Sleep, C. E.,
  * Carter, N. T., Campbell, W. K., & Miller, J. D. (2019).
@@ -18,7 +18,7 @@
 
 import { DOMAINS } from './domains'
 
-export const WC_ITEMS = [
+export const FQ_ITEMS = [
 
   // ── DEPTH (Neuroticism) ───────────────────────────────────────
 
@@ -211,7 +211,7 @@ export const WC_ITEMS = [
     domain: 'discipline', facet: 'counsel', reverse: true },
 ]
 
-export const WC_SCALE_LABELS = {
+export const FQ_SCALE_LABELS = {
   1: 'Disagree strongly',
   2: 'Disagree a little',
   3: 'Neither agree nor disagree',
@@ -219,7 +219,7 @@ export const WC_SCALE_LABELS = {
   5: 'Agree strongly',
 }
 
-export const WC_DOMAIN_META = {
+export const FQ_DOMAIN_META = {
   presence:   { ...DOMAINS.presence,   facets: ['hearth', 'gather', 'command', 'drive', 'thrill', 'radiance'] },
   bond:       { ...DOMAINS.bond,       facets: ['faith', 'edge', 'gift', 'yield', 'shadow', 'shield'] },
   discipline: { ...DOMAINS.discipline, facets: ['mastery', 'structure', 'oath', 'quest', 'will', 'counsel'] },
@@ -227,7 +227,7 @@ export const WC_DOMAIN_META = {
   vision:     { ...DOMAINS.vision,     facets: ['dream', 'craft', 'resonance', 'drift', 'prism', 'compass'] },
 }
 
-export const WC_FACET_META = {
+export const FQ_FACET_META = {
   // DEPTH
   vigil:     { cercol: 'Vigil',     valencian: 'Vigília',   academic: 'Anxiety',              domain: 'depth' },
   blaze:     { cercol: 'Blaze',     valencian: 'Flama',     academic: 'Angry Hostility',      domain: 'depth' },

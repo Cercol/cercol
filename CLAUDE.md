@@ -30,7 +30,7 @@ When that happens, only tokens.js needs updating.
 - No inline styles, always Tailwind classes
 - Keep components small and single-responsibility
 - NEVER use academic instrument names in user-facing text or comments:
-  use "Cèrcol New Moon" and "Cèrcol Waxing Crescent", never "TIPI", "IPIP", "Big Five", "NEO"
+  use "New Moon Cèrcol" and "First Quarter Cèrcol", never "TIPI", "IPIP", "Big Five", "NEO"
 
 ## Claude Code workflow
 After every successful npm run deploy, Claude Code must:
@@ -52,36 +52,34 @@ Never expose academic instrument names (TIPI, IPIP, NEO) in user-facing text.
 Never use generic names like "test" or "radar" in user-facing text or filenames.
 
 Current instruments:
-- "Cèrcol New Moon"      — 10-item quick snapshot
-- "Cèrcol Waxing Crescent" — 60-item full portrait, 30 facets
+- "New Moon Cèrcol"      — 10-item quick snapshot (CA: "Cèrcol de Lluna Nova")
+- "First Quarter Cèrcol" — 60-item full portrait, 30 facets (CA: "Cèrcol de Quart Creixent")
 
 ## Lunar phase instrument map
 
-Each phase is a standalone user experience.
-Internal methodologies (AB5C clustering, observer weighting)
-are never exposed to users.
+Cèrcol uses four lunar phases as instrument names.
+Each phase is a standalone user experience with increasing depth.
+Observer assessment and cognitive ability (ICAR) are components
+of FullMoon, not standalone phases.
 
-| Phase | Code name | Instrument | Facets | Status |
-|---|---|---|---|---|
-| 🌑 | NewMoon | TIPI — 10 items, 7-point | 5 domains | Live |
-| 🌒 | WaxingCrescent | IPIP-NEO-60 — 60 items, 5-point | 30 facets | Live |
-| 🌓 | FirstQuarter | Reserved | — | — |
-| 🌔 | WaxingGibbous | Reserved | — | — |
-| 🌕 | FullMoon | IPIP-NEO-120 + Observer + ICAR g | 30 facets | Planned |
-| 🌖 | WaningGibbous | Reserved (individual evolution) | — | — |
-| 🌗 | LastQuarter | Team report (members FullMoon) | — | Planned |
-| 🌘 | WaningCrescent | Reserved (team evolution) | — | — |
+| Phase | Code name | EN display name | CA display name | Instrument | Status |
+|---|---|---|---|---|---|
+| 🌑 | NewMoon | New Moon Cèrcol | Cèrcol de Lluna Nova | TIPI — 10 items, 7-point, 5 domains | Live |
+| 🌓 | FirstQuarter | First Quarter Cèrcol | Cèrcol de Quart Creixent | IPIP-NEO-60 — 60 items, 5-point, 30 facets | Live |
+| 🌕 | FullMoon | Full Moon Cèrcol | Cèrcol de Lluna Plena | IPIP-NEO-120 + Observer + ICAR g | Planned |
+| 🌗 | LastQuarter | Last Quarter Cèrcol | Cèrcol de Quart Minvant | Team report (members FullMoon) | Planned |
 
 User journey:
-NewMoon → WaxingCrescent → FullMoon → LastQuarter
+NewMoon → FirstQuarter → FullMoon → LastQuarter
+(snapshot)  (portrait)   (complete)  (team)
 
 ## File naming convention
 All instrument pages use English phase names as base:
-NewMoonPage.jsx, WaxingCrescentPage.jsx, FullMoonPage.jsx etc.
+NewMoonPage.jsx, FirstQuarterPage.jsx, FullMoonPage.jsx, LastQuarterPage.jsx
 Never use generic names like TestPage.jsx or RadarPage.jsx.
 
 ## Dimension names (user-facing)
-Applies to both NewMoon and WaxingCrescent.
+Applies to both NewMoon and FirstQuarter.
 Internal code keys remain unchanged for research traceability.
 
 | Academic key | Cèrcol name | Valencià |
@@ -92,7 +90,7 @@ Internal code keys remain unchanged for research traceability.
 | negativeEmotionality / Neuroticism | Depth | Profunditat |
 | openMindedness / Openness | Vision | Visió |
 
-## Facet names (WaxingCrescent — 30 facets)
+## Facet names (FirstQuarter — 30 facets)
 
 DEPTH (Neuroticism):
 | NEO facet | Cèrcol name | Valencià |
@@ -225,21 +223,21 @@ Future: migrate to a spreadsheet or translation management tool
 - All copy follows Brand voice guidelines (direct, warm, non-clinical)
 - ca.json descriptions left in English pending Valencian translation
 
-### Phase 3.10 — Instrument rebranding + Waxing Crescent launch ✅ COMPLETE
-- All instruments renamed to lunar phases: "Cèrcol New Moon" (was Radar) and "Cèrcol Waxing Crescent" (new)
-- File renames: tipi.js→new-moon.js, cercol-big-five.js→waxing-crescent-v1.js, scoring.js→new-moon-scoring.js
+### Phase 3.10 — Instrument rebranding + First Quarter launch ✅ COMPLETE
+- All instruments renamed to lunar phases: "New Moon Cèrcol" (was Radar) and "First Quarter Cèrcol" (new)
+- File renames: tipi.js→new-moon.js, cercol-big-five.js→first-quarter-v1.js, scoring.js→new-moon-scoring.js
 - Pages renamed: RadarTestPage→NewMoonPage, RadarResultsPage→NewMoonResultsPage
-- Old TestPage/ResultsPage (30-item v1) retired; replaced by WaxingCrescentPage/WaxingCrescentResultsPage
-- New instrument: waxing-crescent.js — IPIP-NEO-60, 60 items, 5 domains, 30 facets, 5-point scale
-- New scoring: waxing-crescent-scoring.js — computeWCScores, wcScoreToPercent, wcScoreLabel
-- WaxingCrescentPage: 5 blocks of 12 items with transitions, keyboard nav, FeedbackContext
-- WaxingCrescentResultsPage: radar chart, domain cards, 30-facet breakdown, share via URL
+- Old TestPage/ResultsPage (30-item v1) retired; replaced by FirstQuarterPage/FirstQuarterResultsPage
+- New instrument: first-quarter.js — IPIP-NEO-60, 60 items, 5 domains, 30 facets, 5-point scale
+- New scoring: first-quarter-scoring.js — computeFQScores, fqScoreToPercent, fqScoreLabel
+- FirstQuarterPage: 5 blocks of 12 items with transitions, keyboard nav, FeedbackContext
+- FirstQuarterResultsPage: radar chart, domain cards, 30-facet breakdown, share via URL
 - RadarChart updated to accept optional domainKeys and labelFn props (backward compat maintained)
-- i18n: new wc.*, wcResults.*, wcDomains.*, wcFacets.* namespaces; newMoon.* and newMoonResults.* updated
-- Routes: /new-moon, /new-moon/results, /waxing-crescent, /waxing-crescent/results added
+- i18n: new fq.*, fqResults.*, fqDomains.*, fqFacets.* namespaces; newMoon.* and newMoonResults.* updated
+- Routes: /new-moon, /new-moon/results, /first-quarter, /first-quarter/results added
   Legacy /radar and /radar/results kept for backward compat with shared links
 - CLAUDE.md: Product naming convention replaced with lunar phase map, file naming convention, facet table
-- WaxingCrescent facet names: Vigil, Blaze, Hollow, Veil, Surge, Fracture (Depth);
+- FirstQuarter facet names: Vigil, Blaze, Hollow, Veil, Surge, Fracture (Depth);
   Hearth, Gather, Command, Drive, Thrill, Radiance (Presence);
   Dream, Craft, Resonance, Drift, Prism, Compass (Vision);
   Faith, Edge, Gift, Yield, Shadow, Shield (Bond);
@@ -249,30 +247,30 @@ Future: migrate to a spreadsheet or translation management tool
 - radar-scoring.js deleted; its three exports (computeRadarScores, radarScoreToPercent,
   radarScoreLabel) merged into new-moon-scoring.js
 - NewMoonPage and NewMoonResultsPage imports updated to new-moon-scoring.js
-- waxing-crescent-v1.js still referenced by NewMoonResultsPage.jsx and RadarChart.jsx
+- first-quarter-v1.js still referenced by NewMoonResultsPage.jsx and RadarChart.jsx
   (not deleted — cleanup deferred)
 
-### Phase 3.12 — Housekeeping: remove waxing-crescent-v1.js ✅ COMPLETE
+### Phase 3.12 — Housekeeping: remove first-quarter-v1.js ✅ COMPLETE
 - Added NEW_MOON_DOMAIN_META to new-moon.js (5 remapped display keys, stable order
   for share URL encoding)
 - NewMoonResultsPage.jsx: import replaced with NEW_MOON_DOMAIN_META from new-moon.js;
   RadarChart call updated to pass domainKeys and labelFn props explicitly
-- RadarChart.jsx: internal import of waxing-crescent-v1.js removed; DOMAIN_META
+- RadarChart.jsx: internal import of first-quarter-v1.js removed; DOMAIN_META
   fallback removed — domainKeys and labelFn are now required props
-- waxing-crescent-v1.js deleted
+- first-quarter-v1.js deleted
 
 ### Phase 3.13 — Centralise domain naming ✅ COMPLETE
 - Created src/data/domains.js as single source of truth for all domain metadata
   (DOMAINS object, DOMAIN_KEYS canonical order, TIPI_TO_CERCOL derived map)
 - new-moon.js: removed NEW_MOON_DOMAIN_META and DIMENSION_META (now in domains.js)
 - new-moon-scoring.js: replaced internal KEY_MAP with TIPI_TO_CERCOL from domains.js
-- waxing-crescent.js: WC_DOMAIN_META restructured using DOMAINS spread + facets arrays;
+- first-quarter.js: FQ_DOMAIN_META restructured using DOMAINS spread + facets arrays;
   key order now matches DOMAIN_KEYS (presence/bond/discipline/depth/vision)
 - logger.js: domain key columns driven by DOMAIN_KEYS.forEach loop, not hardcoded fields
 - NewMoonResultsPage.jsx: imports DOMAIN_KEYS from domains.js; fixed DOMAIN_BAR_COLOR
   and description lookup (were using stale academic keys, now use Cèrcol keys)
-- WaxingCrescentResultsPage.jsx: imports DOMAIN_KEYS for encoding/display;
-  WC_DOMAIN_META retained only for facet list lookup
+- FirstQuarterResultsPage.jsx: imports DOMAIN_KEYS for encoding/display;
+  FQ_DOMAIN_META retained only for facet list lookup
 - Share URL encoding order for both instruments now canonically governed by DOMAIN_KEYS
 
 ### Phase 3.14 — README ✅ COMPLETE
@@ -284,7 +282,7 @@ Future: migrate to a spreadsheet or translation management tool
 
 #### Manual tasks (Miquel) ✅ COMPLETE
 - Verify Supabase logs results correctly for both instruments
-- Invite 5-10 known contacts to complete WaxingCrescent
+- Invite 5-10 known contacts to complete FirstQuarter
 
 ### Phase 3.15 — Credentials to environment variables ✅ COMPLETE
 - .env created at repo root with VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY
@@ -292,22 +290,38 @@ Future: migrate to a spreadsheet or translation management tool
 - logger.js and translationFeedback.js updated to use import.meta.env.VITE_* variables
 - .env already covered by .gitignore (*.local + explicit .env entry)
 
-### Phase 3.16 — WaxingCrescent display bug fixes ✅ COMPLETE
-- Block header was showing "DEPTH · CÈRCOL WAXING CRESCENT 1 / 5" (wc.subtitle concatenated
-  with blockIdx + 1). Fixed: now uses wc.blockLabel key → "DEPTH · Block 1 of 5"
+### Phase 3.16 — FirstQuarter display bug fixes ✅ COMPLETE
+- Block header was showing "DEPTH · FIRST QUARTER CÈRCOL 1 / 5" (fq.subtitle concatenated
+  with blockIdx + 1). Fixed: now uses fq.blockLabel key → "DEPTH · Block 1 of 5"
 - Item prefix was showing "TEST.ITEMPREFIX" (QuestionCard defaulting to test.itemPrefix).
-  Fixed: WaxingCrescentPage now passes prefixKey="wc.itemPrefix" to QuestionCard
-- wc.blockLabel added to en.json ("Block {{current}} of {{total}}")
+  Fixed: FirstQuarterPage now passes prefixKey="fq.itemPrefix" to QuestionCard
+- fq.blockLabel added to en.json ("Block {{current}} of {{total}}")
   and ca.json ("Bloc {{current}} de {{total}}")
 
 ### Phase 3.17 — Suppress moderate score descriptions ✅ COMPLETE
 - Domain and facet descriptions now only shown for clearly high or low scores
-- WaxingCrescent (1-5 scale): description shown if score > 3.5 (high) or < 2.5 (low);
+- FirstQuarter (1-5 scale): description shown if score > 3.5 (high) or < 2.5 (low);
   hidden for moderate scores (2.5-3.5)
 - NewMoon (1-7 scale): description shown if score ≥ 5.0 (high) or ≤ 2.9 (low);
   hidden for moderate scores (3.0-4.9)
-- Applies to domain cards in both results pages and facet rows in WaxingCrescentResultsPage
+- Applies to domain cards in both results pages and facet rows in FirstQuarterResultsPage
 - Score label (Low / Moderate / High badge) unchanged
+
+### Phase 3.18 — Complete instrument rename to FirstQuarter + lunar phase map simplification ✅ COMPLETE
+- Renamed all "Waxing Crescent" / "WaxingCrescent" identifiers to "First Quarter" / "FirstQuarter"
+- Deleted: waxing-crescent.js, waxing-crescent-scoring.js, WaxingCrescentPage.jsx, WaxingCrescentResultsPage.jsx
+- Created: first-quarter.js, first-quarter-scoring.js, FirstQuarterPage.jsx, FirstQuarterResultsPage.jsx
+- App.jsx: removed /waxing-crescent routes and all legacy /radar routes; added /first-quarter routes
+- HomePage.jsx: home.firstQuarter i18n key, navigate('/first-quarter')
+- FeedbackButton.jsx: getInstrument updated to match /first-quarter pathname
+- NewMoonResultsPage.jsx: upgrade CTA now navigates to /first-quarter
+- i18n namespaces renamed: wc→fq, wcResults→fqResults, wcDomains→fqDomains, wcFacets→fqFacets
+- Display names updated: EN "First Quarter Cèrcol", CA "Cèrcol de Quart Creixent"
+- en.json and ca.json fully rewritten with new namespace keys and display names
+- logger.js: instrument value changed from 'waxingCrescent' to 'firstQuarter'
+- Lunar phase map simplified from 8 phases to 4 (NewMoon, FirstQuarter, FullMoon, LastQuarter)
+- All legacy route aliases removed — no backward compat needed (no shared FirstQuarter links existed yet)
+- Exhaustiveness verified: 8 grep patterns all returned CLEAN after rename
 
 <!--
   EPOCH 2 — Platform & Infrastructure
@@ -447,8 +461,8 @@ and src/locales/ca.json under the roles namespace (Phase 5 implementation).
 
 #### Implementation steps (when data prerequisite met)
 1. Build role scoring module (scoring/role-scoring.js)
-2. Add role result to WaxingCrescent results page (provisional, labelled as beta)
-3. Build observer assessment instrument (FirstQuarter)
+2. Add role result to FirstQuarter results page (provisional, labelled as beta)
+3. Build observer assessment instrument (FullMoon observer component)
 4. Add ICAR cognitive ability test (public domain, Condon & Revelle 2014)
 5. Build FullMoon integrated report
 6. Replace theoretical centroids with empirical centroids
@@ -488,10 +502,10 @@ A sub-phase (3.x) is complete when:
 3. The specific feature described is verifiable at the production URL
 
 Phase 3 (Epoch 1) closes when:
-- Both NewMoon and WaxingCrescent are fully functional end-to-end
-- Supabase logs all three instrument values correctly
+- Both NewMoon and FirstQuarter are fully functional end-to-end
+- Supabase logs both instrument values correctly
 - README is published and accurate
-- At least one real external user has completed WaxingCrescent
+- At least one real external user has completed FirstQuarter
 
 ## File structure
 src/
@@ -514,7 +528,7 @@ src/
   Fisher, Hunter & Macrosson (1998-2002)
 
 ## Technical notes
-- Cèrcol Waxing Crescent uses 2 items per facet from the IPIP-NEO-60
+- Cèrcol First Quarter uses 2 items per facet from the IPIP-NEO-60
   (Maples-Keller et al. 2019). Adequate for feedback purposes,
   not for clinical assessment.
 - Cèrcol New Moon uses 10 items across 5 domains (no facets).
