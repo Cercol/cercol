@@ -15,7 +15,6 @@ import { computeFQScores } from '../utils/first-quarter-scoring'
 import { useFeedbackContext } from '../context/FeedbackContext'
 import QuestionCard from '../components/QuestionCard'
 import ProgressBar from '../components/ProgressBar'
-import LanguageToggle from '../components/LanguageToggle'
 
 const DOMAIN_ORDER = ['depth', 'presence', 'vision', 'bond', 'discipline']
 
@@ -196,16 +195,6 @@ export default function FirstQuarterPage() {
   return (
     <main className="min-h-screen bg-gray-50 flex flex-col items-center px-4 py-10 sm:py-16">
       <div className="w-full max-w-xl flex flex-col gap-6">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="text-lg font-bold text-gray-900">{t('nav.brand')}</span>
-            <span className="text-gray-300">·</span>
-            <span className="text-sm font-medium text-gray-500">{t('fq.subtitle')}</span>
-          </div>
-          <LanguageToggle />
-        </div>
-
         {/* Block header */}
         <div className="bg-white rounded-2xl border border-gray-200 shadow-sm px-5 py-4">
           <div className="flex items-center gap-2 mb-0.5">

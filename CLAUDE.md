@@ -402,6 +402,19 @@ Future: migrate to a spreadsheet or translation management tool
 - App.jsx: /my-results route added
 - en.json / ca.json: myResults namespace added (link, heading, loading, error, empty, startCta)
 
+### Phase 4.4 — Shared Layout component ✅ COMPLETE
+- src/components/Layout.jsx: persistent header (brand link left, AccountButton + LanguageToggle right);
+  children rendered below in normal flow; uses only Tailwind classes, no hardcoded values
+- App.jsx: all routes wrapped in Layout via AppContent; single source of nav shell
+- HomePage: removed AccountButton + LanguageToggle imports and absolute top-4 divs
+- AuthPage: removed LanguageToggle import + absolute div; removed brand button (Layout owns it);
+  removed unused useNavigate
+- MyResultsPage: removed AccountButton + LanguageToggle imports + absolute divs; removed brand button
+- NewMoonPage: removed LanguageToggle import + inline header row (brand span + LanguageToggle)
+- FirstQuarterPage: same — removed LanguageToggle import + inline header row
+- NewMoonResultsPage: removed LanguageToggle import; inline header collapsed to h1 + subtitle only
+- FirstQuarterResultsPage: same
+
 #### Remaining Phase 4 scope (future sub-phases)
 - Stripe integration for extended reports
 

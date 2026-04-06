@@ -5,8 +5,6 @@
  */
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import LanguageToggle from '../components/LanguageToggle'
-import AccountButton from '../components/AccountButton'
 
 function InstrumentCard({ name, tagline, meta, description, onClick, accent }) {
   return (
@@ -54,14 +52,6 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen bg-gray-50 flex flex-col items-center justify-center px-4 py-16">
-      {/* Top bar */}
-      <div className="absolute top-4 left-4">
-        <AccountButton />
-      </div>
-      <div className="absolute top-4 right-4">
-        <LanguageToggle />
-      </div>
-
       <div className="w-full max-w-xl">
         {/* Wordmark */}
         <div className="text-center mb-10">

@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { FeedbackProvider, useFeedbackContext } from './context/FeedbackContext'
 import { AuthProvider } from './context/AuthContext'
+import Layout from './components/Layout'
 import HomePage from './pages/HomePage'
 import NewMoonPage from './pages/NewMoonPage'
 import NewMoonResultsPage from './pages/NewMoonResultsPage'
@@ -14,7 +15,7 @@ import FeedbackButton from './components/FeedbackButton'
 function AppContent() {
   const { itemContext } = useFeedbackContext()
   return (
-    <>
+    <Layout>
       <Routes>
         <Route path="/" element={<HomePage />} />
         {/* New Moon */}
@@ -30,7 +31,7 @@ function AppContent() {
         <Route path="/my-results" element={<MyResultsPage />} />
       </Routes>
       <FeedbackButton itemId={itemContext.itemId} itemText={itemContext.itemText} />
-    </>
+    </Layout>
   )
 }
 

@@ -9,8 +9,6 @@ import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
 import { DOMAIN_KEYS } from '../data/domains'
-import LanguageToggle from '../components/LanguageToggle'
-import AccountButton from '../components/AccountButton'
 
 const DOMAIN_BAR_COLOR = {
   presence:   'bg-amber-400',
@@ -98,21 +96,7 @@ export default function MyResultsPage() {
 
   return (
     <main className="min-h-screen bg-gray-50 flex flex-col items-center px-4 py-16">
-      <div className="absolute top-4 left-4">
-        <AccountButton />
-      </div>
-      <div className="absolute top-4 right-4">
-        <LanguageToggle />
-      </div>
-
       <div className="w-full max-w-xl">
-        <button
-          onClick={() => navigate('/')}
-          className="mb-8 text-2xl font-bold tracking-tight text-gray-900 hover:text-blue-700 transition-colors"
-        >
-          {t('nav.brand')}
-        </button>
-
         <h1 className="text-xl font-bold text-gray-900 mb-6">
           {t('myResults.heading')}
         </h1>

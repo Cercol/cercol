@@ -17,7 +17,6 @@ import { logResult } from '../utils/logger'
 import { useAuth } from '../context/AuthContext'
 import { colors } from '../design/tokens'
 import RadarChart from '../components/RadarChart'
-import LanguageToggle from '../components/LanguageToggle'
 
 const LABEL_STYLES = {
   low:      'bg-gray-100 text-gray-600',
@@ -100,13 +99,9 @@ export default function FirstQuarterResultsPage() {
       <div className="w-full max-w-xl mx-auto flex flex-col gap-8">
 
         {/* Header */}
-        <div className="flex items-start justify-between">
-          <div>
-            <span className="text-lg font-bold text-gray-900">{t('nav.brand')}</span>
-            <h1 className="mt-1 text-2xl sm:text-3xl font-bold text-gray-900">{t('fqResults.title')}</h1>
-            <p className="mt-1 text-gray-500 text-sm">{t('fqResults.subtitle')}</p>
-          </div>
-          <LanguageToggle />
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">{t('fqResults.title')}</h1>
+          <p className="mt-1 text-gray-500 text-sm">{t('fqResults.subtitle')}</p>
         </div>
 
         {/* ── Section 1: Domain radar chart ── */}

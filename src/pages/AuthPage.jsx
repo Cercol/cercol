@@ -3,14 +3,11 @@
  * Two states: 'form' (email input) → 'sent' (confirmation message).
  */
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
-import LanguageToggle from '../components/LanguageToggle'
 
 export default function AuthPage() {
   const { t }        = useTranslation()
-  const navigate     = useNavigate()
   const { signIn }   = useAuth()
 
   const [email,   setEmail]   = useState('')
@@ -29,18 +26,7 @@ export default function AuthPage() {
 
   return (
     <main className="min-h-screen bg-gray-50 flex flex-col items-center justify-center px-4 py-16">
-      <div className="absolute top-4 right-4">
-        <LanguageToggle />
-      </div>
-
       <div className="w-full max-w-sm">
-        <button
-          onClick={() => navigate('/')}
-          className="mb-8 text-2xl font-bold tracking-tight text-gray-900 hover:text-blue-700 transition-colors"
-        >
-          {t('nav.brand')}
-        </button>
-
         {state === 'sent' ? (
           <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm text-center">
             <p className="text-2xl mb-2">✉️</p>

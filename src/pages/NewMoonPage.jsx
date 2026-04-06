@@ -11,7 +11,6 @@ import { computeRadarScores } from '../utils/new-moon-scoring'
 import { useFeedbackContext } from '../context/FeedbackContext'
 import QuestionCard from '../components/QuestionCard'
 import ProgressBar from '../components/ProgressBar'
-import LanguageToggle from '../components/LanguageToggle'
 
 const SCALE_POINTS = 7
 
@@ -89,15 +88,6 @@ export default function NewMoonPage() {
   return (
     <main className="min-h-screen bg-gray-50 flex flex-col items-center px-4 py-10 sm:py-16">
       <div className="w-full max-w-xl flex flex-col gap-6">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <span className="text-lg font-bold text-gray-900">{t('nav.brand')}</span>
-            <span className="ml-2 text-sm text-gray-400">{t('newMoon.subtitle')}</span>
-          </div>
-          <LanguageToggle />
-        </div>
-
         {/* Progress */}
         <ProgressBar
           current={current + 1}
