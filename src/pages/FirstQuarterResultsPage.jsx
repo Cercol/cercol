@@ -14,6 +14,7 @@ import { FQ_DOMAIN_META } from '../data/first-quarter'
 import { DOMAIN_KEYS } from '../data/domains'
 import { fqScoreToPercent, fqScoreLabel } from '../utils/first-quarter-scoring'
 import { logResult } from '../utils/logger'
+import { useAuth } from '../context/AuthContext'
 import { colors } from '../design/tokens'
 import RadarChart from '../components/RadarChart'
 import LanguageToggle from '../components/LanguageToggle'
@@ -52,6 +53,7 @@ export default function FirstQuarterResultsPage() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const { t, i18n } = useTranslation()
+  const { user } = useAuth()
   const [copied, setCopied] = useState(false)
   const loggedRef = useRef(false)
 
@@ -78,7 +80,7 @@ export default function FirstQuarterResultsPage() {
   useEffect(() => {
     if (fromTest && !loggedRef.current) {
       loggedRef.current = true
-      logResult(domains, i18n.language, 'firstQuarter')
+      logResult(domains, i18n.language, 'firstQuarter', user?.id ?? null)
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 

@@ -1,7 +1,7 @@
 /**
  * AccountButton — top-left auth indicator.
  * Not signed in: "Sign in" link.
- * Signed in: email initial badge + "Sign out" button.
+ * Signed in: email initial badge + "My results" link + "Sign out" button.
  */
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -32,6 +32,13 @@ export default function AccountButton() {
       <span className="w-7 h-7 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center select-none">
         {initial}
       </span>
+      <button
+        onClick={() => navigate('/my-results')}
+        className="text-sm font-semibold text-gray-500 hover:text-blue-700 transition-colors"
+      >
+        {t('myResults.link')}
+      </button>
+      <span className="text-gray-300 text-xs">|</span>
       <button
         onClick={signOut}
         className="text-sm font-semibold text-gray-400 hover:text-gray-700 transition-colors"

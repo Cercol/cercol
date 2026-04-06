@@ -2,6 +2,14 @@
   "nav": {
     "brand": "Cèrcol"
   },
+  "myResults": {
+    "link": "Els meus resultats",
+    "heading": "Els meus resultats",
+    "loading": "Carregant…",
+    "error": "No s'han pogut carregar els resultats. Torna-ho a intentar més tard.",
+    "empty": "Encara no hi ha resultats. Completa una avaluació per veure el teu perfil aquí.",
+    "startCta": "Comença una avaluació"
+  },
   "auth": {
     "signIn": "Iniciar sessió",
     "signInSubtitle": "Sense contrasenya. T'enviarem un enllaç al correu.",

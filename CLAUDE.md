@@ -389,8 +389,20 @@ Future: migrate to a spreadsheet or translation management tool
 - In Supabase Auth dashboard: enable Email provider; set Site URL to https://cercol.team;
   add https://cercol.team/auth/callback to "Redirect URLs" allowlist
 
+### Phase 4.3 — Linked results + My Results page ✅ COMPLETE
+- logger.js: added optional userId param (4th arg); populates user_id column when non-null
+- NewMoonResultsPage.jsx: imports useAuth; passes user?.id to logResult on test completion
+- FirstQuarterResultsPage.jsx: same — user?.id passed to logResult
+- Anonymous completions (user not signed in) continue to work unchanged (user_id left null)
+- src/pages/MyResultsPage.jsx: fetches own results via Supabase anon client; RLS filters
+  to rows where user_id = auth.uid(); displays instrument name, date, domain bar chart
+  for each result; empty state + "Start an assessment" CTA; redirects to /auth if not signed in
+- src/components/AccountButton.jsx: when signed in, now shows initial badge + "My results"
+  link + "Sign out" (was just badge + sign out)
+- App.jsx: /my-results route added
+- en.json / ca.json: myResults namespace added (link, heading, loading, error, empty, startCta)
+
 #### Remaining Phase 4 scope (future sub-phases)
-- Result history: GET /results/mine (authenticated), frontend history page
 - Stripe integration for extended reports
 
 <!--

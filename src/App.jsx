@@ -8,6 +8,7 @@ import FirstQuarterPage from './pages/FirstQuarterPage'
 import FirstQuarterResultsPage from './pages/FirstQuarterResultsPage'
 import AuthPage from './pages/AuthPage'
 import AuthCallbackPage from './pages/AuthCallbackPage'
+import MyResultsPage from './pages/MyResultsPage'
 import FeedbackButton from './components/FeedbackButton'
 
 function AppContent() {
@@ -25,6 +26,8 @@ function AppContent() {
         {/* Auth */}
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/auth/callback" element={<AuthCallbackPage />} />
+        {/* Account */}
+        <Route path="/my-results" element={<MyResultsPage />} />
       </Routes>
       <FeedbackButton itemId={itemContext.itemId} itemText={itemContext.itemText} />
     </>

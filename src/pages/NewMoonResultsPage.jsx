@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next'
 import { DOMAIN_KEYS } from '../data/domains'
 import { radarScoreToPercent, radarScoreLabel } from '../utils/new-moon-scoring'
 import { logResult } from '../utils/logger'
+import { useAuth } from '../context/AuthContext'
 import { colors } from '../design/tokens'
 import RadarChart from '../components/RadarChart'
 import LanguageToggle from '../components/LanguageToggle'
@@ -49,6 +50,7 @@ export default function NewMoonResultsPage() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const { t, i18n } = useTranslation()
+  const { user } = useAuth()
   const [copied, setCopied] = useState(false)
   const loggedRef = useRef(false)
 
@@ -74,7 +76,7 @@ export default function NewMoonResultsPage() {
   useEffect(() => {
     if (fromTest && !loggedRef.current) {
       loggedRef.current = true
-      logResult(scores, i18n.language, 'newMoon')
+      logResult(scores, i18n.language, 'newMoon', user?.id ?? null)
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 

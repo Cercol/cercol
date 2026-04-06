@@ -2,6 +2,14 @@
   "nav": {
     "brand": "Cèrcol"
   },
+  "myResults": {
+    "link": "My results",
+    "heading": "My results",
+    "loading": "Loading…",
+    "error": "Could not load results. Try again later.",
+    "empty": "No results yet. Complete an assessment to see your profile here.",
+    "startCta": "Start an assessment"
+  },
   "auth": {
     "signIn": "Sign in",
     "signInSubtitle": "No password. We'll send a link to your inbox.",
