@@ -11,9 +11,10 @@ Phase 4+:  team role instrument built on accumulated real data
 All scoring algorithms and item sources are documented and citable.
 
 ## Stack
-- React + Vite
+- React + Vite (frontend — GitHub Pages, cercol.team)
 - Tailwind CSS
-- GitHub Pages (static only — no backend until Phase 4)
+- FastAPI + uvicorn (backend — Railway, api.cercol.team) [Phase 4+]
+- Supabase: anonymous result logging (anon key) + user auth + profiles (service_role key, backend only)
 - All scoring happens client-side in JavaScript
 
 ## Design system
@@ -338,10 +339,30 @@ Future: migrate to a spreadsheet or translation management tool
 -->
 
 ### Phase 4 — Backend + Accounts
-- FastAPI + PostgreSQL (or Supabase)
-- User accounts, result history
-- Stripe payment for extended reports
-- Custom domain
+
+### Phase 4.1 — FastAPI skeleton + Supabase account schema ✅ COMPLETE
+- api/ directory created: FastAPI 0.115 skeleton deployable to Railway via Nixpacks
+- api/main.py: single /health endpoint; CORS configured for cercol.team and Vite dev ports
+- api/requirements.txt: fastapi + uvicorn[standard], pinned versions
+- api/railway.toml: nixpacks builder, uvicorn start command, /health healthcheck
+- api/.env.example: documents SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY (service_role, not anon)
+- supabase/migrations/001_profiles.sql: profiles table (uuid PK → auth.users), RLS policies
+  (select/update own), trigger auto-creates profile on Supabase Auth sign-up
+- supabase/migrations/002_results_user_id.sql: adds nullable user_id FK to existing results table;
+  sparse index; select policy so authenticated users can read own results; anon insert policy unchanged
+
+#### Manual tasks (Miquel)
+- In Railway: create new service, connect to cercol repo, set Root Directory = api/
+- In Railway: add env vars SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY
+- In Railway: add custom domain api.cercol.team once service is live
+- In Supabase SQL editor: run migrations 001 and 002 in order
+- Enable Supabase Auth (Email provider) in project dashboard
+
+#### Remaining Phase 4 scope (future sub-phases)
+- Auth endpoints: sign-up, sign-in, token refresh (or delegate fully to Supabase Auth client-side)
+- Result history: GET /results/mine (authenticated)
+- Stripe integration for extended reports
+- Frontend: account UI (sign up, sign in, result history page)
 
 <!--
   EPOCH 3 — Team Intelligence
