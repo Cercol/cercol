@@ -2,6 +2,20 @@
   "nav": {
     "brand": "Cèrcol"
   },
+  "auth": {
+    "signIn": "Sign in",
+    "signInSubtitle": "No password. We'll send a link to your inbox.",
+    "signOut": "Sign out",
+    "emailLabel": "Your email",
+    "emailPlaceholder": "you@example.com",
+    "sendLink": "Send magic link",
+    "sending": "Sending...",
+    "sentHeading": "Check your inbox",
+    "sentBody": "We sent a link to {{email}}. Click it to sign in.",
+    "sentNote": "No email? Check your spam folder.",
+    "signingIn": "Signing you in…",
+    "error": "Something went wrong. Try again."
+  },
   "home": {
     "subtitle": "Know yourself better.",
     "headline": "Choose your assessment",

@@ -2,6 +2,20 @@
   "nav": {
     "brand": "Cèrcol"
   },
+  "auth": {
+    "signIn": "Iniciar sessió",
+    "signInSubtitle": "Sense contrasenya. T'enviarem un enllaç al correu.",
+    "signOut": "Tancar sessió",
+    "emailLabel": "El teu correu",
+    "emailPlaceholder": "tu@exemple.com",
+    "sendLink": "Envia l'enllaç màgic",
+    "sending": "Enviant...",
+    "sentHeading": "Comprova la safata d'entrada",
+    "sentBody": "T'hem enviat un enllaç a {{email}}. Fes-hi clic per iniciar sessió.",
+    "sentNote": "Sense correu? Comprova la carpeta de correu brossa.",
+    "signingIn": "Iniciant sessió…",
+    "error": "Alguna cosa ha fallat. Torna-ho a intentar."
+  },
   "home": {
     "subtitle": "Coneix-te millor.",
     "headline": "Tria la teua avaluació",

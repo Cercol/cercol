@@ -4,8 +4,9 @@
   <script>
     const path = window.location.pathname
     const search = window.location.search
+    const hash = window.location.hash
     window.location.replace(
-      '/?p=' + encodeURIComponent(path + search)
+      '/?p=' + encodeURIComponent(path + search) + hash
     )
   </script>
 </head>

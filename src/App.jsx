@@ -1,10 +1,13 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { FeedbackProvider, useFeedbackContext } from './context/FeedbackContext'
+import { AuthProvider } from './context/AuthContext'
 import HomePage from './pages/HomePage'
 import NewMoonPage from './pages/NewMoonPage'
 import NewMoonResultsPage from './pages/NewMoonResultsPage'
 import FirstQuarterPage from './pages/FirstQuarterPage'
 import FirstQuarterResultsPage from './pages/FirstQuarterResultsPage'
+import AuthPage from './pages/AuthPage'
+import AuthCallbackPage from './pages/AuthCallbackPage'
 import FeedbackButton from './components/FeedbackButton'
 
 function AppContent() {
@@ -19,6 +22,9 @@ function AppContent() {
         {/* First Quarter */}
         <Route path="/first-quarter" element={<FirstQuarterPage />} />
         <Route path="/first-quarter/results" element={<FirstQuarterResultsPage />} />
+        {/* Auth */}
+        <Route path="/auth" element={<AuthPage />} />
+        <Route path="/auth/callback" element={<AuthCallbackPage />} />
       </Routes>
       <FeedbackButton itemId={itemContext.itemId} itemText={itemContext.itemText} />
     </>
@@ -28,9 +34,11 @@ function AppContent() {
 export default function App() {
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL}>
-      <FeedbackProvider>
-        <AppContent />
-      </FeedbackProvider>
+      <AuthProvider>
+        <FeedbackProvider>
+          <AppContent />
+        </FeedbackProvider>
+      </AuthProvider>
     </BrowserRouter>
   )
 }

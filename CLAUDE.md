@@ -358,11 +358,36 @@ Future: migrate to a spreadsheet or translation management tool
 - In Supabase SQL editor: run migrations 001 and 002 in order
 - Enable Supabase Auth (Email provider) in project dashboard
 
+### Phase 4.2 — Magic link auth (frontend + backend) ✅ COMPLETE
+- src/lib/supabase.js: shared Supabase client extracted (was duplicated in logger.js)
+- logger.js: updated to import from src/lib/supabase instead of creating own client
+- src/context/AuthContext.jsx: AuthProvider wraps the whole app; exposes user, loading,
+  signIn(email), signOut(); session persisted automatically via supabase-js localStorage
+- src/pages/AuthPage.jsx: magic link form (form → sending → sent states); consistent with
+  existing design (bg-gray-50, white card, rounded-2xl, Tailwind only)
+- src/pages/AuthCallbackPage.jsx: handles Supabase redirect after email click;
+  waits for SIGNED_IN event via onAuthStateChange, then navigates home
+- src/components/AccountButton.jsx: top-left of HomePage; shows "Sign in" when anonymous,
+  shows email initial badge + "Sign out" when authenticated
+- App.jsx: AuthProvider wraps FeedbackProvider; routes /auth and /auth/callback added
+- HomePage.jsx: AccountButton added top-left (symmetric with LanguageToggle top-right)
+- public/404.html: updated to forward window.location.hash through the redirect
+  (needed for Supabase implicit flow: hash carries access_token)
+- index.html: replaceState now appends window.location.hash after restoring the path
+- en.json / ca.json: auth namespace added (signIn, signOut, form labels, sent state, error)
+- api/main.py: Supabase JWT dependency (get_current_user via python-jose HS256 + "authenticated" audience);
+  GET /me endpoint returns user_id and email for valid tokens; version bumped to 0.2.0
+- api/requirements.txt: python-jose[cryptography]==3.3.0 added
+- api/.env.example: SUPABASE_JWT_SECRET documented
+
+#### Manual tasks (Miquel)
+- In Railway: add env var SUPABASE_JWT_SECRET (Supabase dashboard → Settings → API → JWT Settings)
+- In Supabase Auth dashboard: enable Email provider; set Site URL to https://cercol.team;
+  add https://cercol.team/auth/callback to "Redirect URLs" allowlist
+
 #### Remaining Phase 4 scope (future sub-phases)
-- Auth endpoints: sign-up, sign-in, token refresh (or delegate fully to Supabase Auth client-side)
-- Result history: GET /results/mine (authenticated)
+- Result history: GET /results/mine (authenticated), frontend history page
 - Stripe integration for extended reports
-- Frontend: account UI (sign up, sign in, result history page)
 
 <!--
   EPOCH 3 — Team Intelligence
