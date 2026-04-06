@@ -94,7 +94,15 @@
     "share": "Compartir resultats",
     "copied": "Copiat!",
     "retake": "Tornar a començar",
-    "disclaimer": "Les puntuacions reflecteixen tendències en el moment de l'avaluació. Cada extrem d'una dimensió té els seus punts forts — cap puntuació és bona o dolenta."
+    "disclaimer": "Les puntuacions reflecteixen tendències en el moment de l'avaluació. Cada extrem d'una dimensió té els seus punts forts — cap puntuació és bona o dolenta.",
+    "paymentSuccess": "Pagament rebut. El detall complet de les teues facetes ja està disponible.",
+    "unlock": {
+      "heading": "30 facetes. Un sol pagament.",
+      "body": "Veu el detall darrere de cada dimensió — allò que et mou, on t'atures, i com et mous pel món.",
+      "cta": "Desbloquejar l'informe complet",
+      "loading": "Redirigint al pagament…",
+      "signInNote": "Cal que iniciïs sessió primer."
+    }
   },
   "scale": {
     "1": "Totalment en desacord",

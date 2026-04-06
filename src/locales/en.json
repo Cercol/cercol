@@ -94,7 +94,15 @@
     "share": "Share results",
     "copied": "Copied!",
     "retake": "Start over",
-    "disclaimer": "Scores reflect tendencies at the time of assessment. Each end of a dimension has its own strengths — no score is good or bad."
+    "disclaimer": "Scores reflect tendencies at the time of assessment. Each end of a dimension has its own strengths — no score is good or bad.",
+    "paymentSuccess": "Payment received. Your full facet breakdown is now unlocked.",
+    "unlock": {
+      "heading": "30 facets. One payment.",
+      "body": "See the detail behind each dimension — what drives you, where you hold back, and how you move through the world.",
+      "cta": "Unlock full report",
+      "loading": "Redirecting to payment…",
+      "signInNote": "You need to sign in first."
+    }
   },
   "scale": {
     "1": "Disagree strongly",

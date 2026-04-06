@@ -415,8 +415,37 @@ Future: migrate to a spreadsheet or translation management tool
 - NewMoonResultsPage: removed LanguageToggle import; inline header collapsed to h1 + subtitle only
 - FirstQuarterResultsPage: same
 
-#### Remaining Phase 4 scope (future sub-phases)
-- Stripe integration for extended reports
+### Phase 4.5 — Stripe Checkout + premium facet gate ✅ COMPLETE
+- supabase/migrations/003_premium.sql: adds `premium boolean default false` to profiles
+- api/requirements.txt: stripe==12.1.0 added
+- api/main.py: two new endpoints; version bumped to 0.3.0
+  - POST /checkout (authenticated): creates Stripe Checkout session (mode=payment),
+    sets client_reference_id=user_id, customer_email pre-filled; returns { url }
+  - POST /webhooks/stripe: verifies Stripe-Signature; on checkout.session.completed
+    calls Supabase REST PATCH via service_role key to set profiles.premium=true
+  - _supabase_patch() helper: service_role REST calls using stdlib urllib (no extra deps)
+- api/.env.example: STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, STRIPE_PRICE_ID, FRONTEND_URL documented
+- src/lib/api.js: authenticated fetch helper; createCheckoutSession() wraps POST /checkout
+- src/pages/FirstQuarterResultsPage.jsx: premium gate on facet breakdown
+  - Checks profiles.premium from Supabase on mount (anon client, RLS filters to own row)
+  - Non-premium + has facets: shows blurred first-domain preview + CTA overlay
+  - CTA: saves facets to sessionStorage, calls createCheckoutSession(), redirects to Stripe
+  - On return (?payment=success): restores facets from sessionStorage; shows success banner;
+    clears sessionStorage once premium confirmed
+  - Premium users: full 30-facet breakdown shown as before
+- en.json / ca.json: fqResults.unlock.* and fqResults.paymentSuccess added
+- .env / .env.example: VITE_API_URL added
+
+#### Manual tasks (Miquel)
+- In Supabase SQL editor: run migration 003_premium.sql
+- In Stripe dashboard (test mode):
+  - Create a product "First Quarter Full Report" with a one-time price
+  - Copy the price ID (price_...) → set STRIPE_PRICE_ID in Railway
+  - Add webhook endpoint: https://api.cercol.team/webhooks/stripe
+    Events to listen: checkout.session.completed
+  - Copy webhook signing secret (whsec_...) → set STRIPE_WEBHOOK_SECRET in Railway
+- In Railway: set STRIPE_SECRET_KEY=sk_test_... and the above two env vars
+- NOTE: Stripe secret key provided during dev session — store in Railway only, never commit
 
 <!--
   EPOCH 3 — Team Intelligence
