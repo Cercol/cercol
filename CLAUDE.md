@@ -375,13 +375,17 @@ Future: migrate to a spreadsheet or translation management tool
   (needed for Supabase implicit flow: hash carries access_token)
 - index.html: replaceState now appends window.location.hash after restoring the path
 - en.json / ca.json: auth namespace added (signIn, signOut, form labels, sent state, error)
-- api/main.py: Supabase JWT dependency (get_current_user via python-jose HS256 + "authenticated" audience);
-  GET /me endpoint returns user_id and email for valid tokens; version bumped to 0.2.0
-- api/requirements.txt: python-jose[cryptography]==3.3.0 added
-- api/.env.example: SUPABASE_JWT_SECRET documented
+- api/main.py: Supabase JWT dependency (get_current_user) via JWKS endpoint (ES256 / P-256);
+  JWKS URL derived from SUPABASE_URL — no shared secret needed; keys cached in-process by kid;
+  supports key rotation (re-fetches JWKS on unknown kid); GET /me returns user_id and email;
+  version 0.2.0
+- api/requirements.txt: python-jose[cryptography]==3.3.0 added (EC key support)
+- api/.env.example: SUPABASE_JWT_SECRET removed; SUPABASE_URL is the only JWT-related var needed
+- NOTE: initial implementation used HS256 + shared secret; corrected to JWKS/ES256 because
+  Supabase migrated to ECC P-256 asymmetric signing keys
 
 #### Manual tasks (Miquel)
-- In Railway: add env var SUPABASE_JWT_SECRET (Supabase dashboard → Settings → API → JWT Settings)
+- In Railway: ensure SUPABASE_URL is set (already documented in Phase 4.1); remove SUPABASE_JWT_SECRET if added
 - In Supabase Auth dashboard: enable Email provider; set Site URL to https://cercol.team;
   add https://cercol.team/auth/callback to "Redirect URLs" allowlist
 
