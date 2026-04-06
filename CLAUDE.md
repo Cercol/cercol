@@ -308,13 +308,6 @@ Future: migrate to a spreadsheet or translation management tool
 - Applies to domain cards in both results pages and facet rows in FirstQuarterResultsPage
 - Score label (Low / Moderate / High badge) unchanged
 
-### Phase 3.19 — Custom domain: cercol.team ✅ COMPLETE
-- vite.config.js: base changed from '/cercol/' to '/'
-- public/CNAME created with 'cercol.team' (copied to dist/ on every build)
-- public/404.html: redirect script updated — removed /cercol repo prefix, now redirects to /?p=path from root
-- index.html: companion replaceState script updated — removed '/cercol' prefix, now restores from '/' root
-- App now serves at cercol.team instead of miquelmatoses.github.io/cercol
-
 ### Phase 3.18 — Complete instrument rename to FirstQuarter + lunar phase map simplification ✅ COMPLETE
 - Renamed all "Waxing Crescent" / "WaxingCrescent" identifiers to "First Quarter" / "FirstQuarter"
 - Deleted: waxing-crescent.js, waxing-crescent-scoring.js, WaxingCrescentPage.jsx, WaxingCrescentResultsPage.jsx
@@ -330,6 +323,13 @@ Future: migrate to a spreadsheet or translation management tool
 - Lunar phase map simplified from 8 phases to 4 (NewMoon, FirstQuarter, FullMoon, LastQuarter)
 - All legacy route aliases removed — no backward compat needed (no shared FirstQuarter links existed yet)
 - Exhaustiveness verified: 8 grep patterns all returned CLEAN after rename
+
+### Phase 3.19 — Custom domain: cercol.team ✅ COMPLETE
+- vite.config.js: base changed from '/cercol/' to '/'
+- public/CNAME created with 'cercol.team' (copied to dist/ on every build)
+- public/404.html: redirect script updated — removed /cercol repo prefix, now redirects to /?p=path from root
+- index.html: companion replaceState script updated — removed '/cercol' prefix, now restores from '/' root
+- App now serves at cercol.team instead of miquelmatoses.github.io/cercol
 
 <!--
   EPOCH 2 — Platform & Infrastructure
