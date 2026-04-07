@@ -366,7 +366,7 @@ Future: migrate to a spreadsheet or translation management tool
   Prerequisite: Epoch 1 complete + data collected.
 -->
 
-### Phase 4 — Backend + Accounts
+### Phase 4 — Backend + Accounts ✅ COMPLETE
 
 ### Phase 4.1 — FastAPI skeleton + Supabase account schema ✅ COMPLETE
 - api/ directory created: FastAPI 0.115 skeleton deployable to Railway via Nixpacks
@@ -671,15 +671,6 @@ or worse than another.
 Full descriptions (user-facing, Brand voice) live in src/locales/en.json
 and src/locales/ca.json under the roles namespace (Phase 5 implementation).
 
-#### Implementation steps (remaining)
-1. ✅ Role scoring module (src/utils/role-scoring.js) — done Phase 5.1
-2. ✅ Beta role display in First Quarter — done Phase 5.1–5.4
-3. Build Witness Cèrcol instrument (Phase 7)
-4. Add ICAR cognitive ability measure (public domain, Condon & Revelle 2014) (Phase 6)
-5. Build Full Moon integrated report (Phase 6)
-6. Replace theoretical centroids with empirical centroids at N≥300
-7. Build Last Quarter team composition report (Phase 10+)
-
 #### Academic sources
 - AB5C: Hofstee, De Raad & Goldberg (1992), JPSP 63, 146-163
 - Digman meta-factors: Digman (1997), JPSP 73, 1246-1256
@@ -741,12 +732,6 @@ A sub-phase (3.x) is complete when:
 1. npm run build passes with no errors
 2. npm run deploy succeeds
 3. The specific feature described is verifiable at the production URL
-
-Phase 3 (Epoch 1) closes when:
-- Both NewMoon and FirstQuarter are fully functional end-to-end
-- Supabase logs both instrument values correctly
-- README is published and accurate
-- At least one real external user has completed FirstQuarter
 
 ## File structure
 src/
