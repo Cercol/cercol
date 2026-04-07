@@ -507,6 +507,24 @@ PAID (one-time payment, per session):
   Prerequisite: ~300 WaxingCrescent completions analysed.
 -->
 
+### Phase 5.3 — Simplified pipeline + published prior statistics ✅ COMPLETE
+- src/utils/role-scoring.js only — no UI changes, no i18n changes
+  - Replaced uniform mean=3/SD=0.6 prior with per-domain published normative statistics:
+      NORM_MEAN: E=3.3, A=3.9, C=3.7, N=2.8, O=3.7
+      NORM_SD:   E=0.72, A=0.58, C=0.62, N=0.72, O=0.60
+    Source: Johnson (2014) doi:10.1016/j.jrp.2014.05.003;
+            Maples-Keller et al. (2019) doi:10.1080/00223891.2018.1467425
+  - Removed SECTOR_MAP constant entirely (all sector detection code deleted)
+  - computeRole() simplified to 4 steps:
+      1. Normalise to z-scores via NORM_MEAN/NORM_SD
+      2. Centre rule: max(|z|) < 0.5 → R0
+      3. Euclidean distance to all 9 centroids → minimum-distance role
+      4. buildResult() → softmax probabilities, arc, Digman α/β
+  - buildResult() signature simplified: removed sector and method params
+  - Return object: { role, arc, probabilities, alpha, beta }
+    (sector and _method removed — unused by RoleResult and RoleWheel)
+  - CENTROIDS and ROLE_PROJECTIONS unchanged
+
 ### Phase 5.2 — Role wheel: α/β 2D visualisation ✅ COMPLETE
 - src/utils/role-scoring.js: added exported ROLE_PROJECTIONS constant
   Derived from CENTROIDS at module level (no data duplication):
@@ -556,7 +574,8 @@ PAID (one-time payment, per session):
    R6=Enclusa, R7=Teler, R8=Cometa; essences left in EN pending translation)
 
 NOTE: centroids are theoretical (Phase 5.1). Replace with empirical centroids
-at N≥300 completions. All thresholds (0.5, 0.3, 0.15) are calibration params.
+at N≥300 completions. Threshold 0.5 (centre rule) and 0.15 (arc) are calibration params.
+Normalisation priors updated in Phase 5.3 to published per-domain values.
 
 ### Phase 5 — Team Role Instrument (Cèrcol Full Moon)
 

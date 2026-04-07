@@ -1,8 +1,10 @@
 /**
- * Cèrcol role scoring — Phase 5.1 (theoretical centroids, beta)
+ * Cèrcol role scoring — Phase 5.3 (theoretical centroids, beta)
  * Pipeline: CLAUDE.md "Phase 5 — Scientific foundation"
  * OCEAN mapping: E=presence, A=bond, C=discipline, N=depth, O=vision
- * Prior normalisation: mean=3, SD=0.6 (1-5 scale)
+ *
+ * Normalisation: per-domain published priors from Johnson (2014) and
+ * Maples-Keller et al. (2019); replaced by sample stats at N≥200.
  *
  * Replace CENTROIDS with empirical values at N≥300.
  */
@@ -21,8 +23,8 @@ const CENTROIDS = {
   R8: [ +0.5,  0.0,  0.0, -0.5, +1.2 ],
 }
 
-// ── Digman α/β projections derived from centroids (display use only) ─────────
-// α = (z_A + z_E - z_N) / 3  (socialisation axis, horizontal)
+// ── Digman α/β projections derived from centroids (display use only) ──────
+// α = (z_A + z_E − z_N) / 3  (socialisation axis, horizontal)
 // β = (z_C + z_O) / 2         (efficacy/growth axis, vertical)
 // CENTROIDS order: [E, A, C, N, O]
 export const ROLE_PROJECTIONS = Object.fromEntries(
@@ -35,35 +37,28 @@ export const ROLE_PROJECTIONS = Object.fromEntries(
   })
 )
 
-// OCEAN factor keys — index maps to CENTROIDS arrays
+// ── OCEAN factor keys ──────────────────────────────────────────────────────
 const FACTOR_KEYS = ['E', 'A', 'C', 'N', 'O']
 const DOMAIN_MAP  = { E: 'presence', A: 'bond', C: 'discipline', N: 'depth', O: 'vision' }
 
-// ── Sector → role lookup ───────────────────────────────────────────────────
-// Boundary sectors return 2 candidates (resolved by Euclidean distance).
-// Unrecognised sectors also resolved by Euclidean over all 9 roles.
-const SECTOR_MAP = {
-  // R1 — Bolt
-  'E+/C+': ['R1'], 'C+/E+': ['R1'],
-  // R2 — Beacon
-  'E+/A+': ['R2'], 'A+/E+': ['R2'],
-  // R3 — Thorn
-  'A-/E+': ['R3'], 'E+/N+': ['R3'], 'N-/A-': ['R3'],
-  // R4 — Anchor
-  'A+/C+': ['R4'], 'C+/A+': ['R4'], 'A+/N-': ['R4'], 'N-/C+': ['R4'],
-  // R5 — Heron
-  'A+/E-': ['R5'], 'E-/A+': ['R5'], 'A+/C-': ['R5'], 'C-/A+': ['R5'],
-  // R6 — Anvil
-  'C+/N+': ['R6'], 'N+/C+': ['R6'],
-  // R7 — Loom
-  'O+/C+': ['R7'], 'C+/O+': ['R7'],
-  // R8 — Comet
-  'O+/N-': ['R8'], 'O+/A-': ['R8'], 'E-/O+': ['R8'],
-  // Boundary sectors — 2 candidates, resolved by Euclidean
-  'E+/O+': ['R1', 'R8'], 'O+/E+': ['R1', 'R8'],
-  'A+/O+': ['R5', 'R7'], 'O+/A+': ['R5', 'R7'],
-  'N-/E+': ['R1', 'R2'], 'E+/N-': ['R1', 'R2'],
-  'E+/A-': ['R3', 'R6'], 'A-/C+': ['R3', 'R6'],
+// ── Published normative statistics for IPIP-NEO (1-5 scale) ───────────────
+// Source: Johnson (2014) doi:10.1016/j.jrp.2014.05.003;
+//         Maples-Keller et al. (2019) doi:10.1080/00223891.2018.1467425
+// Approximate cross-study means for general adult samples.
+// Order matches FACTOR_KEYS: [E, A, C, N, O]
+const NORM_MEAN = {
+  E: 3.3,  // Presence (Extraversion)
+  A: 3.9,  // Bond (Agreeableness)
+  C: 3.7,  // Discipline (Conscientiousness)
+  N: 2.8,  // Depth (Neuroticism)
+  O: 3.7,  // Vision (Openness)
+}
+const NORM_SD = {
+  E: 0.72,
+  A: 0.58,
+  C: 0.62,
+  N: 0.72,
+  O: 0.60,
 }
 
 // ── Softmax over negated distances ────────────────────────────────────────
@@ -82,7 +77,7 @@ function euclidean(zArr, centroid) {
 }
 
 // ── buildResult ───────────────────────────────────────────────────────────
-function buildResult(role, z, sector, method) {
+function buildResult(role, z) {
   const roles   = Object.keys(CENTROIDS)
   const dists   = roles.map(r => euclidean(z, CENTROIDS[r]))
   const probs   = softmax(dists.map(d => -d))
@@ -93,7 +88,7 @@ function buildResult(role, z, sector, method) {
   const alpha = (zA + zE - zN) / 3
   const beta  = (zC + zO)  / 2
 
-  return { role, arc, probabilities: probMap, alpha, beta, sector, _method: method }
+  return { role, arc, probabilities: probMap, alpha, beta }
 }
 
 /**
@@ -106,44 +101,22 @@ function buildResult(role, z, sector, method) {
  *   probabilities: Object,   // {R0…R8: 0–1}
  *   alpha: number,           // Digman α axis (display only)
  *   beta: number,            // Digman β axis (display only)
- *   sector: string,          // e.g. 'E+/C+' (traceability)
  * }
  */
 export function computeRole(domainScores) {
-  const MEAN = 3
-  const SD   = 0.6
+  // Step 1 — Normalise raw 1-5 scores to z-scores using per-domain published priors
+  const z = FACTOR_KEYS.map(f => (domainScores[DOMAIN_MAP[f]] - NORM_MEAN[f]) / NORM_SD[f])
 
-  // Step 1 — Normalise raw scores to z-scores [E, A, C, N, O]
-  const z = FACTOR_KEYS.map(f => (domainScores[DOMAIN_MAP[f]] - MEAN) / SD)
-
-  // Step 2 — Identify primary and secondary factor poles (AB5C sector)
-  const sorted = z.map((v, i) => [i, Math.abs(v)]).sort((a, b) => b[1] - a[1])
-  const [priIdx, priAbs] = sorted[0]
-  const [secIdx, secAbs] = sorted[1]
-
-  const sector = `${FACTOR_KEYS[priIdx]}${z[priIdx] >= 0 ? '+' : '-'}/${FACTOR_KEYS[secIdx]}${z[secIdx] >= 0 ? '+' : '-'}`
-
-  // Centre rule: primary pole too weak → R0 (no dominant role)
-  if (priAbs < 0.5) {
-    return buildResult('R0', z, sector, 'centre')
+  // Step 2 — Centre rule: no dominant pole → R0
+  if (Math.max(...z.map(Math.abs)) < 0.5) {
+    return buildResult('R0', z)
   }
 
-  // Pure pole: secondary too weak → fall through to Euclidean over all roles
-  // Otherwise look up candidates in SECTOR_MAP (fall back to all 9 if unknown)
-  const candidates = secAbs < 0.3
-    ? Object.keys(CENTROIDS)
-    : (SECTOR_MAP[sector] ?? Object.keys(CENTROIDS))
-
-  // Step 4 — Resolve by minimum Euclidean distance within candidate set
-  const distances = Object.fromEntries(
-    Object.keys(CENTROIDS).map(r => [r, euclidean(z, CENTROIDS[r])])
-  )
-  const role = candidates.reduce((best, r) =>
-    distances[r] < distances[best] ? r : best
+  // Step 3 — Assign role with minimum Euclidean distance to centroids
+  const role = Object.keys(CENTROIDS).reduce((best, r) =>
+    euclidean(z, CENTROIDS[r]) < euclidean(z, CENTROIDS[best]) ? r : best
   )
 
-  return buildResult(
-    role, z, sector,
-    candidates.length === Object.keys(CENTROIDS).length ? 'euclidean-all' : 'sector'
-  )
+  // Step 4 — buildResult: softmax probabilities, arc, Digman α/β
+  return buildResult(role, z)
 }
