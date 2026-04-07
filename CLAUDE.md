@@ -402,7 +402,8 @@ Future: migrate to a spreadsheet or translation management tool
 - App.jsx: /my-results route added
 - en.json / ca.json: myResults namespace added (link, heading, loading, error, empty, startCta)
 
-### Phase 4.4 — Shared Layout component ✅ COMPLETE
+### Phase 4.4 — Shared Layout component + HTTPS bug fixes ✅ COMPLETE
+- Three HTTPS bugs fixed after custom domain went live (see below)
 - src/components/Layout.jsx: persistent header (brand link left, AccountButton + LanguageToggle right);
   children rendered below in normal flow; uses only Tailwind classes, no hardcoded values
 - App.jsx: all routes wrapped in Layout via AppContent; single source of nav shell
@@ -414,6 +415,15 @@ Future: migrate to a spreadsheet or translation management tool
 - FirstQuarterPage: same — removed LanguageToggle import + inline header row
 - NewMoonResultsPage: removed LanguageToggle import; inline header collapsed to h1 + subtitle only
 - FirstQuarterResultsPage: same
+
+#### HTTPS bug fixes (post-custom-domain)
+- api/main.py: added http://cercol.team and both http/https localhost variants to CORS origins
+  (only https://cercol.team was listed; http variant and https localhost were missing)
+- src/utils/translationFeedback.js: removed duplicate createClient() call; now imports shared
+  supabase instance from src/lib/supabase.js (was the source of "multiple GoTrueClient" warning)
+- public/404.html: skip redirect for /auth/callback paths so Supabase can handle its own
+  magic link redirect without the SPA script mangling the hash fragment
+- index.html: companion replaceState script also skips /auth/callback paths
 
 ### Phase 4.5 — Stripe Checkout + premium facet gate ✅ COMPLETE
 - supabase/migrations/003_premium.sql: adds `premium boolean default false` to profiles

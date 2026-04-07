@@ -8,7 +8,7 @@
     <script>
       (function() {
         const p = new URLSearchParams(window.location.search).get('p')
-        if (p) {
+        if (p && decodeURIComponent(p).indexOf('/auth/callback') !== 0) {
           window.history.replaceState(
             null, null,
             '/' + decodeURIComponent(p) + window.location.hash

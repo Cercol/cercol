@@ -27,8 +27,11 @@ app = FastAPI(
 
 ALLOWED_ORIGINS = [
     "https://cercol.team",
+    "http://cercol.team",
     "http://localhost:5173",   # Vite dev server
+    "https://localhost:5173",
     "http://localhost:4173",   # Vite preview
+    "https://localhost:4173",
 ]
 
 app.add_middleware(
