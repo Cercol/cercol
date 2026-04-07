@@ -156,13 +156,14 @@ export default function FirstQuarterResultsPage() {
     return () => { cancelled = true }
   }, [user, paymentParam]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Clear sessionStorage once payment confirmed and premium loaded
+  // Clear sessionStorage once the DB confirms premium=true.
+  // We don't clear it earlier because the polling may still be running.
   useEffect(() => {
-    if (paymentParam === 'success' && premium === true) {
+    if (premium === true) {
       sessionStorage.removeItem(FACETS_SESSION_KEY)
       sessionStorage.removeItem(DOMAINS_SESSION_KEY)
     }
-  }, [paymentParam, premium])
+  }, [premium])
 
   async function handleUnlock() {
     if (!user) { navigate('/auth'); return }
@@ -187,8 +188,13 @@ export default function FirstQuarterResultsPage() {
     })
   }
 
-  const domainKeys     = DOMAIN_KEYS
-  const facetsUnlocked = premium === true
+  const domainKeys = DOMAIN_KEYS
+  // Unlock immediately if Stripe redirected back with ?payment=success —
+  // the webhook may still be in flight, but Stripe guarantees this URL
+  // is only visited after a successful charge. The polling continues in
+  // the background so profiles.premium gets set before sessionStorage
+  // is cleared, but we don't make the user wait for it.
+  const facetsUnlocked = premium === true || paymentParam === 'success'
   const showFacets     = facets && facetsUnlocked
   const showGate       = facets && !facetsUnlocked
 
