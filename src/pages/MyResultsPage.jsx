@@ -21,6 +21,7 @@ const DOMAIN_BAR_COLOR = {
 const INSTRUMENT_SCALE = {
   newMoon:      { min: 1, max: 7 },
   firstQuarter: { min: 1, max: 5 },
+  fullMoon:     { min: 1, max: 5 },
 }
 
 function scorePercent(score, instrument) {
@@ -35,9 +36,10 @@ function formatDate(iso, language) {
 }
 
 function ResultCard({ result, t, language }) {
-  const instrumentLabel = result.instrument === 'newMoon'
-    ? t('home.newMoon.name')
-    : t('home.firstQuarter.name')
+  const instrumentLabel =
+    result.instrument === 'newMoon'      ? t('home.newMoon.name')
+    : result.instrument === 'fullMoon'   ? t('home.fullMoon.name')
+    :                                      t('home.firstQuarter.name')
 
   return (
     <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
