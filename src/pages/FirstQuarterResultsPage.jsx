@@ -40,7 +40,8 @@ const DOMAIN_BAR_COLOR = {
   discipline: 'bg-blue-600',
 }
 
-const FACETS_SESSION_KEY = 'cercol_fq_facets'
+const FACETS_SESSION_KEY  = 'cercol_fq_facets'
+const DOMAINS_SESSION_KEY = 'cercol_fq_domains'
 
 function encodeScores(domains) {
   const ordered = DOMAIN_KEYS.map((k) => domains[k] ?? 0)
@@ -84,12 +85,20 @@ export default function FirstQuarterResultsPage() {
     domains = decodeScores(sharedParam)
   }
 
-  // Restore facets from sessionStorage after a Stripe redirect
-  if (!facets && paymentParam) {
-    try {
-      const saved = sessionStorage.getItem(FACETS_SESSION_KEY)
-      if (saved) facets = JSON.parse(saved)
-    } catch { /* ignore */ }
+  // Restore scores from sessionStorage after a Stripe redirect
+  if (paymentParam) {
+    if (!facets) {
+      try {
+        const saved = sessionStorage.getItem(FACETS_SESSION_KEY)
+        if (saved) facets = JSON.parse(saved)
+      } catch { /* ignore */ }
+    }
+    if (!domains) {
+      try {
+        const saved = sessionStorage.getItem(DOMAINS_SESSION_KEY)
+        if (saved) domains = JSON.parse(saved)
+      } catch { /* ignore */ }
+    }
   }
 
   if (!domains) {
@@ -120,6 +129,7 @@ export default function FirstQuarterResultsPage() {
   useEffect(() => {
     if (paymentParam === 'success' && premium === true) {
       sessionStorage.removeItem(FACETS_SESSION_KEY)
+      sessionStorage.removeItem(DOMAINS_SESSION_KEY)
     }
   }, [paymentParam, premium])
 
@@ -127,8 +137,9 @@ export default function FirstQuarterResultsPage() {
     if (!user) { navigate('/auth'); return }
     try {
       setCheckingOut(true)
-      // Persist facets so they survive the Stripe redirect
-      if (facets) sessionStorage.setItem(FACETS_SESSION_KEY, JSON.stringify(facets))
+      // Persist scores so they survive the Stripe redirect
+      if (facets)   sessionStorage.setItem(FACETS_SESSION_KEY,  JSON.stringify(facets))
+      if (domains)  sessionStorage.setItem(DOMAINS_SESSION_KEY, JSON.stringify(domains))
       const { url } = await createCheckoutSession()
       window.location.href = url
     } catch {
