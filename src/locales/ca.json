@@ -52,6 +52,12 @@
       "meta": "60 preguntes · ~10 min",
       "description": "Una mirada més profunda, dividida en 30 facetes."
     },
+    "fullMoon": {
+      "name": "Cèrcol de Lluna Plena",
+      "tagline": "Retrat definitiu",
+      "meta": "120 preguntes · ~20 min",
+      "description": "L'autoinforme més complet — les 30 facetes a resolució completa."
+    },
     "footnote": "Codi obert · ",
     "viewOnGitHub": "Veure a GitHub"
   },
@@ -117,6 +123,45 @@
       "loading": "Redirigint al pagament…",
       "signInNote": "Cal que iniciïs sessió primer."
     }
+  },
+  "fm": {
+    "subtitle": "Cèrcol de Lluna Plena",
+    "blockProgress": "{{current}} de {{total}} en aquest bloc",
+    "blockLabel": "Bloc {{current}} de {{total}}",
+    "overallProgress": "{{current}} de {{total}} en total",
+    "instructions": "Indica en quina mesura cada afirmació s'aplica a tu.",
+    "itemPrefix": "Em veig com algú que",
+    "back": "Anterior",
+    "next": "Següent",
+    "seeResults": "Veure els meus resultats",
+    "transition": {
+      "blockDone": "{{name}} completat",
+      "nextUp": "A continuació:",
+      "cta": "Continuar amb {{name}}"
+    }
+  },
+  "fmResults": {
+    "title": "El teu retrat complet",
+    "subtitle": "Cèrcol de Lluna Plena · 5 dimensions · 30 facetes",
+    "domainSection": "Cinc dimensions",
+    "facetSection": "Detall per facetes",
+    "roleSection": "El teu rol · Primera mirada",
+    "scoreLabels": {
+      "low": "Baix",
+      "moderate": "Moderat",
+      "high": "Alt"
+    },
+    "share": "Compartir resultats",
+    "copied": "Copiat!",
+    "retake": "Tornar a començar",
+    "disclaimer": "Les puntuacions reflecteixen tendències en el moment de l'avaluació. Cada extrem d'una dimensió té els seus punts forts — cap puntuació és bona o dolenta."
+  },
+  "fmDomains": {
+    "depth":      { "name": "Profunditat", "description": "Com processes les emocions i navegues la incertesa.", "blockIntro": "Aquestes preguntes exploren el teu paisatge emocional — com respons a l'estrès, el canvi i la tensió interior." },
+    "presence":   { "name": "Presència",   "description": "L'energia que portes als espais socials.", "blockIntro": "Aquestes preguntes exploren com et mostres en situacions socials i com connectes amb els altres." },
+    "vision":     { "name": "Visió",       "description": "Com t'impliques amb les idees, la bellesa i el pensament nou.", "blockIntro": "Aquestes preguntes exploren la teua curiositat, imaginació i obertura a noves perspectives." },
+    "bond":       { "name": "Vincle",      "description": "Com et relaciones i la calidesa que aportes.", "blockIntro": "Aquestes preguntes exploren com construeixes confiança, mostres cura i et relaciones amb la gent del teu entorn." },
+    "discipline": { "name": "Disciplina", "description": "Com abordes les tasques, els objectius i el compromís.", "blockIntro": "Aquestes preguntes exploren com organitzes el teu temps, compleixes compromisos i mantens el rumb." }
   },
   "scale": {
     "1": "Totalment en desacord",

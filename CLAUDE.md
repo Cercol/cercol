@@ -458,7 +458,7 @@ Future: migrate to a spreadsheet or translation management tool
 - en.json / ca.json: fqResults.unlock.* and fqResults.paymentSuccess added
 - .env / .env.example: VITE_API_URL added
 - NOTE: The gate was originally placed on FirstQuarter facets, then removed in Phase 4.7.
-  The Stripe endpoints and premium column remain — they will gate Full Moon (Phase 5).
+  The Stripe endpoints and premium column remain — they will gate Full Moon (Phase 6).
 
 #### Manual tasks (Miquel)
 - In Supabase SQL editor: run migration 003_premium.sql
@@ -501,7 +501,8 @@ All three auth methods broken after Phase 4.6. Three root causes found and fixed
    (GitHub Pages served 404.html but the skip meant no redirect to index.html → blank page).
    404.html now always redirects to /?p=encodedPath+hash, for every path including /auth/callback.
 2. index.html: fixed double-slash bug — `'/' + decodeURIComponent(p)` produced `//auth/callback`
-   (SecurityError) because p already starts with '/'. Fixed to `decodeURIComponent(p)`. Also
+   (SecurityError) because p already starts with '/'. Fixed to use `p` directly
+   (URLSearchParams.get() already decodes — no additional decodeURIComponent needed). Also
    removed the /auth/callback exclusion check (no longer needed since 404.html always redirects).
 3. src/pages/AuthPage.jsx: added useNavigate + useEffect(() => { if (user) navigate('/') }, [user])
    — password sign-in and sign-up were succeeding but the page never navigated (onAuthStateChange
@@ -542,7 +543,7 @@ The pipeline uses theoretical centroids and will be updated with empirical
 values as data accumulates. Built across four sub-phases:
 
 - **5.1** — `computeRole()` scoring module; `RoleResult` card (name, essence, arc chips)
-  shown at the end of First Quarter results. Theoretical centroids, AB5C sector lookup.
+  shown at the end of First Quarter results. Theoretical centroids.
 - **5.2** — `RoleWheel` SVG visualisation: all 9 roles plotted in α/β space with user position.
 - **5.3** — Pipeline simplified: SECTOR_MAP and sector detection removed; pure Euclidean
   over all 9 centroids. Normalisation priors replaced with per-domain published values
@@ -682,11 +683,32 @@ and src/locales/ca.json under the roles namespace (Phase 5 implementation).
   Full Moon, Witness, complete product before redesign.
 -->
 
-### Phase 6 — Full Moon Cèrcol
-- IPIP-NEO-120 self-report (120 items, 5-point, 30 facets)
+### Phase 6 — Full Moon Cèrcol (self-report instrument) ✅ COMPLETE
+
+#### Phase 6.1 — IPIP-NEO-120 self-report instrument ✅ COMPLETE
+- src/data/full-moon.js: 120-item IPIP-NEO-120 instrument
+  - Same 30 facets as First Quarter; 4 items per facet (vs 2 in FQ)
+  - FM_ITEMS, FM_SCALE_LABELS, FM_DOMAIN_META, FM_FACET_META
+  - All items from public-domain IPIP pool (ipip.ori.org)
+  - Source: Johnson (2014) doi:10.1016/j.jrp.2014.05.003
+- src/utils/full-moon-scoring.js: computeFMScores, fmScoreToPercent, fmScoreLabel
+  - Same logic as First Quarter; domain score = mean of 24 items (6 facets × 4)
+- src/pages/FullMoonPage.jsx: 5 blocks of 24 items (one block per domain)
+  - Exact same architecture as FirstQuarterPage; keyboard nav, transitions, FeedbackContext
+- src/pages/FullMoonResultsPage.jsx: radar + domain cards + 30-facet breakdown + role
+  - Facet labels and descriptions reuse fqFacets namespace (same 30 facets)
+  - Role result (RoleResult + RoleProbabilityBars) — same computeRole pipeline as FQ
+  - Share via ?r=BASE64 encoded domain scores; result logging ('fullMoon' instrument)
+- src/App.jsx: /full-moon and /full-moon/results routes added
+- src/pages/HomePage.jsx: Full Moon Cèrcol card added (purple accent)
+- src/components/FeedbackButton.jsx: /full-moon → 'fullMoon' instrument detection
+- en.json / ca.json: fm.*, fmResults.*, fmDomains.*, home.fullMoon.* namespaces added
+  (CA fully translated inline)
+
+Remaining Full Moon components (not yet built):
 - ICAR cognitive ability measure (public domain, Condon & Revelle 2014)
+- Stripe gate (one-time payment per session)
 - Definitive role result (beta → validated when N≥200)
-- Stripe gate active (one-time payment per session)
 
 ### Phase 7 — Witness Cèrcol
 - AB5C lexical adjective corpus: markers per role documented
@@ -737,6 +759,8 @@ A sub-phase (3.x) is complete when:
 src/
   components/    # UI components
   pages/         # Route-level components
+  context/       # React context providers (AuthContext.jsx, FeedbackContext.jsx)
+  lib/           # Shared service clients (supabase.js, api.js)
   design/        # tokens.js and global styles
   data/          # test items, scoring keys (always cite source)
   utils/         # scoring logic, logger.js, translationFeedback.js

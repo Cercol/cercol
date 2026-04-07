@@ -52,6 +52,12 @@
       "meta": "60 questions · ~10 min",
       "description": "A deeper look, broken into 30 facets."
     },
+    "fullMoon": {
+      "name": "Full Moon Cèrcol",
+      "tagline": "Complete portrait",
+      "meta": "120 questions · ~20 min",
+      "description": "The deepest self-report — all 30 facets at full resolution."
+    },
     "footnote": "Open source · ",
     "viewOnGitHub": "View on GitHub"
   },
@@ -117,6 +123,45 @@
       "loading": "Redirecting to payment…",
       "signInNote": "You need to sign in first."
     }
+  },
+  "fm": {
+    "subtitle": "Full Moon Cèrcol",
+    "blockProgress": "{{current}} of {{total}} in this block",
+    "blockLabel": "Block {{current}} of {{total}}",
+    "overallProgress": "{{current}} of {{total}} overall",
+    "instructions": "Rate the extent to which each statement applies to you.",
+    "itemPrefix": "I see myself as someone who",
+    "back": "Back",
+    "next": "Next",
+    "seeResults": "See my results",
+    "transition": {
+      "blockDone": "{{name}} done",
+      "nextUp": "Up next:",
+      "cta": "Continue to {{name}}"
+    }
+  },
+  "fmResults": {
+    "title": "Your full portrait",
+    "subtitle": "Full Moon Cèrcol · 5 dimensions · 30 facets",
+    "domainSection": "Five dimensions",
+    "facetSection": "Facet breakdown",
+    "roleSection": "Your role · First look",
+    "scoreLabels": {
+      "low": "Low",
+      "moderate": "Moderate",
+      "high": "High"
+    },
+    "share": "Share results",
+    "copied": "Copied!",
+    "retake": "Start over",
+    "disclaimer": "Scores reflect tendencies at the time of assessment. Each end of a dimension has its own strengths — no score is good or bad."
+  },
+  "fmDomains": {
+    "depth":      { "name": "Depth",      "description": "How you process emotions and navigate uncertainty.", "blockIntro": "These questions explore your emotional landscape — how you respond to stress, change, and inner tension." },
+    "presence":   { "name": "Presence",   "description": "How much energy you bring to social spaces.", "blockIntro": "These questions explore how you show up in social situations and connect with others." },
+    "vision":     { "name": "Vision",     "description": "How you engage with ideas, beauty, and new thinking.", "blockIntro": "These questions explore your curiosity, imagination, and openness to new perspectives." },
+    "bond":       { "name": "Bond",       "description": "How you relate to others and the warmth you bring.", "blockIntro": "These questions explore how you build trust, show care, and relate to the people around you." },
+    "discipline": { "name": "Discipline", "description": "How you approach tasks, goals, and follow-through.", "blockIntro": "These questions explore how you organise your time, keep commitments, and stay on track." }
   },
   "scale": {
     "1": "Disagree strongly",

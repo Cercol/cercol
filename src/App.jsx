@@ -7,6 +7,8 @@ import NewMoonPage from './pages/NewMoonPage'
 import NewMoonResultsPage from './pages/NewMoonResultsPage'
 import FirstQuarterPage from './pages/FirstQuarterPage'
 import FirstQuarterResultsPage from './pages/FirstQuarterResultsPage'
+import FullMoonPage from './pages/FullMoonPage'
+import FullMoonResultsPage from './pages/FullMoonResultsPage'
 import AuthPage from './pages/AuthPage'
 import AuthCallbackPage from './pages/AuthCallbackPage'
 import MyResultsPage from './pages/MyResultsPage'
@@ -24,6 +26,9 @@ function AppContent() {
         {/* First Quarter */}
         <Route path="/first-quarter" element={<FirstQuarterPage />} />
         <Route path="/first-quarter/results" element={<FirstQuarterResultsPage />} />
+        {/* Full Moon */}
+        <Route path="/full-moon" element={<FullMoonPage />} />
+        <Route path="/full-moon/results" element={<FullMoonResultsPage />} />
         {/* Auth */}
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/auth/callback" element={<AuthCallbackPage />} />

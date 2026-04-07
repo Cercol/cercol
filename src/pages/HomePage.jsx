@@ -84,6 +84,14 @@ export default function HomePage() {
             accent="text-blue-600"
             onClick={() => navigate('/first-quarter')}
           />
+          <InstrumentCard
+            name={t('home.fullMoon.name')}
+            tagline={t('home.fullMoon.tagline')}
+            meta={t('home.fullMoon.meta')}
+            description={t('home.fullMoon.description')}
+            accent="text-purple-600"
+            onClick={() => navigate('/full-moon')}
+          />
         </div>
 
         {/* Footer */}

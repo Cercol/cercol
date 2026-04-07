@@ -17,6 +17,7 @@ const ISSUE_URL =
 function getInstrument(pathname) {
   if (pathname.includes('/new-moon')) return 'newMoon'
   if (pathname.includes('/first-quarter')) return 'firstQuarter'
+  if (pathname.includes('/full-moon')) return 'fullMoon'
   return 'none'
 }
 
