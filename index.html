@@ -7,12 +7,14 @@
     <title>cercol</title>
     <script>
       (function() {
+        // Companion to public/404.html SPA redirect workaround.
+        // 404.html encodes the original path+search into the ?p= param.
+        // URLSearchParams.get() already percent-decodes the value,
+        // so we restore the URL directly — no extra decodeURIComponent.
+        // The hash is kept separate so Supabase auth fragments survive intact.
         const p = new URLSearchParams(window.location.search).get('p')
         if (p) {
-          window.history.replaceState(
-            null, null,
-            decodeURIComponent(p) + window.location.hash
-          )
+          window.history.replaceState(null, null, p + window.location.hash)
         }
       })()
     </script>
