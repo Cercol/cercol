@@ -8,7 +8,7 @@
     <script>
       (function() {
         const p = new URLSearchParams(window.location.search).get('p')
-        if (p) {
+        if (p && decodeURIComponent(p).indexOf('/auth/callback') !== 0) {
           window.history.replaceState(
             null, null,
             '/' + decodeURIComponent(p) + window.location.hash
@@ -16,7 +16,7 @@
         }
       })()
     </script>
-    <script type="module" crossorigin src="/assets/index-Dpvg4hMf.js"></script>
+    <script type="module" crossorigin src="/assets/index-Dgn5FHDB.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-XQhXnbww.css">
   </head>
   <body>
