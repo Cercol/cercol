@@ -347,6 +347,7 @@
     "beta_label": "Beta · Model teòric",
     "arc_label": "Arc personal",
     "you": "La teua posició",
+    "probability_label": "Afinitat de rol",
     "R0": {
       "name": "Opàl",
       "essence": "No fixed role. Present in different ways without ceasing to be you."

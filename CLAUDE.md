@@ -61,19 +61,47 @@ Current instruments:
 
 Cèrcol uses four lunar phases as instrument names.
 Each phase is a standalone user experience with increasing depth.
-Observer assessment and cognitive ability (ICAR) are components
-of FullMoon, not standalone phases.
+Witness Cèrcol and ICAR cognitive ability are components of Full Moon,
+not standalone phases. Never use "observer" in user-facing text or code
+comments — it is Belbin terminology. Always use "Witness" / "Testimoni".
 
 | Phase | Code name | EN display name | CA display name | Instrument | Status |
 |---|---|---|---|---|---|
 | 🌑 | NewMoon | New Moon Cèrcol | Cèrcol de Lluna Nova | TIPI — 10 items, 7-point, 5 domains | Live |
 | 🌓 | FirstQuarter | First Quarter Cèrcol | Cèrcol de Quart Creixent | IPIP-NEO-60 — 60 items, 5-point, 30 facets | Live |
-| 🌕 | FullMoon | Full Moon Cèrcol | Cèrcol de Lluna Plena | IPIP-NEO-120 + Observer + ICAR g | Planned |
+| 🌕 | FullMoon | Full Moon Cèrcol | Cèrcol de Lluna Plena | IPIP-NEO-120 + Witness Cèrcol + ICAR g | Planned |
 | 🌗 | LastQuarter | Last Quarter Cèrcol | Cèrcol de Quart Minvant | Team report (members FullMoon) | Planned |
 
 User journey:
 NewMoon → FirstQuarter → FullMoon → LastQuarter
 (snapshot)  (portrait)   (complete)  (team)
+
+## Full Moon + Witness Cèrcol design (definitive)
+
+Full Moon = IPIP-NEO-120 (self-report, 120 items, 5-point Likert)
+          + ICAR cognitive ability measure
+          + Witness Cèrcol (CA: Testimoni Cèrcol)
+
+### Witness Cèrcol
+Adaptive forced-choice adjective selection based on AB5C lexical markers
+from the public-domain IPIP item pool (Goldberg). Never called "observer
+assessment" in user-facing text or comments.
+
+Flow:
+- A person who knows the subject well is given a unique link
+- Each round: 4–6 adjectives shown; assessor selects best fit and worst fit
+  for the subject (forced choice — no Likert scale)
+- Forced choice eliminates social desirability bias
+- Algorithm maintains a Bayesian probability distribution over the 9 roles;
+  selects the next adjective set to maximise information gain on remaining
+  ambiguities
+- Stops at convergence or ~20–25 decisions
+
+Output of Full Moon + Witness:
+- Primary role (self, from IPIP-NEO-120)
+- Role consensus (from Witness, may be multiple witnesses averaged)
+- Convergence score (self vs witness agreement)
+- Blind spots: dimensions where self and witness diverge significantly
 
 ## File naming convention
 All instrument pages use English phase names as base:
@@ -506,6 +534,23 @@ PAID (one-time payment, per session):
   Role instrument, observer, team reports.
   Prerequisite: ~300 WaxingCrescent completions analysed.
 -->
+
+### Phase 5.4 — Probability bars + Full Moon/Witness design documented ✅ COMPLETE
+- src/utils/role-scoring.js: removed ROLE_PROJECTIONS export
+  (was only used by RoleWheel, which is deleted; confirmed with grep)
+- src/components/RoleWheel.jsx: deleted
+- src/components/RoleProbabilityBars.jsx: new component replacing RoleWheel
+  - Sorted descending by softmax probability; primary highlighted (primary color,
+    bold label); arc roles distinct (blue-300 bar, blue-700 label); rest gray
+  - Percentage shown as tabular-nums right-aligned per row
+  - Section eyebrow: roles.probability_label ("Role fit" / "Afinitat de rol")
+  - No SVG, no axes, no coordinate projection; consistent with existing card style
+- src/pages/FirstQuarterResultsPage.jsx: swapped RoleWheel import/usage for
+  RoleProbabilityBars; wrapper div removed (RoleProbabilityBars is self-contained)
+- en.json / ca.json: roles.probability_label added
+- CLAUDE.md: updated lunar phase table (Observer → Witness Cèrcol); added
+  "Full Moon + Witness Cèrcol design (definitive)" section documenting the
+  adaptive forced-choice Witness instrument, algorithm, and Full Moon output
 
 ### Phase 5.3 — Simplified pipeline + published prior statistics ✅ COMPLETE
 - src/utils/role-scoring.js only — no UI changes, no i18n changes
