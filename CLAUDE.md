@@ -525,70 +525,30 @@ FREE (always):
 - First Quarter Cèrcol — 60 items, 5 domains, 30 facets, full portrait
 
 PAID (one-time payment, per session):
-- Full Moon Cèrcol — IPIP-NEO-120 + observer assessment + ICAR cognitive ability;
-  definitive role result and team report (Phase 5, not yet built)
+- Full Moon Cèrcol — IPIP-NEO-120 + Witness Cèrcol + ICAR cognitive ability;
+  definitive role result and team report (Phase 6–7, not yet built)
   Stripe infrastructure (checkout endpoint, webhook, premium column) is already in place.
 
 <!--
-  EPOCH 3 — Team Intelligence
-  Role instrument, observer, team reports.
-  Prerequisite: ~300 WaxingCrescent completions analysed.
+  EPOCH 3 — Role intelligence
+  Role scoring in the product. Full Moon and Witness when data allows.
+  Prerequisite: ~300 FirstQuarter completions in Supabase.
 -->
 
-### Phase 5.4 — Probability bars + Full Moon/Witness design documented ✅ COMPLETE
-- src/utils/role-scoring.js: removed ROLE_PROJECTIONS export
-  (was only used by RoleWheel, which is deleted; confirmed with grep)
-- src/components/RoleWheel.jsx: deleted
-- src/components/RoleProbabilityBars.jsx: new component replacing RoleWheel
-  - Sorted descending by softmax probability; primary highlighted (primary color,
-    bold label); arc roles distinct (blue-300 bar, blue-700 label); rest gray
-  - Percentage shown as tabular-nums right-aligned per row
-  - Section eyebrow: roles.probability_label ("Role fit" / "Afinitat de rol")
-  - No SVG, no axes, no coordinate projection; consistent with existing card style
-- src/pages/FirstQuarterResultsPage.jsx: swapped RoleWheel import/usage for
-  RoleProbabilityBars; wrapper div removed (RoleProbabilityBars is self-contained)
-- en.json / ca.json: roles.probability_label added
-- CLAUDE.md: updated lunar phase table (Observer → Witness Cèrcol); added
-  "Full Moon + Witness Cèrcol design (definitive)" section documenting the
-  adaptive forced-choice Witness instrument, algorithm, and Full Moon output
+### Phase 5 — Beta role scoring in First Quarter ✅ COMPLETE
 
-### Phase 5.3 — Simplified pipeline + published prior statistics ✅ COMPLETE
-- src/utils/role-scoring.js only — no UI changes, no i18n changes
-  - Replaced uniform mean=3/SD=0.6 prior with per-domain published normative statistics:
-      NORM_MEAN: E=3.3, A=3.9, C=3.7, N=2.8, O=3.7
-      NORM_SD:   E=0.72, A=0.58, C=0.62, N=0.72, O=0.60
-    Source: Johnson (2014) doi:10.1016/j.jrp.2014.05.003;
-            Maples-Keller et al. (2019) doi:10.1080/00223891.2018.1467425
-  - Removed SECTOR_MAP constant entirely (all sector detection code deleted)
-  - computeRole() simplified to 4 steps:
-      1. Normalise to z-scores via NORM_MEAN/NORM_SD
-      2. Centre rule: max(|z|) < 0.5 → R0
-      3. Euclidean distance to all 9 centroids → minimum-distance role
-      4. buildResult() → softmax probabilities, arc, Digman α/β
-  - buildResult() signature simplified: removed sector and method params
-  - Return object: { role, arc, probabilities, alpha, beta }
-    (sector and _method removed — unused by RoleResult and RoleWheel)
-  - CENTROIDS and ROLE_PROJECTIONS unchanged
+Role scoring is live in First Quarter as a clearly labelled beta feature.
+The pipeline uses theoretical centroids and will be updated with empirical
+values as data accumulates. Built across four sub-phases:
 
-### Phase 5.2 — Role wheel: α/β 2D visualisation ✅ COMPLETE
-- src/utils/role-scoring.js: added exported ROLE_PROJECTIONS constant
-  Derived from CENTROIDS at module level (no data duplication):
-  each role mapped to { alpha, beta } using Digman axes
-- src/components/RoleWheel.jsx: pure SVG wheel component
-  - viewBox="-3 -3 6 6", w-full max-w-xs mx-auto; x=α, y=−β
-  - Axes + end labels (+α/−α/+β/−β) at ±2.65/±2.72
-  - 9 role dots in 3 visual tiers: background (r=0.18, gray), arc (r=0.22, blue-100),
-    primary (r=0.28, design token primary); rendered back-to-front so primary is on top
-  - Labels offset away from origin via distance-based vector; near-origin (R0) fixed up-right;
-    textAnchor derived from horizontal component
-  - User position: outer amber ring + inner amber dot; clamped to ±2.5 viewport
-  - Legend row below SVG: amber icon + roles.you label
-  - No external charting library; no canvas; design tokens only
-- src/pages/FirstQuarterResultsPage.jsx: RoleWheel added below RoleResult in Section 3,
-  wrapped in a matching white card (rounded-2xl border shadow-sm)
-- en.json / ca.json: roles.you added ("Your position" / "La teua posició")
-- NOTE: label placement uses direction-from-origin heuristic; may need adjustment
-  when theoretical centroids are replaced with empirical values at N≥300
+- **5.1** — `computeRole()` scoring module; `RoleResult` card (name, essence, arc chips)
+  shown at the end of First Quarter results. Theoretical centroids, AB5C sector lookup.
+- **5.2** — `RoleWheel` SVG visualisation: all 9 roles plotted in α/β space with user position.
+- **5.3** — Pipeline simplified: SECTOR_MAP and sector detection removed; pure Euclidean
+  over all 9 centroids. Normalisation priors replaced with per-domain published values
+  (Johnson 2014; Maples-Keller et al. 2019).
+- **5.4** — `RoleWheel` replaced with `RoleProbabilityBars`: ranked horizontal bars for all
+  9 roles sorted by softmax probability. Full Moon + Witness Cèrcol design documented.
 
 ### Phase 5.1 — Role scoring module + beta role display ✅ COMPLETE
 - src/utils/role-scoring.js: pure scoring module (no React, no side effects)
@@ -596,105 +556,76 @@ PAID (one-time payment, per session):
   - computeRole(domainScores): normalise → detect AB5C sector → lookup candidates
     → resolve by Euclidean distance → softmax probabilities over all 9 roles
   - Centre rule: |z_primary| < 0.5 → R0 (no dominant role)
-  - Pure-pole rule: |z_secondary| < 0.3 → Euclidean over all 9 roles
-  - Returns: { role, arc, probabilities, alpha, beta, sector, _method }
+  - Returns: { role, arc, probabilities, alpha, beta }
   - arc = secondary roles with softmax probability > 15% (excluding primary)
   - Digman α/β axes computed for future visualisation
 - src/components/RoleResult.jsx: minimal beta card
   - Beta badge (roles.beta_label) — prominently shown, cannot be missed
-  - Section label (fqResults.roleSection) used as eyebrow above role name
-  - Role name (roles.{R}.name) — large, bold
-  - Role essence (roles.{R}.essence) — body copy
+  - Role name (roles.{R}.name) — large, bold; essence — body copy
   - Personal arc chips (roles.arc_label + roles.{R}.name per arc role)
-  - Uses design tokens only; Tailwind classes only; no hardcoded values
-- src/pages/FirstQuarterResultsPage.jsx: integrated role display
-  - computeRole(domains) called after domains are resolved
-  - <RoleResult result={roleResult} /> rendered after facet breakdown,
-    before share/retake buttons, with h2 section heading
-- src/locales/en.json: added fqResults.roleSection and roles namespace
-  (R0=Opal, R1=Bolt, R2=Beacon, R3=Thorn, R4=Anchor, R5=Heron,
-   R6=Anvil, R7=Loom, R8=Comet; beta_label, arc_label, essences)
-- src/locales/ca.json: same structure; Valencian names
-  (R0=Opàl, R1=Llamp, R2=Far, R3=Espina, R4=Àncora, R5=Garça,
-   R6=Enclusa, R7=Teler, R8=Cometa; essences left in EN pending translation)
+  - Design tokens only; Tailwind classes only; no hardcoded values
+- src/pages/FirstQuarterResultsPage.jsx: computeRole(domains) called after domains
+  are resolved; RoleResult rendered after facet breakdown with section heading
+- en.json / ca.json: fqResults.roleSection and roles namespace added
+  (R0=Opal/Opàl … R8=Comet/Cometa; beta_label, arc_label, essences)
 
-NOTE: centroids are theoretical (Phase 5.1). Replace with empirical centroids
-at N≥300 completions. Threshold 0.5 (centre rule) and 0.15 (arc) are calibration params.
-Normalisation priors updated in Phase 5.3 to published per-domain values.
+### Phase 5.2 — Role wheel: α/β 2D visualisation ✅ COMPLETE
+- src/utils/role-scoring.js: ROLE_PROJECTIONS exported (Digman α/β per centroid)
+- src/components/RoleWheel.jsx: pure SVG; 9 role dots in 3 tiers; user position
+  as amber ring+dot; axis labels; no external charting library
+- en.json / ca.json: roles.you added
+- NOTE: superseded by RoleProbabilityBars in Phase 5.4
 
-### Phase 5 — Team Role Instrument (Cèrcol Full Moon)
+### Phase 5.3 — Simplified pipeline + published prior statistics ✅ COMPLETE
+- src/utils/role-scoring.js: SECTOR_MAP and all sector detection code removed;
+  computeRole() now: normalise → centre rule → Euclidean to all 9 → buildResult
+- Per-domain normative priors introduced:
+    NORM_MEAN: E=3.3, A=3.9, C=3.7, N=2.8, O=3.7
+    NORM_SD:   E=0.72, A=0.58, C=0.62, N=0.72, O=0.60
+  Source: Johnson (2014) doi:10.1016/j.jrp.2014.05.003;
+          Maples-Keller et al. (2019) doi:10.1080/00223891.2018.1467425
+- Return object simplified to { role, arc, probabilities, alpha, beta }
 
-<!--
-  Prerequisite: ~300 WaxingCrescent completions in Supabase.
-  Theoretical foundation documented below.
-  Implementation pending data collection.
--->
+### Phase 5.4 — Probability bars + Full Moon/Witness design documented ✅ COMPLETE
+- src/utils/role-scoring.js: ROLE_PROJECTIONS export removed (unused after RoleWheel deleted)
+- src/components/RoleWheel.jsx: deleted
+- src/components/RoleProbabilityBars.jsx: ranked horizontal bars for all 9 roles,
+  sorted by softmax probability descending; primary/arc/background colour tiers;
+  percentage shown tabular-nums right-aligned; no SVG, no axes
+- src/pages/FirstQuarterResultsPage.jsx: RoleWheel replaced with RoleProbabilityBars
+- en.json / ca.json: roles.probability_label added
+- CLAUDE.md: lunar phase table updated (Observer → Witness Cèrcol);
+  Full Moon + Witness Cèrcol design section added
 
 #### Scientific foundation
 
 Role taxonomy derived from the AB5C circumplex (Hofstee, De Raad & Goldberg 1992),
-not from Belbin. Belbin is referenced for comparison only, not as a design source.
+not from Belbin. Belbin is referenced for comparison only.
 The model is empirically grounded: hypothesis defined from literature,
-validated and refined with real accumulated data.
+validated and refined as real data accumulates.
 
-Two meta-axes from Digman (1997) structure the role space:
-  α = (z_A + z_E - z_N) / 3   — socialisation axis (horizontal)
-  β = (z_C + z_O) / 2          — efficacy/growth axis (vertical)
+Two meta-axes from Digman (1997) define the role space:
+  α = (z_A + z_E − z_N) / 3   — socialisation axis
+  β = (z_C + z_O) / 2          — efficacy/growth axis
 
-Used for visualisation only. Role assignment always computed in full 5D space.
+Used for visualisation only. Role assignment is always computed in full 5D space.
 
-#### Pipeline: from OCEAN to role (v1 — theoretical centroids)
+#### Current pipeline (v1 — theoretical centroids)
 
-Step 1 — Normalise OCEAN scores to z-scores
-  (population mean=3, SD=0.6 as prior; replaced by sample stats at N≥300)
+Step 1 — Normalise OCEAN scores to z-scores using per-domain published priors
+  (Johnson 2014; Maples-Keller et al. 2019; replaced by sample stats at N≥200)
+  NORM_MEAN: E=3.3, A=3.9, C=3.7, N=2.8, O=3.7
+  NORM_SD:   E=0.72, A=0.58, C=0.62, N=0.72, O=0.60
 
-Step 2 — Detect AB5C sector
-  Primary factor = highest |z|. Secondary = second highest |z|.
-  If |z_primary| < 0.5 → assign directly to R0 (Integrator)
-  If |z_secondary| < 0.3 → treat as pure pole (no secondary)
-  NOTE: thresholds are calibration parameters, not theoretical constants.
+Step 2 — Centre rule: if max(|z|) < 0.5 → assign R0 directly
 
-Step 3 — Lookup sector → role candidate(s)
-  34 empirically supported sectors (11 excluded — no robust evidence)
-  Each sector maps to 1 or 2 role candidates:
+Step 3 — Euclidean distance to all 9 theoretical centroids → minimum-distance role
+  d(profile, centroid) = sqrt(Σ(z_i − c_i)²) for i in {E, A, C, N, O}
 
-  | ID | Primary | Typical secondaries | AB5C sectors |
-  |----|---------|---------------------|--------------|
-  | R1 | E+      | C+, O+              | E+/C+, E+/O+, C+/E+, O+/E+ |
-  | R2 | E+      | A+, N-              | E+/A+, A+/E+, E+/N-, N-/E+ |
-  | R3 | E+ or A-| A- or N+            | E+/A-, A-/E+, E+/N+, N-/A- |
-  | R4 | A+ or C+| C+ or A+            | A+/C+, C+/A+, A+/N-, N-/C+ |
-  | R5 | A+      | E-, C-              | A+/E-, E-/A+, A+/C-, C-/A+ |
-  | R6 | C+      | N+, A-              | C+/N+, N+/C+, C+/A-, A-/C+ |
-  | R7 | O+      | C+, A+              | O+/C+, C+/O+, O+/A+, A+/O+ |
-  | R8 | O+      | E+, N-, A-          | O+/E+, O+/N-, O+/A-, E-/O+ |
-  | R0 | —       | all moderate        | residual sectors + centre |
+Step 4 — Softmax over negative distances → full probability map
+  Roles with prob > 15% = personal arc
 
-  Boundary sectors (return 2 candidates, resolved at Step 4):
-  E+/O+, O+/E+ → R1, R8
-  A+/O+, O+/A+ → R5, R7
-  N-/E+, E+/N- → R1, R2
-  E+/A-, A-/C+ → R3, R6
-
-  Known fragility: R3 aggregates conductually distant profiles.
-  Likely to split into two roles when real data available.
-
-Step 4 — Tiebreak by 5D Euclidean distance to theoretical centroids
-  d(profile, centroid) = sqrt(Σ(z_i - c_i)²) for i in {E,A,C,N,O}
-  Assign role with minimum distance.
-
-Step 5 — Full probability profile (softmax over negative distances)
-  prob_i = softmax(-distances)[i] for all 9 roles
-  Roles with prob > 15% = personal arc (natural secondary roles)
-
-Step 6 — 2D projection for visualisation (α/β axes, display only)
-
-Output per profile:
-  - Primary role (label + Cèrcol name)
-  - Personal arc (2-3 roles with prob > 15%)
-  - Full probability vector (9 values)
-  - α/β coordinates for wheel visualisation
-  - AB5C sector code (traceable to literature)
+Step 5 — Digman α/β projection (display only; currently unused in UI)
 
 #### Theoretical centroids (v1 — to be replaced by empirical centroids at N≥300)
 
@@ -714,10 +645,10 @@ Centroids are theoretical approximations derived from AB5C sector midpoints.
 Replace with k-means centroids when N≥300 real profiles available.
 
 #### Validation plan
-- At N≥100: check sector distribution, flag if R3 shows bimodal pattern
+- At N≥100: check role distribution; flag if R3 shows a bimodal profile pattern
+- At N≥200: update normalisation priors to sample mean/SD per domain
 - At N≥300: run k-means (k=9), compare empirical vs theoretical centroids
-- If empirical k suggests k≠9: revise taxonomy before launch
-- AB5C sector codes preserved in Supabase for full reanalysis at any point
+- If empirical k suggests k≠9: revise taxonomy before Full Moon launch
 
 #### Role names (Cèrcol vocabulary)
 
@@ -740,14 +671,14 @@ or worse than another.
 Full descriptions (user-facing, Brand voice) live in src/locales/en.json
 and src/locales/ca.json under the roles namespace (Phase 5 implementation).
 
-#### Implementation steps (when data prerequisite met)
-1. Build role scoring module (scoring/role-scoring.js)
-2. Add role result to FirstQuarter results page (provisional, labelled as beta)
-3. Build observer assessment instrument (FullMoon observer component)
-4. Add ICAR cognitive ability test (public domain, Condon & Revelle 2014)
-5. Build FullMoon integrated report
-6. Replace theoretical centroids with empirical centroids
-7. Build LastQuarter team composition report
+#### Implementation steps (remaining)
+1. ✅ Role scoring module (src/utils/role-scoring.js) — done Phase 5.1
+2. ✅ Beta role display in First Quarter — done Phase 5.1–5.4
+3. Build Witness Cèrcol instrument (Phase 7)
+4. Add ICAR cognitive ability measure (public domain, Condon & Revelle 2014) (Phase 6)
+5. Build Full Moon integrated report (Phase 6)
+6. Replace theoretical centroids with empirical centroids at N≥300
+7. Build Last Quarter team composition report (Phase 10+)
 
 #### Academic sources
 - AB5C: Hofstee, De Raad & Goldberg (1992), JPSP 63, 146-163
@@ -756,16 +687,45 @@ and src/locales/ca.json under the roles namespace (Phase 5 implementation).
 - AB5C short form validation: Lanning et al. (2020), JSCP
 
 <!--
-  EPOCH 4 — Brand & Expansion
+  EPOCH 3 — Full instrument suite
+  Full Moon, Witness, complete product before redesign.
 -->
 
-### Phase 6 — Branding + Visual identity
-- Cèrcol visual identity applied via tokens.js
-- AI image generation trained on Cèrcol style
+### Phase 6 — Full Moon Cèrcol
+- IPIP-NEO-120 self-report (120 items, 5-point, 30 facets)
+- ICAR cognitive ability measure (public domain, Condon & Revelle 2014)
+- Definitive role result (beta → validated when N≥200)
+- Stripe gate active (one-time payment per session)
 
-### Phase 7 — Multilingual expansion
-- Translate test items into additional languages beyond Valencian
+### Phase 7 — Witness Cèrcol
+- AB5C lexical adjective corpus: markers per role documented
+- Adaptive forced-choice instrument (4–6 adjectives per round)
+- Bayesian update over 9 roles; convergence stopping rule (~20–25 decisions)
+- Output: witness role + convergence score + blind spots vs self-report
+- Unique link flow: subject sends link to witness(es)
+
+<!--
+  EPOCH 4 — Quality and reach
+  Redesign when the product is complete. Multilingual when the redesign is done.
+-->
+
+### Phase 8 — Full UX/UI
+- Full visual identity applied via tokens.js
+- Design done once the full product scope (Phases 6–7) is known
+
+### Phase 9 — Multilingual support
+- Translate all items and UI strings beyond Valencian
 - Translation management via Tolgee or equivalent
+
+<!--
+  EPOCH 5 — The future will be better tomorrow
+-->
+
+### Phase 10 — Beyond
+- GitHub Actions job every 28 days: compute sample mean/SD per domain
+- Update normalisation priors when N≥200 (replace published priors)
+- Replace theoretical centroids with k-means centroids at N≥300
+- Internal validation dashboard
 
 ## Phase completion criteria
 
