@@ -731,12 +731,55 @@ and src/locales/ca.json under the roles namespace (Phase 5 implementation).
 - en.json / ca.json: fm.paywall.*, fqResults.fullMoonCta.*, home.fullMoon.paid added
   (CA fully translated inline)
 
-### Phase 7 — Witness Cèrcol
-- AB5C lexical adjective corpus: markers per role documented
-- Adaptive forced-choice instrument (4–6 adjectives per round)
-- Bayesian update over 9 roles; convergence stopping rule (~20–25 decisions)
-- Unique link flow: subject sends link to witness(es)
-- Output stored in Supabase linked to subject's user_id
+### Phase 7 — Witness Cèrcol ✅ COMPLETE
+- src/data/witness-adjectives.js: 100-adjective AB5C lexical corpus (public-domain IPIP markers)
+  - 20 adjectives per OCEAN factor, 10 positive (+1) and 10 negative (−1) valence
+  - Mapped to Cèrcol domain names (E=presence, A=bond, C=discipline, N=depth, O=vision)
+  - ADJECTIVES_BY_FACTOR and FACTOR_TO_DOMAIN helpers exported
+- supabase/migrations/004_witness.sql: witness_sessions and witness_responses tables
+  - witness_sessions: subject_id FK, token (unique hex string), witness_name, optional email, completed_at
+  - witness_responses: session_id FK, domain_scores (jsonb)
+  - RLS: subject reads own sessions/responses; public insert on responses (API validates token)
+  - Indexes on token (hot path) and subject_id
+- src/utils/witness-scoring.js: scoring and round generation utilities
+  - buildRounds(20): shuffled-cycle algorithm — one adjective per factor per round, no early repeats
+  - computeWitnessScores(rounds): net votes per factor → 1–5 scale (score = 3 + mean_vote × 2)
+  - computeInterimRole(rounds): live role probabilities from partial completions
+  - detectDivergence(self, witness, threshold=0.8): returns blind-spot list by |z-score diff|
+  - averageWitnessScores(scoreSets): mean domain scores across multiple witnesses
+- api/main.py: 4 new endpoints; version bumped to 0.4.0
+  - POST /witness/sessions (auth): creates up to 12 sessions, returns [{token, name, link}]
+  - GET /witness/session/{token} (public): returns {witness_name, completed}
+  - POST /witness/session/{token}/complete (public): saves domain scores, marks completed
+  - GET /witness/my-sessions (auth): returns sessions with scores for completed ones
+  - _supabase_get() and _supabase_post() helpers added; _supabase_headers() extracted
+  - Pydantic models: WitnessInput, CreateSessionsBody, DomainScores, CompleteSessionBody
+- src/lib/api.js: createWitnessSessions(), getWitnessSession(), completeWitnessSession(),
+  getMyWitnessSessions() added; publicFetch() helper extracted alongside authFetch()
+- src/pages/WitnessSetupPage.jsx: authenticated + premium, form for up to 12 witnesses
+  - Gate: not logged in → /auth; not premium → /full-moon
+  - Lists existing sessions (pending / completed) with copy-link button
+  - Generates share links after submit; refreshes session list
+- src/pages/WitnessPage.jsx: public at /witness/:token
+  - Phases: loading → intro → instrument (20 rounds) → submitting → complete
+  - Each round: 5 adjective cards (one per factor), pick BEST (green) + WORST (red)
+  - Progress bar, back navigation, submit on final round
+  - Handles 404 / already-completed / error states
+- src/pages/FullMoonReportPage.jsx: integrated self + witness report at /full-moon/report
+  - Requires auth; fetches FM self-report from results table (most recent fullMoon row)
+  - Fetches witness sessions from API; shows pending / complete list
+  - ≥2 complete: averaged domain comparison bars + witness role result + divergence section
+  - Divergence: domains where |self_z − witness_z| > 0.8 shown as blind spots
+  - < 2 complete: prompt to invite more witnesses
+- src/pages/FullMoonResultsPage.jsx: Witness Cèrcol CTA added after role section (shown only
+  after real test completion via fromTest flag) — "Invite a witness" + "View full report"
+- src/App.jsx: /full-moon/report, /witness-setup, /witness/:token routes added
+- en.json / ca.json: witness.setup.*, witness.page.*, witnessResults.*, fmResults.witnessCta.*
+  namespaces added (CA fully translated inline)
+
+#### Manual tasks (Miquel)
+- In Supabase SQL editor: run migration 004_witness.sql
+- Deploy API to Railway (api/main.py version 0.4.0)
 
 ### Phase 8 — Documentation and content site
 - Standalone section of the site (not gated, no login required)

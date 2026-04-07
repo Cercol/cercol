@@ -9,6 +9,9 @@ import FirstQuarterPage from './pages/FirstQuarterPage'
 import FirstQuarterResultsPage from './pages/FirstQuarterResultsPage'
 import FullMoonPage from './pages/FullMoonPage'
 import FullMoonResultsPage from './pages/FullMoonResultsPage'
+import FullMoonReportPage from './pages/FullMoonReportPage'
+import WitnessSetupPage from './pages/WitnessSetupPage'
+import WitnessPage from './pages/WitnessPage'
 import AuthPage from './pages/AuthPage'
 import AuthCallbackPage from './pages/AuthCallbackPage'
 import MyResultsPage from './pages/MyResultsPage'
@@ -29,6 +32,10 @@ function AppContent() {
         {/* Full Moon */}
         <Route path="/full-moon" element={<FullMoonPage />} />
         <Route path="/full-moon/results" element={<FullMoonResultsPage />} />
+        <Route path="/full-moon/report" element={<FullMoonReportPage />} />
+        {/* Witness Cèrcol */}
+        <Route path="/witness-setup" element={<WitnessSetupPage />} />
+        <Route path="/witness/:token" element={<WitnessPage />} />
         {/* Auth */}
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/auth/callback" element={<AuthCallbackPage />} />

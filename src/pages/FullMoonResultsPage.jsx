@@ -228,6 +228,35 @@ export default function FullMoonResultsPage() {
           </div>
         </section>
 
+        {/* ── Witness Cèrcol CTA ── */}
+        {fromTest && (
+          <div className="bg-white rounded-2xl border border-purple-100 shadow-sm p-5">
+            <p className="text-xs font-semibold uppercase tracking-widest text-purple-400 mb-2">
+              🌕 {t('fmResults.witnessCta.eyebrow')}
+            </p>
+            <h3 className="font-semibold text-gray-900 mb-1">
+              {t('fmResults.witnessCta.heading')}
+            </h3>
+            <p className="text-sm text-gray-500 mb-4 leading-relaxed">
+              {t('fmResults.witnessCta.body')}
+            </p>
+            <div className="flex flex-col gap-2">
+              <button
+                onClick={() => navigate('/witness-setup')}
+                className="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold transition-colors shadow-sm"
+              >
+                {t('fmResults.witnessCta.cta')}
+              </button>
+              <button
+                onClick={() => navigate('/full-moon/report')}
+                className="w-full py-2.5 rounded-xl border border-purple-200 text-purple-700 text-sm font-medium hover:bg-purple-50 transition-colors"
+              >
+                {t('fmResults.witnessCta.report')}
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* ── Share + actions ── */}
         <div className="flex flex-col gap-3">
           <button

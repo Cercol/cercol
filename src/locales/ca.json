@@ -173,7 +173,14 @@
     "share": "Compartir resultats",
     "copied": "Copiat!",
     "retake": "Tornar a començar",
-    "disclaimer": "Les puntuacions reflecteixen tendències en el moment de l'avaluació. Cada extrem d'una dimensió té els seus punts forts — cap puntuació és bona o dolenta."
+    "disclaimer": "Les puntuacions reflecteixen tendències en el moment de l'avaluació. Cada extrem d'una dimensió té els seus punts forts — cap puntuació és bona o dolenta.",
+    "witnessCta": {
+      "eyebrow": "Testimoni Cèrcol",
+      "heading": "Mira't des de fora.",
+      "body": "Demana a algú que et conega bé que et descriga. Li porta 5 minuts i et mostra el que tu no pots veure de tu mateix.",
+      "cta": "Convidar un testimoni",
+      "report": "Veure l'informe complet"
+    }
   },
   "fmDomains": {
     "depth":      { "name": "Profunditat", "description": "Com processes les emocions i navegues la incertesa.", "blockIntro": "Aquestes preguntes exploren el teu paisatge emocional — com respons a l'estrès, el canvi i la tensió interior." },
@@ -448,5 +455,84 @@
       "name": "Cometa",
       "essence": "You don't ask permission to move outside the expected path. The best decisions passed through your angle first."
     }
+  },
+  "witness": {
+    "setup": {
+      "checking": "Comprovant l'accés…",
+      "title": "Convida els teus testimonis",
+      "subtitle": "Un testimoni et veu des de fora. Afegeix fins a 12 persones que et coneguen bé.",
+      "addHeading": "Afegir testimonis",
+      "addRow": "Afegir un altre testimoni",
+      "generate": "Generar enllaços",
+      "generating": "Creant enllaços…",
+      "linksHeading": "Els teus enllaços de testimoni",
+      "shareInstruction": "Envia cada enllaç a la persona indicada. Cada enllaç funciona una sola vegada.",
+      "copyLink": "Copiar l'enllaç",
+      "statusPending": "Esperant",
+      "statusComplete": "Fet",
+      "existingHeading": "Els teus testimonis",
+      "viewReport": "Veure l'informe complet",
+      "error": "Alguna cosa ha anat malament. Torna-ho a intentar."
+    },
+    "page": {
+      "loading": "Carregant…",
+      "intro": {
+        "heading": "Et demanen que descrigues algú.",
+        "body": "Veuràs grups de paraules i triaràs quina s'assembla més a aquesta persona — i quina menys. Uns 5 minuts.",
+        "subjectLabel": "Estàs descrivint",
+        "cta": "Començar"
+      },
+      "progress": "{{current}} de {{total}}",
+      "instruction": "Quina paraula encaixa millor amb {{name}}?",
+      "instructionSub": "Tria una paraula per al Millor encaix i una per al Pitjor encaix.",
+      "bestLabel": "Millor encaix",
+      "worstLabel": "Pitjor encaix",
+      "selectBothNote": "Tria un Millor i un Pitjor per continuar.",
+      "next": "Següent",
+      "back": "Enrere",
+      "finish": "Enviar",
+      "submitting": "Guardant les teues respostes…",
+      "done": {
+        "heading": "Fet.",
+        "body": "Les teues observacions han quedat registrades. Gràcies.",
+        "return": "Tornar a Cèrcol"
+      },
+      "alreadyDone": {
+        "heading": "Ja enviat.",
+        "body": "Aquest enllaç ja s'ha usat. Cada enllaç només es pot usar una vegada."
+      },
+      "notFound": {
+        "heading": "Enllaç no trobat.",
+        "body": "Comprova l'enllaç i torna-ho a intentar."
+      },
+      "errorHeading": "Alguna cosa ha anat malament.",
+      "errorBody": "No hem pogut guardar la teua resposta. Torna-ho a intentar més tard."
+    }
+  },
+  "witnessResults": {
+    "title": "Informe de Lluna Plena",
+    "subtitle": "Autoinforme · Testimoni Cèrcol",
+    "loading": "Carregant el teu informe…",
+    "error": "No s'ha pogut carregar l'informe. Torna-ho a intentar.",
+    "noSelf": "Completa primer el Cèrcol de Lluna Plena per veure el teu informe.",
+    "startFmCta": "Començar el Cèrcol de Lluna Plena",
+    "selfSection": "El teu autoinforme",
+    "selfRoleSection": "El teu rol · Autoinforme",
+    "witnessSection": "Com et veuen els testimonis",
+    "witnessCount": "{{count}} testimoni completat",
+    "witnessCount_plural": "{{count}} testimonis completats",
+    "pendingNote": "Necessites almenys 2 testimonis completats per veure aquesta secció.",
+    "selfLabel": "Jo",
+    "witnessLabel": "Testimonis",
+    "roleSection": "El teu rol · Testimonis",
+    "divergenceHeading": "Punts cecs",
+    "divergenceNote": "Dimensions on l'autoinforme i els testimonis difereixen significativament.",
+    "divergenceDirection": {
+      "higher": "Els testimonis puntuen {{domain}} més alt que tu.",
+      "lower": "Els testimonis puntuen {{domain}} més baix que tu."
+    },
+    "noDivergence": "Alineació forta. La teua autopercepció coincideix àmpliament amb com et veuen els altres.",
+    "setupCta": "Convidar testimonis",
+    "disclaimer": "Els resultats dels testimonis reflecteixen la perspectiva de les persones que han completat l'instrument. La divergència no és un defecte — és informació."
   }
 }
