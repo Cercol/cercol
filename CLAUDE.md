@@ -416,6 +416,21 @@ Future: migrate to a spreadsheet or translation management tool
 - NewMoonResultsPage: removed LanguageToggle import; inline header collapsed to h1 + subtitle only
 - FirstQuarterResultsPage: same
 
+### Phase 4.6 — Multi-method auth (Google OAuth + password + magic link) ✅ COMPLETE
+- src/context/AuthContext.jsx: added signInWithPassword(email, password), signUp(email, password),
+  signInWithGoogle(); signUp returns { needsConfirmation } so UI can show confirm-email state
+- src/pages/AuthPage.jsx: redesigned with three methods in one form:
+  - Google OAuth button (top)
+  - "or" divider
+  - Email field (shared)
+  - Two-tab method switcher: "Password" | "Magic link"
+  - Password field + sign-in/sign-up toggle (password method only)
+  - Single submit button adapts label to current method + mode
+  - Sent/confirm state shows appropriate message for magic link vs email confirmation
+- AuthCallbackPage unchanged — onAuthStateChange already handles OAuth and password sessions
+- en.json / ca.json: auth namespace expanded (Google CTA, method labels, password labels,
+  sign-up toggle, confirm-email state, tryAgain)
+
 #### HTTPS bug fixes (post-custom-domain)
 - api/main.py: added http://cercol.team and both http/https localhost variants to CORS origins
   (only https://cercol.team was listed; http variant and https localhost were missing)
