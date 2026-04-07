@@ -56,7 +56,8 @@
       "name": "Cèrcol de Lluna Plena",
       "tagline": "Retrat definitiu",
       "meta": "120 preguntes · ~20 min",
-      "description": "L'autoinforme més complet — les 30 facetes a resolució completa."
+      "description": "L'autoinforme més complet — les 30 facetes a resolució completa.",
+      "paid": "Pagament únic"
     },
     "footnote": "Codi obert · ",
     "viewOnGitHub": "Veure a GitHub"
@@ -111,6 +112,12 @@
       "moderate": "Moderat",
       "high": "Alt"
     },
+    "fullMoonCta": {
+      "eyebrow": "Cèrcol de Lluna Plena",
+      "heading": "Vols el doble de precisió?",
+      "body": "El Cèrcol de Lluna Plena utilitza 4 preguntes per faceta en lloc de 2. El mateix retrat, més nítid.",
+      "cta": "Prova el Cèrcol de Lluna Plena"
+    },
     "share": "Compartir resultats",
     "copied": "Copiat!",
     "retake": "Tornar a començar",
@@ -126,6 +133,18 @@
   },
   "fm": {
     "subtitle": "Cèrcol de Lluna Plena",
+    "paywall": {
+      "heading": "Cèrcol de Lluna Plena",
+      "body": "El mateix retrat, construït a partir de 120 preguntes en lloc de 60. Cada faceta mesurada a resolució completa.",
+      "includes": "30 facetes · Resultat de rol · Per sempre teu",
+      "cta": "Desbloqueja el Cèrcol de Lluna Plena",
+      "loading": "Redirigint al pagament…",
+      "processing": "Pagament rebut. Configurant el teu accés…",
+      "processingTimeout": "El teu pagament s'està processant.",
+      "processingTimeoutNote": "Refresca aquesta pàgina en un moment per començar.",
+      "error": "Alguna cosa ha fallat. Torna-ho a intentar.",
+      "permanentNote": "Pagament únic. L'accés és permanent."
+    },
     "blockProgress": "{{current}} de {{total}} en aquest bloc",
     "blockLabel": "Bloc {{current}} de {{total}}",
     "overallProgress": "{{current}} de {{total}} en total",

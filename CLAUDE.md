@@ -714,10 +714,22 @@ and src/locales/ca.json under the roles namespace (Phase 5 implementation).
   FullMoonResultsPage.jsx confirmed correct: passes `user?.id ?? null` to logResult
   with instrument string `'fullMoon'`.
 
-### Phase 6.2 — Full Moon gate + polish
-- Stripe gate active for Full Moon (requires login + one-time payment)
-- Full Moon CTA on First Quarter results page
-- Any remaining Full Moon UX bugs
+### Phase 6.2 — Full Moon gate + polish ✅ COMPLETE
+- api/main.py: Stripe success_url and cancel_url updated from /first-quarter/results
+  to /full-moon (were left pointing at the old FQ gate from Phase 4.5)
+- src/pages/FullMoonPage.jsx: gate added at the top of the page
+  - Not logged in → navigate('/auth')
+  - Logged in, not premium → paywall screen (🌕 heading, body, includes list, Stripe CTA)
+  - ?payment=success in URL → polls profiles.premium up to 8×1.5s; shows processing screen;
+    graceful timeout message if webhook is delayed
+  - Premium confirmed → show test as normal
+  - Keyboard handler guarded so it only fires in gateState='ready'
+- src/pages/FirstQuarterResultsPage.jsx: Full Moon CTA section added after role result,
+  before share/actions — purple-bordered card, eyebrow label, one-line body, CTA button
+- src/pages/HomePage.jsx: InstrumentCard now accepts paid + paidLabel props;
+  Full Moon card shows purple "One-time payment" pill, purple hover border + title colour
+- en.json / ca.json: fm.paywall.*, fqResults.fullMoonCta.*, home.fullMoon.paid added
+  (CA fully translated inline)
 
 ### Phase 7 — Witness Cèrcol
 - AB5C lexical adjective corpus: markers per role documented

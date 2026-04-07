@@ -6,18 +6,22 @@
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
-function InstrumentCard({ name, tagline, meta, description, onClick, accent }) {
+function InstrumentCard({ name, tagline, meta, description, onClick, accent, paid = false, paidLabel = '' }) {
+  const hoverBorder = paid ? 'hover:border-purple-200' : 'hover:border-blue-300'
+  const hoverTitle  = paid ? 'group-hover:text-purple-700' : 'group-hover:text-blue-700'
+  const hoverArrow  = paid ? 'group-hover:text-purple-400' : 'group-hover:text-blue-400'
+
   return (
     <button
       onClick={onClick}
-      className="w-full text-left bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group"
+      className={`w-full text-left bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md ${hoverBorder} transition-all group`}
     >
       <div className="flex items-start justify-between mb-3">
         <div>
           <span className={`text-xs font-semibold uppercase tracking-widest ${accent}`}>
             {tagline}
           </span>
-          <h2 className="mt-1 text-xl font-bold text-gray-900 group-hover:text-blue-700 transition-colors">
+          <h2 className={`mt-1 text-xl font-bold text-gray-900 ${hoverTitle} transition-colors`}>
             {name}
           </h2>
         </div>
@@ -31,7 +35,7 @@ function InstrumentCard({ name, tagline, meta, description, onClick, accent }) {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="text-gray-300 group-hover:text-blue-400 transition-colors mt-1 shrink-0"
+          className={`text-gray-300 ${hoverArrow} transition-colors mt-1 shrink-0`}
           aria-hidden="true"
         >
           <path d="M5 12h14" />
@@ -39,9 +43,16 @@ function InstrumentCard({ name, tagline, meta, description, onClick, accent }) {
         </svg>
       </div>
       <p className="text-sm text-gray-500 mb-3">{description}</p>
-      <span className="inline-block text-xs font-medium text-gray-400 bg-gray-100 px-2.5 py-1 rounded-full">
-        {meta}
-      </span>
+      <div className="flex items-center gap-2 flex-wrap">
+        <span className="inline-block text-xs font-medium text-gray-400 bg-gray-100 px-2.5 py-1 rounded-full">
+          {meta}
+        </span>
+        {paid && paidLabel && (
+          <span className="inline-block text-xs font-medium text-purple-600 bg-purple-50 px-2.5 py-1 rounded-full">
+            {paidLabel}
+          </span>
+        )}
+      </div>
     </button>
   )
 }
@@ -90,6 +101,8 @@ export default function HomePage() {
             meta={t('home.fullMoon.meta')}
             description={t('home.fullMoon.description')}
             accent="text-purple-600"
+            paid
+            paidLabel={t('home.fullMoon.paid')}
             onClick={() => navigate('/full-moon')}
           />
         </div>

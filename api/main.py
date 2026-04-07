@@ -148,8 +148,8 @@ def create_checkout(
         line_items=[{"price": _STRIPE_PRICE_ID, "quantity": 1}],
         client_reference_id=user["sub"],
         customer_email=user.get("email"),
-        success_url=f"{_FRONTEND_URL}/first-quarter/results?payment=success",
-        cancel_url=f"{_FRONTEND_URL}/first-quarter/results?payment=cancelled",
+        success_url=f"{_FRONTEND_URL}/full-moon?payment=success",
+        cancel_url=f"{_FRONTEND_URL}/full-moon?payment=cancelled",
     )
     return {"url": session.url}
 

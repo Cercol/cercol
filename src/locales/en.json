@@ -56,7 +56,8 @@
       "name": "Full Moon Cèrcol",
       "tagline": "Complete portrait",
       "meta": "120 questions · ~20 min",
-      "description": "The deepest self-report — all 30 facets at full resolution."
+      "description": "The deepest self-report — all 30 facets at full resolution.",
+      "paid": "One-time payment"
     },
     "footnote": "Open source · ",
     "viewOnGitHub": "View on GitHub"
@@ -111,6 +112,12 @@
       "moderate": "Moderate",
       "high": "High"
     },
+    "fullMoonCta": {
+      "eyebrow": "Full Moon Cèrcol",
+      "heading": "Want twice the precision?",
+      "body": "Full Moon Cèrcol uses 4 questions per facet instead of 2. The same portrait, sharper.",
+      "cta": "Try Full Moon Cèrcol"
+    },
     "share": "Share results",
     "copied": "Copied!",
     "retake": "Start over",
@@ -126,6 +133,18 @@
   },
   "fm": {
     "subtitle": "Full Moon Cèrcol",
+    "paywall": {
+      "heading": "Full Moon Cèrcol",
+      "body": "The same portrait, built from 120 questions instead of 60. Every facet measured at full resolution.",
+      "includes": "30 facets · Role result · Yours to keep",
+      "cta": "Unlock Full Moon Cèrcol",
+      "loading": "Taking you to payment…",
+      "processing": "Payment received. Setting up your access…",
+      "processingTimeout": "Your payment is being processed.",
+      "processingTimeoutNote": "Refresh this page in a moment to begin.",
+      "error": "Something went wrong. Try again.",
+      "permanentNote": "One-time payment. Access is permanent."
+    },
     "blockProgress": "{{current}} of {{total}} in this block",
     "blockLabel": "Block {{current}} of {{total}}",
     "overallProgress": "{{current}} of {{total}} overall",

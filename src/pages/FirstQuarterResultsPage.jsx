@@ -226,6 +226,25 @@ export default function FirstQuarterResultsPage() {
           </div>
         </section>
 
+        {/* ── Full Moon CTA ── */}
+        <div className="bg-white rounded-2xl border border-purple-100 shadow-sm p-5">
+          <p className="text-xs font-semibold uppercase tracking-widest text-purple-400 mb-2">
+            🌕 {t('fqResults.fullMoonCta.eyebrow')}
+          </p>
+          <h3 className="font-semibold text-gray-900 mb-1">
+            {t('fqResults.fullMoonCta.heading')}
+          </h3>
+          <p className="text-sm text-gray-500 mb-4 leading-relaxed">
+            {t('fqResults.fullMoonCta.body')}
+          </p>
+          <button
+            onClick={() => navigate('/full-moon')}
+            className="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold transition-colors shadow-sm"
+          >
+            {t('fqResults.fullMoonCta.cta')}
+          </button>
+        </div>
+
         {/* ── Share + actions ── */}
         <div className="flex flex-col gap-3">
           <button
