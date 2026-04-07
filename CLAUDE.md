@@ -705,38 +705,55 @@ and src/locales/ca.json under the roles namespace (Phase 5 implementation).
 - en.json / ca.json: fm.*, fmResults.*, fmDomains.*, home.fullMoon.* namespaces added
   (CA fully translated inline)
 
-Remaining Full Moon components (not yet built):
-- ICAR cognitive ability measure (public domain, Condon & Revelle 2014)
-- Stripe gate (one-time payment per session)
-- Definitive role result (beta → validated when N≥200)
+#### Bug fix (post-6.1) ✅ COMPLETE
+- src/pages/MyResultsPage.jsx: ResultCard.instrumentLabel was a binary ternary
+  (`newMoon` → NM name, everything else → FQ name). `fullMoon` rows were rendering
+  in /my-results but labelled "First Quarter Cèrcol", making them invisible to the user
+  as Full Moon completions. Fixed to a three-way switch (newMoon / fullMoon / firstQuarter).
+  Added `fullMoon: { min: 1, max: 5 }` to INSTRUMENT_SCALE.
+  FullMoonResultsPage.jsx confirmed correct: passes `user?.id ?? null` to logResult
+  with instrument string `'fullMoon'`.
+
+### Phase 6.2 — Full Moon gate + polish
+- Stripe gate active for Full Moon (requires login + one-time payment)
+- Full Moon CTA on First Quarter results page
+- Any remaining Full Moon UX bugs
 
 ### Phase 7 — Witness Cèrcol
 - AB5C lexical adjective corpus: markers per role documented
 - Adaptive forced-choice instrument (4–6 adjectives per round)
 - Bayesian update over 9 roles; convergence stopping rule (~20–25 decisions)
-- Output: witness role + convergence score + blind spots vs self-report
 - Unique link flow: subject sends link to witness(es)
+- Output stored in Supabase linked to subject's user_id
 
-<!--
-  EPOCH 4 — Quality and reach
-  Redesign when the product is complete. Multilingual when the redesign is done.
--->
+### Phase 8 — Documentation and content site
+- Standalone section of the site (not gated, no login required)
+- Explains each instrument: what it measures, how long it takes, what you get
+- Scientific foundation: accessible, no jargon, sources linked
+- Full Moon explained: the three parts, what the Witness does, how to choose one
+- Results framing: scores reflect tendencies in a context, not fixed identity
+- Who the ideal Witness is and what they are asked to do
+- FAQ
+- Available in EN and CA from day one
 
-### Phase 8 — Full UX/UI
+### Phase 9 — Full Moon integrated report
+- Combines self-report (Phase 6), Witness (Phase 7), and ICAR into one report
+- Convergence score: self vs witness role agreement
+- Blind spots: dimensions where self and witness diverge significantly
+- ICAR cognitive ability measure integrated
+- Final definitive role result replaces beta label
+
+### Phase 10 — Full UX/UI redesign
 - Full visual identity applied via tokens.js
-- Design done once the full product scope (Phases 6–7) is known
+- Designed once the full product scope (Phases 6–9) is known and stable
 
-### Phase 9 — Multilingual support
+### Phase 11 — Multilingual support
 - Translate all items and UI strings beyond Valencian
 - Translation management via Tolgee or equivalent
 
-<!--
-  EPOCH 5 — The future will be better tomorrow
--->
-
-### Phase 10 — Beyond
+### Phase 12 — Living model
 - GitHub Actions job every 28 days: compute sample mean/SD per domain
-- Update normalisation priors when N≥200 (replace published priors)
+- Update normalisation priors when N≥200
 - Replace theoretical centroids with k-means centroids at N≥300
 - Internal validation dashboard
 
