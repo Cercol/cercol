@@ -8,15 +8,15 @@
     <script>
       (function() {
         const p = new URLSearchParams(window.location.search).get('p')
-        if (p && decodeURIComponent(p).indexOf('/auth/callback') !== 0) {
+        if (p) {
           window.history.replaceState(
             null, null,
-            '/' + decodeURIComponent(p) + window.location.hash
+            decodeURIComponent(p) + window.location.hash
           )
         }
       })()
     </script>
-    <script type="module" crossorigin src="/assets/index-DONBv-dt.js"></script>
+    <script type="module" crossorigin src="/assets/index-DpgvtMHY.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-BHN2xcho.css">
   </head>
   <body>

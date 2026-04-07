@@ -5,14 +5,12 @@
     const path = window.location.pathname
     const search = window.location.search
     const hash = window.location.hash
-    // Skip /auth/callback — Supabase handles its own redirect
-    if (path.indexOf('/auth/callback') === 0) {
-      // do nothing; let AuthCallbackPage mount normally
-    } else {
-      window.location.replace(
-        '/?p=' + encodeURIComponent(path + search) + hash
-      )
-    }
+    // Always redirect through the SPA entry point.
+    // index.html restores the original path via replaceState.
+    // hash is appended raw so Supabase can read access_token fragments.
+    window.location.replace(
+      '/?p=' + encodeURIComponent(path + search) + hash
+    )
   </script>
 </head>
 </html>
