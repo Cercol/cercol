@@ -16,9 +16,11 @@ import { FQ_DOMAIN_META } from '../data/first-quarter'
 import { DOMAIN_KEYS } from '../data/domains'
 import { fqScoreToPercent, fqScoreLabel } from '../utils/first-quarter-scoring'
 import { logResult } from '../utils/logger'
+import { computeRole } from '../utils/role-scoring'
 import { useAuth } from '../context/AuthContext'
 import { colors } from '../design/tokens'
 import RadarChart from '../components/RadarChart'
+import RoleResult from '../components/RoleResult'
 
 const LABEL_STYLES = {
   low:      'bg-gray-100 text-gray-600',
@@ -96,6 +98,7 @@ export default function FirstQuarterResultsPage() {
   }
 
   const domainKeys = DOMAIN_KEYS
+  const roleResult = computeRole(domains)
 
   return (
     <main className="min-h-screen bg-gray-50 px-4 py-10 sm:py-16">
@@ -210,6 +213,14 @@ export default function FirstQuarterResultsPage() {
             </div>
           </section>
         )}
+
+        {/* ── Section 3: Role result (beta) ── */}
+        <section>
+          <h2 className="text-sm font-semibold uppercase tracking-widest text-gray-400 mb-4">
+            {t('fqResults.roleSection')}
+          </h2>
+          <RoleResult result={roleResult} />
+        </section>
 
         {/* ── Share + actions ── */}
         <div className="flex flex-col gap-3">

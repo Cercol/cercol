@@ -99,6 +99,7 @@
     "subtitle": "First Quarter Cèrcol · 5 dimensions · 30 facets",
     "domainSection": "Five dimensions",
     "facetSection": "Facet breakdown",
+    "roleSection": "Your role · First look",
     "scoreLabels": {
       "low": "Low",
       "moderate": "Moderate",
@@ -341,5 +342,45 @@
     "quest":     { "label": "Quest",     "high": "You're here to get things done. Not to talk about it, not to plan it. Done. That output orientation is rare and it drives results in ways that are hard to argue with.", "low": "You're not motivated by output for its own sake. You need a reason, a purpose, something that matters. When you have it, you work hard. When you don't, you won't pretend." },
     "will":      { "label": "Will",      "high": "You start things when they need starting, not when you feel like it. That ability to act without waiting for motivation is how things that matter actually get finished.", "low": "You need the right conditions to get going. Pressure, interest, meaning. Without them, starting is hard. With them, you can go deep in ways that people who just grind never reach." },
     "counsel":   { "label": "Counsel",   "high": "You think before you act. Decisions get considered, words get chosen, consequences get mapped. That care prevents a lot of problems that impulsive people have to clean up later.", "low": "You decide fast and adjust as you go. That speed has a cost sometimes, but it also means you're moving while others are still deliberating. In fast-moving situations, that matters." }
+  },
+  "roles": {
+    "beta_label": "Beta · Theoretical model",
+    "arc_label": "Personal arc",
+    "R0": {
+      "name": "Opal",
+      "essence": "No fixed role. Present in different ways without ceasing to be you."
+    },
+    "R1": {
+      "name": "Bolt",
+      "essence": "You see the exact moment and go for it. When you move, others know it's time."
+    },
+    "R2": {
+      "name": "Beacon",
+      "essence": "You don't invite anyone. People come because it's easy to let their guard down near you."
+    },
+    "R3": {
+      "name": "Thorn",
+      "essence": "You say what should have been said two meetings ago. Without you, the team sleeps in easy consensus."
+    },
+    "R4": {
+      "name": "Anchor",
+      "essence": "When everything shakes, you stay in place. The team notices most when you're not there."
+    },
+    "R5": {
+      "name": "Heron",
+      "essence": "You listen to what was left unsaid. The team's harmony runs through you without anyone quite knowing."
+    },
+    "R6": {
+      "name": "Anvil",
+      "essence": "Quality is tested at your side. You are the tool that stops the team from fooling itself."
+    },
+    "R7": {
+      "name": "Loom",
+      "essence": "Where others see loose threads, you see the web. What comes out is better than any of the parts."
+    },
+    "R8": {
+      "name": "Comet",
+      "essence": "You don't ask permission to move outside the expected path. The best decisions passed through your angle first."
+    }
   }
 }

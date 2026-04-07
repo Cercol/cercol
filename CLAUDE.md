@@ -507,6 +507,37 @@ PAID (one-time payment, per session):
   Prerequisite: ~300 WaxingCrescent completions analysed.
 -->
 
+### Phase 5.1 — Role scoring module + beta role display ✅ COMPLETE
+- src/utils/role-scoring.js: pure scoring module (no React, no side effects)
+  - Theoretical centroids for R0–R8 (z-scores, order E/A/C/N/O)
+  - computeRole(domainScores): normalise → detect AB5C sector → lookup candidates
+    → resolve by Euclidean distance → softmax probabilities over all 9 roles
+  - Centre rule: |z_primary| < 0.5 → R0 (no dominant role)
+  - Pure-pole rule: |z_secondary| < 0.3 → Euclidean over all 9 roles
+  - Returns: { role, arc, probabilities, alpha, beta, sector, _method }
+  - arc = secondary roles with softmax probability > 15% (excluding primary)
+  - Digman α/β axes computed for future visualisation
+- src/components/RoleResult.jsx: minimal beta card
+  - Beta badge (roles.beta_label) — prominently shown, cannot be missed
+  - Section label (fqResults.roleSection) used as eyebrow above role name
+  - Role name (roles.{R}.name) — large, bold
+  - Role essence (roles.{R}.essence) — body copy
+  - Personal arc chips (roles.arc_label + roles.{R}.name per arc role)
+  - Uses design tokens only; Tailwind classes only; no hardcoded values
+- src/pages/FirstQuarterResultsPage.jsx: integrated role display
+  - computeRole(domains) called after domains are resolved
+  - <RoleResult result={roleResult} /> rendered after facet breakdown,
+    before share/retake buttons, with h2 section heading
+- src/locales/en.json: added fqResults.roleSection and roles namespace
+  (R0=Opal, R1=Bolt, R2=Beacon, R3=Thorn, R4=Anchor, R5=Heron,
+   R6=Anvil, R7=Loom, R8=Comet; beta_label, arc_label, essences)
+- src/locales/ca.json: same structure; Valencian names
+  (R0=Opàl, R1=Llamp, R2=Far, R3=Espina, R4=Àncora, R5=Garça,
+   R6=Enclusa, R7=Teler, R8=Cometa; essences left in EN pending translation)
+
+NOTE: centroids are theoretical (Phase 5.1). Replace with empirical centroids
+at N≥300 completions. All thresholds (0.5, 0.3, 0.15) are calibration params.
+
 ### Phase 5 — Team Role Instrument (Cèrcol Full Moon)
 
 <!--
