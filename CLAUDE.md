@@ -416,6 +416,33 @@ Future: migrate to a spreadsheet or translation management tool
 - NewMoonResultsPage: removed LanguageToggle import; inline header collapsed to h1 + subtitle only
 - FirstQuarterResultsPage: same
 
+### Phase 4.5 — Stripe infrastructure (checkout + webhook + premium column) ✅ COMPLETE
+- supabase/migrations/003_premium.sql: adds `premium boolean default false` to profiles
+- api/requirements.txt: stripe==12.1.0 added
+- api/main.py: two new endpoints; version bumped to 0.3.0
+  - POST /checkout (authenticated): creates Stripe Checkout session (mode=payment),
+    sets client_reference_id=user_id, customer_email pre-filled; returns { url }
+  - POST /webhooks/stripe: verifies Stripe-Signature; on checkout.session.completed
+    calls Supabase REST PATCH via service_role key to set profiles.premium=true
+  - _supabase_patch() helper: service_role REST calls using stdlib urllib (no extra deps)
+- api/.env.example: STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, STRIPE_PRICE_ID, FRONTEND_URL documented
+- src/lib/api.js: authenticated fetch helper; createCheckoutSession() wraps POST /checkout
+- en.json / ca.json: fqResults.unlock.* and fqResults.paymentSuccess added
+- .env / .env.example: VITE_API_URL added
+- NOTE: The gate was originally placed on FirstQuarter facets, then removed in Phase 4.7.
+  The Stripe endpoints and premium column remain — they will gate Full Moon (Phase 5).
+
+#### Manual tasks (Miquel)
+- In Supabase SQL editor: run migration 003_premium.sql
+- In Stripe dashboard (test mode):
+  - Create a product "Full Moon Cèrcol" with a one-time price
+  - Copy the price ID (price_...) → set STRIPE_PRICE_ID in Railway
+  - Add webhook endpoint: https://api.cercol.team/webhooks/stripe
+    Events to listen: checkout.session.completed
+  - Copy webhook signing secret (whsec_...) → set STRIPE_WEBHOOK_SECRET in Railway
+- In Railway: set STRIPE_SECRET_KEY=sk_test_... and the above two env vars
+- NOTE: Stripe secret key provided during dev session — store in Railway only, never commit
+
 ### Phase 4.6 — Multi-method auth (Google OAuth + password + magic link) ✅ COMPLETE
 - src/context/AuthContext.jsx: added signInWithPassword(email, password), signUp(email, password),
   signInWithGoogle(); signUp returns { needsConfirmation } so UI can show confirm-email state
@@ -452,37 +479,27 @@ All three auth methods broken after Phase 4.6. Three root causes found and fixed
    — password sign-in and sign-up were succeeding but the page never navigated (onAuthStateChange
    sets user in AuthContext but AuthPage wasn't watching it).
 
-### Phase 4.5 — Stripe Checkout + premium facet gate ✅ COMPLETE
-- supabase/migrations/003_premium.sql: adds `premium boolean default false` to profiles
-- api/requirements.txt: stripe==12.1.0 added
-- api/main.py: two new endpoints; version bumped to 0.3.0
-  - POST /checkout (authenticated): creates Stripe Checkout session (mode=payment),
-    sets client_reference_id=user_id, customer_email pre-filled; returns { url }
-  - POST /webhooks/stripe: verifies Stripe-Signature; on checkout.session.completed
-    calls Supabase REST PATCH via service_role key to set profiles.premium=true
-  - _supabase_patch() helper: service_role REST calls using stdlib urllib (no extra deps)
-- api/.env.example: STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, STRIPE_PRICE_ID, FRONTEND_URL documented
-- src/lib/api.js: authenticated fetch helper; createCheckoutSession() wraps POST /checkout
-- src/pages/FirstQuarterResultsPage.jsx: premium gate on facet breakdown
-  - Checks profiles.premium from Supabase on mount (anon client, RLS filters to own row)
-  - Non-premium + has facets: shows blurred first-domain preview + CTA overlay
-  - CTA: saves facets to sessionStorage, calls createCheckoutSession(), redirects to Stripe
-  - On return (?payment=success): restores facets from sessionStorage; shows success banner;
-    clears sessionStorage once premium confirmed
-  - Premium users: full 30-facet breakdown shown as before
-- en.json / ca.json: fqResults.unlock.* and fqResults.paymentSuccess added
-- .env / .env.example: VITE_API_URL added
+### Phase 4.7 — Product model correction: FQ gate removed, freemium model documented ✅ COMPLETE
+- src/pages/FirstQuarterResultsPage.jsx: removed all premium gate logic
+  - Deleted: premium state, checkingOut state, paymentParam detection, sessionStorage
+    save/restore for facets/domains, handleUnlock(), gate JSX (blurred preview + CTA overlay),
+    payment success banner, premium polling useEffect, Supabase premium check, sessionStorage
+    cleanup useEffect
+  - Deleted imports: supabase, createCheckoutSession, FACETS_SESSION_KEY, DOMAINS_SESSION_KEY
+  - All 30 facets now shown unconditionally — First Quarter is a free instrument
+  - Result logging (user_id) and ?r= shared links unchanged
+- api/main.py: POST /checkout and POST /webhooks/stripe kept — will gate Full Moon (Phase 5)
+- supabase profiles.premium column kept — will be used for Full Moon
 
-#### Manual tasks (Miquel)
-- In Supabase SQL editor: run migration 003_premium.sql
-- In Stripe dashboard (test mode):
-  - Create a product "First Quarter Full Report" with a one-time price
-  - Copy the price ID (price_...) → set STRIPE_PRICE_ID in Railway
-  - Add webhook endpoint: https://api.cercol.team/webhooks/stripe
-    Events to listen: checkout.session.completed
-  - Copy webhook signing secret (whsec_...) → set STRIPE_WEBHOOK_SECRET in Railway
-- In Railway: set STRIPE_SECRET_KEY=sk_test_... and the above two env vars
-- NOTE: Stripe secret key provided during dev session — store in Railway only, never commit
+#### Freemium model (authoritative)
+FREE (always):
+- New Moon Cèrcol — 10 items, 5 domains, quick snapshot
+- First Quarter Cèrcol — 60 items, 5 domains, 30 facets, full portrait
+
+PAID (one-time payment, per session):
+- Full Moon Cèrcol — IPIP-NEO-120 + observer assessment + ICAR cognitive ability;
+  definitive role result and team report (Phase 5, not yet built)
+  Stripe infrastructure (checkout endpoint, webhook, premium column) is already in place.
 
 <!--
   EPOCH 3 — Team Intelligence

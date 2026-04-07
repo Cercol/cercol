@@ -7,11 +7,7 @@
  *   b) ?r=BASE64 query param — encoded domain scores for sharing
  *      (facet scores not available in shared links)
  *
- * Premium gate:
- *   Facet breakdown is hidden for non-premium users.
- *   Clicking "Unlock" creates a Stripe Checkout session.
- *   Facets are saved to sessionStorage before the Stripe redirect
- *   so they survive the round-trip back to this page.
+ * All facets are shown unconditionally — First Quarter is a free instrument.
  */
 import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
@@ -21,8 +17,6 @@ import { DOMAIN_KEYS } from '../data/domains'
 import { fqScoreToPercent, fqScoreLabel } from '../utils/first-quarter-scoring'
 import { logResult } from '../utils/logger'
 import { useAuth } from '../context/AuthContext'
-import { supabase } from '../lib/supabase'
-import { createCheckoutSession } from '../lib/api'
 import { colors } from '../design/tokens'
 import RadarChart from '../components/RadarChart'
 
@@ -39,9 +33,6 @@ const DOMAIN_BAR_COLOR = {
   bond:       'bg-emerald-500',
   discipline: 'bg-blue-600',
 }
-
-const FACETS_SESSION_KEY  = 'cercol_fq_facets'
-const DOMAINS_SESSION_KEY = 'cercol_fq_domains'
 
 function encodeScores(domains) {
   const ordered = DOMAIN_KEYS.map((k) => domains[k] ?? 0)
@@ -65,13 +56,10 @@ export default function FirstQuarterResultsPage() {
   const { t, i18n } = useTranslation()
   const { user } = useAuth()
   const [copied, setCopied] = useState(false)
-  const [premium, setPremium] = useState(null)    // null = loading
-  const [checkingOut, setCheckingOut] = useState(false)
   const loggedRef = useRef(false)
 
-  const stateScores  = location.state
-  const sharedParam  = searchParams.get('r')
-  const paymentParam = searchParams.get('payment')
+  const stateScores = location.state
+  const sharedParam = searchParams.get('r')
 
   let domains  = null
   let facets   = null
@@ -83,22 +71,6 @@ export default function FirstQuarterResultsPage() {
     fromTest = stateScores.fromTest === true
   } else if (sharedParam) {
     domains = decodeScores(sharedParam)
-  }
-
-  // Restore scores from sessionStorage after a Stripe redirect
-  if (paymentParam) {
-    if (!facets) {
-      try {
-        const saved = sessionStorage.getItem(FACETS_SESSION_KEY)
-        if (saved) facets = JSON.parse(saved)
-      } catch { /* ignore */ }
-    }
-    if (!domains) {
-      try {
-        const saved = sessionStorage.getItem(DOMAINS_SESSION_KEY)
-        if (saved) domains = JSON.parse(saved)
-      } catch { /* ignore */ }
-    }
   }
 
   if (!domains) {
@@ -114,71 +86,6 @@ export default function FirstQuarterResultsPage() {
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Check premium status whenever user is known.
-  // After a Stripe redirect (?payment=success) the webhook may not have
-  // fired yet, so we poll every 2 s until premium flips or we time out.
-  useEffect(() => {
-    if (!user) { setPremium(false); return }
-
-    let cancelled = false
-
-    async function checkPremium() {
-      const { data } = await supabase
-        .from('profiles')
-        .select('premium')
-        .eq('id', user.id)
-        .single()
-      return data?.premium ?? false
-    }
-
-    if (paymentParam === 'success') {
-      // Poll up to 5 times (every 2 s → 10 s total)
-      let attempts = 0
-      const MAX = 5
-
-      const poll = async () => {
-        if (cancelled) return
-        const isPremium = await checkPremium()
-        if (cancelled) return
-        setPremium(isPremium)
-        if (!isPremium && attempts < MAX) {
-          attempts++
-          setTimeout(poll, 2000)
-        }
-      }
-      poll()
-    } else {
-      checkPremium().then((isPremium) => {
-        if (!cancelled) setPremium(isPremium)
-      })
-    }
-
-    return () => { cancelled = true }
-  }, [user, paymentParam]) // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Clear sessionStorage once the DB confirms premium=true.
-  // We don't clear it earlier because the polling may still be running.
-  useEffect(() => {
-    if (premium === true) {
-      sessionStorage.removeItem(FACETS_SESSION_KEY)
-      sessionStorage.removeItem(DOMAINS_SESSION_KEY)
-    }
-  }, [premium])
-
-  async function handleUnlock() {
-    if (!user) { navigate('/auth'); return }
-    try {
-      setCheckingOut(true)
-      // Persist scores so they survive the Stripe redirect
-      if (facets)   sessionStorage.setItem(FACETS_SESSION_KEY,  JSON.stringify(facets))
-      if (domains)  sessionStorage.setItem(DOMAINS_SESSION_KEY, JSON.stringify(domains))
-      const { url } = await createCheckoutSession()
-      window.location.href = url
-    } catch {
-      setCheckingOut(false)
-    }
-  }
-
   function handleShare() {
     const encoded = encodeScores(domains)
     const url = `${window.location.origin}${window.location.pathname}?r=${encoded}`
@@ -189,25 +96,10 @@ export default function FirstQuarterResultsPage() {
   }
 
   const domainKeys = DOMAIN_KEYS
-  // Unlock immediately if Stripe redirected back with ?payment=success —
-  // the webhook may still be in flight, but Stripe guarantees this URL
-  // is only visited after a successful charge. The polling continues in
-  // the background so profiles.premium gets set before sessionStorage
-  // is cleared, but we don't make the user wait for it.
-  const facetsUnlocked = premium === true || paymentParam === 'success'
-  const showFacets     = facets && facetsUnlocked
-  const showGate       = facets && !facetsUnlocked
 
   return (
     <main className="min-h-screen bg-gray-50 px-4 py-10 sm:py-16">
       <div className="w-full max-w-xl mx-auto flex flex-col gap-8">
-
-        {/* Payment success banner */}
-        {paymentParam === 'success' && (
-          <div className="bg-emerald-50 border border-emerald-200 rounded-2xl px-5 py-4 text-sm text-emerald-800 font-medium">
-            {t('fqResults.paymentSuccess')}
-          </div>
-        )}
 
         {/* Header */}
         <div>
@@ -264,125 +156,58 @@ export default function FirstQuarterResultsPage() {
           </div>
         </section>
 
-        {/* ── Section 2: Facet breakdown (premium) ── */}
+        {/* ── Section 2: Facet breakdown (always shown) ── */}
         {facets && (
           <section>
             <h2 className="text-sm font-semibold uppercase tracking-widest text-gray-400 mb-4">
               {t('fqResults.facetSection')}
             </h2>
+            <div className="flex flex-col gap-6">
+              {domainKeys.map((domainKey) => {
+                const domainFacets = FQ_DOMAIN_META[domainKey].facets
+                return (
+                  <div key={domainKey} className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
+                    <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                      <span className={`w-2 h-2 rounded-full inline-block ${DOMAIN_BAR_COLOR[domainKey]}`} />
+                      {t(`fqDomains.${domainKey}.name`)}
+                    </h3>
+                    <div className="flex flex-col gap-5">
+                      {domainFacets.map((facetKey) => {
+                        const facetScore      = facets[facetKey]
+                        const facetPct        = fqScoreToPercent(facetScore)
+                        const facetLabel      = fqScoreLabel(facetScore)
+                        const facetDescVariant = facetScore > 3.5 ? 'high' : facetScore < 2.5 ? 'low' : null
 
-            {/* Gate overlay — shown for non-premium users who have facet data */}
-            {showGate && (
-              <div className="relative">
-                {/* Blurred preview of first domain */}
-                <div className="pointer-events-none select-none blur-sm opacity-60">
-                  {(() => {
-                    const domainKey = domainKeys[0]
-                    const domainFacets = FQ_DOMAIN_META[domainKey].facets
-                    return (
-                      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
-                        <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                          <span className={`w-2 h-2 rounded-full inline-block ${DOMAIN_BAR_COLOR[domainKey]}`} />
-                          {t(`fqDomains.${domainKey}.name`)}
-                        </h3>
-                        <div className="flex flex-col gap-5">
-                          {domainFacets.map((facetKey) => {
-                            const facetScore = facets[facetKey]
-                            const facetPct   = fqScoreToPercent(facetScore)
-                            const facetLabel = fqScoreLabel(facetScore)
-                            return (
-                              <div key={facetKey}>
-                                <div className="flex items-center justify-between mb-1">
-                                  <span className="text-sm text-gray-700">{t(`fqFacets.${facetKey}.label`)}</span>
-                                  <div className="flex items-center gap-2">
-                                    <span className="text-sm font-semibold text-gray-900">{facetScore}/5</span>
-                                    <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${LABEL_STYLES[facetLabel]}`}>
-                                      {t(`fqResults.scoreLabels.${facetLabel}`)}
-                                    </span>
-                                  </div>
-                                </div>
-                                <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                                  <div
-                                    className={`h-full rounded-full ${DOMAIN_BAR_COLOR[domainKey]}`}
-                                    style={{ width: `${facetPct}%` }}
-                                  />
-                                </div>
+                        return (
+                          <div key={facetKey}>
+                            <div className="flex items-center justify-between mb-1">
+                              <span className="text-sm text-gray-700">{t(`fqFacets.${facetKey}.label`)}</span>
+                              <div className="flex items-center gap-2">
+                                <span className="text-sm font-semibold text-gray-900">{facetScore}/5</span>
+                                <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${LABEL_STYLES[facetLabel]}`}>
+                                  {t(`fqResults.scoreLabels.${facetLabel}`)}
+                                </span>
                               </div>
-                            )
-                          })}
-                        </div>
-                      </div>
-                    )
-                  })()}
-                </div>
-
-                {/* CTA overlay */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-200">
-                  <p className="text-base font-bold text-gray-900 mb-1">{t('fqResults.unlock.heading')}</p>
-                  <p className="text-sm text-gray-500 mb-5 text-center px-6">{t('fqResults.unlock.body')}</p>
-                  <button
-                    onClick={handleUnlock}
-                    disabled={checkingOut}
-                    className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold rounded-xl px-6 py-3 text-sm transition-colors"
-                  >
-                    {checkingOut ? t('fqResults.unlock.loading') : t('fqResults.unlock.cta')}
-                  </button>
-                  {!user && (
-                    <p className="mt-3 text-xs text-gray-400">{t('fqResults.unlock.signInNote')}</p>
-                  )}
-                </div>
-              </div>
-            )}
-
-            {/* Full facet breakdown — premium users only */}
-            {showFacets && (
-              <div className="flex flex-col gap-6">
-                {domainKeys.map((domainKey) => {
-                  const domainFacets = FQ_DOMAIN_META[domainKey].facets
-                  return (
-                    <div key={domainKey} className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
-                      <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                        <span className={`w-2 h-2 rounded-full inline-block ${DOMAIN_BAR_COLOR[domainKey]}`} />
-                        {t(`fqDomains.${domainKey}.name`)}
-                      </h3>
-                      <div className="flex flex-col gap-5">
-                        {domainFacets.map((facetKey) => {
-                          const facetScore      = facets[facetKey]
-                          const facetPct        = fqScoreToPercent(facetScore)
-                          const facetLabel      = fqScoreLabel(facetScore)
-                          const facetDescVariant = facetScore > 3.5 ? 'high' : facetScore < 2.5 ? 'low' : null
-
-                          return (
-                            <div key={facetKey}>
-                              <div className="flex items-center justify-between mb-1">
-                                <span className="text-sm text-gray-700">{t(`fqFacets.${facetKey}.label`)}</span>
-                                <div className="flex items-center gap-2">
-                                  <span className="text-sm font-semibold text-gray-900">{facetScore}/5</span>
-                                  <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${LABEL_STYLES[facetLabel]}`}>
-                                    {t(`fqResults.scoreLabels.${facetLabel}`)}
-                                  </span>
-                                </div>
-                              </div>
-                              <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden mb-2">
-                                <div
-                                  className={`h-full rounded-full transition-all duration-500 ${DOMAIN_BAR_COLOR[domainKey]}`}
-                                  style={{ width: `${facetPct}%` }}
-                                />
-                              </div>
-                              {facetDescVariant && (
-                                <p className="text-xs leading-relaxed" style={{ color: colors.textMuted }}>
-                                  {t(`fqFacets.${facetKey}.${facetDescVariant}`)}
-                                </p>
-                              )}
                             </div>
-                          )
-                        })}
-                      </div>
+                            <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden mb-2">
+                              <div
+                                className={`h-full rounded-full transition-all duration-500 ${DOMAIN_BAR_COLOR[domainKey]}`}
+                                style={{ width: `${facetPct}%` }}
+                              />
+                            </div>
+                            {facetDescVariant && (
+                              <p className="text-xs leading-relaxed" style={{ color: colors.textMuted }}>
+                                {t(`fqFacets.${facetKey}.${facetDescVariant}`)}
+                              </p>
+                            )}
+                          </div>
+                        )
+                      })}
                     </div>
-                  )
-                })}
-              </div>
-            )}
+                  </div>
+                )
+              })}
+            </div>
           </section>
         )}
 

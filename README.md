@@ -12,21 +12,23 @@ The long-term goal is a scientifically grounded team role assessment. First we c
 
 ## Live instruments
 
-### 🌑 New Moon
+Both instruments are completely free.
+
+### 🌑 New Moon Cèrcol
 
 10 items. About 2 minutes. Five personality dimensions.
 
 A quick orientation snapshot. Good for when you want a first reading, not a deep dive.
 
-[Take New Moon](https://miquelmatoses.github.io/cercol/)
+[Take New Moon Cèrcol](https://cercol.team)
 
-### 🌒 Waxing Crescent
+### 🌓 First Quarter Cèrcol
 
 60 items. About 10 minutes. Five dimensions, 30 facets.
 
 A full personality portrait. Same five dimensions as New Moon, but resolved into 30 facets so you can see the texture inside each one.
 
-[Take Waxing Crescent](https://miquelmatoses.github.io/cercol/)
+[Take First Quarter Cèrcol](https://cercol.team)
 
 ## Personality dimensions
 
@@ -56,21 +58,19 @@ Full item pool: https://ipip.ori.org
 
 ## Privacy
 
-No account required. No personal data collected.
+No account required for either instrument. No personal data collected.
 
-When you complete an assessment, only anonymous scores are logged: the instrument name, your language preference, and your five domain scores. Nothing that identifies you.
+When you complete an assessment, only anonymous scores are logged: the instrument name, your language preference, and your five domain scores. Nothing that identifies you. Creating an account is optional and only used to save your result history.
 
 Data is stored in Supabase with row-level security. No third-party analytics, no cookies, no tracking.
 
 ## Roadmap
 
-**Epoch 1 (now)** Individual instruments. Data collection. New Moon and Waxing Crescent live.
+**Now** New Moon and First Quarter Cèrcol are live and fully free. Data collection in progress.
 
-**Epoch 2** Backend and accounts. Result history. Extended reports.
+**Next** Full Moon Cèrcol — a deeper assessment combining a 120-item personality portrait, observer ratings from people who know you, and a cognitive ability measure. One-time payment per session. Role result and team report included.
 
-**Epoch 3** Team role instrument. Built on real data from Epoch 1. Observer assessment. Cognitive ability.
-
-**Epoch 4** Multilingual expansion. Translation management. More languages.
+**Later** Last Quarter Cèrcol — team-level instrument built on accumulated real data from Full Moon sessions. Observer assessment. Cognitive ability integration.
 
 No dates. No promises. Just the order things need to happen in.
 
