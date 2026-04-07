@@ -346,6 +346,7 @@
   "roles": {
     "beta_label": "Beta · Theoretical model",
     "arc_label": "Personal arc",
+    "you": "Your position",
     "R0": {
       "name": "Opal",
       "essence": "No fixed role. Present in different ways without ceasing to be you."

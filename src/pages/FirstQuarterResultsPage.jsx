@@ -21,6 +21,7 @@ import { useAuth } from '../context/AuthContext'
 import { colors } from '../design/tokens'
 import RadarChart from '../components/RadarChart'
 import RoleResult from '../components/RoleResult'
+import RoleWheel from '../components/RoleWheel'
 
 const LABEL_STYLES = {
   low:      'bg-gray-100 text-gray-600',
@@ -219,7 +220,12 @@ export default function FirstQuarterResultsPage() {
           <h2 className="text-sm font-semibold uppercase tracking-widest text-gray-400 mb-4">
             {t('fqResults.roleSection')}
           </h2>
-          <RoleResult result={roleResult} />
+          <div className="flex flex-col gap-4">
+            <RoleResult result={roleResult} />
+            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
+              <RoleWheel result={roleResult} />
+            </div>
+          </div>
         </section>
 
         {/* ── Share + actions ── */}

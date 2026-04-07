@@ -507,6 +507,26 @@ PAID (one-time payment, per session):
   Prerequisite: ~300 WaxingCrescent completions analysed.
 -->
 
+### Phase 5.2 — Role wheel: α/β 2D visualisation ✅ COMPLETE
+- src/utils/role-scoring.js: added exported ROLE_PROJECTIONS constant
+  Derived from CENTROIDS at module level (no data duplication):
+  each role mapped to { alpha, beta } using Digman axes
+- src/components/RoleWheel.jsx: pure SVG wheel component
+  - viewBox="-3 -3 6 6", w-full max-w-xs mx-auto; x=α, y=−β
+  - Axes + end labels (+α/−α/+β/−β) at ±2.65/±2.72
+  - 9 role dots in 3 visual tiers: background (r=0.18, gray), arc (r=0.22, blue-100),
+    primary (r=0.28, design token primary); rendered back-to-front so primary is on top
+  - Labels offset away from origin via distance-based vector; near-origin (R0) fixed up-right;
+    textAnchor derived from horizontal component
+  - User position: outer amber ring + inner amber dot; clamped to ±2.5 viewport
+  - Legend row below SVG: amber icon + roles.you label
+  - No external charting library; no canvas; design tokens only
+- src/pages/FirstQuarterResultsPage.jsx: RoleWheel added below RoleResult in Section 3,
+  wrapped in a matching white card (rounded-2xl border shadow-sm)
+- en.json / ca.json: roles.you added ("Your position" / "La teua posició")
+- NOTE: label placement uses direction-from-origin heuristic; may need adjustment
+  when theoretical centroids are replaced with empirical values at N≥300
+
 ### Phase 5.1 — Role scoring module + beta role display ✅ COMPLETE
 - src/utils/role-scoring.js: pure scoring module (no React, no side effects)
   - Theoretical centroids for R0–R8 (z-scores, order E/A/C/N/O)

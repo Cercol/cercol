@@ -21,6 +21,20 @@ const CENTROIDS = {
   R8: [ +0.5,  0.0,  0.0, -0.5, +1.2 ],
 }
 
+// ── Digman α/β projections derived from centroids (display use only) ─────────
+// α = (z_A + z_E - z_N) / 3  (socialisation axis, horizontal)
+// β = (z_C + z_O) / 2         (efficacy/growth axis, vertical)
+// CENTROIDS order: [E, A, C, N, O]
+export const ROLE_PROJECTIONS = Object.fromEntries(
+  Object.entries(CENTROIDS).map(([role, c]) => {
+    const [zE, zA, zC, zN, zO] = c
+    return [role, {
+      alpha: (zA + zE - zN) / 3,
+      beta:  (zC + zO)  / 2,
+    }]
+  })
+)
+
 // OCEAN factor keys — index maps to CENTROIDS arrays
 const FACTOR_KEYS = ['E', 'A', 'C', 'N', 'O']
 const DOMAIN_MAP  = { E: 'presence', A: 'bond', C: 'discipline', N: 'depth', O: 'vision' }
