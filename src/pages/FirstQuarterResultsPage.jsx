@@ -114,16 +114,47 @@ export default function FirstQuarterResultsPage() {
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Check premium status whenever user is known
+  // Check premium status whenever user is known.
+  // After a Stripe redirect (?payment=success) the webhook may not have
+  // fired yet, so we poll every 2 s until premium flips or we time out.
   useEffect(() => {
     if (!user) { setPremium(false); return }
-    supabase
-      .from('profiles')
-      .select('premium')
-      .eq('id', user.id)
-      .single()
-      .then(({ data }) => setPremium(data?.premium ?? false))
-  }, [user])
+
+    let cancelled = false
+
+    async function checkPremium() {
+      const { data } = await supabase
+        .from('profiles')
+        .select('premium')
+        .eq('id', user.id)
+        .single()
+      return data?.premium ?? false
+    }
+
+    if (paymentParam === 'success') {
+      // Poll up to 5 times (every 2 s → 10 s total)
+      let attempts = 0
+      const MAX = 5
+
+      const poll = async () => {
+        if (cancelled) return
+        const isPremium = await checkPremium()
+        if (cancelled) return
+        setPremium(isPremium)
+        if (!isPremium && attempts < MAX) {
+          attempts++
+          setTimeout(poll, 2000)
+        }
+      }
+      poll()
+    } else {
+      checkPremium().then((isPremium) => {
+        if (!cancelled) setPremium(isPremium)
+      })
+    }
+
+    return () => { cancelled = true }
+  }, [user, paymentParam]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Clear sessionStorage once payment confirmed and premium loaded
   useEffect(() => {
