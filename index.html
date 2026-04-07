@@ -8,10 +8,10 @@
     <script>
       (function() {
         const p = new URLSearchParams(window.location.search).get('p')
-        if (p && decodeURIComponent(p).indexOf('/auth/callback') !== 0) {
+        if (p) {
           window.history.replaceState(
             null, null,
-            '/' + decodeURIComponent(p) + window.location.hash
+            decodeURIComponent(p) + window.location.hash
           )
         }
       })()

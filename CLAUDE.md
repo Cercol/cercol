@@ -436,9 +436,21 @@ Future: migrate to a spreadsheet or translation management tool
   (only https://cercol.team was listed; http variant and https localhost were missing)
 - src/utils/translationFeedback.js: removed duplicate createClient() call; now imports shared
   supabase instance from src/lib/supabase.js (was the source of "multiple GoTrueClient" warning)
-- public/404.html: skip redirect for /auth/callback paths so Supabase can handle its own
-  magic link redirect without the SPA script mangling the hash fragment
-- index.html: companion replaceState script also skips /auth/callback paths
+- public/404.html (original fix): skip redirect for /auth/callback — later found to be wrong,
+  see auth bug fix below
+- index.html (original fix): companion replaceState also skipped /auth/callback — also wrong
+
+#### Auth bug fixes (post-Phase 4.6)
+All three auth methods broken after Phase 4.6. Three root causes found and fixed:
+1. public/404.html: removed /auth/callback exclusion — it caused React never to load at that URL
+   (GitHub Pages served 404.html but the skip meant no redirect to index.html → blank page).
+   404.html now always redirects to /?p=encodedPath+hash, for every path including /auth/callback.
+2. index.html: fixed double-slash bug — `'/' + decodeURIComponent(p)` produced `//auth/callback`
+   (SecurityError) because p already starts with '/'. Fixed to `decodeURIComponent(p)`. Also
+   removed the /auth/callback exclusion check (no longer needed since 404.html always redirects).
+3. src/pages/AuthPage.jsx: added useNavigate + useEffect(() => { if (user) navigate('/') }, [user])
+   — password sign-in and sign-up were succeeding but the page never navigated (onAuthStateChange
+   sets user in AuthContext but AuthPage wasn't watching it).
 
 ### Phase 4.5 — Stripe Checkout + premium facet gate ✅ COMPLETE
 - supabase/migrations/003_premium.sql: adds `premium boolean default false` to profiles

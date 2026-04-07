@@ -13,8 +13,9 @@
  *   [Sign in / Create account toggle] ← password method only
  *   [Submit button]
  */
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
 const INPUT_CLASS =
@@ -26,7 +27,12 @@ const BTN_PRIMARY =
 
 export default function AuthPage() {
   const { t } = useTranslation()
-  const { signIn, signInWithPassword, signUp, signInWithGoogle } = useAuth()
+  const navigate = useNavigate()
+  const { user, signIn, signInWithPassword, signUp, signInWithGoogle } = useAuth()
+
+  useEffect(() => {
+    if (user) navigate('/', { replace: true })
+  }, [user, navigate])
 
   const [email,    setEmail]    = useState('')
   const [password, setPassword] = useState('')
