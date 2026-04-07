@@ -3,14 +3,14 @@
  * Accessible at /witness/:token — no auth required.
  *
  * Phases:
- *   loading   — fetching session info
- *   notFound  — token unknown (404)
- *   done      — session already submitted
- *   intro     — show context, who this is about, CTA to start
+ *   loading    — fetching session info
+ *   notFound   — token unknown (404)
+ *   done       — session already submitted
+ *   intro      — show context, subject name (read-only), witness name (editable), CTA
  *   instrument — 20 rounds of forced-choice (5 adjectives, pick best + worst)
  *   submitting — sending scores to API
- *   complete  — thank-you screen
- *   error     — network or API failure
+ *   complete   — thank-you screen
+ *   error      — network or API failure
  *
  * Scoring: all client-side, domain scores sent to API on completion.
  * Never called "observer" anywhere — always "Witness".
@@ -23,37 +23,71 @@ import { buildRounds, computeWitnessScores } from '../utils/witness-scoring'
 
 const TOTAL_ROUNDS = 20
 
+/**
+ * AdjCard — one selectable adjective in a round.
+ * Shows a (i) tooltip button with an explanatory phrase on hover/focus.
+ */
 function AdjCard({ adj, state, lang, onSelect }) {
-  // state: null | 'best' | 'worst'
-  const base = 'w-full text-left rounded-xl border px-4 py-3 transition-all cursor-pointer text-sm font-medium'
+  const { t } = useTranslation()
 
+  const base = 'flex-1 text-left rounded-xl border px-4 py-3 transition-all cursor-pointer text-sm font-medium'
   let styles = 'border-gray-200 bg-white hover:border-gray-300 text-gray-800'
   if (state === 'best')  styles = 'border-emerald-400 bg-emerald-50 text-emerald-800 shadow-sm'
   if (state === 'worst') styles = 'border-red-300 bg-red-50 text-red-800 shadow-sm'
 
+  const tipText = lang === 'ca' ? adj.tip?.ca : adj.tip?.en
+
   return (
-    <button className={`${base} ${styles}`} onClick={() => onSelect(adj.id)}>
-      {lang === 'ca' ? adj.ca : adj.en}
-    </button>
+    <div className="flex items-center gap-2">
+      <button className={`${base} ${styles}`} onClick={() => onSelect(adj.id)}>
+        {lang === 'ca' ? adj.ca : adj.en}
+      </button>
+
+      {tipText && (
+        <div className="group relative flex-shrink-0">
+          {/* (i) trigger button */}
+          <button
+            type="button"
+            onClick={(e) => e.stopPropagation()}
+            aria-label={t('witness.page.tooltipLabel')}
+            className="w-5 h-5 rounded-full text-xs font-bold text-gray-400 hover:text-gray-600 border border-gray-300 hover:border-gray-400 flex items-center justify-center transition-colors select-none"
+          >
+            i
+          </button>
+
+          {/* Tooltip bubble — shown on hover or keyboard focus within the group */}
+          <div
+            role="tooltip"
+            className="absolute right-0 bottom-full mb-2 w-52 bg-gray-900 text-white text-xs rounded-lg px-3 py-2 leading-relaxed z-20 pointer-events-none opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-150"
+          >
+            {tipText}
+            {/* Arrow pointing down */}
+            <span className="absolute right-2.5 top-full border-l-[5px] border-r-[5px] border-t-[5px] border-l-transparent border-r-transparent border-t-gray-900" />
+          </div>
+        </div>
+      )}
+    </div>
   )
 }
 
 export default function WitnessPage() {
-  const { token } = useParams()
-  const navigate  = useNavigate()
+  const { token }    = useParams()
+  const navigate     = useNavigate()
   const { t, i18n } = useTranslation()
-  const lang = i18n.language
+  const lang         = i18n.language
 
-  const [phase,        setPhase]        = useState('loading')
-  const [witnessName,  setWitnessName]  = useState('')
-  const [rounds,       setRounds]       = useState([])
-  const [currentRound, setCurrentRound] = useState(0)
+  const [phase,          setPhase]          = useState('loading')
+  const [subjectDisplay, setSubjectDisplay] = useState('')   // read-only: who they are describing
+  const [witnessName,    setWitnessName]    = useState('')   // editable: the witness's own name
+  const [rounds,         setRounds]         = useState([])
+  const [currentRound,   setCurrentRound]   = useState(0)
 
   // Load session on mount
   useEffect(() => {
     getWitnessSession(token)
-      .then(({ witness_name, completed }) => {
-        setWitnessName(witness_name)
+      .then(({ subject_display, witness_name, completed }) => {
+        setSubjectDisplay(subject_display || '')
+        setWitnessName(witness_name || '')
         if (completed) {
           setPhase('done')
         } else {
@@ -212,10 +246,30 @@ export default function WitnessPage() {
               {t('witness.page.intro.body')}
             </p>
           </div>
+
+          {/* Subject — read-only */}
           <div className="bg-gray-50 rounded-xl px-4 py-3">
             <p className="text-xs text-gray-400 mb-0.5">{t('witness.page.intro.subjectLabel')}</p>
-            <p className="text-base font-semibold text-gray-900">{witnessName}</p>
+            <p className="text-base font-semibold text-gray-900">
+              {subjectDisplay || '—'}
+            </p>
           </div>
+
+          {/* Witness name — editable */}
+          <div className="flex flex-col gap-1.5">
+            <label htmlFor="witness-name-input" className="text-xs text-gray-400">
+              {t('witness.page.intro.youAreLabel')}
+            </label>
+            <input
+              id="witness-name-input"
+              type="text"
+              value={witnessName}
+              onChange={(e) => setWitnessName(e.target.value)}
+              className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-medium text-gray-900 placeholder-gray-300 focus:border-purple-400 focus:outline-none transition-colors"
+              placeholder={t('witness.page.intro.youArePlaceholder')}
+            />
+          </div>
+
           <button
             onClick={handleStart}
             className="w-full py-3 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm transition-colors shadow-sm"
@@ -228,7 +282,7 @@ export default function WitnessPage() {
   }
 
   // ── Instrument ─────────────────────────────────────────────────────────
-  const round = rounds[currentRound]
+  const round    = rounds[currentRound]
   const progress = Math.round(((currentRound + 1) / TOTAL_ROUNDS) * 100)
   const isLastRound = currentRound === TOTAL_ROUNDS - 1
 
@@ -251,10 +305,10 @@ export default function WitnessPage() {
           </div>
         </div>
 
-        {/* Instruction */}
+        {/* Instruction — uses subject's name, not the witness's */}
         <div>
           <p className="text-base font-semibold text-gray-900 mb-1">
-            {t('witness.page.instruction', { name: witnessName })}
+            {t('witness.page.instruction', { name: subjectDisplay })}
           </p>
           <p className="text-xs text-gray-400">{t('witness.page.instructionSub')}</p>
         </div>

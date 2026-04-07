@@ -480,8 +480,11 @@
         "heading": "Et demanen que descrigues algú.",
         "body": "Veuràs grups de paraules i triaràs quina s'assembla més a aquesta persona — i quina menys. Uns 5 minuts.",
         "subjectLabel": "Estàs descrivint",
+        "youAreLabel": "Tu ets",
+        "youArePlaceholder": "El teu nom",
         "cta": "Començar"
       },
+      "tooltipLabel": "Sobre aquesta paraula",
       "progress": "{{current}} de {{total}}",
       "instruction": "Quina paraula encaixa millor amb {{name}}?",
       "instructionSub": "Tria una paraula per al Millor encaix i una per al Pitjor encaix.",

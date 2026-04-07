@@ -513,6 +513,45 @@ values as data accumulates. Built across four sub-phases:
 - In Supabase SQL editor: run migration 004_witness.sql
 - Deploy API to Railway (api/main.py version 0.4.0)
 
+### Phase 7.1 — Witness Cèrcol: three instrument fixes ✅ COMPLETE
+
+**Fix 1 — Landing screen subject name**
+- supabase/migrations/005_witness_subject.sql: adds `subject_display` (text) column to witness_sessions
+- api/main.py POST /witness/sessions: stores authenticated user's email (from JWT) as subject_display
+- api/main.py GET /witness/session/{token}: now returns subject_display alongside witness_name
+- WitnessPage.jsx: intro screen shows two separate fields:
+  - "You're describing: [subject_display]" — read-only, populated from API
+  - "You are: [witness_name]" — editable text input, pre-filled from session
+- Instruction during instrument uses subject_display (the person being described), not witness_name
+- New locale keys: witness.page.intro.youAreLabel, witness.page.intro.youArePlaceholder
+
+**Fix 2 — Adjective tooltips**
+- witness-adjectives.js: all 100 adjectives now carry `tip: { en, ca }` — a short explanatory phrase
+- WitnessPage.jsx AdjCard component: shows a small circular (i) button next to each adjective card
+  - Tooltip appears on hover and keyboard focus (group-hover / group-focus-within Tailwind classes)
+  - Pure CSS/Tailwind — no external tooltip library; absolute-positioned bubble with downward arrow
+  - (i) click does not propagate to the adjective card
+- New locale key: witness.page.tooltipLabel (aria-label for the (i) button)
+
+**Fix 3 — Round polarity (critical design fix)**
+- witness-adjectives.js: adjective IDs renamed from w001…w100 format to {factor}{sign}{nn}
+  (e.g. E+01, E-01, A+01, N+03) — id now encodes factor, pole and sequence number
+- witness-scoring.js buildRounds() completely rewritten:
+  - Positive pole: E+, A+, C+, N−, O+  (high E/A/C/O = low N = calm)
+  - Negative pole: E−, A−, C−, N+, O−  (low E/A/C/O = high N = anxious)
+  - Fixed 20-round polarity sequence: P P N P P P N P P N P P P N P P N P P P
+    (14 positive, 6 negative — 70/30 split)
+  - Each positive round draws from the positive-pole pool for all 5 factors;
+    each negative round draws from the negative-pole pool
+  - POSITIVE_POLE_SIGN map governs which id sign goes into which pool per factor;
+    N factor is inverted (N− is the positive pole, N+ is the negative pole)
+  - getPoleAdjectives() helper filters each factor's pool by the correct id sign
+  - Shuffled-cycle within each pool — no adjective repeats before the pool is exhausted
+  - computeWitnessScores(), computeInterimRole(), detectDivergence(), averageWitnessScores() unchanged
+
+#### Manual tasks (Miquel)
+- In Supabase SQL editor: run migration 005_witness_subject.sql
+
 ### Phase 8 — Documentation and content site
 - Standalone section of the site (not gated, no login required)
 - Explains each instrument: what it measures, how long it takes, what you get

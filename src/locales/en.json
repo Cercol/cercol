@@ -480,8 +480,11 @@
         "heading": "You've been asked to describe someone.",
         "body": "You'll see groups of words and pick which one fits this person best — and which fits least. Takes about 5 minutes.",
         "subjectLabel": "You're describing",
+        "youAreLabel": "You are",
+        "youArePlaceholder": "Your name",
         "cta": "Start"
       },
+      "tooltipLabel": "About this word",
       "progress": "{{current}} of {{total}}",
       "instruction": "Which word fits {{name}} best?",
       "instructionSub": "Pick one for Best fit and one for Worst fit.",

@@ -267,10 +267,11 @@ def create_witness_sessions(
 
         try:
             _supabase_post("witness_sessions", {
-                "subject_id":   subject_id,
-                "token":        token,
-                "witness_name": witness.name.strip(),
-                "witness_email": witness.email.strip() if witness.email else None,
+                "subject_id":      subject_id,
+                "subject_display": user.get("email") or subject_id,
+                "token":           token,
+                "witness_name":    witness.name.strip(),
+                "witness_email":   witness.email.strip() if witness.email else None,
             })
         except Exception:
             raise HTTPException(status_code=500, detail="Failed to create session")
@@ -291,14 +292,15 @@ def get_witness_session(token: str):
     Returns { witness_name, completed } for the given token.
     Used by WitnessPage to load session metadata before starting.
     """
-    rows = _supabase_get("witness_sessions", f"token=eq.{token}&select=witness_name,completed_at")
+    rows = _supabase_get("witness_sessions", f"token=eq.{token}&select=witness_name,subject_display,completed_at")
     if not rows:
         raise HTTPException(status_code=404, detail="Session not found")
 
     session = rows[0]
     return {
-        "witness_name": session["witness_name"],
-        "completed": session["completed_at"] is not None,
+        "witness_name":    session["witness_name"],
+        "subject_display": session.get("subject_display") or "",
+        "completed":       session["completed_at"] is not None,
     }
 
 

@@ -36,29 +36,61 @@ function shuffle(arr) {
 /**
  * buildRounds — pre-generates all rounds for a Witness session.
  *
+ * Each round contains adjectives of ONE polarity only:
+ *   Positive round: E+, A+, C+, N−, O+  (high E/A/C/O, low N)
+ *   Negative round: E−, A−, C−, N+, O−  (low E/A/C/O, high N)
+ *
+ * This prevents witnesses from always avoiding the negative adjective
+ * when it is mixed with positive ones — a key forced-choice design constraint.
+ *
+ * Fixed 20-round polarity sequence (14 positive, 6 negative):
+ *   P P N P P P N P P N P P P N P P N P P P
+ *
+ * Adjective IDs encode polarity: second character is '+' or '−'.
+ * N factor is inverted: N+ (anxious) = negative pole, N− (calm) = positive pole.
+ *
  * @param {number} totalRounds - number of rounds (default 20)
- * @returns {Array} Array of { adjectives: [adj×5] } objects,
- *                  one adjective per factor, in FACTORS order.
+ * @returns {Array} Array of { adjectives: [adj×5], best: null, worst: null }
  */
-export function buildRounds(totalRounds = 20) {
-  // Shuffle each factor's adjective list independently
-  const pools = {}
-  for (const f of FACTORS) {
-    pools[f] = shuffle(ADJECTIVES_BY_FACTOR[f])
-  }
 
-  // Pointers into each pool
-  const ptrs = { E: 0, A: 0, C: 0, N: 0, O: 0 }
+// Which id sign goes into positive-pole rounds for each factor
+const POSITIVE_POLE_SIGN = { E: '+', A: '+', C: '+', N: '-', O: '+' }
+
+// Fixed polarity pattern: 14 positive (P), 6 negative (N) across 20 rounds
+const ROUND_POLARITY = ['P','P','N','P','P','P','N','P','P','N','P','P','P','N','P','P','N','P','P','P']
+
+/**
+ * Returns adjectives for a given factor filtered to the requested pole.
+ * @param {string} factor - 'E'|'A'|'C'|'N'|'O'
+ * @param {string} polarity - 'pos' | 'neg'
+ */
+function getPoleAdjectives(factor, polarity) {
+  const posSign = POSITIVE_POLE_SIGN[factor]
+  const targetSign = polarity === 'pos' ? posSign : (posSign === '+' ? '-' : '+')
+  return ADJECTIVES_BY_FACTOR[factor].filter(a => a.id.charAt(1) === targetSign)
+}
+
+export function buildRounds(totalRounds = 20) {
+  // Build independently shuffled pools for each factor × polarity
+  const pools = { pos: {}, neg: {} }
+  const ptrs  = { pos: {}, neg: {} }
+  for (const f of FACTORS) {
+    for (const p of ['pos', 'neg']) {
+      pools[p][f] = shuffle(getPoleAdjectives(f, p))
+      ptrs[p][f]  = 0
+    }
+  }
 
   const rounds = []
   for (let i = 0; i < totalRounds; i++) {
+    const polarity = ROUND_POLARITY[i] === 'P' ? 'pos' : 'neg'
     const adjectives = FACTORS.map((f) => {
-      // Wrap around if we've used all adjectives for this factor
-      if (ptrs[f] >= pools[f].length) {
-        pools[f] = shuffle(ADJECTIVES_BY_FACTOR[f])
-        ptrs[f] = 0
+      // Reshuffle when the factor pool for this polarity is exhausted
+      if (ptrs[polarity][f] >= pools[polarity][f].length) {
+        pools[polarity][f] = shuffle(getPoleAdjectives(f, polarity))
+        ptrs[polarity][f]  = 0
       }
-      return pools[f][ptrs[f]++]
+      return pools[polarity][f][ptrs[polarity][f]++]
     })
     rounds.push({ adjectives, best: null, worst: null })
   }
