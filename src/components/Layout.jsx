@@ -1,14 +1,16 @@
 /**
  * Layout — persistent shell wrapping all routes.
- * Two-row header:
- *   Row 1: brand link (left) + AccountButton + LanguageToggle (right)
- *   Row 2: five doc nav links (scrollable on narrow viewports)
- * Children rendered below in normal flow.
+ * Single-row header on brand blue (#0047ba).
+ *   Left:   Cèrcol logo (white SVG)
+ *   Center: five doc nav links (scrollable on narrow viewports)
+ *   Right:  AccountButton + LanguageToggle
  */
 import { Link, NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import AccountButton from './AccountButton'
 import LanguageToggle from './LanguageToggle'
+import CercolLogo from './CercolLogo'
+import { colors } from '../design/tokens'
 
 export default function Layout({ children }) {
   const { t } = useTranslation()
@@ -23,36 +25,29 @@ export default function Layout({ children }) {
 
   return (
     <>
-      <header className="bg-white border-b border-gray-200">
-        {/* Row 1 — brand + controls */}
-        <div className="max-w-xl mx-auto px-4 h-14 flex items-center justify-between gap-4">
-          <Link
-            to="/"
-            className="text-base font-bold tracking-tight text-gray-900 hover:text-blue-700 transition-colors shrink-0"
-          >
-            {t('nav.brand')}
-          </Link>
-          <div className="flex items-center gap-3 shrink-0">
-            <AccountButton />
-            <LanguageToggle />
-          </div>
-        </div>
+      <header style={{ backgroundColor: colors.blue }}>
+        <div className="h-16 flex items-center gap-6 px-8 lg:px-12">
 
-        {/* Row 2 — doc nav */}
-        <div className="border-t border-gray-100">
+          {/* Logo — left */}
+          <Link to="/" className="shrink-0" style={{ color: colors.white }}>
+            <CercolLogo className="h-7 w-auto" />
+          </Link>
+
+          {/* Nav — center, scrollable on mobile */}
           <nav
-            className="max-w-xl mx-auto px-4 flex items-center gap-1 overflow-x-auto py-1.5 scrollbar-none"
-            aria-label="Documentation"
+            className="flex-1 flex items-center gap-1 overflow-x-auto min-w-0"
+            style={{ scrollbarWidth: 'none' }}
+            aria-label="Main navigation"
           >
             {navLinks.map(({ to, label }) => (
               <NavLink
                 key={to}
                 to={to}
                 className={({ isActive }) =>
-                  `shrink-0 text-xs font-medium px-2.5 py-1.5 rounded-lg transition-colors whitespace-nowrap ${
+                  `shrink-0 text-xs font-medium px-2.5 py-1.5 rounded transition-colors whitespace-nowrap ${
                     isActive
-                      ? 'bg-gray-100 text-gray-900'
-                      : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
+                      ? 'text-white bg-white/20'
+                      : 'text-white/70 hover:text-white hover:bg-white/10'
                   }`
                 }
               >
@@ -60,6 +55,13 @@ export default function Layout({ children }) {
               </NavLink>
             ))}
           </nav>
+
+          {/* Auth + language toggle — right */}
+          <div className="flex items-center gap-3 shrink-0">
+            <AccountButton />
+            <LanguageToggle />
+          </div>
+
         </div>
       </header>
       {children}

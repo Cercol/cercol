@@ -1,11 +1,12 @@
 /**
- * AccountButton — top-left auth indicator.
- * Not signed in: "Sign in" link.
+ * AccountButton — auth indicator in the header (blue background context).
+ * Not signed in: "Sign in" link (white text).
  * Signed in: email initial badge + "My results" link + "Sign out" button.
  */
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
+import { colors } from '../design/tokens'
 
 export default function AccountButton() {
   const { t }          = useTranslation()
@@ -18,7 +19,7 @@ export default function AccountButton() {
     return (
       <button
         onClick={() => navigate('/auth')}
-        className="text-sm font-semibold text-gray-400 hover:text-gray-700 transition-colors px-2 py-1"
+        className="text-sm font-medium text-white/70 hover:text-white transition-colors px-2 py-1"
       >
         {t('auth.signIn')}
       </button>
@@ -29,19 +30,22 @@ export default function AccountButton() {
 
   return (
     <div className="flex items-center gap-2">
-      <span className="w-7 h-7 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center select-none">
+      <span
+        className="w-7 h-7 rounded-full text-white text-xs font-bold flex items-center justify-center select-none"
+        style={{ backgroundColor: colors.red }}
+      >
         {initial}
       </span>
       <button
         onClick={() => navigate('/my-results')}
-        className="text-sm font-semibold text-gray-500 hover:text-blue-700 transition-colors"
+        className="text-sm font-medium text-white/70 hover:text-white transition-colors"
       >
         {t('myResults.link')}
       </button>
-      <span className="text-gray-300 text-xs">|</span>
+      <span className="text-white/30 text-xs">|</span>
       <button
         onClick={signOut}
-        className="text-sm font-semibold text-gray-400 hover:text-gray-700 transition-colors"
+        className="text-sm font-medium text-white/50 hover:text-white transition-colors"
       >
         {t('auth.signOut')}
       </button>

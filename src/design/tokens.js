@@ -1,41 +1,49 @@
-// Cèrcol Design Tokens
-// Phase 1: neutral placeholder palette
-// To update branding: change values here only, never elsewhere
+// Cèrcol Design Tokens — Phase 10.1
+// Brand identity applied. Update only here, never in component files.
 
 export const colors = {
-  // Primary
-  primary:     '#2563EB',  // placeholder — will become Cèrcol brand color
-  primaryDark: '#1E40AF',
+  // Brand palette
+  red:         '#cf3339',
+  blue:        '#0047ba',
+  yellow:      '#f1c22f',
+  green:       '#427c42',
+  white:       '#ffffff',
+  black:       '#111111',
 
-  // Neutrals
-  background:  '#FAFAFA',
-  surface:     '#FFFFFF',
-  border:      '#E5E7EB',
-  textPrimary: '#111827',
-  textMuted:   '#6B7280',
+  // Semantic aliases
+  primary:     '#cf3339',   // red — primary CTA
+  primaryDark: '#a8262b',   // darker red
 
-  // Semantic
-  success:     '#10B981',
-  warning:     '#F59E0B',
-  error:       '#EF4444',
+  // Surface / text
+  background:  '#ffffff',
+  surface:     '#ffffff',
+  border:      '#d4d4d4',
+  textPrimary: '#111111',
+  textMuted:   '#666666',
+
+  // Semantic status
+  success:     '#427c42',   // green
+  warning:     '#f1c22f',   // yellow
+  error:       '#cf3339',   // red
 
   // Role probability bars
-  arcBar:      '#93c5fd',  // blue-300 — arc role bar fill
-  arcLabel:    '#1d4ed8',  // blue-700 — arc role label text
+  arcBar:      '#0047ba',   // brand blue — arc role bar fill
+  arcLabel:    '#0047ba',   // brand blue — arc role label text
 
   // Big Five dimension colors (radar chart)
-  openness:          '#8B5CF6',
-  conscientiousness: '#2563EB',
-  extraversion:      '#F59E0B',
-  agreeableness:     '#10B981',
-  neuroticism:       '#EF4444',
+  openness:          '#0047ba',   // Vision    → blue
+  conscientiousness: '#f1c22f',   // Discipline → yellow
+  extraversion:      '#cf3339',   // Presence  → red
+  agreeableness:     '#427c42',   // Bond      → green
+  neuroticism:       '#111111',   // Depth     → black
 }
 
 export const fonts = {
-  sans: '"Inter", system-ui, sans-serif',
-  mono: '"JetBrains Mono", monospace',
+  display: '"Playfair Display", Georgia, serif',
+  sans:    '"Roboto", system-ui, sans-serif',
+  mono:    '"JetBrains Mono", monospace',
 }
 
 export const spacing = {
-  pageMax: '720px',   // max content width
+  pageMax: '720px',   // max content width for doc pages
 }

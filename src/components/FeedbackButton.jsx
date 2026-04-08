@@ -83,7 +83,7 @@ export default function FeedbackButton({ itemId = null, itemText = null }) {
       {panelOpen && (
         <div
           style={{ borderColor: colors.border }}
-          className="w-72 bg-white rounded-2xl border shadow-lg p-4 flex flex-col gap-3"
+          className="w-72 bg-white rounded border shadow-lg p-4 flex flex-col gap-3"
         >
           <p className="text-sm font-semibold text-gray-800">{t('feedback.panel.title')}</p>
 
@@ -92,7 +92,7 @@ export default function FeedbackButton({ itemId = null, itemText = null }) {
             <p className="text-xs text-gray-400 mb-1">{t('feedback.panel.context')}</p>
             <p
               style={{ color: colors.textMuted, borderColor: colors.border }}
-              className="text-xs border rounded-lg px-3 py-2 bg-gray-50 font-mono truncate"
+              className="text-xs border rounded px-3 py-2 bg-gray-50 font-mono truncate"
             >
               [{i18n.language}] {pathname}
             </p>
@@ -102,7 +102,7 @@ export default function FeedbackButton({ itemId = null, itemText = null }) {
           {itemId != null && itemText && (
             <p
               style={{ color: colors.textMuted, borderColor: colors.border }}
-              className="text-xs border rounded-lg px-3 py-2 bg-gray-50 leading-snug"
+              className="text-xs border rounded px-3 py-2 bg-gray-50 leading-snug"
             >
               #{itemId}: <span className="italic">"{itemText}"</span>
             </p>
@@ -118,7 +118,7 @@ export default function FeedbackButton({ itemId = null, itemText = null }) {
               rows={3}
               placeholder={t('feedback.panel.placeholder')}
               style={{ borderColor: colors.border }}
-              className="w-full text-sm border rounded-xl px-3 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-blue-200 text-gray-800 placeholder-gray-300"
+              className="w-full text-sm border rounded px-3 py-2 resize-none focus:outline-none focus:ring-2 text-gray-800 placeholder-gray-300"
             />
 
             {status === 'success' ? (
@@ -131,7 +131,7 @@ export default function FeedbackButton({ itemId = null, itemText = null }) {
                   type="button"
                   onClick={closePanel}
                   style={{ borderColor: colors.border, color: colors.textMuted }}
-                  className="flex-1 py-2 rounded-xl border text-xs font-medium hover:bg-gray-50 transition-colors"
+                  className="flex-1 py-2 rounded border text-xs font-medium hover:bg-gray-50 transition-colors"
                 >
                   {t('feedback.panel.cancel')}
                 </button>
@@ -139,7 +139,7 @@ export default function FeedbackButton({ itemId = null, itemText = null }) {
                   type="submit"
                   disabled={status === 'submitting' || !suggestion.trim()}
                   style={{ backgroundColor: colors.primary }}
-                  className="flex-1 py-2 rounded-xl text-white text-xs font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity"
+                  className="flex-1 py-2 rounded text-white text-xs font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity"
                 >
                   {t('feedback.panel.submit')}
                 </button>
@@ -149,48 +149,13 @@ export default function FeedbackButton({ itemId = null, itemText = null }) {
         </div>
       )}
 
-      {/* ── Button cluster ── */}
-      <div className="flex flex-col items-end gap-1.5">
-        {/* Suggest translation — only when not English */}
-        {isNonEnglish && (
-          <button
-            onClick={openPanel}
-            style={{ color: colors.textMuted, borderColor: colors.border }}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl border bg-white text-xs font-medium shadow-sm hover:shadow-md hover:text-gray-700 transition-all"
-          >
-            {/* Translate icon */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="13"
-              height="13"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <path d="m5 8 6 6" />
-              <path d="m4 14 6-6 2-3" />
-              <path d="M2 5h12" />
-              <path d="M7 2h1" />
-              <path d="m22 22-5-10-5 10" />
-              <path d="M14 18h6" />
-            </svg>
-            {t('feedback.suggestTranslation')}
-          </button>
-        )}
-
-        {/* Report issue — always visible */}
-        <a
-          href={ISSUE_URL}
-          target="_blank"
-          rel="noreferrer"
+      {/* Suggest translation button — only when not English */}
+      {isNonEnglish && (
+        <button
+          onClick={openPanel}
           style={{ color: colors.textMuted, borderColor: colors.border }}
-          className="flex items-center gap-1.5 px-3 py-2 rounded-xl border bg-white text-xs font-medium shadow-sm hover:shadow-md hover:text-gray-700 transition-all"
+          className="flex items-center gap-1.5 px-3 py-2 rounded border bg-white text-xs font-medium shadow-sm hover:shadow-md transition-all"
         >
-          {/* Bug icon */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="13"
@@ -203,21 +168,16 @@ export default function FeedbackButton({ itemId = null, itemText = null }) {
             strokeLinejoin="round"
             aria-hidden="true"
           >
-            <path d="M8 2l1.88 1.88" />
-            <path d="M14.12 3.88 16 2" />
-            <path d="M9 7.13v-1a3.003 3.003 0 1 1 6 0v1" />
-            <path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6z" />
-            <path d="M12 20v-9" />
-            <path d="M6.53 9C4.6 8.8 3 7.1 3 5" />
-            <path d="M6 13H2" />
-            <path d="M3 21c0-2.1 1.7-3.9 3.8-4" />
-            <path d="M20.97 5c0 2.1-1.6 3.8-3.5 4" />
-            <path d="M22 13h-4" />
-            <path d="M17.2 17c2.1.1 3.8 1.9 3.8 4" />
+            <path d="m5 8 6 6" />
+            <path d="m4 14 6-6 2-3" />
+            <path d="M2 5h12" />
+            <path d="M7 2h1" />
+            <path d="m22 22-5-10-5 10" />
+            <path d="M14 18h6" />
           </svg>
-          {t('feedback.reportIssue')}
-        </a>
-      </div>
+          {t('feedback.suggestTranslation')}
+        </button>
+      )}
     </div>
   )
 }

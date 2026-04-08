@@ -1,55 +1,39 @@
 /**
  * HomePage — instrument selection screen.
- * User chooses between New Moon Cèrcol (10 items) and
- * First Quarter Cèrcol (60 items).
+ * Full-width blue background. Three instrument cards in a horizontal grid.
+ * Each card has its own brand color background. Clicking anywhere on the
+ * card navigates to the instrument.
  */
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { colors } from '../design/tokens'
 
-function InstrumentCard({ name, tagline, meta, description, onClick, accent, paid = false, paidLabel = '' }) {
-  const hoverBorder = paid ? 'hover:border-purple-200' : 'hover:border-blue-300'
-  const hoverTitle  = paid ? 'group-hover:text-purple-700' : 'group-hover:text-blue-700'
-  const hoverArrow  = paid ? 'group-hover:text-purple-400' : 'group-hover:text-blue-400'
+const GITHUB_URL  = 'https://github.com/miquelmatoses/cercol'
+const ISSUE_URL   = 'https://github.com/miquelmatoses/cercol/issues/new?title=Bug+report&labels=bug'
 
+function InstrumentCard({ emoji, name, description, meta, bgColor, textColor, paymentLabel, onClick }) {
   return (
     <button
       onClick={onClick}
-      className={`w-full text-left bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md ${hoverBorder} transition-all group`}
+      className="text-left w-full p-8 hover:brightness-90 transition-[filter] duration-200 cursor-pointer"
+      style={{ backgroundColor: bgColor, color: textColor, borderRadius: 4 }}
     >
-      <div className="flex items-start justify-between mb-3">
-        <div>
-          <span className={`text-xs font-semibold uppercase tracking-widest ${accent}`}>
-            {tagline}
-          </span>
-          <h2 className={`mt-1 text-xl font-bold text-gray-900 ${hoverTitle} transition-colors`}>
-            {name}
-          </h2>
-        </div>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className={`text-gray-300 ${hoverArrow} transition-colors mt-1 shrink-0`}
-          aria-hidden="true"
-        >
-          <path d="M5 12h14" />
-          <path d="m12 5 7 7-7 7" />
-        </svg>
-      </div>
-      <p className="text-sm text-gray-500 mb-3">{description}</p>
+      <div className="text-5xl mb-6 leading-none">{emoji}</div>
+      <h2 className="text-2xl font-bold mb-2">{name}</h2>
+      <p className="text-sm mb-6" style={{ opacity: 0.8 }}>{description}</p>
       <div className="flex items-center gap-2 flex-wrap">
-        <span className="inline-block text-xs font-medium text-gray-400 bg-gray-100 px-2.5 py-1 rounded-full">
+        <span
+          className="text-xs px-2.5 py-1 font-medium"
+          style={{ backgroundColor: 'rgba(0,0,0,0.15)', borderRadius: 4 }}
+        >
           {meta}
         </span>
-        {paid && paidLabel && (
-          <span className="inline-block text-xs font-medium text-purple-600 bg-purple-50 px-2.5 py-1 rounded-full">
-            {paidLabel}
+        {paymentLabel && (
+          <span
+            className="text-xs px-2.5 py-1 font-medium"
+            style={{ backgroundColor: 'rgba(0,0,0,0.2)', borderRadius: 4 }}
+          >
+            {paymentLabel}
           </span>
         )}
       </div>
@@ -62,64 +46,70 @@ export default function HomePage() {
   const { t } = useTranslation()
 
   return (
-    <main className="min-h-screen bg-gray-50 flex flex-col items-center justify-center px-4 py-16">
-      <div className="w-full max-w-xl">
-        {/* Wordmark */}
-        <div className="text-center mb-10">
-          <span className="text-4xl font-bold tracking-tight text-gray-900">
-            {t('nav.brand')}
-          </span>
-          <p className="mt-2 text-base text-gray-500">{t('home.subtitle')}</p>
-        </div>
+    <main
+      className="min-h-[calc(100vh-4rem)] flex flex-col"
+      style={{ backgroundColor: colors.blue }}
+    >
+      {/* Breathing space above cards */}
+      <div style={{ height: 80 }} />
 
-        {/* Headline */}
-        <h1 className="text-center text-xl font-semibold text-gray-700 mb-5">
-          {t('home.headline')}
-        </h1>
-
-        {/* Instrument cards */}
-        <div className="flex flex-col gap-4">
+      {/* Instrument cards — 3 columns desktop, 2 tablet, 1 mobile */}
+      <div className="flex-1 px-8 lg:px-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-screen-xl mx-auto">
           <InstrumentCard
+            emoji="🌑"
             name={t('home.newMoon.name')}
-            tagline={t('home.newMoon.tagline')}
-            meta={t('home.newMoon.meta')}
             description={t('home.newMoon.description')}
-            accent="text-amber-500"
+            meta={t('home.newMoon.meta')}
+            bgColor={colors.red}
+            textColor={colors.white}
             onClick={() => navigate('/new-moon')}
           />
           <InstrumentCard
+            emoji="🌓"
             name={t('home.firstQuarter.name')}
-            tagline={t('home.firstQuarter.tagline')}
-            meta={t('home.firstQuarter.meta')}
             description={t('home.firstQuarter.description')}
-            accent="text-blue-600"
+            meta={t('home.firstQuarter.meta')}
+            bgColor={colors.green}
+            textColor={colors.white}
             onClick={() => navigate('/first-quarter')}
           />
           <InstrumentCard
+            emoji="🌕"
             name={t('home.fullMoon.name')}
-            tagline={t('home.fullMoon.tagline')}
-            meta={t('home.fullMoon.meta')}
             description={t('home.fullMoon.description')}
-            accent="text-purple-600"
-            paid
-            paidLabel={t('home.fullMoon.paid')}
+            meta={t('home.fullMoon.meta')}
+            bgColor={colors.yellow}
+            textColor={colors.black}
+            paymentLabel={t('home.fullMoon.paid')}
             onClick={() => navigate('/full-moon')}
           />
         </div>
+      </div>
 
-        {/* Footer */}
-        <p className="mt-8 text-center text-xs text-gray-400">
+      {/* Footer */}
+      <footer className="px-8 lg:px-16 pt-10 pb-8">
+        <p className="text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>
           {t('home.footnote')}
           <a
-            href="https://github.com/miquelmatoses/cercol"
+            href={GITHUB_URL}
             target="_blank"
             rel="noreferrer"
-            className="underline hover:text-gray-600"
+            className="underline hover:text-white transition-colors"
           >
             {t('home.viewOnGitHub')}
           </a>
+          {' · '}
+          <a
+            href={ISSUE_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="underline hover:text-white transition-colors"
+          >
+            {t('feedback.reportIssue')}
+          </a>
         </p>
-      </div>
+      </footer>
     </main>
   )
 }

@@ -1,7 +1,10 @@
 /**
- * LanguageToggle — EN / CA switcher shown in the top-right of every page.
+ * LanguageToggle — EN / CA switcher in the header (blue background context).
+ * Active language: white background with blue text.
+ * Inactive: white/60 text, no background.
  */
 import { useTranslation } from 'react-i18next'
+import { colors } from '../design/tokens'
 
 export default function LanguageToggle() {
   const { i18n } = useTranslation()
@@ -15,24 +18,24 @@ export default function LanguageToggle() {
     <div className="flex items-center gap-1 text-sm font-semibold">
       <button
         onClick={() => toggle('en')}
-        className={[
-          'px-2 py-1 rounded-lg transition-colors',
+        className="px-2 py-1 rounded transition-colors"
+        style={
           current === 'en'
-            ? 'bg-blue-600 text-white'
-            : 'text-gray-400 hover:text-gray-700',
-        ].join(' ')}
+            ? { backgroundColor: colors.white, color: colors.blue }
+            : { color: 'rgba(255,255,255,0.6)' }
+        }
       >
         EN
       </button>
-      <span className="text-gray-300">|</span>
+      <span style={{ color: 'rgba(255,255,255,0.3)' }}>|</span>
       <button
         onClick={() => toggle('ca')}
-        className={[
-          'px-2 py-1 rounded-lg transition-colors',
+        className="px-2 py-1 rounded transition-colors"
+        style={
           current === 'ca'
-            ? 'bg-blue-600 text-white'
-            : 'text-gray-400 hover:text-gray-700',
-        ].join(' ')}
+            ? { backgroundColor: colors.white, color: colors.blue }
+            : { color: 'rgba(255,255,255,0.6)' }
+        }
       >
         CA
       </button>

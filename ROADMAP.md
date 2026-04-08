@@ -117,8 +117,17 @@ Combines self-report and Witness into a single coherent narrative at /full-moon/
 - ca.json: 60 `fqFacets` high/low descriptions translated to Valencian (labels were already translated)
 
 ### Phase 10 — Full UX/UI redesign
-Full visual identity applied via tokens.js.
-Designed once full product scope (Phases 6–9) is stable.
+Brand identity and visual foundation. Sub-phases apply the identity across all pages.
+
+### Phase 10.1 — Brand identity foundation + homepage redesign ✅ COMPLETE
+- tokens.js: brand palette (#cf3339 red, #0047ba blue, #f1c22f yellow, #427c42 green, #ffffff, #111111); all generic palette colors replaced
+- tokens.js: typography updated — Playfair Display (display/headings) + Roboto (body/UI)
+- tokens.js: Big Five dimension colors remapped to brand palette
+- index.css: Google Fonts imports (Playfair Display 400/700, Roboto 400/500/700); global h1/h2/h3 rule for Playfair Display; body font → Roboto
+- Layout.jsx: single-row blue header (full-width, px-8/px-12); inline SVG logo (CercolLogo.jsx, white); white nav links; border-radius 4px on nav pills
+- AccountButton.jsx + LanguageToggle.jsx: updated for blue header context (white text, white-bg active state)
+- FeedbackButton: "Report issue" floating link removed; translation feedback panel retained
+- HomePage.jsx: full redesign — blue background, 3-column instrument card grid (red/green/yellow cards), no tagline/headline, footer with GitHub + report issue links
 
 ### Phase 11 — Multilingual support
 Translation management via Tolgee or equivalent.
