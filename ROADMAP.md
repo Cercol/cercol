@@ -87,22 +87,21 @@ FirstQuarterResultsPage.jsx, FullMoonResultsPage.jsx, FullMoonReportPage.jsx,
   EPOCH 4 — Integrated report and living model
 -->
 
-### Phase 9 — Full Moon integrated report
-Combines self-report (Phase 6) and Witness (Phase 7) into one
-definitive report. ICAR excluded: g is not part of the role system
-and Full Moon completions are unlikely to reach N≥300 in the
-near term. Can be added in a future phase if the model evolves.
+### Phase 9 — Full Moon integrated report ✅ COMPLETE
+Combines self-report and Witness into a single coherent narrative at /full-moon/report.
 
-- **Convergence score**: self vs witness role agreement — overlap
-  between self primary+arc and witness primary+arc. Single readable
-  indicator in the report.
-- **Consolidated blind spots**: dimensions where
-  |self_z − witness_z| > 0.8, with plain-language description.
-- **Definitive role result**: beta badge removed from Full Moon
-  report when ≥2 Witnesses have completed. First Quarter retains
-  beta badge.
-- **Report page** (/full-moon/report): self role + witness role +
-  convergence + blind spots. Clean, single page.
+- **Convergence score**: Jaccard overlap between self role set (primary+arc) and
+  witness role set. Three bands: high ≥60%, moderate 30–59%, low <30%. Plain-language
+  sentence per band. Visual progress bar.
+- **Consolidated blind spots**: per-dimension descriptions for all 5 dimensions ×
+  2 directions (self > witness, witness > self). Brand voice. Full CA translations.
+- **Definitive role result**: when ≥2 Witnesses have completed, beta badge replaced
+  with "Witness included" indicator + explanatory note. First Quarter and
+  FullMoonResultsPage retain the beta badge (no Witness signal there).
+- **Narrative page structure**: self role → witness role → convergence → blind spots
+  → domain bars → witness session list. Each section clearly headed.
+- `computeConvergence()` added to witness-scoring.js.
+- `RoleResult` updated with `definitive` prop.
 
 ### Phase 10 — Full UX/UI redesign
 Full visual identity applied via tokens.js.

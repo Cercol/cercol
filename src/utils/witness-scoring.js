@@ -176,6 +176,28 @@ export function detectDivergence(selfDomains, witnessDomains, threshold = 0.8) {
 }
 
 /**
+ * computeConvergence — measure overlap between self and witness role sets.
+ *
+ * Overlap = |intersection| / |union| of role sets (Jaccard similarity).
+ * Each role set is { primary role } ∪ { arc roles }.
+ *
+ * @param {Object} selfResult    - { role, arc } from computeRole()
+ * @param {Object} witnessResult - { role, arc } from computeRole()
+ * @returns {number} 0–1 overlap ratio
+ */
+export function computeConvergence(selfResult, witnessResult) {
+  const selfSet    = new Set([selfResult.role, ...selfResult.arc])
+  const witnessSet = new Set([witnessResult.role, ...witnessResult.arc])
+  const union      = new Set([...selfSet, ...witnessSet])
+  if (union.size === 0) return 0
+  let intersection = 0
+  for (const r of union) {
+    if (selfSet.has(r) && witnessSet.has(r)) intersection++
+  }
+  return intersection / union.size
+}
+
+/**
  * averageWitnessScores — compute mean domain scores across completed witnesses.
  *
  * @param {Array} scoreSets - array of {presence, bond, ...} objects
