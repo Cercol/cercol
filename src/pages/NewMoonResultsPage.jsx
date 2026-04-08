@@ -110,7 +110,7 @@ export default function NewMoonResultsPage() {
                 scores={scores}
                 maxScore={7}
                 domainKeys={domainKeys}
-                labelFn={(key) => t(`domains.${key}.label`)}
+                labelFn={(key) => t(`fqDomains.${key}.name`)}
               />
             </Card>
 
@@ -130,7 +130,7 @@ export default function NewMoonResultsPage() {
                     <div key={key} className="py-3 first:pt-0 last:pb-0">
                       <div className="flex items-center justify-between mb-1.5">
                         <span className="text-sm font-semibold" style={{ color: colors.textPrimary }}>
-                          {t(`domains.${key}.label`)}
+                          {t(`fqDomains.${key}.name`)}
                         </span>
                         <div className="flex items-center gap-2 shrink-0 ml-2">
                           <span className="text-sm font-bold" style={{ color: colors.textPrimary }}>
