@@ -131,14 +131,6 @@ export default function RolesPage() {
           />
         </section>
 
-        {/* ── Why not Belbin ────────────────────────────────────── */}
-        <section className="mb-12">
-          <InfoBox
-            heading={t('rolesPage.notBelbin.heading')}
-            body={t('rolesPage.notBelbin.body')}
-          />
-        </section>
-
         {/* ── Critique CTA ──────────────────────────────────────── */}
         <section className="bg-white rounded-2xl border border-gray-200 px-6 py-6">
           <h2 className="text-base font-bold text-gray-900 mb-2">

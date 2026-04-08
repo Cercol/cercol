@@ -447,84 +447,84 @@
     "you": "Your position",
     "probability_label": "Role fit",
     "R01": {
-      "name": "Dolphin",  "ca": "Dofí",
+      "name": "Dolphin",  "ca": "Dolphin",
       "essence": "When you are in the room, people talk. Not because you ask — because you made it easy. The team warms up with you.",
       "profile": "High Presence and Bond. Warm, outgoing, and easy to be around. People open up in your company.",
       "contributes": "Cohesion. Lowers the social activation energy in the room.",
       "misses": "The productive friction that sharpens ideas. Warmth can smooth over real disagreements."
     },
     "R02": {
-      "name": "Wolf",     "ca": "Llop",
+      "name": "Wolf",     "ca": "Wolf",
       "essence": "You do not wait for permission. When you see the problem, you say it. The team moves because you do not stay quiet.",
       "profile": "High Presence, low Bond. Direct, assertive, and action-oriented. Does not wait for consensus.",
       "contributes": "Initiative. Names what needs to be said and gets things moving.",
       "misses": "The relational cost of directness over time. Teams can lose trust if the challenge is constant."
     },
     "R03": {
-      "name": "Elephant", "ca": "Elefant",
+      "name": "Elephant", "ca": "Elephant",
       "essence": "You do not take up space — you create it. People explain themselves well beside you because they know you are really listening.",
       "profile": "Low Presence, high Bond. Quiet and deeply cooperative. Creates space for others to think out loud.",
       "contributes": "Depth of listening. People articulate themselves better in your presence.",
       "misses": "Momentum. The team can think clearly together but still not move."
     },
     "R04": {
-      "name": "Owl",      "ca": "Mussol",
+      "name": "Owl",      "ca": "Owl",
       "essence": "You see what others miss because you do not need to be at the centre. The distance is useful to you.",
       "profile": "Low Presence and Bond. Independent, observant, and precise. Works best with distance.",
       "contributes": "Clarity. Sees structural problems that high-social profiles miss.",
       "misses": "Warmth and easy collaboration. The distance that helps analysis can isolate."
     },
     "R05": {
-      "name": "Eagle",    "ca": "Àguila",
+      "name": "Eagle",    "ca": "Eagle",
       "essence": "You see far and you move there. You bring the team to places it would not have gone alone.",
       "profile": "High Presence and Vision. Energetic and future-oriented. Pulls the team toward new ground.",
       "contributes": "Direction. Sets ambitious goals the team would not have set alone.",
       "misses": "Execution detail. The horizon is clear; the path can be rough."
     },
     "R06": {
-      "name": "Falcon",   "ca": "Falcó",
+      "name": "Falcon",   "ca": "Falcon",
       "essence": "It is not vision — it is timing. You know exactly when to move, and when you do, the team notices.",
       "profile": "High Presence, low Vision. Present, decisive, and practical. Knows exactly when to act.",
       "contributes": "Timing. Moves at the right moment and carries people with them.",
       "misses": "Long-horizon thinking. Can miss the strategic layer while executing well at speed."
     },
     "R07": {
-      "name": "Octopus",  "ca": "Polp",
+      "name": "Octopus",  "ca": "Octopus",
       "essence": "The team's best ideas often passed through you first, in silence. You do not always know it yourself.",
       "profile": "Low Presence, high Vision. Internally rich and quietly creative. Processes complexity in private.",
       "contributes": "Original thinking. The team's most unusual ideas often come from here.",
       "misses": "Getting ideas into circulation. Works in silence; the ideas can stay there."
     },
     "R08": {
-      "name": "Tortoise", "ca": "Tortuga",
+      "name": "Tortoise", "ca": "Tortoise",
       "essence": "You will not make noise. But when you are not there, the team drifts. You are the ground the others build on.",
       "profile": "Low Presence and Vision. Steady, grounded, and deeply reliable. Holds the ground so others can move.",
       "contributes": "Stability. Others can take risks because this profile holds the ground.",
       "misses": "Adaptability when the situation fundamentally changes."
     },
     "R09": {
-      "name": "Bee",      "ca": "Abella",
+      "name": "Bee",      "ca": "Bee",
       "essence": "Where others see chaos, you see structure. You build bridges between people and ideas no one else would have connected.",
       "profile": "High Bond and Vision. Collaborative and intellectually generative. Connects people and ideas.",
       "contributes": "Synthesis. Builds bridges between people and between concepts no one else had linked.",
       "misses": "The critical edge needed to test whether the connections hold."
     },
     "R10": {
-      "name": "Bear",     "ca": "Ós",
+      "name": "Bear",     "ca": "Bear",
       "essence": "You do not change under pressure. The team knows you are there, and that knowing frees them to take risks.",
       "profile": "High Bond, low Vision. Dependable, grounded, and consistent. The team knows where it stands.",
       "contributes": "Trust. People take more risks when a Bear profile is present.",
       "misses": "Openness to change when the current approach is no longer working."
     },
     "R11": {
-      "name": "Fox",      "ca": "Guineu",
+      "name": "Fox",      "ca": "Fox",
       "essence": "You see what does not add up — in ideas and in relationships. Your discomfort is productive.",
       "profile": "Low Bond, high Vision. Intellectually sharp and critically minded. Spots inconsistency fast.",
       "contributes": "Critical distance. Catches what does not add up before it becomes a problem.",
       "misses": "Relational ease. The discomfort can wear on a team that needs cohesion to function."
     },
     "R12": {
-      "name": "Badger",   "ca": "Teixó",
+      "name": "Badger",   "ca": "Badger",
       "essence": "You are not interested in what should work. You are interested in what works. The team needs you to stop fooling itself.",
       "profile": "Low Bond and Vision. Pragmatic, direct, and unsentimental. What works matters; what should work does not.",
       "contributes": "Ground truth. Stops the team fooling itself with optimism or complexity.",
@@ -652,7 +652,7 @@
       "eyebrow": "Open-source personality assessment",
       "heading": "See yourself more clearly.",
       "body": "Cèrcol is three instruments built on public-domain science. Each measures the same five dimensions — at different depths. No score tells you what to think. No result is good or bad.",
-      "founding": "Tot suma, ningú no és imprescindible, però tots som necessaris."
+      "founding": "Every contribution matters. No one is indispensable, but all of us are necessary."
     },
     "philosophy": {
       "heading": "Built in the open",
@@ -814,10 +814,6 @@
     "beta": {
       "heading": "This is a starting hypothesis, not a validated instrument.",
       "body": "Current role assignments use theoretical centroids derived from published research. As real data accumulates — target: 300 Full Moon completions — centroids will be replaced with empirical values from actual profiles. Role scoring is labelled beta in the interface for exactly this reason."
-    },
-    "notBelbin": {
-      "heading": "Why not Belbin?",
-      "body": "Belbin roles are widely used but have weaknesses: they are proprietary, require a trained assessor, and the psychometric foundations are contested in the literature. Cèrcol roles are derived from open, validated personality science. They are not the same thing and make no claim to be. The purpose — understanding how someone functions in a team — is similar. The approach is different."
     },
     "critique": {
       "heading": "See a problem with this model?",

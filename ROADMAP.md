@@ -87,6 +87,12 @@ FirstQuarterResultsPage.jsx, FullMoonResultsPage.jsx, FullMoonReportPage.jsx,
   EPOCH 4 — Integrated report and living model
 -->
 
+### Phase 9.1 — Locale and Belbin fixes ✅ COMPLETE
+- en.json: 12 role `ca` fields changed from Valencian to English names
+- en.json: `about.intro.founding` translated to English
+- en.json + ca.json: `rolesPage.notBelbin` section removed (Belbin not user-facing)
+- RolesPage.jsx: "Why not Belbin?" InfoBox removed
+
 ### Phase 9 — Full Moon integrated report ✅ COMPLETE
 Combines self-report and Witness into a single coherent narrative at /full-moon/report.
 
