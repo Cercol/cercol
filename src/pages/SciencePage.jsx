@@ -39,11 +39,6 @@ const REFERENCES = [
     url: 'https://doi.org/10.1037/pas0000571',
   },
   {
-    key: 'icar',
-    text: 'Condon, D. M., & Revelle, W. (2014). The International Cognitive Ability Resource: Development and initial validation of a public-domain measure. Intelligence, 46, 79–90.',
-    url: 'https://doi.org/10.1016/j.intell.2014.01.004',
-  },
-  {
     key: 'ab5c',
     text: 'Hofstee, W. K. B., De Raad, B., & Goldberg, L. R. (1992). Integration of the Big Five and circumplex approaches to trait structure. Journal of Personality and Social Psychology, 63, 146–163.',
     url: null,
@@ -165,16 +160,6 @@ export default function SciencePage() {
                   {t('science.fullMoon.witness.idealWitness')}
                 </p>
               </div>
-            </div>
-
-            {/* Cognitive ability */}
-            <div className="bg-white rounded-2xl border border-gray-200 px-5 py-4">
-              <p className="text-sm font-bold text-gray-900 mb-1.5">
-                {t('science.fullMoon.cognitive.heading')}
-              </p>
-              <p className="text-sm text-gray-600 leading-relaxed">
-                {t('science.fullMoon.cognitive.body')}
-              </p>
             </div>
 
           </div>

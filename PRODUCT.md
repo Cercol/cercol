@@ -75,19 +75,18 @@ assessment" in user-facing text or comments.
 
 Flow:
 - A person who knows the subject well is given a unique link
-- Each round: 4–6 adjectives shown; assessor selects best fit and worst fit
-  for the subject (forced choice — no Likert scale)
+- Each round: 5 adjectives shown (one per OCEAN factor); assessor selects
+  best fit and worst fit for the subject (forced choice — no Likert scale)
 - Forced choice eliminates social desirability bias
-- Algorithm maintains a Bayesian probability distribution over the 9 roles;
-  selects the next adjective set to maximise information gain on remaining
-  ambiguities
-- Stops at convergence or ~20–25 decisions
+- 20 rounds total, fixed 70/30 positive/negative polarity sequence
+- Up to 12 Witnesses per subject; scores are averaged across Witnesses
 
 Output of Full Moon + Witness:
 - Primary role (self, from IPIP-NEO-120)
-- Role consensus (from Witness, may be multiple witnesses averaged)
+- Role consensus (from Witness, averaged across completed Witnesses)
 - Convergence score (self vs witness agreement)
 - Blind spots: dimensions where self and witness diverge significantly
+  (|self_z − witness_z| > 0.8)
 
 ### Freemium model (authoritative)
 
@@ -104,7 +103,8 @@ PAID (one-time payment):
 
 ## Dimension names (user-facing)
 
-Applies to all instruments. Internal code keys remain unchanged for research traceability.
+Applies to all instruments. Internal code keys remain unchanged for research
+traceability.
 
 | Academic key                          | Cèrcol name | Valencià    |
 |---------------------------------------|-------------|-------------|
@@ -118,7 +118,8 @@ Applies to all instruments. Internal code keys remain unchanged for research tra
 
 ## Facet names (FirstQuarter — 30 facets)
 
-These names apply to both First Quarter and Full Moon (same 30 facets, same namespace).
+These names apply to both First Quarter and Full Moon (same 30 facets,
+same namespace).
 
 ### DEPTH (Neuroticism)
 | NEO facet          | Cèrcol name | Valencià  |
@@ -141,14 +142,14 @@ These names apply to both First Quarter and Full Moon (same 30 facets, same name
 | Positive Emotions  | Radiance    | Llum      |
 
 ### VISION (Openness)
-| NEO facet | Cèrcol name | Valencià  |
-|-----------|-------------|-----------|
-| Fantasy   | Dream       | Somni     |
-| Aesthetics | Craft      | Traç      |
-| Feelings  | Resonance   | Ressò     |
-| Actions   | Drift       | Volta     |
-| Ideas     | Prism       | Prisma    |
-| Values    | Compass     | Brúixola  |
+| NEO facet  | Cèrcol name | Valencià  |
+|------------|-------------|-----------|
+| Fantasy    | Dream       | Somni     |
+| Aesthetics | Craft       | Traç      |
+| Feelings   | Resonance   | Ressò     |
+| Actions    | Drift       | Volta     |
+| Ideas      | Prism       | Prisma    |
+| Values     | Compass     | Brúixola  |
 
 ### BOND (Agreeableness)
 | NEO facet             | Cèrcol name | Valencià  |
@@ -172,26 +173,96 @@ These names apply to both First Quarter and Full Moon (same 30 facets, same name
 
 ---
 
-## Role names (Cèrcol vocabulary)
+## Role system (Cèrcol vocabulary)
 
-Each role name follows the same design principles as dimension and facet names:
-one word, evocative, translates naturally to Valencian, no role sounds better
-or worse than another.
+### Design principles
 
-| ID | English | Valencian | One-line essence |
-|----|---------|-----------|-----------------|
-| R0 | Opal    | Opàl      | No fixed role. Present in different ways without ceasing to be you. |
-| R1 | Bolt    | Llamp     | You see the exact moment and go for it. When you move, others know it's time. |
-| R2 | Beacon  | Far       | You don't invite anyone. People come because it's easy to let their guard down near you. |
-| R3 | Thorn   | Espina    | You say what should have been said two meetings ago. Without you, the team sleeps in easy consensus. |
-| R4 | Anchor  | Àncora    | When everything shakes, you stay in place. The team notices most when you're not there. |
-| R5 | Heron   | Garça     | You listen to what was left unsaid. The team's harmony runs through you without anyone quite knowing. |
-| R6 | Anvil   | Enclusa   | Quality is tested at your side. You are the tool that stops the team from fooling itself. |
-| R7 | Loom    | Teler     | Where others see loose threads, you see the web. What comes out is better than any of the parts. |
-| R8 | Comet   | Cometa    | You don't ask permission to move outside the expected path. The best decisions passed through your angle first. |
+Cèrcol roles describe how a person moves the balance of a team, not what
+kind of person they are. Each role has a profile in Presence/Bond/Vision
+space — the three dimensions the team composition literature identifies as
+requiring balance. Discipline and Depth modulate how each role is expressed
+but do not define team balance by themselves.
 
-Full descriptions (user-facing, Brand voice) live in src/locales/en.json
-and src/locales/ca.json under the `roles` namespace.
+The 12 roles cover the six intersections of the three balance dimensions
+(P×B, P×V, B×V) at both poles each. Every role name is an animal: concrete,
+iconable, culturally readable, and free of hierarchy. No role is better or
+worse than another. All are necessary in some team configurations; none is
+necessary in all of them.
+
+There is no neutral centre role. A person at the centre of P/B/V space is
+better described by their Discipline and Depth values than assigned a role
+with no functional content.
+
+See SCIENCE.md for the full scientific grounding, centroid values, and
+validation plan.
+
+### Naming constraints for future work
+- No animal already used in the 12 roles below
+- No animal with strong negative cultural connotation in EN or CA
+- Must be iconable with a single recognisable silhouette
+- No hierarchy implied between roles
+
+### The twelve roles
+
+| ID  | English  | Valencià | Profile | One-line essence (EN) |
+|-----|----------|----------|---------|----------------------|
+| R01 | Dolphin  | Dofí     | P+ B+   | When you are in the room, people talk. Not because you ask — because you made it easy. The team warms up with you. |
+| R02 | Wolf     | Llop     | P+ B-   | You do not wait for permission. When you see the problem, you say it. The team moves because you do not stay quiet. |
+| R03 | Elephant | Elefant  | P- B+   | You do not take up space — you create it. People explain themselves well beside you because they know you are really listening. |
+| R04 | Owl      | Mussol   | P- B-   | You see what others miss because you do not need to be at the centre. The distance is useful to you. |
+| R05 | Eagle    | Àguila   | P+ V+   | You see far and you move there. You bring the team to places it would not have gone alone. |
+| R06 | Falcon   | Falcó    | P+ V-   | It is not vision — it is timing. You know exactly when to move, and when you do, the team notices. |
+| R07 | Octopus  | Polp     | P- V+   | The team's best ideas often passed through you first, in silence. You do not always know it yourself. |
+| R08 | Tortoise | Tortuga  | P- V-   | You will not make noise. But when you are not there, the team drifts. You are the ground the others build on. |
+| R09 | Bee      | Abella   | B+ V+   | Where others see chaos, you see structure. You build bridges between people and ideas no one else would have connected. |
+| R10 | Bear     | Ós       | B+ V-   | You do not change under pressure. The team knows you are there, and that knowing frees them to take risks. |
+| R11 | Fox      | Guineu   | B- V+   | You see what does not add up — in ideas and in relationships. Your discomfort is productive. |
+| R12 | Badger   | Teixó    | B- V-   | You are not interested in what should work. You are interested in what works. The team needs you to stop fooling itself. |
+
+### Role essences (CA)
+
+| ID  | Essència (CA) |
+|-----|---------------|
+| R01 | Quan tu ets a la sala, la gent parla. No perquè ho demanes — perquè has fet que siga fàcil. L'equip s'escalfa amb tu. |
+| R02 | No esperes que ningú done permís. Quan veus el problema, el dius. L'equip avança perquè tu no calles. |
+| R03 | No ocupes espai — el crees. La gent s'explica bé al teu costat perquè sap que l'escoltes de veritat. |
+| R04 | Veus el que els altres no veuen perquè no necessites estar al centre. La distància t'és útil. |
+| R05 | Veus lluny i t'hi mous. Portes l'equip a llocs on no hauria anat sol. |
+| R06 | No és visió — és timing. Saps exactament quan moure's, i quan et mous, l'equip ho nota. |
+| R07 | Les millors idees de l'equip sovint han passat primer per tu, en silenci. No ho saps ni tu. |
+| R08 | No faràs soroll. Però quan no ets, l'equip deriva. Ets el terra sobre el qual els altres construeixen. |
+| R09 | On altres veuen caos, tu veus estructura. Construeixes ponts entre persones i idees que ningú hauria connectat. |
+| R10 | No canvies per la pressió. L'equip sap que hi ets, i eixe saber els allibera per arriscar. |
+| R11 | Veus el que no quadra — en les idees i en les relacions. La teua incomoditat és productiva. |
+| R12 | No t'interessa el que hauria de funcionar. T'interessa el que funciona. L'equip et necessita per no enganyar-se a si mateix. |
+
+### Team balance framing
+
+Each role pushes team balance in a specific direction. The user-facing
+report must always frame the role as a contribution to team balance,
+not as a fixed identity. Recommended framing:
+
+✗ "You are a Wolf."
+✓ "Your profile pushes team balance toward initiative and honest confrontation.
+   In a team with high Bond, you are the corrective force."
+
+The report also shows which balance directions the user does not cover —
+this is as informative as the role itself.
+
+### Notes on specific roles
+
+**Fox and Octopus** are statistically rare profiles (B-V+ and P-V+ run
+against natural OCEAN correlations). When a user receives one of these roles,
+the report should acknowledge the rarity explicitly — not to make them feel
+special, but to explain why they may feel unusual in most team configurations.
+
+**Bear and Tortoise** are the highest-Discipline roles (C component in
+centroid). Users in these roles tend to be the most consistent executors in
+a team. The report should frame this as reliability and stability, not rigidity.
+
+**Wolf and Fox** carry negative Bond (A-). The report must never frame low
+Bond as a flaw. These roles provide the confrontation and critical distance
+that high-Bond teams need to avoid groupthink.
 
 ---
 
@@ -206,6 +277,8 @@ and src/locales/ca.json under the `roles` namespace.
 - Keep sentences short. No corporate filler.
 - Dimension names use Cèrcol product vocabulary (see above),
   never academic labels in user-facing text
+- Role descriptions always frame the role as a team balance contribution,
+  never as a personality label
 
 ---
 
@@ -252,3 +325,6 @@ If it sounds like a consulting deck, rewrite it.
 
 ✗ "Congratulations on completing the assessment!"
 ✓ "That's you, in five dimensions."
+
+✗ "Your role is Wolf."
+✓ "Your profile pushes the team toward initiative and honest confrontation."

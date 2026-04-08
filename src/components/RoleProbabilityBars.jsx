@@ -1,5 +1,5 @@
 /**
- * RoleProbabilityBars — ranked probability bars for all 9 roles.
+ * RoleProbabilityBars — ranked probability bars for all 12 roles.
  * Phase 5.4. Replaces RoleWheel.
  *
  * Shows each role as a horizontal bar proportional to its softmax

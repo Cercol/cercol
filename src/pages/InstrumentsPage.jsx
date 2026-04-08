@@ -1,7 +1,7 @@
 /**
  * InstrumentsPage — deep documentation page at /instruments.
  * No auth required. Covers all three instruments in detail:
- * New Moon, First Quarter, and Full Moon (self-report + Witness + cognitive).
+ * New Moon, First Quarter, and Full Moon (self-report + Witness).
  */
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -199,14 +199,6 @@ export default function InstrumentsPage() {
                 {p2.label} · {p2.heading}
               </p>
               <WitnessSection data={p2} />
-            </div>
-
-            {/* Part 3 — Cognitive */}
-            <div className="border-t border-gray-100 px-6 py-5">
-              <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">
-                {t('instruments.fullMoon.part3.label')} · {t('instruments.fullMoon.part3.heading')}
-              </p>
-              <p className="text-sm text-gray-600 leading-relaxed">{t('instruments.fullMoon.part3.body')}</p>
             </div>
 
             <div className="border-t border-gray-100 px-6 py-4">

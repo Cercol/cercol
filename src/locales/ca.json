@@ -182,7 +182,7 @@
       "meta": "120 preguntes · ~20 min",
       "scale": "1–5 · Totalment en desacord → Totalment d'acord",
       "guidance": "Tu et coneixes. Fes-te'n cas.",
-      "partNote": "Aquesta és la part d'autoinforme d'un instrument de tres parts. El Testimoni Cèrcol i una breu mesura cognitiva seguiran als teus resultats.",
+      "partNote": "Aquesta és la Part 1 d'un instrument de dues parts. El Testimoni Cèrcol seguirà als teus resultats.",
       "cta": "Comença"
     }
   },
@@ -446,68 +446,89 @@
     "arc_label": "Arc personal",
     "you": "La teua posició",
     "probability_label": "Afinitat de rol",
-    "R0": {
-      "name": "Opàl",   "ca": "Opàl",
-      "essence": "Sense rol fix. Present de maneres diferents sense deixar de ser tu.",
-      "profile": "Cap dimensió domina. Les puntuacions s'agrupen al voltant del centre en les cinc dimensions.",
-      "contributes": "Adaptabilitat. Pot cobrir el buit que el grup necessiti en cada moment.",
-      "misses": "Una veu clara quan les decisions importants necessiten que algú prengui una posició definida."
+    "R01": {
+      "name": "Dofí",     "ca": "Dofí",
+      "essence": "Quan tu ets a la sala, la gent parla. No perquè ho demanes — perquè has fet que siga fàcil. L'equip s'escalfa amb tu.",
+      "profile": "Alta Presència i Vincle. Càlid, obert i fàcil de tractar. La gent s'obre en la teua companyia.",
+      "contributes": "Cohesió. Redueix l'energia d'activació social a la sala.",
+      "misses": "La fricció productiva que fa les idees més sòlides. La calidesa pot suavitzar desacords reals."
     },
-    "R1": {
-      "name": "Llamp",  "ca": "Llamp",
-      "essence": "Veus el moment exacte i hi vas. Quan et mous, els altres saben que és l'hora.",
-      "profile": "Alta Presència i Disciplina, amb un component de Visió significatiu. Energia social més drive estructurat amb un toc creatiu.",
-      "contributes": "Impuls. Posa les coses en marxa i les manté construïdes.",
-      "misses": "El manteniment de les relacions que els altres necessiten per sentir-se inclosos de veritat."
+    "R02": {
+      "name": "Llop",     "ca": "Llop",
+      "essence": "No esperes que ningú done permís. Quan veus el problema, el dius. L'equip avança perquè tu no calles.",
+      "profile": "Alta Presència, baix Vincle. Directe, assertiu i orientat a l'acció. No espera consens.",
+      "contributes": "Iniciativa. Diu el que cal dir i posa les coses en marxa.",
+      "misses": "El cost relacional de la directesa al llarg del temps. Els equips poden perdre confiança si el repte és constant."
     },
-    "R2": {
-      "name": "Far",    "ca": "Far",
-      "essence": "No convides ningú. La gent ve perquè és fàcil baixar la guàrdia al teu costat.",
-      "profile": "Alta Presència i Vincle, amb forta estabilitat emocional. Càlid, obert i difícil de desestabilitzar.",
-      "contributes": "Cohesió. Fa que la gent es relaxi i col·labori amb facilitat.",
-      "misses": "La fricció productiva que fa les idees més sòlides. L'harmonia pot convertir-se en un sostre."
+    "R03": {
+      "name": "Elefant",  "ca": "Elefant",
+      "essence": "No ocupes espai — el crees. La gent s'explica bé al teu costat perquè sap que l'escoltes de veritat.",
+      "profile": "Baixa Presència, alt Vincle. Callat i profundament cooperatiu. Crea espai perquè els altres pensin en veu alta.",
+      "contributes": "Profunditat d'escolta. La gent s'articula millor en la teua presència.",
+      "misses": "Impuls. L'equip pot pensar clarament junts però encara no moure's."
     },
-    "R3": {
-      "name": "Espina", "ca": "Espina",
-      "essence": "Dius el que hauria d'haver-se dit dues reunions enrere. Sense tu, el grup dorm en un consens fàcil.",
-      "profile": "Alta Presència i baix Vincle, amb Profunditat elevada. Assertiu, independent i emocionalment implicat.",
-      "contributes": "Repte crític. Diu el que ningú més dirà. Evita el tancament prematur.",
-      "misses": "El cost acumulat que el seu estil de repte pot imposar a la confiança i la moral al llarg del temps."
+    "R04": {
+      "name": "Mussol",   "ca": "Mussol",
+      "essence": "Veus el que els altres no veuen perquè no necessites estar al centre. La distància t'és útil.",
+      "profile": "Baixa Presència i Vincle. Independent, observador i precís. Funciona millor amb distància.",
+      "contributes": "Claredat. Veu problemes estructurals que els perfils molt socials no veuen.",
+      "misses": "Calidesa i col·laboració fàcil. La distància que ajuda l'anàlisi pot aïllar."
     },
-    "R4": {
-      "name": "Àncora", "ca": "Àncora",
-      "essence": "Quan tot tremola, tu et mantens. El grup ho nota més quan no hi ets.",
-      "profile": "Alt Vincle i Disciplina, amb estabilitat emocional. Cooperatiu, estructurat i ferm.",
-      "contributes": "Fiabilitat. El grup pot planificar amb confiança al seu voltant.",
-      "misses": "La urgència necessària quan cal un canvi real. L'estabilitat pot resistir allò que necessita transformar-se."
+    "R05": {
+      "name": "Àguila",   "ca": "Àguila",
+      "essence": "Veus lluny i t'hi mous. Portes l'equip a llocs on no hauria anat sol.",
+      "profile": "Alta Presència i Visió. Enèrgic i orientat al futur. Porta l'equip cap a nous territoris.",
+      "contributes": "Direcció. Estableix objectius ambiciosos que l'equip no s'hauria marcat sol.",
+      "misses": "Els detalls d'execució. L'horitzó és clar; el camí pot ser difícil."
     },
-    "R5": {
-      "name": "Garça",  "ca": "Garça",
-      "essence": "Escoltes el que no s'ha dit. L'harmonia del grup passa per tu sense que ningú ho sàpiga del tot.",
-      "profile": "Alt Vincle, menor Presència i Disciplina. Reservat, profundament cooperatiu i espontani.",
-      "contributes": "Harmonia. Manté el teixit emocional del grup sense que ningú ho note fins que no hi és.",
-      "misses": "Les pròpies necessitats. Els rols Garça rarament s'auto-defensen."
+    "R06": {
+      "name": "Falcó",    "ca": "Falcó",
+      "essence": "No és visió — és timing. Saps exactament quan moure's, i quan et mous, l'equip ho nota.",
+      "profile": "Alta Presència, baixa Visió. Present, decidit i pràctic. Sap exactament quan actuar.",
+      "contributes": "Timing. Es mou en el moment adequat i s'emporta la gent.",
+      "misses": "El pensament a llarg termini. Pot perdre la capa estratègica mentre executa bé a alta velocitat."
     },
-    "R6": {
-      "name": "Enclusa", "ca": "Enclusa",
-      "essence": "La qualitat es posa a prova al teu costat. Ets l'eina que impedeix que el grup s'enganyi a si mateix.",
-      "profile": "Alta Disciplina i Profunditat elevada, amb Vincle moderat-baix. Rigorós, crític i alerta als errors.",
-      "contributes": "Assegurament de qualitat. El grup no s'autoenganya quan l'Enclusa hi és atent.",
-      "misses": "Que no tota decisió necessita el màxim estàndard. La rapidesa i el 'prou bé' també importen."
+    "R07": {
+      "name": "Polp",     "ca": "Polp",
+      "essence": "Les millors idees de l'equip sovint han passat primer per tu, en silenci. No ho saps ni tu.",
+      "profile": "Baixa Presència, alta Visió. Ric interiorment i creativament callat. Processa la complexitat en privat.",
+      "contributes": "Pensament original. Les idees més inusuals de l'equip sovint venen d'aquí.",
+      "misses": "Fer circular les idees. Treballa en silenci; les idees poden quedar-s'hi."
     },
-    "R7": {
-      "name": "Teler",  "ca": "Teler",
-      "essence": "On els altres veuen fils solts, tu hi veus la xarxa. El que surt és millor que qualsevol de les parts.",
-      "profile": "Alta Visió amb Vincle i Disciplina moderats. Creatiu, organitzat i col·laboratiu.",
-      "contributes": "Síntesi. Connecta el que els altres veuen com a no relacionat i en fa alguna cosa útil.",
-      "misses": "Els detalls d'execució. La xarxa està ben dissenyada; el lliurament pot quedar curt."
+    "R08": {
+      "name": "Tortuga",  "ca": "Tortuga",
+      "essence": "No faràs soroll. Però quan no ets, l'equip deriva. Ets el terra sobre el qual els altres construeixen.",
+      "profile": "Baixa Presència i Visió. Estable, arrelat i profundament fiable. Aguanta el terra perquè els altres puguen moure's.",
+      "contributes": "Estabilitat. Els altres poden arriscar perquè aquest perfil aguanta el terra.",
+      "misses": "Adaptabilitat quan la situació canvia fonamentalment."
     },
-    "R8": {
-      "name": "Cometa", "ca": "Cometa",
-      "essence": "No demanes permís per moure't fora del camí esperat. Les millors decisions van passar primer pel teu angle.",
-      "profile": "Alta Visió, Presència moderada i estabilitat emocional. Independent, creatiu i tranquil.",
-      "contributes": "Pensament de ruptura. Replanteja problemes abans que els altres els hagin vist com a problemes.",
-      "misses": "La construcció de consens. Va per davant del grup i ha de tornar a buscar-los."
+    "R09": {
+      "name": "Abella",   "ca": "Abella",
+      "essence": "On altres veuen caos, tu veus estructura. Construeixes ponts entre persones i idees que ningú hauria connectat.",
+      "profile": "Alt Vincle i Visió. Col·laboratiu i intel·lectualment generatiu. Connecta persones i idees.",
+      "contributes": "Síntesi. Construeix ponts entre persones i conceptes que ningú havia relacionat.",
+      "misses": "El caire crític necessari per comprovar si les connexions aguanten."
+    },
+    "R10": {
+      "name": "Ós",       "ca": "Ós",
+      "essence": "No canvies per la pressió. L'equip sap que hi ets, i eixe saber els allibera per arriscar.",
+      "profile": "Alt Vincle, baixa Visió. Fiable, arrelat i consistent. L'equip sap on se situa.",
+      "contributes": "Confiança. La gent arrisca més quan hi ha un perfil Ós present.",
+      "misses": "Obertura al canvi quan l'enfocament actual ja no funciona."
+    },
+    "R11": {
+      "name": "Guineu",   "ca": "Guineu",
+      "essence": "Veus el que no quadra — en les idees i en les relacions. La teua incomoditat és productiva.",
+      "profile": "Baix Vincle, alta Visió. Intel·lectualment agut i crític. Detecta inconsistències ràpidament.",
+      "contributes": "Distància crítica. Detecta el que no quadra abans que es converteixi en un problema.",
+      "misses": "Facilitat relacional. La incomoditat pot desgastar un equip que necessita cohesió per funcionar."
+    },
+    "R12": {
+      "name": "Teixó",    "ca": "Teixó",
+      "essence": "No t'interessa el que hauria de funcionar. T'interessa el que funciona. L'equip et necessita per no enganyar-se a si mateix.",
+      "profile": "Baix Vincle i Visió. Pragmàtic, directe i sense sentimentalismes. El que funciona importa; el que hauria de funcionar, no.",
+      "contributes": "Veritat de base. Impedeix que l'equip s'enganyi amb optimisme o complexitat.",
+      "misses": "El consens. La directesa que treu la veritat a la llum també pot crear resistències."
     }
   },
   "witness": {
@@ -655,14 +676,14 @@
     },
     "roles": {
       "eyebrow": "Taxonomia de rols",
-      "heading": "Nou rols. Derivats de la investigació, no inventats.",
-      "body": "La taxonomia de rols s'arela en un model ben validat de com els trets de personalitat s'agrupen en un espai bidimensional. Dues meta-dimensions — una reflectint l'orientació social, una altra el drive i el creixement — defineixen l'espai de rols. Nou posicions de rol corresponen a regions diferenciades en aquell espai.",
-      "beta": "Les assignacions de rols actuals utilitzen punts de partida teòrics derivats de la literatura. A mesura que s'acumulin dades reals — a partir de 200 resultats — el model s'actualitzarà per reflectir persones reals, no estimacions.",
+      "heading": "Dotze rols. Derivats de la investigació, no inventats.",
+      "body": "La taxonomia de rols s'arela en el circumplexe AB5C (Hofstee, De Raad & Goldberg, 1992) i la literatura de composició d'equips (Bell, 2007). Tres dimensions OCEAN — Presència, Vincle i Visió — requereixen equilibri en els equips. Els dotze rols cobreixen les sis interseccions d'aquestes dimensions en tots dos pols. La Disciplina i la Profunditat modulen com s'expressa cada rol.",
+      "beta": "Les assignacions de rols actuals utilitzen centroides teòrics derivats de la investigació publicada. A mesura que s'acumulin dades reals — objectiu: 300 completaments de Lluna Plena — els centroides seran substituïts per valors empírics de perfils reals.",
       "betaNote": "La puntuació de rols és beta. És il·lustrativa, no diagnòstica."
     },
     "fullMoon": {
       "eyebrow": "Cèrcol de Lluna Plena",
-      "heading": "Tres lents sobre la mateixa persona.",
+      "heading": "Dues lents sobre la mateixa persona.",
       "selfReport": {
         "heading": "Autoinforme",
         "body": "120 ítems en 5 dominis i 30 facetes — el doble de resolució que el Quart Creixent. Forma el resultat de rol primari."
@@ -672,10 +693,6 @@
         "body": "Una tasca d'elecció forçada donada a algú que et coneix bé. En cada ronda, el Testimoni veu cinc paraules i tria la que millor i la que pitjor et descriu — un adjectiu per dimensió. L'elecció forçada elimina el biaix de desitjabilitat social que distorsiona l'autoinforme.",
         "idealWitness": "Un Testimoni ideal ha treballat amb tu, ha viscut amb tu o ha passat temps real al teu costat. No el teu aliat més proper, ni el teu crític més dur — algú que et veu com realment ets.",
         "blindSpots": "El resultat del Testimoni es compara amb l'autoinforme. On divergeixen significativament, es marca un punt cec — una dimensió que perceps de manera diferent a com ho fan els qui t'envolten."
-      },
-      "cognitive": {
-        "heading": "Capacitat cognitiva",
-        "body": "Una mesura de codi obert adaptada d'una bateria d'avaluació cognitiva de domini públic. Inclosa per completesa en el perfil de Lluna Plena, no per classificar ni jutjar."
       }
     },
     "sources": {
@@ -729,7 +746,7 @@
     "fullMoon": {
       "heading": "Cèrcol de Lluna Plena",
       "eyebrow": "Retrat complet",
-      "system": "La Lluna Plena és un sistema de tres parts usades conjuntament.",
+      "system": "La Lluna Plena és un sistema de dues parts usades conjuntament.",
       "part1": {
         "label": "Part 1",
         "heading": "Autoinforme",
@@ -751,20 +768,15 @@
         "privacyBody": "Els Testimonis mai no veuen les teues puntuacions. Tu veus el resultat mitjà de tots els Testimonis — no les respostes individuals.",
         "blindSpotsHeading": "Punts cecs",
         "blindSpotsBody": "On l'autoinforme i les puntuacions del Testimoni divergeixen significativament, es marca un punt cec. No perquè un sigui correcte i l'altre incorrecte — sinó perquè la bretxa mateixa és informativa. Una dimensió que perceps de manera molt diferent als qui t'envolten val la pena examinar-la."
-      },
-      "part3": {
-        "label": "Part 3",
-        "heading": "Capacitat cognitiva",
-        "body": "Una breu mesura de codi obert adaptada de l'International Cognitive Ability Resource — una bateria d'avaluació de domini públic. Inclosa com a punt de dades addicional per a l'informe d'equip. No és una puntuació de QI, no és una classificació i no és una porta d'entrada. Una lent addicional, res més."
       }
     }
   },
   "rolesPage": {
     "title": "Rols",
     "intro": {
-      "heading": "Nou rols. Una taxonomia.",
-      "body1": "Els perfils de personalitat descriuen com ets. Els rols descriuen com tendixes a funcionar en grups. L'espai entre aquestes dues coses és on Cèrcol intenta treballar.",
-      "body2": "Els nou rols es deriven del circumplexe AB5C — un model ben validat de com els trets de personalitat s'agrupen en un espai bidimensional (Hofstee, De Raad & Goldberg, 1992). Els noms són nostres. L'estructura és de la literatura."
+      "heading": "Dotze rols. Una taxonomia.",
+      "body1": "Els perfils de personalitat descriuen com ets. Els rols descriuen com tendixes a moure l'equilibri d'un equip. L'espai entre aquestes dues coses és on Cèrcol intenta treballar.",
+      "body2": "Els dotze rols es deriven del circumplexe AB5C (Hofstee, De Raad & Goldberg, 1992) i la literatura de composició d'equips (Bell, 2007). Tres dimensions OCEAN requereixen equilibri en els equips — Presència, Vincle i Visió. Els dotze rols cobreixen les sis interseccions d'aquestes dimensions en tots dos pols. Els noms són nostres. L'estructura és de la literatura."
     },
     "beta": {
       "heading": "Aquesta és una hipòtesi inicial, no un instrument validat.",
@@ -780,22 +792,22 @@
       "cta": "Obre una incidència a GitHub"
     },
     "grid": {
-      "heading": "Els nou rols",
+      "heading": "Els dotze rols",
       "profileLabel": "Tendència",
       "contributesLabel": "Aporta a l'equip",
       "missesLabel": "Tendeix a perdre"
     },
-    "r0Note": {
-      "heading": "Una nota sobre l'Opàl",
-      "body": "L'Opàl no és una categoria residual ni una assignació fallida. Significa que cap dimensió domina el perfil. Moltes persones efectives puntuen aquí. Els perfils Opàl sovint són els membres més adaptables al context d'un equip — poden assumir el rol que la situació requereix."
+    "centreNote": {
+      "heading": "Què passa amb els perfils propers al centre?",
+      "body": "No hi ha cap rol central. Un perfil amb puntuacions baixes en Presència, Vincle i Visió es descriu millor pels seus valors de Disciplina i Profunditat que no pas assignant-li una etiqueta de rol sense contingut funcional. El resultat de rol mostrarà el centroide més proper per distància, amb una probabilitat màxima baixa que indica un perfil difús."
     },
     "arcNote": {
       "heading": "Arc personal",
-      "body": "La majoria de resultats de rol inclouen un arc — rols secundaris que han puntuat a prop del primari en l'espai de probabilitat. Una Àncora amb arc Garça té la fiabilitat de l'Àncora i la qualitat d'escolta de la Garça. L'arc dona textura al resultat que una sola etiqueta no pot."
+      "body": "La majoria de resultats de rol inclouen un arc — rols secundaris que han puntuat a prop del primari en l'espai de probabilitat. Un Llop amb arc Falcó aporta iniciativa i timing decisiu. Una Abella amb arc Elefant aporta síntesi i escolta profunda. L'arc dona textura al resultat que una sola etiqueta no pot."
     },
     "contextNote": {
       "heading": "Els rols no són destins",
-      "body": "La mateixa persona pot funcionar de manera diferent en composicions d'equip diferents. Una Espina en un equip que evita el conflicte pot suavitzar-se. Un Opàl en un equip que necessita direcció pot aguditzar-se. Aquestes són tendències en context — no identitats fixes. No uses un resultat de rol com a sostre."
+      "body": "La mateixa persona pot funcionar de manera diferent en composicions d'equip diferents. Un Llop en un equip que ja confronta tot pot moderar-se. Una Tortuga en un equip que necessita moviment pot accelerar. Aquestes són tendències en context — no identitats fixes. No uses un resultat de rol com a sostre."
     }
   }
 }

@@ -1,20 +1,23 @@
 /**
  * RolesPage — deep documentation page at /roles.
- * No auth required. Nine roles with OCEAN profiles, beta disclaimer,
+ * No auth required. Twelve roles with OCEAN profiles, beta disclaimer,
  * honest limitations, and an invitation to critique the model.
  */
 import { useTranslation } from 'react-i18next'
 
 const ROLES = [
-  { key: 'R0', accent: 'text-gray-500',    bg: 'bg-gray-50'    },
-  { key: 'R1', accent: 'text-amber-500',   bg: 'bg-amber-50'   },
-  { key: 'R2', accent: 'text-emerald-600', bg: 'bg-emerald-50' },
-  { key: 'R3', accent: 'text-red-500',     bg: 'bg-red-50'     },
-  { key: 'R4', accent: 'text-blue-600',    bg: 'bg-blue-50'    },
-  { key: 'R5', accent: 'text-teal-600',    bg: 'bg-teal-50'    },
-  { key: 'R6', accent: 'text-slate-600',   bg: 'bg-slate-50'   },
-  { key: 'R7', accent: 'text-violet-600',  bg: 'bg-violet-50'  },
-  { key: 'R8', accent: 'text-indigo-600',  bg: 'bg-indigo-50'  },
+  { key: 'R01', accent: 'text-emerald-600', bg: 'bg-emerald-50' }, // Dolphin  P+ B+
+  { key: 'R02', accent: 'text-red-500',     bg: 'bg-red-50'     }, // Wolf     P+ B-
+  { key: 'R03', accent: 'text-teal-600',    bg: 'bg-teal-50'    }, // Elephant P- B+
+  { key: 'R04', accent: 'text-slate-600',   bg: 'bg-slate-50'   }, // Owl      P- B-
+  { key: 'R05', accent: 'text-amber-500',   bg: 'bg-amber-50'   }, // Eagle    P+ V+
+  { key: 'R06', accent: 'text-orange-500',  bg: 'bg-orange-50'  }, // Falcon   P+ V-
+  { key: 'R07', accent: 'text-violet-600',  bg: 'bg-violet-50'  }, // Octopus  P- V+
+  { key: 'R08', accent: 'text-stone-600',   bg: 'bg-stone-50'   }, // Tortoise P- V-
+  { key: 'R09', accent: 'text-yellow-600',  bg: 'bg-yellow-50'  }, // Bee      B+ V+
+  { key: 'R10', accent: 'text-amber-800',   bg: 'bg-amber-100'  }, // Bear     B+ V-
+  { key: 'R11', accent: 'text-indigo-600',  bg: 'bg-indigo-50'  }, // Fox      B- V+
+  { key: 'R12', accent: 'text-gray-600',    bg: 'bg-gray-50'    }, // Badger   B- V-
 ]
 
 function RoleCard({ roleKey, accent, bg, t }) {
@@ -115,8 +118,8 @@ export default function RolesPage() {
         {/* ── Context notes ─────────────────────────────────────── */}
         <section className="mb-12 flex flex-col gap-3">
           <InfoBox
-            heading={t('rolesPage.r0Note.heading')}
-            body={t('rolesPage.r0Note.body')}
+            heading={t('rolesPage.centreNote.heading')}
+            body={t('rolesPage.centreNote.body')}
           />
           <InfoBox
             heading={t('rolesPage.arcNote.heading')}

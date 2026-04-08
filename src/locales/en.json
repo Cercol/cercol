@@ -182,7 +182,7 @@
       "meta": "120 questions · ~20 min",
       "scale": "1–5 · Disagree strongly → Agree strongly",
       "guidance": "You know yourself. Trust that.",
-      "partNote": "This is the self-report part of a three-part instrument. Witness Cèrcol and a brief cognitive measure follow your results.",
+      "partNote": "This is Part 1 of a two-part instrument. Witness Cèrcol follows after your results.",
       "cta": "Begin"
     }
   },
@@ -446,68 +446,89 @@
     "arc_label": "Personal arc",
     "you": "Your position",
     "probability_label": "Role fit",
-    "R0": {
-      "name": "Opal",   "ca": "Opàl",
-      "essence": "No fixed role. Present in different ways without ceasing to be you.",
-      "profile": "No single dimension dominates. Scores cluster near the centre across all five.",
-      "contributes": "Adaptability. Can step into whatever gap the team needs in the moment.",
-      "misses": "A distinct voice when high-stakes decisions need someone to take a clear position."
+    "R01": {
+      "name": "Dolphin",  "ca": "Dofí",
+      "essence": "When you are in the room, people talk. Not because you ask — because you made it easy. The team warms up with you.",
+      "profile": "High Presence and Bond. Warm, outgoing, and easy to be around. People open up in your company.",
+      "contributes": "Cohesion. Lowers the social activation energy in the room.",
+      "misses": "The productive friction that sharpens ideas. Warmth can smooth over real disagreements."
     },
-    "R1": {
-      "name": "Bolt",   "ca": "Llamp",
-      "essence": "You see the exact moment and go for it. When you move, others know it's time.",
-      "profile": "High Presence and Discipline, with a meaningful Vision component. Social energy meets structured drive with a creative edge.",
-      "contributes": "Momentum. Gets things moving and keeps them built.",
-      "misses": "The quieter relationship maintenance that others need to feel genuinely included."
+    "R02": {
+      "name": "Wolf",     "ca": "Llop",
+      "essence": "You do not wait for permission. When you see the problem, you say it. The team moves because you do not stay quiet.",
+      "profile": "High Presence, low Bond. Direct, assertive, and action-oriented. Does not wait for consensus.",
+      "contributes": "Initiative. Names what needs to be said and gets things moving.",
+      "misses": "The relational cost of directness over time. Teams can lose trust if the challenge is constant."
     },
-    "R2": {
-      "name": "Beacon", "ca": "Far",
-      "essence": "You don't invite anyone. People come because it's easy to let their guard down near you.",
-      "profile": "High Presence and Bond, with strong emotional stability. Warm, outgoing, and hard to rattle.",
-      "contributes": "Cohesion. Makes it easy for people to let their guard down and work together well.",
-      "misses": "The productive friction that makes ideas sharper. Harmony can become a ceiling."
+    "R03": {
+      "name": "Elephant", "ca": "Elefant",
+      "essence": "You do not take up space — you create it. People explain themselves well beside you because they know you are really listening.",
+      "profile": "Low Presence, high Bond. Quiet and deeply cooperative. Creates space for others to think out loud.",
+      "contributes": "Depth of listening. People articulate themselves better in your presence.",
+      "misses": "Momentum. The team can think clearly together but still not move."
     },
-    "R3": {
-      "name": "Thorn",  "ca": "Espina",
-      "essence": "You say what should have been said two meetings ago. Without you, the team sleeps in easy consensus.",
-      "profile": "High Presence and low Bond, with elevated Depth. Assertive, independent-minded, and emotionally engaged.",
-      "contributes": "Critical challenge. Names what no one else will say. Prevents premature closure.",
-      "misses": "The cumulative cost their challenge style can impose on trust and morale over time."
+    "R04": {
+      "name": "Owl",      "ca": "Mussol",
+      "essence": "You see what others miss because you do not need to be at the centre. The distance is useful to you.",
+      "profile": "Low Presence and Bond. Independent, observant, and precise. Works best with distance.",
+      "contributes": "Clarity. Sees structural problems that high-social profiles miss.",
+      "misses": "Warmth and easy collaboration. The distance that helps analysis can isolate."
     },
-    "R4": {
-      "name": "Anchor", "ca": "Àncora",
-      "essence": "When everything shakes, you stay in place. The team notices most when you're not there.",
-      "profile": "High Bond and Discipline, with emotional stability. Cooperative, structured, and steady.",
-      "contributes": "Reliability. The team can plan around them with confidence.",
-      "misses": "The urgency needed when genuine change is required. Stability can resist what needs to shift."
+    "R05": {
+      "name": "Eagle",    "ca": "Àguila",
+      "essence": "You see far and you move there. You bring the team to places it would not have gone alone.",
+      "profile": "High Presence and Vision. Energetic and future-oriented. Pulls the team toward new ground.",
+      "contributes": "Direction. Sets ambitious goals the team would not have set alone.",
+      "misses": "Execution detail. The horizon is clear; the path can be rough."
     },
-    "R5": {
-      "name": "Heron",  "ca": "Garça",
-      "essence": "You listen to what was left unsaid. The team's harmony runs through you without anyone quite knowing.",
-      "profile": "High Bond, lower Presence and Discipline. Reserved, deeply cooperative, and spontaneous.",
-      "contributes": "Harmony. Holds the team's emotional fabric together without anyone noticing until it's gone.",
-      "misses": "Their own needs. Heron roles rarely advocate for themselves."
+    "R06": {
+      "name": "Falcon",   "ca": "Falcó",
+      "essence": "It is not vision — it is timing. You know exactly when to move, and when you do, the team notices.",
+      "profile": "High Presence, low Vision. Present, decisive, and practical. Knows exactly when to act.",
+      "contributes": "Timing. Moves at the right moment and carries people with them.",
+      "misses": "Long-horizon thinking. Can miss the strategic layer while executing well at speed."
     },
-    "R6": {
-      "name": "Anvil",  "ca": "Enclusa",
-      "essence": "Quality is tested at your side. You are the tool that stops the team from fooling itself.",
-      "profile": "High Discipline and elevated Depth, with moderate-low Bond. Rigorous, critical, and alert to failure.",
-      "contributes": "Quality assurance. The team doesn't fool itself when the Anvil is paying attention.",
-      "misses": "That not every decision needs the highest standard. Speed and sufficiency matter too."
+    "R07": {
+      "name": "Octopus",  "ca": "Polp",
+      "essence": "The team's best ideas often passed through you first, in silence. You do not always know it yourself.",
+      "profile": "Low Presence, high Vision. Internally rich and quietly creative. Processes complexity in private.",
+      "contributes": "Original thinking. The team's most unusual ideas often come from here.",
+      "misses": "Getting ideas into circulation. Works in silence; the ideas can stay there."
     },
-    "R7": {
-      "name": "Loom",   "ca": "Teler",
-      "essence": "Where others see loose threads, you see the web. What comes out is better than any of the parts.",
-      "profile": "High Vision with moderate Bond and Discipline. Creative, organised, and collaborative.",
-      "contributes": "Synthesis. Connects what others see as unrelated and makes something useful from it.",
-      "misses": "Execution details. The web is well-designed; the delivery can fall short."
+    "R08": {
+      "name": "Tortoise", "ca": "Tortuga",
+      "essence": "You will not make noise. But when you are not there, the team drifts. You are the ground the others build on.",
+      "profile": "Low Presence and Vision. Steady, grounded, and deeply reliable. Holds the ground so others can move.",
+      "contributes": "Stability. Others can take risks because this profile holds the ground.",
+      "misses": "Adaptability when the situation fundamentally changes."
     },
-    "R8": {
-      "name": "Comet",  "ca": "Cometa",
-      "essence": "You don't ask permission to move outside the expected path. The best decisions passed through your angle first.",
-      "profile": "High Vision, moderate Presence, and emotional stability. Independent, creative, and calm.",
-      "contributes": "Breakthrough thinking. Reframes problems before others have seen them as problems.",
-      "misses": "Consensus-building. Moves ahead of the team and has to come back for them."
+    "R09": {
+      "name": "Bee",      "ca": "Abella",
+      "essence": "Where others see chaos, you see structure. You build bridges between people and ideas no one else would have connected.",
+      "profile": "High Bond and Vision. Collaborative and intellectually generative. Connects people and ideas.",
+      "contributes": "Synthesis. Builds bridges between people and between concepts no one else had linked.",
+      "misses": "The critical edge needed to test whether the connections hold."
+    },
+    "R10": {
+      "name": "Bear",     "ca": "Ós",
+      "essence": "You do not change under pressure. The team knows you are there, and that knowing frees them to take risks.",
+      "profile": "High Bond, low Vision. Dependable, grounded, and consistent. The team knows where it stands.",
+      "contributes": "Trust. People take more risks when a Bear profile is present.",
+      "misses": "Openness to change when the current approach is no longer working."
+    },
+    "R11": {
+      "name": "Fox",      "ca": "Guineu",
+      "essence": "You see what does not add up — in ideas and in relationships. Your discomfort is productive.",
+      "profile": "Low Bond, high Vision. Intellectually sharp and critically minded. Spots inconsistency fast.",
+      "contributes": "Critical distance. Catches what does not add up before it becomes a problem.",
+      "misses": "Relational ease. The discomfort can wear on a team that needs cohesion to function."
+    },
+    "R12": {
+      "name": "Badger",   "ca": "Teixó",
+      "essence": "You are not interested in what should work. You are interested in what works. The team needs you to stop fooling itself.",
+      "profile": "Low Bond and Vision. Pragmatic, direct, and unsentimental. What works matters; what should work does not.",
+      "contributes": "Ground truth. Stops the team fooling itself with optimism or complexity.",
+      "misses": "Buy-in. The directness that surfaces truth can also create resistance."
     }
   },
   "witness": {
@@ -655,14 +676,14 @@
     },
     "roles": {
       "eyebrow": "Role taxonomy",
-      "heading": "Nine roles. Derived from the research, not invented.",
-      "body": "The role taxonomy is grounded in a well-validated model of how personality traits cluster in two-dimensional space. Two meta-dimensions — one reflecting social orientation, one reflecting drive and growth — define the role space. Nine role positions correspond to distinct regions in that space.",
-      "beta": "Current role assignments use theoretical starting points derived from the literature. As real data accumulates — beginning at 200 completions — the model will update to reflect actual people, not estimates.",
+      "heading": "Twelve roles. Derived from the research, not invented.",
+      "body": "The role taxonomy is grounded in the AB5C circumplex (Hofstee, De Raad & Goldberg, 1992) and the team composition literature (Bell, 2007). Three OCEAN dimensions — Presence, Bond, and Vision — require balance in teams. The twelve roles cover the six intersections of these three dimensions at both poles. Discipline and Depth modulate how each role is expressed.",
+      "beta": "Current role assignments use theoretical centroids derived from published research. As real data accumulates — target: 300 Full Moon completions — centroids will be replaced with empirical values from actual profiles.",
       "betaNote": "Role scoring is labelled beta in the interface. It is illustrative, not diagnostic."
     },
     "fullMoon": {
       "eyebrow": "Full Moon Cèrcol",
-      "heading": "Three lenses on the same person.",
+      "heading": "Two lenses on the same person.",
       "selfReport": {
         "heading": "Self-report",
         "body": "120 items across 5 domains and 30 facets — twice the resolution of First Quarter. Forms the primary role result."
@@ -672,10 +693,6 @@
         "body": "A forced-choice task given to someone who knows you well. Each round, the Witness sees five words and picks the best fit and worst fit for you — one adjective per dimension. Forced choice eliminates the social desirability bias that distorts self-report.",
         "idealWitness": "An ideal Witness has worked with you, lived with you, or spent real time around you. Not your closest ally, not your harshest critic — someone who sees you as you actually are.",
         "blindSpots": "The Witness result is compared to the self-report. Where they diverge significantly, a blind spot is flagged — a dimension you see differently than the people around you do."
-      },
-      "cognitive": {
-        "heading": "Cognitive ability",
-        "body": "An open-source measure adapted from a public-domain cognitive assessment battery. Included for completeness in the Full Moon profile, not to rank or judge."
       }
     },
     "sources": {
@@ -729,7 +746,7 @@
     "fullMoon": {
       "heading": "Full Moon Cèrcol",
       "eyebrow": "Complete portrait",
-      "system": "Full Moon is a system of three parts used together.",
+      "system": "Full Moon is a system of two parts used together.",
       "part1": {
         "label": "Part 1",
         "heading": "Self-report",
@@ -751,20 +768,15 @@
         "privacyBody": "Witnesses never see your scores. You see the averaged result from all Witnesses — not individual responses.",
         "blindSpotsHeading": "Blind spots",
         "blindSpotsBody": "Where your self-report and Witness scores diverge significantly, a blind spot is flagged. Not because one is right and the other wrong — but because the gap itself is informative. A dimension you perceive very differently than those around you is worth examining."
-      },
-      "part3": {
-        "label": "Part 3",
-        "heading": "Cognitive ability",
-        "body": "A brief open-source measure adapted from the International Cognitive Ability Resource — a public-domain assessment battery. Included as an additional data point for the team report. It is not an IQ score, not a ranking, and not a gate. An additional lens, nothing more."
       }
     }
   },
   "rolesPage": {
     "title": "Roles",
     "intro": {
-      "heading": "Nine roles. One taxonomy.",
-      "body1": "Personality profiles describe how you are. Roles describe how you tend to function in groups. The gap between those two things is where Cèrcol tries to work.",
-      "body2": "The nine roles are derived from the AB5C circumplex — a well-validated model of how personality traits cluster in two-dimensional space (Hofstee, De Raad & Goldberg, 1992). The names are ours. The structure is from the literature."
+      "heading": "Twelve roles. One taxonomy.",
+      "body1": "Personality profiles describe how you are. Roles describe how you tend to move the balance of a team. The gap between those two things is where Cèrcol tries to work.",
+      "body2": "The twelve roles are derived from the AB5C circumplex (Hofstee, De Raad & Goldberg, 1992) and the team composition literature (Bell, 2007). Three OCEAN dimensions require balance in teams — Presence, Bond, and Vision. The twelve roles cover the six intersections of these dimensions at both poles. The names are ours. The structure is from the literature."
     },
     "beta": {
       "heading": "This is a starting hypothesis, not a validated instrument.",
@@ -780,22 +792,22 @@
       "cta": "Open an issue on GitHub"
     },
     "grid": {
-      "heading": "The nine roles",
+      "heading": "The twelve roles",
       "profileLabel": "Tendency",
       "contributesLabel": "Contributes to a team",
       "missesLabel": "Tends to miss"
     },
-    "r0Note": {
-      "heading": "A note on Opal",
-      "body": "Opal is not a residual category or a failed assignment. It means no single dimension dominates the profile. Many effective people score here. Opal profiles are often the most context-adaptable members of a team — they can step into whatever role the situation requires."
+    "centreNote": {
+      "heading": "What about profiles near the centre?",
+      "body": "There is no centre role. A profile with low scores on Presence, Bond, and Vision is better described by its Discipline and Depth values than assigned a role label with no functional content. The role result will show the closest centroid by distance, with a low maximum probability indicating a diffuse profile."
     },
     "arcNote": {
       "heading": "Personal arc",
-      "body": "Most role results include an arc — secondary roles that scored close to the primary in probability space. An Anchor with a Heron arc has the Anchor's reliability and the Heron's listening quality. The arc gives the result texture that a single label can't."
+      "body": "Most role results include an arc — secondary roles that scored close to the primary in probability space. A Wolf with a Falcon arc brings initiative and decisive timing. A Bee with an Elephant arc brings synthesis and deep listening. The arc gives the result texture that a single label can't."
     },
     "contextNote": {
       "heading": "Roles are not destinies",
-      "body": "The same person can function differently in different team compositions. A Thorn in a conflict-averse team may soften. An Opal in a team that needs direction may sharpen. These are tendencies in context — not fixed identities. Don't use a role result as a ceiling."
+      "body": "The same person can function differently in different team compositions. A Wolf in a team that already confronts everything may pull back. A Tortoise in a team that needs movement may accelerate. These are tendencies in context — not fixed identities. Don't use a role result as a ceiling."
     }
   }
 }
