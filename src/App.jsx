@@ -15,6 +15,9 @@ import WitnessPage from './pages/WitnessPage'
 import AuthPage from './pages/AuthPage'
 import AuthCallbackPage from './pages/AuthCallbackPage'
 import MyResultsPage from './pages/MyResultsPage'
+import AboutPage from './pages/AboutPage'
+import SciencePage from './pages/SciencePage'
+import FaqPage from './pages/FaqPage'
 import FeedbackButton from './components/FeedbackButton'
 
 function AppContent() {
@@ -41,6 +44,10 @@ function AppContent() {
         <Route path="/auth/callback" element={<AuthCallbackPage />} />
         {/* Account */}
         <Route path="/my-results" element={<MyResultsPage />} />
+        {/* Documentation */}
+        <Route path="/about"   element={<AboutPage />} />
+        <Route path="/science" element={<SciencePage />} />
+        <Route path="/faq"     element={<FaqPage />} />
       </Routes>
       <FeedbackButton itemId={itemContext.itemId} itemText={itemContext.itemText} />
     </Layout>

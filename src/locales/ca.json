@@ -1,6 +1,9 @@
 {
   "nav": {
-    "brand": "Cèrcol"
+    "brand": "Cèrcol",
+    "about": "Sobre",
+    "science": "Ciència",
+    "faq": "Preguntes"
   },
   "myResults": {
     "link": "Els meus resultats",
@@ -537,5 +540,120 @@
     "noDivergence": "Alineació forta. La teua autopercepció coincideix àmpliament amb com et veuen els altres.",
     "setupCta": "Convidar testimonis",
     "disclaimer": "Els resultats dels testimonis reflecteixen la perspectiva de les persones que han completat l'instrument. La divergència no és un defecte — és informació."
+  },
+  "about": {
+    "title": "Sobre",
+    "intro": {
+      "eyebrow": "Avaluació de personalitat de codi obert",
+      "heading": "Coneix-te millor.",
+      "body": "Cèrcol és tres instruments construïts sobre investigació de domini públic. Cadascun mesura les mateixes cinc dimensions — a diferent profunditat. Cap puntuació et diu el que has de pensar. Cap resultat és bo o dolent.",
+      "founding": "Tot suma, ningú no és imprescindible, però tots som necessaris."
+    },
+    "instruments": {
+      "heading": "Tres instruments. Un recorregut.",
+      "freeLabel": "Gratuït",
+      "paidLabel": "Pagament únic",
+      "sampleHeading": "Preguntes de mostra",
+      "newMoon": {
+        "name": "Cèrcol de Lluna Nova",
+        "eyebrow": "Visió ràpida",
+        "meta": "10 preguntes · ~2 min",
+        "about": "Una mirada ràpida a la teua posició en cinc dimensions. Bona per a una primera orientació o una revisió ràpida.",
+        "get": "Obtens un gràfic de radar de les cinc dimensions.",
+        "items": ["Extravertit/da, entusiasta.", "De confiança, autodisciplinat/da.", "Obert/a a noves experiències, complex/a."],
+        "itemPrefix": "Em veig com:",
+        "itemScale": "Puntuació 1–7 · Totalment en desacord → Totalment d'acord"
+      },
+      "firstQuarter": {
+        "name": "Cèrcol de Quart Creixent",
+        "eyebrow": "Retrat complet",
+        "meta": "60 preguntes · ~10 min",
+        "about": "Cada dimensió es divideix en 6 facetes — 30 punts de dades en lloc de 5. Una imatge molt més rica, amb una primera lectura del teu rol.",
+        "get": "Obtens un gràfic de dominis, un desglossament de 30 facetes i una primera mirada al teu rol.",
+        "items": ["Prenc la iniciativa.", "Em preocupe per les coses.", "Tinc una imaginació vívida."],
+        "itemPrefix": "Em veig com algú que:",
+        "itemScale": "Puntuació 1–5 · Totalment en desacord → Totalment d'acord"
+      },
+      "fullMoon": {
+        "name": "Cèrcol de Lluna Plena",
+        "eyebrow": "Retrat definitiu",
+        "meta": "120 preguntes · ~20 min",
+        "about": "L'autoinforme més profund — 120 ítems a màxima resolució — més l'instrument Testimoni i una mesura de capacitat cognitiva.",
+        "get": "Obtens un perfil complet, un rol confirmat, una comparació amb el Testimoni i els teus punts cecs.",
+        "items": ["Rarament em sento trist/a.", "Anticipe les necessitats dels altres.", "Faig les tasques de seguida."],
+        "itemPrefix": "Em veig com algú que:",
+        "itemScale": "Puntuació 1–5 · Totalment en desacord → Totalment d'acord"
+      }
+    },
+    "dimensions": {
+      "heading": "Cinc dimensions",
+      "subheading": "Cada puntuació es troba en un espectre. Tots dos extrems són vàlids — descriuen maneres diferents de ser efectiu.",
+      "presence": { "name": "Presència", "desc": "Quanta energia dirigeixes cap a fora. Alta: portes gent a prop. Baixa: vas a fons amb menys persones." },
+      "bond":     { "name": "Vincle",    "desc": "Com et connectes i cooperes. Alta: prioritzes la confiança i l'harmonia. Baixa: mantens la teua postura." },
+      "discipline":{ "name": "Disciplina","desc": "Com abordes l'estructura i el treball. Alta: fiable, metòdic/a. Baixa: flexible, guiat/da per l'instint." },
+      "depth":    { "name": "Profunditat","desc": "Amb quina intensitat processes l'estrès i les emocions. Alta: sensible, alerta. Baixa: estable, difícil de desestabilitzar." },
+      "vision":   { "name": "Visió",     "desc": "Quanta novetat i complexitat busques. Alta: creatiu/va, explorador/a. Baixa: pràctic/a, arrelat/da." }
+    },
+    "framing": {
+      "heading": "Una nota sobre les puntuacions",
+      "body": "Aquestes són tendències, no etiquetes. El mateix tret que crea fricció en un context és exactament el que cal en un altre. Una Disciplina baixa no és un fracàs — sovint és el que manté les coses en marxa quan el pla s'enfonsa."
+    }
+  },
+  "science": {
+    "title": "Ciència",
+    "openInstruments": {
+      "eyebrow": "Instruments oberts",
+      "heading": "Sense proves propietàries.",
+      "body": "Totes les preguntes de Cèrcol provenen d'una col·lecció de domini públic d'ítems de personalitat usats en centenars d'estudis revisats per experts. Sense restriccions de llicència, sense caixes negres. Qualsevol pot llegir els ítems, executar la puntuació i verificar els resultats."
+    },
+    "fiveFactors": {
+      "eyebrow": "El model de cinc factors",
+      "heading": "La troballa més replicada en psicologia de la personalitat.",
+      "body": "A través de cultures, idiomes i mètodes, la investigació recupera consistentment les mateixes cinc dimensions àmplies de la personalitat. Cèrcol les usa amb noms diferents — Presència, Vincle, Disciplina, Profunditat, Visió — per fer el llenguatge més càlid sense canviar el que es mesura.",
+      "note": "Replicat en més de 50 països. El resultat de consens més fort en psicologia diferencial."
+    },
+    "roles": {
+      "eyebrow": "Taxonomia de rols",
+      "heading": "Nou rols. Derivats de la investigació, no inventats.",
+      "body": "La taxonomia de rols s'arela en un model ben validat de com els trets de personalitat s'agrupen en un espai bidimensional. Dues meta-dimensions — una reflectint l'orientació social, una altra el drive i el creixement — defineixen l'espai de rols. Nou posicions de rol corresponen a regions diferenciades en aquell espai.",
+      "beta": "Les assignacions de rols actuals utilitzen punts de partida teòrics derivats de la literatura. A mesura que s'acumulin dades reals — a partir de 200 resultats — el model s'actualitzarà per reflectir persones reals, no estimacions.",
+      "betaNote": "La puntuació de rols és beta. És il·lustrativa, no diagnòstica."
+    },
+    "fullMoon": {
+      "eyebrow": "Cèrcol de Lluna Plena",
+      "heading": "Tres lents sobre la mateixa persona.",
+      "selfReport": {
+        "heading": "Autoinforme",
+        "body": "120 ítems en 5 dominis i 30 facetes — el doble de resolució que el Quart Creixent. Forma el resultat de rol primari."
+      },
+      "witness": {
+        "heading": "Testimoni Cèrcol",
+        "body": "Una tasca d'elecció forçada donada a algú que et coneix bé. En cada ronda, el Testimoni veu cinc paraules i tria la que millor i la que pitjor et descriu — un adjectiu per dimensió. L'elecció forçada elimina el biaix de desitjabilitat social que distorsiona l'autoinforme.",
+        "idealWitness": "Un Testimoni ideal ha treballat amb tu, ha viscut amb tu o ha passat temps real al teu costat. No el teu aliat més proper, ni el teu crític més dur — algú que et veu com realment ets.",
+        "blindSpots": "El resultat del Testimoni es compara amb l'autoinforme. On divergeixen significativament, es marca un punt cec — una dimensió que perceps de manera diferent a com ho fan els qui t'envolten."
+      },
+      "cognitive": {
+        "heading": "Capacitat cognitiva",
+        "body": "Una mesura de codi obert adaptada d'una bateria d'avaluació cognitiva de domini públic. Inclosa per completesa en el perfil de Lluna Plena, no per classificar ni jutjar."
+      }
+    },
+    "sources": {
+      "heading": "Referències"
+    },
+    "openSource": {
+      "heading": "El codi és obert.",
+      "body": "Cèrcol és de codi obert. La lògica de puntuació, el corpus d'ítems i l'algorisme de rols són tots llegibles.",
+      "cta": "Veure a GitHub"
+    }
+  },
+  "faq": {
+    "title": "Preguntes freqüents",
+    "heading": "Preguntes",
+    "q1": { "q": "Les meues dades són privades?", "a": "Els instruments gratuïts registren puntuacions anònimes sense informació personal — sense nom, sense correu, sense adreça IP. Si crees un compte, el teu correu és emmagatzemat per Supabase i els teus resultats es vinculen al teu compte. Pots eliminar el compte en qualsevol moment. Cap dada es ven ni es comparteix amb tercers." },
+    "q2": { "q": "Són precisos els resultats?", "a": "Les preguntes provenen d'instruments revisats per experts i àmpliament validats. Les puntuacions de les cinc dimensions són fiables per a una eina d'autoinforme d'aquesta longitud. La puntuació de rols és clarament beta — utilitza punts de partida teòrics i serà més precisa a mesura que s'acumulin dades reals. Pren les dimensions seriosament; tracta el rol com una primera estimació útil." },
+    "q3": { "q": "Què és el Testimoni i a qui hauria de convidar?", "a": "El Testimoni és algú que conyides a descriure't des de fora. Veu grups de paraules i tria quines t'encaixen millor i pitjor — una tasca curta d'elecció forçada que dura uns 5 minuts. Un Testimoni ideal és algú que ha passat temps real amb tu: un company de feina, un company de pis, un amic proper. No el teu fan número u, ni el teu crític més dur. Algú que et veu com realment ets." },
+    "q4": { "q": "Quina és la diferència entre els tres instruments?", "a": "La Lluna Nova són 10 preguntes i dura 2 minuts — una orientació ràpida. El Quart Creixent són 60 preguntes i dura 10 minuts — una imatge més completa amb 30 facetes i una primera mirada al teu rol. La Lluna Plena és 120 preguntes, inclou l'avaluació del Testimoni, i és de pagament — és el resultat definitiu. Cada instrument és independent; pots començar des de qualsevol punt." },
+    "q5": { "q": "Val la pena pagar per la Lluna Plena?", "a": "Si el Quart Creixent se't queda curt — si vols entendre una faceta específica més profundament, veure com els altres et perceben, o obtenir un resultat de rol fiable — sí. La comparació amb el Testimoni és la part més distintiva: mostra on la teua autopercepció coincideix amb la visió exterior i on no. Aquesta bretxa és sovint on viu la informació més útil." },
+    "q6": { "q": "Puc repetir les avaluacions?", "a": "Sí. Els instruments gratuïts no tenen límit. Cada enviament és independent — repetir-ne un no sobreescriu els resultats anteriors del teu compte. Moltes persones troben útil repetir el Quart Creixent sis mesos o un any més tard per veure el que ha canviat." }
   }
 }

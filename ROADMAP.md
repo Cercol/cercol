@@ -552,15 +552,29 @@ values as data accumulates. Built across four sub-phases:
 #### Manual tasks (Miquel)
 - In Supabase SQL editor: run migration 005_witness_subject.sql
 
-### Phase 8 — Documentation and content site
-- Standalone section of the site (not gated, no login required)
-- Explains each instrument: what it measures, how long it takes, what you get
-- Scientific foundation: accessible, no jargon, sources linked
-- Full Moon explained: the three parts, what the Witness does, how to choose one
-- Results framing: scores reflect tendencies in a context, not fixed identity
-- Who the ideal Witness is and what they are asked to do
-- FAQ
-- Available in EN and CA from day one
+### Phase 8 — Documentation and content site ✅ COMPLETE
+- Three public routes, no login required, fully bilingual (EN + CA):
+  - /about    — what Cèrcol is, three instruments, five dimensions, score framing
+  - /science  — open instruments, five-factor model, role taxonomy, Full Moon design, references, GitHub link
+  - /faq      — 6 FAQ items: privacy, accuracy, Witness, instrument differences, Full Moon value, retaking
+- Layout.jsx: three compact nav links (About / Science / FAQ) added between brand and right controls
+  using NavLink with active state highlight; existing header structure preserved
+- AboutPage.jsx:
+  - Intro with founding phrase in blockquote
+  - InstrumentSection component: moon icon, eyebrow, name, meta, free/paid chip, description,
+    what-you-get, static read-only sample items (3 per instrument), scale note, start CTA link
+  - StaticItem component: item text + greyed-out numbered scale (7-point for New Moon, 5-point for others)
+  - DimensionCard grid: 5 cards (2-col on sm+), one per dimension with name + one-line description
+  - Framing note section
+- SciencePage.jsx:
+  - Section component (eyebrow, heading, children)
+  - Open instruments, five-factor model (with note callout), role taxonomy (with beta box)
+  - Full Moon three-part breakdown: self-report, Witness (with ideal-Witness callout), cognitive ability
+  - References: 9 citations, linked where DOI available
+  - Open-source CTA linking to GitHub
+- FaqPage.jsx: details/summary HTML accordion (no JS state), 6 questions
+  with chevron that rotates open via group-open Tailwind class
+- en.json / ca.json: nav.about/science/faq keys, about.*, science.*, faq.* namespaces added
 
 ### Phase 9 — Full Moon integrated report
 - Combines self-report (Phase 6), Witness (Phase 7), and ICAR into one report

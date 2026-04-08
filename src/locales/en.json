@@ -1,6 +1,9 @@
 {
   "nav": {
-    "brand": "Cèrcol"
+    "brand": "Cèrcol",
+    "about": "About",
+    "science": "Science",
+    "faq": "FAQ"
   },
   "myResults": {
     "link": "My results",
@@ -537,5 +540,120 @@
     "noDivergence": "Strong alignment. Your self-perception closely matches how others see you.",
     "setupCta": "Invite witnesses",
     "disclaimer": "Witness results reflect the perspective of the people who completed the instrument. Divergence is not a flaw — it is information."
+  },
+  "about": {
+    "title": "About",
+    "intro": {
+      "eyebrow": "Open-source personality assessment",
+      "heading": "See yourself more clearly.",
+      "body": "Cèrcol is three instruments built on public-domain science. Each one measures the same five dimensions — at different depths. No score tells you what to think. No result is good or bad.",
+      "founding": "Tot suma, ningú no és imprescindible, però tots som necessaris."
+    },
+    "instruments": {
+      "heading": "Three instruments. One journey.",
+      "freeLabel": "Free",
+      "paidLabel": "One-time payment",
+      "sampleHeading": "Sample questions",
+      "newMoon": {
+        "name": "New Moon Cèrcol",
+        "eyebrow": "Quick snapshot",
+        "meta": "10 questions · ~2 min",
+        "about": "A fast read of your position on five dimensions. Good for a first orientation or a quick check-in.",
+        "get": "You get a radar chart of all five dimensions.",
+        "items": ["Extraverted, enthusiastic.", "Dependable, self-disciplined.", "Open to new experiences, complex."],
+        "itemPrefix": "I see myself as:",
+        "itemScale": "Rated 1–7 · Disagree strongly → Agree strongly"
+      },
+      "firstQuarter": {
+        "name": "First Quarter Cèrcol",
+        "eyebrow": "Full portrait",
+        "meta": "60 questions · ~10 min",
+        "about": "Each dimension is broken into 6 facets — 30 data points instead of 5. A much richer picture, with a first read on your role.",
+        "get": "You get a domain chart, a 30-facet breakdown, and a first look at your role.",
+        "items": ["Take charge.", "Worry about things.", "Have a vivid imagination."],
+        "itemPrefix": "I see myself as someone who:",
+        "itemScale": "Rated 1–5 · Disagree strongly → Agree strongly"
+      },
+      "fullMoon": {
+        "name": "Full Moon Cèrcol",
+        "eyebrow": "Complete portrait",
+        "meta": "120 questions · ~20 min",
+        "about": "The deepest self-report — 120 items at full resolution — plus the Witness instrument and a cognitive ability measure.",
+        "get": "You get a complete profile, a confirmed role, a Witness comparison, and your blind spots.",
+        "items": ["Seldom feel blue.", "Anticipate the needs of others.", "Get chores done right away."],
+        "itemPrefix": "I see myself as someone who:",
+        "itemScale": "Rated 1–5 · Disagree strongly → Agree strongly"
+      }
+    },
+    "dimensions": {
+      "heading": "Five dimensions",
+      "subheading": "Every score sits on a spectrum. Both ends are valid — they describe different ways of being effective.",
+      "presence": { "name": "Presence", "desc": "How much energy you direct outward. High: you bring people in. Low: you go deep with fewer." },
+      "bond":     { "name": "Bond",     "desc": "How you connect and cooperate. High: you prioritise trust and harmony. Low: you hold your ground." },
+      "discipline":{ "name": "Discipline","desc": "How you approach structure and work. High: reliable, methodical. Low: flexible, instinct-driven." },
+      "depth":    { "name": "Depth",    "desc": "How intensely you process stress and emotion. High: sensitive, alert. Low: stable, hard to rattle." },
+      "vision":   { "name": "Vision",   "desc": "How much novelty and complexity you seek. High: creative, exploratory. Low: practical, grounded." }
+    },
+    "framing": {
+      "heading": "A note on scores",
+      "body": "These are tendencies, not labels. The same trait that creates friction in one context is exactly what's needed in another. Low Discipline isn't failure — it's often what keeps things moving when the plan falls apart."
+    }
+  },
+  "science": {
+    "title": "Science",
+    "openInstruments": {
+      "eyebrow": "Open instruments",
+      "heading": "No proprietary tests.",
+      "body": "Every question in Cèrcol comes from a public-domain collection of personality items used in hundreds of peer-reviewed studies. No licensing restrictions, no black boxes. Anyone can read the items, run the scoring, and verify the results."
+    },
+    "fiveFactors": {
+      "eyebrow": "The five-factor model",
+      "heading": "The most replicated finding in personality psychology.",
+      "body": "Across cultures, languages, and methods, research consistently recovers the same five broad dimensions of personality. Cèrcol uses these under different names — Presence, Bond, Discipline, Depth, Vision — to make the language warmer without changing what's being measured.",
+      "note": "Replicated in more than 50 countries. The strongest consensus result in differential psychology."
+    },
+    "roles": {
+      "eyebrow": "Role taxonomy",
+      "heading": "Nine roles. Derived from the research, not invented.",
+      "body": "The role taxonomy is grounded in a well-validated model of how personality traits cluster in two-dimensional space. Two meta-dimensions — one reflecting social orientation, one reflecting drive and growth — define the role space. Nine role positions correspond to distinct regions in that space.",
+      "beta": "Current role assignments use theoretical starting points derived from the literature. As real data accumulates — beginning at 200 completions — the model will update to reflect actual people, not estimates.",
+      "betaNote": "Role scoring is labelled beta in the interface. It is illustrative, not diagnostic."
+    },
+    "fullMoon": {
+      "eyebrow": "Full Moon Cèrcol",
+      "heading": "Three lenses on the same person.",
+      "selfReport": {
+        "heading": "Self-report",
+        "body": "120 items across 5 domains and 30 facets — twice the resolution of First Quarter. Forms the primary role result."
+      },
+      "witness": {
+        "heading": "Witness Cèrcol",
+        "body": "A forced-choice task given to someone who knows you well. Each round, the Witness sees five words and picks the best fit and worst fit for you — one adjective per dimension. Forced choice eliminates the social desirability bias that distorts self-report.",
+        "idealWitness": "An ideal Witness has worked with you, lived with you, or spent real time around you. Not your closest ally, not your harshest critic — someone who sees you as you actually are.",
+        "blindSpots": "The Witness result is compared to the self-report. Where they diverge significantly, a blind spot is flagged — a dimension you see differently than the people around you do."
+      },
+      "cognitive": {
+        "heading": "Cognitive ability",
+        "body": "An open-source measure adapted from a public-domain cognitive assessment battery. Included for completeness in the Full Moon profile, not to rank or judge."
+      }
+    },
+    "sources": {
+      "heading": "References"
+    },
+    "openSource": {
+      "heading": "The code is open.",
+      "body": "Cèrcol is open source. The scoring logic, item corpus, and role algorithm are all readable.",
+      "cta": "View on GitHub"
+    }
+  },
+  "faq": {
+    "title": "FAQ",
+    "heading": "Questions",
+    "q1": { "q": "Is my data private?", "a": "The free instruments log anonymous scores with no personal information — no name, no email, no IP address. If you create an account, your email is stored by Supabase and your results are linked to your account. You can delete your account at any time. No data is sold or shared with third parties." },
+    "q2": { "q": "Are the results accurate?", "a": "The questions come from peer-reviewed, widely-validated instruments. The five-dimension scores are reliable for a self-report tool of this length. The role scoring is clearly labelled beta — it uses theoretical starting points and will become more accurate as real data accumulates. Take the dimensions seriously; treat the role as a useful first guess." },
+    "q3": { "q": "What is the Witness and who should I invite?", "a": "The Witness is someone you invite to describe you from the outside. They see groups of words and pick which ones fit you best and worst — a short forced-choice task that takes about 5 minutes. An ideal Witness is someone who has spent real time with you: a colleague, a housemate, a close friend. Not your biggest fan, not your harshest critic. Someone who sees you as you actually are." },
+    "q4": { "q": "What is the difference between the three instruments?", "a": "New Moon is 10 questions and takes 2 minutes — a quick orientation. First Quarter is 60 questions and takes 10 minutes — a fuller picture with 30 facets and a first look at your role. Full Moon is 120 questions, includes the Witness assessment, and is paid — it is the definitive result. Each instrument is standalone; you can start anywhere." },
+    "q5": { "q": "Is Full Moon worth paying for?", "a": "If First Quarter feels insufficient — if you want to understand a specific facet more deeply, see how others perceive you, or get a reliable role result — then yes. The Witness comparison is the most distinctive part: it shows where your self-perception matches the outside view and where it doesn't. That gap is often where the most useful information lives." },
+    "q6": { "q": "Can I retake the assessments?", "a": "Yes. The free instruments have no limit. Each submission is independent — retaking does not overwrite previous results in your account. People often find it useful to retake First Quarter six months or a year later to see what has changed." }
   }
 }
