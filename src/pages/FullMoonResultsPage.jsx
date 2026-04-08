@@ -18,6 +18,7 @@ import { DOMAIN_KEYS } from '../data/domains'
 import { fmScoreToPercent, fmScoreLabel } from '../utils/full-moon-scoring'
 import { logResult } from '../utils/logger'
 import { computeRole } from '../utils/role-scoring'
+import { ROLE_ILLUSTRATIONS } from '../data/roles'
 import { useAuth } from '../context/AuthContext'
 import { colors } from '../design/tokens'
 import RadarChart from '../components/RadarChart'
@@ -114,8 +115,18 @@ export default function FullMoonResultsPage() {
 
         {/* ── Section 1: Role (top, full width) ── */}
         <section>
-          <Card accent="red" className="p-6 sm:p-8">
-            <div className="flex flex-col gap-4">
+          <Card accent="red" className="overflow-hidden">
+            {/* Illustration — full-bleed on brand-color bg */}
+            {ROLE_ILLUSTRATIONS[roleResult.role] && (
+              <div style={{ backgroundColor: ROLE_ILLUSTRATIONS[roleResult.role].bg }}>
+                <img
+                  src={ROLE_ILLUSTRATIONS[roleResult.role].src}
+                  alt={t(`roles.${roleResult.role}.name`)}
+                  className="block w-full max-w-[400px] mx-auto"
+                />
+              </div>
+            )}
+            <div className="p-6 sm:p-8 flex flex-col gap-4">
               <Badge variant="beta" className="self-start">
                 {t('roles.beta_label')}
               </Badge>

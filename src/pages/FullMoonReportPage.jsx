@@ -21,6 +21,7 @@ import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
 import { getMyWitnessSessions } from '../lib/api'
 import { computeRole } from '../utils/role-scoring'
+import { ROLE_ILLUSTRATIONS } from '../data/roles'
 import { averageWitnessScores, detectDivergence, computeConvergence, computeCombinedRole } from '../utils/witness-scoring'
 import { DOMAIN_KEYS } from '../data/domains'
 import { colors } from '../design/tokens'
@@ -347,8 +348,18 @@ export default function FullMoonReportPage() {
           <SectionLabel color="gray" className="mb-4">
             {t('witnessResults.combinedRoleSection')}
           </SectionLabel>
-          <Card accent="red" className="p-6 sm:p-8">
-            <div className="flex flex-col gap-4">
+          <Card accent="red" className="overflow-hidden">
+            {/* Illustration — full-bleed on brand-color bg */}
+            {ROLE_ILLUSTRATIONS[combinedRole.role] && (
+              <div style={{ backgroundColor: ROLE_ILLUSTRATIONS[combinedRole.role].bg }}>
+                <img
+                  src={ROLE_ILLUSTRATIONS[combinedRole.role].src}
+                  alt={t(`roles.${combinedRole.role}.name`)}
+                  className="block w-full max-w-[400px] mx-auto"
+                />
+              </div>
+            )}
+            <div className="p-6 sm:p-8 flex flex-col gap-4">
               {isDefinitive ? (
                 <div className="flex flex-col gap-1">
                   <Badge className="self-start bg-[#e8eef8] text-[#0047ba]">
