@@ -12,6 +12,7 @@
 import { useTranslation } from 'react-i18next'
 import { colors } from '../design/tokens'
 import LikertScale from './LikertScale'
+import { KeyboardIcon } from './MoonIcons'
 
 export default function QuestionCard({
   item,
@@ -44,7 +45,8 @@ export default function QuestionCard({
         scaleLabels={scaleLabels}
       />
       {/* Keyboard hint — desktop only */}
-      <p className="hidden sm:block mt-4 text-center text-xs text-gray-300">
+      <p className="hidden sm:flex items-center justify-center gap-1.5 mt-4 text-xs text-gray-300">
+        <KeyboardIcon size={14} />
         {t('keyboard.hint')}
       </p>
     </div>

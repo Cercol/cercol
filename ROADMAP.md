@@ -256,6 +256,32 @@ strokeLinecap="round". All icons defined in `src/components/MoonIcons.jsx`.
 - `src/pages/WitnessSetupPage.jsx` — header eyebrow: `<FullMoonIcon size={13} />`; Copied button: ✓ emoji → `<CheckIcon size={12} />`
 - `src/pages/WitnessPage.jsx` — done screen: ✓ emoji → `<CheckIcon size={40} style={{ color: colors.green }} />`
 
+### Phase 10.9 — Functional line icons across UI ✅ COMPLETE
+Extended MoonIcons.jsx with 8 new functional icons in the Cèrcol brand style
+(stroke-based, no fills, slightly organic, 24×24 viewBox) and applied them across the UI.
+
+**New icons added to `src/components/MoonIcons.jsx`:**
+- `ArrowLeftIcon` — back navigation (shaft + arrowhead, slight curve)
+- `ArrowRightIcon` — forward navigation
+- `KeyboardIcon` — keyboard body outline + top key-row caps + spacebar
+- `InfoCircleIcon` — irregular circle + i dot + i stem (replaces manual `i` text)
+- `XIcon` — × cross (worst-fit legend)
+- `ChevronRightIcon` — › chevron (list row indicator)
+- `ShareIcon` — upload arrow over tray base
+- `BlindSpotsIcon` — two arrows diverging outward from a central gap
+
+**Files modified (9 locations):**
+- `src/pages/NewMoonPage.jsx` — back/next buttons: `← Back` / `→ Next`;
+  added missing `import { colors }` (latent bug fixed)
+- `src/pages/FirstQuarterPage.jsx` — back/next buttons in answering screen
+- `src/pages/FullMoonPage.jsx` — back/next buttons in answering screen
+- `src/components/QuestionCard.jsx` — KeyboardIcon left of keyboard hint (`<p>` → `<p>` flex row)
+- `src/pages/WitnessPage.jsx` — InfoCircleIcon replaces manual `i` button; CheckIcon/XIcon replace colored dots in best/worst legend
+- `src/pages/FirstQuarterResultsPage.jsx` — ShareIcon inline left of Share button label
+- `src/pages/FullMoonResultsPage.jsx` — ShareIcon inline left of Share button label
+- `src/pages/MyResultsPage.jsx` — ChevronRightIcon right-aligned in each ResultCard header row
+- `src/pages/FullMoonReportPage.jsx` — BlindSpotsIcon inline in blind spots SectionLabel
+
 ### Phase 11 — Multilingual support
 Translation management via Tolgee or equivalent.
 EN + CA already complete; this phase adds languages beyond Valencian.

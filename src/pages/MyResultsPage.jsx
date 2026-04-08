@@ -10,6 +10,7 @@ import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
 import { DOMAIN_KEYS } from '../data/domains'
 import { Card, Button } from '../components/ui'
+import { ChevronRightIcon } from '../components/MoonIcons'
 
 const DOMAIN_BAR_COLOR = {
   presence:   'bg-amber-400',
@@ -46,7 +47,10 @@ function ResultCard({ result, t, language }) {
     <Card className="p-6 shadow-sm">
       <div className="flex items-center justify-between mb-4">
         <span className="text-sm font-semibold text-gray-900">{instrumentLabel}</span>
-        <span className="text-xs text-gray-400">{formatDate(result.created_at, language)}</span>
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-gray-400">{formatDate(result.created_at, language)}</span>
+          <ChevronRightIcon size={14} className="text-gray-300" />
+        </div>
       </div>
 
       <div className="flex flex-col gap-2">

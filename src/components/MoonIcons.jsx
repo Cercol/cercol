@@ -5,12 +5,14 @@
  * matching the brand's rice-grain illustration system.
  * All icons use currentColor — place color on the parent or via className/style.
  *
- * Exports: NewMoonIcon, FirstQuarterIcon, FullMoonIcon, CheckIcon
+ * Moon phase icons (32×32 viewBox): NewMoonIcon, FirstQuarterIcon, FullMoonIcon
+ * Functional icons  (24×24 viewBox): CheckIcon, ArrowLeftIcon, ArrowRightIcon,
+ *   KeyboardIcon, InfoCircleIcon, XIcon, ChevronRightIcon, ShareIcon, BlindSpotsIcon
  *
  * Usage:
  *   <NewMoonIcon size={40} style={{ color: colors.red }} />
  *   <FullMoonIcon size={13} className="inline-block align-middle" />
- *   <CheckIcon size={40} style={{ color: colors.green }} />
+ *   <ArrowLeftIcon size={14} />
  */
 
 /**
@@ -144,6 +146,214 @@ export function CheckIcon({ size = 32, className = '', style }) {
         strokeWidth="2.5"
         d="M5 16.5 C7.5 19 10.5 23 12.5 25 C17 20 22 13 27.5 6.5"
       />
+    </svg>
+  )
+}
+
+// ── Functional icons (24×24 viewBox) ──────────────────────────────────────────
+// These are used inline in UI elements (buttons, legends, labels).
+// Stroke-based, no fills, slightly organic curves to match brand style.
+
+/**
+ * ArrowLeftIcon — hand-drawn left-pointing arrow. Back navigation.
+ */
+export function ArrowLeftIcon({ size = 24, className = '', style }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className={className}
+      style={style}
+    >
+      {/* Shaft with slight natural curve */}
+      <path strokeWidth="1.9" d="M19 12 C16 11.8 9 12.2 5.5 12" />
+      {/* Arrowhead */}
+      <path strokeWidth="1.9" d="M5.5 12 L10 7.5 M5.5 12 L10 16.5" />
+    </svg>
+  )
+}
+
+/**
+ * ArrowRightIcon — hand-drawn right-pointing arrow. Next / advance navigation.
+ */
+export function ArrowRightIcon({ size = 24, className = '', style }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className={className}
+      style={style}
+    >
+      {/* Shaft */}
+      <path strokeWidth="1.9" d="M5 12 C8 12.2 15 11.8 18.5 12" />
+      {/* Arrowhead */}
+      <path strokeWidth="1.9" d="M18.5 12 L14 7.5 M18.5 12 L14 16.5" />
+    </svg>
+  )
+}
+
+/**
+ * KeyboardIcon — simplified keyboard outline with key rows.
+ * Used beside keyboard shortcut hints.
+ */
+export function KeyboardIcon({ size = 24, className = '', style }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className={className}
+      style={style}
+    >
+      {/* Keyboard body */}
+      <rect x="2" y="6" width="20" height="12" rx="1.5" strokeWidth="1.6" />
+      {/* Top row — three key caps */}
+      <rect x="5"    y="9.5" width="3" height="2" rx="0.5" strokeWidth="1.1" />
+      <rect x="10.5" y="9.5" width="3" height="2" rx="0.5" strokeWidth="1.1" />
+      <rect x="16"   y="9.5" width="3" height="2" rx="0.5" strokeWidth="1.1" />
+      {/* Bottom row — spacebar */}
+      <rect x="7" y="13.5" width="10" height="2" rx="0.5" strokeWidth="1.1" />
+    </svg>
+  )
+}
+
+/**
+ * InfoCircleIcon — circle with an "i" inside. Replaces the manual (i) tooltip button.
+ */
+export function InfoCircleIcon({ size = 24, className = '', style }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className={className}
+      style={style}
+    >
+      {/* Outer circle — slightly irregular for brand warmth */}
+      <path strokeWidth="1.7" d="M12 3.5 C16.5 3.2 20.8 7.2 20.5 12 C20.2 16.8 16.3 20.8 12 20.5 C7.7 20.8 3.5 16.5 3.5 12 C3.5 7.5 7.5 3.2 12 3.5 Z" />
+      {/* i — dot above */}
+      <line strokeWidth="2" x1="12" y1="8" x2="12" y2="8.1" />
+      {/* i — stem */}
+      <line strokeWidth="1.8" x1="12" y1="11" x2="12" y2="16" />
+    </svg>
+  )
+}
+
+/**
+ * XIcon — simple × cross. Used for "worst fit" in the adjective legend.
+ */
+export function XIcon({ size = 24, className = '', style }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className={className}
+      style={style}
+    >
+      <path strokeWidth="2" d="M7 7 L17 17 M17 7 L7 17" />
+    </svg>
+  )
+}
+
+/**
+ * ChevronRightIcon — simple › chevron. Used as a list-row indicator.
+ */
+export function ChevronRightIcon({ size = 24, className = '', style }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className={className}
+      style={style}
+    >
+      <path strokeWidth="2" d="M9 5.5 C11 7.5 14 10 16 12 C14 14 11 16.5 9 18.5" />
+    </svg>
+  )
+}
+
+/**
+ * ShareIcon — upload-style arrow over a tray. Used on share/copy result buttons.
+ */
+export function ShareIcon({ size = 24, className = '', style }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className={className}
+      style={style}
+    >
+      {/* Upward arrow shaft */}
+      <path strokeWidth="1.9" d="M12 15.5 L12 5" />
+      {/* Arrowhead */}
+      <path strokeWidth="1.9" d="M12 5 L7.5 9.5 M12 5 L16.5 9.5" />
+      {/* Tray / base platform */}
+      <path strokeWidth="1.9" d="M5 17.5 L5 20 L19 20 L19 17.5" />
+    </svg>
+  )
+}
+
+/**
+ * BlindSpotsIcon — two opposing arrows diverging from a central gap.
+ * Represents self vs witness divergence (blind spots section).
+ */
+export function BlindSpotsIcon({ size = 24, className = '', style }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className={className}
+      style={style}
+    >
+      {/* Left arrow — pointing away from center */}
+      <path strokeWidth="1.8" d="M10.5 12 L4 12 M4 12 L7.5 8.5 M4 12 L7.5 15.5" />
+      {/* Right arrow — pointing away from center */}
+      <path strokeWidth="1.8" d="M13.5 12 L20 12 M20 12 L16.5 8.5 M20 12 L16.5 15.5" />
     </svg>
   )
 }

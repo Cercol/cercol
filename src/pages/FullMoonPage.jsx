@@ -26,7 +26,7 @@ import QuestionCard from '../components/QuestionCard'
 import ProgressBar from '../components/ProgressBar'
 import { Card, Button, SectionLabel } from '../components/ui'
 import { colors } from '../design/tokens'
-import { FullMoonIcon } from '../components/MoonIcons'
+import { FullMoonIcon, ArrowLeftIcon, ArrowRightIcon } from '../components/MoonIcons'
 
 const DOMAIN_ORDER = ['depth', 'presence', 'vision', 'bond', 'discipline']
 
@@ -429,8 +429,8 @@ export default function FullMoonPage() {
         {/* Navigation */}
         <div className="flex gap-3">
           {(blockIdx > 0 || itemInBlockIdx > 0) && (
-            <Button variant="secondary" size="lg" onClick={handleBack} className="flex-1 sm:flex-none">
-              {t('fm.back')}
+            <Button variant="secondary" size="lg" onClick={handleBack} className="flex-1 sm:flex-none gap-1.5">
+              <ArrowLeftIcon size={14} />{t('fm.back')}
             </Button>
           )}
           <Button
@@ -438,9 +438,9 @@ export default function FullMoonPage() {
             size="lg"
             onClick={handleNext}
             disabled={!answered}
-            className="flex-1"
+            className="flex-1 gap-1.5"
           >
-            {isLastItemOverall ? t('fm.seeResults') : t('fm.next')}
+            <ArrowRightIcon size={14} />{isLastItemOverall ? t('fm.seeResults') : t('fm.next')}
           </Button>
         </div>
       </div>

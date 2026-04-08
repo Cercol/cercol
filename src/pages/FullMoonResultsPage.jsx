@@ -19,7 +19,7 @@ import { fmScoreToPercent, fmScoreLabel } from '../utils/full-moon-scoring'
 import { logResult } from '../utils/logger'
 import { computeRole } from '../utils/role-scoring'
 import { ROLE_ILLUSTRATIONS } from '../data/roles'
-import { FullMoonIcon } from '../components/MoonIcons'
+import { FullMoonIcon, ShareIcon } from '../components/MoonIcons'
 import { useAuth } from '../context/AuthContext'
 import { colors } from '../design/tokens'
 import RadarChart from '../components/RadarChart'
@@ -307,8 +307,8 @@ export default function FullMoonResultsPage() {
 
         {/* ── Actions row ── */}
         <div className="flex gap-3">
-          <Button variant="primary" onClick={handleShare} className="flex-1 shadow-sm">
-            {copied ? t('fmResults.copied') : t('fmResults.share')}
+          <Button variant="primary" onClick={handleShare} className="flex-1 shadow-sm gap-1.5">
+            {!copied && <ShareIcon size={15} />}{copied ? t('fmResults.copied') : t('fmResults.share')}
           </Button>
           <Button variant="secondary" onClick={() => navigate('/')}>
             {t('fmResults.retake')}

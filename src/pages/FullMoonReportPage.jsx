@@ -22,7 +22,7 @@ import { supabase } from '../lib/supabase'
 import { getMyWitnessSessions } from '../lib/api'
 import { computeRole } from '../utils/role-scoring'
 import { ROLE_ILLUSTRATIONS } from '../data/roles'
-import { FullMoonIcon } from '../components/MoonIcons'
+import { FullMoonIcon, BlindSpotsIcon } from '../components/MoonIcons'
 import { averageWitnessScores, detectDivergence, computeConvergence, computeCombinedRole } from '../utils/witness-scoring'
 import { DOMAIN_KEYS } from '../data/domains'
 import { colors } from '../design/tokens'
@@ -434,8 +434,8 @@ export default function FullMoonReportPage() {
         {/* ── Section 4: Blind spots (if ≥2 complete) ── */}
         {hasEnoughWitnesses && (
           <section>
-            <SectionLabel color="gray" className="mb-1">
-              {t('witnessResults.blindSpotsTitle')}
+            <SectionLabel color="gray" className="mb-1 flex items-center gap-1.5">
+              <BlindSpotsIcon size={16} />{t('witnessResults.blindSpotsTitle')}
             </SectionLabel>
             <p className="text-xs mb-4" style={{ color: colors.textMuted }}>
               {t('witnessResults.blindSpotsNote')}

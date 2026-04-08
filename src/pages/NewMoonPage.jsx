@@ -12,7 +12,8 @@ import { useFeedbackContext } from '../context/FeedbackContext'
 import QuestionCard from '../components/QuestionCard'
 import ProgressBar from '../components/ProgressBar'
 import { Button, Card, SectionLabel } from '../components/ui'
-import { NewMoonIcon } from '../components/MoonIcons'
+import { colors } from '../design/tokens'
+import { NewMoonIcon, ArrowLeftIcon, ArrowRightIcon } from '../components/MoonIcons'
 
 const SCALE_POINTS = 7
 
@@ -150,8 +151,8 @@ export default function NewMoonPage() {
         {/* Navigation */}
         <div className="flex gap-3">
           {current > 0 && (
-            <Button variant="secondary" size="lg" onClick={handleBack} className="flex-1 sm:flex-none">
-              {t('newMoon.back')}
+            <Button variant="secondary" size="lg" onClick={handleBack} className="flex-1 sm:flex-none gap-1.5">
+              <ArrowLeftIcon size={14} />{t('newMoon.back')}
             </Button>
           )}
           <Button
@@ -159,9 +160,9 @@ export default function NewMoonPage() {
             size="lg"
             onClick={handleNext}
             disabled={!answered}
-            className="flex-1"
+            className="flex-1 gap-1.5"
           >
-            {isLast ? t('newMoon.seeResults') : t('newMoon.next')}
+            <ArrowRightIcon size={14} />{isLast ? t('newMoon.seeResults') : t('newMoon.next')}
           </Button>
         </div>
       </div>

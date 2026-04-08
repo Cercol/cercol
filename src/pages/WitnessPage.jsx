@@ -21,7 +21,7 @@ import { useTranslation } from 'react-i18next'
 import { getWitnessSession, completeWitnessSession } from '../lib/api'
 import { buildRounds, computeWitnessScores } from '../utils/witness-scoring'
 import { Card, Button, SectionLabel } from '../components/ui'
-import { CheckIcon } from '../components/MoonIcons'
+import { CheckIcon, InfoCircleIcon, XIcon } from '../components/MoonIcons'
 import { colors } from '../design/tokens'
 
 const TOTAL_ROUNDS = 20
@@ -53,9 +53,9 @@ function AdjCard({ adj, state, lang, onSelect }) {
             type="button"
             onClick={(e) => e.stopPropagation()}
             aria-label={t('witness.page.tooltipLabel')}
-            className="w-5 h-5 rounded-full text-xs font-bold text-gray-400 hover:text-gray-600 border border-gray-300 hover:border-gray-400 flex items-center justify-center transition-colors select-none"
+            className="text-gray-400 hover:text-gray-600 flex items-center justify-center transition-colors"
           >
-            i
+            <InfoCircleIcon size={20} />
           </button>
 
           {/* Tooltip bubble — shown on hover or keyboard focus within the group */}
@@ -312,11 +312,11 @@ export default function WitnessPage() {
         {/* Legend */}
         <div className="flex items-center gap-4 text-xs font-medium">
           <span className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-full bg-emerald-400 inline-block" />
+            <CheckIcon size={14} style={{ color: colors.green }} />
             {t('witness.page.bestLabel')}
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-full bg-red-400 inline-block" />
+            <XIcon size={14} style={{ color: colors.red }} />
             {t('witness.page.worstLabel')}
           </span>
         </div>
