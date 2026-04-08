@@ -74,7 +74,14 @@
     "itemPrefix": "I see myself as",
     "back": "Back",
     "next": "Next",
-    "seeResults": "See my results"
+    "seeResults": "See my results",
+    "intro": {
+      "heading": "New Moon Cèrcol",
+      "meta": "10 questions · ~2 min",
+      "scale": "1–7 · Disagree strongly → Agree strongly",
+      "guidance": "Go with your first instinct. There are no right answers.",
+      "cta": "Begin"
+    }
   },
   "newMoonResults": {
     "title": "Your Snapshot",
@@ -104,6 +111,13 @@
       "blockDone": "{{name}} done",
       "nextUp": "Up next:",
       "cta": "Continue to {{name}}"
+    },
+    "intro": {
+      "heading": "First Quarter Cèrcol",
+      "meta": "60 questions · ~10 min",
+      "scale": "1–5 · Disagree strongly → Agree strongly",
+      "guidance": "No right answers. Go with what's true for you right now.",
+      "cta": "Begin"
     }
   },
   "fqResults": {
@@ -162,6 +176,14 @@
       "blockDone": "{{name}} done",
       "nextUp": "Up next:",
       "cta": "Continue to {{name}}"
+    },
+    "intro": {
+      "heading": "Full Moon Cèrcol",
+      "meta": "120 questions · ~20 min",
+      "scale": "1–5 · Disagree strongly → Agree strongly",
+      "guidance": "You know yourself. Trust that.",
+      "partNote": "This is the self-report part of a three-part instrument. Witness Cèrcol and a brief cognitive measure follow your results.",
+      "cta": "Begin"
     }
   },
   "fmResults": {

@@ -575,6 +575,18 @@ Phase 8.1 revision: radical transparency architecture — anyone can read the su
   added philosophy / explore / notThis); added instruments.* and rolesPage.* namespaces
 - ca.json: same structural changes with full Valencian translations throughout
 
+Phase 8.2 addition: instrument intro screens ✅ COMPLETE
+
+**Intro screens added to all three instrument pages** (shown before first item, after any gate):
+- NewMoonPage: showIntro state (default true) → centered screen with 🌑 emoji, heading, meta,
+  scale card (1–7), guidance sentence, Begin button; transitions to existing test flow
+- FirstQuarterPage: same pattern with 🌓, scale 1–5, FQ-specific guidance
+- FullMoonPage: same pattern with 🌕, scale 1–5, FM guidance, plus partNote explaining
+  this is self-report part 1 of 3 (Witness + cognitive follow)
+- Keyboard: Enter/Space on intro screen triggers Begin (same pattern as transition screens)
+- Removed redundant first-item instruction banners from all three pages
+- Locale keys: newMoon.intro.*, fq.intro.*, fm.intro.* in en.json and ca.json (full EN + CA)
+
 ### Phase 9 — Full Moon integrated report
 - Combines self-report (Phase 6), Witness (Phase 7), and ICAR into one report
 - Convergence score: self vs witness role agreement

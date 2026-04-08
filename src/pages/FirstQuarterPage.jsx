@@ -40,6 +40,7 @@ export default function FirstQuarterPage() {
   const { t, i18n } = useTranslation()
   const { setItemContext } = useFeedbackContext()
 
+  const [showIntro, setShowIntro] = useState(true)
   const [blockIdx, setBlockIdx] = useState(0)
   const [itemInBlockIdx, setItemInBlockIdx] = useState(0)
   const [answers, setAnswers] = useState({})
@@ -119,9 +120,20 @@ export default function FirstQuarterPage() {
   handleBackRef.current = handleBack
   handleContinueToNextBlockRef.current = handleContinueToNextBlock
 
+  const showIntroRef = useRef(showIntro)
+  showIntroRef.current = showIntro
+
   useEffect(() => {
     function onKeyDown(e) {
       if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) return
+
+      if (showIntroRef.current) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          setShowIntro(false)
+        }
+        return
+      }
 
       if (showTransition) {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -148,6 +160,36 @@ export default function FirstQuarterPage() {
     document.addEventListener('keydown', onKeyDown)
     return () => document.removeEventListener('keydown', onKeyDown)
   }, [item.id, showTransition])
+
+  // ── Intro screen ───────────────────────────────────────────────
+  if (showIntro) {
+    return (
+      <main className="min-h-screen bg-gray-50 flex flex-col items-center justify-center px-4 py-16">
+        <div className="w-full max-w-sm flex flex-col items-center text-center gap-6">
+          <div>
+            <p className="text-4xl mb-3" aria-hidden="true">🌓</p>
+            <h1 className="text-2xl font-bold text-gray-900 mb-1">{t('fq.intro.heading')}</h1>
+            <p className="text-sm text-gray-400">{t('fq.intro.meta')}</p>
+          </div>
+          <div className="bg-white rounded-2xl border border-gray-200 px-5 py-4 w-full text-left flex flex-col gap-3">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-1">Scale</p>
+              <p className="text-sm text-gray-700">{t('fq.intro.scale')}</p>
+            </div>
+            <p className="text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-3">
+              {t('fq.intro.guidance')}
+            </p>
+          </div>
+          <button
+            onClick={() => setShowIntro(false)}
+            className="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-2xl shadow-sm transition-colors"
+          >
+            {t('fq.intro.cta')}
+          </button>
+        </div>
+      </main>
+    )
+  }
 
   // ── Transition screen ──────────────────────────────────────────
   if (showTransition) {
@@ -190,8 +232,6 @@ export default function FirstQuarterPage() {
   }
 
   // ── Answering screen ───────────────────────────────────────────
-  const isFirstItemOfFirstBlock = blockIdx === 0 && itemInBlockIdx === 0
-
   return (
     <main className="min-h-screen bg-gray-50 flex flex-col items-center px-4 py-10 sm:py-16">
       <div className="w-full max-w-xl flex flex-col gap-6">
@@ -222,13 +262,6 @@ export default function FirstQuarterPage() {
         <p className="text-xs text-gray-400 -mt-3 text-right">
           {t('fq.overallProgress', { current: overallCurrent, total: TOTAL_ITEMS })}
         </p>
-
-        {/* Instructions banner — first item only */}
-        {isFirstItemOfFirstBlock && (
-          <div className="bg-blue-50 border border-blue-100 rounded-xl px-5 py-4 text-sm text-blue-800 leading-relaxed">
-            {t('fq.instructions')}
-          </div>
-        )}
 
         {/* Question */}
         <QuestionCard

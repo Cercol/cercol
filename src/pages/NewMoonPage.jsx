@@ -18,6 +18,7 @@ export default function NewMoonPage() {
   const navigate = useNavigate()
   const { t } = useTranslation()
   const { setItemContext } = useFeedbackContext()
+  const [showIntro, setShowIntro] = useState(true)
   const [answers, setAnswers] = useState({})
   const [current, setCurrent] = useState(0)
 
@@ -63,9 +64,20 @@ export default function NewMoonPage() {
   handleNextRef.current = handleNext
   handleBackRef.current = handleBack
 
+  const showIntroRef = useRef(showIntro)
+  showIntroRef.current = showIntro
+
   useEffect(() => {
     function onKeyDown(e) {
       if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) return
+
+      if (showIntroRef.current) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          setShowIntro(false)
+        }
+        return
+      }
 
       const n = parseInt(e.key, 10)
       if (n >= 1 && n <= SCALE_POINTS) {
@@ -85,6 +97,36 @@ export default function NewMoonPage() {
     return () => document.removeEventListener('keydown', onKeyDown)
   }, [item.id])
 
+  // ── Intro screen ───────────────────────────────────────────────
+  if (showIntro) {
+    return (
+      <main className="min-h-screen bg-gray-50 flex flex-col items-center justify-center px-4 py-16">
+        <div className="w-full max-w-sm flex flex-col items-center text-center gap-6">
+          <div>
+            <p className="text-4xl mb-3" aria-hidden="true">🌑</p>
+            <h1 className="text-2xl font-bold text-gray-900 mb-1">{t('newMoon.intro.heading')}</h1>
+            <p className="text-sm text-gray-400">{t('newMoon.intro.meta')}</p>
+          </div>
+          <div className="bg-white rounded-2xl border border-gray-200 px-5 py-4 w-full text-left flex flex-col gap-3">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-1">Scale</p>
+              <p className="text-sm text-gray-700">{t('newMoon.intro.scale')}</p>
+            </div>
+            <p className="text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-3">
+              {t('newMoon.intro.guidance')}
+            </p>
+          </div>
+          <button
+            onClick={() => setShowIntro(false)}
+            className="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-2xl shadow-sm transition-colors"
+          >
+            {t('newMoon.intro.cta')}
+          </button>
+        </div>
+      </main>
+    )
+  }
+
   return (
     <main className="min-h-screen bg-gray-50 flex flex-col items-center px-4 py-10 sm:py-16">
       <div className="w-full max-w-xl flex flex-col gap-6">
@@ -94,13 +136,6 @@ export default function NewMoonPage() {
           total={TIPI_ITEMS.length}
           label={t('newMoon.progress', { current: current + 1, total: TIPI_ITEMS.length })}
         />
-
-        {/* Instruction (only on first item) */}
-        {current === 0 && (
-          <div className="bg-blue-50 border border-blue-100 rounded-xl px-5 py-4 text-sm text-blue-800 leading-relaxed">
-            {t('newMoon.instructions')}
-          </div>
-        )}
 
         {/* Question */}
         <QuestionCard

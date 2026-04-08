@@ -74,7 +74,14 @@
     "itemPrefix": "Em veig com",
     "back": "Anterior",
     "next": "Següent",
-    "seeResults": "Veure els meus resultats"
+    "seeResults": "Veure els meus resultats",
+    "intro": {
+      "heading": "Cèrcol de Lluna Nova",
+      "meta": "10 preguntes · ~2 min",
+      "scale": "1–7 · Totalment en desacord → Totalment d'acord",
+      "guidance": "Ves amb el primer instint. No hi ha respostes correctes.",
+      "cta": "Comença"
+    }
   },
   "newMoonResults": {
     "title": "La teua instantània",
@@ -104,6 +111,13 @@
       "blockDone": "{{name}} completat",
       "nextUp": "A continuació:",
       "cta": "Continuar amb {{name}}"
+    },
+    "intro": {
+      "heading": "Cèrcol de Quart Creixent",
+      "meta": "60 preguntes · ~10 min",
+      "scale": "1–5 · Totalment en desacord → Totalment d'acord",
+      "guidance": "No hi ha respostes correctes. Tria el que és cert per a tu ara mateix.",
+      "cta": "Comença"
     }
   },
   "fqResults": {
@@ -162,6 +176,14 @@
       "blockDone": "{{name}} completat",
       "nextUp": "A continuació:",
       "cta": "Continuar amb {{name}}"
+    },
+    "intro": {
+      "heading": "Cèrcol de Lluna Plena",
+      "meta": "120 preguntes · ~20 min",
+      "scale": "1–5 · Totalment en desacord → Totalment d'acord",
+      "guidance": "Tu et coneixes. Fes-te'n cas.",
+      "partNote": "Aquesta és la part d'autoinforme d'un instrument de tres parts. El Testimoni Cèrcol i una breu mesura cognitiva seguiran als teus resultats.",
+      "cta": "Comença"
     }
   },
   "fmResults": {
