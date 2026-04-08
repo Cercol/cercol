@@ -97,67 +97,71 @@ export default function NewMoonResultsPage() {
 
         {/* Header */}
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">{t('newMoonResults.title')}</h1>
-          <p className="mt-1 text-gray-500 text-sm">{t('newMoonResults.subtitle')}</p>
+          <h1 className="text-2xl sm:text-3xl font-bold" style={{ color: colors.textPrimary }}>{t('newMoonResults.title')}</h1>
+          <p className="mt-1 text-sm" style={{ color: colors.textMuted }}>{t('newMoonResults.subtitle')}</p>
         </div>
 
-        {/* Radar chart */}
+        {/* ── Radar + domain rows ── */}
         <section>
-          <SectionLabel color="gray" className="mb-4">
-            {t('newMoonResults.domainSection')}
-          </SectionLabel>
-          <Card className="shadow-sm p-6">
-            <RadarChart
-              scores={scores}
-              maxScore={7}
-              domainKeys={domainKeys}
-              labelFn={(key) => t(`domains.${key}.label`)}
-            />
-          </Card>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Radar chart */}
+            <Card className="shadow-sm p-5">
+              <RadarChart
+                scores={scores}
+                maxScore={7}
+                domainKeys={domainKeys}
+                labelFn={(key) => t(`domains.${key}.label`)}
+              />
+            </Card>
 
-          {/* Domain score cards */}
-          <div className="flex flex-col gap-3 mt-4">
-            {domainKeys.map((key) => {
-              const score = scores[key]
-              const pct = radarScoreToPercent(score)
-              const label = radarScoreLabel(score)
-              const barColor = DOMAIN_BAR_COLOR[key]
-              const descVariant = score >= 5.0 ? 'high' : score <= 2.9 ? 'low' : null
-
-              return (
-                <Card key={key} className="shadow-sm p-5">
-                  <div className="flex items-center justify-between mb-3">
-                    <div>
-                      <h3 className="font-semibold text-gray-900">{t(`domains.${key}.label`)}</h3>
+            {/* Domain rows */}
+            <Card className="shadow-sm p-5">
+              <SectionLabel color="gray" className="mb-3">
+                {t('newMoonResults.domainSection')}
+              </SectionLabel>
+              <div className="flex flex-col divide-y divide-gray-100">
+                {domainKeys.map((key) => {
+                  const score = scores[key]
+                  const pct = radarScoreToPercent(score)
+                  const label = radarScoreLabel(score)
+                  const barColor = DOMAIN_BAR_COLOR[key]
+                  const descVariant = score >= 5.0 ? 'high' : score <= 2.9 ? 'low' : null
+                  return (
+                    <div key={key} className="py-3 first:pt-0 last:pb-0">
+                      <div className="flex items-center justify-between mb-1.5">
+                        <span className="text-sm font-semibold" style={{ color: colors.textPrimary }}>
+                          {t(`domains.${key}.label`)}
+                        </span>
+                        <div className="flex items-center gap-2 shrink-0 ml-2">
+                          <span className="text-sm font-bold" style={{ color: colors.textPrimary }}>
+                            {score}<span className="text-xs font-normal" style={{ color: colors.textMuted }}>/7</span>
+                          </span>
+                          <span className={`text-xs font-semibold px-2 py-0.5 rounded ${LABEL_STYLES[label]}`}>
+                            {t(`results.scoreLabels.${label}`)}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                        <div className={`h-full rounded-full transition-all duration-500 ${barColor}`} style={{ width: `${pct}%` }} />
+                      </div>
+                      {descVariant && (
+                        <p className="text-xs leading-relaxed mt-1.5" style={{ color: colors.textMuted }}>
+                          {t(`dimensions.${key}.${descVariant}`)}
+                        </p>
+                      )}
                     </div>
-                    <div className="flex flex-col items-end gap-1 ml-4 shrink-0">
-                      <span className="text-xl font-bold text-gray-900">
-                        {score}<span className="text-sm font-normal text-gray-400">/7</span>
-                      </span>
-                      <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${LABEL_STYLES[label]}`}>
-                        {t(`results.scoreLabels.${label}`)}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden mb-3">
-                    <div className={`h-full rounded-full transition-all duration-500 ${barColor}`} style={{ width: `${pct}%` }} />
-                  </div>
-                  {descVariant && (
-                    <p className="text-sm leading-relaxed" style={{ color: colors.textMuted }}>
-                      {t(`dimensions.${key}.${descVariant}`)}
-                    </p>
-                  )}
-                </Card>
-              )
-            })}
+                  )
+                })}
+              </div>
+            </Card>
           </div>
         </section>
 
         {/* ── Upgrade prompt ── */}
         <Card className="px-6 py-5 flex flex-col gap-3 bg-gray-50 border-gray-200">
           <div>
-            <p className="font-semibold text-gray-900">{t('newMoonResults.upgrade.heading')}</p>
-            <p className="text-sm text-gray-500 mt-1">{t('newMoonResults.upgrade.body')}</p>
+            <p className="font-semibold" style={{ color: colors.textPrimary }}>{t('newMoonResults.upgrade.heading')}</p>
+            <p className="text-sm mt-1" style={{ color: colors.textMuted }}>{t('newMoonResults.upgrade.body')}</p>
           </div>
           <Button
             variant="primary"
@@ -169,24 +173,18 @@ export default function NewMoonResultsPage() {
           </Button>
         </Card>
 
-        {/* Share + retake */}
-        <div className="flex flex-col gap-3">
-          <button
-            onClick={handleShare}
-            className="w-full py-3 rounded bg-white border border-gray-200 text-gray-700 font-medium hover:bg-gray-50 transition-colors"
-          >
+        {/* ── Actions row ── */}
+        <div className="flex gap-3">
+          <Button variant="secondary" onClick={handleShare} className="flex-1 shadow-sm">
             {copied ? t('newMoonResults.copied') : t('newMoonResults.share')}
-          </button>
-          <button
-            onClick={() => navigate('/')}
-            className="w-full py-3 rounded border border-gray-200 text-gray-500 text-sm font-medium hover:bg-gray-100 transition-colors"
-          >
+          </Button>
+          <Button variant="ghost" onClick={() => navigate('/')}>
             {t('newMoonResults.retake')}
-          </button>
+          </Button>
         </div>
 
         {/* Disclaimer */}
-        <p className="text-xs text-gray-400 leading-relaxed text-center">
+        <p className="text-xs leading-relaxed text-center" style={{ color: colors.textMuted }}>
           {t('newMoonResults.disclaimer')}
         </p>
 

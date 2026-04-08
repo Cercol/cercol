@@ -20,9 +20,8 @@ import { computeRole } from '../utils/role-scoring'
 import { useAuth } from '../context/AuthContext'
 import { colors } from '../design/tokens'
 import RadarChart from '../components/RadarChart'
-import RoleResult from '../components/RoleResult'
 import RoleProbabilityBars from '../components/RoleProbabilityBars'
-import { Card, Button, SectionLabel } from '../components/ui'
+import { Card, Button, Badge, SectionLabel } from '../components/ui'
 
 const LABEL_STYLES = {
   low:      'bg-gray-100 text-gray-600',
@@ -108,93 +107,140 @@ export default function FirstQuarterResultsPage() {
 
         {/* Header */}
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">{t('fqResults.title')}</h1>
-          <p className="mt-1 text-gray-500 text-sm">{t('fqResults.subtitle')}</p>
+          <h1 className="text-2xl sm:text-3xl font-bold" style={{ color: colors.textPrimary }}>{t('fqResults.title')}</h1>
+          <p className="mt-1 text-sm" style={{ color: colors.textMuted }}>{t('fqResults.subtitle')}</p>
         </div>
 
-        {/* ── Section 1: Domain radar chart ── */}
+        {/* ── Section 1: Role (top, full width) ── */}
         <section>
-          <SectionLabel color="gray" className="mb-4">
-            {t('fqResults.domainSection')}
-          </SectionLabel>
-          <Card className="shadow-sm p-6">
-            <RadarChart
-              scores={domains}
-              domainKeys={domainKeys}
-              labelFn={(key) => t(`fqDomains.${key}.name`)}
-            />
+          <Card accent="red" className="p-6 sm:p-8">
+            <div className="flex flex-col gap-4">
+              <Badge variant="beta" className="self-start">
+                {t('roles.beta_label')}
+              </Badge>
+              <h2
+                className="text-4xl sm:text-5xl font-bold leading-tight"
+                style={{ color: colors.textPrimary }}
+              >
+                {t(`roles.${roleResult.role}.name`)}
+              </h2>
+              <p className="text-base leading-relaxed" style={{ color: colors.textMuted }}>
+                {t(`roles.${roleResult.role}.essence`)}
+              </p>
+              {roleResult.arc.length > 0 && (
+                <div className="flex flex-col gap-2">
+                  <p
+                    className="text-xs font-semibold uppercase tracking-widest"
+                    style={{ color: colors.textMuted }}
+                  >
+                    {t('roles.arc_label')}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {roleResult.arc.map(r => (
+                      <Badge key={r} variant="default">
+                        {t(`roles.${r}.name`)}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </Card>
+        </section>
 
-          {/* Domain score cards */}
-          <div className="flex flex-col gap-3 mt-4">
-            {domainKeys.map((key) => {
-              const score = domains[key]
-              const pct = fqScoreToPercent(score)
-              const label = fqScoreLabel(score)
-              const barColor = DOMAIN_BAR_COLOR[key]
-              const descVariant = score > 3.5 ? 'high' : score < 2.5 ? 'low' : null
+        {/* ── Section 2: Radar + domain rows ── */}
+        <section>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Radar chart */}
+            <Card className="shadow-sm p-5">
+              <RadarChart
+                scores={domains}
+                domainKeys={domainKeys}
+                labelFn={(key) => t(`fqDomains.${key}.name`)}
+              />
+            </Card>
 
-              return (
-                <Card key={key} className="shadow-sm p-5">
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="font-semibold text-gray-900">{t(`fqDomains.${key}.name`)}</h3>
-                    <div className="flex flex-col items-end gap-1 ml-4 shrink-0">
-                      <span className="text-xl font-bold text-gray-900">
-                        {score}<span className="text-sm font-normal text-gray-400">/5</span>
-                      </span>
-                      <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${LABEL_STYLES[label]}`}>
-                        {t(`fqResults.scoreLabels.${label}`)}
-                      </span>
+            {/* Domain rows */}
+            <Card className="shadow-sm p-5">
+              <SectionLabel color="gray" className="mb-3">
+                {t('fqResults.domainSection')}
+              </SectionLabel>
+              <div className="flex flex-col divide-y divide-gray-100">
+                {domainKeys.map((key) => {
+                  const score = domains[key]
+                  const pct = fqScoreToPercent(score)
+                  const label = fqScoreLabel(score)
+                  const barColor = DOMAIN_BAR_COLOR[key]
+                  const descVariant = score > 3.5 ? 'high' : score < 2.5 ? 'low' : null
+                  return (
+                    <div key={key} className="py-3 first:pt-0 last:pb-0">
+                      <div className="flex items-center justify-between mb-1.5">
+                        <span className="text-sm font-semibold" style={{ color: colors.textPrimary }}>
+                          {t(`fqDomains.${key}.name`)}
+                        </span>
+                        <div className="flex items-center gap-2 shrink-0 ml-2">
+                          <span className="text-sm font-bold" style={{ color: colors.textPrimary }}>
+                            {score}<span className="text-xs font-normal" style={{ color: colors.textMuted }}>/5</span>
+                          </span>
+                          <span className={`text-xs font-semibold px-2 py-0.5 rounded ${LABEL_STYLES[label]}`}>
+                            {t(`fqResults.scoreLabels.${label}`)}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                        <div className={`h-full rounded-full transition-all duration-500 ${barColor}`} style={{ width: `${pct}%` }} />
+                      </div>
+                      {descVariant && (
+                        <p className="text-xs leading-relaxed mt-1.5" style={{ color: colors.textMuted }}>
+                          {t(`dimensions.${key}.${descVariant}`)}
+                        </p>
+                      )}
                     </div>
-                  </div>
-                  <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden mb-3">
-                    <div className={`h-full rounded-full transition-all duration-500 ${barColor}`} style={{ width: `${pct}%` }} />
-                  </div>
-                  {descVariant && (
-                    <p className="text-sm leading-relaxed" style={{ color: colors.textMuted }}>
-                      {t(`dimensions.${key}.${descVariant}`)}
-                    </p>
-                  )}
-                </Card>
-              )
-            })}
+                  )
+                })}
+              </div>
+            </Card>
           </div>
         </section>
 
-        {/* ── Section 2: Facet breakdown (always shown) ── */}
+        {/* ── Section 3: Role probability bars (2-column) ── */}
+        <section>
+          <RoleProbabilityBars result={roleResult} columns={2} />
+        </section>
+
+        {/* ── Section 4: Facet breakdown ── */}
         {facets && (
           <section>
             <SectionLabel color="gray" className="mb-4">
               {t('fqResults.facetSection')}
             </SectionLabel>
-            <div className="flex flex-col gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {domainKeys.map((domainKey) => {
                 const domainFacets = FQ_DOMAIN_META[domainKey].facets
                 return (
                   <Card key={domainKey} className="shadow-sm p-5">
-                    <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                    <h3 className="font-semibold mb-4 flex items-center gap-2" style={{ color: colors.textPrimary }}>
                       <span className={`w-2 h-2 rounded-full inline-block ${DOMAIN_BAR_COLOR[domainKey]}`} />
                       {t(`fqDomains.${domainKey}.name`)}
                     </h3>
-                    <div className="flex flex-col gap-5">
+                    <div className="flex flex-col gap-4">
                       {domainFacets.map((facetKey) => {
                         const facetScore      = facets[facetKey]
                         const facetPct        = fqScoreToPercent(facetScore)
                         const facetLabel      = fqScoreLabel(facetScore)
                         const facetDescVariant = facetScore > 3.5 ? 'high' : facetScore < 2.5 ? 'low' : null
-
                         return (
                           <div key={facetKey}>
                             <div className="flex items-center justify-between mb-1">
-                              <span className="text-sm text-gray-700">{t(`fqFacets.${facetKey}.label`)}</span>
-                              <div className="flex items-center gap-2">
-                                <span className="text-sm font-semibold text-gray-900">{facetScore}/5</span>
-                                <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${LABEL_STYLES[facetLabel]}`}>
+                              <span className="text-sm" style={{ color: colors.textPrimary }}>{t(`fqFacets.${facetKey}.label`)}</span>
+                              <div className="flex items-center gap-2 shrink-0 ml-2">
+                                <span className="text-sm font-semibold" style={{ color: colors.textPrimary }}>{facetScore}/5</span>
+                                <span className={`text-xs font-semibold px-2 py-0.5 rounded ${LABEL_STYLES[facetLabel]}`}>
                                   {t(`fqResults.scoreLabels.${facetLabel}`)}
                                 </span>
                               </div>
                             </div>
-                            <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden mb-2">
+                            <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden mb-1">
                               <div
                                 className={`h-full rounded-full transition-all duration-500 ${DOMAIN_BAR_COLOR[domainKey]}`}
                                 style={{ width: `${facetPct}%` }}
@@ -216,26 +262,15 @@ export default function FirstQuarterResultsPage() {
           </section>
         )}
 
-        {/* ── Section 3: Role result (beta) ── */}
-        <section>
-          <SectionLabel color="gray" className="mb-4">
-            {t('fqResults.roleSection')}
-          </SectionLabel>
-          <div className="flex flex-col gap-4">
-            <RoleResult result={roleResult} />
-            <RoleProbabilityBars result={roleResult} />
-          </div>
-        </section>
-
         {/* ── Full Moon CTA ── */}
         <Card className="shadow-sm p-5">
           <SectionLabel color="blue" className="mb-2">
             🌕 {t('fqResults.fullMoonCta.eyebrow')}
           </SectionLabel>
-          <h3 className="font-semibold text-gray-900 mb-1">
+          <h3 className="font-semibold mb-1" style={{ color: colors.textPrimary }}>
             {t('fqResults.fullMoonCta.heading')}
           </h3>
-          <p className="text-sm text-gray-500 mb-4 leading-relaxed">
+          <p className="text-sm mb-4 leading-relaxed" style={{ color: colors.textMuted }}>
             {t('fqResults.fullMoonCta.body')}
           </p>
           <Button variant="primary" onClick={() => navigate('/full-moon')} className="w-full shadow-sm">
@@ -243,21 +278,18 @@ export default function FirstQuarterResultsPage() {
           </Button>
         </Card>
 
-        {/* ── Share + actions ── */}
-        <div className="flex flex-col gap-3">
-          <Button variant="primary" onClick={handleShare} className="w-full shadow-sm">
+        {/* ── Actions row ── */}
+        <div className="flex gap-3">
+          <Button variant="primary" onClick={handleShare} className="flex-1 shadow-sm">
             {copied ? t('fqResults.copied') : t('fqResults.share')}
           </Button>
-          <button
-            onClick={() => navigate('/')}
-            className="w-full py-3 rounded border border-gray-200 text-gray-700 font-medium hover:bg-gray-100 transition-colors"
-          >
+          <Button variant="secondary" onClick={() => navigate('/')}>
             {t('fqResults.retake')}
-          </button>
+          </Button>
         </div>
 
         {/* Disclaimer */}
-        <div className="bg-gray-100 rounded px-5 py-4 text-xs text-gray-500 leading-relaxed">
+        <div className="bg-gray-100 rounded px-5 py-4 text-xs leading-relaxed" style={{ color: colors.textMuted }}>
           {t('fqResults.disclaimer')}
         </div>
 

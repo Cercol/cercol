@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next'
 import { colors } from '../design/tokens'
 import { Card, SectionLabel } from './ui'
 
-export default function RoleProbabilityBars({ result }) {
+export default function RoleProbabilityBars({ result, columns = 1 }) {
   const { t } = useTranslation()
   const { role: primaryRole, arc, probabilities } = result
 
@@ -27,7 +27,7 @@ export default function RoleProbabilityBars({ result }) {
         {t('roles.probability_label')}
       </SectionLabel>
 
-      <div className="flex flex-col gap-2">
+      <div className={columns === 2 ? 'grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2' : 'flex flex-col gap-2'}>
         {sorted.map(([r, prob]) => {
           const isPrimary = r === primaryRole
           const isArc     = arc.includes(r)
