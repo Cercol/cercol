@@ -1,38 +1,29 @@
 /**
  * AboutPage — public informational page at /about.
- * No auth required. Explains what Cèrcol is, the three instruments,
- * the five dimensions, and how to interpret scores.
- * Brand voice: warm, direct, no jargon (PRODUCT.md).
+ * No auth required. High-level intro: what Cèrcol is, philosophy,
+ * five dimensions, explore-deeper cards, and framing note.
  */
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
-/**
- * StaticItem — read-only visual representation of a sample instrument question.
- * Shows the item text and a greyed-out scale. Not interactive.
- */
-function StaticItem({ prefix, text, scaleMax }) {
+function ExploreCard({ label, desc, to, accent }) {
   return (
-    <div className="bg-gray-50 rounded-xl px-4 py-3 border border-gray-200">
-      <p className="text-xs text-gray-400 mb-1">{prefix}</p>
-      <p className="text-sm text-gray-700 mb-3 font-medium">{text}</p>
-      <div className="flex items-center gap-1.5">
-        {Array.from({ length: scaleMax }, (_, i) => (
-          <div
-            key={i}
-            className="flex-1 h-8 rounded-lg border border-gray-200 bg-white flex items-center justify-center"
-          >
-            <span className="text-xs text-gray-300 font-medium">{i + 1}</span>
-          </div>
-        ))}
-      </div>
-    </div>
+    <Link
+      to={to}
+      className="bg-white rounded-2xl border border-gray-200 p-5 hover:border-gray-300 hover:shadow-sm transition-all flex flex-col gap-1.5"
+    >
+      <p className={`text-xs font-bold uppercase tracking-widest ${accent}`}>{label}</p>
+      <p className="text-sm text-gray-600 leading-relaxed">{desc}</p>
+      <p className="mt-auto pt-2 text-xs font-semibold text-gray-400 flex items-center gap-1">
+        Read more
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+        </svg>
+      </p>
+    </Link>
   )
 }
 
-/**
- * DimensionCard — one of the five dimension descriptions.
- */
 function DimensionCard({ name, desc, accent }) {
   return (
     <div className="bg-white rounded-2xl border border-gray-200 p-5">
@@ -42,64 +33,18 @@ function DimensionCard({ name, desc, accent }) {
   )
 }
 
-/**
- * InstrumentSection — one instrument with description + sample items.
- */
-function InstrumentSection({ moon, name, eyebrow, meta, about, get, items, itemPrefix, itemScale, scaleMax, free, freeLabel, paidLabel, accent, ctaTo, sampleHeading }) {
-  return (
-    <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
-      <div className="px-6 pt-6 pb-5">
-        <div className="flex items-start justify-between gap-4 mb-3">
-          <div>
-            <p className={`text-xs font-semibold uppercase tracking-widest mb-1 ${accent}`}>
-              {moon} {eyebrow}
-            </p>
-            <h3 className="text-lg font-bold text-gray-900">{name}</h3>
-          </div>
-          <span className={`shrink-0 mt-1 text-xs font-semibold px-2.5 py-1 rounded-full ${free ? 'bg-emerald-50 text-emerald-700' : 'bg-purple-50 text-purple-700'}`}>
-            {free ? freeLabel : paidLabel}
-          </span>
-        </div>
-        <p className="text-xs text-gray-400 mb-3">{meta}</p>
-        <p className="text-sm text-gray-600 leading-relaxed mb-2">{about}</p>
-        <p className="text-sm text-gray-500 leading-relaxed">{get}</p>
-      </div>
-
-      <div className="border-t border-gray-100 px-6 py-5">
-        <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">{sampleHeading}</p>
-        <div className="flex flex-col gap-2">
-          {items.map((item, i) => (
-            <StaticItem key={i} prefix={itemPrefix} text={item} scaleMax={scaleMax} />
-          ))}
-        </div>
-        <p className="mt-3 text-xs text-gray-400">{itemScale}</p>
-      </div>
-
-      <div className="border-t border-gray-100 px-6 py-4">
-        <Link
-          to={ctaTo}
-          className="text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors flex items-center gap-1.5"
-        >
-          Start {name}
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
-          </svg>
-        </Link>
-      </div>
-    </div>
-  )
-}
-
 export default function AboutPage() {
   const { t } = useTranslation()
 
   const dimensions = [
-    { key: 'presence',   accent: 'text-amber-500' },
-    { key: 'bond',       accent: 'text-emerald-600' },
-    { key: 'discipline', accent: 'text-blue-600' },
-    { key: 'depth',      accent: 'text-red-500' },
-    { key: 'vision',     accent: 'text-purple-600' },
+    { key: 'presence',    accent: 'text-amber-500' },
+    { key: 'bond',        accent: 'text-emerald-600' },
+    { key: 'discipline',  accent: 'text-blue-600' },
+    { key: 'depth',       accent: 'text-red-500' },
+    { key: 'vision',      accent: 'text-purple-600' },
   ]
+
+  const notThisItems = ['item1', 'item2', 'item3', 'item4']
 
   return (
     <main className="min-h-screen bg-gray-50">
@@ -121,65 +66,39 @@ export default function AboutPage() {
           </blockquote>
         </section>
 
-        {/* ── Instruments ───────────────────────────────────────── */}
+        {/* ── Philosophy ────────────────────────────────────────── */}
+        <section className="mb-14">
+          <h2 className="text-xl font-bold text-gray-900 mb-3">
+            {t('about.philosophy.heading')}
+          </h2>
+          <p className="text-sm text-gray-600 leading-relaxed">
+            {t('about.philosophy.body')}
+          </p>
+        </section>
+
+        {/* ── Explore deeper ────────────────────────────────────── */}
         <section className="mb-14">
           <h2 className="text-xl font-bold text-gray-900 mb-6">
-            {t('about.instruments.heading')}
+            {t('about.explore.heading')}
           </h2>
-          <div className="flex flex-col gap-5">
-            <InstrumentSection
-              moon="🌑"
-              name={t('about.instruments.newMoon.name')}
-              eyebrow={t('about.instruments.newMoon.eyebrow')}
-              meta={t('about.instruments.newMoon.meta')}
-              about={t('about.instruments.newMoon.about')}
-              get={t('about.instruments.newMoon.get')}
-              items={t('about.instruments.newMoon.items', { returnObjects: true })}
-              itemPrefix={t('about.instruments.newMoon.itemPrefix')}
-              itemScale={t('about.instruments.newMoon.itemScale')}
-              scaleMax={7}
-              free
-              freeLabel={t('about.instruments.freeLabel')}
-              paidLabel={t('about.instruments.paidLabel')}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <ExploreCard
+              label={t('about.explore.instruments.label')}
+              desc={t('about.explore.instruments.desc')}
+              to="/instruments"
               accent="text-amber-500"
-              sampleHeading={t('about.instruments.sampleHeading')}
-              ctaTo="/new-moon"
             />
-            <InstrumentSection
-              moon="🌓"
-              name={t('about.instruments.firstQuarter.name')}
-              eyebrow={t('about.instruments.firstQuarter.eyebrow')}
-              meta={t('about.instruments.firstQuarter.meta')}
-              about={t('about.instruments.firstQuarter.about')}
-              get={t('about.instruments.firstQuarter.get')}
-              items={t('about.instruments.firstQuarter.items', { returnObjects: true })}
-              itemPrefix={t('about.instruments.firstQuarter.itemPrefix')}
-              itemScale={t('about.instruments.firstQuarter.itemScale')}
-              scaleMax={5}
-              free
-              freeLabel={t('about.instruments.freeLabel')}
-              paidLabel={t('about.instruments.paidLabel')}
-              accent="text-blue-600"
-              sampleHeading={t('about.instruments.sampleHeading')}
-              ctaTo="/first-quarter"
-            />
-            <InstrumentSection
-              moon="🌕"
-              name={t('about.instruments.fullMoon.name')}
-              eyebrow={t('about.instruments.fullMoon.eyebrow')}
-              meta={t('about.instruments.fullMoon.meta')}
-              about={t('about.instruments.fullMoon.about')}
-              get={t('about.instruments.fullMoon.get')}
-              items={t('about.instruments.fullMoon.items', { returnObjects: true })}
-              itemPrefix={t('about.instruments.fullMoon.itemPrefix')}
-              itemScale={t('about.instruments.fullMoon.itemScale')}
-              scaleMax={5}
-              free={false}
-              freeLabel={t('about.instruments.freeLabel')}
-              paidLabel={t('about.instruments.paidLabel')}
+            <ExploreCard
+              label={t('about.explore.roles.label')}
+              desc={t('about.explore.roles.desc')}
+              to="/roles"
               accent="text-purple-600"
-              sampleHeading={t('about.instruments.sampleHeading')}
-              ctaTo="/full-moon"
+            />
+            <ExploreCard
+              label={t('about.explore.science.label')}
+              desc={t('about.explore.science.desc')}
+              to="/science"
+              accent="text-blue-600"
             />
           </div>
         </section>
@@ -202,6 +121,21 @@ export default function AboutPage() {
               />
             ))}
           </div>
+        </section>
+
+        {/* ── What Cèrcol is not ────────────────────────────────── */}
+        <section className="mb-14">
+          <h2 className="text-xl font-bold text-gray-900 mb-4">
+            {t('about.notThis.heading')}
+          </h2>
+          <ul className="flex flex-col gap-2">
+            {notThisItems.map((key) => (
+              <li key={key} className="flex gap-3 text-sm text-gray-600 leading-relaxed">
+                <span className="mt-0.5 shrink-0 text-gray-300">—</span>
+                {t(`about.notThis.${key}`)}
+              </li>
+            ))}
+          </ul>
         </section>
 
         {/* ── Framing note ──────────────────────────────────────── */}

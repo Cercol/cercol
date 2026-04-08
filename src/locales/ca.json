@@ -2,6 +2,8 @@
   "nav": {
     "brand": "Cèrcol",
     "about": "Sobre",
+    "instruments": "Instruments",
+    "roles": "Rols",
     "science": "Ciència",
     "faq": "Preguntes"
   },
@@ -423,40 +425,67 @@
     "you": "La teua posició",
     "probability_label": "Afinitat de rol",
     "R0": {
-      "name": "Opàl",
-      "essence": "No fixed role. Present in different ways without ceasing to be you."
+      "name": "Opàl",   "ca": "Opàl",
+      "essence": "Sense rol fix. Present de maneres diferents sense deixar de ser tu.",
+      "profile": "Cap dimensió domina. Les puntuacions s'agrupen al voltant del centre en les cinc dimensions.",
+      "contributes": "Adaptabilitat. Pot cobrir el buit que el grup necessiti en cada moment.",
+      "misses": "Una veu clara quan les decisions importants necessiten que algú prengui una posició definida."
     },
     "R1": {
-      "name": "Llamp",
-      "essence": "You see the exact moment and go for it. When you move, others know it's time."
+      "name": "Llamp",  "ca": "Llamp",
+      "essence": "Veus el moment exacte i hi vas. Quan et mous, els altres saben que és l'hora.",
+      "profile": "Alta Presència i Disciplina, amb un component de Visió significatiu. Energia social més drive estructurat amb un toc creatiu.",
+      "contributes": "Impuls. Posa les coses en marxa i les manté construïdes.",
+      "misses": "El manteniment de les relacions que els altres necessiten per sentir-se inclosos de veritat."
     },
     "R2": {
-      "name": "Far",
-      "essence": "You don't invite anyone. People come because it's easy to let their guard down near you."
+      "name": "Far",    "ca": "Far",
+      "essence": "No convides ningú. La gent ve perquè és fàcil baixar la guàrdia al teu costat.",
+      "profile": "Alta Presència i Vincle, amb forta estabilitat emocional. Càlid, obert i difícil de desestabilitzar.",
+      "contributes": "Cohesió. Fa que la gent es relaxi i col·labori amb facilitat.",
+      "misses": "La fricció productiva que fa les idees més sòlides. L'harmonia pot convertir-se en un sostre."
     },
     "R3": {
-      "name": "Espina",
-      "essence": "You say what should have been said two meetings ago. Without you, the team sleeps in easy consensus."
+      "name": "Espina", "ca": "Espina",
+      "essence": "Dius el que hauria d'haver-se dit dues reunions enrere. Sense tu, el grup dorm en un consens fàcil.",
+      "profile": "Alta Presència i baix Vincle, amb Profunditat elevada. Assertiu, independent i emocionalment implicat.",
+      "contributes": "Repte crític. Diu el que ningú més dirà. Evita el tancament prematur.",
+      "misses": "El cost acumulat que el seu estil de repte pot imposar a la confiança i la moral al llarg del temps."
     },
     "R4": {
-      "name": "Àncora",
-      "essence": "When everything shakes, you stay in place. The team notices most when you're not there."
+      "name": "Àncora", "ca": "Àncora",
+      "essence": "Quan tot tremola, tu et mantens. El grup ho nota més quan no hi ets.",
+      "profile": "Alt Vincle i Disciplina, amb estabilitat emocional. Cooperatiu, estructurat i ferm.",
+      "contributes": "Fiabilitat. El grup pot planificar amb confiança al seu voltant.",
+      "misses": "La urgència necessària quan cal un canvi real. L'estabilitat pot resistir allò que necessita transformar-se."
     },
     "R5": {
-      "name": "Garça",
-      "essence": "You listen to what was left unsaid. The team's harmony runs through you without anyone quite knowing."
+      "name": "Garça",  "ca": "Garça",
+      "essence": "Escoltes el que no s'ha dit. L'harmonia del grup passa per tu sense que ningú ho sàpiga del tot.",
+      "profile": "Alt Vincle, menor Presència i Disciplina. Reservat, profundament cooperatiu i espontani.",
+      "contributes": "Harmonia. Manté el teixit emocional del grup sense que ningú ho note fins que no hi és.",
+      "misses": "Les pròpies necessitats. Els rols Garça rarament s'auto-defensen."
     },
     "R6": {
-      "name": "Enclusa",
-      "essence": "Quality is tested at your side. You are the tool that stops the team from fooling itself."
+      "name": "Enclusa", "ca": "Enclusa",
+      "essence": "La qualitat es posa a prova al teu costat. Ets l'eina que impedeix que el grup s'enganyi a si mateix.",
+      "profile": "Alta Disciplina i Profunditat elevada, amb Vincle moderat-baix. Rigorós, crític i alerta als errors.",
+      "contributes": "Assegurament de qualitat. El grup no s'autoenganya quan l'Enclusa hi és atent.",
+      "misses": "Que no tota decisió necessita el màxim estàndard. La rapidesa i el 'prou bé' també importen."
     },
     "R7": {
-      "name": "Teler",
-      "essence": "Where others see loose threads, you see the web. What comes out is better than any of the parts."
+      "name": "Teler",  "ca": "Teler",
+      "essence": "On els altres veuen fils solts, tu hi veus la xarxa. El que surt és millor que qualsevol de les parts.",
+      "profile": "Alta Visió amb Vincle i Disciplina moderats. Creatiu, organitzat i col·laboratiu.",
+      "contributes": "Síntesi. Connecta el que els altres veuen com a no relacionat i en fa alguna cosa útil.",
+      "misses": "Els detalls d'execució. La xarxa està ben dissenyada; el lliurament pot quedar curt."
     },
     "R8": {
-      "name": "Cometa",
-      "essence": "You don't ask permission to move outside the expected path. The best decisions passed through your angle first."
+      "name": "Cometa", "ca": "Cometa",
+      "essence": "No demanes permís per moure't fora del camí esperat. Les millors decisions van passar primer pel teu angle.",
+      "profile": "Alta Visió, Presència moderada i estabilitat emocional. Independent, creatiu i tranquil.",
+      "contributes": "Pensament de ruptura. Replanteja problemes abans que els altres els hagin vist com a problemes.",
+      "misses": "La construcció de consens. Va per davant del grup i ha de tornar a buscar-los."
     }
   },
   "witness": {
@@ -549,40 +578,23 @@
       "body": "Cèrcol és tres instruments construïts sobre investigació de domini públic. Cadascun mesura les mateixes cinc dimensions — a diferent profunditat. Cap puntuació et diu el que has de pensar. Cap resultat és bo o dolent.",
       "founding": "Tot suma, ningú no és imprescindible, però tots som necessaris."
     },
-    "instruments": {
-      "heading": "Tres instruments. Un recorregut.",
-      "freeLabel": "Gratuït",
-      "paidLabel": "Pagament únic",
-      "sampleHeading": "Preguntes de mostra",
-      "newMoon": {
-        "name": "Cèrcol de Lluna Nova",
-        "eyebrow": "Visió ràpida",
-        "meta": "10 preguntes · ~2 min",
-        "about": "Una mirada ràpida a la teua posició en cinc dimensions. Bona per a una primera orientació o una revisió ràpida.",
-        "get": "Obtens un gràfic de radar de les cinc dimensions.",
-        "items": ["Extravertit/da, entusiasta.", "De confiança, autodisciplinat/da.", "Obert/a a noves experiències, complex/a."],
-        "itemPrefix": "Em veig com:",
-        "itemScale": "Puntuació 1–7 · Totalment en desacord → Totalment d'acord"
+    "philosophy": {
+      "heading": "Construït en obert",
+      "body": "La majoria d'avaluacions de personalitat són propietàries. Les preguntes, la puntuació, les dades normatives — darrere de pagaments o acords de confidencialitat. Fas el test, obtens un resultat, i no tens manera de saber si l'algorisme és sòlid. Cèrcol és diferent. Cada pregunta prové d'investigació de domini públic. La puntuació és a GitHub. Qualsevol la pot llegir, qüestionar i millorar. Creiem que les avaluacions de personalitat haurien de funcionar així."
+    },
+    "explore": {
+      "heading": "Aprofundeix",
+      "instruments": {
+        "label": "Instruments",
+        "desc": "Com funciona cada instrument, què mesura i què obtens."
       },
-      "firstQuarter": {
-        "name": "Cèrcol de Quart Creixent",
-        "eyebrow": "Retrat complet",
-        "meta": "60 preguntes · ~10 min",
-        "about": "Cada dimensió es divideix en 6 facetes — 30 punts de dades en lloc de 5. Una imatge molt més rica, amb una primera lectura del teu rol.",
-        "get": "Obtens un gràfic de dominis, un desglossament de 30 facetes i una primera mirada al teu rol.",
-        "items": ["Prenc la iniciativa.", "Em preocupe per les coses.", "Tinc una imaginació vívida."],
-        "itemPrefix": "Em veig com algú que:",
-        "itemScale": "Puntuació 1–5 · Totalment en desacord → Totalment d'acord"
+      "roles": {
+        "label": "Rols",
+        "desc": "Els nou rols, d'on venen i les seves limitacions honestes."
       },
-      "fullMoon": {
-        "name": "Cèrcol de Lluna Plena",
-        "eyebrow": "Retrat definitiu",
-        "meta": "120 preguntes · ~20 min",
-        "about": "L'autoinforme més profund — 120 ítems a màxima resolució — més l'instrument Testimoni i una mesura de capacitat cognitiva.",
-        "get": "Obtens un perfil complet, un rol confirmat, una comparació amb el Testimoni i els teus punts cecs.",
-        "items": ["Rarament em sento trist/a.", "Anticipe les necessitats dels altres.", "Faig les tasques de seguida."],
-        "itemPrefix": "Em veig com algú que:",
-        "itemScale": "Puntuació 1–5 · Totalment en desacord → Totalment d'acord"
+      "science": {
+        "label": "Ciència",
+        "desc": "El fonament de la investigació, el procés de puntuació i les preguntes obertes."
       }
     },
     "dimensions": {
@@ -593,6 +605,13 @@
       "discipline":{ "name": "Disciplina","desc": "Com abordes l'estructura i el treball. Alta: fiable, metòdic/a. Baixa: flexible, guiat/da per l'instint." },
       "depth":    { "name": "Profunditat","desc": "Amb quina intensitat processes l'estrès i les emocions. Alta: sensible, alerta. Baixa: estable, difícil de desestabilitzar." },
       "vision":   { "name": "Visió",     "desc": "Quanta novetat i complexitat busques. Alta: creatiu/va, explorador/a. Baixa: pràctic/a, arrelat/da." }
+    },
+    "notThis": {
+      "heading": "El que Cèrcol no és",
+      "item1": "Una eina diagnòstica. Aquests resultats no tenen validesa clínica.",
+      "item2": "Una etiqueta fixa. Les puntuacions canvien amb el context, el temps i l'estat mental.",
+      "item3": "Una classificació. Cap dimensió és millor ni pitjor que una altra.",
+      "item4": "Un predictor d'èxit. Les tendències descriuen com soleu funcionar — no el que aconseguireu."
     },
     "framing": {
       "heading": "Una nota sobre les puntuacions",
@@ -655,5 +674,106 @@
     "q4": { "q": "Quina és la diferència entre els tres instruments?", "a": "La Lluna Nova són 10 preguntes i dura 2 minuts — una orientació ràpida. El Quart Creixent són 60 preguntes i dura 10 minuts — una imatge més completa amb 30 facetes i una primera mirada al teu rol. La Lluna Plena és 120 preguntes, inclou l'avaluació del Testimoni, i és de pagament — és el resultat definitiu. Cada instrument és independent; pots començar des de qualsevol punt." },
     "q5": { "q": "Val la pena pagar per la Lluna Plena?", "a": "Si el Quart Creixent se't queda curt — si vols entendre una faceta específica més profundament, veure com els altres et perceben, o obtenir un resultat de rol fiable — sí. La comparació amb el Testimoni és la part més distintiva: mostra on la teua autopercepció coincideix amb la visió exterior i on no. Aquesta bretxa és sovint on viu la informació més útil." },
     "q6": { "q": "Puc repetir les avaluacions?", "a": "Sí. Els instruments gratuïts no tenen límit. Cada enviament és independent — repetir-ne un no sobreescriu els resultats anteriors del teu compte. Moltes persones troben útil repetir el Quart Creixent sis mesos o un any més tard per veure el que ha canviat." }
+  },
+  "instruments": {
+    "title": "Instruments",
+    "intro": {
+      "heading": "Tres instruments. Una escala.",
+      "body": "Cada instrument mesura les mateixes cinc dimensions — a diferent profunditat i resolució. Estan dissenyats per usar-se en seqüència, però cadascun és autònom."
+    },
+    "freeLabel": "Gratuït",
+    "paidLabel": "Pagament únic · No és una subscripció",
+    "sampleHeading": "Preguntes de mostra",
+    "newMoon": {
+      "heading": "Cèrcol de Lluna Nova",
+      "eyebrow": "Visió ràpida",
+      "meta": "10 preguntes · ~2 min",
+      "scaleNote": "Escala de 7 punts: «Totalment en desacord» fins a «Totalment d'acord». Cada punt té significat — no només dos extrems amb números al mig.",
+      "measures": "Cinc dimensions. Una puntuació per dimensió. Sense desglossament per facetes.",
+      "get": "Un gràfic de radar de la teua posició en les cinc dimensions. Útil per a una orientació ràpida. No és prou precís per a afirmacions detallades sobre facetes — per a això serveix el Quart Creixent.",
+      "items": ["Extravertit/da, entusiasta.", "De confiança, autodisciplinat/da.", "Obert/a a noves experiències, complex/a."],
+      "itemPrefix": "Em veig com:"
+    },
+    "firstQuarter": {
+      "heading": "Cèrcol de Quart Creixent",
+      "eyebrow": "Retrat complet",
+      "meta": "60 preguntes · ~10 min",
+      "scaleNote": "Escala de 5 punts: «Totalment en desacord» fins a «Totalment d'acord». Les escales de cinc punts són estàndard per a la mesura a nivell de facetes de l'IPIP.",
+      "measures": "Cinc dimensions, cadascuna dividida en 6 facetes — 30 punts de dades. Dos ítems per faceta.",
+      "get": "Gràfic de dominis, desglossament de 30 facetes i una primera lectura beta del teu rol. El desglossament de facetes és on viu la informació útil — els totals de domini són només el titular.",
+      "items": ["Prenc la iniciativa.", "Em preocupe per les coses.", "Tinc una imaginació vívida."],
+      "itemPrefix": "Em veig com algú que:"
+    },
+    "fullMoon": {
+      "heading": "Cèrcol de Lluna Plena",
+      "eyebrow": "Retrat complet",
+      "system": "La Lluna Plena és un sistema de tres parts usades conjuntament.",
+      "part1": {
+        "label": "Part 1",
+        "heading": "Autoinforme",
+        "meta": "120 preguntes · ~20 min · Escala de 5 punts",
+        "body": "Les mateixes 30 facetes que el Quart Creixent — al doble de resolució. Quatre ítems per faceta en lloc de dos. En termes psicomètrics, més ítems per faceta signifiquen puntuacions més fiables, especialment per a facetes properes al centre de l'escala on dos ítems poden donar un resultat imprecís.",
+        "items": ["Rarament em sento trist/a.", "Anticipe les necessitats dels altres.", "Faig les tasques de seguida."],
+        "itemPrefix": "Em veig com algú que:"
+      },
+      "part2": {
+        "label": "Part 2",
+        "heading": "Testimoni Cèrcol",
+        "whyHeading": "Per què un Testimoni?",
+        "whyBody": "Els autoinformes tenen una limitació coneguda: no sempre ens percebem de la manera que apareixem als altres. Les persones amb Profunditat alta poden infravalorar-se — l'emoció sembla normal des de dins. Les persones amb Vincle alt poden sobreestimar la calidesa — la intenció és genuïna però l'impacte pot diferir. L'autoavaluació és un senyal filtrat. El Testimoni n'afegeix un d'independent.",
+        "howHeading": "Com funciona",
+        "howBody": "Cada Testimoni rep un enllaç únic. La tasca dura uns 5 minuts. Veu 20 rondes de 5 paraules — un adjectiu per dimensió — i tria el que millor i el que menys s'ajusta. Elecció forçada: sense escala Likert, sense possibilitat de donar totes les respostes positives.",
+        "whoHeading": "Qui és un Testimoni ideal?",
+        "whoBody": "Algú que ha treballat amb tu, ha viscut amb tu o t'ha vist sota pressió. No el teu defensor més gran — algú prou honest per marcar on tens arestes. Pots convidar fins a 12 Testimonis. Més Testimonis redueixen el soroll: les puntuacions es fan la mitjana.",
+        "privacyHeading": "Privacitat",
+        "privacyBody": "Els Testimonis mai no veuen les teues puntuacions. Tu veus el resultat mitjà de tots els Testimonis — no les respostes individuals.",
+        "blindSpotsHeading": "Punts cecs",
+        "blindSpotsBody": "On l'autoinforme i les puntuacions del Testimoni divergeixen significativament, es marca un punt cec. No perquè un sigui correcte i l'altre incorrecte — sinó perquè la bretxa mateixa és informativa. Una dimensió que perceps de manera molt diferent als qui t'envolten val la pena examinar-la."
+      },
+      "part3": {
+        "label": "Part 3",
+        "heading": "Capacitat cognitiva",
+        "body": "Una breu mesura de codi obert adaptada de l'International Cognitive Ability Resource — una bateria d'avaluació de domini públic. Inclosa com a punt de dades addicional per a l'informe d'equip. No és una puntuació de QI, no és una classificació i no és una porta d'entrada. Una lent addicional, res més."
+      }
+    }
+  },
+  "rolesPage": {
+    "title": "Rols",
+    "intro": {
+      "heading": "Nou rols. Una taxonomia.",
+      "body1": "Els perfils de personalitat descriuen com ets. Els rols descriuen com tendixes a funcionar en grups. L'espai entre aquestes dues coses és on Cèrcol intenta treballar.",
+      "body2": "Els nou rols es deriven del circumplexe AB5C — un model ben validat de com els trets de personalitat s'agrupen en un espai bidimensional (Hofstee, De Raad & Goldberg, 1992). Els noms són nostres. L'estructura és de la literatura."
+    },
+    "beta": {
+      "heading": "Aquesta és una hipòtesi inicial, no un instrument validat.",
+      "body": "Les assignacions de rols actuals utilitzen centroides teòrics derivats de la investigació publicada. A mesura que s'acumulin dades reals — objectiu: 300 completaments de Lluna Plena — els centroides seran substituïts per valors empírics de perfils reals. La puntuació de rols és beta per exactament aquesta raó."
+    },
+    "notBelbin": {
+      "heading": "Per què no Belbin?",
+      "body": "Els rols de Belbin s'usen àmpliament però tenen punts febles: són propietaris, requereixen un avaluador format i els fonaments psicomètrics estan en debat a la literatura. Els rols de Cèrcol es deriven d'una ciència de la personalitat oberta i validada. No són el mateix i no ho pretenen. El propòsit — entendre com funciona algú en un equip — és similar. L'enfocament és diferent."
+    },
+    "critique": {
+      "heading": "Veus un problema en aquest model?",
+      "body": "Aquesta taxonomia és una hipòtesi. Si tens formació en psicometria, psicologia organitzacional o dinàmica d'equips i veus un error — en els centroides, els noms, el disseny d'elecció forçada, qualsevol cosa — obre una incidència.",
+      "cta": "Obre una incidència a GitHub"
+    },
+    "grid": {
+      "heading": "Els nou rols",
+      "profileLabel": "Tendència",
+      "contributesLabel": "Aporta a l'equip",
+      "missesLabel": "Tendeix a perdre"
+    },
+    "r0Note": {
+      "heading": "Una nota sobre l'Opàl",
+      "body": "L'Opàl no és una categoria residual ni una assignació fallida. Significa que cap dimensió domina el perfil. Moltes persones efectives puntuen aquí. Els perfils Opàl sovint són els membres més adaptables al context d'un equip — poden assumir el rol que la situació requereix."
+    },
+    "arcNote": {
+      "heading": "Arc personal",
+      "body": "La majoria de resultats de rol inclouen un arc — rols secundaris que han puntuat a prop del primari en l'espai de probabilitat. Una Àncora amb arc Garça té la fiabilitat de l'Àncora i la qualitat d'escolta de la Garça. L'arc dona textura al resultat que una sola etiqueta no pot."
+    },
+    "contextNote": {
+      "heading": "Els rols no són destins",
+      "body": "La mateixa persona pot funcionar de manera diferent en composicions d'equip diferents. Una Espina en un equip que evita el conflicte pot suavitzar-se. Un Opàl en un equip que necessita direcció pot aguditzar-se. Aquestes són tendències en context — no identitats fixes. No uses un resultat de rol com a sostre."
+    }
   }
 }

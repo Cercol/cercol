@@ -2,6 +2,8 @@
   "nav": {
     "brand": "Cèrcol",
     "about": "About",
+    "instruments": "Instruments",
+    "roles": "Roles",
     "science": "Science",
     "faq": "FAQ"
   },
@@ -423,40 +425,67 @@
     "you": "Your position",
     "probability_label": "Role fit",
     "R0": {
-      "name": "Opal",
-      "essence": "No fixed role. Present in different ways without ceasing to be you."
+      "name": "Opal",   "ca": "Opàl",
+      "essence": "No fixed role. Present in different ways without ceasing to be you.",
+      "profile": "No single dimension dominates. Scores cluster near the centre across all five.",
+      "contributes": "Adaptability. Can step into whatever gap the team needs in the moment.",
+      "misses": "A distinct voice when high-stakes decisions need someone to take a clear position."
     },
     "R1": {
-      "name": "Bolt",
-      "essence": "You see the exact moment and go for it. When you move, others know it's time."
+      "name": "Bolt",   "ca": "Llamp",
+      "essence": "You see the exact moment and go for it. When you move, others know it's time.",
+      "profile": "High Presence and Discipline, with a meaningful Vision component. Social energy meets structured drive with a creative edge.",
+      "contributes": "Momentum. Gets things moving and keeps them built.",
+      "misses": "The quieter relationship maintenance that others need to feel genuinely included."
     },
     "R2": {
-      "name": "Beacon",
-      "essence": "You don't invite anyone. People come because it's easy to let their guard down near you."
+      "name": "Beacon", "ca": "Far",
+      "essence": "You don't invite anyone. People come because it's easy to let their guard down near you.",
+      "profile": "High Presence and Bond, with strong emotional stability. Warm, outgoing, and hard to rattle.",
+      "contributes": "Cohesion. Makes it easy for people to let their guard down and work together well.",
+      "misses": "The productive friction that makes ideas sharper. Harmony can become a ceiling."
     },
     "R3": {
-      "name": "Thorn",
-      "essence": "You say what should have been said two meetings ago. Without you, the team sleeps in easy consensus."
+      "name": "Thorn",  "ca": "Espina",
+      "essence": "You say what should have been said two meetings ago. Without you, the team sleeps in easy consensus.",
+      "profile": "High Presence and low Bond, with elevated Depth. Assertive, independent-minded, and emotionally engaged.",
+      "contributes": "Critical challenge. Names what no one else will say. Prevents premature closure.",
+      "misses": "The cumulative cost their challenge style can impose on trust and morale over time."
     },
     "R4": {
-      "name": "Anchor",
-      "essence": "When everything shakes, you stay in place. The team notices most when you're not there."
+      "name": "Anchor", "ca": "Àncora",
+      "essence": "When everything shakes, you stay in place. The team notices most when you're not there.",
+      "profile": "High Bond and Discipline, with emotional stability. Cooperative, structured, and steady.",
+      "contributes": "Reliability. The team can plan around them with confidence.",
+      "misses": "The urgency needed when genuine change is required. Stability can resist what needs to shift."
     },
     "R5": {
-      "name": "Heron",
-      "essence": "You listen to what was left unsaid. The team's harmony runs through you without anyone quite knowing."
+      "name": "Heron",  "ca": "Garça",
+      "essence": "You listen to what was left unsaid. The team's harmony runs through you without anyone quite knowing.",
+      "profile": "High Bond, lower Presence and Discipline. Reserved, deeply cooperative, and spontaneous.",
+      "contributes": "Harmony. Holds the team's emotional fabric together without anyone noticing until it's gone.",
+      "misses": "Their own needs. Heron roles rarely advocate for themselves."
     },
     "R6": {
-      "name": "Anvil",
-      "essence": "Quality is tested at your side. You are the tool that stops the team from fooling itself."
+      "name": "Anvil",  "ca": "Enclusa",
+      "essence": "Quality is tested at your side. You are the tool that stops the team from fooling itself.",
+      "profile": "High Discipline and elevated Depth, with moderate-low Bond. Rigorous, critical, and alert to failure.",
+      "contributes": "Quality assurance. The team doesn't fool itself when the Anvil is paying attention.",
+      "misses": "That not every decision needs the highest standard. Speed and sufficiency matter too."
     },
     "R7": {
-      "name": "Loom",
-      "essence": "Where others see loose threads, you see the web. What comes out is better than any of the parts."
+      "name": "Loom",   "ca": "Teler",
+      "essence": "Where others see loose threads, you see the web. What comes out is better than any of the parts.",
+      "profile": "High Vision with moderate Bond and Discipline. Creative, organised, and collaborative.",
+      "contributes": "Synthesis. Connects what others see as unrelated and makes something useful from it.",
+      "misses": "Execution details. The web is well-designed; the delivery can fall short."
     },
     "R8": {
-      "name": "Comet",
-      "essence": "You don't ask permission to move outside the expected path. The best decisions passed through your angle first."
+      "name": "Comet",  "ca": "Cometa",
+      "essence": "You don't ask permission to move outside the expected path. The best decisions passed through your angle first.",
+      "profile": "High Vision, moderate Presence, and emotional stability. Independent, creative, and calm.",
+      "contributes": "Breakthrough thinking. Reframes problems before others have seen them as problems.",
+      "misses": "Consensus-building. Moves ahead of the team and has to come back for them."
     }
   },
   "witness": {
@@ -546,43 +575,26 @@
     "intro": {
       "eyebrow": "Open-source personality assessment",
       "heading": "See yourself more clearly.",
-      "body": "Cèrcol is three instruments built on public-domain science. Each one measures the same five dimensions — at different depths. No score tells you what to think. No result is good or bad.",
+      "body": "Cèrcol is three instruments built on public-domain science. Each measures the same five dimensions — at different depths. No score tells you what to think. No result is good or bad.",
       "founding": "Tot suma, ningú no és imprescindible, però tots som necessaris."
     },
-    "instruments": {
-      "heading": "Three instruments. One journey.",
-      "freeLabel": "Free",
-      "paidLabel": "One-time payment",
-      "sampleHeading": "Sample questions",
-      "newMoon": {
-        "name": "New Moon Cèrcol",
-        "eyebrow": "Quick snapshot",
-        "meta": "10 questions · ~2 min",
-        "about": "A fast read of your position on five dimensions. Good for a first orientation or a quick check-in.",
-        "get": "You get a radar chart of all five dimensions.",
-        "items": ["Extraverted, enthusiastic.", "Dependable, self-disciplined.", "Open to new experiences, complex."],
-        "itemPrefix": "I see myself as:",
-        "itemScale": "Rated 1–7 · Disagree strongly → Agree strongly"
+    "philosophy": {
+      "heading": "Built in the open",
+      "body": "Most personality assessments are proprietary. The items, the scoring, the normative data — behind paywalls or NDAs. You take the test, get a result, and have no way to know if the algorithm is sound. Cèrcol is different. Every question comes from public-domain research. The scoring is on GitHub. Anyone can read it, question it, and improve it. We think personality assessments should work that way."
+    },
+    "explore": {
+      "heading": "Go deeper",
+      "instruments": {
+        "label": "Instruments",
+        "desc": "How each instrument works, what it measures, and what you get."
       },
-      "firstQuarter": {
-        "name": "First Quarter Cèrcol",
-        "eyebrow": "Full portrait",
-        "meta": "60 questions · ~10 min",
-        "about": "Each dimension is broken into 6 facets — 30 data points instead of 5. A much richer picture, with a first read on your role.",
-        "get": "You get a domain chart, a 30-facet breakdown, and a first look at your role.",
-        "items": ["Take charge.", "Worry about things.", "Have a vivid imagination."],
-        "itemPrefix": "I see myself as someone who:",
-        "itemScale": "Rated 1–5 · Disagree strongly → Agree strongly"
+      "roles": {
+        "label": "Roles",
+        "desc": "The nine roles, where they come from, and their honest limitations."
       },
-      "fullMoon": {
-        "name": "Full Moon Cèrcol",
-        "eyebrow": "Complete portrait",
-        "meta": "120 questions · ~20 min",
-        "about": "The deepest self-report — 120 items at full resolution — plus the Witness instrument and a cognitive ability measure.",
-        "get": "You get a complete profile, a confirmed role, a Witness comparison, and your blind spots.",
-        "items": ["Seldom feel blue.", "Anticipate the needs of others.", "Get chores done right away."],
-        "itemPrefix": "I see myself as someone who:",
-        "itemScale": "Rated 1–5 · Disagree strongly → Agree strongly"
+      "science": {
+        "label": "Science",
+        "desc": "The research foundation, the scoring pipeline, and the open questions."
       }
     },
     "dimensions": {
@@ -593,6 +605,13 @@
       "discipline":{ "name": "Discipline","desc": "How you approach structure and work. High: reliable, methodical. Low: flexible, instinct-driven." },
       "depth":    { "name": "Depth",    "desc": "How intensely you process stress and emotion. High: sensitive, alert. Low: stable, hard to rattle." },
       "vision":   { "name": "Vision",   "desc": "How much novelty and complexity you seek. High: creative, exploratory. Low: practical, grounded." }
+    },
+    "notThis": {
+      "heading": "What Cèrcol is not",
+      "item1": "A diagnostic tool. These results have no clinical validity.",
+      "item2": "A fixed label. Scores shift with context, time, and state of mind.",
+      "item3": "A ranking. No dimension is better or worse than another.",
+      "item4": "A predictor of success. Tendencies describe how you tend to operate — not what you'll achieve."
     },
     "framing": {
       "heading": "A note on scores",
@@ -655,5 +674,106 @@
     "q4": { "q": "What is the difference between the three instruments?", "a": "New Moon is 10 questions and takes 2 minutes — a quick orientation. First Quarter is 60 questions and takes 10 minutes — a fuller picture with 30 facets and a first look at your role. Full Moon is 120 questions, includes the Witness assessment, and is paid — it is the definitive result. Each instrument is standalone; you can start anywhere." },
     "q5": { "q": "Is Full Moon worth paying for?", "a": "If First Quarter feels insufficient — if you want to understand a specific facet more deeply, see how others perceive you, or get a reliable role result — then yes. The Witness comparison is the most distinctive part: it shows where your self-perception matches the outside view and where it doesn't. That gap is often where the most useful information lives." },
     "q6": { "q": "Can I retake the assessments?", "a": "Yes. The free instruments have no limit. Each submission is independent — retaking does not overwrite previous results in your account. People often find it useful to retake First Quarter six months or a year later to see what has changed." }
+  },
+  "instruments": {
+    "title": "Instruments",
+    "intro": {
+      "heading": "Three instruments. One scale.",
+      "body": "Each instrument measures the same five dimensions — at different depth and resolution. They are designed to be used in sequence, but each stands alone."
+    },
+    "freeLabel": "Free",
+    "paidLabel": "One-time payment · Not a subscription",
+    "sampleHeading": "Sample questions",
+    "newMoon": {
+      "heading": "New Moon Cèrcol",
+      "eyebrow": "Quick snapshot",
+      "meta": "10 questions · ~2 min",
+      "scaleNote": "7-point scale: 'Disagree strongly' to 'Agree strongly'. Each point carries meaning — not just two extremes with numbers in between.",
+      "measures": "Five dimensions. One score per dimension. No facet breakdown.",
+      "get": "A radar chart of your position on all five dimensions. Good for a quick orientation. Not precise enough for fine-grained claims about facets — that's what First Quarter is for.",
+      "items": ["Extraverted, enthusiastic.", "Dependable, self-disciplined.", "Open to new experiences, complex."],
+      "itemPrefix": "I see myself as:"
+    },
+    "firstQuarter": {
+      "heading": "First Quarter Cèrcol",
+      "eyebrow": "Full portrait",
+      "meta": "60 questions · ~10 min",
+      "scaleNote": "5-point scale: 'Disagree strongly' to 'Agree strongly'. Five-point scales are standard for IPIP facet-level measurement.",
+      "measures": "Five dimensions, each broken into 6 facets — 30 data points. Two items per facet.",
+      "get": "Domain chart, 30-facet breakdown, and a first beta read on your role. The facet breakdown is where the useful information lives — the domain totals are just the headline.",
+      "items": ["Take charge.", "Worry about things.", "Have a vivid imagination."],
+      "itemPrefix": "I see myself as someone who:"
+    },
+    "fullMoon": {
+      "heading": "Full Moon Cèrcol",
+      "eyebrow": "Complete portrait",
+      "system": "Full Moon is a system of three parts used together.",
+      "part1": {
+        "label": "Part 1",
+        "heading": "Self-report",
+        "meta": "120 questions · ~20 min · 5-point scale",
+        "body": "The same 30 facets as First Quarter — at twice the resolution. Four items per facet instead of two. In psychometric terms, more items per facet means more reliable scores, especially for facets near the centre of the scale where two items can give a noisy result.",
+        "items": ["Seldom feel blue.", "Anticipate the needs of others.", "Get chores done right away."],
+        "itemPrefix": "I see myself as someone who:"
+      },
+      "part2": {
+        "label": "Part 2",
+        "heading": "Witness Cèrcol",
+        "whyHeading": "Why a Witness?",
+        "whyBody": "Self-reports have a known limitation: we don't always perceive ourselves the way we come across to others. People high on Depth may under-report — the emotion feels normal from the inside. People high on Bond may over-report warmth — the intent is genuine but the impact can differ. Self-assessment is a filtered signal. The Witness adds an independent one.",
+        "howHeading": "How it works",
+        "howBody": "Each Witness receives a unique link. The task takes about 5 minutes. They see 20 rounds of 5 words — one adjective per dimension — and pick the one that fits best and the one that fits least. Forced choice: no Likert scale, no ability to give all positive answers.",
+        "whoHeading": "Who is an ideal Witness?",
+        "whoBody": "Someone who has worked with you, lived with you, or seen you under pressure. Not your biggest advocate — someone honest enough to mark where you have edges. You can invite up to 12 Witnesses. More Witnesses reduce noise: the scores are averaged.",
+        "privacyHeading": "Privacy",
+        "privacyBody": "Witnesses never see your scores. You see the averaged result from all Witnesses — not individual responses.",
+        "blindSpotsHeading": "Blind spots",
+        "blindSpotsBody": "Where your self-report and Witness scores diverge significantly, a blind spot is flagged. Not because one is right and the other wrong — but because the gap itself is informative. A dimension you perceive very differently than those around you is worth examining."
+      },
+      "part3": {
+        "label": "Part 3",
+        "heading": "Cognitive ability",
+        "body": "A brief open-source measure adapted from the International Cognitive Ability Resource — a public-domain assessment battery. Included as an additional data point for the team report. It is not an IQ score, not a ranking, and not a gate. An additional lens, nothing more."
+      }
+    }
+  },
+  "rolesPage": {
+    "title": "Roles",
+    "intro": {
+      "heading": "Nine roles. One taxonomy.",
+      "body1": "Personality profiles describe how you are. Roles describe how you tend to function in groups. The gap between those two things is where Cèrcol tries to work.",
+      "body2": "The nine roles are derived from the AB5C circumplex — a well-validated model of how personality traits cluster in two-dimensional space (Hofstee, De Raad & Goldberg, 1992). The names are ours. The structure is from the literature."
+    },
+    "beta": {
+      "heading": "This is a starting hypothesis, not a validated instrument.",
+      "body": "Current role assignments use theoretical centroids derived from published research. As real data accumulates — target: 300 Full Moon completions — centroids will be replaced with empirical values from actual profiles. Role scoring is labelled beta in the interface for exactly this reason."
+    },
+    "notBelbin": {
+      "heading": "Why not Belbin?",
+      "body": "Belbin roles are widely used but have weaknesses: they are proprietary, require a trained assessor, and the psychometric foundations are contested in the literature. Cèrcol roles are derived from open, validated personality science. They are not the same thing and make no claim to be. The purpose — understanding how someone functions in a team — is similar. The approach is different."
+    },
+    "critique": {
+      "heading": "See a problem with this model?",
+      "body": "This taxonomy is a hypothesis. If you have background in psychometrics, organisational psychology, or team dynamics and see a flaw — in the centroids, the naming, the forced-choice design, anything — open an issue.",
+      "cta": "Open an issue on GitHub"
+    },
+    "grid": {
+      "heading": "The nine roles",
+      "profileLabel": "Tendency",
+      "contributesLabel": "Contributes to a team",
+      "missesLabel": "Tends to miss"
+    },
+    "r0Note": {
+      "heading": "A note on Opal",
+      "body": "Opal is not a residual category or a failed assignment. It means no single dimension dominates the profile. Many effective people score here. Opal profiles are often the most context-adaptable members of a team — they can step into whatever role the situation requires."
+    },
+    "arcNote": {
+      "heading": "Personal arc",
+      "body": "Most role results include an arc — secondary roles that scored close to the primary in probability space. An Anchor with a Heron arc has the Anchor's reliability and the Heron's listening quality. The arc gives the result texture that a single label can't."
+    },
+    "contextNote": {
+      "heading": "Roles are not destinies",
+      "body": "The same person can function differently in different team compositions. A Thorn in a conflict-averse team may soften. An Opal in a team that needs direction may sharpen. These are tendencies in context — not fixed identities. Don't use a role result as a ceiling."
+    }
   }
 }

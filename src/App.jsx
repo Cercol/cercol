@@ -16,6 +16,8 @@ import AuthPage from './pages/AuthPage'
 import AuthCallbackPage from './pages/AuthCallbackPage'
 import MyResultsPage from './pages/MyResultsPage'
 import AboutPage from './pages/AboutPage'
+import InstrumentsPage from './pages/InstrumentsPage'
+import RolesPage from './pages/RolesPage'
 import SciencePage from './pages/SciencePage'
 import FaqPage from './pages/FaqPage'
 import FeedbackButton from './components/FeedbackButton'
@@ -45,9 +47,11 @@ function AppContent() {
         {/* Account */}
         <Route path="/my-results" element={<MyResultsPage />} />
         {/* Documentation */}
-        <Route path="/about"   element={<AboutPage />} />
-        <Route path="/science" element={<SciencePage />} />
-        <Route path="/faq"     element={<FaqPage />} />
+        <Route path="/about"       element={<AboutPage />} />
+        <Route path="/instruments" element={<InstrumentsPage />} />
+        <Route path="/roles"       element={<RolesPage />} />
+        <Route path="/science"     element={<SciencePage />} />
+        <Route path="/faq"         element={<FaqPage />} />
       </Routes>
       <FeedbackButton itemId={itemContext.itemId} itemText={itemContext.itemText} />
     </Layout>

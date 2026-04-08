@@ -553,28 +553,27 @@ values as data accumulates. Built across four sub-phases:
 - In Supabase SQL editor: run migration 005_witness_subject.sql
 
 ### Phase 8 — Documentation and content site ✅ COMPLETE
-- Three public routes, no login required, fully bilingual (EN + CA):
-  - /about    — what Cèrcol is, three instruments, five dimensions, score framing
-  - /science  — open instruments, five-factor model, role taxonomy, Full Moon design, references, GitHub link
-  - /faq      — 6 FAQ items: privacy, accuracy, Witness, instrument differences, Full Moon value, retaking
-- Layout.jsx: three compact nav links (About / Science / FAQ) added between brand and right controls
-  using NavLink with active state highlight; existing header structure preserved
-- AboutPage.jsx:
-  - Intro with founding phrase in blockquote
-  - InstrumentSection component: moon icon, eyebrow, name, meta, free/paid chip, description,
-    what-you-get, static read-only sample items (3 per instrument), scale note, start CTA link
-  - StaticItem component: item text + greyed-out numbered scale (7-point for New Moon, 5-point for others)
-  - DimensionCard grid: 5 cards (2-col on sm+), one per dimension with name + one-line description
-  - Framing note section
-- SciencePage.jsx:
-  - Section component (eyebrow, heading, children)
-  - Open instruments, five-factor model (with note callout), role taxonomy (with beta box)
-  - Full Moon three-part breakdown: self-report, Witness (with ideal-Witness callout), cognitive ability
-  - References: 9 citations, linked where DOI available
-  - Open-source CTA linking to GitHub
-- FaqPage.jsx: details/summary HTML accordion (no JS state), 6 questions
-  with chevron that rotates open via group-open Tailwind class
-- en.json / ca.json: nav.about/science/faq keys, about.*, science.*, faq.* namespaces added
+Phase 8.1 revision: radical transparency architecture — anyone can read the surface, or go deep.
+
+**Five public doc routes, no login required, fully bilingual (EN + CA):**
+- /about        — what Cèrcol is, philosophy ("built in the open"), explore-deeper cards,
+                  five dimensions grid, "what Cèrcol is not" list, score framing note
+- /instruments  — deep page: New Moon (7-point scale, 3 sample items, get/measures breakdown),
+                  First Quarter (5-point, 30 facets), Full Moon as three-part system:
+                  Part 1 self-report, Part 2 Witness (why/how/who/privacy/blind spots),
+                  Part 3 cognitive ability; start CTAs on all three
+- /roles        — nine roles with OCEAN tendency profiles derived from SCIENCE.md centroids,
+                  contributes/misses per role, beta disclaimer, "why not Belbin" section,
+                  R0/arc/context notes, GitHub issues CTA
+- /science      — unchanged from Phase 8
+- /faq          — unchanged from Phase 8
+
+**Layout.jsx:** two-row header — row 1 brand + controls, row 2 five nav links (About · Instruments · Roles · Science · FAQ) with overflow-x-auto for mobile; NavLink active state preserved
+
+**Locale changes:**
+- en.json: added nav.instruments / nav.roles; reworked about.* (removed instruments subsection,
+  added philosophy / explore / notThis); added instruments.* and rolesPage.* namespaces
+- ca.json: same structural changes with full Valencian translations throughout
 
 ### Phase 9 — Full Moon integrated report
 - Combines self-report (Phase 6), Witness (Phase 7), and ICAR into one report
