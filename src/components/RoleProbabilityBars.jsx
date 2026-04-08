@@ -36,14 +36,14 @@ export default function RoleProbabilityBars({ result }) {
           const barColor = isPrimary
             ? colors.primary
             : isArc
-              ? '#93c5fd'   // blue-300
-              : '#e5e7eb'   // gray-200
+              ? colors.arcBar
+              : colors.border
 
           // Label colour
           const labelColor = isPrimary
             ? colors.textPrimary
             : isArc
-              ? '#1d4ed8'   // blue-700
+              ? colors.arcLabel
               : colors.textMuted
 
           return (
@@ -59,7 +59,7 @@ export default function RoleProbabilityBars({ result }) {
                   {pct}%
                 </span>
               </div>
-              <div className="w-full h-2 rounded-full overflow-hidden" style={{ background: '#f3f4f6' }}>
+              <div className="w-full h-2 rounded-full overflow-hidden bg-gray-100">
                 <div
                   className="h-full rounded-full transition-all duration-500"
                   style={{ width: `${pct}%`, background: barColor }}

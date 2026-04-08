@@ -666,7 +666,7 @@
       },
       "roles": {
         "label": "Roles",
-        "desc": "The nine roles, where they come from, and their honest limitations."
+        "desc": "The twelve roles, where they come from, and their honest limitations."
       },
       "science": {
         "label": "Science",
@@ -770,7 +770,7 @@
       "heading": "First Quarter Cèrcol",
       "eyebrow": "Full portrait",
       "meta": "60 questions · ~10 min",
-      "scaleNote": "5-point scale: 'Disagree strongly' to 'Agree strongly'. Five-point scales are standard for IPIP facet-level measurement.",
+      "scaleNote": "5-point scale: 'Disagree strongly' to 'Agree strongly'. Five-point scales are standard for facet-level personality measurement.",
       "measures": "Five dimensions, each broken into 6 facets — 30 data points. Two items per facet.",
       "get": "Domain chart, 30-facet breakdown, and a first beta read on your role. The facet breakdown is where the useful information lives — the domain totals are just the headline.",
       "items": ["Take charge.", "Worry about things.", "Have a vivid imagination."],

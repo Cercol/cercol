@@ -109,6 +109,13 @@ Combines self-report and Witness into a single coherent narrative at /full-moon/
 - `computeConvergence()` added to witness-scoring.js.
 - `RoleResult` updated with `definitive` prop.
 
+### Phase 9.2 — Pre-Phase 10 audit fixes ✅ COMPLETE
+- en.json + ca.json: "nine roles" → "twelve roles" in `about.explore.roles.desc`
+- en.json + ca.json: "IPIP" removed from `instruments.firstQuarter.scaleNote`
+- RoleProbabilityBars.jsx: 4 hardcoded hex values replaced with design tokens (`colors.arcBar`, `colors.arcLabel`, `colors.border`; bar track inline style replaced with Tailwind `bg-gray-100`)
+- tokens.js: added `arcBar` and `arcLabel` tokens
+- ca.json: 60 `fqFacets` high/low descriptions translated to Valencian (labels were already translated)
+
 ### Phase 10 — Full UX/UI redesign
 Full visual identity applied via tokens.js.
 Designed once full product scope (Phases 6–9) is stable.
