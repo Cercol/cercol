@@ -3,8 +3,8 @@
  * Requires authentication (premium already validated by having completed Full Moon).
  *
  * Reading order (narrative flow):
- * 1. Self role (prominent, top)
- * 2. Witness role (if ≥1 complete)
+ * 1. Combined role card (self × 2/3 + witness × 1/3 weighting)
+ * 2. Combined probability bars (3 rows per role when witness present)
  * 3. Role alignment / convergence (if ≥2 complete)
  * 4. Blind spots (if ≥2 complete)
  * 5. Domain comparison bars (self vs witness average) — two-column layout
@@ -21,11 +21,10 @@ import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
 import { getMyWitnessSessions } from '../lib/api'
 import { computeRole } from '../utils/role-scoring'
-import { averageWitnessScores, detectDivergence, computeConvergence } from '../utils/witness-scoring'
+import { averageWitnessScores, detectDivergence, computeConvergence, computeCombinedRole } from '../utils/witness-scoring'
 import { DOMAIN_KEYS } from '../data/domains'
 import { colors } from '../design/tokens'
 import RadarChart from '../components/RadarChart'
-import RoleProbabilityBars from '../components/RoleProbabilityBars'
 import { Card, Button, Badge, SectionLabel } from '../components/ui'
 
 const DOMAIN_BAR_COLOR = {
@@ -37,6 +36,106 @@ const DOMAIN_BAR_COLOR = {
 }
 
 const MIN_WITNESSES_FOR_REPORT = 2
+
+// ── CombinedRoleBars ──────────────────────────────────────────────────────────
+// Shows all 12 roles in a 2×6 grid.
+// If witnessResult is present: 3 stacked bars (combined / self / witness).
+// If witnessResult is null: single bar (self only, same as FQ/FM results pages).
+function CombinedRoleBars({ combinedResult, selfResult, witnessResult, t }) {
+  const sorted = Object.entries(combinedResult.probabilities).sort((a, b) => b[1] - a[1])
+  const { role: primaryRole, arc } = combinedResult
+
+  return (
+    <Card className="shadow-sm p-5 flex flex-col gap-3">
+      <SectionLabel color="gray">
+        {t('roles.probability_label')}
+      </SectionLabel>
+
+      {witnessResult && (
+        <div className="flex items-center gap-4 text-xs" style={{ color: colors.textMuted }}>
+          <span className="flex items-center gap-1.5 font-medium">
+            <span className="w-3 h-2 rounded-full inline-block bg-gray-600" />
+            {t('witnessResults.combinedLabel')}
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="w-3 h-1 rounded-full bg-gray-300 inline-block" />
+            {t('witnessResults.selfLabel')}
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="w-3 h-1 rounded-full bg-[#99b3e0] inline-block" />
+            {t('witnessResults.witnessLabel')}
+          </span>
+        </div>
+      )}
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
+        {sorted.map(([r, combinedProb]) => {
+          const isPrimary   = r === primaryRole
+          const isArc       = arc.includes(r)
+          const combinedPct = Math.round(combinedProb * 100)
+          const selfPct     = Math.round((selfResult.probabilities[r] ?? 0) * 100)
+          const witnessPct  = witnessResult
+            ? Math.round((witnessResult.probabilities[r] ?? 0) * 100)
+            : null
+
+          const barColor   = isPrimary ? colors.primary : isArc ? colors.arcBar : colors.border
+          const labelColor = isPrimary ? colors.textPrimary : isArc ? colors.arcLabel : colors.textMuted
+
+          return (
+            <div key={r}>
+              <div className="flex items-center justify-between mb-1">
+                <span
+                  className={`text-sm ${isPrimary ? 'font-semibold' : 'font-normal'}`}
+                  style={{ color: labelColor }}
+                >
+                  {t(`roles.${r}.name`)}
+                </span>
+                <span className="text-xs tabular-nums" style={{ color: colors.textMuted }}>
+                  {combinedPct}%
+                </span>
+              </div>
+              {/* Combined bar — thicker */}
+              <div className="w-full h-2 rounded-full overflow-hidden bg-gray-100 mb-1">
+                <div
+                  className="h-full rounded-full transition-all duration-500"
+                  style={{ width: `${combinedPct}%`, background: barColor }}
+                />
+              </div>
+              {witnessResult && (
+                <>
+                  {/* Self bar — thinner */}
+                  <div className="flex items-center gap-1.5 mb-0.5">
+                    <div className="flex-1 h-1 rounded-full overflow-hidden bg-gray-100">
+                      <div
+                        className="h-full rounded-full transition-all duration-500 bg-gray-400"
+                        style={{ width: `${selfPct}%` }}
+                      />
+                    </div>
+                    <span className="text-xs tabular-nums w-6 text-right shrink-0" style={{ color: colors.textMuted }}>
+                      {selfPct}%
+                    </span>
+                  </div>
+                  {/* Witness bar — thinner */}
+                  <div className="flex items-center gap-1.5">
+                    <div className="flex-1 h-1 rounded-full overflow-hidden bg-gray-100">
+                      <div
+                        className="h-full rounded-full transition-all duration-500 bg-[#99b3e0]"
+                        style={{ width: `${witnessPct}%` }}
+                      />
+                    </div>
+                    <span className="text-xs tabular-nums w-6 text-right shrink-0" style={{ color: colors.textMuted }}>
+                      {witnessPct}%
+                    </span>
+                  </div>
+                </>
+              )}
+            </div>
+          )
+        })}
+      </div>
+    </Card>
+  )
+}
 
 // ── ConvergenceMeter ──────────────────────────────────────────────────────────
 function ConvergenceMeter({ ratio, t }) {
@@ -101,7 +200,7 @@ function BlindSpotCard({ domain, selfScore, witnessScore, t }) {
 }
 
 // ── DomainComparisonRow ───────────────────────────────────────────────────────
-function DomainComparisonRow({ domainKey, selfScore, witnessScore, label, barColor }) {
+function DomainComparisonRow({ selfScore, witnessScore, label, barColor }) {
   const selfPct    = ((selfScore - 1) / 4) * 100
   const witnessPct = witnessScore !== null ? ((witnessScore - 1) / 4) * 100 : null
 
@@ -215,6 +314,9 @@ export default function FullMoonReportPage() {
     : null
   const witnessRole = witnessScores ? computeRole(witnessScores) : null
 
+  // Combined role: self × 2/3 + witness × 1/3 (falls back to selfRole when no witnesses)
+  const combinedRole = computeCombinedRole(selfRole, witnessRole)
+
   const divergence = hasEnoughWitnesses
     ? detectDivergence(selfReport, witnessScores)
     : []
@@ -240,10 +342,10 @@ export default function FullMoonReportPage() {
           </p>
         </div>
 
-        {/* ── Section 1: Self role (top, full width) ── */}
+        {/* ── Section 1: Combined role card (top, full width) ── */}
         <section>
           <SectionLabel color="gray" className="mb-4">
-            {t('witnessResults.selfRoleSection')}
+            {t('witnessResults.combinedRoleSection')}
           </SectionLabel>
           <Card accent="red" className="p-6 sm:p-8">
             <div className="flex flex-col gap-4">
@@ -265,18 +367,21 @@ export default function FullMoonReportPage() {
                 className="text-4xl sm:text-5xl font-bold leading-tight"
                 style={{ color: colors.textPrimary }}
               >
-                {t(`roles.${selfRole.role}.name`)}
+                {t(`roles.${combinedRole.role}.name`)}
               </h2>
               <p className="text-base leading-relaxed" style={{ color: colors.textMuted }}>
-                {t(`roles.${selfRole.role}.essence`)}
+                {t(`roles.${combinedRole.role}.essence`)}
               </p>
-              {selfRole.arc.length > 0 && (
+              {combinedRole.arc.length > 0 && (
                 <div className="flex flex-col gap-2">
-                  <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: colors.textMuted }}>
+                  <p
+                    className="text-xs font-semibold uppercase tracking-widest"
+                    style={{ color: colors.textMuted }}
+                  >
                     {t('roles.arc_label')}
                   </p>
                   <div className="flex flex-wrap gap-2">
-                    {selfRole.arc.map(r => (
+                    {combinedRole.arc.map(r => (
                       <Badge key={r} variant="default">
                         {t(`roles.${r}.name`)}
                       </Badge>
@@ -286,52 +391,17 @@ export default function FullMoonReportPage() {
               )}
             </div>
           </Card>
-          <div className="mt-4">
-            <RoleProbabilityBars result={selfRole} columns={2} />
-          </div>
         </section>
 
-        {/* ── Section 2: Witness role (if ≥1 complete) ── */}
-        {hasAnyWitness && witnessRole && (
-          <section>
-            <SectionLabel color="gray" className="mb-4">
-              {t('witnessResults.roleSection')}
-            </SectionLabel>
-            <Card accent="blue" className="p-6 sm:p-8">
-              <div className="flex flex-col gap-4">
-                <Badge variant="default" className="self-start">
-                  {t('roles.beta_label')}
-                </Badge>
-                <h2
-                  className="text-4xl sm:text-5xl font-bold leading-tight"
-                  style={{ color: colors.textPrimary }}
-                >
-                  {t(`roles.${witnessRole.role}.name`)}
-                </h2>
-                <p className="text-base leading-relaxed" style={{ color: colors.textMuted }}>
-                  {t(`roles.${witnessRole.role}.essence`)}
-                </p>
-                {witnessRole.arc.length > 0 && (
-                  <div className="flex flex-col gap-2">
-                    <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: colors.textMuted }}>
-                      {t('roles.arc_label')}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {witnessRole.arc.map(r => (
-                        <Badge key={r} variant="default">
-                          {t(`roles.${r}.name`)}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </Card>
-            <div className="mt-4">
-              <RoleProbabilityBars result={witnessRole} columns={2} />
-            </div>
-          </section>
-        )}
+        {/* ── Section 2: Combined probability bars ── */}
+        <section>
+          <CombinedRoleBars
+            combinedResult={combinedRole}
+            selfResult={selfRole}
+            witnessResult={witnessRole}
+            t={t}
+          />
+        </section>
 
         {/* ── Section 3: Convergence (if ≥2 complete) ── */}
         {hasEnoughWitnesses && convergence !== null && (
@@ -408,7 +478,6 @@ export default function FullMoonReportPage() {
                 {DOMAIN_KEYS.map(key => (
                   <DomainComparisonRow
                     key={key}
-                    domainKey={key}
                     selfScore={selfReport[key]}
                     witnessScore={witnessScores ? witnessScores[key] : null}
                     label={t(`fmDomains.${key}.name`)}

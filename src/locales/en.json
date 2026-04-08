@@ -602,6 +602,8 @@
     "pendingNote": "You need at least 2 completed witnesses to see this section.",
     "selfLabel": "Self",
     "witnessLabel": "Witnesses",
+    "combinedLabel": "Combined",
+    "combinedRoleSection": "Your role",
     "roleSection": "Your role · Witness",
     "divergenceHeading": "Blind spots",
     "divergenceNote": "Dimensions where your self-report and witness reports differ significantly.",

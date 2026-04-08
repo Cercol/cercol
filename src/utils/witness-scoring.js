@@ -198,6 +198,36 @@ export function computeConvergence(selfResult, witnessResult) {
 }
 
 /**
+ * computeCombinedRole — combine self and witness role results.
+ *
+ * Applies a 2/3 self + 1/3 witness weighting to probabilities across all 12 roles.
+ * If witnessResult is null, returns selfResult unchanged.
+ *
+ * @param {Object} selfResult    — return value of computeRole()
+ * @param {Object} witnessResult — return value of computeRole(), or null
+ * @returns same shape as computeRole(): { role, arc, probabilities }
+ */
+export function computeCombinedRole(selfResult, witnessResult) {
+  if (!witnessResult) return selfResult
+
+  const combined = {}
+  for (const r of Object.keys(selfResult.probabilities)) {
+    const selfProb    = selfResult.probabilities[r] ?? 0
+    const witnessProb = witnessResult.probabilities[r] ?? 0
+    combined[r] = (selfProb * 2 + witnessProb) / 3
+  }
+
+  // Primary: highest combined probability
+  const entries = Object.entries(combined).sort((a, b) => b[1] - a[1])
+  const role = entries[0][0]
+
+  // Arc: combined probability > 15%, excluding primary
+  const arc = entries.filter(([r, p]) => r !== role && p > 0.15).map(([r]) => r)
+
+  return { role, arc, probabilities: combined }
+}
+
+/**
  * averageWitnessScores — compute mean domain scores across completed witnesses.
  *
  * @param {Array} scoreSets - array of {presence, bond, ...} objects

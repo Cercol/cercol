@@ -602,6 +602,8 @@
     "pendingNote": "Necessites almenys 2 testimonis completats per veure aquesta secció.",
     "selfLabel": "Jo",
     "witnessLabel": "Testimonis",
+    "combinedLabel": "Combinat",
+    "combinedRoleSection": "El teu rol",
     "roleSection": "El teu rol · Testimonis",
     "divergenceHeading": "Punts cecs",
     "divergenceNote": "Dimensions on l'autoinforme i els testimonis difereixen significativament.",

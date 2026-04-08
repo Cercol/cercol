@@ -122,21 +122,22 @@ Brand identity and visual foundation. Sub-phases apply the identity across all p
 ### Phase 10.5 — Results pages dashboard redesign ✅ COMPLETE
 Redesigned all four results/report pages as dashboards.
 
-- **Role first**: FQ, FM, and report pages surface role name (Playfair Display text-4xl/5xl) at
-  the top in a full-width Card with 3px left red accent border (blue for witness role in report).
-  Beta badge, essence text, arc chips all inline.
-- **Two-column layout**: RadarChart card (left) + compact domain rows card (right) in a
-  `grid-cols-1 md:grid-cols-2` grid. Domain rows use dividers instead of individual cards.
-  FullMoonReportPage uses `DomainComparisonRow` (self + witness bars) in the right column.
+- **Role first**: FQ and FM surface role name (Playfair Display text-4xl/5xl) at the top in a
+  full-width Card with 3px left red accent border. Beta badge, essence text, arc chips inline.
+- **Two-column layout**: RadarChart card (left) + compact domain rows card (right)
+  (`grid-cols-1 md:grid-cols-2`). Domain rows use dividers instead of individual cards.
 - **Role probability bars**: Full width, 2×6 grid (`columns={2}` prop on RoleProbabilityBars).
-- **Facets**: Two columns of domain cards (`grid-cols-1 md:grid-cols-2`), compact rows within.
-- **Actions**: Share + Start over in a single flex row (not stacked full-width).
-- **NewMoon**: No role section, no facets. Two-column radar+domains → upgrade CTA → actions row.
-- **Fix**: NewMoonResultsPage i18n — `domains.${key}.label` (TIPI keys) →
-  `fqDomains.${key}.name` (Cèrcol keys, matching remapped scores). Fixes broken domain labels.
-- **FullMoonReportPage**: Fully updated with same dashboard treatment. Self role at top with
-  large display; witness role below with blue accent; domain section two-column.
-  All witness logic (convergence, blind spots, session list) preserved unchanged.
+- **Facets**: Two columns of domain cards, compact rows within.
+- **Actions**: Share + Start over in a single flex row.
+- **NewMoon**: No role/facets. Two-column radar+domains → upgrade CTA → actions row.
+- **NewMoon i18n fix**: `domains.${key}.label` (TIPI keys) → `fqDomains.${key}.name`
+  (Cèrcol keys, matching remapped scores). New bundle hash forces CDN cache bust.
+- **FullMoonReportPage combined role**: Two separate role cards replaced with a single
+  combined role card. Combined score = self × 2/3 + witness × 1/3 via
+  `computeCombinedRole(selfResult, witnessResult)` in witness-scoring.js.
+  Probability bars show 3 stacked rows (combined / self / witness) when ≥1 witness complete;
+  single row when no witnesses. Legend with Combined / Self / Witness color keys.
+  All witness logic (convergence, blind spots, domain comparison, session list) unchanged.
 
 ### Phase 10.4 — Centralized component system + mobile navigation ✅ COMPLETE
 **Fix 1 — Component system (src/components/ui/):**
