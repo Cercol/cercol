@@ -12,11 +12,11 @@ const ROLES = [
   { key: 'R04', accent: 'text-slate-600',   bg: 'bg-slate-50'   }, // Owl      P- B-
   { key: 'R05', accent: 'text-amber-500',   bg: 'bg-amber-50'   }, // Eagle    P+ V+
   { key: 'R06', accent: 'text-orange-500',  bg: 'bg-orange-50'  }, // Falcon   P+ V-
-  { key: 'R07', accent: 'text-violet-600',  bg: 'bg-violet-50'  }, // Octopus  P- V+
+  { key: 'R07', accent: 'text-[#427c42]',   bg: 'bg-[#eaf2ea]'  }, // Octopus  P- V+
   { key: 'R08', accent: 'text-stone-600',   bg: 'bg-stone-50'   }, // Tortoise P- V-
   { key: 'R09', accent: 'text-yellow-600',  bg: 'bg-yellow-50'  }, // Bee      B+ V+
   { key: 'R10', accent: 'text-amber-800',   bg: 'bg-amber-100'  }, // Bear     B+ V-
-  { key: 'R11', accent: 'text-indigo-600',  bg: 'bg-indigo-50'  }, // Fox      B- V+
+  { key: 'R11', accent: 'text-[#427c42]',   bg: 'bg-[#eaf2ea]'  }, // Fox      B- V+
   { key: 'R12', accent: 'text-gray-600',    bg: 'bg-gray-50'    }, // Badger   B- V-
 ]
 

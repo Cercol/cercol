@@ -31,7 +31,7 @@ import RoleProbabilityBars from '../components/RoleProbabilityBars'
 const DOMAIN_BAR_COLOR = {
   depth:      'bg-red-500',
   presence:   'bg-amber-400',
-  vision:     'bg-purple-500',
+  vision:     'bg-[#427c42]',
   bond:       'bg-emerald-500',
   discipline: 'bg-blue-600',
 }
@@ -90,7 +90,7 @@ function BlindSpotCard({ domain, selfScore, witnessScore, t }) {
         </p>
         <div className="flex items-center gap-3 text-xs font-semibold shrink-0">
           <span style={{ color: colors.textMuted }}>{selfScore.toFixed(1)}</span>
-          <span className="text-purple-600">{witnessScore.toFixed(1)}</span>
+          <span className="text-[#0047ba]">{witnessScore.toFixed(1)}</span>
         </div>
       </div>
       <p className="text-sm leading-relaxed" style={{ color: colors.textMuted }}>
@@ -112,7 +112,7 @@ function DomainComparisonBar({ domainKey, selfScore, witnessScore, label, barCol
         <div className="flex items-center gap-3 text-sm font-semibold shrink-0">
           <span style={{ color: colors.textMuted }}>{selfScore.toFixed(1)}</span>
           {witnessPct !== null && (
-            <span className="text-purple-600">{witnessScore.toFixed(1)}</span>
+            <span className="text-[#0047ba]">{witnessScore.toFixed(1)}</span>
           )}
         </div>
       </div>
@@ -121,7 +121,7 @@ function DomainComparisonBar({ domainKey, selfScore, witnessScore, label, barCol
       </div>
       {witnessPct !== null && (
         <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
-          <div className="h-full rounded-full transition-all duration-500 bg-purple-300" style={{ width: `${witnessPct}%` }} />
+          <div className="h-full rounded-full transition-all duration-500 bg-[#99b3e0]" style={{ width: `${witnessPct}%` }} />
         </div>
       )}
     </div>
@@ -196,7 +196,7 @@ export default function FullMoonReportPage() {
           <p className="text-gray-500 text-sm mb-4">{t('witnessResults.noSelf')}</p>
           <button
             onClick={() => navigate('/full-moon')}
-            className="py-2.5 px-5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold transition-colors shadow-sm"
+            className="py-2.5 px-5 rounded-xl bg-[#0047ba] hover:opacity-90 text-white text-sm font-semibold transition-opacity shadow-sm"
           >
             {t('witnessResults.startFmCta')}
           </button>
@@ -232,7 +232,7 @@ export default function FullMoonReportPage() {
 
         {/* ── Header ── */}
         <div>
-          <p className="text-xs font-semibold uppercase tracking-widest text-purple-500 mb-1">
+          <p className="text-xs font-semibold uppercase tracking-widest text-[#0047ba] mb-1">
             🌕 Full Moon Cèrcol
           </p>
           <h1 className="text-2xl sm:text-3xl font-bold" style={{ color: colors.textPrimary }}>
@@ -332,7 +332,7 @@ export default function FullMoonReportPage() {
                   {t('witnessResults.selfLabel')}
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <span className="w-3 h-1.5 rounded-full bg-purple-300 inline-block" />
+                  <span className="w-3 h-1.5 rounded-full bg-[#99b3e0] inline-block" />
                   {t('witnessResults.witnessLabel')}
                 </span>
               </div>
@@ -387,7 +387,7 @@ export default function FullMoonReportPage() {
             )}
             <button
               onClick={() => navigate('/witness-setup')}
-              className="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold transition-colors shadow-sm"
+              className="w-full py-2.5 rounded-xl bg-[#0047ba] hover:opacity-90 text-white text-sm font-semibold transition-opacity shadow-sm"
             >
               {t('witnessResults.setupCta')}
             </button>

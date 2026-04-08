@@ -30,7 +30,7 @@ const SCALE_POINTS = 5
 const DOMAIN_ACCENT = {
   depth:      'bg-red-500',
   presence:   'bg-amber-400',
-  vision:     'bg-purple-500',
+  vision:     'bg-[#427c42]',
   bond:       'bg-emerald-500',
   discipline: 'bg-blue-600',
 }

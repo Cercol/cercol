@@ -83,12 +83,9 @@ export default function HomePage() {
       className="min-h-[calc(100vh-4rem)] flex flex-col"
       style={{ backgroundColor: colors.blue }}
     >
-      {/* Breathing space above cards */}
-      <div style={{ height: 80 }} />
-
-      {/* Instrument cards — 3-col desktop, 2 tablet, 1 mobile */}
-      <div className="flex-1 px-8 lg:px-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-screen-xl mx-auto">
+      {/* Instrument cards — vertically centered, 3-col desktop, 2 tablet, 1 mobile */}
+      <div className="flex-1 flex items-center px-8 lg:px-16 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-screen-xl mx-auto w-full">
           <InstrumentCard
             emoji="🌑"
             name={t('home.newMoon.name')}

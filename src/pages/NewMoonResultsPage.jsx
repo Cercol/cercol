@@ -26,7 +26,7 @@ const DOMAIN_BAR_COLOR = {
   bond:       'bg-emerald-500',
   discipline: 'bg-blue-600',
   depth:      'bg-red-500',
-  vision:     'bg-purple-500',
+  vision:     'bg-[#427c42]',
 }
 
 function encodeScores(scores) {

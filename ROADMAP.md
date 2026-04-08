@@ -119,6 +119,25 @@ Combines self-report and Witness into a single coherent narrative at /full-moon/
 ### Phase 10 — Full UX/UI redesign
 Brand identity and visual foundation. Sub-phases apply the identity across all pages.
 
+### Phase 10.3 — Purple removal + homepage vertical centering ✅ COMPLETE
+- Removed all Tailwind purple-*, violet-*, indigo-* from every user-facing component and page
+- Vision dimension bars: `bg-purple-500` → `bg-[#427c42]` (green) in 5 files
+  (MyResultsPage, NewMoonResultsPage, FirstQuarterResultsPage, FullMoonResultsPage, FullMoonReportPage)
+- Vision DOMAIN_ACCENT: `bg-purple-500` → `bg-[#427c42]` in FirstQuarterPage, FullMoonPage
+- CTA buttons: `bg-purple-600 hover:bg-purple-700` → `bg-[#0047ba] hover:opacity-90 transition-opacity` across
+  FirstQuarterResultsPage, FullMoonResultsPage, FullMoonReportPage (×2), WitnessSetupPage, WitnessPage (×2), FullMoonPage
+- Secondary buttons: `border-purple-200 text-purple-700 hover:bg-purple-50` → `border-[#0047ba] text-[#0047ba] hover:bg-[#e8eef8]`
+  in FullMoonResultsPage, WitnessSetupPage
+- Section eyebrows and labels: `text-purple-400/500` → `text-[#0047ba]` across 5 files
+- Borders: `border-purple-100` → `border-gray-200` in FirstQuarterResultsPage, FullMoonResultsPage, WitnessSetupPage
+- Witness score values: `text-purple-600` → `text-[#0047ba]` in FullMoonReportPage (×2)
+- Witness comparison bar: `bg-purple-300` → `bg-[#99b3e0]` in FullMoonReportPage (bar + legend dot)
+- Definitive badge: `bg-purple-50 text-purple-700` → `bg-[#e8eef8] text-[#0047ba]` in RoleResult
+- RolesPage: R07 Octopus + R11 Fox role accents violet/indigo → `text-[#427c42] bg-[#eaf2ea]`
+- WitnessPage progress bar: `bg-purple-500` → `bg-[#0047ba]`; focus ring → `focus:ring-[#99b3e0]`
+- FullMoonPage paywall disabled state: `bg-purple-300` → `bg-[#99b3e0]`
+- HomePage: cards vertically centered (flex-1 flex items-center; removed fixed 80px top spacer)
+
 ### Phase 10.2 — Homepage card fix + centralized layout container ✅ COMPLETE
 - HomePage: instrument cards redesigned — white bg, 3px solid left border in instrument color,
   name in instrument color, hover fills with instrument color (text inverts), transition-colors 200ms

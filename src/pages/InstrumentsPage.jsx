@@ -166,12 +166,12 @@ export default function InstrumentsPage() {
             <div className="px-6 pt-6 pb-3">
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-widest mb-1 text-purple-600">
+                  <p className="text-xs font-semibold uppercase tracking-widest mb-1 text-[#0047ba]">
                     🌕 {t('instruments.fullMoon.eyebrow')}
                   </p>
                   <h2 className="text-lg font-bold text-gray-900">{t('instruments.fullMoon.heading')}</h2>
                 </div>
-                <span className="shrink-0 mt-1 text-xs font-semibold px-2.5 py-1 rounded-full bg-purple-50 text-purple-700">
+                <span className="shrink-0 mt-1 text-xs font-semibold px-2.5 py-1 rounded-full bg-[#e8eef8] text-[#0047ba]">
                   {t('instruments.paidLabel')}
                 </span>
               </div>

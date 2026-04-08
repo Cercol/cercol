@@ -42,7 +42,7 @@ const POLL_INTERVAL_MS  = 1500
 const DOMAIN_ACCENT = {
   depth:      'bg-red-500',
   presence:   'bg-amber-400',
-  vision:     'bg-purple-500',
+  vision:     'bg-[#427c42]',
   bond:       'bg-emerald-500',
   discipline: 'bg-blue-600',
 }
@@ -297,8 +297,8 @@ export default function FullMoonPage() {
               className={[
                 'w-full py-3 rounded-xl font-semibold text-white transition-colors',
                 checkoutLoading
-                  ? 'bg-purple-300 cursor-not-allowed'
-                  : 'bg-purple-600 hover:bg-purple-700 shadow-sm',
+                  ? 'bg-[#99b3e0] cursor-not-allowed'
+                  : 'bg-[#0047ba] hover:opacity-90 transition-opacity shadow-sm',
               ].join(' ')}
             >
               {checkoutLoading ? t('fm.paywall.loading') : t('fm.paywall.cta')}

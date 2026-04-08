@@ -27,14 +27,14 @@ function WitnessRow({ index, name, email, onChange, onRemove, showRemove }) {
           placeholder={`Witness ${index + 1}`}
           value={name}
           onChange={(e) => onChange(index, 'name', e.target.value)}
-          className="flex-1 border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-200"
+          className="flex-1 border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#99b3e0]"
         />
         <input
           type="email"
           placeholder="Email (optional)"
           value={email}
           onChange={(e) => onChange(index, 'email', e.target.value)}
-          className="flex-1 border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-200"
+          className="flex-1 border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#99b3e0]"
         />
       </div>
       {showRemove && (
@@ -65,7 +65,7 @@ function CopyButton({ text, label }) {
   return (
     <button
       onClick={handleCopy}
-      className="shrink-0 text-xs font-semibold text-purple-600 hover:text-purple-800 transition-colors"
+      className="shrink-0 text-xs font-semibold text-[#0047ba] hover:text-[#003090] transition-colors"
     >
       {copied ? '✓ Copied' : label}
     </button>
@@ -180,7 +180,7 @@ export default function WitnessSetupPage() {
 
         {/* Header */}
         <div>
-          <p className="text-xs font-semibold uppercase tracking-widest text-purple-500 mb-1">
+          <p className="text-xs font-semibold uppercase tracking-widest text-[#0047ba] mb-1">
             🌕 Witness Cèrcol
           </p>
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">{t('witness.setup.title')}</h1>
@@ -189,7 +189,7 @@ export default function WitnessSetupPage() {
 
         {/* New links (shown after successful create) */}
         {newLinks.length > 0 && (
-          <div className="bg-white rounded-2xl border border-purple-100 shadow-sm p-5 flex flex-col gap-3">
+          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 flex flex-col gap-3">
             <p className="text-sm font-semibold text-gray-900">{t('witness.setup.linksHeading')}</p>
             <p className="text-xs text-gray-500">{t('witness.setup.shareInstruction')}</p>
             {newLinks.map(link => (
@@ -224,7 +224,7 @@ export default function WitnessSetupPage() {
               <button
                 type="button"
                 onClick={handleAdd}
-                className="text-sm text-purple-600 hover:text-purple-800 font-medium text-left transition-colors"
+                className="text-sm text-[#0047ba] hover:text-[#003090] font-medium text-left transition-colors"
               >
                 + {t('witness.setup.addRow')}
               </button>
@@ -237,7 +237,7 @@ export default function WitnessSetupPage() {
             <button
               type="submit"
               disabled={submitting || !witnesses.some(w => w.name.trim())}
-              className="mt-1 w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white text-sm font-semibold transition-colors shadow-sm"
+              className="mt-1 w-full py-2.5 rounded-xl bg-[#0047ba] hover:opacity-90 disabled:opacity-50 text-white text-sm font-semibold transition-opacity shadow-sm"
             >
               {submitting ? t('witness.setup.generating') : t('witness.setup.generate')}
             </button>
@@ -291,7 +291,7 @@ export default function WitnessSetupPage() {
         <div className="flex flex-col gap-3">
           <button
             onClick={() => navigate('/full-moon/report')}
-            className="w-full py-3 rounded-xl border border-purple-200 text-purple-700 font-medium hover:bg-purple-50 transition-colors"
+            className="w-full py-3 rounded-xl border border-[#0047ba] text-[#0047ba] font-medium hover:bg-[#e8eef8] transition-colors"
           >
             {t('witness.setup.viewReport')}
           </button>

@@ -23,7 +23,7 @@ export default function RoleResult({ result, definitive = false }) {
       {/* Beta badge or Witness-confirmed indicator */}
       {definitive ? (
         <div className="flex flex-col gap-1">
-          <span className="self-start text-xs font-semibold uppercase tracking-widest px-2 py-1 rounded-md bg-purple-50 text-purple-700">
+          <span className="self-start text-xs font-semibold uppercase tracking-widest px-2 py-1 rounded-md bg-[#e8eef8] text-[#0047ba]">
             {t('witnessResults.definitiveLabel')}
           </span>
           <p className="text-xs leading-relaxed" style={{ color: colors.textMuted }}>

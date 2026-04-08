@@ -236,7 +236,7 @@ export default function WitnessPage() {
       <main className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
         <div className="w-full max-w-sm bg-white rounded-2xl border border-gray-200 shadow-sm p-7 flex flex-col gap-5">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-widest text-purple-500 mb-3">
+            <p className="text-xs font-semibold uppercase tracking-widest text-[#0047ba] mb-3">
               Witness Cèrcol
             </p>
             <h1 className="text-xl font-bold text-gray-900 mb-2">
@@ -265,14 +265,14 @@ export default function WitnessPage() {
               type="text"
               value={witnessName}
               onChange={(e) => setWitnessName(e.target.value)}
-              className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-medium text-gray-900 placeholder-gray-300 focus:border-purple-400 focus:outline-none transition-colors"
+              className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-medium text-gray-900 placeholder-gray-300 focus:border-[#0047ba] focus:outline-none transition-colors"
               placeholder={t('witness.page.intro.youArePlaceholder')}
             />
           </div>
 
           <button
             onClick={handleStart}
-            className="w-full py-3 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm transition-colors shadow-sm"
+            className="w-full py-3 rounded-xl bg-[#0047ba] hover:opacity-90 text-white font-semibold text-sm transition-opacity shadow-sm"
           >
             {t('witness.page.intro.cta')}
           </button>
@@ -299,7 +299,7 @@ export default function WitnessPage() {
           </div>
           <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
             <div
-              className="h-full bg-purple-500 rounded-full transition-all duration-300"
+              className="h-full bg-[#0047ba] rounded-full transition-all duration-300"
               style={{ width: `${progress}%` }}
             />
           </div>
@@ -356,7 +356,7 @@ export default function WitnessPage() {
           <button
             onClick={handleNext}
             disabled={!canAdvance()}
-            className="flex-1 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 disabled:opacity-40 text-white font-semibold text-sm transition-colors shadow-sm"
+            className="flex-1 py-2.5 rounded-xl bg-[#0047ba] hover:opacity-90 disabled:opacity-40 text-white font-semibold text-sm transition-opacity shadow-sm"
           >
             {isLastRound ? t('witness.page.finish') : t('witness.page.next')}
           </button>

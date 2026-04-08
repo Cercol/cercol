@@ -33,7 +33,7 @@ const LABEL_STYLES = {
 const DOMAIN_BAR_COLOR = {
   depth:      'bg-red-500',
   presence:   'bg-amber-400',
-  vision:     'bg-purple-500',
+  vision:     'bg-[#427c42]',
   bond:       'bg-emerald-500',
   discipline: 'bg-blue-600',
 }
@@ -230,8 +230,8 @@ export default function FullMoonResultsPage() {
 
         {/* ── Witness Cèrcol CTA ── */}
         {fromTest && (
-          <div className="bg-white rounded-2xl border border-purple-100 shadow-sm p-5">
-            <p className="text-xs font-semibold uppercase tracking-widest text-purple-400 mb-2">
+          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
+            <p className="text-xs font-semibold uppercase tracking-widest text-[#0047ba] mb-2">
               🌕 {t('fmResults.witnessCta.eyebrow')}
             </p>
             <h3 className="font-semibold text-gray-900 mb-1">
@@ -243,13 +243,13 @@ export default function FullMoonResultsPage() {
             <div className="flex flex-col gap-2">
               <button
                 onClick={() => navigate('/witness-setup')}
-                className="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold transition-colors shadow-sm"
+                className="w-full py-2.5 rounded-xl bg-[#0047ba] hover:opacity-90 text-white text-sm font-semibold transition-opacity shadow-sm"
               >
                 {t('fmResults.witnessCta.cta')}
               </button>
               <button
                 onClick={() => navigate('/full-moon/report')}
-                className="w-full py-2.5 rounded-xl border border-purple-200 text-purple-700 text-sm font-medium hover:bg-purple-50 transition-colors"
+                className="w-full py-2.5 rounded-xl border border-[#0047ba] text-[#0047ba] text-sm font-medium hover:bg-[#e8eef8] transition-colors"
               >
                 {t('fmResults.witnessCta.report')}
               </button>

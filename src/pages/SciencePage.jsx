@@ -100,7 +100,7 @@ export default function SciencePage() {
         <Section
           eyebrow={t('science.roles.eyebrow')}
           heading={t('science.roles.heading')}
-          accent="text-purple-600"
+          accent="text-[#427c42]"
         >
           <p className="text-sm text-gray-600 leading-relaxed mb-4">
             {t('science.roles.body')}
@@ -126,7 +126,7 @@ export default function SciencePage() {
         <Section
           eyebrow={t('science.fullMoon.eyebrow')}
           heading={t('science.fullMoon.heading')}
-          accent="text-purple-600"
+          accent="text-[#427c42]"
         >
           <div className="flex flex-col gap-4">
 

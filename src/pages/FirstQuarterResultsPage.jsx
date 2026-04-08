@@ -32,7 +32,7 @@ const LABEL_STYLES = {
 const DOMAIN_BAR_COLOR = {
   depth:      'bg-red-500',
   presence:   'bg-amber-400',
-  vision:     'bg-purple-500',
+  vision:     'bg-[#427c42]',
   bond:       'bg-emerald-500',
   discipline: 'bg-blue-600',
 }
@@ -227,8 +227,8 @@ export default function FirstQuarterResultsPage() {
         </section>
 
         {/* ── Full Moon CTA ── */}
-        <div className="bg-white rounded-2xl border border-purple-100 shadow-sm p-5">
-          <p className="text-xs font-semibold uppercase tracking-widest text-purple-400 mb-2">
+        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
+          <p className="text-xs font-semibold uppercase tracking-widest text-[#0047ba] mb-2">
             🌕 {t('fqResults.fullMoonCta.eyebrow')}
           </p>
           <h3 className="font-semibold text-gray-900 mb-1">
@@ -239,7 +239,7 @@ export default function FirstQuarterResultsPage() {
           </p>
           <button
             onClick={() => navigate('/full-moon')}
-            className="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold transition-colors shadow-sm"
+            className="w-full py-2.5 rounded-xl bg-[#0047ba] hover:opacity-90 text-white text-sm font-semibold transition-opacity shadow-sm"
           >
             {t('fqResults.fullMoonCta.cta')}
           </button>
