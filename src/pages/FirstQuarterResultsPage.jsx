@@ -18,6 +18,7 @@ import { fqScoreToPercent, fqScoreLabel } from '../utils/first-quarter-scoring'
 import { logResult } from '../utils/logger'
 import { computeRole } from '../utils/role-scoring'
 import { ROLE_ILLUSTRATIONS } from '../data/roles'
+import { FullMoonIcon } from '../components/MoonIcons'
 import { useAuth } from '../context/AuthContext'
 import { colors } from '../design/tokens'
 import RadarChart from '../components/RadarChart'
@@ -281,8 +282,8 @@ export default function FirstQuarterResultsPage() {
 
         {/* ── Full Moon CTA ── */}
         <Card className="shadow-sm p-5">
-          <SectionLabel color="blue" className="mb-2">
-            🌕 {t('fqResults.fullMoonCta.eyebrow')}
+          <SectionLabel color="blue" className="mb-2 flex items-center gap-1.5">
+            <FullMoonIcon size={13} />{t('fqResults.fullMoonCta.eyebrow')}
           </SectionLabel>
           <h3 className="font-semibold mb-1" style={{ color: colors.textPrimary }}>
             {t('fqResults.fullMoonCta.heading')}

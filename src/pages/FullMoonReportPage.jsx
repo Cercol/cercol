@@ -22,6 +22,7 @@ import { supabase } from '../lib/supabase'
 import { getMyWitnessSessions } from '../lib/api'
 import { computeRole } from '../utils/role-scoring'
 import { ROLE_ILLUSTRATIONS } from '../data/roles'
+import { FullMoonIcon } from '../components/MoonIcons'
 import { averageWitnessScores, detectDivergence, computeConvergence, computeCombinedRole } from '../utils/witness-scoring'
 import { DOMAIN_KEYS } from '../data/domains'
 import { colors } from '../design/tokens'
@@ -332,8 +333,8 @@ export default function FullMoonReportPage() {
 
         {/* ── Header ── */}
         <div>
-          <SectionLabel color="blue" className="mb-1">
-            🌕 Full Moon Cèrcol
+          <SectionLabel color="blue" className="mb-1 flex items-center gap-1.5">
+            <FullMoonIcon size={13} />Full Moon Cèrcol
           </SectionLabel>
           <h1 className="text-2xl sm:text-3xl font-bold" style={{ color: colors.textPrimary }}>
             {t('witnessResults.title')}

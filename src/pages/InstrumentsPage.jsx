@@ -6,6 +6,7 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Card, Badge, SectionLabel } from '../components/ui'
+import { NewMoonIcon, FirstQuarterIcon, FullMoonIcon } from '../components/MoonIcons'
 
 /**
  * StaticItem — read-only sample question with greyed-out scale.
@@ -79,8 +80,8 @@ export default function InstrumentsPage() {
             <div className="px-6 pt-6 pb-5">
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div>
-                  <SectionLabel color="amber" className="mb-1">
-                    🌑 {t('instruments.newMoon.eyebrow')}
+                  <SectionLabel color="amber" className="mb-1 flex items-center gap-1.5">
+                    <NewMoonIcon size={13} />{t('instruments.newMoon.eyebrow')}
                   </SectionLabel>
                   <h2 className="text-lg font-bold text-gray-900">{t('instruments.newMoon.heading')}</h2>
                 </div>
@@ -121,8 +122,8 @@ export default function InstrumentsPage() {
             <div className="px-6 pt-6 pb-5">
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div>
-                  <SectionLabel color="green" className="mb-1">
-                    🌓 {t('instruments.firstQuarter.eyebrow')}
+                  <SectionLabel color="green" className="mb-1 flex items-center gap-1.5">
+                    <FirstQuarterIcon size={13} />{t('instruments.firstQuarter.eyebrow')}
                   </SectionLabel>
                   <h2 className="text-lg font-bold text-gray-900">{t('instruments.firstQuarter.heading')}</h2>
                 </div>
@@ -163,8 +164,8 @@ export default function InstrumentsPage() {
             <div className="px-6 pt-6 pb-3">
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div>
-                  <SectionLabel color="blue" className="mb-1">
-                    🌕 {t('instruments.fullMoon.eyebrow')}
+                  <SectionLabel color="blue" className="mb-1 flex items-center gap-1.5">
+                    <FullMoonIcon size={13} />{t('instruments.fullMoon.eyebrow')}
                   </SectionLabel>
                   <h2 className="text-lg font-bold text-gray-900">{t('instruments.fullMoon.heading')}</h2>
                 </div>

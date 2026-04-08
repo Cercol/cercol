@@ -25,6 +25,8 @@ import { createCheckoutSession } from '../lib/api'
 import QuestionCard from '../components/QuestionCard'
 import ProgressBar from '../components/ProgressBar'
 import { Card, Button, SectionLabel } from '../components/ui'
+import { colors } from '../design/tokens'
+import { FullMoonIcon } from '../components/MoonIcons'
 
 const DOMAIN_ORDER = ['depth', 'presence', 'vision', 'bond', 'discipline']
 
@@ -277,7 +279,7 @@ export default function FullMoonPage() {
           <Card className="shadow-sm p-8">
 
             <div className="text-center mb-6">
-              <div className="text-3xl mb-3">🌕</div>
+              <FullMoonIcon size={36} className="mb-3 mx-auto" style={{ color: colors.blue }} />
               <h1 className="text-2xl font-bold text-gray-900 mb-2">
                 {t('fm.paywall.heading')}
               </h1>
@@ -320,7 +322,7 @@ export default function FullMoonPage() {
       <main className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)]">
         <div className="w-full max-w-sm flex flex-col items-center text-center gap-6">
           <div>
-            <p className="text-4xl mb-3" aria-hidden="true">🌕</p>
+            <FullMoonIcon size={40} className="mb-3 mx-auto" style={{ color: colors.blue }} />
             <h1 className="text-2xl font-bold text-gray-900 mb-1">{t('fm.intro.heading')}</h1>
             <p className="text-sm text-gray-400">{t('fm.intro.meta')}</p>
           </div>

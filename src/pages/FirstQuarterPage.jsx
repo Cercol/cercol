@@ -16,6 +16,8 @@ import { useFeedbackContext } from '../context/FeedbackContext'
 import QuestionCard from '../components/QuestionCard'
 import ProgressBar from '../components/ProgressBar'
 import { Button, SectionLabel } from '../components/ui'
+import { colors } from '../design/tokens'
+import { FirstQuarterIcon } from '../components/MoonIcons'
 
 const DOMAIN_ORDER = ['depth', 'presence', 'vision', 'bond', 'discipline']
 
@@ -168,7 +170,7 @@ export default function FirstQuarterPage() {
       <main className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)]">
         <div className="w-full max-w-sm flex flex-col items-center text-center gap-6">
           <div>
-            <p className="text-4xl mb-3" aria-hidden="true">🌓</p>
+            <FirstQuarterIcon size={40} className="mb-3 mx-auto" style={{ color: colors.green }} />
             <h1 className="text-2xl font-bold text-gray-900 mb-1">{t('fq.intro.heading')}</h1>
             <p className="text-sm text-gray-400">{t('fq.intro.meta')}</p>
           </div>

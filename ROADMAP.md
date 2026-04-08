@@ -231,6 +231,31 @@ Applied brand identity to all four test flow pages (NewMoonPage, FirstQuarterPag
 - **Gate screens** (FM checking/processing/paywall): removed `min-h-screen bg-gray-50`
 - **WitnessPage**: removed `min-h-screen bg-gray-50` from all phase screens; instrument back button → `<Button variant="secondary">`; intro/terminal screens vertically centered via `min-h-[calc(100vh-4rem)]`
 
+### Phase 10.8 — Moon phase SVG line icons ✅ COMPLETE
+Replaced all moon emoji (🌑 🌓 🌕) and functional emoji (✓) with custom SVG line icons
+drawn in the Cèrcol brand style: stroke-based, currentColor, slightly imperfect bezier paths,
+strokeLinecap="round". All icons defined in `src/components/MoonIcons.jsx`.
+
+**Icons created:**
+- `NewMoonIcon` — hatched circle (outline + 5 diagonal shade lines through the disc)
+- `FirstQuarterIcon` — closed D-shape path (right arc + gentle-bow terminator)
+- `FullMoonIcon` — slightly irregular circle + 3 crater ovals (strokeWidth 1.2/1.0)
+- `CheckIcon` — single stroke checkmark path
+
+**Files modified (10 locations):**
+- `src/components/MoonIcons.jsx` — new file with all four icons
+- `src/pages/HomePage.jsx` — 3 instrument cards: emoji → `<NewMoonIcon size={44} />`, `<FirstQuarterIcon size={44} />`, `<FullMoonIcon size={44} />`;
+  icon wrapper `div` gets `style={{ color: hovered ? textColor : accentColor }}` so icons track hover color like the name
+- `src/pages/InstrumentsPage.jsx` — 3 SectionLabel eyebrows: emoji → inline icon at size 13
+- `src/pages/NewMoonPage.jsx` — intro screen: emoji → `<NewMoonIcon size={40} style={{ color: colors.red }} />`
+- `src/pages/FirstQuarterPage.jsx` — intro screen: `<FirstQuarterIcon size={40} style={{ color: colors.green }} />`
+- `src/pages/FullMoonPage.jsx` — paywall + intro screens: `<FullMoonIcon size={36/40} style={{ color: colors.blue }} />`
+- `src/pages/FirstQuarterResultsPage.jsx` — Full Moon CTA eyebrow: `<FullMoonIcon size={13} />`
+- `src/pages/FullMoonResultsPage.jsx` — Witness CTA eyebrow: `<FullMoonIcon size={13} />`
+- `src/pages/FullMoonReportPage.jsx` — page header SectionLabel: `<FullMoonIcon size={13} />`
+- `src/pages/WitnessSetupPage.jsx` — header eyebrow: `<FullMoonIcon size={13} />`; Copied button: ✓ emoji → `<CheckIcon size={12} />`
+- `src/pages/WitnessPage.jsx` — done screen: ✓ emoji → `<CheckIcon size={40} style={{ color: colors.green }} />`
+
 ### Phase 11 — Multilingual support
 Translation management via Tolgee or equivalent.
 EN + CA already complete; this phase adds languages beyond Valencian.

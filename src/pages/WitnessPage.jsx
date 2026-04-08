@@ -21,6 +21,8 @@ import { useTranslation } from 'react-i18next'
 import { getWitnessSession, completeWitnessSession } from '../lib/api'
 import { buildRounds, computeWitnessScores } from '../utils/witness-scoring'
 import { Card, Button, SectionLabel } from '../components/ui'
+import { CheckIcon } from '../components/MoonIcons'
+import { colors } from '../design/tokens'
 
 const TOTAL_ROUNDS = 20
 
@@ -195,7 +197,7 @@ export default function WitnessPage() {
     return (
       <main className="flex items-center justify-center min-h-[calc(100vh-4rem)]">
         <div className="text-center max-w-sm">
-          <div className="text-4xl mb-4">✓</div>
+          <CheckIcon size={40} className="mb-4 mx-auto" style={{ color: colors.green }} />
           <h1 className="text-xl font-bold text-gray-900 mb-2">{t('witness.page.done.heading')}</h1>
           <p className="text-sm text-gray-500 mb-6">{t('witness.page.done.body')}</p>
           <button

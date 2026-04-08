@@ -16,6 +16,7 @@ import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
 import { createWitnessSessions, getMyWitnessSessions } from '../lib/api'
 import { Card, Button, SectionLabel } from '../components/ui'
+import { FullMoonIcon, CheckIcon } from '../components/MoonIcons'
 
 const MAX_WITNESSES = 12
 
@@ -68,7 +69,7 @@ function CopyButton({ text, label }) {
       onClick={handleCopy}
       className="shrink-0 text-xs font-semibold text-[#0047ba] hover:text-[#003090] transition-colors"
     >
-      {copied ? '✓ Copied' : label}
+      {copied ? <span className="flex items-center gap-1"><CheckIcon size={12} />Copied</span> : label}
     </button>
   )
 }
@@ -181,8 +182,8 @@ export default function WitnessSetupPage() {
 
         {/* Header */}
         <div>
-          <SectionLabel color="blue" className="mb-1">
-            🌕 Witness Cèrcol
+          <SectionLabel color="blue" className="mb-1 flex items-center gap-1.5">
+            <FullMoonIcon size={13} />Witness Cèrcol
           </SectionLabel>
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">{t('witness.setup.title')}</h1>
           <p className="mt-1 text-gray-500 text-sm">{t('witness.setup.subtitle')}</p>

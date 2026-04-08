@@ -10,6 +10,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { colors } from '../design/tokens'
+import { NewMoonIcon, FirstQuarterIcon, FullMoonIcon } from '../components/MoonIcons'
 
 const GITHUB_URL = 'https://github.com/miquelmatoses/cercol'
 const ISSUE_URL  = 'https://github.com/miquelmatoses/cercol/issues/new?title=Bug+report&labels=bug'
@@ -18,7 +19,7 @@ const ISSUE_URL  = 'https://github.com/miquelmatoses/cercol/issues/new?title=Bug
  * InstrumentCard — white card with colored left border.
  * On hover: fills with accentColor; text inverts (white, or black on yellow).
  */
-function InstrumentCard({ emoji, name, description, meta, accentColor, darkHover = false, paymentLabel, onClick }) {
+function InstrumentCard({ icon, name, description, meta, accentColor, darkHover = false, paymentLabel, onClick }) {
   const [hovered, setHovered] = useState(false)
 
   // Text color: black by default; on hover → white (or black for yellow cards)
@@ -40,7 +41,7 @@ function InstrumentCard({ emoji, name, description, meta, accentColor, darkHover
         transition:   'background-color 200ms, color 200ms',
       }}
     >
-      <div className="text-5xl mb-6 leading-none">{emoji}</div>
+      <div className="mb-6 leading-none" style={{ color: hovered ? textColor : accentColor }}>{icon}</div>
 
       {/* Name in accent color when idle; inverts on hover */}
       <h2
@@ -87,7 +88,7 @@ export default function HomePage() {
       <div className="flex-1 flex items-center px-8 lg:px-16 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-screen-xl mx-auto w-full">
           <InstrumentCard
-            emoji="🌑"
+            icon={<NewMoonIcon size={44} />}
             name={t('home.newMoon.name')}
             description={t('home.newMoon.description')}
             meta={t('home.newMoon.meta')}
@@ -95,7 +96,7 @@ export default function HomePage() {
             onClick={() => navigate('/new-moon')}
           />
           <InstrumentCard
-            emoji="🌓"
+            icon={<FirstQuarterIcon size={44} />}
             name={t('home.firstQuarter.name')}
             description={t('home.firstQuarter.description')}
             meta={t('home.firstQuarter.meta')}
@@ -103,7 +104,7 @@ export default function HomePage() {
             onClick={() => navigate('/first-quarter')}
           />
           <InstrumentCard
-            emoji="🌕"
+            icon={<FullMoonIcon size={44} />}
             name={t('home.fullMoon.name')}
             description={t('home.fullMoon.description')}
             meta={t('home.fullMoon.meta')}

@@ -12,6 +12,7 @@ import { useFeedbackContext } from '../context/FeedbackContext'
 import QuestionCard from '../components/QuestionCard'
 import ProgressBar from '../components/ProgressBar'
 import { Button, Card, SectionLabel } from '../components/ui'
+import { NewMoonIcon } from '../components/MoonIcons'
 
 const SCALE_POINTS = 7
 
@@ -104,7 +105,7 @@ export default function NewMoonPage() {
       <main className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)]">
         <div className="w-full max-w-sm flex flex-col items-center text-center gap-6">
           <div>
-            <p className="text-4xl mb-3" aria-hidden="true">🌑</p>
+            <NewMoonIcon size={40} className="mb-3 mx-auto" style={{ color: colors.red }} />
             <h1 className="text-2xl font-bold text-gray-900 mb-1">{t('newMoon.intro.heading')}</h1>
             <p className="text-sm text-gray-400">{t('newMoon.intro.meta')}</p>
           </div>
