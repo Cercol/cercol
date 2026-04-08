@@ -282,6 +282,24 @@ Extended MoonIcons.jsx with 8 new functional icons in the Cèrcol brand style
 - `src/pages/MyResultsPage.jsx` — ChevronRightIcon right-aligned in each ResultCard header row
 - `src/pages/FullMoonReportPage.jsx` — BlindSpotsIcon inline in blind spots SectionLabel
 
+### Phase 10.10 — Animal role icons + dimension icons ✅ COMPLETE
+Extended MoonIcons.jsx with 12 animal role icons and 5 dimension icons, plus two convenience wrapper components.
+
+**New icons added to `src/components/MoonIcons.jsx`:**
+- 12 animal role icons (32×32 viewBox): `DolphinIcon`, `WolfIcon`, `ElephantIcon`, `OwlIcon`, `EagleIcon`, `FalconIcon`, `OctopusIcon`, `TortoiseIcon`, `BeeIcon`, `BearIcon`, `FoxIcon`, `BadgerIcon`
+- 5 dimension icons (24×24 viewBox): `PresenceIcon` (sun/radial lines), `BondIcon` (interlocking circles), `VisionIcon` (eye), `DepthIcon` (waves + arrow), `DisciplineIcon` (target/concentric circles)
+- `RoleIcon({ role, size, className, style })` — wrapper that maps R01–R12 to the correct animal icon
+- `DimensionIcon({ domain, size, className, style })` — wrapper that maps domain key to the correct dimension icon
+
+**Files modified:**
+- `src/pages/RolesPage.jsx` — RoleIcon (size 28, accent color) added to each RoleCard header in a flex layout with role name + essence
+- `src/pages/NewMoonResultsPage.jsx` — DimensionIcon (size 15) preceding domain name in each domain row
+- `src/pages/FirstQuarterResultsPage.jsx` — same pattern; DOMAIN_ICON_COLOR map added
+- `src/pages/FullMoonResultsPage.jsx` — same pattern; DOMAIN_ICON_COLOR map added
+- `src/pages/FirstQuarterPage.jsx` — DimensionIcon (size 16) replaces colored dot span in block section header
+- `src/pages/FullMoonPage.jsx` — same
+- `src/pages/FullMoonReportPage.jsx` — DimensionIcon added to DomainComparisonRow via new `domainKey` prop; DOMAIN_ICON_COLOR map added
+
 ### Phase 11 — Multilingual support
 Translation management via Tolgee or equivalent.
 EN + CA already complete; this phase adds languages beyond Valencian.

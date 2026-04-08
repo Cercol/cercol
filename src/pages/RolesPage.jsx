@@ -5,6 +5,7 @@
  */
 import { useTranslation } from 'react-i18next'
 import { Card, SectionLabel } from '../components/ui'
+import { RoleIcon } from '../components/MoonIcons'
 
 const ROLES = [
   { key: 'R01', accent: 'text-emerald-600', bg: 'bg-emerald-50' }, // Dolphin  P+ B+
@@ -31,11 +32,14 @@ function RoleCard({ roleKey, accent, bg, t }) {
 
   return (
     <Card className="overflow-hidden">
-      <div className={`px-5 pt-5 pb-4 ${bg}`}>
-        <p className={`text-xs font-bold uppercase tracking-widest mb-0.5 ${accent}`}>
-          {name}{ca !== name ? ` · ${ca}` : ''}
-        </p>
-        <p className="text-sm font-medium text-gray-800 leading-snug">{essence}</p>
+      <div className={`px-5 pt-5 pb-4 ${bg} flex items-start gap-3`}>
+        <RoleIcon role={roleKey} size={28} className={`shrink-0 mt-0.5 ${accent}`} />
+        <div>
+          <p className={`text-xs font-bold uppercase tracking-widest mb-0.5 ${accent}`}>
+            {name}{ca !== name ? ` · ${ca}` : ''}
+          </p>
+          <p className="text-sm font-medium text-gray-800 leading-snug">{essence}</p>
+        </div>
       </div>
       <div className="px-5 py-4 flex flex-col gap-3">
         <div>

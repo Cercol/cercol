@@ -22,7 +22,7 @@ import { supabase } from '../lib/supabase'
 import { getMyWitnessSessions } from '../lib/api'
 import { computeRole } from '../utils/role-scoring'
 import { ROLE_ILLUSTRATIONS } from '../data/roles'
-import { FullMoonIcon, BlindSpotsIcon } from '../components/MoonIcons'
+import { FullMoonIcon, BlindSpotsIcon, DimensionIcon } from '../components/MoonIcons'
 import { averageWitnessScores, detectDivergence, computeConvergence, computeCombinedRole } from '../utils/witness-scoring'
 import { DOMAIN_KEYS } from '../data/domains'
 import { colors } from '../design/tokens'
@@ -35,6 +35,14 @@ const DOMAIN_BAR_COLOR = {
   vision:     'bg-[#427c42]',
   bond:       'bg-emerald-500',
   discipline: 'bg-blue-600',
+}
+
+const DOMAIN_ICON_COLOR = {
+  depth:      'text-red-500',
+  presence:   'text-amber-400',
+  vision:     'text-[#427c42]',
+  bond:       'text-emerald-500',
+  discipline: 'text-blue-600',
 }
 
 const MIN_WITNESSES_FOR_REPORT = 2
@@ -202,14 +210,17 @@ function BlindSpotCard({ domain, selfScore, witnessScore, t }) {
 }
 
 // ── DomainComparisonRow ───────────────────────────────────────────────────────
-function DomainComparisonRow({ selfScore, witnessScore, label, barColor }) {
+function DomainComparisonRow({ selfScore, witnessScore, label, barColor, domainKey }) {
   const selfPct    = ((selfScore - 1) / 4) * 100
   const witnessPct = witnessScore !== null ? ((witnessScore - 1) / 4) * 100 : null
 
   return (
     <div className="py-3 first:pt-0 last:pb-0">
       <div className="flex items-center justify-between mb-1.5">
-        <span className="text-sm font-semibold" style={{ color: colors.textPrimary }}>{label}</span>
+        <span className="text-sm font-semibold flex items-center gap-1.5" style={{ color: colors.textPrimary }}>
+          {domainKey && <DimensionIcon domain={domainKey} size={15} className={DOMAIN_ICON_COLOR[domainKey]} />}
+          {label}
+        </span>
         <div className="flex items-center gap-3 text-sm font-semibold shrink-0">
           <span style={{ color: colors.textMuted }}>{selfScore.toFixed(1)}</span>
           {witnessPct !== null && (
@@ -500,6 +511,7 @@ export default function FullMoonReportPage() {
                     witnessScore={witnessScores ? witnessScores[key] : null}
                     label={t(`fmDomains.${key}.name`)}
                     barColor={DOMAIN_BAR_COLOR[key]}
+                    domainKey={key}
                   />
                 ))}
               </div>

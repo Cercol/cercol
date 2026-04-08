@@ -18,7 +18,7 @@ import { fqScoreToPercent, fqScoreLabel } from '../utils/first-quarter-scoring'
 import { logResult } from '../utils/logger'
 import { computeRole } from '../utils/role-scoring'
 import { ROLE_ILLUSTRATIONS } from '../data/roles'
-import { FullMoonIcon, ShareIcon } from '../components/MoonIcons'
+import { FullMoonIcon, ShareIcon, DimensionIcon } from '../components/MoonIcons'
 import { useAuth } from '../context/AuthContext'
 import { colors } from '../design/tokens'
 import RadarChart from '../components/RadarChart'
@@ -37,6 +37,14 @@ const DOMAIN_BAR_COLOR = {
   vision:     'bg-[#427c42]',
   bond:       'bg-emerald-500',
   discipline: 'bg-blue-600',
+}
+
+const DOMAIN_ICON_COLOR = {
+  depth:      'text-red-500',
+  presence:   'text-amber-400',
+  vision:     'text-[#427c42]',
+  bond:       'text-emerald-500',
+  discipline: 'text-blue-600',
 }
 
 function encodeScores(domains) {
@@ -193,7 +201,8 @@ export default function FirstQuarterResultsPage() {
                   return (
                     <div key={key} className="py-3 first:pt-0 last:pb-0">
                       <div className="flex items-center justify-between mb-1.5">
-                        <span className="text-sm font-semibold" style={{ color: colors.textPrimary }}>
+                        <span className="text-sm font-semibold flex items-center gap-1.5" style={{ color: colors.textPrimary }}>
+                          <DimensionIcon domain={key} size={15} className={DOMAIN_ICON_COLOR[key]} />
                           {t(`fqDomains.${key}.name`)}
                         </span>
                         <div className="flex items-center gap-2 shrink-0 ml-2">

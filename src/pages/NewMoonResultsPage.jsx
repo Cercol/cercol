@@ -15,6 +15,15 @@ import { useAuth } from '../context/AuthContext'
 import { colors } from '../design/tokens'
 import RadarChart from '../components/RadarChart'
 import { Card, Button, SectionLabel } from '../components/ui'
+import { DimensionIcon } from '../components/MoonIcons'
+
+const DOMAIN_ICON_COLOR = {
+  presence:   'text-amber-400',
+  bond:       'text-emerald-500',
+  discipline: 'text-blue-600',
+  depth:      'text-red-500',
+  vision:     'text-[#427c42]',
+}
 
 const LABEL_STYLES = {
   low:      'bg-gray-100 text-gray-600',
@@ -129,7 +138,8 @@ export default function NewMoonResultsPage() {
                   return (
                     <div key={key} className="py-3 first:pt-0 last:pb-0">
                       <div className="flex items-center justify-between mb-1.5">
-                        <span className="text-sm font-semibold" style={{ color: colors.textPrimary }}>
+                        <span className="text-sm font-semibold flex items-center gap-1.5" style={{ color: colors.textPrimary }}>
+                          <DimensionIcon domain={key} size={15} className={DOMAIN_ICON_COLOR[key]} />
                           {t(`fqDomains.${key}.name`)}
                         </span>
                         <div className="flex items-center gap-2 shrink-0 ml-2">

@@ -17,7 +17,7 @@ import QuestionCard from '../components/QuestionCard'
 import ProgressBar from '../components/ProgressBar'
 import { Button, SectionLabel } from '../components/ui'
 import { colors } from '../design/tokens'
-import { FirstQuarterIcon, ArrowLeftIcon, ArrowRightIcon } from '../components/MoonIcons'
+import { FirstQuarterIcon, ArrowLeftIcon, ArrowRightIcon, DimensionIcon } from '../components/MoonIcons'
 
 const DOMAIN_ORDER = ['depth', 'presence', 'vision', 'bond', 'discipline']
 
@@ -36,6 +36,14 @@ const DOMAIN_ACCENT = {
   vision:     'bg-[#427c42]',
   bond:       'bg-emerald-500',
   discipline: 'bg-blue-600',
+}
+
+const DOMAIN_ICON_COLOR = {
+  depth:      'text-red-500',
+  presence:   'text-amber-400',
+  vision:     'text-[#427c42]',
+  bond:       'text-emerald-500',
+  discipline: 'text-blue-600',
 }
 
 export default function FirstQuarterPage() {
@@ -235,7 +243,7 @@ export default function FirstQuarterPage() {
         {/* Block header */}
         <div className="bg-white rounded border border-gray-200 px-5 py-4">
           <div className="flex items-center gap-2 mb-0.5">
-            <span className={`w-2.5 h-2.5 rounded-full shrink-0 ${DOMAIN_ACCENT[domainKey]}`} />
+            <DimensionIcon domain={domainKey} size={16} className={`shrink-0 ${DOMAIN_ICON_COLOR[domainKey]}`} />
             <span className="text-xs font-semibold uppercase tracking-widest text-gray-500">
               {t(`fqDomains.${domainKey}.name`)} · {t('fq.blockLabel', { current: blockIdx + 1, total: TOTAL_BLOCKS })}
             </span>
