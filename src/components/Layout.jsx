@@ -1,11 +1,19 @@
 /**
  * Layout — persistent shell wrapping all routes.
- * Single-row header on brand blue (#0047ba).
+ *
+ * Header: single row on brand blue (#0047ba).
  *   Left:   Cèrcol logo (white SVG)
  *   Center: five doc nav links (scrollable on narrow viewports)
  *   Right:  AccountButton + LanguageToggle
+ *
+ * Content wrapper: white background, centered max-w-4xl column with
+ * px-4 (mobile) / px-8 (desktop) padding. Covers min-height of viewport
+ * minus the 4rem header.
+ *
+ * Exception: the homepage ("/") opts out of the white wrapper — it manages
+ * its own full-bleed blue background. Detected via useLocation.
  */
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import AccountButton from './AccountButton'
 import LanguageToggle from './LanguageToggle'
@@ -13,7 +21,9 @@ import CercolLogo from './CercolLogo'
 import { colors } from '../design/tokens'
 
 export default function Layout({ children }) {
-  const { t } = useTranslation()
+  const { t }       = useTranslation()
+  const { pathname } = useLocation()
+  const isHome      = pathname === '/'
 
   const navLinks = [
     { to: '/about',       label: t('nav.about')       },
@@ -25,6 +35,7 @@ export default function Layout({ children }) {
 
   return (
     <>
+      {/* ── Blue header ── */}
       <header style={{ backgroundColor: colors.blue }}>
         <div className="h-16 flex items-center gap-6 px-8 lg:px-12">
 
@@ -64,7 +75,17 @@ export default function Layout({ children }) {
 
         </div>
       </header>
-      {children}
+
+      {/* ── Content wrapper ── */}
+      {isHome ? children : (
+        <div
+          className="bg-white min-h-[calc(100vh-4rem)]"
+        >
+          <div className="max-w-4xl mx-auto px-4 sm:px-8">
+            {children}
+          </div>
+        </div>
+      )}
     </>
   )
 }

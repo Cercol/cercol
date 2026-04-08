@@ -69,8 +69,7 @@ export default function SciencePage() {
   const { t } = useTranslation()
 
   return (
-    <main className="min-h-screen bg-gray-50">
-      <div className="max-w-xl mx-auto px-4 py-12">
+    <main className="py-12">
 
         {/* ── Open instruments ──────────────────────────────────── */}
         <Section
@@ -216,7 +215,6 @@ export default function SciencePage() {
           </a>
         </section>
 
-      </div>
     </main>
   )
 }

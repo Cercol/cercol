@@ -38,8 +38,7 @@ export default function FaqPage() {
   const questions = ['q1', 'q2', 'q3', 'q4', 'q5', 'q6']
 
   return (
-    <main className="min-h-screen bg-gray-50">
-      <div className="max-w-xl mx-auto px-4 py-12">
+    <main className="py-12">
 
         <h1 className="text-3xl font-bold text-gray-900 mb-8">
           {t('faq.heading')}
@@ -55,7 +54,6 @@ export default function FaqPage() {
           ))}
         </div>
 
-      </div>
     </main>
   )
 }

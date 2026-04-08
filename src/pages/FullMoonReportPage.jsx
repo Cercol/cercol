@@ -175,7 +175,7 @@ export default function FullMoonReportPage() {
 
   if (authLoading || loading) {
     return (
-      <main className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <main className="flex items-center justify-center min-h-[calc(100vh-4rem)]">
         <p className="text-sm text-gray-400">{t('witnessResults.loading')}</p>
       </main>
     )
@@ -183,7 +183,7 @@ export default function FullMoonReportPage() {
 
   if (loadError) {
     return (
-      <main className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+      <main className="flex items-center justify-center min-h-[calc(100vh-4rem)]">
         <p className="text-sm text-red-500">{loadError}</p>
       </main>
     )
@@ -191,7 +191,7 @@ export default function FullMoonReportPage() {
 
   if (!selfReport) {
     return (
-      <main className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+      <main className="flex items-center justify-center min-h-[calc(100vh-4rem)]">
         <div className="text-center max-w-sm">
           <p className="text-gray-500 text-sm mb-4">{t('witnessResults.noSelf')}</p>
           <button
@@ -227,8 +227,8 @@ export default function FullMoonReportPage() {
     : null
 
   return (
-    <main className="min-h-screen bg-gray-50 px-4 py-10 sm:py-16">
-      <div className="w-full max-w-xl mx-auto flex flex-col gap-10">
+    <main className="py-10 sm:py-16">
+      <div className="flex flex-col gap-10">
 
         {/* ── Header ── */}
         <div>

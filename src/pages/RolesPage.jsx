@@ -73,8 +73,7 @@ export default function RolesPage() {
   const { t } = useTranslation()
 
   return (
-    <main className="min-h-screen bg-gray-50">
-      <div className="max-w-xl mx-auto px-4 py-12">
+    <main className="py-12">
 
         {/* ── Intro ─────────────────────────────────────────────── */}
         <section className="mb-12">
@@ -152,7 +151,6 @@ export default function RolesPage() {
           </a>
         </section>
 
-      </div>
     </main>
   )
 }

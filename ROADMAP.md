@@ -119,6 +119,20 @@ Combines self-report and Witness into a single coherent narrative at /full-moon/
 ### Phase 10 — Full UX/UI redesign
 Brand identity and visual foundation. Sub-phases apply the identity across all pages.
 
+### Phase 10.2 — Homepage card fix + centralized layout container ✅ COMPLETE
+- HomePage: instrument cards redesigned — white bg, 3px solid left border in instrument color,
+  name in instrument color, hover fills with instrument color (text inverts), transition-colors 200ms
+- Layout.jsx: centralized white content wrapper (bg-white, max-w-4xl mx-auto, px-4 sm:px-8,
+  min-h-[calc(100vh-4rem)]); homepage opts out via useLocation check (pathname === '/')
+- Removed redundant declarations from 13 pages:
+  - AboutPage, InstrumentsPage, RolesPage, SciencePage, FaqPage: removed bg-gray-50, min-h-screen,
+    max-w-xl mx-auto px-4 outer wrapper; py-12 stays on main
+  - NewMoonResultsPage, FirstQuarterResultsPage, FullMoonResultsPage, WitnessSetupPage:
+    removed bg-gray-50, min-h-screen, px-4, max-w-xl mx-auto w-full from inner container
+  - MyResultsPage: removed bg-gray-50, min-h-screen, flex centering, px-4, max-w-xl from wrapper
+  - AuthPage: removed bg-gray-50, min-h-screen, px-4; flex centering kept; min-h-[calc(100vh-4rem)]
+  - FullMoonReportPage: removed same from 3 loading/error states and main content wrapper
+
 ### Phase 10.1 — Brand identity foundation + homepage redesign ✅ COMPLETE
 - tokens.js: brand palette (#cf3339 red, #0047ba blue, #f1c22f yellow, #427c42 green, #ffffff, #111111); all generic palette colors replaced
 - tokens.js: typography updated — Playfair Display (display/headings) + Roboto (body/UI)

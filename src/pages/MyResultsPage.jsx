@@ -97,8 +97,8 @@ export default function MyResultsPage() {
   }, [user, loading, navigate])
 
   return (
-    <main className="min-h-screen bg-gray-50 flex flex-col items-center px-4 py-16">
-      <div className="w-full max-w-xl">
+    <main className="py-16">
+      <div>
         <h1 className="text-xl font-bold text-gray-900 mb-6">
           {t('myResults.heading')}
         </h1>

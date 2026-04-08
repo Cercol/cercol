@@ -91,8 +91,8 @@ export default function NewMoonResultsPage() {
   const domainKeys = DOMAIN_KEYS
 
   return (
-    <main className="min-h-screen bg-gray-50 px-4 py-10 sm:py-16">
-      <div className="w-full max-w-xl mx-auto flex flex-col gap-8">
+    <main className="py-10 sm:py-16">
+      <div className="flex flex-col gap-8">
 
         {/* Header */}
         <div>

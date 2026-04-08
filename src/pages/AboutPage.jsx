@@ -47,8 +47,7 @@ export default function AboutPage() {
   const notThisItems = ['item1', 'item2', 'item3', 'item4']
 
   return (
-    <main className="min-h-screen bg-gray-50">
-      <div className="max-w-xl mx-auto px-4 py-12">
+    <main className="py-12">
 
         {/* ── Intro ─────────────────────────────────────────────── */}
         <section className="mb-14">
@@ -148,7 +147,6 @@ export default function AboutPage() {
           </p>
         </section>
 
-      </div>
     </main>
   )
 }

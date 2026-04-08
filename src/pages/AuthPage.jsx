@@ -73,7 +73,7 @@ export default function AuthPage() {
   if (status === 'sent') {
     const isMagic = method === 'magic'
     return (
-      <main className="min-h-screen bg-gray-50 flex flex-col items-center justify-center px-4 py-16">
+      <main className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] py-16">
         <div className="w-full max-w-sm bg-white border border-gray-200 rounded-2xl p-8 shadow-sm text-center">
           <p className="text-2xl mb-2">✉️</p>
           <h1 className="text-lg font-bold text-gray-900 mb-2">
