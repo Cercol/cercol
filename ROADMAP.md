@@ -204,6 +204,18 @@ Redesigned all four results/report pages as dashboards.
 - FeedbackButton: "Report issue" floating link removed; translation feedback panel retained
 - HomePage.jsx: full redesign — blue background, 3-column instrument card grid (red/green/yellow cards), no tagline/headline, footer with GitHub + report issue links
 
+### Phase 10.6 — Test flow pages brand identity ✅ COMPLETE
+Applied brand identity to all four test flow pages (NewMoonPage, FirstQuarterPage, FullMoonPage, WitnessPage) and shared test components.
+
+- **LikertScale**: `rounded` (4px), inline styles from `colors.blue` token for selected state (both mobile/desktop), brand hover colors
+- **QuestionCard**: `rounded` (4px), no shadow, item prefix uses `style={{ color: colors.blue }}`
+- **ProgressBar**: fill bar uses `style={{ backgroundColor: colors.blue }}` from token
+- **Intro screens** (all three instruments): removed `min-h-screen bg-gray-50`; info card `rounded`; "Scale" label → `<SectionLabel color="gray">`; CTA → `<Button variant="primary">`; vertically centered via `min-h-[calc(100vh-4rem)]`
+- **Transition screens** (FQ + FM): same bg/layout fix; CTA → `<Button variant="primary">`
+- **Answering screens** (all three): removed `min-h-screen bg-gray-50`; block header `rounded`, no shadow; back → `<Button variant="secondary">`, next → `<Button variant="primary" disabled>`
+- **Gate screens** (FM checking/processing/paywall): removed `min-h-screen bg-gray-50`
+- **WitnessPage**: removed `min-h-screen bg-gray-50` from all phase screens; instrument back button → `<Button variant="secondary">`; intro/terminal screens vertically centered via `min-h-[calc(100vh-4rem)]`
+
 ### Phase 11 — Multilingual support
 Translation management via Tolgee or equivalent.
 EN + CA already complete; this phase adds languages beyond Valencian.

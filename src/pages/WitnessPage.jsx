@@ -174,7 +174,7 @@ export default function WitnessPage() {
 
   if (phase === 'loading') {
     return (
-      <main className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <main className="flex items-center justify-center min-h-[calc(100vh-4rem)]">
         <p className="text-sm text-gray-400">{t('witness.page.loading')}</p>
       </main>
     )
@@ -182,7 +182,7 @@ export default function WitnessPage() {
 
   if (phase === 'notFound') {
     return (
-      <main className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+      <main className="flex items-center justify-center min-h-[calc(100vh-4rem)]">
         <div className="text-center max-w-sm">
           <h1 className="text-xl font-bold text-gray-900 mb-2">{t('witness.page.notFound.heading')}</h1>
           <p className="text-sm text-gray-500">{t('witness.page.notFound.body')}</p>
@@ -193,7 +193,7 @@ export default function WitnessPage() {
 
   if (phase === 'done' || phase === 'complete') {
     return (
-      <main className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+      <main className="flex items-center justify-center min-h-[calc(100vh-4rem)]">
         <div className="text-center max-w-sm">
           <div className="text-4xl mb-4">✓</div>
           <h1 className="text-xl font-bold text-gray-900 mb-2">{t('witness.page.done.heading')}</h1>
@@ -211,7 +211,7 @@ export default function WitnessPage() {
 
   if (phase === 'error') {
     return (
-      <main className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+      <main className="flex items-center justify-center min-h-[calc(100vh-4rem)]">
         <div className="text-center max-w-sm">
           <h1 className="text-xl font-bold text-gray-900 mb-2">{t('witness.page.errorHeading')}</h1>
           <p className="text-sm text-gray-500">{t('witness.page.errorBody')}</p>
@@ -222,7 +222,7 @@ export default function WitnessPage() {
 
   if (phase === 'submitting') {
     return (
-      <main className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <main className="flex items-center justify-center min-h-[calc(100vh-4rem)]">
         <p className="text-sm text-gray-400">{t('witness.page.submitting')}</p>
       </main>
     )
@@ -230,7 +230,7 @@ export default function WitnessPage() {
 
   if (phase === 'intro') {
     return (
-      <main className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+      <main className="flex items-center justify-center min-h-[calc(100vh-4rem)]">
         <Card className="w-full max-w-sm shadow-sm p-7 flex flex-col gap-5">
           <div>
             <SectionLabel color="blue" className="mb-3">
@@ -281,7 +281,7 @@ export default function WitnessPage() {
   const isLastRound = currentRound === TOTAL_ROUNDS - 1
 
   return (
-    <main className="min-h-screen bg-gray-50 px-4 py-10">
+    <main className="px-4 py-10">
       <div className="w-full max-w-sm mx-auto flex flex-col gap-6">
 
         {/* Progress */}
@@ -340,12 +340,9 @@ export default function WitnessPage() {
         {/* Navigation */}
         <div className="flex gap-3">
           {currentRound > 0 && (
-            <button
-              onClick={handleBack}
-              className="flex-1 py-2.5 rounded border border-gray-200 text-gray-700 font-medium text-sm hover:bg-gray-100 transition-colors"
-            >
+            <Button variant="secondary" onClick={handleBack} className="flex-1">
               {t('witness.page.back')}
-            </button>
+            </Button>
           )}
           <Button
             variant="primary"

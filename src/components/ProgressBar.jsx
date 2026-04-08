@@ -5,6 +5,8 @@
  *   total    {number} — total number of questions
  *   label    {string} — optional override for the left-side text (i18n)
  */
+import { colors } from '../design/tokens'
+
 export default function ProgressBar({ current, total, label }) {
   const pct = total > 0 ? Math.round((current / total) * 100) : 0
   const leftLabel = label ?? `Question ${current} of ${total}`
@@ -17,8 +19,8 @@ export default function ProgressBar({ current, total, label }) {
       </div>
       <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
         <div
-          className="h-full bg-blue-600 rounded-full transition-all duration-300"
-          style={{ width: `${pct}%` }}
+          className="h-full rounded-full transition-all duration-300"
+          style={{ width: `${pct}%`, backgroundColor: colors.blue }}
         />
       </div>
     </div>

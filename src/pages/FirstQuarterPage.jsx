@@ -15,6 +15,7 @@ import { computeFQScores } from '../utils/first-quarter-scoring'
 import { useFeedbackContext } from '../context/FeedbackContext'
 import QuestionCard from '../components/QuestionCard'
 import ProgressBar from '../components/ProgressBar'
+import { Button, SectionLabel } from '../components/ui'
 
 const DOMAIN_ORDER = ['depth', 'presence', 'vision', 'bond', 'discipline']
 
@@ -164,28 +165,25 @@ export default function FirstQuarterPage() {
   // ── Intro screen ───────────────────────────────────────────────
   if (showIntro) {
     return (
-      <main className="min-h-screen bg-gray-50 flex flex-col items-center justify-center px-4 py-16">
+      <main className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)]">
         <div className="w-full max-w-sm flex flex-col items-center text-center gap-6">
           <div>
             <p className="text-4xl mb-3" aria-hidden="true">🌓</p>
             <h1 className="text-2xl font-bold text-gray-900 mb-1">{t('fq.intro.heading')}</h1>
             <p className="text-sm text-gray-400">{t('fq.intro.meta')}</p>
           </div>
-          <div className="bg-white rounded-2xl border border-gray-200 px-5 py-4 w-full text-left flex flex-col gap-3">
+          <div className="bg-white rounded border border-gray-200 px-5 py-4 w-full text-left flex flex-col gap-3">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-1">Scale</p>
+              <SectionLabel color="gray" className="mb-1">Scale</SectionLabel>
               <p className="text-sm text-gray-700">{t('fq.intro.scale')}</p>
             </div>
             <p className="text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-3">
               {t('fq.intro.guidance')}
             </p>
           </div>
-          <button
-            onClick={() => setShowIntro(false)}
-            className="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-2xl shadow-sm transition-colors"
-          >
+          <Button variant="primary" size="lg" onClick={() => setShowIntro(false)} className="w-full">
             {t('fq.intro.cta')}
-          </button>
+          </Button>
         </div>
       </main>
     )
@@ -194,7 +192,7 @@ export default function FirstQuarterPage() {
   // ── Transition screen ──────────────────────────────────────────
   if (showTransition) {
     return (
-      <main className="min-h-screen bg-gray-50 flex flex-col items-center justify-center px-4 py-16">
+      <main className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)]">
         <div className="w-full max-w-xl flex flex-col items-center text-center gap-6">
           <div className="flex items-center gap-2">
             <span className={`w-3 h-3 rounded-full ${DOMAIN_ACCENT[domainKey]}`} />
@@ -216,12 +214,9 @@ export default function FirstQuarterPage() {
             </p>
           </div>
 
-          <button
-            onClick={handleContinueToNextBlock}
-            className="px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-2xl shadow-sm transition-colors"
-          >
+          <Button variant="primary" size="lg" onClick={handleContinueToNextBlock}>
             {t('fq.transition.cta', { name: t(`fqDomains.${nextDomainKey}.name`) })}
-          </button>
+          </Button>
 
           <p className="text-xs text-gray-400">
             {t('fq.overallProgress', { current: overallCurrent, total: TOTAL_ITEMS })}
@@ -233,10 +228,10 @@ export default function FirstQuarterPage() {
 
   // ── Answering screen ───────────────────────────────────────────
   return (
-    <main className="min-h-screen bg-gray-50 flex flex-col items-center px-4 py-10 sm:py-16">
+    <main className="flex flex-col items-center py-10 sm:py-16">
       <div className="w-full max-w-xl flex flex-col gap-6">
         {/* Block header */}
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm px-5 py-4">
+        <div className="bg-white rounded border border-gray-200 px-5 py-4">
           <div className="flex items-center gap-2 mb-0.5">
             <span className={`w-2.5 h-2.5 rounded-full shrink-0 ${DOMAIN_ACCENT[domainKey]}`} />
             <span className="text-xs font-semibold uppercase tracking-widest text-gray-500">
@@ -277,25 +272,19 @@ export default function FirstQuarterPage() {
         {/* Navigation */}
         <div className="flex gap-3">
           {(blockIdx > 0 || itemInBlockIdx > 0) && (
-            <button
-              onClick={handleBack}
-              className="flex-1 sm:flex-none px-6 py-3 rounded-xl border border-gray-200 text-gray-700 font-medium hover:bg-gray-100 transition-colors"
-            >
+            <Button variant="secondary" size="lg" onClick={handleBack} className="flex-1 sm:flex-none">
               {t('fq.back')}
-            </button>
+            </Button>
           )}
-          <button
+          <Button
+            variant="primary"
+            size="lg"
             onClick={handleNext}
             disabled={!answered}
-            className={[
-              'flex-1 py-3 rounded-xl font-semibold text-white transition-colors',
-              answered
-                ? 'bg-blue-600 hover:bg-blue-700 shadow-sm'
-                : 'bg-gray-200 text-gray-400 cursor-not-allowed',
-            ].join(' ')}
+            className="flex-1"
           >
             {isLastItemOverall ? t('fq.seeResults') : t('fq.next')}
-          </button>
+          </Button>
         </div>
       </div>
     </main>

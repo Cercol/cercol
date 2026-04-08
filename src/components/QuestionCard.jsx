@@ -10,6 +10,7 @@
  *   prefixKey   {string}                 — i18n key for the item prefix (default 'test.itemPrefix')
  */
 import { useTranslation } from 'react-i18next'
+import { colors } from '../design/tokens'
 import LikertScale from './LikertScale'
 
 export default function QuestionCard({
@@ -29,8 +30,8 @@ export default function QuestionCard({
     : item.text
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 sm:p-8">
-      <p className="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-3">
+    <div className="bg-white rounded border border-gray-200 p-6 sm:p-8">
+      <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: colors.blue }}>
         {t(prefixKey)} {index}
       </p>
       <p className="text-lg sm:text-xl font-medium text-gray-900 mb-6 leading-snug italic">
