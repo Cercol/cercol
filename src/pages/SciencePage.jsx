@@ -6,14 +6,15 @@
  * Brand voice: grounded, accessible, no jargon (PRODUCT.md).
  */
 import { useTranslation } from 'react-i18next'
+import { Card, SectionLabel } from '../components/ui'
 
-function Section({ eyebrow, heading, children, accent = 'text-gray-400' }) {
+function Section({ eyebrow, heading, children, accent = 'gray' }) {
   return (
     <section className="mb-12">
       {eyebrow && (
-        <p className={`text-xs font-semibold uppercase tracking-widest mb-2 ${accent}`}>
+        <SectionLabel color={accent} className="mb-2">
           {eyebrow}
-        </p>
+        </SectionLabel>
       )}
       <h2 className="text-xl font-bold text-gray-900 mb-4">{heading}</h2>
       {children}
@@ -75,7 +76,7 @@ export default function SciencePage() {
         <Section
           eyebrow={t('science.openInstruments.eyebrow')}
           heading={t('science.openInstruments.heading')}
-          accent="text-blue-600"
+          accent="blue"
         >
           <p className="text-sm text-gray-600 leading-relaxed">
             {t('science.openInstruments.body')}
@@ -86,12 +87,12 @@ export default function SciencePage() {
         <Section
           eyebrow={t('science.fiveFactors.eyebrow')}
           heading={t('science.fiveFactors.heading')}
-          accent="text-amber-500"
+          accent="amber"
         >
           <p className="text-sm text-gray-600 leading-relaxed mb-3">
             {t('science.fiveFactors.body')}
           </p>
-          <p className="text-xs text-gray-400 bg-gray-100 rounded-xl px-4 py-3 leading-relaxed">
+          <p className="text-xs text-gray-400 bg-gray-100 rounded px-4 py-3 leading-relaxed">
             {t('science.fiveFactors.note')}
           </p>
         </Section>
@@ -100,14 +101,14 @@ export default function SciencePage() {
         <Section
           eyebrow={t('science.roles.eyebrow')}
           heading={t('science.roles.heading')}
-          accent="text-[#427c42]"
+          accent="green"
         >
           <p className="text-sm text-gray-600 leading-relaxed mb-4">
             {t('science.roles.body')}
           </p>
-          <div className="bg-white rounded-2xl border border-gray-200 px-5 py-4">
+          <Card className="px-5 py-4">
             <div className="flex items-start gap-3">
-              <span className="text-xs font-bold text-amber-600 uppercase tracking-widest bg-amber-50 px-2 py-1 rounded-md shrink-0 mt-0.5">
+              <span className="text-xs font-bold text-amber-600 uppercase tracking-widest bg-amber-50 px-2 py-1 rounded shrink-0 mt-0.5">
                 Beta
               </span>
               <div>
@@ -119,29 +120,29 @@ export default function SciencePage() {
                 </p>
               </div>
             </div>
-          </div>
+          </Card>
         </Section>
 
         {/* ── Full Moon — three parts ───────────────────────────── */}
         <Section
           eyebrow={t('science.fullMoon.eyebrow')}
           heading={t('science.fullMoon.heading')}
-          accent="text-[#427c42]"
+          accent="green"
         >
           <div className="flex flex-col gap-4">
 
             {/* Self-report */}
-            <div className="bg-white rounded-2xl border border-gray-200 px-5 py-4">
+            <Card className="px-5 py-4">
               <p className="text-sm font-bold text-gray-900 mb-1.5">
                 {t('science.fullMoon.selfReport.heading')}
               </p>
               <p className="text-sm text-gray-600 leading-relaxed">
                 {t('science.fullMoon.selfReport.body')}
               </p>
-            </div>
+            </Card>
 
             {/* Witness */}
-            <div className="bg-white rounded-2xl border border-gray-200 px-5 py-4">
+            <Card className="px-5 py-4">
               <p className="text-sm font-bold text-gray-900 mb-1.5">
                 {t('science.fullMoon.witness.heading')}
               </p>
@@ -151,7 +152,7 @@ export default function SciencePage() {
               <p className="text-sm text-gray-600 leading-relaxed mb-3">
                 {t('science.fullMoon.witness.blindSpots')}
               </p>
-              <div className="bg-gray-50 rounded-xl px-4 py-3 border border-gray-100">
+              <div className="bg-gray-50 rounded px-4 py-3 border border-gray-100">
                 <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-1">
                   Ideal Witness
                 </p>
@@ -159,7 +160,7 @@ export default function SciencePage() {
                   {t('science.fullMoon.witness.idealWitness')}
                 </p>
               </div>
-            </div>
+            </Card>
 
           </div>
         </Section>
@@ -171,7 +172,7 @@ export default function SciencePage() {
           </h2>
           <div className="flex flex-col gap-2">
             {REFERENCES.map((ref) => (
-              <div key={ref.key} className="text-xs text-gray-500 leading-relaxed bg-white rounded-xl border border-gray-200 px-4 py-3">
+              <Card key={ref.key} className="px-4 py-3 text-xs text-gray-500 leading-relaxed">
                 {ref.url ? (
                   <>
                     {ref.text.replace(/\.$/, '')} —{' '}
@@ -187,13 +188,13 @@ export default function SciencePage() {
                 ) : (
                   ref.text
                 )}
-              </div>
+              </Card>
             ))}
           </div>
         </section>
 
         {/* ── Open source ───────────────────────────────────────── */}
-        <section className="bg-white rounded-2xl border border-gray-200 px-6 py-6">
+        <Card className="px-6 py-6">
           <h2 className="text-base font-bold text-gray-900 mb-2">
             {t('science.openSource.heading')}
           </h2>
@@ -213,7 +214,7 @@ export default function SciencePage() {
               <line x1="10" y1="14" x2="21" y2="3"/>
             </svg>
           </a>
-        </section>
+        </Card>
 
     </main>
   )

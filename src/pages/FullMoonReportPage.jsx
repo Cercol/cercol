@@ -27,6 +27,7 @@ import { colors } from '../design/tokens'
 import RadarChart from '../components/RadarChart'
 import RoleResult from '../components/RoleResult'
 import RoleProbabilityBars from '../components/RoleProbabilityBars'
+import { Card, Button, SectionLabel } from '../components/ui'
 
 const DOMAIN_BAR_COLOR = {
   depth:      'bg-red-500',
@@ -61,7 +62,7 @@ function ConvergenceMeter({ ratio, t }) {
   }
 
   return (
-    <div className={`rounded-2xl border border-gray-200 px-6 py-5 ${bg}`}>
+    <div className={`rounded border border-gray-200 px-6 py-5 ${bg}`}>
       <p className={`text-sm font-semibold mb-3 ${textColor}`}>{label}</p>
       <div className="w-full h-2.5 bg-white rounded-full overflow-hidden mb-2">
         <div
@@ -83,7 +84,7 @@ function BlindSpotCard({ domain, selfScore, witnessScore, t }) {
   const domainName = t(`fmDomains.${domain}.name`)
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 px-5 py-4">
+    <Card className="px-5 py-4">
       <div className="flex items-center justify-between mb-2">
         <p className="text-sm font-semibold" style={{ color: colors.textPrimary }}>
           {domainName}
@@ -96,7 +97,7 @@ function BlindSpotCard({ domain, selfScore, witnessScore, t }) {
       <p className="text-sm leading-relaxed" style={{ color: colors.textMuted }}>
         {desc}
       </p>
-    </div>
+    </Card>
   )
 }
 
@@ -194,12 +195,9 @@ export default function FullMoonReportPage() {
       <main className="flex items-center justify-center min-h-[calc(100vh-4rem)]">
         <div className="text-center max-w-sm">
           <p className="text-gray-500 text-sm mb-4">{t('witnessResults.noSelf')}</p>
-          <button
-            onClick={() => navigate('/full-moon')}
-            className="py-2.5 px-5 rounded-xl bg-[#0047ba] hover:opacity-90 text-white text-sm font-semibold transition-opacity shadow-sm"
-          >
+          <Button variant="primary" onClick={() => navigate('/full-moon')} className="shadow-sm">
             {t('witnessResults.startFmCta')}
-          </button>
+          </Button>
         </div>
       </main>
     )
@@ -232,9 +230,9 @@ export default function FullMoonReportPage() {
 
         {/* ── Header ── */}
         <div>
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#0047ba] mb-1">
+          <SectionLabel color="blue" className="mb-1">
             🌕 Full Moon Cèrcol
-          </p>
+          </SectionLabel>
           <h1 className="text-2xl sm:text-3xl font-bold" style={{ color: colors.textPrimary }}>
             {t('witnessResults.title')}
           </h1>
@@ -245,9 +243,9 @@ export default function FullMoonReportPage() {
 
         {/* ── Section 1: Self role ── */}
         <section>
-          <h2 className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: colors.textMuted }}>
+          <SectionLabel color="gray" className="mb-4">
             {t('witnessResults.selfRoleSection')}
-          </h2>
+          </SectionLabel>
           <div className="flex flex-col gap-4">
             <RoleResult result={selfRole} definitive={isDefinitive} />
             <RoleProbabilityBars result={selfRole} />
@@ -257,9 +255,9 @@ export default function FullMoonReportPage() {
         {/* ── Section 2: Witness role (if ≥1 complete) ── */}
         {hasAnyWitness && witnessRole && (
           <section>
-            <h2 className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: colors.textMuted }}>
+            <SectionLabel color="gray" className="mb-4">
               {t('witnessResults.roleSection')}
-            </h2>
+            </SectionLabel>
             <div className="flex flex-col gap-4">
               <RoleResult result={witnessRole} />
               <RoleProbabilityBars result={witnessRole} />
@@ -270,9 +268,9 @@ export default function FullMoonReportPage() {
         {/* ── Section 3: Convergence (if ≥2 complete) ── */}
         {hasEnoughWitnesses && convergence !== null && (
           <section>
-            <h2 className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: colors.textMuted }}>
+            <SectionLabel color="gray" className="mb-4">
               {t('witnessResults.convergenceSection')}
-            </h2>
+            </SectionLabel>
             <ConvergenceMeter ratio={convergence} t={t} />
           </section>
         )}
@@ -280,18 +278,18 @@ export default function FullMoonReportPage() {
         {/* ── Section 4: Blind spots (if ≥2 complete) ── */}
         {hasEnoughWitnesses && (
           <section>
-            <h2 className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: colors.textMuted }}>
+            <SectionLabel color="gray" className="mb-1">
               {t('witnessResults.blindSpotsTitle')}
-            </h2>
+            </SectionLabel>
             <p className="text-xs mb-4" style={{ color: colors.textMuted }}>
               {t('witnessResults.blindSpotsNote')}
             </p>
             {divergence.length === 0 ? (
-              <div className="bg-white rounded-2xl border border-gray-200 px-5 py-4">
+              <Card className="px-5 py-4">
                 <p className="text-sm" style={{ color: colors.textMuted }}>
                   {t('witnessResults.noDivergence')}
                 </p>
-              </div>
+              </Card>
             ) : (
               <div className="flex flex-col gap-3">
                 {divergence.map(({ domain, selfScore, witnessScore }) => (
@@ -310,21 +308,21 @@ export default function FullMoonReportPage() {
 
         {/* ── Section 5: Domain comparison bars ── */}
         <section>
-          <h2 className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: colors.textMuted }}>
+          <SectionLabel color="gray" className="mb-4">
             {t('witnessResults.domainsSection')}
-          </h2>
+          </SectionLabel>
 
           {/* Radar chart */}
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-4">
+          <Card className="shadow-sm p-6 mb-4">
             <RadarChart
               scores={selfReport}
               domainKeys={DOMAIN_KEYS}
               labelFn={(key) => t(`fmDomains.${key}.name`)}
             />
-          </div>
+          </Card>
 
           {/* Domain bars */}
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
+          <Card className="shadow-sm p-5">
             {witnessScores && (
               <div className="flex items-center gap-4 text-xs font-medium mb-4" style={{ color: colors.textMuted }}>
                 <span className="flex items-center gap-1.5">
@@ -349,33 +347,33 @@ export default function FullMoonReportPage() {
                 />
               ))}
             </div>
-          </div>
+          </Card>
         </section>
 
         {/* ── Section 6: Witness sessions + invite CTA ── */}
         <section>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xs font-semibold uppercase tracking-widest" style={{ color: colors.textMuted }}>
+            <SectionLabel color="gray">
               {t('witnessResults.witnessSessionsSection')}
-            </h2>
+            </SectionLabel>
             <span className="text-xs font-medium" style={{ color: colors.textMuted }}>
               {t('witnessResults.witnessCount', { count: completedSessions.length })}
             </span>
           </div>
 
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
+          <Card className="shadow-sm p-5">
             {(completedSessions.length > 0 || pendingSessions.length > 0) && (
               <div className="flex flex-col gap-2 mb-4">
                 {completedSessions.map(s => (
                   <div key={s.id} className="flex items-center justify-between text-sm">
                     <span style={{ color: colors.textPrimary }}>{s.witness_name}</span>
-                    <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">Done</span>
+                    <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">Done</span>
                   </div>
                 ))}
                 {pendingSessions.map(s => (
                   <div key={s.id} className="flex items-center justify-between text-sm">
                     <span style={{ color: colors.textPrimary }}>{s.witness_name}</span>
-                    <span className="text-xs font-medium bg-gray-100 px-2 py-0.5 rounded-full" style={{ color: colors.textMuted }}>Waiting</span>
+                    <span className="text-xs font-medium bg-gray-100 px-2 py-0.5 rounded" style={{ color: colors.textMuted }}>Waiting</span>
                   </div>
                 ))}
               </div>
@@ -385,17 +383,14 @@ export default function FullMoonReportPage() {
                 {t('witnessResults.pendingNote')}
               </p>
             )}
-            <button
-              onClick={() => navigate('/witness-setup')}
-              className="w-full py-2.5 rounded-xl bg-[#0047ba] hover:opacity-90 text-white text-sm font-semibold transition-opacity shadow-sm"
-            >
+            <Button variant="primary" onClick={() => navigate('/witness-setup')} className="w-full shadow-sm">
               {t('witnessResults.setupCta')}
-            </button>
-          </div>
+            </Button>
+          </Card>
         </section>
 
         {/* Disclaimer */}
-        <div className="bg-gray-100 rounded-xl px-5 py-4 text-xs leading-relaxed" style={{ color: colors.textMuted }}>
+        <div className="bg-gray-100 rounded px-5 py-4 text-xs leading-relaxed" style={{ color: colors.textMuted }}>
           {t('witnessResults.disclaimer')}
         </div>
 

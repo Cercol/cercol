@@ -4,6 +4,7 @@
  * honest limitations, and an invitation to critique the model.
  */
 import { useTranslation } from 'react-i18next'
+import { Card, SectionLabel } from '../components/ui'
 
 const ROLES = [
   { key: 'R01', accent: 'text-emerald-600', bg: 'bg-emerald-50' }, // Dolphin  P+ B+
@@ -29,7 +30,7 @@ function RoleCard({ roleKey, accent, bg, t }) {
   const misses      = t(`roles.${roleKey}.misses`)
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
+    <Card className="overflow-hidden">
       <div className={`px-5 pt-5 pb-4 ${bg}`}>
         <p className={`text-xs font-bold uppercase tracking-widest mb-0.5 ${accent}`}>
           {name}{ca !== name ? ` · ${ca}` : ''}
@@ -56,16 +57,16 @@ function RoleCard({ roleKey, accent, bg, t }) {
           <p className="text-sm text-gray-600 leading-relaxed">{misses}</p>
         </div>
       </div>
-    </div>
+    </Card>
   )
 }
 
 function InfoBox({ heading, body, accent = 'text-gray-900' }) {
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 px-6 py-5">
+    <Card className="px-6 py-5">
       <h3 className={`text-sm font-bold mb-2 ${accent}`}>{heading}</h3>
       <p className="text-sm text-gray-600 leading-relaxed">{body}</p>
-    </div>
+    </Card>
   )
 }
 
@@ -77,9 +78,9 @@ export default function RolesPage() {
 
         {/* ── Intro ─────────────────────────────────────────────── */}
         <section className="mb-12">
-          <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">
+          <SectionLabel color="gray" className="mb-3">
             {t('nav.roles')}
-          </p>
+          </SectionLabel>
           <h1 className="text-3xl font-bold text-gray-900 mb-4">
             {t('rolesPage.intro.heading')}
           </h1>
@@ -93,7 +94,7 @@ export default function RolesPage() {
 
         {/* ── Beta disclaimer ───────────────────────────────────── */}
         <section className="mb-12">
-          <div className="bg-amber-50 border border-amber-200 rounded-2xl px-6 py-5">
+          <div className="bg-amber-50 border border-amber-200 rounded px-6 py-5">
             <p className="text-xs font-bold uppercase tracking-widest text-amber-600 mb-2">
               Beta
             </p>
@@ -102,7 +103,7 @@ export default function RolesPage() {
           </div>
         </section>
 
-        {/* ── Nine roles grid ───────────────────────────────────── */}
+        {/* ── Roles grid ────────────────────────────────────────── */}
         <section className="mb-12">
           <h2 className="text-xl font-bold text-gray-900 mb-6">
             {t('rolesPage.grid.heading')}
@@ -131,7 +132,7 @@ export default function RolesPage() {
         </section>
 
         {/* ── Critique CTA ──────────────────────────────────────── */}
-        <section className="bg-white rounded-2xl border border-gray-200 px-6 py-6">
+        <Card className="px-6 py-6">
           <h2 className="text-base font-bold text-gray-900 mb-2">
             {t('rolesPage.critique.heading')}
           </h2>
@@ -149,7 +150,7 @@ export default function RolesPage() {
               <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
             </svg>
           </a>
-        </section>
+        </Card>
 
     </main>
   )

@@ -11,6 +11,7 @@
  */
 import { useTranslation } from 'react-i18next'
 import { colors } from '../design/tokens'
+import { Card, Badge } from './ui'
 
 export default function RoleResult({ result, definitive = false }) {
   const { t } = useTranslation()
@@ -18,25 +19,22 @@ export default function RoleResult({ result, definitive = false }) {
   const { role, arc } = result
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 flex flex-col gap-4">
+    <Card className="shadow-sm p-6 flex flex-col gap-4">
 
       {/* Beta badge or Witness-confirmed indicator */}
       {definitive ? (
         <div className="flex flex-col gap-1">
-          <span className="self-start text-xs font-semibold uppercase tracking-widest px-2 py-1 rounded-md bg-[#e8eef8] text-[#0047ba]">
+          <Badge className="self-start bg-[#e8eef8] text-[#0047ba]">
             {t('witnessResults.definitiveLabel')}
-          </span>
+          </Badge>
           <p className="text-xs leading-relaxed" style={{ color: colors.textMuted }}>
             {t('witnessResults.definitiveNote')}
           </p>
         </div>
       ) : (
-        <span
-          className="self-start text-xs font-semibold uppercase tracking-widest px-2 py-1 rounded-md bg-gray-100"
-          style={{ color: colors.textMuted }}
-        >
+        <Badge variant="default" className="self-start">
           {t('roles.beta_label')}
-        </span>
+        </Badge>
       )}
 
       {/* Role name */}
@@ -71,18 +69,14 @@ export default function RoleResult({ result, definitive = false }) {
           </p>
           <div className="flex flex-wrap gap-2">
             {arc.map(r => (
-              <span
-                key={r}
-                className="text-xs font-medium px-3 py-1 rounded-full bg-gray-100"
-                style={{ color: colors.textMuted }}
-              >
+              <Badge key={r} variant="default">
                 {t(`roles.${r}.name`)}
-              </span>
+              </Badge>
             ))}
           </div>
         </div>
       )}
 
-    </div>
+    </Card>
   )
 }

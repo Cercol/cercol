@@ -9,3 +9,8 @@ body {
 h1, h2, h3 {
   font-family: 'Playfair Display', Georgia, serif;
 }
+
+/* Global border-radius baseline — Tailwind utility classes override this */
+button, input, textarea, select {
+  border-radius: 4px;
+}

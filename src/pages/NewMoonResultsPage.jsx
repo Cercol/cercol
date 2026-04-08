@@ -14,11 +14,12 @@ import { logResult } from '../utils/logger'
 import { useAuth } from '../context/AuthContext'
 import { colors } from '../design/tokens'
 import RadarChart from '../components/RadarChart'
+import { Card, Button, SectionLabel } from '../components/ui'
 
 const LABEL_STYLES = {
   low:      'bg-gray-100 text-gray-600',
   moderate: 'bg-blue-100 text-blue-700',
-  high:     'bg-blue-600 text-white',
+  high:     'bg-[#0047ba] text-white',
 }
 
 const DOMAIN_BAR_COLOR = {
@@ -102,17 +103,17 @@ export default function NewMoonResultsPage() {
 
         {/* Radar chart */}
         <section>
-          <h2 className="text-sm font-semibold uppercase tracking-widest text-gray-400 mb-4">
+          <SectionLabel color="gray" className="mb-4">
             {t('newMoonResults.domainSection')}
-          </h2>
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+          </SectionLabel>
+          <Card className="shadow-sm p-6">
             <RadarChart
               scores={scores}
               maxScore={7}
               domainKeys={domainKeys}
               labelFn={(key) => t(`domains.${key}.label`)}
             />
-          </div>
+          </Card>
 
           {/* Domain score cards */}
           <div className="flex flex-col gap-3 mt-4">
@@ -121,11 +122,10 @@ export default function NewMoonResultsPage() {
               const pct = radarScoreToPercent(score)
               const label = radarScoreLabel(score)
               const barColor = DOMAIN_BAR_COLOR[key]
-              // New Moon scale is 1–7: low ≤ 2.9, moderate 3.0–4.9, high ≥ 5.0
               const descVariant = score >= 5.0 ? 'high' : score <= 2.9 ? 'low' : null
 
               return (
-                <div key={key} className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
+                <Card key={key} className="shadow-sm p-5">
                   <div className="flex items-center justify-between mb-3">
                     <div>
                       <h3 className="font-semibold text-gray-900">{t(`domains.${key}.label`)}</h3>
@@ -147,37 +147,39 @@ export default function NewMoonResultsPage() {
                       {t(`dimensions.${key}.${descVariant}`)}
                     </p>
                   )}
-                </div>
+                </Card>
               )
             })}
           </div>
         </section>
 
         {/* ── Upgrade prompt ── */}
-        <div className="bg-gray-50 border border-gray-200 rounded-2xl px-6 py-5 flex flex-col gap-3">
+        <Card className="px-6 py-5 flex flex-col gap-3 bg-gray-50 border-gray-200">
           <div>
             <p className="font-semibold text-gray-900">{t('newMoonResults.upgrade.heading')}</p>
             <p className="text-sm text-gray-500 mt-1">{t('newMoonResults.upgrade.body')}</p>
           </div>
-          <button
+          <Button
+            variant="primary"
+            size="md"
             onClick={() => navigate('/first-quarter')}
-            className="self-start px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl transition-colors shadow-sm"
+            className="self-start shadow-sm"
           >
             {t('newMoonResults.upgrade.cta')}
-          </button>
-        </div>
+          </Button>
+        </Card>
 
         {/* Share + retake */}
         <div className="flex flex-col gap-3">
           <button
             onClick={handleShare}
-            className="w-full py-3 rounded-xl bg-white border border-gray-200 text-gray-700 font-medium hover:bg-gray-50 transition-colors"
+            className="w-full py-3 rounded bg-white border border-gray-200 text-gray-700 font-medium hover:bg-gray-50 transition-colors"
           >
             {copied ? t('newMoonResults.copied') : t('newMoonResults.share')}
           </button>
           <button
             onClick={() => navigate('/')}
-            className="w-full py-3 rounded-xl border border-gray-200 text-gray-500 text-sm font-medium hover:bg-gray-100 transition-colors"
+            className="w-full py-3 rounded border border-gray-200 text-gray-500 text-sm font-medium hover:bg-gray-100 transition-colors"
           >
             {t('newMoonResults.retake')}
           </button>

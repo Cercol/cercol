@@ -24,6 +24,7 @@ import { supabase } from '../lib/supabase'
 import { createCheckoutSession } from '../lib/api'
 import QuestionCard from '../components/QuestionCard'
 import ProgressBar from '../components/ProgressBar'
+import { Card, Button } from '../components/ui'
 
 const DOMAIN_ORDER = ['depth', 'presence', 'vision', 'bond', 'discipline']
 
@@ -273,7 +274,7 @@ export default function FullMoonPage() {
     return (
       <main className="min-h-screen bg-gray-50 flex flex-col items-center justify-center px-4 py-16">
         <div className="w-full max-w-md">
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
+          <Card className="shadow-sm p-8">
 
             <div className="text-center mb-6">
               <div className="text-3xl mb-3">🌕</div>
@@ -285,24 +286,20 @@ export default function FullMoonPage() {
               </p>
             </div>
 
-            <div className="bg-gray-50 rounded-xl px-4 py-3 mb-6">
+            <div className="bg-gray-50 rounded px-4 py-3 mb-6">
               <p className="text-sm font-medium text-gray-700 text-center">
                 {t('fm.paywall.includes')}
               </p>
             </div>
 
-            <button
+            <Button
+              variant="primary"
               onClick={handleUnlock}
               disabled={checkoutLoading}
-              className={[
-                'w-full py-3 rounded-xl font-semibold text-white transition-colors',
-                checkoutLoading
-                  ? 'bg-[#99b3e0] cursor-not-allowed'
-                  : 'bg-[#0047ba] hover:opacity-90 transition-opacity shadow-sm',
-              ].join(' ')}
+              className={`w-full shadow-sm${checkoutLoading ? ' cursor-not-allowed' : ''}`}
             >
               {checkoutLoading ? t('fm.paywall.loading') : t('fm.paywall.cta')}
-            </button>
+            </Button>
 
             {checkoutError && (
               <p className="mt-3 text-sm text-red-500 text-center">{checkoutError}</p>
@@ -311,7 +308,7 @@ export default function FullMoonPage() {
             <p className="mt-4 text-xs text-gray-400 text-center">
               {t('fm.paywall.permanentNote')}
             </p>
-          </div>
+          </Card>
         </div>
       </main>
     )

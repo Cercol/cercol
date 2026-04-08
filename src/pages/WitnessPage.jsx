@@ -20,6 +20,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { getWitnessSession, completeWitnessSession } from '../lib/api'
 import { buildRounds, computeWitnessScores } from '../utils/witness-scoring'
+import { Card, Button, SectionLabel } from '../components/ui'
 
 const TOTAL_ROUNDS = 20
 
@@ -30,7 +31,7 @@ const TOTAL_ROUNDS = 20
 function AdjCard({ adj, state, lang, onSelect }) {
   const { t } = useTranslation()
 
-  const base = 'flex-1 text-left rounded-xl border px-4 py-3 transition-all cursor-pointer text-sm font-medium'
+  const base = 'flex-1 text-left rounded border px-4 py-3 transition-all cursor-pointer text-sm font-medium'
   let styles = 'border-gray-200 bg-white hover:border-gray-300 text-gray-800'
   if (state === 'best')  styles = 'border-emerald-400 bg-emerald-50 text-emerald-800 shadow-sm'
   if (state === 'worst') styles = 'border-red-300 bg-red-50 text-red-800 shadow-sm'
@@ -58,7 +59,7 @@ function AdjCard({ adj, state, lang, onSelect }) {
           {/* Tooltip bubble — shown on hover or keyboard focus within the group */}
           <div
             role="tooltip"
-            className="absolute right-0 bottom-full mb-2 w-52 bg-gray-900 text-white text-xs rounded-lg px-3 py-2 leading-relaxed z-20 pointer-events-none opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-150"
+            className="absolute right-0 bottom-full mb-2 w-52 bg-gray-900 text-white text-xs rounded px-3 py-2 leading-relaxed z-20 pointer-events-none opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-150"
           >
             {tipText}
             {/* Arrow pointing down */}
@@ -116,18 +117,14 @@ export default function WitnessPage() {
       const r = { ...updated[currentRound] }
 
       if (r.best === adjId) {
-        // Deselect best
         r.best = null
       } else if (r.worst === adjId) {
-        // Deselect worst
         r.worst = null
       } else if (r.best === null) {
         r.best = adjId
       } else if (r.worst === null) {
-        // Don't allow same adjective for both
         if (r.best !== adjId) r.worst = adjId
       } else {
-        // Both selected; replace worst (second tap)
         if (r.best !== adjId) r.worst = adjId
       }
 
@@ -234,11 +231,11 @@ export default function WitnessPage() {
   if (phase === 'intro') {
     return (
       <main className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-        <div className="w-full max-w-sm bg-white rounded-2xl border border-gray-200 shadow-sm p-7 flex flex-col gap-5">
+        <Card className="w-full max-w-sm shadow-sm p-7 flex flex-col gap-5">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-widest text-[#0047ba] mb-3">
+            <SectionLabel color="blue" className="mb-3">
               Witness Cèrcol
-            </p>
+            </SectionLabel>
             <h1 className="text-xl font-bold text-gray-900 mb-2">
               {t('witness.page.intro.heading')}
             </h1>
@@ -248,7 +245,7 @@ export default function WitnessPage() {
           </div>
 
           {/* Subject — read-only */}
-          <div className="bg-gray-50 rounded-xl px-4 py-3">
+          <div className="bg-gray-50 rounded px-4 py-3">
             <p className="text-xs text-gray-400 mb-0.5">{t('witness.page.intro.subjectLabel')}</p>
             <p className="text-base font-semibold text-gray-900">
               {subjectDisplay || '—'}
@@ -265,18 +262,15 @@ export default function WitnessPage() {
               type="text"
               value={witnessName}
               onChange={(e) => setWitnessName(e.target.value)}
-              className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-medium text-gray-900 placeholder-gray-300 focus:border-[#0047ba] focus:outline-none transition-colors"
+              className="w-full rounded border border-gray-200 bg-white px-4 py-2.5 text-sm font-medium text-gray-900 placeholder-gray-300 focus:border-[#0047ba] focus:outline-none transition-colors"
               placeholder={t('witness.page.intro.youArePlaceholder')}
             />
           </div>
 
-          <button
-            onClick={handleStart}
-            className="w-full py-3 rounded-xl bg-[#0047ba] hover:opacity-90 text-white font-semibold text-sm transition-opacity shadow-sm"
-          >
+          <Button variant="primary" onClick={handleStart} className="w-full shadow-sm">
             {t('witness.page.intro.cta')}
-          </button>
-        </div>
+          </Button>
+        </Card>
       </main>
     )
   }
@@ -348,18 +342,19 @@ export default function WitnessPage() {
           {currentRound > 0 && (
             <button
               onClick={handleBack}
-              className="flex-1 py-2.5 rounded-xl border border-gray-200 text-gray-700 font-medium text-sm hover:bg-gray-100 transition-colors"
+              className="flex-1 py-2.5 rounded border border-gray-200 text-gray-700 font-medium text-sm hover:bg-gray-100 transition-colors"
             >
               {t('witness.page.back')}
             </button>
           )}
-          <button
+          <Button
+            variant="primary"
             onClick={handleNext}
             disabled={!canAdvance()}
-            className="flex-1 py-2.5 rounded-xl bg-[#0047ba] hover:opacity-90 disabled:opacity-40 text-white font-semibold text-sm transition-opacity shadow-sm"
+            className="flex-1 shadow-sm"
           >
             {isLastRound ? t('witness.page.finish') : t('witness.page.next')}
-          </button>
+          </Button>
         </div>
 
       </div>

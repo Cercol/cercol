@@ -22,11 +22,12 @@ import { colors } from '../design/tokens'
 import RadarChart from '../components/RadarChart'
 import RoleResult from '../components/RoleResult'
 import RoleProbabilityBars from '../components/RoleProbabilityBars'
+import { Card, Button, SectionLabel } from '../components/ui'
 
 const LABEL_STYLES = {
   low:      'bg-gray-100 text-gray-600',
   moderate: 'bg-blue-100 text-blue-700',
-  high:     'bg-blue-600 text-white',
+  high:     'bg-[#0047ba] text-white',
 }
 
 const DOMAIN_BAR_COLOR = {
@@ -113,16 +114,16 @@ export default function FirstQuarterResultsPage() {
 
         {/* ── Section 1: Domain radar chart ── */}
         <section>
-          <h2 className="text-sm font-semibold uppercase tracking-widest text-gray-400 mb-4">
+          <SectionLabel color="gray" className="mb-4">
             {t('fqResults.domainSection')}
-          </h2>
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+          </SectionLabel>
+          <Card className="shadow-sm p-6">
             <RadarChart
               scores={domains}
               domainKeys={domainKeys}
               labelFn={(key) => t(`fqDomains.${key}.name`)}
             />
-          </div>
+          </Card>
 
           {/* Domain score cards */}
           <div className="flex flex-col gap-3 mt-4">
@@ -134,7 +135,7 @@ export default function FirstQuarterResultsPage() {
               const descVariant = score > 3.5 ? 'high' : score < 2.5 ? 'low' : null
 
               return (
-                <div key={key} className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
+                <Card key={key} className="shadow-sm p-5">
                   <div className="flex items-center justify-between mb-3">
                     <h3 className="font-semibold text-gray-900">{t(`fqDomains.${key}.name`)}</h3>
                     <div className="flex flex-col items-end gap-1 ml-4 shrink-0">
@@ -154,7 +155,7 @@ export default function FirstQuarterResultsPage() {
                       {t(`dimensions.${key}.${descVariant}`)}
                     </p>
                   )}
-                </div>
+                </Card>
               )
             })}
           </div>
@@ -163,14 +164,14 @@ export default function FirstQuarterResultsPage() {
         {/* ── Section 2: Facet breakdown (always shown) ── */}
         {facets && (
           <section>
-            <h2 className="text-sm font-semibold uppercase tracking-widest text-gray-400 mb-4">
+            <SectionLabel color="gray" className="mb-4">
               {t('fqResults.facetSection')}
-            </h2>
+            </SectionLabel>
             <div className="flex flex-col gap-6">
               {domainKeys.map((domainKey) => {
                 const domainFacets = FQ_DOMAIN_META[domainKey].facets
                 return (
-                  <div key={domainKey} className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
+                  <Card key={domainKey} className="shadow-sm p-5">
                     <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
                       <span className={`w-2 h-2 rounded-full inline-block ${DOMAIN_BAR_COLOR[domainKey]}`} />
                       {t(`fqDomains.${domainKey}.name`)}
@@ -208,7 +209,7 @@ export default function FirstQuarterResultsPage() {
                         )
                       })}
                     </div>
-                  </div>
+                  </Card>
                 )
               })}
             </div>
@@ -217,9 +218,9 @@ export default function FirstQuarterResultsPage() {
 
         {/* ── Section 3: Role result (beta) ── */}
         <section>
-          <h2 className="text-sm font-semibold uppercase tracking-widest text-gray-400 mb-4">
+          <SectionLabel color="gray" className="mb-4">
             {t('fqResults.roleSection')}
-          </h2>
+          </SectionLabel>
           <div className="flex flex-col gap-4">
             <RoleResult result={roleResult} />
             <RoleProbabilityBars result={roleResult} />
@@ -227,42 +228,36 @@ export default function FirstQuarterResultsPage() {
         </section>
 
         {/* ── Full Moon CTA ── */}
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#0047ba] mb-2">
+        <Card className="shadow-sm p-5">
+          <SectionLabel color="blue" className="mb-2">
             🌕 {t('fqResults.fullMoonCta.eyebrow')}
-          </p>
+          </SectionLabel>
           <h3 className="font-semibold text-gray-900 mb-1">
             {t('fqResults.fullMoonCta.heading')}
           </h3>
           <p className="text-sm text-gray-500 mb-4 leading-relaxed">
             {t('fqResults.fullMoonCta.body')}
           </p>
-          <button
-            onClick={() => navigate('/full-moon')}
-            className="w-full py-2.5 rounded-xl bg-[#0047ba] hover:opacity-90 text-white text-sm font-semibold transition-opacity shadow-sm"
-          >
+          <Button variant="primary" onClick={() => navigate('/full-moon')} className="w-full shadow-sm">
             {t('fqResults.fullMoonCta.cta')}
-          </button>
-        </div>
+          </Button>
+        </Card>
 
         {/* ── Share + actions ── */}
         <div className="flex flex-col gap-3">
-          <button
-            onClick={handleShare}
-            className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold transition-colors shadow-sm"
-          >
+          <Button variant="primary" onClick={handleShare} className="w-full shadow-sm">
             {copied ? t('fqResults.copied') : t('fqResults.share')}
-          </button>
+          </Button>
           <button
             onClick={() => navigate('/')}
-            className="w-full py-3 rounded-xl border border-gray-200 text-gray-700 font-medium hover:bg-gray-100 transition-colors"
+            className="w-full py-3 rounded border border-gray-200 text-gray-700 font-medium hover:bg-gray-100 transition-colors"
           >
             {t('fqResults.retake')}
           </button>
         </div>
 
         {/* Disclaimer */}
-        <div className="bg-gray-100 rounded-xl px-5 py-4 text-xs text-gray-500 leading-relaxed">
+        <div className="bg-gray-100 rounded px-5 py-4 text-xs text-gray-500 leading-relaxed">
           {t('fqResults.disclaimer')}
         </div>
 

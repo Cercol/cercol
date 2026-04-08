@@ -11,6 +11,7 @@
  */
 import { useTranslation } from 'react-i18next'
 import { colors } from '../design/tokens'
+import { Card, SectionLabel } from './ui'
 
 export default function RoleProbabilityBars({ result }) {
   const { t } = useTranslation()
@@ -20,11 +21,11 @@ export default function RoleProbabilityBars({ result }) {
   const sorted = Object.entries(probabilities).sort((a, b) => b[1] - a[1])
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 flex flex-col gap-3">
+    <Card className="shadow-sm p-5 flex flex-col gap-3">
 
-      <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: colors.textMuted }}>
+      <SectionLabel color="gray">
         {t('roles.probability_label')}
-      </p>
+      </SectionLabel>
 
       <div className="flex flex-col gap-2">
         {sorted.map(([r, prob]) => {
@@ -70,6 +71,6 @@ export default function RoleProbabilityBars({ result }) {
         })}
       </div>
 
-    </div>
+    </Card>
   )
 }

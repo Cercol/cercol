@@ -119,6 +119,28 @@ Combines self-report and Witness into a single coherent narrative at /full-moon/
 ### Phase 10 — Full UX/UI redesign
 Brand identity and visual foundation. Sub-phases apply the identity across all pages.
 
+### Phase 10.4 — Centralized component system + mobile navigation ✅ COMPLETE
+**Fix 1 — Component system (src/components/ui/):**
+- Button.jsx: variant primary|secondary|ghost, size sm|md|lg, 4px radius
+- Card.jsx: white bg + 1px gray border + 4px radius; accent variant = 3px left border only
+- Badge.jsx: variant default|beta|paid|free; 4px radius
+- SectionLabel.jsx: eyebrow text; color blue|red|green|amber|gray
+- index.js: barrel export for clean imports
+- index.css: global `button, input, textarea, select { border-radius: 4px }` reset
+- All 23 updated files remove hardcoded rounded-2xl/rounded-xl/rounded-lg in favour of
+  `rounded` (4px) from the shared components
+- Pages updated: AboutPage, InstrumentsPage, RolesPage, SciencePage, FaqPage,
+  AuthPage, MyResultsPage, NewMoonResultsPage, FirstQuarterResultsPage,
+  FullMoonResultsPage, WitnessSetupPage, WitnessPage, FullMoonReportPage,
+  FullMoonPage (paywall section), RoleResult, RoleProbabilityBars
+- No page defines its own button or card styles
+
+**Fix 2 — Mobile hamburger navigation:**
+- Layout.jsx: hamburger icon button on mobile (below md breakpoint)
+- Full-width blue dropdown below header with vertical nav links
+- Each link closes menu on click
+- Desktop (md+): existing horizontal nav unchanged; hamburger hidden
+
 ### Phase 10.3 — Purple removal + homepage vertical centering ✅ COMPLETE
 - Removed all Tailwind purple-*, violet-*, indigo-* from every user-facing component and page
 - Vision dimension bars: `bg-purple-500` → `bg-[#427c42]` (green) in 5 files

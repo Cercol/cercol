@@ -3,16 +3,17 @@
  *
  * Header: single row on brand blue (#0047ba).
  *   Left:   Cèrcol logo (white SVG)
- *   Center: five doc nav links (scrollable on narrow viewports)
- *   Right:  AccountButton + LanguageToggle
+ *   Center: five doc nav links — horizontal on desktop (md+),
+ *           hidden on mobile (replaced by hamburger)
+ *   Right:  hamburger (mobile) | AccountButton + LanguageToggle
  *
- * Content wrapper: white background, centered max-w-4xl column with
- * px-4 (mobile) / px-8 (desktop) padding. Covers min-height of viewport
- * minus the 4rem header.
+ * Mobile nav: hamburger opens a full-width blue dropdown below the header.
+ * Each link closes the menu on click.
  *
- * Exception: the homepage ("/") opts out of the white wrapper — it manages
- * its own full-bleed blue background. Detected via useLocation.
+ * Content wrapper: white background, centered max-w-4xl column.
+ * Exception: homepage ("/") opts out — manages its own full-bleed background.
  */
+import { useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import AccountButton from './AccountButton'
@@ -21,9 +22,10 @@ import CercolLogo from './CercolLogo'
 import { colors } from '../design/tokens'
 
 export default function Layout({ children }) {
-  const { t }       = useTranslation()
+  const { t }        = useTranslation()
   const { pathname } = useLocation()
-  const isHome      = pathname === '/'
+  const isHome       = pathname === '/'
+  const [menuOpen, setMenuOpen] = useState(false)
 
   const navLinks = [
     { to: '/about',       label: t('nav.about')       },
@@ -33,29 +35,81 @@ export default function Layout({ children }) {
     { to: '/faq',         label: t('nav.faq')         },
   ]
 
+  const navLinkClass = ({ isActive }) =>
+    `shrink-0 text-xs font-medium px-2.5 py-1.5 rounded transition-colors whitespace-nowrap ${
+      isActive
+        ? 'text-white bg-white/20'
+        : 'text-white/70 hover:text-white hover:bg-white/10'
+    }`
+
   return (
     <>
       {/* ── Blue header ── */}
       <header style={{ backgroundColor: colors.blue }}>
-        <div className="h-16 flex items-center gap-6 px-8 lg:px-12">
+        <div className="h-16 flex items-center gap-6 px-6 lg:px-12">
 
           {/* Logo — left */}
           <Link to="/" className="shrink-0" style={{ color: colors.white }}>
             <CercolLogo className="h-7 w-auto" />
           </Link>
 
-          {/* Nav — center, scrollable on mobile */}
+          {/* Nav — desktop only, scrollable on mid-range viewports */}
           <nav
-            className="flex-1 flex items-center gap-1 overflow-x-auto min-w-0"
+            className="hidden md:flex flex-1 items-center gap-1 overflow-x-auto min-w-0"
             style={{ scrollbarWidth: 'none' }}
             aria-label="Main navigation"
           >
             {navLinks.map(({ to, label }) => (
+              <NavLink key={to} to={to} className={navLinkClass}>
+                {label}
+              </NavLink>
+            ))}
+          </nav>
+
+          {/* Right slot */}
+          <div className="flex items-center gap-3 shrink-0 ml-auto md:ml-0">
+            <AccountButton />
+            <LanguageToggle />
+
+            {/* Hamburger — mobile only */}
+            <button
+              type="button"
+              onClick={() => setMenuOpen(o => !o)}
+              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={menuOpen}
+              className="md:hidden flex flex-col justify-center gap-1.5 p-1"
+              style={{ color: colors.white }}
+            >
+              {menuOpen ? (
+                /* × close icon */
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                </svg>
+              ) : (
+                /* ≡ hamburger icon */
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <line x1="3" y1="6" x2="21" y2="6"/>
+                  <line x1="3" y1="12" x2="21" y2="12"/>
+                  <line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+              )}
+            </button>
+          </div>
+
+        </div>
+      </header>
+
+      {/* ── Mobile dropdown nav ── */}
+      {menuOpen && (
+        <div className="md:hidden" style={{ backgroundColor: colors.blue }}>
+          <nav className="flex flex-col px-4 py-3 gap-0.5" aria-label="Mobile navigation">
+            {navLinks.map(({ to, label }) => (
               <NavLink
                 key={to}
                 to={to}
+                onClick={() => setMenuOpen(false)}
                 className={({ isActive }) =>
-                  `shrink-0 text-xs font-medium px-2.5 py-1.5 rounded transition-colors whitespace-nowrap ${
+                  `text-sm font-medium px-3 py-2.5 rounded transition-colors ${
                     isActive
                       ? 'text-white bg-white/20'
                       : 'text-white/70 hover:text-white hover:bg-white/10'
@@ -66,21 +120,12 @@ export default function Layout({ children }) {
               </NavLink>
             ))}
           </nav>
-
-          {/* Auth + language toggle — right */}
-          <div className="flex items-center gap-3 shrink-0">
-            <AccountButton />
-            <LanguageToggle />
-          </div>
-
         </div>
-      </header>
+      )}
 
       {/* ── Content wrapper ── */}
       {isHome ? children : (
-        <div
-          className="bg-white min-h-[calc(100vh-4rem)]"
-        >
+        <div className="bg-white min-h-[calc(100vh-4rem)]">
           <div className="max-w-4xl mx-auto px-4 sm:px-8">
             {children}
           </div>

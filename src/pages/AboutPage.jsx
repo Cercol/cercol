@@ -5,12 +5,13 @@
  */
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { Card, SectionLabel } from '../components/ui'
 
 function ExploreCard({ label, desc, to, accent }) {
   return (
     <Link
       to={to}
-      className="bg-white rounded-2xl border border-gray-200 p-5 hover:border-gray-300 hover:shadow-sm transition-all flex flex-col gap-1.5"
+      className="bg-white border border-gray-200 rounded p-5 hover:border-gray-300 hover:shadow-sm transition-all flex flex-col gap-1.5"
     >
       <p className={`text-xs font-bold uppercase tracking-widest ${accent}`}>{label}</p>
       <p className="text-sm text-gray-600 leading-relaxed">{desc}</p>
@@ -26,10 +27,10 @@ function ExploreCard({ label, desc, to, accent }) {
 
 function DimensionCard({ name, desc, accent }) {
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 p-5">
+    <Card className="p-5">
       <p className={`text-xs font-bold uppercase tracking-widest mb-1.5 ${accent}`}>{name}</p>
       <p className="text-sm text-gray-600 leading-relaxed">{desc}</p>
-    </div>
+    </Card>
   )
 }
 
@@ -51,9 +52,9 @@ export default function AboutPage() {
 
         {/* ── Intro ─────────────────────────────────────────────── */}
         <section className="mb-14">
-          <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">
+          <SectionLabel color="gray" className="mb-3">
             {t('about.intro.eyebrow')}
-          </p>
+          </SectionLabel>
           <h1 className="text-3xl font-bold text-gray-900 mb-4">
             {t('about.intro.heading')}
           </h1>
@@ -138,14 +139,14 @@ export default function AboutPage() {
         </section>
 
         {/* ── Framing note ──────────────────────────────────────── */}
-        <section className="bg-white rounded-2xl border border-gray-200 px-6 py-6">
+        <Card className="px-6 py-6">
           <h2 className="text-base font-bold text-gray-900 mb-2">
             {t('about.framing.heading')}
           </h2>
           <p className="text-sm text-gray-600 leading-relaxed">
             {t('about.framing.body')}
           </p>
-        </section>
+        </Card>
 
     </main>
   )

@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
 import { createWitnessSessions, getMyWitnessSessions } from '../lib/api'
+import { Card, Button, SectionLabel } from '../components/ui'
 
 const MAX_WITNESSES = 12
 
@@ -27,14 +28,14 @@ function WitnessRow({ index, name, email, onChange, onRemove, showRemove }) {
           placeholder={`Witness ${index + 1}`}
           value={name}
           onChange={(e) => onChange(index, 'name', e.target.value)}
-          className="flex-1 border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#99b3e0]"
+          className="flex-1 border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#99b3e0]"
         />
         <input
           type="email"
           placeholder="Email (optional)"
           value={email}
           onChange={(e) => onChange(index, 'email', e.target.value)}
-          className="flex-1 border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#99b3e0]"
+          className="flex-1 border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#99b3e0]"
         />
       </div>
       {showRemove && (
@@ -180,20 +181,20 @@ export default function WitnessSetupPage() {
 
         {/* Header */}
         <div>
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#0047ba] mb-1">
+          <SectionLabel color="blue" className="mb-1">
             🌕 Witness Cèrcol
-          </p>
+          </SectionLabel>
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">{t('witness.setup.title')}</h1>
           <p className="mt-1 text-gray-500 text-sm">{t('witness.setup.subtitle')}</p>
         </div>
 
         {/* New links (shown after successful create) */}
         {newLinks.length > 0 && (
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 flex flex-col gap-3">
+          <Card className="shadow-sm p-5 flex flex-col gap-3">
             <p className="text-sm font-semibold text-gray-900">{t('witness.setup.linksHeading')}</p>
             <p className="text-xs text-gray-500">{t('witness.setup.shareInstruction')}</p>
             {newLinks.map(link => (
-              <div key={link.token} className="flex items-center justify-between gap-3 bg-gray-50 rounded-xl px-3 py-2">
+              <div key={link.token} className="flex items-center justify-between gap-3 bg-gray-50 rounded px-3 py-2">
                 <div className="min-w-0">
                   <p className="text-sm font-medium text-gray-900 truncate">{link.name}</p>
                   <p className="text-xs text-gray-400 truncate">{link.link}</p>
@@ -201,11 +202,11 @@ export default function WitnessSetupPage() {
                 <CopyButton text={link.link} label={t('witness.setup.copyLink')} />
               </div>
             ))}
-          </div>
+          </Card>
         )}
 
         {/* Add witnesses form */}
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
+        <Card className="shadow-sm p-5">
           <h2 className="font-semibold text-gray-900 mb-4">{t('witness.setup.addHeading')}</h2>
           <form onSubmit={handleSubmit} className="flex flex-col gap-3">
             {witnesses.map((w, i) => (
@@ -234,41 +235,42 @@ export default function WitnessSetupPage() {
               <p className="text-sm text-red-600">{formError}</p>
             )}
 
-            <button
+            <Button
               type="submit"
+              variant="primary"
               disabled={submitting || !witnesses.some(w => w.name.trim())}
-              className="mt-1 w-full py-2.5 rounded-xl bg-[#0047ba] hover:opacity-90 disabled:opacity-50 text-white text-sm font-semibold transition-opacity shadow-sm"
+              className="mt-1 w-full shadow-sm"
             >
               {submitting ? t('witness.setup.generating') : t('witness.setup.generate')}
-            </button>
+            </Button>
           </form>
-        </div>
+        </Card>
 
         {/* Existing sessions */}
         {sessions.length > 0 && (
           <section>
-            <h2 className="text-sm font-semibold uppercase tracking-widest text-gray-400 mb-3">
+            <SectionLabel color="gray" className="mb-3">
               {t('witness.setup.existingHeading')}
-            </h2>
+            </SectionLabel>
             {sessionsError && (
               <p className="text-sm text-red-600 mb-2">{sessionsError}</p>
             )}
             <div className="flex flex-col gap-2">
               {completedSessions.map(s => (
-                <div key={s.id} className="bg-white rounded-xl border border-gray-200 px-4 py-3 flex items-center justify-between">
+                <div key={s.id} className="bg-white rounded border border-gray-200 px-4 py-3 flex items-center justify-between">
                   <div>
                     <p className="text-sm font-medium text-gray-900">{s.witness_name}</p>
                     {s.witness_email && (
                       <p className="text-xs text-gray-400">{s.witness_email}</p>
                     )}
                   </div>
-                  <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
+                  <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">
                     {t('witness.setup.statusComplete')}
                   </span>
                 </div>
               ))}
               {pendingSessions.map(s => (
-                <div key={s.id} className="bg-white rounded-xl border border-gray-200 px-4 py-3 flex items-center justify-between gap-3">
+                <div key={s.id} className="bg-white rounded border border-gray-200 px-4 py-3 flex items-center justify-between gap-3">
                   <div className="min-w-0">
                     <p className="text-sm font-medium text-gray-900">{s.witness_name}</p>
                     {s.witness_email && (
@@ -276,7 +278,7 @@ export default function WitnessSetupPage() {
                     )}
                   </div>
                   <div className="flex items-center gap-3 shrink-0">
-                    <span className="text-xs font-medium text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">
+                    <span className="text-xs font-medium text-gray-400 bg-gray-100 px-2 py-0.5 rounded">
                       {t('witness.setup.statusPending')}
                     </span>
                     <CopyButton text={s.link} label={t('witness.setup.copyLink')} />
@@ -289,12 +291,9 @@ export default function WitnessSetupPage() {
 
         {/* View report CTA */}
         <div className="flex flex-col gap-3">
-          <button
-            onClick={() => navigate('/full-moon/report')}
-            className="w-full py-3 rounded-xl border border-[#0047ba] text-[#0047ba] font-medium hover:bg-[#e8eef8] transition-colors"
-          >
+          <Button variant="secondary" onClick={() => navigate('/full-moon/report')} className="w-full">
             {t('witness.setup.viewReport')}
-          </button>
+          </Button>
         </div>
 
       </div>

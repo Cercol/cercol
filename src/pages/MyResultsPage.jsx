@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
 import { DOMAIN_KEYS } from '../data/domains'
+import { Card, Button } from '../components/ui'
 
 const DOMAIN_BAR_COLOR = {
   presence:   'bg-amber-400',
@@ -42,7 +43,7 @@ function ResultCard({ result, t, language }) {
     :                                      t('home.firstQuarter.name')
 
   return (
-    <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+    <Card className="p-6 shadow-sm">
       <div className="flex items-center justify-between mb-4">
         <span className="text-sm font-semibold text-gray-900">{instrumentLabel}</span>
         <span className="text-xs text-gray-400">{formatDate(result.created_at, language)}</span>
@@ -69,7 +70,7 @@ function ResultCard({ result, t, language }) {
           )
         })}
       </div>
-    </div>
+    </Card>
   )
 }
 
@@ -114,12 +115,9 @@ export default function MyResultsPage() {
         {results !== null && results.length === 0 && (
           <div className="text-center py-16">
             <p className="text-gray-500 mb-6">{t('myResults.empty')}</p>
-            <button
-              onClick={() => navigate('/')}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl px-6 py-3 text-sm transition-colors"
-            >
+            <Button variant="primary" size="lg" onClick={() => navigate('/')}>
               {t('myResults.startCta')}
-            </button>
+            </Button>
           </div>
         )}
 
@@ -128,12 +126,14 @@ export default function MyResultsPage() {
             {results.map((r) => (
               <ResultCard key={r.id} result={r} t={t} language={i18n.language} />
             ))}
-            <button
+            <Button
+              variant="secondary"
+              size="lg"
               onClick={() => navigate('/')}
-              className="mt-2 w-full border border-gray-200 hover:border-blue-300 text-gray-500 hover:text-blue-700 font-semibold rounded-xl px-4 py-3 text-sm transition-colors"
+              className="mt-2 w-full"
             >
               {t('myResults.startCta')}
-            </button>
+            </Button>
           </div>
         )}
       </div>

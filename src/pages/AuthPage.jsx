@@ -17,13 +17,11 @@ import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { Card, Button } from '../components/ui'
 
 const INPUT_CLASS =
-  'w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 placeholder-gray-400 ' +
-  'focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition'
-
-const BTN_PRIMARY =
-  'w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold rounded-xl px-4 py-3 text-sm transition-colors'
+  'w-full border border-gray-200 rounded px-4 py-3 text-sm text-gray-900 placeholder-gray-400 ' +
+  'focus:outline-none focus:border-[#0047ba] focus:ring-1 focus:ring-[#99b3e0] transition'
 
 export default function AuthPage() {
   const { t } = useTranslation()
@@ -74,7 +72,7 @@ export default function AuthPage() {
     const isMagic = method === 'magic'
     return (
       <main className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] py-16">
-        <div className="w-full max-w-sm bg-white border border-gray-200 rounded-2xl p-8 shadow-sm text-center">
+        <Card className="w-full max-w-sm p-8 shadow-sm text-center">
           <p className="text-2xl mb-2">✉️</p>
           <h1 className="text-lg font-bold text-gray-900 mb-2">
             {isMagic ? t('auth.sentHeading') : t('auth.confirmHeading')}
@@ -85,11 +83,11 @@ export default function AuthPage() {
           <p className="text-xs text-gray-400 mt-4">{t('auth.sentNote')}</p>
           <button
             onClick={() => { setStatus('idle'); setErrorMsg('') }}
-            className="mt-6 text-sm text-blue-600 hover:underline"
+            className="mt-6 text-sm text-[#0047ba] hover:underline"
           >
             {t('auth.tryAgain')}
           </button>
-        </div>
+        </Card>
       </main>
     )
   }
@@ -105,7 +103,7 @@ export default function AuthPage() {
   return (
     <main className="min-h-screen bg-gray-50 flex flex-col items-center justify-center px-4 py-16">
       <div className="w-full max-w-sm">
-        <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm flex flex-col gap-5">
+        <Card className="p-8 shadow-sm flex flex-col gap-5">
 
           <div>
             <h1 className="text-lg font-bold text-gray-900">{t('auth.signIn')}</h1>
@@ -116,7 +114,7 @@ export default function AuthPage() {
             type="button"
             onClick={handleGoogle}
             disabled={status === 'busy'}
-            className="w-full flex items-center justify-center gap-3 border border-gray-200 rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50 disabled:opacity-50 transition-colors"
+            className="w-full flex items-center justify-center gap-3 border border-gray-200 rounded px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50 disabled:opacity-50 transition-colors"
           >
             <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
               <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615Z"/>
@@ -155,7 +153,7 @@ export default function AuthPage() {
             </div>
 
             {/* Method tabs */}
-            <div className="flex rounded-xl border border-gray-200 overflow-hidden text-xs font-semibold">
+            <div className="flex rounded border border-gray-200 overflow-hidden text-xs font-semibold">
               {['password', 'magic'].map((m) => (
                 <button
                   key={m}
@@ -164,7 +162,7 @@ export default function AuthPage() {
                   className={[
                     'flex-1 py-2 transition-colors',
                     method === m
-                      ? 'bg-blue-600 text-white'
+                      ? 'bg-[#0047ba] text-white'
                       : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50',
                   ].join(' ')}
                 >
@@ -198,9 +196,9 @@ export default function AuthPage() {
             )}
 
             {/* Submit */}
-            <button type="submit" disabled={status === 'busy'} className={BTN_PRIMARY}>
+            <Button type="submit" variant="primary" disabled={status === 'busy'} className="w-full">
               {submitLabel}
-            </button>
+            </Button>
 
             {/* Sign-in / Sign-up toggle (password only) */}
             {isPasswordMode && (
@@ -209,7 +207,7 @@ export default function AuthPage() {
                 <button
                   type="button"
                   onClick={() => { setMode(mode === 'signin' ? 'signup' : 'signin'); setErrorMsg('') }}
-                  className="text-blue-600 hover:underline font-semibold"
+                  className="text-[#0047ba] hover:underline font-semibold"
                 >
                   {mode === 'signin' ? t('auth.createAccount') : t('auth.signInCta')}
                 </button>
@@ -217,7 +215,7 @@ export default function AuthPage() {
             )}
 
           </form>
-        </div>
+        </Card>
       </div>
     </main>
   )

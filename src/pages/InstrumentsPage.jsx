@@ -5,26 +5,27 @@
  */
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { Card, Badge, SectionLabel } from '../components/ui'
 
 /**
  * StaticItem — read-only sample question with greyed-out scale.
  */
 function StaticItem({ prefix, text, scaleMax }) {
   return (
-    <div className="bg-gray-50 rounded-xl px-4 py-3 border border-gray-200">
+    <Card className="px-4 py-3">
       <p className="text-xs text-gray-400 mb-1">{prefix}</p>
       <p className="text-sm text-gray-700 mb-3 font-medium">{text}</p>
       <div className="flex items-center gap-1.5">
         {Array.from({ length: scaleMax }, (_, i) => (
           <div
             key={i}
-            className="flex-1 h-8 rounded-lg border border-gray-200 bg-white flex items-center justify-center"
+            className="flex-1 h-8 rounded border border-gray-200 bg-white flex items-center justify-center"
           >
             <span className="text-xs text-gray-300 font-medium">{i + 1}</span>
           </div>
         ))}
       </div>
-    </div>
+    </Card>
   )
 }
 
@@ -61,9 +62,9 @@ export default function InstrumentsPage() {
 
         {/* ── Intro ─────────────────────────────────────────────── */}
         <section className="mb-14">
-          <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">
+          <SectionLabel color="gray" className="mb-3">
             {t('nav.instruments')}
-          </p>
+          </SectionLabel>
           <h1 className="text-3xl font-bold text-gray-900 mb-4">
             {t('instruments.intro.heading')}
           </h1>
@@ -74,27 +75,25 @@ export default function InstrumentsPage() {
 
         {/* ── New Moon ──────────────────────────────────────────── */}
         <section className="mb-10">
-          <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
+          <Card className="overflow-hidden">
             <div className="px-6 pt-6 pb-5">
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-widest mb-1 text-amber-500">
+                  <SectionLabel color="amber" className="mb-1">
                     🌑 {t('instruments.newMoon.eyebrow')}
-                  </p>
+                  </SectionLabel>
                   <h2 className="text-lg font-bold text-gray-900">{t('instruments.newMoon.heading')}</h2>
                 </div>
-                <span className="shrink-0 mt-1 text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700">
-                  {t('instruments.freeLabel')}
-                </span>
+                <Badge variant="free">{t('instruments.freeLabel')}</Badge>
               </div>
               <p className="text-xs text-gray-400 mb-3">{t('instruments.newMoon.meta')}</p>
               <p className="text-sm text-gray-600 leading-relaxed mb-3">{t('instruments.newMoon.measures')}</p>
               <p className="text-sm text-gray-500 leading-relaxed">{t('instruments.newMoon.get')}</p>
             </div>
             <div className="border-t border-gray-100 px-6 py-5">
-              <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">
+              <SectionLabel color="gray" className="mb-3">
                 {t('instruments.sampleHeading')}
-              </p>
+              </SectionLabel>
               <div className="flex flex-col gap-2">
                 {t('instruments.newMoon.items', { returnObjects: true }).map((item, i) => (
                   <StaticItem key={i} prefix={t('instruments.newMoon.itemPrefix')} text={item} scaleMax={7} />
@@ -113,32 +112,30 @@ export default function InstrumentsPage() {
                 </svg>
               </Link>
             </div>
-          </div>
+          </Card>
         </section>
 
         {/* ── First Quarter ─────────────────────────────────────── */}
         <section className="mb-10">
-          <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
+          <Card className="overflow-hidden">
             <div className="px-6 pt-6 pb-5">
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-widest mb-1 text-blue-600">
+                  <SectionLabel color="green" className="mb-1">
                     🌓 {t('instruments.firstQuarter.eyebrow')}
-                  </p>
+                  </SectionLabel>
                   <h2 className="text-lg font-bold text-gray-900">{t('instruments.firstQuarter.heading')}</h2>
                 </div>
-                <span className="shrink-0 mt-1 text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700">
-                  {t('instruments.freeLabel')}
-                </span>
+                <Badge variant="free">{t('instruments.freeLabel')}</Badge>
               </div>
               <p className="text-xs text-gray-400 mb-3">{t('instruments.firstQuarter.meta')}</p>
               <p className="text-sm text-gray-600 leading-relaxed mb-3">{t('instruments.firstQuarter.measures')}</p>
               <p className="text-sm text-gray-500 leading-relaxed">{t('instruments.firstQuarter.get')}</p>
             </div>
             <div className="border-t border-gray-100 px-6 py-5">
-              <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">
+              <SectionLabel color="gray" className="mb-3">
                 {t('instruments.sampleHeading')}
-              </p>
+              </SectionLabel>
               <div className="flex flex-col gap-2">
                 {t('instruments.firstQuarter.items', { returnObjects: true }).map((item, i) => (
                   <StaticItem key={i} prefix={t('instruments.firstQuarter.itemPrefix')} text={item} scaleMax={5} />
@@ -157,23 +154,21 @@ export default function InstrumentsPage() {
                 </svg>
               </Link>
             </div>
-          </div>
+          </Card>
         </section>
 
         {/* ── Full Moon ─────────────────────────────────────────── */}
         <section className="mb-14">
-          <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
+          <Card className="overflow-hidden">
             <div className="px-6 pt-6 pb-3">
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-widest mb-1 text-[#0047ba]">
+                  <SectionLabel color="blue" className="mb-1">
                     🌕 {t('instruments.fullMoon.eyebrow')}
-                  </p>
+                  </SectionLabel>
                   <h2 className="text-lg font-bold text-gray-900">{t('instruments.fullMoon.heading')}</h2>
                 </div>
-                <span className="shrink-0 mt-1 text-xs font-semibold px-2.5 py-1 rounded-full bg-[#e8eef8] text-[#0047ba]">
-                  {t('instruments.paidLabel')}
-                </span>
+                <Badge variant="paid">{t('instruments.paidLabel')}</Badge>
               </div>
               <p className="text-sm text-gray-500 leading-relaxed">{t('instruments.fullMoon.system')}</p>
             </div>
@@ -211,7 +206,7 @@ export default function InstrumentsPage() {
                 </svg>
               </Link>
             </div>
-          </div>
+          </Card>
         </section>
 
     </main>

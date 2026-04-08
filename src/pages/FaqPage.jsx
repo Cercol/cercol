@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next'
 
 function FaqItem({ question, answer }) {
   return (
-    <details className="group bg-white rounded-2xl border border-gray-200 overflow-hidden">
+    <details className="group bg-white rounded border border-gray-200 overflow-hidden">
       <summary className="flex items-center justify-between gap-4 px-5 py-4 cursor-pointer list-none select-none">
         <span className="text-sm font-semibold text-gray-900">{question}</span>
         {/* Chevron — rotates when open via group-open */}
