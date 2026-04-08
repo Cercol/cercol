@@ -16,8 +16,8 @@ import r07 from '../assets/illustrations/role-r07-octopus.jpg?url'
 import r08 from '../assets/illustrations/role-r08-tortoise.jpg?url'
 import r09 from '../assets/illustrations/role-r09-bee.jpg?url'
 import r10 from '../assets/illustrations/role-r10-bear.jpg?url'
-import r11 from '../assets/illustrations/role-r11-fox.png?url'
-import r12 from '../assets/illustrations/role-r12-badger.png?url'
+import r11 from '../assets/illustrations/role-r11-fox.jpg?url'
+import r12 from '../assets/illustrations/role-r12-badger.jpg?url'
 
 export const ROLE_ILLUSTRATIONS = {
   R01: { src: r01, bg: '#0047ba' }, // Dolphin

@@ -205,17 +205,19 @@ Redesigned all four results/report pages as dashboards.
 - HomePage.jsx: full redesign — blue background, 3-column instrument card grid (red/green/yellow cards), no tagline/headline, footer with GitHub + report issue links
 
 ### Phase 10.7 — Animal illustrations on role cards ✅ COMPLETE
-12 animal illustrations (JPG/PNG) integrated into the role card on all three results pages.
+12 animal illustrations integrated into the role card on all three results pages.
 
-- `src/assets/illustrations/` — 12 files: `role-r01-dolphin.jpg` through `role-r12-badger.png`
+- `src/assets/illustrations/` — 12 JPGs: `role-r01-dolphin.jpg` through `role-r12-badger.jpg`
+  (Fox and Badger converted from ~6MB PNG to JPG quality 85, max 800px via sharp: 92KB / 67KB)
 - `src/data/roles.js` — new file; imports all illustrations with `?url`, exports `ROLE_ILLUSTRATIONS`
   map with `{ src, bg }` per role ID. Most `bg: '#0047ba'`; Owl (R04) `bg: '#cf3339'`
 - `FirstQuarterResultsPage`, `FullMoonResultsPage`, `FullMoonReportPage`: role card
-  (`Card accent="red"`) restructured to `overflow-hidden` with full-bleed illustration block
-  (`style={{ backgroundColor: bg }}`, `<img class="w-full max-w-[400px] mx-auto">`) above the
-  padded content wrapper. Content padding moved from Card to inner div.
+  (`Card accent="red" overflow-hidden`) is a two-column flex row:
+  left column (`flex-1 p-6 sm:p-8`) holds badge + role name + essence + arc chips;
+  right column (`w-[120px] sm:w-[160px] shrink-0 overflow-hidden`) holds the illustration
+  `object-cover object-center` on a solid brand-color background (`illustrationBg`), flush to
+  the card's right/top/bottom edges.
 - `RoleResult.jsx` updated consistently (not currently used by any page).
-- Fox (R11) and Badger (R12) source PNGs are ~6MB; consider optimising externally if needed.
 
 ### Phase 10.6 — Test flow pages brand identity ✅ COMPLETE
 Applied brand identity to all four test flow pages (NewMoonPage, FirstQuarterPage, FullMoonPage, WitnessPage) and shared test components.

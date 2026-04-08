@@ -116,44 +116,50 @@ export default function FullMoonResultsPage() {
         {/* ── Section 1: Role (top, full width) ── */}
         <section>
           <Card accent="red" className="overflow-hidden">
-            {/* Illustration — full-bleed on brand-color bg */}
-            {ROLE_ILLUSTRATIONS[roleResult.role] && (
-              <div style={{ backgroundColor: ROLE_ILLUSTRATIONS[roleResult.role].bg }}>
-                <img
-                  src={ROLE_ILLUSTRATIONS[roleResult.role].src}
-                  alt={t(`roles.${roleResult.role}.name`)}
-                  className="block w-full max-w-[400px] mx-auto"
-                />
-              </div>
-            )}
-            <div className="p-6 sm:p-8 flex flex-col gap-4">
-              <Badge variant="beta" className="self-start">
-                {t('roles.beta_label')}
-              </Badge>
-              <h2
-                className="text-4xl sm:text-5xl font-bold leading-tight"
-                style={{ color: colors.textPrimary }}
-              >
-                {t(`roles.${roleResult.role}.name`)}
-              </h2>
-              <p className="text-base leading-relaxed" style={{ color: colors.textMuted }}>
-                {t(`roles.${roleResult.role}.essence`)}
-              </p>
-              {roleResult.arc.length > 0 && (
-                <div className="flex flex-col gap-2">
-                  <p
-                    className="text-xs font-semibold uppercase tracking-widest"
-                    style={{ color: colors.textMuted }}
-                  >
-                    {t('roles.arc_label')}
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {roleResult.arc.map(r => (
-                      <Badge key={r} variant="default">
-                        {t(`roles.${r}.name`)}
-                      </Badge>
-                    ))}
+            <div className="flex flex-row">
+              {/* Left: content */}
+              <div className="flex-1 p-6 sm:p-8 flex flex-col gap-4">
+                <Badge variant="beta" className="self-start">
+                  {t('roles.beta_label')}
+                </Badge>
+                <h2
+                  className="text-4xl sm:text-5xl font-bold leading-tight"
+                  style={{ color: colors.textPrimary }}
+                >
+                  {t(`roles.${roleResult.role}.name`)}
+                </h2>
+                <p className="text-base leading-relaxed" style={{ color: colors.textMuted }}>
+                  {t(`roles.${roleResult.role}.essence`)}
+                </p>
+                {roleResult.arc.length > 0 && (
+                  <div className="flex flex-col gap-2">
+                    <p
+                      className="text-xs font-semibold uppercase tracking-widest"
+                      style={{ color: colors.textMuted }}
+                    >
+                      {t('roles.arc_label')}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {roleResult.arc.map(r => (
+                        <Badge key={r} variant="default">
+                          {t(`roles.${r}.name`)}
+                        </Badge>
+                      ))}
+                    </div>
                   </div>
+                )}
+              </div>
+              {/* Right: illustration flush to card edge */}
+              {ROLE_ILLUSTRATIONS[roleResult.role] && (
+                <div
+                  className="w-[120px] sm:w-[160px] shrink-0 overflow-hidden"
+                  style={{ backgroundColor: ROLE_ILLUSTRATIONS[roleResult.role].bg }}
+                >
+                  <img
+                    src={ROLE_ILLUSTRATIONS[roleResult.role].src}
+                    alt={t(`roles.${roleResult.role}.name`)}
+                    className="w-full h-full object-cover object-center"
+                  />
                 </div>
               )}
             </div>
