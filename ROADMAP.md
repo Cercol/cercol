@@ -525,6 +525,45 @@ linked personality results, profile fields, and processes payments via Stripe.
 - `src/pages/HomePage.jsx` — privacy footer link
 - `src/locales/en.json` + `ca.json` — `cookies.*`, `privacy.*`, `home.privacy` keys
 
+### Phase 10.20 — Security hardening ✅ COMPLETE
+Backend and database security audit. Three real vulnerabilities found and fixed.
+
+**Finding 1 — CRITICAL: Premium self-escalation (fixed)**
+The `profiles` UPDATE RLS policy (`auth.uid() = id`) allowed any authenticated user to call
+`supabase.from('profiles').update({ premium: true })` and grant themselves paid access without
+going through Stripe. RLS has no native column-level restriction. Fixed via a `BEFORE UPDATE`
+trigger (`prevent_premium_self_update`) that silently preserves `premium` for all JWT-based
+callers (`auth.role() IS NOT NULL`). Service_role (the Stripe webhook) passes through unaffected
+because `auth.role()` returns NULL for service_role — it carries no JWT claims.
+
+**Finding 2 — MEDIUM: `witness_responses` open INSERT policy (fixed)**
+`WITH CHECK (true)` on `witness_responses` allowed any anon key holder to insert arbitrary rows,
+bypassing the API's token validation. The legitimate flow never uses this policy — all writes go
+through the backend via service_role (which bypasses RLS anyway). Policy dropped; service_role
+inserts continue to work unchanged.
+
+**Finding 3 — MEDIUM: No rate limiting on public endpoints (fixed)**
+`POST /witness/session/{token}/complete` (public, no auth) and `POST /witness/sessions` (auth)
+had no rate limiting. Added `slowapi==0.1.9`. Custom `_get_client_ip()` reads `X-Forwarded-For`
+to get the real IP through Railway's proxy. Limits: 10/min on session completion, 20/min on
+session creation.
+
+**Confirmed clean (no changes):**
+- CORS: correctly locked to `cercol.team` and localhost dev ports only. No wildcard.
+- service_role isolation: only in `api/main.py`, never in the frontend.
+- Stripe webhook: signature verified before processing.
+- JWT: JWKS-based ES256 via python-jose, audience validated.
+- Anon key: correctly public (named `sb_publishable_*`); RLS adequate for its scope.
+
+**Files modified/added:**
+- `supabase/migrations/007_security_fixes.sql` — premium trigger + drop open witness_responses policy
+- `api/requirements.txt` — added `slowapi==0.1.9`
+- `api/main.py` — slowapi imports, `_get_client_ip`, limiter setup, `@limiter.limit` on two routes
+
+**Note — .env tracking:** The `.env` file at the project root appears to be tracked by git.
+Its contents are all `VITE_*` variables (intentionally public, embedded in the JS bundle), so
+there is no credential exposure, but the file should be added to `.gitignore`.
+
 ### Phase 11 — Multilingual support
 Translation management via Tolgee or equivalent.
 EN + CA already complete; this phase adds languages beyond Valencian.

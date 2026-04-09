@@ -5,6 +5,7 @@ Phase 4.1: health check + CORS.
 Phase 4.2: Supabase JWT auth via JWKS (ES256 / P-256 asymmetric).
 Phase 4.5: Stripe Checkout + webhook → premium flag in Supabase.
 Phase 7:   Witness Cèrcol session management.
+Phase 10.19+: slowapi rate limiting on public/sensitive endpoints.
 """
 
 import json
@@ -20,6 +21,23 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import JWTError, jwk, jwt
 from pydantic import BaseModel
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+
+
+def _get_client_ip(request: Request) -> str:
+    """
+    Extract the real client IP for rate limiting.
+    Railway (and most proxies) forward the original IP in X-Forwarded-For.
+    Fall back to request.client.host if the header is absent.
+    """
+    forwarded = request.headers.get("X-Forwarded-For", "")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    return request.client.host if request.client else "unknown"
+
+
+limiter = Limiter(key_func=_get_client_ip)
 
 app = FastAPI(
     title="Cèrcol API",
@@ -27,6 +45,9 @@ app = FastAPI(
     docs_url="/docs",
     redoc_url=None,
 )
+
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 ALLOWED_ORIGINS = [
     "https://cercol.team",
@@ -247,7 +268,9 @@ async def stripe_webhook(request: Request):
 # ---------------------------------------------------------------------------
 
 @app.post("/witness/sessions")
+@limiter.limit("20/minute")
 def create_witness_sessions(
+    request: Request,
     body: CreateSessionsBody,
     user: dict = Depends(get_current_user),
 ):
@@ -318,7 +341,8 @@ def get_witness_session(token: str):
 
 
 @app.post("/witness/session/{token}/complete")
-def complete_witness_session(token: str, body: CompleteSessionBody):
+@limiter.limit("10/minute")
+def complete_witness_session(request: Request, token: str, body: CompleteSessionBody):
     """
     Public endpoint — no auth required.
     Receives domain scores from the witness, inserts a witness_response row,
