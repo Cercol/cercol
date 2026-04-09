@@ -11,7 +11,7 @@
  * prevents icon overlaps.
  */
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { colors } from '../design/tokens'
 import { NewMoonIcon, FirstQuarterIcon, FullMoonIcon, RoleIcon } from '../components/MoonIcons'
@@ -229,6 +229,13 @@ export default function HomePage() {
           >
             {t('feedback.reportIssue')}
           </a>
+          {' · '}
+          <Link
+            to="/privacy"
+            className="underline hover:text-white transition-colors"
+          >
+            {t('home.privacy')}
+          </Link>
         </p>
       </footer>
     </main>

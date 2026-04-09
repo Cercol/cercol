@@ -20,6 +20,66 @@
     "myResults": "My results",
     "signOut": "Sign out"
   },
+  "cookies": {
+    "notice": "Cèrcol uses only functional cookies — no analytics, no advertising trackers.",
+    "learnMore": "Privacy policy",
+    "ok": "OK",
+    "dismiss": "Dismiss cookie notice"
+  },
+  "privacy": {
+    "eyebrow": "Legal",
+    "title": "Privacy policy",
+    "lastUpdated": "Last updated: April 2026",
+    "intro": "This policy explains what data Cèrcol collects, why, and what you can do with it. It is written in plain language — if anything is unclear, email us.",
+    "collected": {
+      "heading": "What we collect",
+      "body": "Depending on how you use Cèrcol, we may hold:",
+      "email": "Your email address — when you create an account or sign in.",
+      "results": "Your test results — scores linked to your account when you are signed in. Anonymous scores (no account) are stored without any identifying information.",
+      "profile": "Profile fields you provide voluntarily: first name, last name, country, native language. All optional except first name.",
+      "payment": "Payment data — processed entirely by Stripe. Cèrcol never sees or stores your card details.",
+      "anonymous": "Anonymous usage data — if you complete an assessment without an account, only the scores are stored. No name, email, IP, or device information."
+    },
+    "why": {
+      "heading": "Why we collect it",
+      "body": "We collect data for three purposes only:",
+      "function": "To provide the service — your email is needed to authenticate you; your results are stored so you can view your history.",
+      "research": "Anonymised research — aggregated, de-identified scores are used to improve the personality model and validate norms across populations. Individual results are never published.",
+      "payment": "To process your payment — Stripe needs your card details to charge you for Full Moon Cèrcol. We receive only a confirmation.",
+      "noAds": "We do not sell data. We do not use data for advertising. We do not share data with third parties except as described above."
+    },
+    "retention": {
+      "heading": "How long we keep it",
+      "body": "We keep your data for as long as your account is active. Specifically:",
+      "account": "Account data (email, profile, results) — retained until you delete your account.",
+      "anonymous": "Anonymous test scores — retained indefinitely as research data, with no link to any individual.",
+      "payment": "Payment records — retained by Stripe according to their own policy (typically 7 years for tax compliance)."
+    },
+    "cookies": {
+      "heading": "Cookies",
+      "body": "Cèrcol uses one strictly necessary cookie: the authentication session token set by Supabase when you sign in. No analytics cookies, no advertising trackers, no third-party tracking of any kind. Strictly necessary cookies do not require your consent under GDPR."
+    },
+    "rights": {
+      "heading": "Your rights",
+      "body": "Under GDPR, if you are based in the EU or EEA, you have the right to:",
+      "access": "Access — request a copy of the personal data we hold about you.",
+      "deletion": "Deletion — request that your account and all associated personal data be deleted.",
+      "portability": "Portability — request your test results in a machine-readable format.",
+      "correction": "Correction — update or correct your profile information at any time via the profile page.",
+      "how": "To exercise any of these rights, email us. We will respond within 30 days."
+    },
+    "thirdParties": {
+      "heading": "Third-party services",
+      "supabase": "Authentication and data storage are handled by Supabase (Supabase, Inc.), a US-based company operating under standard contractual clauses for EU data transfers.",
+      "stripe": "Payments are handled by Stripe (Stripe, Inc.), a US-based company with EU data transfer compliance. Cèrcol receives no payment card data — only a transaction confirmation.",
+      "noTrackers": "No other third-party services receive your personal data. There are no analytics platforms, advertising networks, or social media trackers on this site."
+    },
+    "contact": {
+      "heading": "Contact",
+      "body": "For data requests, questions, or complaints:",
+      "email": "hello@cercol.team"
+    }
+  },
   "profile": {
     "eyebrow": "Your account",
     "title": "Your profile",
@@ -73,6 +133,7 @@
   "home": {
     "subtitle": "Know yourself better.",
     "headline": "Choose your assessment",
+    "privacy": "Privacy",
     "newMoon": {
       "name": "New Moon Cèrcol",
       "tagline": "Quick snapshot",

@@ -20,6 +20,66 @@
     "myResults": "Els meus resultats",
     "signOut": "Tancar sessió"
   },
+  "cookies": {
+    "notice": "Cèrcol utilitza únicament galetes funcionals — sense analítiques, sense rastreig publicitari.",
+    "learnMore": "Política de privacitat",
+    "ok": "D'acord",
+    "dismiss": "Tanca l'avís de galetes"
+  },
+  "privacy": {
+    "eyebrow": "Legal",
+    "title": "Política de privacitat",
+    "lastUpdated": "Última actualització: abril de 2026",
+    "intro": "Aquesta política explica quines dades recull Cèrcol, per què, i quines opcions tens. Està escrita en llenguatge clar — si alguna cosa no queda clara, envia'ns un correu.",
+    "collected": {
+      "heading": "Què recopilem",
+      "body": "Depenent de com utilitzes Cèrcol, podem tenir:",
+      "email": "La teua adreça de correu electrònic — quan crees un compte o inicies sessió.",
+      "results": "Els teus resultats — puntuacions vinculades al teu compte quan has iniciat sessió. Les puntuacions anònimes (sense compte) s'emmagatzemen sense cap informació d'identificació.",
+      "profile": "Camps de perfil que proporciones voluntàriament: nom, cognoms, país, llengua materna. Tots opcionals excepte el nom.",
+      "payment": "Dades de pagament — processades íntegrament per Stripe. Cèrcol no veu ni emmagatzema mai les dades de la teua targeta.",
+      "anonymous": "Dades d'ús anònimes — si completes una avaluació sense compte, només s'emmagatzemen les puntuacions. Cap nom, correu, IP ni informació del dispositiu."
+    },
+    "why": {
+      "heading": "Per què les recopilem",
+      "body": "Recopilem dades amb tres finalitats úniques:",
+      "function": "Per proporcionar el servei — el teu correu és necessari per autenticar-te; els teus resultats s'emmagatzemen perquè pugues veure el teu historial.",
+      "research": "Recerca anonimitzada — les puntuacions agregades i desidentificades s'utilitzen per millorar el model de personalitat i validar normes entre poblacions. Els resultats individuals mai es publiquen.",
+      "payment": "Per processar el teu pagament — Stripe necessita les dades de la teua targeta per cobrar-te el Cèrcol de Lluna Plena. Nosaltres només rebem una confirmació.",
+      "noAds": "No venem dades. No les fem servir per a publicitat. No les compartim amb tercers excepte com es descriu més amunt."
+    },
+    "retention": {
+      "heading": "Quant temps les guardem",
+      "body": "Guardem les teues dades mentre el teu compte estigui actiu. Concretament:",
+      "account": "Dades del compte (correu, perfil, resultats) — es conserven fins que elimines el teu compte.",
+      "anonymous": "Puntuacions de test anònimes — es conserven indefinidament com a dades de recerca, sense cap vinculació amb cap persona.",
+      "payment": "Registres de pagament — conservats per Stripe d'acord amb la seua pròpia política (normalment 7 anys per a compliment fiscal)."
+    },
+    "cookies": {
+      "heading": "Galetes",
+      "body": "Cèrcol utilitza una sola galeta estrictament necessària: el token de sessió d'autenticació que estableix Supabase quan inicies sessió. Cap galeta analítica, cap rastrejador publicitari, cap seguiment de tercers de cap mena. Les galetes estrictament necessàries no requereixen el teu consentiment en virtut del RGPD."
+    },
+    "rights": {
+      "heading": "Els teus drets",
+      "body": "En virtut del RGPD, si resideixes a la UE o l'EEE, tens dret a:",
+      "access": "Accés — sol·licitar una còpia de les dades personals que tenim sobre tu.",
+      "deletion": "Supressió — sol·licitar que el teu compte i totes les dades personals associades siguin eliminats.",
+      "portability": "Portabilitat — sol·licitar els teus resultats en un format llegible per màquina.",
+      "correction": "Correcció — actualitzar o corregir la informació del teu perfil en qualsevol moment a través de la pàgina de perfil.",
+      "how": "Per exercir qualsevol d'aquests drets, envia'ns un correu. Respondrem en un termini de 30 dies."
+    },
+    "thirdParties": {
+      "heading": "Serveis de tercers",
+      "supabase": "L'autenticació i l'emmagatzematge de dades estan a càrrec de Supabase (Supabase, Inc.), una empresa nord-americana que opera sota clàusules contractuals estàndard per a transferències de dades de la UE.",
+      "stripe": "Els pagaments estan a càrrec de Stripe (Stripe, Inc.), una empresa nord-americana amb compliment de transferència de dades de la UE. Cèrcol no rep dades de targetes de pagament — únicament una confirmació de la transacció.",
+      "noTrackers": "Cap altre servei de tercers rep les teues dades personals. No hi ha plataformes analítiques, xarxes publicitàries ni rastrejadors de xarxes socials en aquest lloc."
+    },
+    "contact": {
+      "heading": "Contacte",
+      "body": "Per a sol·licituds de dades, preguntes o reclamacions:",
+      "email": "hello@cercol.team"
+    }
+  },
   "profile": {
     "eyebrow": "El teu compte",
     "title": "El teu perfil",
@@ -73,6 +133,7 @@
   "home": {
     "subtitle": "Coneix-te millor.",
     "headline": "Tria la teua avaluació",
+    "privacy": "Privacitat",
     "newMoon": {
       "name": "Cèrcol de Lluna Nova",
       "tagline": "Visió ràpida",

@@ -21,7 +21,9 @@ import InstrumentsPage from './pages/InstrumentsPage'
 import RolesPage from './pages/RolesPage'
 import SciencePage from './pages/SciencePage'
 import FaqPage from './pages/FaqPage'
+import PrivacyPage from './pages/PrivacyPage'
 import FeedbackButton from './components/FeedbackButton'
+import CookieBanner from './components/CookieBanner'
 
 function AppContent() {
   const { itemContext } = useFeedbackContext()
@@ -54,8 +56,11 @@ function AppContent() {
         <Route path="/roles"       element={<RolesPage />} />
         <Route path="/science"     element={<SciencePage />} />
         <Route path="/faq"         element={<FaqPage />} />
+        {/* Legal */}
+        <Route path="/privacy"     element={<PrivacyPage />} />
       </Routes>
       <FeedbackButton itemId={itemContext.itemId} itemText={itemContext.itemText} />
+      <CookieBanner />
     </Layout>
   )
 }

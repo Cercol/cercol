@@ -500,6 +500,31 @@ Country and language are scientifically relevant for personality norm validation
 - `api/main.py` — `create_witness_sessions` updated to resolve first_name for subject_display
 - `src/locales/en.json` + `ca.json` — `profile.*` strings; `account.myResults` + `account.signOut` keys
 
+### Phase 10.19 — Legal compliance layer ✅ COMPLETE
+Minimum viable GDPR compliance for an EU-facing platform that collects email,
+linked personality results, profile fields, and processes payments via Stripe.
+
+**Privacy Policy (`/privacy`):**
+- Plain-language policy in Cèrcol brand voice — direct and human, not legal boilerplate.
+- Covers: what is collected (email, results, profile fields, payment via Stripe, anonymous scores), why (product function + anonymised research + payment processing), retention (account data until deletion; anonymous scores indefinitely; payment records per Stripe's policy), cookies (strictly necessary only — no consent required), user rights (access, deletion, portability, correction under GDPR), third-party services (Supabase + Stripe, no trackers), and contact email.
+- Full EN and CA translations.
+
+**Cookie banner (`CookieBanner.jsx`):**
+- Fixed bottom bar, dark background, one line of explanatory text + "OK" dismiss button.
+- Dismissed state persisted to `localStorage` (key: `cercol-cookies-ok`) — appears once per browser, never again after dismissal.
+- Strictly informational: no accept/reject toggle required because Cèrcol's cookies are strictly necessary (GDPR Article 5(3) exemption).
+- Mounted in `AppContent` (renders on all routes).
+
+**Homepage footer:**
+- "Privacy" link added alongside GitHub and Report issue.
+
+**Files added/modified:**
+- `src/pages/PrivacyPage.jsx` — new page
+- `src/components/CookieBanner.jsx` — new component
+- `src/App.jsx` — `/privacy` route + `CookieBanner` mount
+- `src/pages/HomePage.jsx` — privacy footer link
+- `src/locales/en.json` + `ca.json` — `cookies.*`, `privacy.*`, `home.privacy` keys
+
 ### Phase 11 — Multilingual support
 Translation management via Tolgee or equivalent.
 EN + CA already complete; this phase adds languages beyond Valencian.
