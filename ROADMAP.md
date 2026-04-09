@@ -300,6 +300,26 @@ Extended MoonIcons.jsx with 12 animal role icons and 5 dimension icons, plus two
 - `src/pages/FullMoonPage.jsx` — same
 - `src/pages/FullMoonReportPage.jsx` — DimensionIcon added to DomainComparisonRow via new `domainKey` prop; DOMAIN_ICON_COLOR map added
 
+### Phase 10.11 — Animal icon redesign + dimension icons on About page ✅ COMPLETE
+All 12 animal role icons redrawn from scratch in MoonIcons.jsx for greater recognisability and uniqueness.
+DimensionIcon added to the About page dimension cards.
+
+**Icon redesign principles applied:**
+- Every icon shows the **full animal** with its most distinctive silhouette feature
+- Eagle and Falcon are now unambiguously different: Eagle is **perched** with a massive hooked beak and folded wings; Falcon is in a **diving stoop** with long swept-back pointed wings and the signature **facial teardrop/malar stripe**
+- Dolphin: full leaping arc with long rostrum, dorsal fin, pectoral fin, forked tail flukes
+- Wolf: front-facing, very tall sharp ear triangles, elongated muzzle
+- Elephant: side view, giant fan ear (left), long curved hanging trunk, short tusk
+- Owl: round face disk, two large circle eyes with pupil dots, paired ear tufts
+- Bear: front-facing, large round head, small round ears, oval muzzle
+- Fox: sitting side profile, one sharp ear, pointed snout, **large bushy tail** sweeping around body
+- Badger: front-facing, two thick parallel dark facial stripes flanking the white center stripe
+- Octopus, Tortoise, Bee: refined for clarity
+
+**Files modified:**
+- `src/components/MoonIcons.jsx` — all 12 animal icon functions replaced with redesigned paths
+- `src/pages/AboutPage.jsx` — `DimensionCard` receives `domainKey` prop; `DimensionIcon` added to each dimension card heading (size 14, inherits accent color)
+
 ### Phase 11 — Multilingual support
 Translation management via Tolgee or equivalent.
 EN + CA already complete; this phase adds languages beyond Valencian.

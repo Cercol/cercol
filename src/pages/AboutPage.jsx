@@ -6,6 +6,7 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Card, SectionLabel } from '../components/ui'
+import { DimensionIcon } from '../components/MoonIcons'
 
 function ExploreCard({ label, desc, to, accent }) {
   return (
@@ -25,10 +26,13 @@ function ExploreCard({ label, desc, to, accent }) {
   )
 }
 
-function DimensionCard({ name, desc, accent }) {
+function DimensionCard({ name, desc, accent, domainKey }) {
   return (
     <Card className="p-5">
-      <p className={`text-xs font-bold uppercase tracking-widest mb-1.5 ${accent}`}>{name}</p>
+      <p className={`text-xs font-bold uppercase tracking-widest mb-1.5 flex items-center gap-1.5 ${accent}`}>
+        <DimensionIcon domain={domainKey} size={14} />
+        {name}
+      </p>
       <p className="text-sm text-gray-600 leading-relaxed">{desc}</p>
     </Card>
   )
@@ -115,6 +119,7 @@ export default function AboutPage() {
             {dimensions.map(({ key, accent }) => (
               <DimensionCard
                 key={key}
+                domainKey={key}
                 name={t(`about.dimensions.${key}.name`)}
                 desc={t(`about.dimensions.${key}.desc`)}
                 accent={accent}
