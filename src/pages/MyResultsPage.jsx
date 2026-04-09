@@ -4,7 +4,7 @@
  * Fetches from Supabase using the anon client; RLS filters to own rows only.
  */
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
@@ -78,10 +78,24 @@ function ResultCard({ result, t, language }) {
   )
 }
 
+function ProfilePrompt({ t }) {
+  return (
+    <div className="mb-6 flex items-center justify-between gap-4 rounded border border-amber-200 bg-amber-50 px-4 py-3">
+      <p className="text-sm text-amber-800">{t('profile.completionPrompt.body')}</p>
+      <Link
+        to="/profile"
+        className="shrink-0 text-sm font-semibold text-amber-900 underline hover:no-underline"
+      >
+        {t('profile.completionPrompt.cta')}
+      </Link>
+    </div>
+  )
+}
+
 export default function MyResultsPage() {
   const { t, i18n }     = useTranslation()
   const navigate        = useNavigate()
-  const { user, loading } = useAuth()
+  const { user, profile, loading } = useAuth()
   const [results, setResults] = useState(null)   // null = loading
   const [error,   setError]   = useState(false)
 
@@ -107,6 +121,9 @@ export default function MyResultsPage() {
         <h1 className="text-xl font-bold text-gray-900 mb-6">
           {t('myResults.heading')}
         </h1>
+
+        {/* Non-blocking profile completion prompt */}
+        {profile && !profile.first_name && <ProfilePrompt t={t} />}
 
         {results === null && !error && (
           <p className="text-sm text-gray-400">{t('myResults.loading')}</p>

@@ -16,7 +16,32 @@
     "startCta": "Comença una avaluació"
   },
   "account": {
-    "profile": "Perfil"
+    "profile": "Perfil",
+    "myResults": "Els meus resultats",
+    "signOut": "Tancar sessió"
+  },
+  "profile": {
+    "eyebrow": "El teu compte",
+    "title": "El teu perfil",
+    "subtitle": "Ajuda'ns a entendre la diversitat de personalitats entre cultures. El país i la llengua s'utilitzen únicament amb finalitats de recerca.",
+    "loading": "Carregant…",
+    "firstNameLabel": "Nom",
+    "firstNamePlaceholder": "El teu nom",
+    "lastNameLabel": "Cognoms",
+    "lastNamePlaceholder": "Els teus cognoms",
+    "countryLabel": "País",
+    "countryPlaceholder": "Selecciona el teu país",
+    "languageLabel": "Llengua materna",
+    "languagePlaceholder": "Selecciona la teua llengua",
+    "saveButton": "Desa",
+    "saving": "Desant…",
+    "saved": "Perfil desat.",
+    "error": "Alguna cosa ha fallat. Torna-ho a intentar.",
+    "cancel": "Cancel·la",
+    "completionPrompt": {
+      "body": "Afegeix el teu nom per personalitzar la teua experiència.",
+      "cta": "Configura el perfil"
+    }
   },
   "auth": {
     "signIn": "Iniciar sessió",

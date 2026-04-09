@@ -257,6 +257,19 @@ def create_witness_sessions(
     The token is a 32-character hex string; the link is the public witness URL.
     """
     subject_id = user["sub"]
+
+    # Resolve subject display name from profile (falls back to email, then id)
+    subject_display = user.get("email") or subject_id
+    try:
+        profiles = _supabase_get("profiles", f"id=eq.{subject_id}&select=first_name,last_name")
+        if profiles:
+            p = profiles[0]
+            full = f"{p.get('first_name') or ''} {p.get('last_name') or ''}".strip()
+            if full:
+                subject_display = full
+    except Exception:
+        pass  # Fall back to email/id if profile lookup fails
+
     created = []
 
     for witness in body.witnesses[:12]:
@@ -268,7 +281,7 @@ def create_witness_sessions(
         try:
             _supabase_post("witness_sessions", {
                 "subject_id":      subject_id,
-                "subject_display": user.get("email") or subject_id,
+                "subject_display": subject_display,
                 "token":           token,
                 "witness_name":    witness.name.strip(),
                 "witness_email":   witness.email.strip() if witness.email else None,

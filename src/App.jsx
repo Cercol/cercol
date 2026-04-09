@@ -15,6 +15,7 @@ import WitnessPage from './pages/WitnessPage'
 import AuthPage from './pages/AuthPage'
 import AuthCallbackPage from './pages/AuthCallbackPage'
 import MyResultsPage from './pages/MyResultsPage'
+import ProfilePage from './pages/ProfilePage'
 import AboutPage from './pages/AboutPage'
 import InstrumentsPage from './pages/InstrumentsPage'
 import RolesPage from './pages/RolesPage'
@@ -46,6 +47,7 @@ function AppContent() {
         <Route path="/auth/callback" element={<AuthCallbackPage />} />
         {/* Account */}
         <Route path="/my-results" element={<MyResultsPage />} />
+        <Route path="/profile"    element={<ProfilePage />} />
         {/* Documentation */}
         <Route path="/about"       element={<AboutPage />} />
         <Route path="/instruments" element={<InstrumentsPage />} />

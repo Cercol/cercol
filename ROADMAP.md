@@ -462,6 +462,44 @@ Four independent changes to the homepage and persistent header UI.
 - `src/components/LanguageToggle.jsx` — full rewrite: `GlobeIcon` button; `localStorage` write on toggle
 - `src/i18n.js` — reads `localStorage` + `navigator.language` to set `lng` at init time
 
+### Phase 10.18 — User profile feature ✅ COMPLETE
+Collects demographic data (name, country, native language) to enrich the research dataset.
+Country and language are scientifically relevant for personality norm validation across populations.
+
+**Database:**
+- `supabase/migrations/006_profile_fields.sql` — adds `first_name`, `last_name`, `country`, `native_language` (all nullable TEXT) to `public.profiles`. Existing RLS policies (SELECT + UPDATE own row) already cover these new columns.
+
+**Frontend — ProfilePage (`/profile`):**
+- Works as both first-time setup and ongoing editing.
+- Reads existing values from `profile` in AuthContext; pre-fills form on load.
+- Fields: first name (required), last name (optional), country (select, ~55 ISO-coded options), native language (select, ~40 options including Catalan and Valencian separately).
+- Saves via `supabase.from('profiles').update(...)` + calls `refreshProfile()` on success.
+- Redirects to `/auth` if not signed in.
+
+**AuthContext extension:**
+- Added `profile` state (loaded from Supabase when user resolves).
+- Added `refreshProfile()` — public function to re-fetch after a save.
+- `fetchProfile(userId)` called on `getSession` resolve and on every `onAuthStateChange`.
+- The `loading` flag still tracks only the auth check; profile loads asynchronously in parallel.
+
+**Non-blocking profile completion prompt:**
+- Shown when `profile && !profile.first_name` on `MyResultsPage` and `WitnessSetupPage`.
+- Amber banner: short prompt text + "Set up profile" link to `/profile`.
+- Not a gate — all page functionality remains accessible.
+
+**Backend — API update:**
+- `create_witness_sessions` (POST /witness/sessions): before creating sessions, queries `profiles` for the subject's `first_name` + `last_name`. Uses `"first last".strip()` as `subject_display` if available; falls back to email or user id. Profile lookup failure is swallowed to avoid blocking session creation.
+
+**Files modified/added:**
+- `supabase/migrations/006_profile_fields.sql` — new migration
+- `src/pages/ProfilePage.jsx` — new page
+- `src/context/AuthContext.jsx` — added `profile`, `refreshProfile`, `fetchProfile`
+- `src/App.jsx` — `/profile` route added
+- `src/pages/MyResultsPage.jsx` — `ProfilePrompt` banner + `profile` from `useAuth()`
+- `src/pages/WitnessSetupPage.jsx` — same prompt after page header
+- `api/main.py` — `create_witness_sessions` updated to resolve first_name for subject_display
+- `src/locales/en.json` + `ca.json` — `profile.*` strings; `account.myResults` + `account.signOut` keys
+
 ### Phase 11 — Multilingual support
 Translation management via Tolgee or equivalent.
 EN + CA already complete; this phase adds languages beyond Valencian.

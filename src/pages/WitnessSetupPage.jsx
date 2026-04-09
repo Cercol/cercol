@@ -10,7 +10,7 @@
  * 5. Submit → creates sessions, shows unique share links.
  */
 import { useEffect, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
@@ -74,10 +74,24 @@ function CopyButton({ text, label }) {
   )
 }
 
+function ProfilePrompt({ t }) {
+  return (
+    <div className="flex items-center justify-between gap-4 rounded border border-amber-200 bg-amber-50 px-4 py-3">
+      <p className="text-sm text-amber-800">{t('profile.completionPrompt.body')}</p>
+      <Link
+        to="/profile"
+        className="shrink-0 text-sm font-semibold text-amber-900 underline hover:no-underline"
+      >
+        {t('profile.completionPrompt.cta')}
+      </Link>
+    </div>
+  )
+}
+
 export default function WitnessSetupPage() {
   const navigate = useNavigate()
   const { t } = useTranslation()
-  const { user, loading: authLoading } = useAuth()
+  const { user, profile, loading: authLoading } = useAuth()
 
   const [gateState, setGateState] = useState('checking')
 
@@ -188,6 +202,9 @@ export default function WitnessSetupPage() {
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">{t('witness.setup.title')}</h1>
           <p className="mt-1 text-gray-500 text-sm">{t('witness.setup.subtitle')}</p>
         </div>
+
+        {/* Non-blocking profile completion prompt */}
+        {profile && !profile.first_name && <ProfilePrompt t={t} />}
 
         {/* New links (shown after successful create) */}
         {newLinks.length > 0 && (

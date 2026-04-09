@@ -16,7 +16,32 @@
     "startCta": "Start an assessment"
   },
   "account": {
-    "profile": "Profile"
+    "profile": "Profile",
+    "myResults": "My results",
+    "signOut": "Sign out"
+  },
+  "profile": {
+    "eyebrow": "Your account",
+    "title": "Your profile",
+    "subtitle": "Help us understand the diversity of personalities across cultures. Country and language are used for research purposes only.",
+    "loading": "Loading…",
+    "firstNameLabel": "First name",
+    "firstNamePlaceholder": "Your first name",
+    "lastNameLabel": "Last name",
+    "lastNamePlaceholder": "Your last name",
+    "countryLabel": "Country",
+    "countryPlaceholder": "Select your country",
+    "languageLabel": "Native language",
+    "languagePlaceholder": "Select your language",
+    "saveButton": "Save",
+    "saving": "Saving…",
+    "saved": "Profile saved.",
+    "error": "Something went wrong. Try again.",
+    "cancel": "Cancel",
+    "completionPrompt": {
+      "body": "Add your name to personalise your experience.",
+      "cta": "Set up profile"
+    }
   },
   "auth": {
     "signIn": "Sign in",
