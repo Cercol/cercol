@@ -21,7 +21,7 @@ import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
 import { getMyWitnessSessions } from '../lib/api'
 import { computeRole } from '../utils/role-scoring'
-import { ROLE_ILLUSTRATIONS } from '../data/roles'
+import { RoleIcon } from '../components/MoonIcons'
 import { FullMoonIcon, BlindSpotsIcon, DimensionIcon } from '../components/MoonIcons'
 import { averageWitnessScores, detectDivergence, computeConvergence, computeCombinedRole } from '../utils/witness-scoring'
 import { DOMAIN_KEYS } from '../data/domains'
@@ -405,19 +405,13 @@ export default function FullMoonReportPage() {
                   </div>
                 )}
               </div>
-              {/* Right: illustration flush to card edge */}
-              {ROLE_ILLUSTRATIONS[combinedRole.role] && (
-                <div
-                  className="w-[120px] sm:w-[160px] shrink-0 overflow-hidden"
-                  style={{ backgroundColor: ROLE_ILLUSTRATIONS[combinedRole.role].bg }}
-                >
-                  <img
-                    src={ROLE_ILLUSTRATIONS[combinedRole.role].src}
-                    alt={t(`roles.${combinedRole.role}.name`)}
-                    className="w-full h-full object-cover object-center"
-                  />
-                </div>
-              )}
+              {/* Right: role icon on brand-blue background, flush to card edge */}
+              <div
+                className="w-[120px] sm:w-[160px] shrink-0 flex items-center justify-center"
+                style={{ backgroundColor: colors.blue }}
+              >
+                <RoleIcon role={combinedRole.role} size={96} className="text-white opacity-90" />
+              </div>
             </div>
           </Card>
         </section>

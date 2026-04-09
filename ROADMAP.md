@@ -344,6 +344,27 @@ that render the externally-generated potrace SVGs inline, preserving the full
 - `src/components/MoonIcons.jsx` — animal icon section replaced; 12 `?raw` imports +
   `prepareAnimalSvg` helper + `AnimalSvg` inner component + 12 one-liner exports
 
+### Phase 10.14 — Replace JPG illustrations with RoleIcon in role cards ✅ COMPLETE
+Decision: the technology for generating consistent rice-grain style illustrations
+is not mature enough. JPG illustrations replaced by RoleIcon SVG icons on all
+role cards. Illustrations remain on disk for future reference.
+
+**Right column of role card** — was: `<img>` on a per-role solid background color.
+Now: `<RoleIcon role={...} size={96} className="text-white opacity-90" />` centered
+on `colors.blue` background (`w-[120px] sm:w-[160px] shrink-0 flex items-center justify-center`).
+`RoleResult.jsx` header — was: full-bleed `<img>` block. Now: `<RoleIcon size={120}>` centered
+on brand-blue with `py-8` padding.
+
+**Files modified:**
+- `src/data/roles.js` — all 12 JPG imports and `ROLE_ILLUSTRATIONS` export removed; file kept as stub with comment
+- `src/components/RoleResult.jsx` — removed `ROLE_ILLUSTRATIONS` import; illustration block replaced with centered `RoleIcon` in blue header; imported `RoleIcon`
+- `src/pages/FirstQuarterResultsPage.jsx` — `ROLE_ILLUSTRATIONS` → `RoleIcon`; illustration column replaced
+- `src/pages/FullMoonResultsPage.jsx` — same
+- `src/pages/FullMoonReportPage.jsx` — same (role variable: `combinedRole.role`)
+
+**Phase 10.7 note:** JPG files remain at `src/assets/illustrations/` but are no longer
+imported anywhere. Illustration work to be revisited when generation tooling matures.
+
 ### Phase 10.13 — RoleIcon in RoleProbabilityBars ✅ COMPLETE
 Added `RoleIcon` (size 18, `currentColor`) inline to the left of each role name
 in the probability bar list.

@@ -1,8 +1,8 @@
 /**
  * RoleResult — role card shown on results pages.
  *
- * Displays the animal illustration (full-width, on its bg color) above
- * the role name, essence, and personal arc.
+ * Displays a large RoleIcon on a brand-blue background above the role name,
+ * essence, and personal arc. (JPG illustrations removed in Phase 10.14.)
  *
  * Props:
  *   result     — return value of computeRole() from src/utils/role-scoring.js
@@ -11,28 +11,24 @@
  */
 import { useTranslation } from 'react-i18next'
 import { colors } from '../design/tokens'
-import { ROLE_ILLUSTRATIONS } from '../data/roles'
+import { RoleIcon } from './MoonIcons'
 import { Card, Badge } from './ui'
 
 export default function RoleResult({ result, definitive = false }) {
   const { t } = useTranslation()
 
   const { role, arc } = result
-  const illustration = ROLE_ILLUSTRATIONS[role]
 
   return (
     <Card className="overflow-hidden">
 
-      {/* Illustration — full-bleed, solid brand-color background */}
-      {illustration && (
-        <div style={{ backgroundColor: illustration.bg }}>
-          <img
-            src={illustration.src}
-            alt={t(`roles.${role}.name`)}
-            className="block w-full max-w-[400px] mx-auto"
-          />
-        </div>
-      )}
+      {/* Role icon — centred on brand-blue background, full-width header */}
+      <div
+        className="flex items-center justify-center py-8"
+        style={{ backgroundColor: colors.blue }}
+      >
+        <RoleIcon role={role} size={120} className="text-white opacity-90" />
+      </div>
 
       {/* Content */}
       <div className="p-6 flex flex-col gap-4">

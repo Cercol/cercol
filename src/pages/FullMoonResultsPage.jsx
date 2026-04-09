@@ -18,7 +18,7 @@ import { DOMAIN_KEYS } from '../data/domains'
 import { fmScoreToPercent, fmScoreLabel } from '../utils/full-moon-scoring'
 import { logResult } from '../utils/logger'
 import { computeRole } from '../utils/role-scoring'
-import { ROLE_ILLUSTRATIONS } from '../data/roles'
+import { RoleIcon } from '../components/MoonIcons'
 import { FullMoonIcon, ShareIcon, DimensionIcon } from '../components/MoonIcons'
 import { useAuth } from '../context/AuthContext'
 import { colors } from '../design/tokens'
@@ -158,19 +158,13 @@ export default function FullMoonResultsPage() {
                   </div>
                 )}
               </div>
-              {/* Right: illustration flush to card edge */}
-              {ROLE_ILLUSTRATIONS[roleResult.role] && (
-                <div
-                  className="w-[120px] sm:w-[160px] shrink-0 overflow-hidden"
-                  style={{ backgroundColor: ROLE_ILLUSTRATIONS[roleResult.role].bg }}
-                >
-                  <img
-                    src={ROLE_ILLUSTRATIONS[roleResult.role].src}
-                    alt={t(`roles.${roleResult.role}.name`)}
-                    className="w-full h-full object-cover object-center"
-                  />
-                </div>
-              )}
+              {/* Right: role icon on brand-blue background, flush to card edge */}
+              <div
+                className="w-[120px] sm:w-[160px] shrink-0 flex items-center justify-center"
+                style={{ backgroundColor: colors.blue }}
+              >
+                <RoleIcon role={roleResult.role} size={96} className="text-white opacity-90" />
+              </div>
             </div>
           </Card>
         </section>
