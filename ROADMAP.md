@@ -344,6 +344,16 @@ that render the externally-generated potrace SVGs inline, preserving the full
 - `src/components/MoonIcons.jsx` — animal icon section replaced; 12 `?raw` imports +
   `prepareAnimalSvg` helper + `AnimalSvg` inner component + 12 one-liner exports
 
+### Phase 10.13 — RoleIcon in RoleProbabilityBars ✅ COMPLETE
+Added `RoleIcon` (size 18, `currentColor`) inline to the left of each role name
+in the probability bar list.
+
+**Files modified:**
+- `src/components/RoleProbabilityBars.jsx` — imported `RoleIcon` from `MoonIcons`;
+  role name `<span>` changed to `flex items-center gap-1.5`; `<RoleIcon role={r} size={18} />`
+  added before the translated name. `r` (the role key R01–R12) was already the
+  loop variable from `Object.entries(probabilities)`.
+
 ### Phase 11 — Multilingual support
 Translation management via Tolgee or equivalent.
 EN + CA already complete; this phase adds languages beyond Valencian.

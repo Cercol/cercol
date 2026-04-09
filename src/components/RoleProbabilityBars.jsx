@@ -12,6 +12,7 @@
 import { useTranslation } from 'react-i18next'
 import { colors } from '../design/tokens'
 import { Card, SectionLabel } from './ui'
+import { RoleIcon } from './MoonIcons'
 
 export default function RoleProbabilityBars({ result, columns = 1 }) {
   const { t } = useTranslation()
@@ -51,9 +52,10 @@ export default function RoleProbabilityBars({ result, columns = 1 }) {
             <div key={r}>
               <div className="flex items-center justify-between mb-1">
                 <span
-                  className={`text-sm ${isPrimary ? 'font-semibold' : 'font-normal'}`}
+                  className={`text-sm flex items-center gap-1.5 ${isPrimary ? 'font-semibold' : 'font-normal'}`}
                   style={{ color: labelColor }}
                 >
+                  <RoleIcon role={r} size={18} />
                   {t(`roles.${r}.name`)}
                 </span>
                 <span className="text-xs tabular-nums" style={{ color: colors.textMuted }}>
