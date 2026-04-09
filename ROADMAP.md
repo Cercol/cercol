@@ -398,6 +398,35 @@ Two visual upgrades to unify the brand identity across results pages.
 **Files modified:**
 - `src/components/RadarChart.jsx` — `smoothClosedPath()` helper added; `OrganicRadarShape` component added; `PolarGrid gridType="circle"`; `Radar shape={<OrganicRadarShape />} stroke={colors.red}`; gradient opacity raised to 0.18/0.38/0.58
 
+### Phase 10.16 — Homepage icon + wallpaper; Science dimensions section ✅ COMPLETE
+Three independent UI and content changes.
+
+**Change 1 — Homepage instrument card icons:**
+- Moon icon size increased from 44 → 80px on all three instrument cards.
+- Icon container: `flex justify-center` added — icons are now horizontally centred within each card. Text remains left-aligned.
+
+**Change 2 — Homepage decorative animal wallpaper:**
+- 10 animal RoleIcons scattered as an absolutely-positioned layer behind the instrument cards.
+- `position: relative; overflow: hidden` added to `<main>`; decorative layer uses `absolute inset-0 pointer-events-none`.
+- Icons: Dolphin, Eagle, Bear, Fox, Octopus, Bee, Owl, Wolf, Tortoise, Badger — varied sizes (68–160px), percentage-based positions, individual rotations.
+- Color: white, opacity 0.12 — subtle wallpaper effect visible against the blue background.
+- Cards sit in a `relative` wrapper at z-index above the decorative layer.
+
+**Files modified:**
+- `src/pages/HomePage.jsx` — RoleIcon imported; `BG_ICONS` array; decorative layer div; icon sizes 80; `flex justify-center`; `relative overflow-hidden` on main; `relative` on card wrapper
+
+**Change 3 — Science page: Five Dimensions section:**
+- New section between Five-Factor Model and Role Taxonomy.
+- 2-column grid of dimension Cards (1-column on mobile); each card: DimensionIcon + Cèrcol name + academic name (muted) + 2–3 sentence plain-language description + primary reference.
+- Dimension descriptions follow brand voice: both poles framed positively, no jargon, direct sentences.
+- References: Barrick & Mount (1991) for Discipline; Bell (2007) for Presence, Bond, Vision, Depth.
+- Full EN and CA i18n strings added.
+
+**Files modified:**
+- `src/pages/SciencePage.jsx` — DimensionIcon + colors imported; DIMENSION_KEYS + DIMENSION_COLOR maps; Five Dimensions section inserted
+- `src/locales/en.json` — `science.dimensions` block: eyebrow, heading, intro, and per-dimension academic/body/ref for all 5 dimensions
+- `src/locales/ca.json` — same, in Valencian
+
 ### Phase 11 — Multilingual support
 Translation management via Tolgee or equivalent.
 EN + CA already complete; this phase adds languages beyond Valencian.

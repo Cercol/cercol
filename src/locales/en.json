@@ -709,6 +709,36 @@
       "body": "Across cultures, languages, and methods, research consistently recovers the same five broad dimensions of personality. Cèrcol uses these under different names — Presence, Bond, Discipline, Depth, Vision — to make the language warmer without changing what's being measured.",
       "note": "Replicated in more than 50 countries. The strongest consensus result in differential psychology."
     },
+    "dimensions": {
+      "eyebrow": "Five dimensions",
+      "heading": "What Cèrcol actually measures.",
+      "intro": "Five broad dimensions of personality — each covering a different axis of human variation. The dimensions are the same across all three instruments. Only the resolution changes.",
+      "presence": {
+        "academic": "Extraversion",
+        "body": "How much energy you bring into a room — and how much you draw from being around others. High Presence means initiative, expressiveness, and comfort in the spotlight. Low Presence means depth in focused work, and a listening quality most groups undervalue. Teams need both.",
+        "ref": "Bell, 2007"
+      },
+      "bond": {
+        "academic": "Agreeableness",
+        "body": "How you navigate the tension between harmony and honesty. High Bond means warmth, trust, and genuine care for the people around you. Low Bond means you hold your ground, challenge assumptions, and keep the group from fooling itself. Both ends are functional. Most teams need both.",
+        "ref": "Bell, 2007"
+      },
+      "vision": {
+        "academic": "Openness to Experience",
+        "body": "How drawn you are to ideas, novelty, and complexity. High Vision drives curiosity, imagination, and comfort with the unknown. Low Vision grounds a team in what is real, tested, and actionable. No healthy team is homogeneous on this dimension.",
+        "ref": "Bell, 2007"
+      },
+      "discipline": {
+        "academic": "Conscientiousness",
+        "body": "How reliably you follow through. High Discipline means planning, structure, and doing what you said you would do. It is the most replicated predictor of job performance in the research literature — not because rigid people do better, but because consistent people do.",
+        "ref": "Barrick & Mount, 1991"
+      },
+      "depth": {
+        "academic": "Neuroticism",
+        "body": "How readily you experience negative emotion — worry, frustration, sensitivity. High Depth often comes with heightened vigilance and strong empathy. Low Depth means steadiness under pressure. Neither extreme is a flaw; both reflect different ways of reading the world.",
+        "ref": "Bell, 2007"
+      }
+    },
     "roles": {
       "eyebrow": "Role taxonomy",
       "heading": "Twelve roles. Derived from the research, not invented.",

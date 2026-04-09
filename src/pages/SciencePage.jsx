@@ -7,6 +7,18 @@
  */
 import { useTranslation } from 'react-i18next'
 import { Card, SectionLabel } from '../components/ui'
+import { DimensionIcon } from '../components/MoonIcons'
+import { colors } from '../design/tokens'
+
+const DIMENSION_KEYS = ['presence', 'bond', 'vision', 'discipline', 'depth']
+
+const DIMENSION_COLOR = {
+  presence:   '#fbbf24',
+  bond:       '#10b981',
+  vision:     '#427c42',
+  discipline: '#2563eb',
+  depth:      '#ef4444',
+}
 
 function Section({ eyebrow, heading, children, accent = 'gray' }) {
   return (
@@ -95,6 +107,38 @@ export default function SciencePage() {
           <p className="text-xs text-gray-400 bg-gray-100 rounded px-4 py-3 leading-relaxed">
             {t('science.fiveFactors.note')}
           </p>
+        </Section>
+
+        {/* ── Five dimensions ───────────────────────────────────── */}
+        <Section
+          eyebrow={t('science.dimensions.eyebrow')}
+          heading={t('science.dimensions.heading')}
+          accent="red"
+        >
+          <p className="text-sm text-gray-600 leading-relaxed mb-4">
+            {t('science.dimensions.intro')}
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {DIMENSION_KEYS.map((key) => (
+              <Card key={key} className="px-5 py-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <DimensionIcon domain={key} size={16} style={{ color: DIMENSION_COLOR[key] }} />
+                  <span className="text-sm font-bold" style={{ color: colors.textPrimary }}>
+                    {t(`fqDomains.${key}.name`)}
+                  </span>
+                  <span className="text-xs" style={{ color: colors.textMuted }}>
+                    · {t(`science.dimensions.${key}.academic`)}
+                  </span>
+                </div>
+                <p className="text-sm leading-relaxed mb-2" style={{ color: colors.textMuted }}>
+                  {t(`science.dimensions.${key}.body`)}
+                </p>
+                <p className="text-xs" style={{ color: colors.textMuted, opacity: 0.7 }}>
+                  {t(`science.dimensions.${key}.ref`)}
+                </p>
+              </Card>
+            ))}
+          </div>
         </Section>
 
         {/* ── Role taxonomy ─────────────────────────────────────── */}

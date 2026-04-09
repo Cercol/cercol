@@ -709,6 +709,36 @@
       "body": "A través de cultures, idiomes i mètodes, la investigació recupera consistentment les mateixes cinc dimensions àmplies de la personalitat. Cèrcol les usa amb noms diferents — Presència, Vincle, Disciplina, Profunditat, Visió — per fer el llenguatge més càlid sense canviar el que es mesura.",
       "note": "Replicat en més de 50 països. El resultat de consens més fort en psicologia diferencial."
     },
+    "dimensions": {
+      "eyebrow": "Cinc dimensions",
+      "heading": "El que Cèrcol mesura realment.",
+      "intro": "Cinc dimensions àmplies de la personalitat — cadascuna cobreix un eix diferent de la variació humana. Les dimensions són les mateixes en tots tres instruments. Només canvia la resolució.",
+      "presence": {
+        "academic": "Extraversió",
+        "body": "Quanta energia portes quan entres en una sala — i quanta en treus d'estar amb els altres. Alta Presència significa iniciativa, expressivitat i comoditat al centre. Baixa Presència significa profunditat en el treball concentrat i una qualitat d'escolta que la majoria dels grups infravalora. Els equips necessiten totes dues.",
+        "ref": "Bell, 2007"
+      },
+      "bond": {
+        "academic": "Amabilitat",
+        "body": "Com navegues la tensió entre harmonia i honestedat. Alt Vincle significa calidesa, confiança i cura genuïna per les persones del teu entorn. Baix Vincle significa que mantens el teu terreny, qüestiones supòsits i evites que el grup s'enganyi a si mateix. Tots dos extrems són funcionals. La majoria dels equips necessiten els dos.",
+        "ref": "Bell, 2007"
+      },
+      "vision": {
+        "academic": "Obertura a l'experiència",
+        "body": "Quant t'atreuen les idees, la novetat i la complexitat. Alta Visió impulsa la curiositat, la imaginació i la comoditat amb el desconegut. Baixa Visió ancora l'equip en el que és real, contrastat i accionable. Cap equip sa és homogeni en aquesta dimensió.",
+        "ref": "Bell, 2007"
+      },
+      "discipline": {
+        "academic": "Conscienciositat",
+        "body": "Amb quina fiabilitat completes el que et proposes. Alta Disciplina significa planificació, estructura i fer el que has dit que faries. És el predictor de rendiment laboral més replicat en la literatura científica — no perquè les persones rígides ho facen millor, sinó perquè les persones constants sí.",
+        "ref": "Barrick & Mount, 1991"
+      },
+      "depth": {
+        "academic": "Neuroticisme",
+        "body": "Amb quina facilitat experimentes emocions negatives — preocupació, frustració, sensibilitat. Alta Profunditat sovint ve acompanyada d'alta vigilància i empatia forta. Baixa Profunditat significa estabilitat sota pressió. Cap extrem és un defecte; tots dos reflecteixen maneres diferents de llegir el món.",
+        "ref": "Bell, 2007"
+      }
+    },
     "roles": {
       "eyebrow": "Taxonomia de rols",
       "heading": "Dotze rols. Derivats de la investigació, no inventats.",

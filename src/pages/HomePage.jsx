@@ -10,7 +10,21 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { colors } from '../design/tokens'
-import { NewMoonIcon, FirstQuarterIcon, FullMoonIcon } from '../components/MoonIcons'
+import { NewMoonIcon, FirstQuarterIcon, FullMoonIcon, RoleIcon } from '../components/MoonIcons'
+
+/** Decorative animal icons scattered across the blue background. */
+const BG_ICONS = [
+  { role: 'R01', size: 160, style: { top: '-4%',  left: '-3%',  transform: 'rotate(18deg)'  } },
+  { role: 'R05', size: 140, style: { top: '1%',   right: '-2%', transform: 'rotate(-22deg)' } },
+  { role: 'R10', size: 130, style: { bottom: '4%', right: '-2%', transform: 'rotate(14deg)' } },
+  { role: 'R11', size: 115, style: { bottom: '2%', left: '-2%', transform: 'rotate(-20deg)' } },
+  { role: 'R07', size: 100, style: { top: '38%',  left: '1%',  transform: 'rotate(32deg)'  } },
+  { role: 'R09', size: 88,  style: { top: '42%',  right: '1%', transform: 'rotate(-18deg)' } },
+  { role: 'R04', size: 78,  style: { top: '14%',  left: '19%', transform: 'rotate(-10deg)' } },
+  { role: 'R02', size: 72,  style: { top: '10%',  right: '20%', transform: 'rotate(24deg)' } },
+  { role: 'R08', size: 82,  style: { bottom: '18%', right: '19%', transform: 'rotate(8deg)'} },
+  { role: 'R12', size: 68,  style: { bottom: '16%', left: '17%', transform: 'rotate(-38deg)'} },
+]
 
 const GITHUB_URL = 'https://github.com/miquelmatoses/cercol'
 const ISSUE_URL  = 'https://github.com/miquelmatoses/cercol/issues/new?title=Bug+report&labels=bug'
@@ -41,7 +55,7 @@ function InstrumentCard({ icon, name, description, meta, accentColor, darkHover 
         transition:   'background-color 200ms, color 200ms',
       }}
     >
-      <div className="mb-6 leading-none" style={{ color: hovered ? textColor : accentColor }}>{icon}</div>
+      <div className="mb-6 leading-none flex justify-center" style={{ color: hovered ? textColor : accentColor }}>{icon}</div>
 
       {/* Name in accent color when idle; inverts on hover */}
       <h2
@@ -81,14 +95,23 @@ export default function HomePage() {
 
   return (
     <main
-      className="min-h-[calc(100vh-4rem)] flex flex-col"
+      className="min-h-[calc(100vh-4rem)] flex flex-col relative overflow-hidden"
       style={{ backgroundColor: colors.blue }}
     >
+      {/* Decorative animal icons — behind cards, low opacity */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        {BG_ICONS.map(({ role, size, style }) => (
+          <div key={role} className="absolute" style={style}>
+            <RoleIcon role={role} size={size} style={{ color: 'white', opacity: 0.12 }} />
+          </div>
+        ))}
+      </div>
+
       {/* Instrument cards — vertically centered, 3-col desktop, 2 tablet, 1 mobile */}
-      <div className="flex-1 flex items-center px-8 lg:px-16 py-12">
+      <div className="flex-1 flex items-center px-8 lg:px-16 py-12 relative">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-screen-xl mx-auto w-full">
           <InstrumentCard
-            icon={<NewMoonIcon size={44} />}
+            icon={<NewMoonIcon size={80} />}
             name={t('home.newMoon.name')}
             description={t('home.newMoon.description')}
             meta={t('home.newMoon.meta')}
@@ -96,7 +119,7 @@ export default function HomePage() {
             onClick={() => navigate('/new-moon')}
           />
           <InstrumentCard
-            icon={<FirstQuarterIcon size={44} />}
+            icon={<FirstQuarterIcon size={80} />}
             name={t('home.firstQuarter.name')}
             description={t('home.firstQuarter.description')}
             meta={t('home.firstQuarter.meta')}
@@ -104,7 +127,7 @@ export default function HomePage() {
             onClick={() => navigate('/first-quarter')}
           />
           <InstrumentCard
-            icon={<FullMoonIcon size={44} />}
+            icon={<FullMoonIcon size={80} />}
             name={t('home.fullMoon.name')}
             description={t('home.fullMoon.description')}
             meta={t('home.fullMoon.meta')}
