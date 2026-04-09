@@ -333,6 +333,60 @@ export function ShareIcon({ size = 24, className = '', style }) {
 }
 
 /**
+ * UserIcon — person silhouette: head circle + shoulder arc.
+ * Used for the signed-out auth button in the header.
+ */
+export function UserIcon({ size = 24, className = '', style }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className={className}
+      style={style}
+    >
+      {/* Head */}
+      <circle cx="12" cy="8.5" r="3.2" strokeWidth="1.7" />
+      {/* Shoulders */}
+      <path strokeWidth="1.7" d="M4.5 20.5 C5 16 8.2 13.5 12 13.5 C15.8 13.5 19 16 19.5 20.5" />
+    </svg>
+  )
+}
+
+/**
+ * GlobeIcon — circle + equator bow + vertical meridian oval.
+ * Used for the language toggle button in the header.
+ */
+export function GlobeIcon({ size = 24, className = '', style }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className={className}
+      style={style}
+    >
+      {/* Outer circle */}
+      <circle cx="12" cy="12" r="9" strokeWidth="1.7" />
+      {/* Equator — slight bow */}
+      <path strokeWidth="1.3" d="M3 12 C6 11 18 11 21 12" />
+      {/* Meridian — vertical oval through centre */}
+      <path strokeWidth="1.3" d="M12 3 C9.5 6.5 9.5 17.5 12 21 C14.5 17.5 14.5 6.5 12 3 Z" />
+    </svg>
+  )
+}
+
+/**
  * BlindSpotsIcon — two opposing arrows diverging from a central gap.
  * Represents self vs witness divergence (blind spots section).
  */

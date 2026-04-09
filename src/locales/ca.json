@@ -15,6 +15,9 @@
     "empty": "Encara no hi ha resultats. Completa una avaluació per veure el teu perfil aquí.",
     "startCta": "Comença una avaluació"
   },
+  "account": {
+    "profile": "Perfil"
+  },
   "auth": {
     "signIn": "Iniciar sessió",
     "signOut": "Tancar sessió",

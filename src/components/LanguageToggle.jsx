@@ -1,44 +1,31 @@
 /**
- * LanguageToggle — EN / CA switcher in the header (blue background context).
- * Active language: white background with blue text.
- * Inactive: white/60 text, no background.
+ * LanguageToggle — single globe icon button that cycles EN ↔ CA.
+ * Persists the selection to localStorage (key: 'cercol-lang').
+ * Browser language detection happens once at app init in i18n.js.
  */
 import { useTranslation } from 'react-i18next'
-import { colors } from '../design/tokens'
+import { GlobeIcon } from './MoonIcons'
+
+const STORAGE_KEY = 'cercol-lang'
 
 export default function LanguageToggle() {
   const { i18n } = useTranslation()
-  const current = i18n.language
 
-  function toggle(lang) {
-    i18n.changeLanguage(lang)
+  function toggle() {
+    const next = i18n.language === 'en' ? 'ca' : 'en'
+    i18n.changeLanguage(next)
+    localStorage.setItem(STORAGE_KEY, next)
   }
 
   return (
-    <div className="flex items-center gap-1 text-sm font-semibold">
-      <button
-        onClick={() => toggle('en')}
-        className="px-2 py-1 rounded transition-colors"
-        style={
-          current === 'en'
-            ? { backgroundColor: colors.white, color: colors.blue }
-            : { color: 'rgba(255,255,255,0.6)' }
-        }
-      >
-        EN
-      </button>
-      <span style={{ color: 'rgba(255,255,255,0.3)' }}>|</span>
-      <button
-        onClick={() => toggle('ca')}
-        className="px-2 py-1 rounded transition-colors"
-        style={
-          current === 'ca'
-            ? { backgroundColor: colors.white, color: colors.blue }
-            : { color: 'rgba(255,255,255,0.6)' }
-        }
-      >
-        CA
-      </button>
-    </div>
+    <button
+      onClick={toggle}
+      aria-label={i18n.language === 'en' ? 'Switch to Català' : 'Switch to English'}
+      title={i18n.language === 'en' ? 'Català' : 'English'}
+      className="p-1.5 rounded transition-colors hover:bg-white/10"
+      style={{ color: 'rgba(255,255,255,0.7)' }}
+    >
+      <GlobeIcon size={18} />
+    </button>
   )
 }

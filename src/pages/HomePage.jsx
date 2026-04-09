@@ -5,29 +5,94 @@
  * On hover: card fills with the instrument color, text inverts.
  * This page opts out of Layout's white content wrapper via the home-route
  * exception in Layout.jsx (useLocation check).
+ *
+ * Phase 10.17: animal wallpaper positions are generated randomly on each
+ * page load using a layout algorithm that avoids the card grid zone and
+ * prevents icon overlaps.
  */
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { colors } from '../design/tokens'
 import { NewMoonIcon, FirstQuarterIcon, FullMoonIcon, RoleIcon } from '../components/MoonIcons'
 
-/** Decorative animal icons scattered across the blue background. */
-const BG_ICONS = [
-  { role: 'R01', size: 160, style: { top: '-4%',  left: '-3%',  transform: 'rotate(18deg)'  } },
-  { role: 'R05', size: 140, style: { top: '1%',   right: '-2%', transform: 'rotate(-22deg)' } },
-  { role: 'R10', size: 130, style: { bottom: '4%', right: '-2%', transform: 'rotate(14deg)' } },
-  { role: 'R11', size: 115, style: { bottom: '2%', left: '-2%', transform: 'rotate(-20deg)' } },
-  { role: 'R07', size: 100, style: { top: '38%',  left: '1%',  transform: 'rotate(32deg)'  } },
-  { role: 'R09', size: 88,  style: { top: '42%',  right: '1%', transform: 'rotate(-18deg)' } },
-  { role: 'R04', size: 78,  style: { top: '14%',  left: '19%', transform: 'rotate(-10deg)' } },
-  { role: 'R02', size: 72,  style: { top: '10%',  right: '20%', transform: 'rotate(24deg)' } },
-  { role: 'R08', size: 82,  style: { bottom: '18%', right: '19%', transform: 'rotate(8deg)'} },
-  { role: 'R12', size: 68,  style: { bottom: '16%', left: '17%', transform: 'rotate(-38deg)'} },
-]
-
 const GITHUB_URL = 'https://github.com/miquelmatoses/cercol'
 const ISSUE_URL  = 'https://github.com/miquelmatoses/cercol/issues/new?title=Bug+report&labels=bug'
+
+/** Animal definitions: fixed role selection and size range. */
+const ICON_DEFS = [
+  { role: 'R01', size: 160 },
+  { role: 'R05', size: 140 },
+  { role: 'R10', size: 130 },
+  { role: 'R11', size: 115 },
+  { role: 'R07', size: 100 },
+  { role: 'R09', size: 88  },
+  { role: 'R04', size: 78  },
+  { role: 'R02', size: 72  },
+  { role: 'R08', size: 82  },
+  { role: 'R12', size: 68  },
+]
+
+/**
+ * Card grid exclusion zone in viewport-% coordinates.
+ * Conservative: centre 64% × 64% of the viewport where the three
+ * instrument cards live. Icons may not overlap this zone.
+ */
+const CARD_X1 = 18, CARD_X2 = 82
+const CARD_Y1 = 18, CARD_Y2 = 82
+
+/**
+ * Generates a random layout for the decorative wallpaper icons.
+ * Each call produces a different layout — call once per page load.
+ *
+ * Algorithm:
+ *   For each icon, try up to 100 random (x, y) positions in normalised
+ *   viewport-% space (with slight edge bleed). Reject positions that
+ *   overlap the card zone or that are too close to already-placed icons.
+ *   Fall back to a corner slot if no valid position found.
+ */
+function generateWallpaper() {
+  const placed = []
+
+  return ICON_DEFS.map((def) => {
+    // Approximate icon radius in viewport-% units (assumes ~1300px viewport width)
+    const r = def.size / 13
+    const rotate = Math.round((Math.random() - 0.5) * 80)   // –40 ° to +40 °
+
+    let cx = -10, cy = -10   // default: hidden off-screen if no slot found
+
+    for (let attempt = 0; attempt < 100; attempt++) {
+      // Sample with slight bleed beyond viewport edges for corner/edge effects
+      const x = Math.random() * 112 - 6   // –6 % to 106 %
+      const y = Math.random() * 112 - 6
+
+      // Reject if the icon circle overlaps the card exclusion zone
+      if (x + r > CARD_X1 && x - r < CARD_X2 &&
+          y + r > CARD_Y1 && y - r < CARD_Y2) continue
+
+      // Reject if too close to an already-placed icon (1.25× combined radii)
+      if (placed.some(p => {
+        const dx = x - p.x, dy = y - p.y
+        return Math.sqrt(dx * dx + dy * dy) < (r + p.r) * 1.25
+      })) continue
+
+      cx = x; cy = y
+      break
+    }
+
+    placed.push({ x: cx, y: cy, r })
+
+    return {
+      role: def.role,
+      size: def.size,
+      style: {
+        left:      `${cx}%`,
+        top:       `${cy}%`,
+        transform: `translate(-50%, -50%) rotate(${rotate}deg)`,
+      },
+    }
+  })
+}
 
 /**
  * InstrumentCard — white card with colored left border.
@@ -36,7 +101,6 @@ const ISSUE_URL  = 'https://github.com/miquelmatoses/cercol/issues/new?title=Bug
 function InstrumentCard({ icon, name, description, meta, accentColor, darkHover = false, paymentLabel, onClick }) {
   const [hovered, setHovered] = useState(false)
 
-  // Text color: black by default; on hover → white (or black for yellow cards)
   const textColor = hovered ? (darkHover ? colors.black : colors.white) : colors.black
 
   return (
@@ -57,7 +121,6 @@ function InstrumentCard({ icon, name, description, meta, accentColor, darkHover 
     >
       <div className="mb-6 leading-none flex justify-center" style={{ color: hovered ? textColor : accentColor }}>{icon}</div>
 
-      {/* Name in accent color when idle; inverts on hover */}
       <h2
         className="text-2xl font-bold mb-2"
         style={{ color: hovered ? textColor : accentColor, transition: 'color 200ms' }}
@@ -92,15 +155,21 @@ function InstrumentCard({ icon, name, description, meta, accentColor, darkHover 
 export default function HomePage() {
   const navigate = useNavigate()
   const { t } = useTranslation()
+  const [wallpaper, setWallpaper] = useState([])
+
+  // Generate a fresh random layout on every page load
+  useEffect(() => {
+    setWallpaper(generateWallpaper())
+  }, [])
 
   return (
     <main
       className="min-h-[calc(100vh-4rem)] flex flex-col relative overflow-hidden"
       style={{ backgroundColor: colors.blue }}
     >
-      {/* Decorative animal icons — behind cards, low opacity */}
+      {/* Decorative animal icons — randomised on each load, behind cards */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        {BG_ICONS.map(({ role, size, style }) => (
+        {wallpaper.map(({ role, size, style }) => (
           <div key={role} className="absolute" style={style}>
             <RoleIcon role={role} size={size} style={{ color: 'white', opacity: 0.12 }} />
           </div>

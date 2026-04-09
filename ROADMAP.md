@@ -427,6 +427,41 @@ Three independent UI and content changes.
 - `src/locales/en.json` — `science.dimensions` block: eyebrow, heading, intro, and per-dimension academic/body/ref for all 5 dimensions
 - `src/locales/ca.json` — same, in Valencian
 
+### Phase 10.17 — Dynamic wallpaper; header icon UI; globe language toggle ✅ COMPLETE
+Four independent changes to the homepage and persistent header UI.
+
+**Change 1 — Homepage animal wallpaper: dynamic placement**
+- Static `BG_ICONS` array replaced with a `generateWallpaper()` function called once on mount via `useEffect`.
+- Algorithm: for each of the 10 animal icons, tries up to 100 random `(x, y)` positions in normalised viewport-% coordinates (with ±6% edge bleed). Rejects positions that overlap the card exclusion zone (centre 64%×64% of viewport) or that are within 1.25× combined radii of any already-placed icon. Falls back to off-screen position if no valid slot found.
+- Rotation also randomised per-visit (−40° to +40°). Sizes and opacity unchanged.
+- Result: visibly different layout on every page load.
+
+**Files modified:**
+- `src/pages/HomePage.jsx` — `generateWallpaper()` + `ICON_DEFS` + `CARD_X/Y` constants; `useState([])` + `useEffect` to populate; removed static `BG_ICONS`
+
+**Change 2 — Header auth UI**
+- Signed-out state: "Sign in" text link replaced by `UserIcon` icon button (18px, `hover:bg-white/10`, aria-label).
+- Signed-in state: red initial circle retained. "My results" and "Sign out" links removed. Clicking the circle opens a small dropdown (`position: absolute right-0 top-9 z-50 w-44`) with three items: Profile (`/profile`), My Results (`/my-results`), Sign Out. Dropdown closes on outside click (document `mousedown` listener via `useEffect`).
+- `/profile` route placeholder: navigation target only; no page built yet.
+- `UserIcon` added to `MoonIcons.jsx`: 24×24 viewBox, head circle + shoulder arc.
+- i18n key `account.profile` added (EN: "Profile", CA: "Perfil").
+
+**Files modified:**
+- `src/components/MoonIcons.jsx` — `UserIcon` exported
+- `src/components/AccountButton.jsx` — full rewrite: `UserIcon` signed-out; dropdown for signed-in
+- `src/locales/en.json` + `ca.json` — `account.profile` key added
+
+**Change 3 — Language selector: globe icon + language detection**
+- EN | CA text toggle replaced by a single `GlobeIcon` button (18px, `hover:bg-white/10`).
+- Clicking cycles EN → CA → EN. Selection persisted to `localStorage` key `cercol-lang`.
+- `GlobeIcon` added to `MoonIcons.jsx`: 24×24 viewBox, outer circle + equator bow + vertical meridian oval.
+- On first load, i18n initialises with: (1) `localStorage['cercol-lang']` if set, else (2) `navigator.language.startsWith('ca')` ? `'ca'` : `'en'`. Manual selection always overrides detection.
+
+**Files modified:**
+- `src/components/MoonIcons.jsx` — `GlobeIcon` exported
+- `src/components/LanguageToggle.jsx` — full rewrite: `GlobeIcon` button; `localStorage` write on toggle
+- `src/i18n.js` — reads `localStorage` + `navigator.language` to set `lng` at init time
+
 ### Phase 11 — Multilingual support
 Translation management via Tolgee or equivalent.
 EN + CA already complete; this phase adds languages beyond Valencian.

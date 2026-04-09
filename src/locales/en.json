@@ -15,6 +15,9 @@
     "empty": "No results yet. Complete an assessment to see your profile here.",
     "startCta": "Start an assessment"
   },
+  "account": {
+    "profile": "Profile"
+  },
   "auth": {
     "signIn": "Sign in",
     "signOut": "Sign out",
