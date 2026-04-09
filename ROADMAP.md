@@ -320,6 +320,30 @@ DimensionIcon added to the About page dimension cards.
 - `src/components/MoonIcons.jsx` — all 12 animal icon functions replaced with redesigned paths
 - `src/pages/AboutPage.jsx` — `DimensionCard` receives `domainKey` prop; `DimensionIcon` added to each dimension card heading (size 14, inherits accent color)
 
+### Phase 10.12 — External potrace SVG animal icons ✅ COMPLETE
+Replaced the 12 hand-drawn animal icon functions in MoonIcons.jsx with components
+that render the externally-generated potrace SVGs inline, preserving the full
+`RoleIcon` API and `currentColor` inheritance.
+
+**Integration approach: Vite `?raw` import + `dangerouslySetInnerHTML`**
+- Zero new npm dependencies; no changes to vite.config.js
+- Each SVG imported as a raw string at build time via `import ... from '...?raw'`
+- `prepareAnimalSvg(raw)` helper runs once at module load: extracts the `viewBox`
+  attribute and strips the outer `<svg>`, `<?xml>`, `<!DOCTYPE>`, `<metadata>` wrappers,
+  leaving the inner `<g transform fill="currentColor">` content
+- Shared `AnimalSvg` component renders `<svg width height viewBox dangerouslySetInnerHTML>`
+- Each of the 12 named exports (`DolphinIcon`, `WolfIcon`, …, `BadgerIcon`) is now a
+  one-liner that delegates to `AnimalSvg` with its pre-parsed data
+- `RoleIcon` wrapper and all call sites unchanged
+
+**Files added:**
+- `src/assets/icons/animals/cercol-icon-r01-dolphin.svg` … `cercol-icon-r12-badger.svg`
+  (copied from `src/assets/icons_raw/`)
+
+**Files modified:**
+- `src/components/MoonIcons.jsx` — animal icon section replaced; 12 `?raw` imports +
+  `prepareAnimalSvg` helper + `AnimalSvg` inner component + 12 one-liner exports
+
 ### Phase 11 — Multilingual support
 Translation management via Tolgee or equivalent.
 EN + CA already complete; this phase adds languages beyond Valencian.
