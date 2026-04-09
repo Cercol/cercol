@@ -126,8 +126,8 @@ export default function FirstQuarterResultsPage() {
           <Card accent="red" className="overflow-hidden">
             <div className="flex flex-row">
               {/* Left: icon column — full card height, icon centred */}
-              <div className="w-24 shrink-0 flex items-center justify-center">
-                <RoleIcon role={roleResult.role} size={64} style={{ color: colors.red }} />
+              <div className="w-40 shrink-0 flex items-center justify-center">
+                <RoleIcon role={roleResult.role} size={128} style={{ color: colors.red }} />
               </div>
               {/* Right: content */}
               <div className="flex-1 p-6 sm:p-8 flex flex-col gap-4">

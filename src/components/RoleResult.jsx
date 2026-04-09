@@ -24,8 +24,8 @@ export default function RoleResult({ result, definitive = false }) {
       <div className="flex flex-row">
 
         {/* Left: icon column — full card height, icon centred */}
-        <div className="w-24 shrink-0 flex items-center justify-center">
-          <RoleIcon role={role} size={64} style={{ color: colors.red }} />
+        <div className="w-40 shrink-0 flex items-center justify-center">
+          <RoleIcon role={role} size={128} style={{ color: colors.red }} />
         </div>
 
         {/* Right: content */}
