@@ -20,17 +20,7 @@ export default function RoleResult({ result, definitive = false }) {
   const { role, arc } = result
 
   return (
-    <Card className="overflow-hidden">
-
-      {/* Role icon — centred on brand-blue background, full-width header */}
-      <div
-        className="flex items-center justify-center py-8"
-        style={{ backgroundColor: colors.blue }}
-      >
-        <RoleIcon role={role} size={120} className="text-white opacity-90" />
-      </div>
-
-      {/* Content */}
+    <Card accent="red" className="overflow-hidden">
       <div className="p-6 flex flex-col gap-4">
 
         {/* Beta badge or Witness-confirmed indicator */}
@@ -49,20 +39,23 @@ export default function RoleResult({ result, definitive = false }) {
           </Badge>
         )}
 
-        {/* Role name */}
-        <div>
-          <p
-            className="text-xs font-semibold uppercase tracking-widest mb-1"
-            style={{ color: colors.textMuted }}
-          >
-            {t('fqResults.roleSection')}
-          </p>
-          <h3
-            className="text-2xl font-bold"
-            style={{ color: colors.textPrimary }}
-          >
-            {t(`roles.${role}.name`)}
-          </h3>
+        {/* Role icon + name */}
+        <div className="flex items-center gap-4">
+          <RoleIcon role={role} size={56} style={{ color: colors.red }} className="shrink-0" />
+          <div>
+            <p
+              className="text-xs font-semibold uppercase tracking-widest mb-1"
+              style={{ color: colors.textMuted }}
+            >
+              {t('fqResults.roleSection')}
+            </p>
+            <h3
+              className="text-2xl font-bold"
+              style={{ color: colors.textPrimary }}
+            >
+              {t(`roles.${role}.name`)}
+            </h3>
+          </div>
         </div>
 
         {/* Essence */}

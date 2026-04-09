@@ -124,46 +124,39 @@ export default function FirstQuarterResultsPage() {
         {/* ── Section 1: Role (top, full width) ── */}
         <section>
           <Card accent="red" className="overflow-hidden">
-            <div className="flex flex-row">
-              {/* Left: content */}
-              <div className="flex-1 p-6 sm:p-8 flex flex-col gap-4">
-                <Badge variant="beta" className="self-start">
-                  {t('roles.beta_label')}
-                </Badge>
+            <div className="p-6 sm:p-8 flex flex-col gap-4">
+              <Badge variant="beta" className="self-start">
+                {t('roles.beta_label')}
+              </Badge>
+              <div className="flex items-center gap-4">
+                <RoleIcon role={roleResult.role} size={56} style={{ color: colors.red }} className="shrink-0" />
                 <h2
                   className="text-4xl sm:text-5xl font-bold leading-tight"
                   style={{ color: colors.textPrimary }}
                 >
                   {t(`roles.${roleResult.role}.name`)}
                 </h2>
-                <p className="text-base leading-relaxed" style={{ color: colors.textMuted }}>
-                  {t(`roles.${roleResult.role}.essence`)}
-                </p>
-                {roleResult.arc.length > 0 && (
-                  <div className="flex flex-col gap-2">
-                    <p
-                      className="text-xs font-semibold uppercase tracking-widest"
-                      style={{ color: colors.textMuted }}
-                    >
-                      {t('roles.arc_label')}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {roleResult.arc.map(r => (
-                        <Badge key={r} variant="default">
-                          {t(`roles.${r}.name`)}
-                        </Badge>
-                      ))}
-                    </div>
+              </div>
+              <p className="text-base leading-relaxed" style={{ color: colors.textMuted }}>
+                {t(`roles.${roleResult.role}.essence`)}
+              </p>
+              {roleResult.arc.length > 0 && (
+                <div className="flex flex-col gap-2">
+                  <p
+                    className="text-xs font-semibold uppercase tracking-widest"
+                    style={{ color: colors.textMuted }}
+                  >
+                    {t('roles.arc_label')}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {roleResult.arc.map(r => (
+                      <Badge key={r} variant="default">
+                        {t(`roles.${r}.name`)}
+                      </Badge>
+                    ))}
                   </div>
-                )}
-              </div>
-              {/* Right: role icon on brand-blue background, flush to card edge */}
-              <div
-                className="w-[120px] sm:w-[160px] shrink-0 flex items-center justify-center"
-                style={{ backgroundColor: colors.blue }}
-              >
-                <RoleIcon role={roleResult.role} size={96} className="text-white opacity-90" />
-              </div>
+                </div>
+              )}
             </div>
           </Card>
         </section>

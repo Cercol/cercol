@@ -375,6 +375,30 @@ in the probability bar list.
   added before the translated name. `r` (the role key R01–R12) was already the
   loop variable from `Object.entries(probabilities)`.
 
+### Phase 10.15 — Role card icon repositioning + Cèrcol circle radar ✅ COMPLETE
+Two visual upgrades to unify the brand identity across results pages.
+
+**Change 1 — Role card icon:**
+- Removed the two-column flex layout and the right blue-background column on all role cards.
+- `RoleIcon` (size 56) moved to the left of the role name, inline in a `flex items-center gap-4` row.
+- Icon colour: `colors.red` (matching the 3px left accent border of the Card).
+- The Card accent and the icon now form a coherent red visual system.
+
+**Files modified:**
+- `src/pages/FirstQuarterResultsPage.jsx` — two-column layout → single-column; RoleIcon size 56, `style={{ color: colors.red }}`
+- `src/pages/FullMoonResultsPage.jsx` — same
+- `src/pages/FullMoonReportPage.jsx` — same (role variable: `combinedRole.role`; conditional definitive/beta badge preserved)
+- `src/components/RoleResult.jsx` — full-width blue header removed; RoleIcon (size 56, red) placed inline with role name; `Card accent="red"` added
+
+**Change 2 — Radar chart → Cèrcol circle:**
+- Grid rings: `PolarGrid gridType="circle"` — circular rings replace pentagon.
+- Shape: custom `OrganicRadarShape` component renders a smooth closed cubic-Bézier path via `smoothClosedPath()` (Catmull-Rom → cubic Bézier, tension 0.4) instead of Recharts' straight-line polygon.
+- Fill: SVG `<radialGradient gradientUnits="userSpaceOnUse">` centred at chart origin; lighter at centre (stopOpacity 0.06), darker at edges (stopOpacity 0.30) — moon-like lunar disc effect.
+- Stroke colour: `colors.red` (was `colors.primary` blue).
+
+**Files modified:**
+- `src/components/RadarChart.jsx` — `smoothClosedPath()` helper added; `OrganicRadarShape` component added; `PolarGrid gridType="circle"`; `Radar shape={<OrganicRadarShape />} stroke={colors.red}`
+
 ### Phase 11 — Multilingual support
 Translation management via Tolgee or equivalent.
 EN + CA already complete; this phase adds languages beyond Valencian.
