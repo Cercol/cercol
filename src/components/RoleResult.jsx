@@ -21,27 +21,33 @@ export default function RoleResult({ result, definitive = false }) {
 
   return (
     <Card accent="red" className="overflow-hidden">
-      <div className="p-6 flex flex-col gap-4">
+      <div className="flex flex-row">
 
-        {/* Beta badge or Witness-confirmed indicator */}
-        {definitive ? (
-          <div className="flex flex-col gap-1">
-            <Badge className="self-start bg-[#e8eef8] text-[#0047ba]">
-              {t('witnessResults.definitiveLabel')}
+        {/* Left: icon column — full card height, icon centred */}
+        <div className="w-24 shrink-0 flex items-center justify-center">
+          <RoleIcon role={role} size={64} style={{ color: colors.red }} />
+        </div>
+
+        {/* Right: content */}
+        <div className="flex-1 p-6 flex flex-col gap-4">
+
+          {/* Beta badge or Witness-confirmed indicator */}
+          {definitive ? (
+            <div className="flex flex-col gap-1">
+              <Badge className="self-start bg-[#e8eef8] text-[#0047ba]">
+                {t('witnessResults.definitiveLabel')}
+              </Badge>
+              <p className="text-xs leading-relaxed" style={{ color: colors.textMuted }}>
+                {t('witnessResults.definitiveNote')}
+              </p>
+            </div>
+          ) : (
+            <Badge variant="default" className="self-start">
+              {t('roles.beta_label')}
             </Badge>
-            <p className="text-xs leading-relaxed" style={{ color: colors.textMuted }}>
-              {t('witnessResults.definitiveNote')}
-            </p>
-          </div>
-        ) : (
-          <Badge variant="default" className="self-start">
-            {t('roles.beta_label')}
-          </Badge>
-        )}
+          )}
 
-        {/* Role icon + name */}
-        <div className="flex items-center gap-4">
-          <RoleIcon role={role} size={56} style={{ color: colors.red }} className="shrink-0" />
+          {/* Role name */}
           <div>
             <p
               className="text-xs font-semibold uppercase tracking-widest mb-1"
@@ -56,32 +62,32 @@ export default function RoleResult({ result, definitive = false }) {
               {t(`roles.${role}.name`)}
             </h3>
           </div>
-        </div>
 
-        {/* Essence */}
-        <p className="text-sm leading-relaxed" style={{ color: colors.textMuted }}>
-          {t(`roles.${role}.essence`)}
-        </p>
+          {/* Essence */}
+          <p className="text-sm leading-relaxed" style={{ color: colors.textMuted }}>
+            {t(`roles.${role}.essence`)}
+          </p>
 
-        {/* Personal arc — secondary roles */}
-        {arc.length > 0 && (
-          <div>
-            <p
-              className="text-xs font-semibold uppercase tracking-widest mb-2"
-              style={{ color: colors.textMuted }}
-            >
-              {t('roles.arc_label')}
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {arc.map(r => (
-                <Badge key={r} variant="default">
-                  {t(`roles.${r}.name`)}
-                </Badge>
-              ))}
+          {/* Personal arc — secondary roles */}
+          {arc.length > 0 && (
+            <div>
+              <p
+                className="text-xs font-semibold uppercase tracking-widest mb-2"
+                style={{ color: colors.textMuted }}
+              >
+                {t('roles.arc_label')}
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {arc.map(r => (
+                  <Badge key={r} variant="default">
+                    {t(`roles.${r}.name`)}
+                  </Badge>
+                ))}
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
+        </div>
       </div>
     </Card>
   )

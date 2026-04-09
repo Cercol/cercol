@@ -56,9 +56,9 @@ function OrganicRadarShape({ points, cx, cy, outerRadius, stroke, strokeWidth })
           cy={cy}
           r={outerRadius}
         >
-          <stop offset="0%"   stopColor={colors.red} stopOpacity={0.06} />
-          <stop offset="55%"  stopColor={colors.red} stopOpacity={0.16} />
-          <stop offset="100%" stopColor={colors.red} stopOpacity={0.30} />
+          <stop offset="0%"   stopColor={colors.red} stopOpacity={0.18} />
+          <stop offset="55%"  stopColor={colors.red} stopOpacity={0.38} />
+          <stop offset="100%" stopColor={colors.red} stopOpacity={0.58} />
         </radialGradient>
       </defs>
       <path
