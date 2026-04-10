@@ -50,9 +50,24 @@ This applies to every phase, without exception.
 ## i18n
 User-facing strings live in src/locales/{lang}.json (react-i18next).
 One file per language, key-value format.
-Test item text (questions) uses { en, ca } structure inside data files.
+Test item text (questions) uses { en, ca, es, ... } structure inside data files.
 Future: migrate to a spreadsheet or translation management tool
 (Tolgee, Localazy, or Google Sheets export) when languages > 3.
+
+## Adding new languages
+
+When adding a new language to Cèrcol:
+1. Create `src/locales/{lang}.json` with full UI string translations.
+2. Add the `{lang}` key to every item's `text` object in `src/data/new-moon.js`,
+   `src/data/first-quarter.js`, and `src/data/full-moon.js`.
+3. The translation of test items must follow the methodology documented in SCIENCE.md:
+   direct translation from English, psychological meaning preserved exactly, reviewed
+   by a human with knowledge of both the source language and the psychometric context.
+   NEVER use machine translation without human review for test items — item wording
+   has direct effects on what construct is being measured.
+4. Document the translation methodology in SCIENCE.md.
+5. Update `src/i18n.js` to import the new locale and add browser detection.
+6. Update `src/components/LanguageToggle.jsx` to include the new language in the cycle.
 
 ## File structure
 src/

@@ -268,6 +268,39 @@ the project.
 
 ---
 
+## Translation methodology
+
+### Spanish (ES) test items
+
+The Spanish translation of IPIP items used in Cèrcol follows a direct translation
+approach from the English source items. IPIP items are in the public domain
+(Goldberg et al. 2006), and Spanish adaptations are supported by published precedent.
+
+**Source language:** English (ipip.ori.org public domain corpus)
+
+**Translation approach:** Direct translation by a human translator with knowledge of
+both the source language and the psychometric context of each item. The translation
+preserves the precise psychological meaning of each item without softening, strengthening,
+or reframing the construct being measured. Neutral international Spanish is used — neither
+localised regionalisms nor formal register that would increase perceived test-taking
+difficulty. Gender-inclusive forms (e.g. the slash notation -o/a) are used where the
+source item's meaning requires it.
+
+**Validation precedent:** Cupani, M., de Minzi, M. C. R., Pérez, E. R., & Pjurisdición, M. A. (2014).
+An assessment of a short measure of personality: The IPIP-NEO-60 in an Argentine sample.
+*Psychological Reports, 114*(3), 777–797. This study validated an Argentine Spanish adaptation
+of the IPIP-NEO, establishing that the five-factor structure replicates in Spanish-speaking
+populations. Cèrcol's translation follows the same item-level translation methodology.
+This is not a formally validated translation — it is a principled open-source translation
+of public-domain items, documented as such.
+
+**Ongoing correction:** The translation feedback system (visible on all instrument pages)
+allows Spanish-speaking users to suggest corrections to individual items. Feedback is
+stored in Supabase with the `language` field set to `'es'` and reviewed by maintainers
+before any item text is updated in the source files.
+
+---
+
 ## References
 
 - Barrick, M. R., & Mount, M. K. (1991). The Big Five personality dimensions

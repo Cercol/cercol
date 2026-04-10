@@ -18,6 +18,7 @@ export const TIPI_ITEMS = [
     text: {
       en: 'Extraverted, enthusiastic.',
       ca: 'Extravertit/da, entusiasta.',
+      es: 'Extravertido/a, entusiasta.',
     },
     dimension: 'extraversion',
     reverse: false,
@@ -27,6 +28,7 @@ export const TIPI_ITEMS = [
     text: {
       en: 'Critical, quarrelsome.',
       ca: 'Crític/a, conflictiu/va.',
+      es: 'Crítico/a, pendenciero/a.',
     },
     dimension: 'agreeableness',
     reverse: true,
@@ -36,6 +38,7 @@ export const TIPI_ITEMS = [
     text: {
       en: 'Dependable, self-disciplined.',
       ca: 'De confiança, autodisciplinat/da.',
+      es: 'Responsable, autodisciplinado/a.',
     },
     dimension: 'conscientiousness',
     reverse: false,
@@ -45,6 +48,7 @@ export const TIPI_ITEMS = [
     text: {
       en: 'Anxious, easily upset.',
       ca: "Ansiós/a, que s'altera fàcilment.",
+      es: 'Ansioso/a, que se altera fácilmente.',
     },
     dimension: 'neuroticism',
     reverse: false,
@@ -54,6 +58,7 @@ export const TIPI_ITEMS = [
     text: {
       en: 'Open to new experiences, complex.',
       ca: 'Obert/a a noves experiències, complex/a.',
+      es: 'Abierto/a a nuevas experiencias, complejo/a.',
     },
     dimension: 'openness',
     reverse: false,
@@ -63,6 +68,7 @@ export const TIPI_ITEMS = [
     text: {
       en: 'Reserved, quiet.',
       ca: 'Reservat/da, tranquil·la.',
+      es: 'Reservado/a, tranquilo/a.',
     },
     dimension: 'extraversion',
     reverse: true,
@@ -72,6 +78,7 @@ export const TIPI_ITEMS = [
     text: {
       en: 'Sympathetic, warm.',
       ca: 'Empàtic/a, càlid/a.',
+      es: 'Empático/a, cálido/a.',
     },
     dimension: 'agreeableness',
     reverse: false,
@@ -81,6 +88,7 @@ export const TIPI_ITEMS = [
     text: {
       en: 'Disorganized, careless.',
       ca: 'Desorganitzat/da, descurat/da.',
+      es: 'Desorganizado/a, descuidado/a.',
     },
     dimension: 'conscientiousness',
     reverse: true,
@@ -90,6 +98,7 @@ export const TIPI_ITEMS = [
     text: {
       en: 'Calm, emotionally stable.',
       ca: 'Calmat/da, emocionalment estable.',
+      es: 'Tranquilo/a, emocionalmente estable.',
     },
     dimension: 'neuroticism',
     reverse: true,
@@ -99,6 +108,7 @@ export const TIPI_ITEMS = [
     text: {
       en: 'Conventional, uncreative.',
       ca: 'Convencional, poc creatiu/va.',
+      es: 'Convencional, poco creativo/a.',
     },
     dimension: 'openness',
     reverse: true,

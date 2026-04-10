@@ -564,9 +564,24 @@ session creation.
 Its contents are all `VITE_*` variables (intentionally public, embedded in the JS bundle), so
 there is no credential exposure, but the file should be added to `.gitignore`.
 
-### Phase 11 — Multilingual support
-Translation management via Tolgee or equivalent.
-EN + CA already complete; this phase adds languages beyond Valencian.
+### Phase 11 — Spanish (ES) language support ✅ COMPLETE
+
+Added Spanish as the third language across the full stack:
+
+- `src/locales/es.json` — full Spanish UI translation of all keys (neutral international Spanish)
+- `src/data/new-moon.js` — `es` key added to all 10 TIPI items
+- `src/data/first-quarter.js` — `es` key added to all 60 IPIP-NEO-60 items
+- `src/data/full-moon.js` — `es` key added to all 120 IPIP-NEO-120 items
+- `src/components/LanguageToggle.jsx` — binary EN↔CA extended to three-way cycle EN→CA→ES→EN
+- `src/i18n.js` — ES locale imported; browser `es*` detection added
+- `SCIENCE.md` — "Translation methodology" subsection added before References
+- `CLAUDE.md` — "Adding new languages" guidelines added
+- Translation feedback system (`translationFeedback.js`) works for ES without changes
+
+Translation methodology: direct translation from English source items, psychological
+meaning preserved exactly. See SCIENCE.md for full methodology and validation precedent
+(Cupani et al. 2014). Translation feedback available to Spanish-speaking users via the
+suggestion panel on all instrument pages.
 
 ### Phase 12 — Living model
 - GitHub Actions job every 28 days: update NORM_MEAN/NORM_SD at N≥200
