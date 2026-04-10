@@ -97,7 +97,40 @@
     "narrative": {
       "moveHeading": "Sådan bevæger din gruppe sig",
       "watchOutHeading": "Vær opmærksom på",
-      "helpHeading": "Hvad der ville hjælpe"
+      "helpHeading": "Hvad der ville hjælpe",
+      "move": {
+        "high_p": "Dit team har en stærk udadvendt tilstedeværelse — synligt, direkte og hurtigt til at bringe ideer frem. Møder kører med energi. Eksterne interessenter bemærker denne gruppe.",
+        "low_p":  "Dit team arbejder med stille dybde. Ideer udvikler sig langsomt og omhyggeligt. Gruppen har tendens til at handle ud fra refleksion frem for impuls.",
+        "high_b": "Sammenhæng er dette teams fundament. Folk lytter godt, støtter hinanden og har tendens til at bevæge sig konstruktivt gennem uenigheder. Tillid er høj.",
+        "low_b":  "Dit team er direkte, opgaveorienteret og effektivt. Folk siger, hvad de mener. Social friktion accepteres som en del af ærligt arbejde.",
+        "high_v": "Innovation er gruppens naturlige tilstand. Kreativ udforskning og nye ideer kommer let. Teamet er komfortabelt med tvetydighed.",
+        "low_v":  "Dit team er pragmatisk og udførelsesfokuseret. Konkrete planer, klare skridt og målbart fremskridt er denne gruppes sprog.",
+        "low_c":  "Dit team er fleksibelt og tilpasningsdygtigt — men kan have svært ved at opretholde momentum eller koordinere ejerskab uden bevidst struktur.",
+        "high_n": "Følelsesmæssig reaktivitet er til stede i denne gruppe. Teamet mærker tingene intenst og kan bære stress synligt.",
+        "balanced": "Dit team viser et veldistribueret profil på tværs af alle dimensioner. Ingen enkelt tendens dominerer, hvilket skaber alsidighed — og kræver aktiv koordinering for at forblive sammenhængende."
+      },
+      "watchOut": {
+        "high_p": "Teams med høj tilstedeværelse risikerer at dominere diskussionen. Mere stille medlemmer kan tilbageholde ideer. Teamet kan virke overvældende på mindre vokale samarbejdspartnere.",
+        "low_p":  "Teams med lav tilstedeværelse kan være usynlige for den bredere organisation. Konflikter kan forblive under overfladen længere end sundt.",
+        "high_b": "Teams med højt bånd risikerer overenighed og harmoni-bias. Svære sandheder kan blødgøres eller undgås. Grupmetænkning er en reel risiko.",
+        "low_b":  "Teams med lavt bånd kan lide under interpersonel friktion og fejlfortolke direkthed som fjendtlighed. At opbygge tillid kan kræve eksplicit indsats.",
+        "high_v": "Visionstunge teams kæmper ofte med opfølgning. Ideer multiplicerer sig hurtigere end de færdiggøres. Udførelsesstrukturer kræver bevidst vedligeholdelse.",
+        "low_v":  "Teams med lav vision kan misse strategiske muligheder eller have svært ved at tilpasse sig, når deres nuværende tilgang holder op med at virke.",
+        "low_c":  "Teams med lav disciplin har tendens til at efterlade ejerskab uklart og tidsfrister løse. Risikoen er ambition uden færdiggørelse.",
+        "high_n": "Forhøjet stressreaktivitet kan forstærke interpersonelle spændinger. Under pres kan teamets humør destabilisere, inden problemerne løses.",
+        "balanced": "Ingen enkelt dimension markerer stærkt. Hold øje med diffus ansvarlighed — alsidige teams antager sommetider, at nogen anden ejer en opgave."
+      },
+      "help": {
+        "high_p": "Skab bevidst plads til mindre synlige medlemmer. Rotér hvem der åbner diskussionen. Giv stille bidragsydere ejerskab over første udkast på vigtige beslutninger.",
+        "low_p":  "Investér i synlighed: udpeg nogen til at kommunikere teamets arbejde udadtil. Opret eksplicitte kanaler til at bringe små frustrationer frem, inden de hober sig op.",
+        "high_b": "Øv struktureret uenighed: tildel djævelens advokat-roller i beslutningstagning. Spørg 'hvad ville gøre dette til en dårlig idé?' inden I forpligter jer.",
+        "low_b":  "Investér i relationel infrastruktur: regelmæssige ikke-opgavebaserede check-ins, fælles kontekstsætning og eksplicit påskønnelse af bidrag.",
+        "high_v": "Forankr kreative sessioner til leverancer. For hver udforsket idé, tildel én enkelt ejer og et konkret næste skridt. Reducer idébackloggen regelmæssigt.",
+        "low_v":  "Planlæg tid til horisontscanning: hvad ændrer sig i jeres miljø? Hvilke tilgange er I måske ved at overstole på?",
+        "low_c":  "Indfør lette ejerskabsritualer: navngiv én person per resultat, én deadline per beslutning. Gennemgå forpligtelser ugentligt.",
+        "high_n": "Investér i stressforståelse som team. Navngiv hvornår gruppen er reaktiv versus reflektiv. Opret lavrisiko-kanaler til at ventilere bekymringer, inden de eskalerer.",
+        "balanced": "Med et afbalanceret profil er risikoen koordinationsomkostninger. Vær eksplicit om beslutningsrettigheder, kommunikationsnormer og hvem der leder hvad — antag ikke tilpasning."
+      }
     },
     "shareHeading": "Del",
     "copyLink": "Kopiér link",

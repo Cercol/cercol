@@ -97,7 +97,40 @@
     "narrative": {
       "moveHeading": "Wie sich deine Gruppe bewegt",
       "watchOutHeading": "Achtung",
-      "helpHeading": "Was helfen würde"
+      "helpHeading": "Was helfen würde",
+      "move": {
+        "high_p": "Dein Team hat eine starke äußere Präsenz — sichtbar, direkt und schnell beim Aufwerfen von Ideen. Meetings verlaufen mit Energie. Externe Stakeholder bemerken diese Gruppe.",
+        "low_p":  "Dein Team arbeitet mit stiller Tiefe. Ideen entwickeln sich langsam und sorgfältig. Die Gruppe neigt dazu, aus Reflexion statt aus Impuls heraus zu handeln.",
+        "high_b": "Kohäsion ist das Fundament dieses Teams. Menschen hören gut zu, unterstützen sich gegenseitig und tendieren dazu, Meinungsverschiedenheiten konstruktiv zu durchlaufen. Vertrauen ist hoch.",
+        "low_b":  "Dein Team ist direkt, aufgabenorientiert und effizient. Menschen sagen, was sie meinen. Soziale Reibung wird als Teil ehrlicher Arbeit akzeptiert.",
+        "high_v": "Innovation ist der natürliche Modus der Gruppe. Kreative Erkundung und neue Ideen kommen leicht. Das Team fühlt sich in Mehrdeutigkeit wohl.",
+        "low_v":  "Dein Team ist pragmatisch und ausführungsorientiert. Konkrete Pläne, klare Schritte und messbarer Fortschritt sind die Sprache dieser Gruppe.",
+        "low_c":  "Dein Team ist flexibel und anpassungsfähig — kann aber Schwierigkeiten haben, Schwung zu erhalten oder Verantwortung ohne bewusste Struktur zu koordinieren.",
+        "high_n": "Emotionale Reaktivität ist in dieser Gruppe präsent. Das Team fühlt Dinge intensiv und kann Stress sichtbar tragen.",
+        "balanced": "Dein Team zeigt ein gut verteiltes Profil über alle Dimensionen. Keine einzelne Tendenz dominiert, was Vielseitigkeit schafft — und aktive Koordination erfordert, um kohärent zu bleiben."
+      },
+      "watchOut": {
+        "high_p": "Teams mit hoher Präsenz riskieren, die Diskussion zu dominieren. Stillere Mitglieder könnten Ideen zurückhalten. Das Team kann auf weniger stimmstarke Mitarbeiter überwältigend wirken.",
+        "low_p":  "Teams mit geringer Präsenz können für die Organisation unsichtbar sein. Konflikte könnten länger unter der Oberfläche bleiben als gesund ist.",
+        "high_b": "Teams mit hohem Band riskieren Übereinigung und Harmonieverzerrung. Schwierige Wahrheiten könnten abgemildert oder vermieden werden. Gruppendenken ist ein echtes Risiko.",
+        "low_b":  "Teams mit geringem Band können unter interpersoneller Reibung leiden und Direktheit als Feindseligkeit missverstehen. Vertrauen aufzubauen erfordert möglicherweise explizite Anstrengung.",
+        "high_v": "Visionslastige Teams kämpfen oft mit der Umsetzung. Ideen vermehren sich schneller als sie abgeschlossen werden. Ausführungsstrukturen brauchen bewusste Pflege.",
+        "low_v":  "Teams mit geringer Vision können strategische Chancen verpassen oder Schwierigkeiten haben, sich anzupassen, wenn ihr aktueller Ansatz nicht mehr funktioniert.",
+        "low_c":  "Teams mit geringer Disziplin lassen Verantwortung oft unklar und Zeitpläne weich. Das Risiko ist Ehrgeiz ohne Vollendung.",
+        "high_n": "Erhöhte Stressreaktivität kann interpersonelle Spannungen verstärken. Unter Druck kann die Stimmung des Teams destabilisieren, bevor Probleme gelöst werden.",
+        "balanced": "Keine einzelne Dimension zeigt stark aus. Aufpassen auf diffuse Verantwortlichkeit — vielseitige Teams nehmen manchmal an, jemand anderes kümmere sich um eine Aufgabe."
+      },
+      "help": {
+        "high_p": "Schafft bewusst Raum für weniger sichtbare Mitglieder. Rotiert, wer die Diskussion eröffnet. Gebt stillen Beitragenden die Erstautor-Verantwortung bei Schlüsselentscheidungen.",
+        "low_p":  "Investiert in Sichtbarkeit: Benennt jemanden, der die Arbeit des Teams nach außen kommuniziert. Schafft explizite Kanäle zum Ansprechen kleiner Frustrationen, bevor sie sich ansammeln.",
+        "high_b": "Übt strukturierten Widerspruch: Weist in Entscheidungsprozessen Rollen des Advocatus Diaboli zu. Fragt 'Was würde das zu einer schlechten Idee machen?' bevor ihr euch verpflichtet.",
+        "low_b":  "Investiert in relationale Infrastruktur: regelmäßige aufgabenfreie Check-ins, gemeinsamen Kontext schaffen und explizite Wertschätzung von Beiträgen.",
+        "high_v": "Verankert kreative Sitzungen an Lieferobjekte. Für jede erkundete Idee einen einzigen Verantwortlichen und einen konkreten nächsten Schritt zuweisen. Den Ideen-Rückstand regelmäßig reduzieren.",
+        "low_v":  "Plant Zeit für Horizontbeobachtung ein: Was ändert sich in eurem Umfeld? Welche Ansätze werdet ihr möglicherweise überstrapazieren?",
+        "low_c":  "Übernehmt leichte Verantwortungsrituale: eine Person pro Ergebnis benennen, ein Fälligkeitsdatum pro Entscheidung. Verpflichtungen wöchentlich überprüfen.",
+        "high_n": "Investiert als Team in Stresskompetenz. Benennt, wann die Gruppe reaktiv versus reflektiv ist. Schafft risikoarme Kanäle zum Ablassen von Bedenken, bevor sie eskalieren.",
+        "balanced": "Bei einem ausgewogenen Profil ist das Risiko der Koordinationsaufwand. Seid explizit über Entscheidungsrechte, Kommunikationsnormen und wer was leitet — nehmt keine Ausrichtung an."
+      }
     },
     "shareHeading": "Teilen",
     "copyLink": "Link kopieren",

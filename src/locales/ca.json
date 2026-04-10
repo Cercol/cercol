@@ -97,7 +97,40 @@
     "narrative": {
       "moveHeading": "Com es mou el teu grup",
       "watchOutHeading": "Atenció",
-      "helpHeading": "Què ajudaria"
+      "helpHeading": "Què ajudaria",
+      "move": {
+        "high_p": "El teu equip té una presència externa forta — visible, directe i ràpid per treure idees a la superfície. Les reunions avancen amb energia. Els col·laboradors externs noten aquest grup.",
+        "low_p":  "El teu equip opera amb una profunditat silenciosa. Les idees es desenvolupen amb calma i cura. El grup tendeix a actuar des de la reflexió, no de l'impuls.",
+        "high_b": "La cohesió és el fonament d'aquest equip. La gent s'escolta bé, es recolza mútuament i tendeix a travessar els desacords de manera constructiva. La confiança és alta.",
+        "low_b":  "El teu equip és directe, centrat en les tasques i eficient. La gent diu el que pensa. La fricció social s'accepta com a part del treball honest.",
+        "high_v": "La innovació és el mode natural del grup. L'exploració creativa i les idees noves surten amb facilitat. L'equip es troba còmode en l'ambigüitat.",
+        "low_v":  "El teu equip és pragmàtic i centrat en l'execució. Plans concrets, passos clars i progrés mesurable són el llenguatge d'aquest grup.",
+        "low_c":  "El teu equip és flexible i adaptatiu — però pot tenir dificultats per mantenir l'impuls o coordinar la responsabilitat sense estructura deliberada.",
+        "high_n": "La reactivitat emocional és present en aquest grup. L'equip sent les coses amb intensitat i pot mostrar l'estrès de manera visible.",
+        "balanced": "El teu equip mostra un perfil ben distribuït a totes les dimensions. Cap tendència única domina, cosa que crea versatilitat — i requereix coordinació activa per mantenir la coherència."
+      },
+      "watchOut": {
+        "high_p": "Els equips amb alta Presència arrisquen dominar la discussió. Els membres més discrets poden retenir idees. L'equip pot semblar aclaparador per als col·laboradors menys vocals.",
+        "low_p":  "Els equips amb baixa Presència poden ser invisibles per a l'organització. El conflicte pot quedar per davall de la superfície més temps del que és saludable.",
+        "high_b": "Els equips d'alt Vincle arrisquen l'excés d'acord i el biaix d'harmonia. Les veritats difícils es poden suavitzar o evitar. El pensament de grup és un risc real.",
+        "low_b":  "Els equips de baix Vincle poden patir friccions interpersonals i malinterpretar la directesa com a hostilitat. Construir confiança pot requerir un esforç explícit.",
+        "high_v": "Els equips amb molta Visió sovint lluiten amb el seguiment. Les idees es multipliquen més ràpid que no es completen. Les estructures d'execució necessiten manteniment deliberat.",
+        "low_v":  "Els equips amb poca Visió poden perdre's oportunitats estratègiques o tenir dificultats per adaptar-se quan el seu enfocament actual deixa de funcionar.",
+        "low_c":  "Els equips amb baixa Disciplina tendeixen a deixar la responsabilitat poc clara i els terminis poc definits. El risc és ambició sense finalització.",
+        "high_n": "Una elevada reactivitat a l'estrès pot amplificar la tensió interpersonal. Sota pressió, l'estat d'ànim de l'equip pot desestabilitzar-se abans de resoldre els problemes.",
+        "balanced": "Cap dimensió no destaca especialment. Vigileu la responsabilitat difusa — els equips versàtils de vegades assumeixen que algú altre s'encarrega d'una tasca."
+      },
+      "help": {
+        "high_p": "Creeu deliberadament espai per als membres menys visibles. Rotat qui obre la discussió. Doneu als contribuïdors silenciosos la propietat del primer esborrany en les decisions clau.",
+        "low_p":  "Invertiu en visibilitat: nomeneu algú per comunicar el treball de l'equip a l'exterior. Creeu canals explícits per treure a la superfície les petites frustracions abans que s'acumulin.",
+        "high_b": "Practiqueu el desacord estructurat: assigneu rols d'advocat del diable en la presa de decisions. Pregunteu 'Què faria que açò fos una mala idea?' abans de comprometre-vos.",
+        "low_b":  "Invertiu en infraestructura relacional: check-ins regulars sense tasques, establiment de context compartit i apreciació explícita de les contribucions.",
+        "high_v": "Ancorau les sessions creatives als productes lliurables. Per a cada idea explorada, assigneu un únic responsable i un pas concret. Reduïu el backlog d'idees regularment.",
+        "low_v":  "Programeu temps per explorar l'horitzó: Què canvia en el vostre entorn? Quins enfocaments potser esteu fent servir en excés?",
+        "low_c":  "Adopteu rituals lleugers de responsabilitat: nomeneu una persona per resultat, una data límit per decisió. Reviseu els compromisos setmanalment.",
+        "high_n": "Invertiu en l'alfabetització de l'estrès com a equip. Nomeneu quan el grup és reactiu versus reflexiu. Creeu canals de baix risc per ventilar preocupacions abans que s'escalen.",
+        "balanced": "Amb un perfil equilibrat, el risc és la sobrecàrrega de coordinació. Sigueu explícits sobre els drets de decisió, les normes de comunicació i qui lidera cada cosa — no assumiu l'alineació."
+      }
     },
     "shareHeading": "Compartir",
     "copyLink": "Copiar l'enllaç",

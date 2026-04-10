@@ -742,6 +742,26 @@ per-dimension analysis for all 5 dimensions:
 **i18n:** `lastQuarter.balance.*` object added to all 6 locale files:
 `topContributor`, `compensates`, `suggestRole`, `suggestRoles`, and `notes.*` per dimension/state.
 
+### Phase 13.4 — Last Quarter report: compact layout + fixes ✅ COMPLETE
+
+**Narrative translations:** all 27 narrative text keys (`move/*`, `watchOut/*`, `help/*`) added
+to all 5 non-English locale files (CA, ES, FR, DE, DA). Previously only the section headings
+were translated; the full paragraph text fell back to EN.
+
+**Compact layout for print:** significant whitespace reductions across the page:
+- Global section gap: `gap-8` → `gap-4`; card padding: `p-6` → `p-4`
+- Member rows: `py-3` → `py-1.5`; icon sizes reduced (30→26px primary, 20→18px arc1, 15→13px arc2)
+- Dimension scores: changed from 5 stacked rows to a compact 2-column grid (3+2), thinner bar (h-1.5→h-1)
+- Balance analysis: single-line per dimension (icon + name + pill + top contributor); descriptive note
+  shown only when tilted/caution, hidden when balanced to save space
+- Narrative: `gap-5` → `gap-3`; paragraph font size `text-sm` → `text-xs`
+- Share section hidden on print via `print:hidden`
+- Print stylesheet in `index.css`: `@page { margin: 1cm }`, `font-size: 11px`, nav hidden, shadows removed
+
+**Dev z-score logging:** `import.meta.env.DEV` guard logs group mean z-scores per dimension and
+their computed balance flags to the browser console. Helps verify the balance classification is
+working correctly in development.
+
 ### Phase 13 — Living model
 - GitHub Actions job every 28 days: update NORM_MEAN/NORM_SD at N≥200
 - At N≥300: k-means (k=12) in 5D; update centroids if divergence is systematic

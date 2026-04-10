@@ -97,7 +97,40 @@
     "narrative": {
       "moveHeading": "Comment votre groupe fonctionne",
       "watchOutHeading": "Points de vigilance",
-      "helpHeading": "Ce qui aiderait"
+      "helpHeading": "Ce qui aiderait",
+      "move": {
+        "high_p": "Votre équipe a une présence externe forte — visible, directe et rapide pour faire émerger des idées. Les réunions avancent avec énergie. Les parties prenantes externes remarquent ce groupe.",
+        "low_p":  "Votre équipe fonctionne avec une profondeur silencieuse. Les idées se développent lentement et avec soin. Le groupe tend à agir par réflexion plutôt que par impulsion.",
+        "high_b": "La cohésion est le fondement de cette équipe. Les personnes s'écoutent bien, se soutiennent mutuellement et traversent les désaccords de manière constructive. La confiance est élevée.",
+        "low_b":  "Votre équipe est directe, orientée tâches et efficace. Les gens disent ce qu'ils pensent. La friction sociale est acceptée comme une partie du travail honnête.",
+        "high_v": "L'innovation est le mode naturel du groupe. L'exploration créative et les idées nouvelles viennent facilement. L'équipe est à l'aise dans l'ambiguïté.",
+        "low_v":  "Votre équipe est pragmatique et orientée vers l'exécution. Les plans concrets, les étapes claires et le progrès mesurable sont le langage de ce groupe.",
+        "low_c":  "Votre équipe est flexible et adaptable — mais peut avoir du mal à maintenir l'élan ou à coordonner les responsabilités sans structure délibérée.",
+        "high_n": "La réactivité émotionnelle est présente dans ce groupe. L'équipe ressent les choses intensément et peut montrer le stress de manière visible.",
+        "balanced": "Votre équipe présente un profil bien distribué sur toutes les dimensions. Aucune tendance unique ne domine, ce qui crée de la polyvalence — et nécessite une coordination active pour rester cohérent."
+      },
+      "watchOut": {
+        "high_p": "Les équipes à haute Présence risquent de dominer la discussion. Les membres plus discrets peuvent retenir leurs idées. L'équipe peut sembler accablante pour les collaborateurs moins vocaux.",
+        "low_p":  "Les équipes à faible Présence peuvent être invisibles pour l'organisation. Les conflits peuvent rester sous la surface plus longtemps que ce n'est sain.",
+        "high_b": "Les équipes à fort Lien risquent le sur-accord et le biais d'harmonie. Les vérités difficiles peuvent être adoucies ou évitées. La pensée de groupe est un vrai risque.",
+        "low_b":  "Les équipes à faible Lien peuvent souffrir de frictions interpersonnelles et mal interpréter la franchise comme de l'hostilité. Construire la confiance peut nécessiter un effort explicite.",
+        "high_v": "Les équipes à forte Vision peinent souvent à concrétiser. Les idées se multiplient plus vite qu'elles ne se réalisent. Les structures d'exécution nécessitent un entretien délibéré.",
+        "low_v":  "Les équipes à faible Vision peuvent rater des opportunités stratégiques ou avoir du mal à s'adapter quand leur approche actuelle cesse de fonctionner.",
+        "low_c":  "Les équipes à faible Discipline tendent à laisser les responsabilités floues et les délais souples. Le risque est l'ambition sans achèvement.",
+        "high_n": "Une réactivité au stress élevée peut amplifier les tensions interpersonnelles. Sous pression, l'humeur de l'équipe peut se déstabiliser avant que les problèmes soient résolus.",
+        "balanced": "Aucune dimension ne se démarque fortement. Attention à la responsabilité diffuse — les équipes polyvalentes supposent parfois que quelqu'un d'autre s'occupe d'une tâche."
+      },
+      "help": {
+        "high_p": "Créez délibérément de l'espace pour les membres moins visibles. Faites tourner qui ouvre la discussion. Donnez aux contributeurs discrets la propriété du premier brouillon sur les décisions clés.",
+        "low_p":  "Investissez dans la visibilité : nommez quelqu'un pour communiquer le travail de l'équipe à l'extérieur. Créez des canaux explicites pour faire remonter les petites frustrations avant qu'elles s'accumulent.",
+        "high_b": "Pratiquez le désaccord structuré : assignez des rôles d'avocat du diable dans la prise de décision. Demandez 'Qu'est-ce qui ferait que c'est une mauvaise idée ?' avant de s'engager.",
+        "low_b":  "Investissez dans l'infrastructure relationnelle : check-ins réguliers hors tâche, établissement de contexte partagé et appréciation explicite des contributions.",
+        "high_v": "Ancrez les sessions créatives sur des livrables. Pour chaque idée explorée, assignez un seul responsable et une prochaine étape concrète. Réduisez régulièrement le backlog d'idées.",
+        "low_v":  "Planifiez du temps pour l'exploration d'horizon : que change dans votre environnement ? Quelles approches sur-utilisez-vous peut-être ?",
+        "low_c":  "Adoptez des rituels légers de responsabilité : nommez une personne par résultat, une date limite par décision. Révisez les engagements chaque semaine.",
+        "high_n": "Investissez dans la culture du stress en équipe. Nommez quand le groupe est réactif vs réflexif. Créez des canaux à faible enjeu pour ventiler les préoccupations avant qu'elles escaladent.",
+        "balanced": "Avec un profil équilibré, le risque est la surcharge de coordination. Soyez explicites sur les droits de décision, les normes de communication et qui dirige quoi — ne supposez pas l'alignement."
+      }
     },
     "shareHeading": "Partager",
     "copyLink": "Copier le lien",

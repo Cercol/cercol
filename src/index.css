@@ -14,3 +14,12 @@ h1, h2, h3 {
 button, input, textarea, select {
   border-radius: 4px;
 }
+
+/* Print styles — compact single-page layout for Last Quarter report */
+@media print {
+  @page { margin: 1cm; }
+  body  { font-size: 11px; }
+  nav, header { display: none !important; }
+  .print\:hidden { display: none !important; }
+  .shadow-sm { box-shadow: none !important; }
+}

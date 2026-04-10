@@ -97,7 +97,40 @@
     "narrative": {
       "moveHeading": "Cómo se mueve tu grupo",
       "watchOutHeading": "Atención",
-      "helpHeading": "Qué ayudaría"
+      "helpHeading": "Qué ayudaría",
+      "move": {
+        "high_p": "Tu equipo tiene una presencia externa fuerte — visible, directo y rápido para hacer emerger ideas. Las reuniones transcurren con energía. Los colaboradores externos notan este grupo.",
+        "low_p":  "Tu equipo opera con una profundidad silenciosa. Las ideas se desarrollan despacio y con cuidado. El grupo tiende a actuar desde la reflexión, no del impulso.",
+        "high_b": "La cohesión es el fundamento de este equipo. Las personas se escuchan bien, se apoyan mutuamente y tienden a atravesar los desacuerdos de forma constructiva. La confianza es alta.",
+        "low_b":  "Tu equipo es directo, centrado en las tareas y eficiente. La gente dice lo que piensa. La fricción social se acepta como parte del trabajo honesto.",
+        "high_v": "La innovación es el modo natural del grupo. La exploración creativa y las ideas nuevas surgen con facilidad. El equipo se siente cómodo en la ambigüedad.",
+        "low_v":  "Tu equipo es pragmático y orientado a la ejecución. Los planes concretos, los pasos claros y el progreso medible son el lenguaje de este grupo.",
+        "low_c":  "Tu equipo es flexible y adaptable — pero puede tener dificultades para mantener el impulso o coordinar la responsabilidad sin una estructura deliberada.",
+        "high_n": "La reactividad emocional está presente en este grupo. El equipo siente las cosas con intensidad y puede llevar el estrés de manera visible.",
+        "balanced": "Tu equipo muestra un perfil bien distribuido en todas las dimensiones. Ninguna tendencia única domina, lo que crea versatilidad — y requiere coordinación activa para mantener la coherencia."
+      },
+      "watchOut": {
+        "high_p": "Los equipos con alta Presencia arriesgan dominar la discusión. Los miembros más silenciosos pueden retener ideas. El equipo puede parecer abrumador para colaboradores menos vocales.",
+        "low_p":  "Los equipos con baja Presencia pueden ser invisibles para la organización. El conflicto puede quedarse bajo la superficie más tiempo del que es saludable.",
+        "high_b": "Los equipos de alto Vínculo arriesgan el exceso de acuerdo y el sesgo de armonía. Las verdades difíciles pueden suavizarse o evitarse. El pensamiento grupal es un riesgo real.",
+        "low_b":  "Los equipos de bajo Vínculo pueden sufrir fricciones interpersonales y malinterpretar la franqueza como hostilidad. Construir confianza puede requerir un esfuerzo explícito.",
+        "high_v": "Los equipos con mucha Visión a menudo luchan con el seguimiento. Las ideas se multiplican más rápido de lo que se completan. Las estructuras de ejecución necesitan mantenimiento deliberado.",
+        "low_v":  "Los equipos con poca Visión pueden perderse oportunidades estratégicas o tener dificultades para adaptarse cuando su enfoque actual deja de funcionar.",
+        "low_c":  "Los equipos con baja Disciplina tienden a dejar la responsabilidad poco clara y los plazos poco definidos. El riesgo es ambición sin finalización.",
+        "high_n": "Una elevada reactividad al estrés puede amplificar la tensión interpersonal. Bajo presión, el estado de ánimo del equipo puede desestabilizarse antes de resolver los problemas.",
+        "balanced": "Ninguna dimensión destaca especialmente. Vigilad la responsabilidad difusa — los equipos versátiles a veces asumen que otra persona se encarga de una tarea."
+      },
+      "help": {
+        "high_p": "Cread deliberadamente espacio para los miembros menos visibles. Rotad quién abre la discusión. Dad a los contribuidores silenciosos la propiedad del primer borrador en las decisiones clave.",
+        "low_p":  "Invertid en visibilidad: nombrad a alguien para comunicar el trabajo del equipo al exterior. Cread canales explícitos para hacer emerger las pequeñas frustraciones antes de que se acumulen.",
+        "high_b": "Practicad el desacuerdo estructurado: asignad roles de abogado del diablo en la toma de decisiones. Preguntad '¿Qué haría que esto fuera una mala idea?' antes de comprometeros.",
+        "low_b":  "Invertid en infraestructura relacional: check-ins regulares sin tareas, establecimiento de contexto compartido y apreciación explícita de las contribuciones.",
+        "high_v": "Anclar las sesiones creativas a los entregables. Por cada idea explorada, asignar un único responsable y un siguiente paso concreto. Reducid el backlog de ideas regularmente.",
+        "low_v":  "Programad tiempo para explorar el horizonte: ¿Qué cambia en vuestro entorno? ¿Qué enfoques podéis estar utilizando en exceso?",
+        "low_c":  "Adoptad rituales ligeros de responsabilidad: nombrad una persona por resultado, una fecha límite por decisión. Revisad los compromisos semanalmente.",
+        "high_n": "Invertid en la alfabetización del estrés como equipo. Nombrad cuándo el grupo es reactivo versus reflexivo. Cread canales de bajo riesgo para ventilar preocupaciones antes de que escalen.",
+        "balanced": "Con un perfil equilibrado, el riesgo es la sobrecarga de coordinación. Sed explícitos sobre los derechos de decisión, las normas de comunicación y quién lidera qué — no asumáis la alineación."
+      }
     },
     "shareHeading": "Compartir",
     "copyLink": "Copiar enlace",
