@@ -781,6 +781,23 @@ working correctly in development.
 - Bar fill element: `WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact'` inline styles.
 - `@media print` in `index.css`: `* { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }` as belt-and-suspenders for all colored elements (pills, etc.).
 
+### Phase 13.6 — Print layout fix ✅ COMPLETE
+
+Tailwind's `md:` responsive classes collapse to single-column in print because the browser
+renders with a narrow virtual viewport. Fixed by:
+
+- Added stable class names `lq-top-grid` and `lq-bottom-grid` to the two grid containers
+  in `LastQuarterPage.jsx`. These are non-Tailwind plain CSS hooks for the print stylesheet.
+- `@media print` in `index.css` now explicitly forces:
+  - `.lq-top-grid { display: grid; grid-template-columns: 40% 30% 30% }`
+  - `.lq-bottom-grid { display: grid; grid-template-columns: 50% 50% }`
+  - `break-inside: avoid` on grid children to prevent mid-card page breaks
+- Page size set to `A4 landscape` in `@page`.
+- Hidden in print: `header`, `nav`, `.fixed` (catches both the cookie banner and the
+  feedback button — both use Tailwind's `fixed` class), `.print:hidden` (share card).
+- `* { print-color-adjust: exact }` retained for bars and pills.
+- Radar SVG has no `print:hidden` — confirmed visible in print.
+
 ### Phase 13 — Living model
 - GitHub Actions job every 28 days: update NORM_MEAN/NORM_SD at N≥200
 - At N≥300: k-means (k=12) in 5D; update centroids if divergence is systematic

@@ -438,7 +438,7 @@ export default function LastQuarterPage() {
           </SectionLabel>
 
           {completedCount > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-[4fr_3fr_3fr] gap-4 items-start">
+            <div className="lq-top-grid grid grid-cols-1 md:grid-cols-[4fr_3fr_3fr] gap-4 items-start">
 
               {/* Col 1 (40%): toggle + radar */}
               <div>
@@ -499,7 +499,7 @@ export default function LastQuarterPage() {
 
         {/* ── Bottom row: 2-column [50/50] ── */}
         {(dimAnalysis?.length > 0 || narrative) && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
+          <div className="lq-bottom-grid grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
 
             {/* Col 1: Balance analysis */}
             <Card className="shadow-sm p-4 h-full">

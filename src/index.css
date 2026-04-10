@@ -15,13 +15,37 @@ button, input, textarea, select {
   border-radius: 4px;
 }
 
-/* Print styles — compact single-page layout for Last Quarter report */
+/* Print styles — Last Quarter report single-page layout */
 @media print {
-  @page { margin: 1cm; }
+  @page { margin: 1cm; size: A4 landscape; }
   body  { font-size: 11px; }
-  nav, header { display: none !important; }
+
+  /* Hide chrome: header, nav, cookie banner, feedback button, share card */
+  header, nav { display: none !important; }
   .print\:hidden { display: none !important; }
-  .shadow-sm { box-shadow: none !important; }
+  /* Fixed-position overlays (cookie banner bottom-0, feedback button bottom-5) */
+  .fixed { display: none !important; }
+
+  /* Remove decorative shadows */
+  .shadow-sm, .shadow { box-shadow: none !important; }
+
+  /* Force the 3-col top grid to keep its columns regardless of viewport */
+  .lq-top-grid {
+    display: grid !important;
+    grid-template-columns: 40% 30% 30% !important;
+    gap: 1rem !important;
+  }
+
+  /* Force the 2-col bottom grid */
+  .lq-bottom-grid {
+    display: grid !important;
+    grid-template-columns: 50% 50% !important;
+    gap: 1rem !important;
+  }
+
+  /* Prevent page breaks inside cards */
+  .lq-top-grid > *, .lq-bottom-grid > * { break-inside: avoid; }
+
   /* Ensure background colors (dimension bars, balance pills) print */
   * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
 }
