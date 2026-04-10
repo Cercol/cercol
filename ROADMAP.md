@@ -798,6 +798,28 @@ renders with a narrow virtual viewport. Fixed by:
 - `* { print-color-adjust: exact }` retained for bars and pills.
 - Radar SVG has no `print:hidden` — confirmed visible in print.
 
+### Phase 13.7 — My Results + Full Moon report fixes ✅ COMPLETE
+
+**My Results page — dimension icons added:**
+`DimensionIcon` (size 13) added before each dimension name in `ResultCard`. Added
+`DOMAIN_ICON_COLOR` constant. Dimension label span is now colored to match the domain.
+
+**My Results page — Full Moon card clickable:**
+`ResultCard` now wraps in a `<button>` when `result.instrument === 'fullMoon'`, navigating
+to `/full-moon/report`. `ChevronRightIcon` is darker (text-gray-500) and a "View report"
+link label is shown at the bottom of the card. `hover:shadow-md transition-shadow` on hover.
+
+**Full Moon report — probability bars redesign:**
+`CombinedRoleBars` in `FullMoonReportPage.jsx` replaced 3 stacked separate bars with a
+single shared track (h-3) containing 3 overlaid layers (all `position: absolute`):
+- Layer 1 (base, z=0): combined value — full opacity, brand color (red/blue/gray)
+- Layer 2 (z=1): self value — same color, 0.45 opacity
+- Layer 3 (z=2): witness average — brand blue (#0047ba), 0.5 opacity
+Hovering the bar shows an inline tooltip (dark bg) with all 3 labelled values.
+Legend row updated to match: colored dots (full / 0.45 / 0.5) with Combined / Self / Witnesses labels.
+`RoleIcon` added back to each row label (was missing from the old combined version).
+Single-bar mode (no witnesses) unchanged — only the combined layer renders.
+
 ### Phase 13 — Living model
 - GitHub Actions job every 28 days: update NORM_MEAN/NORM_SD at N≥200
 - At N≥300: k-means (k=12) in 5D; update centroids if divergence is systematic

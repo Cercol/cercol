@@ -11,7 +11,7 @@ import { supabase } from '../lib/supabase'
 import { getMyWitnessContributions } from '../lib/api'
 import { DOMAIN_KEYS } from '../data/domains'
 import { Card, Button, SectionLabel } from '../components/ui'
-import { ChevronRightIcon } from '../components/MoonIcons'
+import { ChevronRightIcon, DimensionIcon } from '../components/MoonIcons'
 
 const DOMAIN_BAR_COLOR = {
   presence:   'bg-amber-400',
@@ -19,6 +19,14 @@ const DOMAIN_BAR_COLOR = {
   discipline: 'bg-blue-600',
   depth:      'bg-red-500',
   vision:     'bg-[#427c42]',
+}
+
+const DOMAIN_ICON_COLOR = {
+  presence:   'text-amber-400',
+  bond:       'text-emerald-500',
+  discipline: 'text-blue-600',
+  depth:      'text-red-500',
+  vision:     'text-[#427c42]',
 }
 
 const INSTRUMENT_SCALE = {
@@ -38,19 +46,20 @@ function formatDate(iso, language) {
   })
 }
 
-function ResultCard({ result, t, language }) {
+function ResultCard({ result, t, language, navigate }) {
+  const isFullMoon = result.instrument === 'fullMoon'
   const instrumentLabel =
-    result.instrument === 'newMoon'      ? t('home.newMoon.name')
-    : result.instrument === 'fullMoon'   ? t('home.fullMoon.name')
-    :                                      t('home.firstQuarter.name')
+    result.instrument === 'newMoon'    ? t('home.newMoon.name')
+    : isFullMoon                       ? t('home.fullMoon.name')
+    :                                    t('home.firstQuarter.name')
 
-  return (
-    <Card className="p-6 shadow-sm">
+  const inner = (
+    <Card className={`p-6 shadow-sm ${isFullMoon ? 'cursor-pointer hover:shadow-md transition-shadow' : ''}`}>
       <div className="flex items-center justify-between mb-4">
         <span className="text-sm font-semibold text-gray-900">{instrumentLabel}</span>
         <div className="flex items-center gap-2">
           <span className="text-xs text-gray-400">{formatDate(result.created_at, language)}</span>
-          <ChevronRightIcon size={14} className="text-gray-300" />
+          <ChevronRightIcon size={14} className={isFullMoon ? 'text-gray-500' : 'text-gray-300'} />
         </div>
       </div>
 
@@ -61,8 +70,11 @@ function ResultCard({ result, t, language }) {
           const pct = scorePercent(score, result.instrument)
           return (
             <div key={key} className="flex items-center gap-3">
-              <span className="w-20 shrink-0 text-xs font-semibold uppercase tracking-widest text-gray-500 capitalize">
-                {t(`dimensions.${key}.label`, { defaultValue: key })}
+              <span className={`w-24 shrink-0 text-xs font-semibold flex items-center gap-1.5 ${DOMAIN_ICON_COLOR[key]}`}>
+                <DimensionIcon domain={key} size={13} />
+                <span className="text-gray-600">
+                  {t(`dimensions.${key}.label`, { defaultValue: key })}
+                </span>
               </span>
               <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
                 <div
@@ -75,8 +87,21 @@ function ResultCard({ result, t, language }) {
           )
         })}
       </div>
+
+      {isFullMoon && (
+        <p className="mt-3 text-xs text-blue-600 font-medium">{t('lastQuarter.viewReport')}</p>
+      )}
     </Card>
   )
+
+  if (isFullMoon) {
+    return (
+      <button type="button" className="w-full text-left" onClick={() => navigate('/full-moon/report')}>
+        {inner}
+      </button>
+    )
+  }
+  return inner
 }
 
 function ProfilePrompt({ t }) {
@@ -150,7 +175,7 @@ export default function MyResultsPage() {
         {results !== null && results.length > 0 && (
           <div className="flex flex-col gap-4">
             {results.map((r) => (
-              <ResultCard key={r.id} result={r} t={t} language={i18n.language} />
+              <ResultCard key={r.id} result={r} t={t} language={i18n.language} navigate={navigate} />
             ))}
             <Button
               variant="secondary"

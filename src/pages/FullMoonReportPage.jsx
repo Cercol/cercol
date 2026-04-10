@@ -14,7 +14,7 @@
  * - Self-report: `results` Supabase table (most recent fullMoon row for this user)
  * - Witness: API GET /witness/my-sessions (returns sessions + scores)
  */
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
@@ -49,9 +49,10 @@ const MIN_WITNESSES_FOR_REPORT = 2
 
 // ── CombinedRoleBars ──────────────────────────────────────────────────────────
 // Shows all 12 roles in a 2×6 grid.
-// If witnessResult is present: 3 stacked bars (combined / self / witness).
-// If witnessResult is null: single bar (self only, same as FQ/FM results pages).
+// If witnessResult present: single overlaid bar (combined / self / witness).
+// If witnessResult null: single bar (self/combined only).
 function CombinedRoleBars({ combinedResult, selfResult, witnessResult, t }) {
+  const [hoveredRole, setHoveredRole] = useState(null)
   const sorted = Object.entries(combinedResult.probabilities).sort((a, b) => b[1] - a[1])
   const { role: primaryRole, arc } = combinedResult
 
@@ -61,24 +62,25 @@ function CombinedRoleBars({ combinedResult, selfResult, witnessResult, t }) {
         {t('roles.probability_label')}
       </SectionLabel>
 
+      {/* Legend — shown only when witnesses present */}
       {witnessResult && (
-        <div className="flex items-center gap-4 text-xs" style={{ color: colors.textMuted }}>
+        <div className="flex items-center gap-4 text-xs flex-wrap" style={{ color: colors.textMuted }}>
           <span className="flex items-center gap-1.5 font-medium">
-            <span className="w-3 h-2 rounded-full inline-block bg-gray-600" />
+            <span className="w-3 h-2.5 rounded-full inline-block" style={{ backgroundColor: colors.primary }} />
             {t('witnessResults.combinedLabel')}
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="w-3 h-1 rounded-full bg-gray-300 inline-block" />
+            <span className="w-3 h-2.5 rounded-full inline-block" style={{ backgroundColor: colors.primary, opacity: 0.45 }} />
             {t('witnessResults.selfLabel')}
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="w-3 h-1 rounded-full bg-[#99b3e0] inline-block" />
+            <span className="w-3 h-2.5 rounded-full inline-block" style={{ backgroundColor: colors.blue, opacity: 0.5 }} />
             {t('witnessResults.witnessLabel')}
           </span>
         </div>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
         {sorted.map(([r, combinedProb]) => {
           const isPrimary   = r === primaryRole
           const isArc       = arc.includes(r)
@@ -90,54 +92,63 @@ function CombinedRoleBars({ combinedResult, selfResult, witnessResult, t }) {
 
           const barColor   = isPrimary ? colors.primary : isArc ? colors.arcBar : colors.border
           const labelColor = isPrimary ? colors.textPrimary : isArc ? colors.arcLabel : colors.textMuted
+          const isHovered  = hoveredRole === r
 
           return (
             <div key={r}>
               <div className="flex items-center justify-between mb-1">
                 <span
-                  className={`text-sm ${isPrimary ? 'font-semibold' : 'font-normal'}`}
+                  className={`text-sm flex items-center gap-1.5 ${isPrimary ? 'font-semibold' : 'font-normal'}`}
                   style={{ color: labelColor }}
                 >
+                  <RoleIcon role={r} size={18} />
                   {t(`roles.${r}.name`)}
                 </span>
                 <span className="text-xs tabular-nums" style={{ color: colors.textMuted }}>
                   {combinedPct}%
                 </span>
               </div>
-              {/* Combined bar — thicker */}
-              <div className="w-full h-2 rounded-full overflow-hidden bg-gray-100 mb-1">
+
+              {/* Overlaid bar track */}
+              <div
+                className="relative w-full h-3 rounded-full overflow-hidden"
+                style={{ backgroundColor: '#f3f4f6', cursor: witnessResult ? 'default' : undefined }}
+                onMouseEnter={() => witnessResult && setHoveredRole(r)}
+                onMouseLeave={() => setHoveredRole(null)}
+              >
+                {/* Layer 1: combined (base, full opacity) */}
                 <div
-                  className="h-full rounded-full transition-all duration-500"
-                  style={{ width: `${combinedPct}%`, background: barColor }}
+                  className="absolute inset-y-0 left-0 rounded-full transition-all duration-500"
+                  style={{ width: `${combinedPct}%`, backgroundColor: barColor }}
                 />
+                {/* Layer 2: self (lighter, same color) */}
+                {witnessResult && (
+                  <div
+                    className="absolute inset-y-0 left-0 rounded-full transition-all duration-500"
+                    style={{ width: `${selfPct}%`, backgroundColor: barColor, opacity: 0.45 }}
+                  />
+                )}
+                {/* Layer 3: witness (blue, semi-transparent) */}
+                {witnessResult && witnessPct !== null && (
+                  <div
+                    className="absolute inset-y-0 left-0 rounded-full transition-all duration-500"
+                    style={{ width: `${witnessPct}%`, backgroundColor: colors.blue, opacity: 0.5 }}
+                  />
+                )}
               </div>
-              {witnessResult && (
-                <>
-                  {/* Self bar — thinner */}
-                  <div className="flex items-center gap-1.5 mb-0.5">
-                    <div className="flex-1 h-1 rounded-full overflow-hidden bg-gray-100">
-                      <div
-                        className="h-full rounded-full transition-all duration-500 bg-gray-400"
-                        style={{ width: `${selfPct}%` }}
-                      />
-                    </div>
-                    <span className="text-xs tabular-nums w-6 text-right shrink-0" style={{ color: colors.textMuted }}>
-                      {selfPct}%
-                    </span>
-                  </div>
-                  {/* Witness bar — thinner */}
-                  <div className="flex items-center gap-1.5">
-                    <div className="flex-1 h-1 rounded-full overflow-hidden bg-gray-100">
-                      <div
-                        className="h-full rounded-full transition-all duration-500 bg-[#99b3e0]"
-                        style={{ width: `${witnessPct}%` }}
-                      />
-                    </div>
-                    <span className="text-xs tabular-nums w-6 text-right shrink-0" style={{ color: colors.textMuted }}>
-                      {witnessPct}%
-                    </span>
-                  </div>
-                </>
+
+              {/* Hover tooltip */}
+              {isHovered && witnessResult && (
+                <div
+                  className="mt-1 flex items-center gap-2 text-xs rounded px-2 py-1 w-fit"
+                  style={{ backgroundColor: '#1f2937', color: '#f9fafb' }}
+                >
+                  <span style={{ color: barColor }}>{t('witnessResults.combinedLabel')}: {combinedPct}%</span>
+                  <span style={{ color: '#6b7280' }}>·</span>
+                  <span style={{ color: barColor, opacity: 0.7 }}>{t('witnessResults.selfLabel')}: {selfPct}%</span>
+                  <span style={{ color: '#6b7280' }}>·</span>
+                  <span style={{ color: '#99b3e0' }}>{t('witnessResults.witnessLabel')}: {witnessPct}%</span>
+                </div>
               )}
             </div>
           )
