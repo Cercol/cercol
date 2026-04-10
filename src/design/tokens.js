@@ -47,3 +47,24 @@ export const fonts = {
 export const spacing = {
   pageMax: '720px',   // max content width for doc pages
 }
+
+/**
+ * ROLE_COLORS — one distinct color per role (R01–R12).
+ * Hues are evenly distributed across the full color wheel (30° apart),
+ * all at similar saturation/darkness so each is legible on white.
+ * Brand anchors: R01 uses brand red, R05 uses brand green.
+ */
+export const ROLE_COLORS = {
+  R01: '#cf3339',   // Dolphin  — red       (brand)
+  R02: '#d46010',   // Wolf     — orange
+  R03: '#c08800',   // Elephant — amber
+  R04: '#6a8800',   // Owl      — olive
+  R05: '#427c42',   // Eagle    — green     (brand)
+  R06: '#1a8c60',   // Falcon   — emerald
+  R07: '#0d8888',   // Octopus  — teal
+  R08: '#1a68b0',   // Tortoise — cerulean
+  R09: '#3355c8',   // Bee      — cobalt
+  R10: '#6630a8',   // Bear     — indigo
+  R11: '#a030a0',   // Fox      — violet
+  R12: '#b03070',   // Badger   — crimson
+}

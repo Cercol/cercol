@@ -60,6 +60,7 @@
     "notMember": "Du bist kein Mitglied dieser Gruppe.",
     "compositionHeading": "Teamzusammensetzung",
     "pendingLabel": "Ausstehend",
+    "selfLabel": "du",
     "pendingNote": "{{count}} Mitglied hat Full Moon noch nicht abgeschlossen.",
     "pendingNote_plural": "{{count}} Mitglieder haben Full Moon noch nicht abgeschlossen.",
     "arcLabel": "Bogen:",

@@ -1,12 +1,13 @@
 /**
  * LastQuarterPage — team report for a group.
  * Route: /groups/:id
- * Phase 12.3
+ * Phase 13.1 — two-column layout: multi-member radar (left 2/3)
+ *              + member list with hover-linked highlight (right 1/3).
  *
  * Sections:
- *  1. Team composition — RoleIcon + role name + arc chips per member; Pending badge for incomplete
- *  2. Balance analysis — group mean z-scores with balance/tilt flags; RadarChart
- *  3. Team narrative   — deterministic decision tree text (3 sections)
+ *  1. Team composition — multi-series radar + hoverable member list
+ *  2. Balance analysis — group mean z-scores + single-series RadarChart
+ *  3. Team narrative   — deterministic decision tree text
  *  4. Share            — copy link + print/PDF
  */
 import { useEffect, useState } from 'react'
@@ -25,8 +26,8 @@ import {
 } from '../utils/team-narrative'
 import { RoleIcon, LastQuarterIcon } from '../components/MoonIcons'
 import RadarChart from '../components/RadarChart'
-import { Card, Button, Badge, SectionLabel } from '../components/ui'
-import { colors } from '../design/tokens'
+import { Card, Button, SectionLabel } from '../components/ui'
+import { colors, ROLE_COLORS } from '../design/tokens'
 import { DOMAIN_KEYS } from '../data/domains'
 
 const BALANCE_COLOR = {
@@ -53,44 +54,68 @@ function BalancePill({ flag, t }) {
   )
 }
 
-function MemberCard({ member, t }) {
-  // Backend z-scores → raw 1-5 → computeRole for arc (backend role is authoritative)
+/**
+ * ArcIcon — single arc role icon with a native tooltip showing the role name.
+ */
+function ArcIcon({ role, t }) {
+  return (
+    <span title={t(`roles.${role}.name`)} style={{ cursor: 'help', display: 'inline-flex' }}>
+      <RoleIcon role={role} size={16} style={{ color: '#b0b8c4' }} />
+    </span>
+  )
+}
+
+/**
+ * MemberRow — one member in the right-column list.
+ * Triggers radar highlight on hover (completed members only).
+ */
+function MemberRow({ member, color, isHovered, onMouseEnter, onMouseLeave, t }) {
   const arc = member.completed && member.zscores
     ? computeRole(zscoresToRaw(member.zscores)).arc
     : []
 
-  const role = member.role
-
   return (
-    <div className="flex items-start gap-3 py-3">
+    <div
+      className="flex items-center gap-3 py-3 rounded px-2 -mx-2 transition-colors"
+      style={{
+        backgroundColor: isHovered && color ? color + '18' : 'transparent',
+        cursor: member.completed ? 'default' : 'default',
+      }}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
+      {/* Role avatar */}
       <div
-        className="shrink-0 w-10 h-10 rounded-full flex items-center justify-center"
-        style={{ backgroundColor: member.completed ? colors.red + '18' : '#f3f4f6' }}
+        className="shrink-0 w-9 h-9 rounded-full flex items-center justify-center"
+        style={{
+          backgroundColor: member.completed && color ? color + '22' : '#f3f4f6',
+        }}
       >
-        {member.completed && role
-          ? <RoleIcon role={role} size={22} style={{ color: colors.red }} />
-          : <span className="text-base">·</span>
+        {member.completed && member.role
+          ? <RoleIcon role={member.role} size={22} style={{ color: color ?? colors.red }} />
+          : <span className="text-gray-300 text-base select-none">·</span>
         }
       </div>
 
+      {/* Name + role + arc */}
       <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-sm font-semibold text-gray-900 truncate">
+        <div className="flex items-center gap-1.5 flex-wrap">
+          <span className="text-sm font-semibold text-gray-900 truncate leading-snug">
             {member.display_name ?? '—'}
           </span>
           {member.is_self && (
-            <span className="text-xs text-gray-400">(you)</span>
+            <span className="text-xs text-gray-400">({t('lastQuarter.selfLabel')})</span>
           )}
         </div>
 
-        {member.completed && role ? (
+        {member.completed && member.role ? (
           <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
-            <span className="text-xs text-gray-500">{t(`roles.${role}.name`)}</span>
-            {arc.map(r => (
-              <Badge key={r} variant="outline" className="text-xs px-1.5 py-0">
-                {t(`roles.${r}.name`)}
-              </Badge>
-            ))}
+            <span className="text-xs text-gray-500">{t(`roles.${member.role}.name`)}</span>
+            {arc.length > 0 && (
+              <span className="flex items-center gap-1">
+                {arc.map(r => <ArcIcon key={r} role={r} t={t} />)}
+              </span>
+            )}
           </div>
         ) : (
           <span
@@ -108,13 +133,16 @@ function MemberCard({ member, t }) {
 export default function LastQuarterPage() {
   const { id }      = useParams()
   const navigate    = useNavigate()
-  const { t, i18n } = useTranslation()
+  const { t, i18n } = useTranslation() // eslint-disable-line no-unused-vars
   const { user, loading: authLoading } = useAuth()
 
   const [data,    setData]    = useState(null)
   const [loading, setLoading] = useState(true)
   const [error,   setError]   = useState(null)
   const [copied,  setCopied]  = useState(false)
+
+  // Hover state: user_id of the highlighted member, or null
+  const [hoveredMember, setHoveredMember] = useState(null)
 
   useEffect(() => {
     if (authLoading) return
@@ -159,12 +187,24 @@ export default function LastQuarterPage() {
     )
   }
 
-  const members       = data?.members ?? []
-  const completedCount = members.filter(m => m.completed).length
-  const pendingCount  = members.length - completedCount
-  const groupMeans    = computeGroupMeans(members)
+  const members        = data?.members ?? []
+  const completedMembers = members.filter(m => m.completed && m.zscores && m.role)
+  const completedCount = completedMembers.length
+  const pendingCount   = members.length - completedCount
 
-  // Balance flags (only if we have completed data)
+  // Multi-series radar: one shape per completed member
+  const radarSeries = completedMembers.map(m => ({
+    id:     m.user_id,
+    scores: zscoresToRaw(m.zscores),
+    color:  ROLE_COLORS[m.role] ?? colors.red,
+    opacity: hoveredMember === null
+      ? 0.5
+      : hoveredMember === m.user_id ? 1.0 : 0.15,
+  }))
+
+  const groupMeans = computeGroupMeans(members)
+
+  // Balance flags
   const flags = groupMeans ? {
     p: balanceFlagForPBV(groupMeans.p),
     b: balanceFlagForPBV(groupMeans.b),
@@ -176,7 +216,7 @@ export default function LastQuarterPage() {
   // Narrative keys
   const narrative = groupMeans ? generateNarrative(groupMeans) : null
 
-  // Radar data: convert z-score means to approximate raw scores
+  // Balance radar (group mean)
   const radarScores = groupMeans ? zscoresToRaw({
     presence:   groupMeans.p,
     bond:       groupMeans.b,
@@ -187,7 +227,7 @@ export default function LastQuarterPage() {
 
   return (
     <main className="py-10 sm:py-16">
-      <div className="w-full max-w-2xl mx-auto px-4 flex flex-col gap-8">
+      <div className="w-full px-4 flex flex-col gap-8">
 
         {/* Header */}
         <div className="flex items-start gap-3">
@@ -200,17 +240,57 @@ export default function LastQuarterPage() {
           </div>
         </div>
 
-        {/* ── Section 1: Team composition ── */}
+        {/* ── Section 1: Two-column team composition ── */}
         <Card className="shadow-sm p-6">
           <SectionLabel color="gray" className="mb-4">
             {t('lastQuarter.compositionHeading')}
           </SectionLabel>
 
-          <div className="divide-y divide-gray-100">
-            {members.map(m => (
-              <MemberCard key={m.user_id} member={m} t={t} />
-            ))}
-          </div>
+          {completedCount > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+
+              {/* Left column: multi-member radar (2/3) */}
+              <div className="md:col-span-2">
+                <RadarChart
+                  series={radarSeries}
+                  maxScore={5}
+                  domainKeys={DOMAIN_KEYS}
+                  labelFn={k => t(`fmDomains.${k}.name`)}
+                />
+              </div>
+
+              {/* Right column: member list (1/3) */}
+              <div className="flex flex-col divide-y divide-gray-100">
+                {members.map(m => {
+                  const color = m.completed && m.role ? ROLE_COLORS[m.role] ?? colors.red : null
+                  return (
+                    <MemberRow
+                      key={m.user_id}
+                      member={m}
+                      color={color}
+                      isHovered={hoveredMember === m.user_id}
+                      onMouseEnter={m.completed ? () => setHoveredMember(m.user_id) : undefined}
+                      onMouseLeave={m.completed ? () => setHoveredMember(null) : undefined}
+                      t={t}
+                    />
+                  )
+                })}
+              </div>
+            </div>
+          ) : (
+            // No one completed yet — just show member list
+            <div className="flex flex-col divide-y divide-gray-100">
+              {members.map(m => (
+                <MemberRow
+                  key={m.user_id}
+                  member={m}
+                  color={null}
+                  isHovered={false}
+                  t={t}
+                />
+              ))}
+            </div>
+          )}
 
           {pendingCount > 0 && (
             <p className="mt-4 text-xs text-gray-400 pt-3 border-t border-gray-100">
@@ -242,7 +322,7 @@ export default function LastQuarterPage() {
               ))}
             </div>
 
-            {/* Radar chart */}
+            {/* Group mean radar */}
             <RadarChart
               scores={radarScores}
               maxScore={5}

@@ -669,6 +669,31 @@ the loop since all icons are identical size; placement attempts increased to 300
 **AccountButton avatar:** `RoleIcon` size increased 18 → 26 inside the 28×28px button,
 reducing padding from ~5px/side to ~1px/side for a much tighter icon fill.
 
+### Phase 13.1 — Last Quarter report layout redesign ✅ COMPLETE
+
+**`ROLE_COLORS` in `tokens.js`:** 12 distinct colors mapped to R01–R12. Hues are evenly
+distributed across the color wheel (30° intervals), all at similar saturation/darkness for
+legibility on white. Brand anchors: R01 = brand red (#cf3339), R05 = brand green (#427c42).
+Full spectrum: orange, amber, olive, emerald, teal, cerulean, cobalt, indigo, violet, crimson.
+
+**`RadarChart` multi-series extension:** optional `series` prop
+(`Array<{id, scores, color, opacity}>`). When provided, renders one `<Radar>` per entry,
+each with a colour-keyed `OrganicRadarShape` whose fill and stroke opacity are controlled
+by the `seriesOpacity` prop. Single-series API (`scores`, `maxScore`, `domainKeys`, `labelFn`)
+is fully preserved — all existing usages unchanged.
+
+**Last Quarter report — two-column Section 1:**
+- Left 2/3: `RadarChart` in multi-series mode, one filled shape per completed member in their
+  ROLE_COLOR. Default opacity 0.5 for all; on member row hover: hovered shape → 1.0, others → 0.15.
+- Right 1/3: `MemberRow` list — 36px role avatar in ROLE_COLOR, primary role name, arc icons
+  (16px, muted grey) with native `title` tooltip on hover. Pending members show grey dot + label.
+- Hover state (`hoveredMember`) lifted to page level; passed to both column and radar series.
+- Mobile: stacks (radar above, list below) via `grid-cols-1 md:grid-cols-3`.
+- Page container widened from `max-w-2xl` to full Layout width (4xl).
+
+**i18n:** `lastQuarter.selfLabel` added to all 6 locale files
+(EN: "you", CA: "tu", ES: "tú", FR: "toi", DE: "du", DA: "dig").
+
 ### Phase 13 — Living model
 - GitHub Actions job every 28 days: update NORM_MEAN/NORM_SD at N≥200
 - At N≥300: k-means (k=12) in 5D; update centroids if divergence is systematic

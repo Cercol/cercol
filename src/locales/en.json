@@ -60,6 +60,7 @@
     "notMember": "You are not a member of this group.",
     "compositionHeading": "Team composition",
     "pendingLabel": "Pending",
+    "selfLabel": "you",
     "pendingNote": "{{count}} member hasn't completed Full Moon yet.",
     "pendingNote_plural": "{{count}} members haven't completed Full Moon yet.",
     "arcLabel": "Arc:",

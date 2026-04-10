@@ -60,6 +60,7 @@
     "notMember": "Du er ikke medlem af denne gruppe.",
     "compositionHeading": "Teamsammensætning",
     "pendingLabel": "Afventer",
+    "selfLabel": "dig",
     "pendingNote": "{{count}} medlem har endnu ikke gennemført Full Moon.",
     "pendingNote_plural": "{{count}} medlemmer har endnu ikke gennemført Full Moon.",
     "arcLabel": "Bue:",
