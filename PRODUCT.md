@@ -27,9 +27,13 @@ Never expose academic instrument names (TIPI, IPIP, NEO) in user-facing text.
 Never use generic names like "test" or "radar" in user-facing text or filenames.
 
 Current instruments:
-- "New Moon Cèrcol"      — 10-item quick snapshot (CA: "Cèrcol de Lluna Nova")
-- "First Quarter Cèrcol" — 60-item full portrait, 30 facets (CA: "Cèrcol de Quart Creixent")
-- "Full Moon Cèrcol"     — 120-item complete portrait + Witness Cèrcol (CA: "Cèrcol de Lluna Plena")
+
+| Instrument          | EN                    | CA                          | ES                            | FR                              | DE                            | DA                        |
+|---------------------|-----------------------|-----------------------------|-------------------------------|---------------------------------|-------------------------------|---------------------------|
+| New Moon Cèrcol     | New Moon Cèrcol       | Cèrcol de Lluna Nova        | Cèrcol de Luna Nueva          | Cèrcol de Nouvelle Lune         | Cèrcol des Neumondes          | Nymåne Cèrcol             |
+| First Quarter Cèrcol| First Quarter Cèrcol  | Cèrcol de Quart Creixent    | Cèrcol de Cuarto Creciente    | Cèrcol de Premier Quartier      | Cèrcol des Ersten Viertels    | Første Kvartal Cèrcol     |
+| Full Moon Cèrcol    | Full Moon Cèrcol      | Cèrcol de Lluna Plena       | Cèrcol de Luna Llena          | Cèrcol de Pleine Lune           | Cèrcol des Vollmondes         | Fuldmåne Cèrcol           |
+| Witness Cèrcol      | Witness Cèrcol        | Testimoni Cèrcol            | Testigo Cèrcol                | Témoin Cèrcol                   | Zeuge Cèrcol                  | Vidne Cèrcol              |
 
 ---
 
@@ -39,7 +43,8 @@ Cèrcol uses four lunar phases as instrument names.
 Each phase is a standalone user experience with increasing depth.
 Witness Cèrcol and ICAR cognitive ability are components of Full Moon,
 not standalone phases. Never use "observer" in user-facing text or code
-comments — it is Belbin terminology. Always use "Witness" / "Testimoni".
+comments — it is Belbin terminology. Always use "Witness" (EN) / "Testimoni" (CA)
+/ "Testigo" (ES) / "Témoin" (FR) / "Zeuge/Zeugin" (DE) / "Vidne" (DA).
 
 | Phase | Code name    | EN display name         | CA display name               | Instrument                             | Status  |
 |-------|--------------|-------------------------|-------------------------------|----------------------------------------|---------|
@@ -47,6 +52,8 @@ comments — it is Belbin terminology. Always use "Witness" / "Testimoni".
 | 🌓    | FirstQuarter | First Quarter Cèrcol    | Cèrcol de Quart Creixent      | IPIP-NEO-60 — 60 items, 5-point, 30 facets | Live |
 | 🌕    | FullMoon     | Full Moon Cèrcol        | Cèrcol de Lluna Plena         | IPIP-NEO-120 + Witness Cèrcol + ICAR g | Live   |
 | 🌗    | LastQuarter  | Last Quarter Cèrcol     | Cèrcol de Quart Minvant       | Team report (members FullMoon)         | Planned |
+
+ES/FR/DE display names: see instrument naming table above.
 
 User journey:
 NewMoon → FirstQuarter → FullMoon → LastQuarter
@@ -113,6 +120,9 @@ traceability.
 | conscientiousness / Conscientiousness | Discipline  | Disciplina  |
 | negativeEmotionality / Neuroticism    | Depth       | Profunditat |
 | openMindedness / Openness             | Vision      | Visió       |
+
+Translations of dimension names into ES, FR, and DE are in the respective locale files
+(`src/locales/es.json`, `fr.json`, `de.json`) under the `dimensions.*` keys.
 
 ---
 

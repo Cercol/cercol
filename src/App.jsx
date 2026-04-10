@@ -22,6 +22,8 @@ import RolesPage from './pages/RolesPage'
 import SciencePage from './pages/SciencePage'
 import FaqPage from './pages/FaqPage'
 import PrivacyPage from './pages/PrivacyPage'
+import GroupsPage from './pages/GroupsPage'
+import LastQuarterPage from './pages/LastQuarterPage'
 import FeedbackButton from './components/FeedbackButton'
 import CookieBanner from './components/CookieBanner'
 
@@ -50,6 +52,8 @@ function AppContent() {
         {/* Account */}
         <Route path="/my-results" element={<MyResultsPage />} />
         <Route path="/profile"    element={<ProfilePage />} />
+        <Route path="/groups"     element={<GroupsPage />} />
+        <Route path="/groups/:id" element={<LastQuarterPage />} />
         {/* Documentation */}
         <Route path="/about"       element={<AboutPage />} />
         <Route path="/instruments" element={<InstrumentsPage />} />

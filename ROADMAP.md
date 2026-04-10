@@ -1,11 +1,11 @@
 # Cèrcol — Roadmap
 
 <!--
-  COMPLETED PHASES SUMMARY (1–7.1)
+  COMPLETED PHASES SUMMARY (1–9.2)
   Full detail preserved in git history.
 -->
 
-## Epochs 1–2: completed phases summary
+## Epochs 1–3: completed phases summary
 
 | Phase | What was built |
 |-------|---------------|
@@ -33,111 +33,60 @@
 | 6.2 | Full Moon gate (Stripe). Paywall screen. FQ → FM upgrade CTA. |
 | 7 | Witness Cèrcol: 100-adjective AB5C corpus, 20 rounds forced choice, up to 12 witnesses, /full-moon/report. |
 | 7.1 | Witness fixes: subject name on intro, adjective tooltips, round polarity (70/30, no pole mixing). |
+| 8 | Documentation site: five routes (/about, /instruments, /roles, /science, /faq) — bilingual EN + CA. |
+| 8.2 | Instrument intro screens before first item on all three instruments. |
+| 8.3 | Role system: 9 roles → 12 animal roles (Dolphin–Badger). AB5C-based 5D centroids, softmax assignment, 15% arc threshold. |
+| 9.1 | Locale fixes: 12 role CA fields corrected, founding phrase translated to English, Belbin section removed from /roles. |
+| 9 | Full Moon integrated report: combined role (self × 2/3 + witness × 1/3), convergence score (Jaccard), blind spots per dimension, narrative layout at /full-moon/report. |
+| 9.2 | Pre-Phase 10 audit: i18n corrections, design token cleanup, 60 FQ facet CA descriptions translated. |
 
-## Epoch 3: documentation and role system
+## Epoch 4: UI redesign, languages, and infrastructure
 
-### Phase 8 — Documentation and content site ✅ COMPLETE
-Five public routes, no login, bilingual EN + CA:
-- /about — philosophy, dimensions, explore-deeper cards, score framing
-- /instruments — all three instruments with full Witness documentation
-- /roles — role system, scientific grounding, "why not Belbin", GitHub CTA
-  (content updated in Phase 8.3)
-- /science — scientific foundation, full references
-- /faq — privacy, accuracy, Witness, differences, retaking
+### Phase 10 — Full UX/UI redesign ✅ COMPLETE
+Brand identity and visual foundation. All 20 sub-phases below are complete.
 
-Layout: two-row header, five nav links, mobile safe.
+### Phase 10.1 — Brand identity foundation + homepage redesign ✅ COMPLETE
+- tokens.js: brand palette (#cf3339 red, #0047ba blue, #f1c22f yellow, #427c42 green, #ffffff, #111111); all generic palette colors replaced
+- tokens.js: typography updated — Playfair Display (display/headings) + Roboto (body/UI)
+- tokens.js: Big Five dimension colors remapped to brand palette
+- index.css: Google Fonts imports (Playfair Display 400/700, Roboto 400/500/700); global h1/h2/h3 rule for Playfair Display; body font → Roboto
+- Layout.jsx: single-row blue header (full-width, px-8/px-12); inline SVG logo (CercolLogo.jsx, white); white nav links; border-radius 4px on nav pills
+- AccountButton.jsx + LanguageToggle.jsx: updated for blue header context (white text, white-bg active state)
+- FeedbackButton: "Report issue" floating link removed; translation feedback panel retained
+- HomePage.jsx: full redesign — blue background, 3-column instrument card grid (red/green/yellow cards), no tagline/headline, footer with GitHub + report issue links
 
-### Phase 8.2 — Instrument intro screens ✅ COMPLETE
-Intro screen before first item on all three instruments.
-Scale explanation, guidance sentence, Begin button (Enter/Space).
-Redundant first-item banners removed.
+### Phase 10.2 — Homepage card fix + centralized layout container ✅ COMPLETE
+- HomePage: instrument cards redesigned — white bg, 3px solid left border in instrument color,
+  name in instrument color, hover fills with instrument color (text inverts), transition-colors 200ms
+- Layout.jsx: centralized white content wrapper (bg-white, max-w-4xl mx-auto, px-4 sm:px-8,
+  min-h-[calc(100vh-4rem)]); homepage opts out via useLocation check (pathname === '/')
+- Removed redundant declarations from 13 pages:
+  - AboutPage, InstrumentsPage, RolesPage, SciencePage, FaqPage: removed bg-gray-50, min-h-screen,
+    max-w-xl mx-auto px-4 outer wrapper; py-12 stays on main
+  - NewMoonResultsPage, FirstQuarterResultsPage, FullMoonResultsPage, WitnessSetupPage:
+    removed bg-gray-50, min-h-screen, px-4, max-w-xl mx-auto w-full from inner container
+  - MyResultsPage: removed bg-gray-50, min-h-screen, flex centering, px-4, max-w-xl from wrapper
+  - AuthPage: removed bg-gray-50, min-h-screen, px-4; flex centering kept; min-h-[calc(100vh-4rem)]
+  - FullMoonReportPage: removed same from 3 loading/error states and main content wrapper
 
-### Phase 8.3 — Role system migration: 9 roles → 12 animal roles ✅ COMPLETE
-Complete replacement of the role system. The old 9-role system
-(R0 Opal through R8 Comet) is fully superseded.
-
-**Scientific basis** (documented in SCIENCE.md):
-- 3 balance dimensions (Bell 2007): Presence (E), Bond (A), Vision (O)
-- 12 roles covering all six P×B, P×V, B×V intersections at both poles
-- Centroids in 5D space (E, A, O, C, N z-scores)
-- C and N modulate expression, not balance
-- No centre role: profiles near origin described by C/N values
-- Euclidean distance in full 5D; softmax probabilities; arc > 15%
-
-| ID  | EN       | CA       | Profile |
-|-----|----------|----------|---------|
-| R01 | Dolphin  | Dofí     | P+ B+   |
-| R02 | Wolf     | Llop     | P+ B-   |
-| R03 | Elephant | Elefant  | P- B+   |
-| R04 | Owl      | Mussol   | P- B-   |
-| R05 | Eagle    | Àguila   | P+ V+   |
-| R06 | Falcon   | Falcó    | P+ V-   |
-| R07 | Octopus  | Polp     | P- V+   |
-| R08 | Tortoise | Tortuga  | P- V-   |
-| R09 | Bee      | Abella   | B+ V+   |
-| R10 | Bear     | Ós       | B+ V-   |
-| R11 | Fox      | Guineu   | B- V+   |
-| R12 | Badger   | Teixó    | B- V-   |
-
-Files to update: role-scoring.js, RoleResult.jsx, RoleProbabilityBars.jsx,
-FirstQuarterResultsPage.jsx, FullMoonResultsPage.jsx, FullMoonReportPage.jsx,
-/roles page, en.json, ca.json.
-
-<!--
-  EPOCH 4 — Integrated report and living model
--->
-
-### Phase 9.1 — Locale and Belbin fixes ✅ COMPLETE
-- en.json: 12 role `ca` fields changed from Valencian to English names
-- en.json: `about.intro.founding` translated to English
-- en.json + ca.json: `rolesPage.notBelbin` section removed (Belbin not user-facing)
-- RolesPage.jsx: "Why not Belbin?" InfoBox removed
-
-### Phase 9 — Full Moon integrated report ✅ COMPLETE
-Combines self-report and Witness into a single coherent narrative at /full-moon/report.
-
-- **Convergence score**: Jaccard overlap between self role set (primary+arc) and
-  witness role set. Three bands: high ≥60%, moderate 30–59%, low <30%. Plain-language
-  sentence per band. Visual progress bar.
-- **Consolidated blind spots**: per-dimension descriptions for all 5 dimensions ×
-  2 directions (self > witness, witness > self). Brand voice. Full CA translations.
-- **Definitive role result**: when ≥2 Witnesses have completed, beta badge replaced
-  with "Witness included" indicator + explanatory note. First Quarter and
-  FullMoonResultsPage retain the beta badge (no Witness signal there).
-- **Narrative page structure**: self role → witness role → convergence → blind spots
-  → domain bars → witness session list. Each section clearly headed.
-- `computeConvergence()` added to witness-scoring.js.
-- `RoleResult` updated with `definitive` prop.
-
-### Phase 9.2 — Pre-Phase 10 audit fixes ✅ COMPLETE
-- en.json + ca.json: "nine roles" → "twelve roles" in `about.explore.roles.desc`
-- en.json + ca.json: "IPIP" removed from `instruments.firstQuarter.scaleNote`
-- RoleProbabilityBars.jsx: 4 hardcoded hex values replaced with design tokens (`colors.arcBar`, `colors.arcLabel`, `colors.border`; bar track inline style replaced with Tailwind `bg-gray-100`)
-- tokens.js: added `arcBar` and `arcLabel` tokens
-- ca.json: 60 `fqFacets` high/low descriptions translated to Valencian (labels were already translated)
-
-### Phase 10 — Full UX/UI redesign
-Brand identity and visual foundation. Sub-phases apply the identity across all pages.
-
-### Phase 10.5 — Results pages dashboard redesign ✅ COMPLETE
-Redesigned all four results/report pages as dashboards.
-
-- **Role first**: FQ and FM surface role name (Playfair Display text-4xl/5xl) at the top in a
-  full-width Card with 3px left red accent border. Beta badge, essence text, arc chips inline.
-- **Two-column layout**: RadarChart card (left) + compact domain rows card (right)
-  (`grid-cols-1 md:grid-cols-2`). Domain rows use dividers instead of individual cards.
-- **Role probability bars**: Full width, 2×6 grid (`columns={2}` prop on RoleProbabilityBars).
-- **Facets**: Two columns of domain cards, compact rows within.
-- **Actions**: Share + Start over in a single flex row.
-- **NewMoon**: No role/facets. Two-column radar+domains → upgrade CTA → actions row.
-- **NewMoon i18n fix**: `domains.${key}.label` (TIPI keys) → `fqDomains.${key}.name`
-  (Cèrcol keys, matching remapped scores). New bundle hash forces CDN cache bust.
-- **FullMoonReportPage combined role**: Two separate role cards replaced with a single
-  combined role card. Combined score = self × 2/3 + witness × 1/3 via
-  `computeCombinedRole(selfResult, witnessResult)` in witness-scoring.js.
-  Probability bars show 3 stacked rows (combined / self / witness) when ≥1 witness complete;
-  single row when no witnesses. Legend with Combined / Self / Witness color keys.
-  All witness logic (convergence, blind spots, domain comparison, session list) unchanged.
+### Phase 10.3 — Purple removal + homepage vertical centering ✅ COMPLETE
+- Removed all Tailwind purple-*, violet-*, indigo-* from every user-facing component and page
+- Vision dimension bars: `bg-purple-500` → `bg-[#427c42]` (green) in 5 files
+  (MyResultsPage, NewMoonResultsPage, FirstQuarterResultsPage, FullMoonResultsPage, FullMoonReportPage)
+- Vision DOMAIN_ACCENT: `bg-purple-500` → `bg-[#427c42]` in FirstQuarterPage, FullMoonPage
+- CTA buttons: `bg-purple-600 hover:bg-purple-700` → `bg-[#0047ba] hover:opacity-90 transition-opacity` across
+  FirstQuarterResultsPage, FullMoonResultsPage, FullMoonReportPage (×2), WitnessSetupPage, WitnessPage (×2), FullMoonPage
+- Secondary buttons: `border-purple-200 text-purple-700 hover:bg-purple-50` → `border-[#0047ba] text-[#0047ba] hover:bg-[#e8eef8]`
+  in FullMoonResultsPage, WitnessSetupPage
+- Section eyebrows and labels: `text-purple-400/500` → `text-[#0047ba]` across 5 files
+- Borders: `border-purple-100` → `border-gray-200` in FirstQuarterResultsPage, FullMoonResultsPage, WitnessSetupPage
+- Witness score values: `text-purple-600` → `text-[#0047ba]` in FullMoonReportPage (×2)
+- Witness comparison bar: `bg-purple-300` → `bg-[#99b3e0]` in FullMoonReportPage (bar + legend dot)
+- Definitive badge: `bg-purple-50 text-purple-700` → `bg-[#e8eef8] text-[#0047ba]` in RoleResult
+- RolesPage: R07 Octopus + R11 Fox role accents violet/indigo → `text-[#427c42] bg-[#eaf2ea]`
+- WitnessPage progress bar: `bg-purple-500` → `bg-[#0047ba]`; focus ring → `focus:ring-[#99b3e0]`
+- FullMoonPage paywall disabled state: `bg-purple-300` → `bg-[#99b3e0]`
+- HomePage: cards vertically centered (flex-1 flex items-center; removed fixed 80px top spacer)
 
 ### Phase 10.4 — Centralized component system + mobile navigation ✅ COMPLETE
 **Fix 1 — Component system (src/components/ui/):**
@@ -161,48 +110,37 @@ Redesigned all four results/report pages as dashboards.
 - Each link closes menu on click
 - Desktop (md+): existing horizontal nav unchanged; hamburger hidden
 
-### Phase 10.3 — Purple removal + homepage vertical centering ✅ COMPLETE
-- Removed all Tailwind purple-*, violet-*, indigo-* from every user-facing component and page
-- Vision dimension bars: `bg-purple-500` → `bg-[#427c42]` (green) in 5 files
-  (MyResultsPage, NewMoonResultsPage, FirstQuarterResultsPage, FullMoonResultsPage, FullMoonReportPage)
-- Vision DOMAIN_ACCENT: `bg-purple-500` → `bg-[#427c42]` in FirstQuarterPage, FullMoonPage
-- CTA buttons: `bg-purple-600 hover:bg-purple-700` → `bg-[#0047ba] hover:opacity-90 transition-opacity` across
-  FirstQuarterResultsPage, FullMoonResultsPage, FullMoonReportPage (×2), WitnessSetupPage, WitnessPage (×2), FullMoonPage
-- Secondary buttons: `border-purple-200 text-purple-700 hover:bg-purple-50` → `border-[#0047ba] text-[#0047ba] hover:bg-[#e8eef8]`
-  in FullMoonResultsPage, WitnessSetupPage
-- Section eyebrows and labels: `text-purple-400/500` → `text-[#0047ba]` across 5 files
-- Borders: `border-purple-100` → `border-gray-200` in FirstQuarterResultsPage, FullMoonResultsPage, WitnessSetupPage
-- Witness score values: `text-purple-600` → `text-[#0047ba]` in FullMoonReportPage (×2)
-- Witness comparison bar: `bg-purple-300` → `bg-[#99b3e0]` in FullMoonReportPage (bar + legend dot)
-- Definitive badge: `bg-purple-50 text-purple-700` → `bg-[#e8eef8] text-[#0047ba]` in RoleResult
-- RolesPage: R07 Octopus + R11 Fox role accents violet/indigo → `text-[#427c42] bg-[#eaf2ea]`
-- WitnessPage progress bar: `bg-purple-500` → `bg-[#0047ba]`; focus ring → `focus:ring-[#99b3e0]`
-- FullMoonPage paywall disabled state: `bg-purple-300` → `bg-[#99b3e0]`
-- HomePage: cards vertically centered (flex-1 flex items-center; removed fixed 80px top spacer)
+### Phase 10.5 — Results pages dashboard redesign ✅ COMPLETE
+Redesigned all four results/report pages as dashboards.
 
-### Phase 10.2 — Homepage card fix + centralized layout container ✅ COMPLETE
-- HomePage: instrument cards redesigned — white bg, 3px solid left border in instrument color,
-  name in instrument color, hover fills with instrument color (text inverts), transition-colors 200ms
-- Layout.jsx: centralized white content wrapper (bg-white, max-w-4xl mx-auto, px-4 sm:px-8,
-  min-h-[calc(100vh-4rem)]); homepage opts out via useLocation check (pathname === '/')
-- Removed redundant declarations from 13 pages:
-  - AboutPage, InstrumentsPage, RolesPage, SciencePage, FaqPage: removed bg-gray-50, min-h-screen,
-    max-w-xl mx-auto px-4 outer wrapper; py-12 stays on main
-  - NewMoonResultsPage, FirstQuarterResultsPage, FullMoonResultsPage, WitnessSetupPage:
-    removed bg-gray-50, min-h-screen, px-4, max-w-xl mx-auto w-full from inner container
-  - MyResultsPage: removed bg-gray-50, min-h-screen, flex centering, px-4, max-w-xl from wrapper
-  - AuthPage: removed bg-gray-50, min-h-screen, px-4; flex centering kept; min-h-[calc(100vh-4rem)]
-  - FullMoonReportPage: removed same from 3 loading/error states and main content wrapper
+- **Role first**: FQ and FM surface role name (Playfair Display text-4xl/5xl) at the top in a
+  full-width Card with 3px left red accent border. Beta badge, essence text, arc chips inline.
+- **Two-column layout**: RadarChart card (left) + compact domain rows card (right)
+  (`grid-cols-1 md:grid-cols-2`). Domain rows use dividers instead of individual cards.
+- **Role probability bars**: Full width, 2×6 grid (`columns={2}` prop on RoleProbabilityBars).
+- **Facets**: Two columns of domain cards, compact rows within.
+- **Actions**: Share + Start over in a single flex row.
+- **NewMoon**: No role/facets. Two-column radar+domains → upgrade CTA → actions row.
+- **NewMoon i18n fix**: `domains.${key}.label` (TIPI keys) → `fqDomains.${key}.name`
+  (Cèrcol keys, matching remapped scores). New bundle hash forces CDN cache bust.
+- **FullMoonReportPage combined role**: Two separate role cards replaced with a single
+  combined role card. Combined score = self × 2/3 + witness × 1/3 via
+  `computeCombinedRole(selfResult, witnessResult)` in witness-scoring.js.
+  Probability bars show 3 stacked rows (combined / self / witness) when ≥1 witness complete;
+  single row when no witnesses. Legend with Combined / Self / Witness color keys.
+  All witness logic (convergence, blind spots, domain comparison, session list) unchanged.
 
-### Phase 10.1 — Brand identity foundation + homepage redesign ✅ COMPLETE
-- tokens.js: brand palette (#cf3339 red, #0047ba blue, #f1c22f yellow, #427c42 green, #ffffff, #111111); all generic palette colors replaced
-- tokens.js: typography updated — Playfair Display (display/headings) + Roboto (body/UI)
-- tokens.js: Big Five dimension colors remapped to brand palette
-- index.css: Google Fonts imports (Playfair Display 400/700, Roboto 400/500/700); global h1/h2/h3 rule for Playfair Display; body font → Roboto
-- Layout.jsx: single-row blue header (full-width, px-8/px-12); inline SVG logo (CercolLogo.jsx, white); white nav links; border-radius 4px on nav pills
-- AccountButton.jsx + LanguageToggle.jsx: updated for blue header context (white text, white-bg active state)
-- FeedbackButton: "Report issue" floating link removed; translation feedback panel retained
-- HomePage.jsx: full redesign — blue background, 3-column instrument card grid (red/green/yellow cards), no tagline/headline, footer with GitHub + report issue links
+### Phase 10.6 — Test flow pages brand identity ✅ COMPLETE
+Applied brand identity to all four test flow pages (NewMoonPage, FirstQuarterPage, FullMoonPage, WitnessPage) and shared test components.
+
+- **LikertScale**: `rounded` (4px), inline styles from `colors.blue` token for selected state (both mobile/desktop), brand hover colors
+- **QuestionCard**: `rounded` (4px), no shadow, item prefix uses `style={{ color: colors.blue }}`
+- **ProgressBar**: fill bar uses `style={{ backgroundColor: colors.blue }}` from token
+- **Intro screens** (all three instruments): removed `min-h-screen bg-gray-50`; info card `rounded`; "Scale" label → `<SectionLabel color="gray">`; CTA → `<Button variant="primary">`; vertically centered via `min-h-[calc(100vh-4rem)]`
+- **Transition screens** (FQ + FM): same bg/layout fix; CTA → `<Button variant="primary">`
+- **Answering screens** (all three): removed `min-h-screen bg-gray-50`; block header `rounded`, no shadow; back → `<Button variant="secondary">`, next → `<Button variant="primary" disabled>`
+- **Gate screens** (FM checking/processing/paywall): removed `min-h-screen bg-gray-50`
+- **WitnessPage**: removed `min-h-screen bg-gray-50` from all phase screens; instrument back button → `<Button variant="secondary">`; intro/terminal screens vertically centered via `min-h-[calc(100vh-4rem)]`
 
 ### Phase 10.7 — Animal illustrations on role cards ✅ COMPLETE
 12 animal illustrations integrated into the role card on all three results pages.
@@ -218,18 +156,6 @@ Redesigned all four results/report pages as dashboards.
   `object-cover object-center` on a solid brand-color background (`illustrationBg`), flush to
   the card's right/top/bottom edges.
 - `RoleResult.jsx` updated consistently (not currently used by any page).
-
-### Phase 10.6 — Test flow pages brand identity ✅ COMPLETE
-Applied brand identity to all four test flow pages (NewMoonPage, FirstQuarterPage, FullMoonPage, WitnessPage) and shared test components.
-
-- **LikertScale**: `rounded` (4px), inline styles from `colors.blue` token for selected state (both mobile/desktop), brand hover colors
-- **QuestionCard**: `rounded` (4px), no shadow, item prefix uses `style={{ color: colors.blue }}`
-- **ProgressBar**: fill bar uses `style={{ backgroundColor: colors.blue }}` from token
-- **Intro screens** (all three instruments): removed `min-h-screen bg-gray-50`; info card `rounded`; "Scale" label → `<SectionLabel color="gray">`; CTA → `<Button variant="primary">`; vertically centered via `min-h-[calc(100vh-4rem)]`
-- **Transition screens** (FQ + FM): same bg/layout fix; CTA → `<Button variant="primary">`
-- **Answering screens** (all three): removed `min-h-screen bg-gray-50`; block header `rounded`, no shadow; back → `<Button variant="secondary">`, next → `<Button variant="primary" disabled>`
-- **Gate screens** (FM checking/processing/paywall): removed `min-h-screen bg-gray-50`
-- **WitnessPage**: removed `min-h-screen bg-gray-50` from all phase screens; instrument back button → `<Button variant="secondary">`; intro/terminal screens vertically centered via `min-h-[calc(100vh-4rem)]`
 
 ### Phase 10.8 — Moon phase SVG line icons ✅ COMPLETE
 Replaced all moon emoji (🌑 🌓 🌕) and functional emoji (✓) with custom SVG line icons
@@ -344,6 +270,16 @@ that render the externally-generated potrace SVGs inline, preserving the full
 - `src/components/MoonIcons.jsx` — animal icon section replaced; 12 `?raw` imports +
   `prepareAnimalSvg` helper + `AnimalSvg` inner component + 12 one-liner exports
 
+### Phase 10.13 — RoleIcon in RoleProbabilityBars ✅ COMPLETE
+Added `RoleIcon` (size 18, `currentColor`) inline to the left of each role name
+in the probability bar list.
+
+**Files modified:**
+- `src/components/RoleProbabilityBars.jsx` — imported `RoleIcon` from `MoonIcons`;
+  role name `<span>` changed to `flex items-center gap-1.5`; `<RoleIcon role={r} size={18} />`
+  added before the translated name. `r` (the role key R01–R12) was already the
+  loop variable from `Object.entries(probabilities)`.
+
 ### Phase 10.14 — Replace JPG illustrations with RoleIcon in role cards ✅ COMPLETE
 Decision: the technology for generating consistent rice-grain style illustrations
 is not mature enough. JPG illustrations replaced by RoleIcon SVG icons on all
@@ -364,16 +300,6 @@ on brand-blue with `py-8` padding.
 
 **Phase 10.7 note:** JPG files remain at `src/assets/illustrations/` but are no longer
 imported anywhere. Illustration work to be revisited when generation tooling matures.
-
-### Phase 10.13 — RoleIcon in RoleProbabilityBars ✅ COMPLETE
-Added `RoleIcon` (size 18, `currentColor`) inline to the left of each role name
-in the probability bar list.
-
-**Files modified:**
-- `src/components/RoleProbabilityBars.jsx` — imported `RoleIcon` from `MoonIcons`;
-  role name `<span>` changed to `flex items-center gap-1.5`; `<RoleIcon role={r} size={18} />`
-  added before the translated name. `r` (the role key R01–R12) was already the
-  loop variable from `Object.entries(probabilities)`.
 
 ### Phase 10.15 — Role card icon repositioning + Cèrcol circle radar ✅ COMPLETE
 Two visual upgrades to unify the brand identity across results pages.
@@ -564,62 +490,158 @@ session creation.
 Its contents are all `VITE_*` variables (intentionally public, embedded in the JS bundle), so
 there is no credential exposure, but the file should be added to `.gitignore`.
 
-### Phase 11 — Spanish (ES) language support ✅ COMPLETE
+### Phase 11 — Multilingual support ✅ COMPLETE
 
-Added Spanish as the third language across the full stack:
+Six languages live: EN (source), CA (Catalan/Valencian), ES (Spanish), FR (French), DE (German), DA (Danish).
+All UI strings, all 190 test items (10 TIPI + 60 IPIP-NEO-60 + 120 IPIP-NEO-120), and full
+instrument name translations in every language. Translation methodology documented in SCIENCE.md.
 
-- `src/locales/es.json` — full Spanish UI translation of all keys (neutral international Spanish)
-- `src/data/new-moon.js` — `es` key added to all 10 TIPI items
-- `src/data/first-quarter.js` — `es` key added to all 60 IPIP-NEO-60 items
-- `src/data/full-moon.js` — `es` key added to all 120 IPIP-NEO-120 items
-- `src/components/LanguageToggle.jsx` — binary EN↔CA extended to three-way cycle EN→CA→ES→EN; later replaced with a dropdown (see Phase 11.1)
-- `src/i18n.js` — ES locale imported; browser `es*` detection added
-- `SCIENCE.md` — "Translation methodology" subsection added before References
+#### Phase 11.1 — Spanish (ES) ✅ COMPLETE
+
+- `src/locales/es.json` — full UI translation (neutral international Spanish)
+- `es` key added to all 190 test items across new-moon.js, first-quarter.js, full-moon.js
+- Instrument names: "Cèrcol de Luna Nueva", "Cèrcol de Cuarto Creciente", "Cèrcol de Luna Llena", "Testigo Cèrcol"
+- Three hardcoded instrument name strings replaced with `t()` calls in WitnessSetupPage, WitnessPage, FullMoonReportPage
+- `src/i18n.js` — ES locale imported; `es*` browser detection added
+- `SCIENCE.md` — ES translation methodology section added; Cupani et al. (2014) cited as validation precedent
 - `CLAUDE.md` — "Adding new languages" guidelines added
-- Translation feedback system (`translationFeedback.js`) works for ES without changes
 
-Translation methodology: direct translation from English source items, psychological
-meaning preserved exactly. See SCIENCE.md for full methodology and validation precedent
-(Cupani et al. 2014). Translation feedback available to Spanish-speaking users via the
-suggestion panel on all instrument pages.
+#### Phase 11.2 — French (FR) + German (DE) ✅ COMPLETE
 
-### Phase 11.1 — Spanish instrument names + language dropdown ✅ COMPLETE
-
-Follow-up fixes to Phase 11:
-
-- `src/locales/es.json` — instrument names translated throughout: "Cèrcol de Luna Nueva",
-  "Cèrcol de Cuarto Creciente", "Cèrcol de Luna Llena", "Testigo Cèrcol"
-- `src/pages/WitnessSetupPage.jsx`, `WitnessPage.jsx`, `FullMoonReportPage.jsx` — three
-  hardcoded English instrument name strings replaced with `t()` calls
-- `src/components/LanguageToggle.jsx` — three-way cycle replaced with a dropdown: globe icon
-  opens a menu with English / Català / Español, active language highlighted, outside-click
-  to close; same pattern as `AccountButton.jsx`
-
-### Phase 12 — French (FR) + German (DE) language support + UI polish ✅ COMPLETE
-
-Added French and German as the fourth and fifth languages, and refined the language selector:
-
-- `src/locales/fr.json` — full French UI translation (neutral European French)
-- `src/locales/de.json` — full German UI translation (Hochdeutsch)
-- `src/data/new-moon.js` — `fr` and `de` keys added to all 10 TIPI items
-- `src/data/first-quarter.js` — `fr` and `de` keys added to all 60 IPIP-NEO-60 items
-- `src/data/full-moon.js` — `fr` and `de` keys added to all 120 IPIP-NEO-120 items
+- `src/locales/fr.json` — full UI translation (neutral European French)
+- `src/locales/de.json` — full UI translation (Hochdeutsch)
+- `fr` and `de` keys added to all 190 test items across new-moon.js, first-quarter.js, full-moon.js
+- FR instrument names: "Cèrcol de Nouvelle Lune", "Cèrcol de Premier Quartier", "Cèrcol de Pleine Lune", "Témoin Cèrcol"
+- DE instrument names: "Cèrcol des Neumondes", "Cèrcol des Ersten Viertels", "Cèrcol des Vollmondes", "Zeuge Cèrcol"
 - `src/i18n.js` — FR and DE locales imported; `fr*` and `de*` browser detection added
-- `src/components/LanguageToggle.jsx` — dropdown now shows ISO 639-1 codes (EN, CA, ES, FR, DE);
-  active code displayed beside the GlobeIcon so language is always visible without opening menu
-- `src/pages/ProfilePage.jsx` — removed separate "Valencian" entry from native language selector;
-  Catalan covers both (`ca`)
 - `SCIENCE.md` — FR and DE translation methodology sections added
+- FR scientific basis: Thiry & Piolti (2023) IPIP adaptation (University of Mons, ipip.ori.org)
+- DE scientific basis: German IPIP adaptations in published literature (ipip.ori.org)
 
-Instrument names: "Cèrcol de Nouvelle Lune" / "Cèrcol des Neumondes", etc.
-FR scientific basis: Thiry & Piolti (2023) IPIP adaptation (University of Mons), listed on ipip.ori.org.
-DE scientific basis: German IPIP adaptations referenced in published literature (ipip.ori.org).
-Both translations follow the direct translation methodology documented in SCIENCE.md.
+#### Phase 11.3 — Language selector + housekeeping ✅ COMPLETE
 
-### Phase 14 — Living model
+- `src/components/LanguageToggle.jsx` — globe-icon cycle (EN→CA→ES) replaced with a dropdown; ISO codes (EN, CA, ES, FR, DE) displayed; active code shown beside GlobeIcon without opening menu; outside-click closes; same pattern as AccountButton.jsx
+- `src/pages/ProfilePage.jsx` — separate "Valencian" entry removed from native language selector; Catalan (`ca`) covers both
+
+#### Phase 11.4 — Catalan test item translations + Danish (DA) ✅ COMPLETE
+
+**CA test item translations:**
+- All 60 IPIP-NEO-60 items in `src/data/first-quarter.js` translated from English placeholder to Catalan/Valencian
+- All 120 IPIP-NEO-120 items in `src/data/full-moon.js` translated from English placeholder to Catalan/Valencian
+- AVL/IEC orthographic standard; gender-inclusive slash notation; psychological meaning preserved
+- `SCIENCE.md` — CA methodology section updated to reflect all 190 items now translated
+
+**Danish (DA):**
+- `src/locales/da.json` — full UI translation (standard Rigsdansk)
+- `da` key added to all 190 test items across new-moon.js, first-quarter.js, full-moon.js
+- DA instrument names: "Nymåne Cèrcol", "Første Kvartal Cèrcol", "Fuldmåne Cèrcol", "Vidne Cèrcol"
+- `src/i18n.js` — DA locale imported; `da*` browser detection added
+- `src/components/LanguageToggle.jsx` — DA added to LANGS array (6th option)
+- Scientific basis: Vedel, Gøtzsche-Astrup & Holm (2018) validated Danish IPIP-NEO-120 (*Nordic Psychology*)
+- Altered items: conservative voting item DA uses Vedel formulation ("Ser mig selv som overvejende konservativ politisk.") per legal requirement
+- `SCIENCE.md` — DA methodology section added; Vedel et al. (2018) reference added
+
+### Phase 12.1 — Witness identity layer ✅ COMPLETE
+
+Dual-mode Witness system: anonymous sessions preserved unchanged; authenticated witnesses
+can opt in to link the session to their profile, enabling team features in Last Quarter.
+
+**Database (`supabase/migrations/008_witness_identity.sql`):**
+- `witness_user_id` (nullable UUID, FK `auth.users`) added to `witness_sessions`
+- Index on `witness_user_id WHERE NOT NULL`
+- RLS policy: authenticated witness can read rows where `witness_user_id = auth.uid()`
+
+**Backend (`api/main.py`):**
+- `get_optional_user` dependency: validates Bearer if present, returns `None` if absent
+- `POST /witness/session/{token}/complete`: upgraded to optional auth; if authenticated,
+  `witness_user_id` is stored alongside `completed_at` in a single PATCH
+- `GET /witness/my-contributions`: new authenticated endpoint returning sessions the
+  calling user completed as a witness (`subject_display`, `completed_at` only — no scores)
+
+**Frontend:**
+- `src/lib/api.js` — `completeWitnessSession` accepts `linkAsUser` flag; uses `authFetch`
+  if true, `publicFetch` otherwise. `getMyWitnessContributions()` added.
+- `src/pages/WitnessPage.jsx` — `useAuth` imported; `linkAsUser` state added; authenticated
+  users see a checkbox on the intro screen ("Link this session to my profile"); unchecked by
+  default; flow and scoring unchanged regardless of choice.
+- `src/pages/WitnessSetupPage.jsx` — informational note added: if witnesses are signed in
+  they can link the session for team features.
+- `src/pages/MyResultsPage.jsx` — "Witness contributions" section added below results list;
+  shows list of subjects the user has witnessed (subject_display, read-only, no scores).
+
+**i18n:** New keys added to all 6 locales: `witness.setup.linkedNote`,
+`witness.page.intro.linkLabel`, `witness.page.intro.linkNote`,
+`myResults.contributionsHeading`, `myResults.contributionsEmpty`, `myResults.contributionItem`.
+
+### Phase 12.2 — Team groups system ✅ COMPLETE
+
+Group infrastructure enabling Last Quarter team reports.
+
+**Database (`supabase/migrations/009_groups.sql`):**
+- `groups` table: `id`, `name`, `created_by` (FK `auth.users`), `created_at`
+- `group_members` table: `group_id`, `user_id` (nullable), `status` (pending/active),
+  `invited_email`, `invited_at`, `joined_at`
+- Unique indexes: `(group_id, user_id) WHERE NOT NULL` and `(group_id, invited_email) WHERE NOT NULL`
+- RLS: members read own group rows + other active members of shared groups; only creator
+  can update/delete group rows
+
+**Backend (`api/main.py`):**
+- `CreateGroupBody` Pydantic model
+- `POST /groups` — creates group + active membership for creator; invites members by email
+  (matched against `profiles` table; stored as `user_id` if found, `invited_email` if not)
+- `GET /groups/mine` — returns active groups with member count and Full Moon completion count
+- `GET /groups/pending` — returns pending invitations for the calling user
+- `POST /groups/{id}/accept` — transitions pending → active membership
+- `POST /groups/{id}/decline` — deletes pending membership row
+- `GET /groups/{id}/report-data` — active-members-only; returns profile display name, OCEAN
+  z-scores (normative priors from SCIENCE.md), and nearest role centroid (R01–R12) for each
+  active member with a Full Moon result
+
+**Frontend:**
+- `src/lib/api.js` — `createGroup`, `getMyGroups`, `getPendingInvitations`,
+  `acceptGroupInvitation`, `declineGroupInvitation`, `getGroupReportData`
+- `src/pages/GroupsPage.jsx` — `/groups` route; lists active groups with member/completion
+  counts; pending invitations with Accept/Decline; create-group form (name + comma-separated
+  emails); redirects to `/auth` if unauthenticated
+- `src/App.jsx` — `/groups` and `/groups/:id` routes added (`:id` is Phase 12.3 placeholder)
+- `src/components/AccountButton.jsx` — "Groups" link added between My Results and Sign Out
+
+**i18n:** `account.groups` and `groups.*` keys added to all 6 locales (EN/CA/ES/FR/DE/DA).
+
+### Phase 12.3 — Group detail + UX polish ✅ COMPLETE
+
+**Seed data:** `scripts/seed_dummy_team.sql` and `scripts/clear_dummy_team.sql` — direct SQL
+inserts for 7 fictional Valencian users, 7 Full Moon results (6+ roles), 42 witness sessions,
+and 1 group "Grup de prova — La Ventijol". Safe to run in the Supabase SQL editor.
+
+**AccountButton:** replaced static email initial with `RoleIcon` if the signed-in user has a
+Full Moon result; falls back to initial if not. Fetches from Supabase on mount, computes role
+client-side via `computeRole`.
+
+**Full Moon gate:** authenticated premium users who already have a `fullMoon` result see a
+"you've already completed" screen with a link to their report. New gate state: `'completed'`.
+
+**`src/utils/team-narrative.js`:** `generateNarrative({ p, b, v, c, n })` returns i18n key
+suffixes for three sections (move / watchOut / help) using a deterministic decision tree.
+Also exports `computeGroupMeans`, `balanceFlagForPBV`, `balanceFlagForC`, `balanceFlagForN`,
+`zscoresToRaw` for use in LastQuarterPage.
+
+**`src/pages/LastQuarterPage.jsx`:** `/groups/:id` team report with four sections:
+- Team composition: `RoleIcon` + role name + arc chips per member; Pending badge for members
+  without a Full Moon result.
+- Balance analysis: group mean z-score flags (Balanced / Tilted / Strongly Tilted for P/B/V;
+  structural flags for C and N) + RadarChart of reconstructed mean raw scores.
+- Team narrative: three deterministic paragraphs (How your group moves / Watch out for /
+  What would help) from the decision tree.
+- Share: copy-link button + `window.print()` for PDF.
+
+**i18n:** `fm.alreadyCompleted.*` and `lastQuarter.*` (including full narrative paragraphs)
+added to all 6 locales. Non-English locales have structural keys translated; long narrative
+text falls back to English via `fallbackLng: 'en'`.
+
+### Phase 13 — Living model
 - GitHub Actions job every 28 days: update NORM_MEAN/NORM_SD at N≥200
-- At N≥300: k-means (k=12) in 5D; update centroids if divergence
-  is systematic
+- At N≥300: k-means (k=12) in 5D; update centroids if divergence is systematic
 - Internal validation dashboard (read-only, authenticated)
 - If role model evolves to incorporate g: add ICAR collection then
 

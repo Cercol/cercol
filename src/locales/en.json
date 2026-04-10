@@ -13,12 +13,112 @@
     "loading": "Loading…",
     "error": "Could not load results. Try again later.",
     "empty": "No results yet. Complete an assessment to see your profile here.",
-    "startCta": "Start an assessment"
+    "startCta": "Start an assessment",
+    "contributionsHeading": "Witness contributions",
+    "contributionsEmpty": "You haven't completed any witness sessions yet.",
+    "contributionItem": "Described {{name}}"
   },
   "account": {
     "profile": "Profile",
     "myResults": "My results",
+    "groups": "Groups",
     "signOut": "Sign out"
+  },
+  "groups": {
+    "heading": "Groups",
+    "newGroup": "New group",
+    "cancelCreate": "Cancel",
+    "createHeading": "Create a group",
+    "nameLabel": "Group name",
+    "namePlaceholder": "e.g. Design team",
+    "emailsLabel": "Invite members (optional)",
+    "emailsPlaceholder": "alice@example.com, bob@example.com",
+    "emailsNote": "Comma-separated emails. Members must have a Cèrcol account.",
+    "createCta": "Create group",
+    "creating": "Creating…",
+    "createError": "Something went wrong. Try again.",
+    "loading": "Loading…",
+    "loadError": "Could not load groups. Try again later.",
+    "empty": "No groups yet.",
+    "emptyNote": "Create a group to share your Full Moon results with your team.",
+    "activeHeading": "Your groups",
+    "pendingHeading": "Pending invitations",
+    "memberCount": "{{count}} member",
+    "memberCount_plural": "{{count}} members",
+    "completedCount": "{{ratio}} completed",
+    "creatorBadge": "Creator",
+    "invitedOn": "Invited {{date}}",
+    "accept": "Accept",
+    "decline": "Decline",
+    "accepting": "Accepting…",
+    "declining": "Declining…"
+  },
+  "lastQuarter": {
+    "title": "Team report",
+    "loading": "Loading…",
+    "error": "Could not load group data. Try again later.",
+    "notMember": "You are not a member of this group.",
+    "compositionHeading": "Team composition",
+    "pendingLabel": "Pending",
+    "pendingNote": "{{count}} member hasn't completed Full Moon yet.",
+    "pendingNote_plural": "{{count}} members haven't completed Full Moon yet.",
+    "arcLabel": "Arc:",
+    "balanceHeading": "Balance analysis",
+    "balanceState": {
+      "balanced": "Balanced",
+      "tiltedHigh": "Tilted high",
+      "tiltedLow": "Tilted low",
+      "stronglyHigh": "Strongly high",
+      "stronglyLow": "Strongly low",
+      "highGood": "Strong",
+      "lowCaution": "Low — watch out",
+      "highCaution": "High — watch out",
+      "lowGood": "Low"
+    },
+    "narrativeHeading": "Team narrative",
+    "narrative": {
+      "moveHeading": "How your group moves",
+      "watchOutHeading": "Watch out for",
+      "helpHeading": "What would help",
+      "move": {
+        "high_p": "Your team has a strong outward presence — visible, direct, and quick to surface ideas. Meetings run with energy. External stakeholders notice this group.",
+        "low_p":  "Your team operates with quiet depth. Ideas develop slowly and with care. The group tends to act from reflection rather than impulse.",
+        "high_b": "Cohesion is this team's foundation. People listen well, support each other, and tend to move through disagreement constructively. Trust is high.",
+        "low_b":  "Your team is direct, task-focused, and efficient. People say what they mean. Social friction is accepted as part of honest work.",
+        "high_v": "Innovation is the group's natural mode. Creative exploration and novel ideas come easily. The team is comfortable in ambiguity and tolerates unfinished thinking.",
+        "low_v":  "Your team is pragmatic and execution-focused. Concrete plans, clear steps, and measurable progress are this group's language.",
+        "low_c":  "Your team is flexible and adaptive — but may struggle to sustain momentum or coordinate ownership without deliberate structure.",
+        "high_n": "Emotional reactivity is present in this group. The team feels things acutely and may carry stress visibly.",
+        "balanced": "Your team shows a well-distributed profile across all dimensions. No single tendency dominates, which creates versatility — and requires active coordination to stay coherent."
+      },
+      "watchOut": {
+        "high_p": "High-presence teams risk dominating discussion. Quieter members may withhold ideas. The team can read as overwhelming to less vocal collaborators.",
+        "low_p":  "Low-presence teams can be invisible to the wider organisation. Conflict may stay below the surface longer than is healthy.",
+        "high_b": "High-bond teams risk over-agreement and harmony bias. Difficult truths may be softened or avoided. Groupthink is a real risk.",
+        "low_b":  "Low-bond teams can suffer interpersonal friction and misread directness as hostility. Building trust may require explicit effort.",
+        "high_v": "Vision-heavy teams often struggle with follow-through. Ideas multiply faster than they are completed. Execution structures need deliberate maintenance.",
+        "low_v":  "Teams low in vision may miss strategic opportunities or struggle to adapt when their current approach stops working.",
+        "low_c":  "Teams low in discipline tend to leave ownership unclear and timelines soft. The risk is ambition without completion.",
+        "high_n": "Elevated stress reactivity can amplify interpersonal tension. Under pressure, the team's mood may destabilise before problems are solved.",
+        "balanced": "No single dimension flags strongly. Watch for diffuse accountability — versatile teams sometimes assume someone else owns a task."
+      },
+      "help": {
+        "high_p": "Deliberately create space for less visible members. Rotate who opens discussion. Give quiet contributors first-draft ownership on key decisions.",
+        "low_p":  "Invest in visibility: nominate someone to communicate the team's work externally. Create explicit channels for surfacing small frustrations before they accumulate.",
+        "high_b": "Practice structured disagreement: assign devil's advocate roles in decision-making. Ask 'what would make this a bad idea?' before committing.",
+        "low_b":  "Invest in relationship infrastructure: regular non-task check-ins, shared context-setting, and explicit appreciation of contributions.",
+        "high_v": "Anchor creative sessions to deliverables. For every idea explored, assign a single owner and a concrete next step. Reduce the idea backlog regularly.",
+        "low_v":  "Schedule time for horizon scanning: what is changing in your environment? What approaches might you be over-relying on?",
+        "low_c":  "Adopt lightweight ownership rituals: name one person per outcome, one due date per decision. Review commitments weekly.",
+        "high_n": "Invest in stress literacy as a team. Name when the group is reactive versus reflective. Create low-stakes channels for ventilating concerns before they escalate.",
+        "balanced": "With a balanced profile, the risk is coordination overhead. Be explicit about decision rights, communication norms, and who leads what — don't assume alignment."
+      }
+    },
+    "shareHeading": "Share",
+    "copyLink": "Copy link",
+    "copied": "Copied!",
+    "downloadPdf": "Download PDF",
+    "viewReport": "View report"
   },
   "cookies": {
     "notice": "Cèrcol uses only functional cookies — no analytics, no advertising trackers.",
@@ -273,6 +373,11 @@
       "guidance": "You know yourself. Trust that.",
       "partNote": "This is Part 1 of a two-part instrument. Witness Cèrcol follows after your results.",
       "cta": "Begin"
+    },
+    "alreadyCompleted": {
+      "heading": "You've already completed Full Moon Cèrcol",
+      "body": "Personality doesn't change significantly over short periods. Your existing result remains accurate — retaking would produce very similar scores.",
+      "cta": "View your report"
     }
   },
   "fmResults": {
@@ -636,7 +741,8 @@
       "statusComplete": "Done",
       "existingHeading": "Your witnesses",
       "viewReport": "View full report",
-      "error": "Something went wrong. Try again."
+      "error": "Something went wrong. Try again.",
+      "linkedNote": "If your witnesses are signed in, they can link the session to their profile for future team features."
     },
     "page": {
       "loading": "Loading…",
@@ -646,7 +752,9 @@
         "subjectLabel": "You're describing",
         "youAreLabel": "You are",
         "youArePlaceholder": "Your name",
-        "cta": "Start"
+        "cta": "Start",
+        "linkLabel": "Link this session to my profile",
+        "linkNote": "Lets future team features connect you to this person."
       },
       "tooltipLabel": "About this word",
       "progress": "{{current}} of {{total}}",

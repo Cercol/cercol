@@ -8,8 +8,9 @@ import { useNavigate, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
+import { getMyWitnessContributions } from '../lib/api'
 import { DOMAIN_KEYS } from '../data/domains'
-import { Card, Button } from '../components/ui'
+import { Card, Button, SectionLabel } from '../components/ui'
 import { ChevronRightIcon } from '../components/MoonIcons'
 
 const DOMAIN_BAR_COLOR = {
@@ -96,8 +97,9 @@ export default function MyResultsPage() {
   const { t, i18n }     = useTranslation()
   const navigate        = useNavigate()
   const { user, profile, loading } = useAuth()
-  const [results, setResults] = useState(null)   // null = loading
-  const [error,   setError]   = useState(false)
+  const [results,       setResults]       = useState(null)   // null = loading
+  const [error,         setError]         = useState(false)
+  const [contributions, setContributions] = useState(null)  // null = loading
 
   useEffect(() => {
     if (loading) return
@@ -113,6 +115,9 @@ export default function MyResultsPage() {
         if (err) { setError(true); return }
         setResults(data ?? [])
       })
+    getMyWitnessContributions()
+      .then(setContributions)
+      .catch(() => setContributions([]))
   }, [user, loading, navigate])
 
   return (
@@ -156,6 +161,28 @@ export default function MyResultsPage() {
               {t('myResults.startCta')}
             </Button>
           </div>
+        )}
+
+        {/* Witness contributions */}
+        {contributions !== null && (
+          <section className="mt-10">
+            <SectionLabel color="gray" className="mb-3">
+              {t('myResults.contributionsHeading')}
+            </SectionLabel>
+            {contributions.length === 0 ? (
+              <p className="text-sm text-gray-400">{t('myResults.contributionsEmpty')}</p>
+            ) : (
+              <div className="flex flex-col gap-2">
+                {contributions.map((c, i) => (
+                  <div key={i} className="bg-white rounded border border-gray-200 px-4 py-3">
+                    <p className="text-sm text-gray-900">
+                      {t('myResults.contributionItem', { name: c.subject_display || '—' })}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
         )}
       </div>
     </main>

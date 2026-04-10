@@ -13,12 +13,79 @@
     "loading": "Lädt…",
     "error": "Ergebnisse konnten nicht geladen werden. Versuche es später erneut.",
     "empty": "Noch keine Ergebnisse. Schließe eine Auswertung ab, um dein Profil hier zu sehen.",
-    "startCta": "Auswertung starten"
+    "startCta": "Auswertung starten",
+    "contributionsHeading": "Beiträge als Zeuge/Zeugin",
+    "contributionsEmpty": "Du hast noch keine Zeugensitzungen abgeschlossen.",
+    "contributionItem": "{{name}} beschrieben"
   },
   "account": {
     "profile": "Profil",
     "myResults": "Meine Ergebnisse",
+    "groups": "Gruppen",
     "signOut": "Abmelden"
+  },
+  "groups": {
+    "heading": "Gruppen",
+    "newGroup": "Neue Gruppe",
+    "cancelCreate": "Abbrechen",
+    "createHeading": "Gruppe erstellen",
+    "nameLabel": "Gruppenname",
+    "namePlaceholder": "z. B. Design-Team",
+    "emailsLabel": "Mitglieder einladen (optional)",
+    "emailsPlaceholder": "alice@example.com, bob@example.com",
+    "emailsNote": "Kommagetrennte E-Mail-Adressen. Mitglieder müssen ein Cèrcol-Konto haben.",
+    "createCta": "Gruppe erstellen",
+    "creating": "Wird erstellt…",
+    "createError": "Etwas ist schiefgelaufen. Versuche es erneut.",
+    "loading": "Lädt…",
+    "loadError": "Gruppen konnten nicht geladen werden. Versuche es später erneut.",
+    "empty": "Noch keine Gruppen.",
+    "emptyNote": "Erstelle eine Gruppe, um deine Full Moon-Ergebnisse mit deinem Team zu teilen.",
+    "activeHeading": "Deine Gruppen",
+    "pendingHeading": "Ausstehende Einladungen",
+    "memberCount": "{{count}} Mitglied",
+    "memberCount_plural": "{{count}} Mitglieder",
+    "completedCount": "{{ratio}} abgeschlossen",
+    "creatorBadge": "Ersteller/in",
+    "invitedOn": "Eingeladen am {{date}}",
+    "accept": "Annehmen",
+    "decline": "Ablehnen",
+    "accepting": "Wird angenommen…",
+    "declining": "Wird abgelehnt…"
+  },
+  "lastQuarter": {
+    "title": "Teambericht",
+    "loading": "Wird geladen…",
+    "error": "Gruppendaten konnten nicht geladen werden. Versuche es erneut.",
+    "notMember": "Du bist kein Mitglied dieser Gruppe.",
+    "compositionHeading": "Teamzusammensetzung",
+    "pendingLabel": "Ausstehend",
+    "pendingNote": "{{count}} Mitglied hat Full Moon noch nicht abgeschlossen.",
+    "pendingNote_plural": "{{count}} Mitglieder haben Full Moon noch nicht abgeschlossen.",
+    "arcLabel": "Bogen:",
+    "balanceHeading": "Gleichgewichtsanalyse",
+    "balanceState": {
+      "balanced": "Ausgeglichen",
+      "tiltedHigh": "Hoch geneigt",
+      "tiltedLow": "Niedrig geneigt",
+      "stronglyHigh": "Stark erhöht",
+      "stronglyLow": "Stark niedrig",
+      "highGood": "Hoch",
+      "lowCaution": "Niedrig — Achtung",
+      "highCaution": "Hoch — Achtung",
+      "lowGood": "Niedrig"
+    },
+    "narrativeHeading": "Team-Narrative",
+    "narrative": {
+      "moveHeading": "Wie sich deine Gruppe bewegt",
+      "watchOutHeading": "Achtung",
+      "helpHeading": "Was helfen würde"
+    },
+    "shareHeading": "Teilen",
+    "copyLink": "Link kopieren",
+    "copied": "Kopiert!",
+    "downloadPdf": "PDF herunterladen",
+    "viewReport": "Bericht anzeigen"
   },
   "cookies": {
     "notice": "Cèrcol verwendet nur funktionale Cookies — keine Analyse-Cookies, keine Werbe-Tracker.",
@@ -273,6 +340,11 @@
       "guidance": "Du kennst dich selbst. Vertrau darauf.",
       "partNote": "Dies ist Teil 1 eines zweiteiligen Instruments. Zeuge Cèrcol folgt nach deinen Ergebnissen.",
       "cta": "Beginnen"
+    },
+    "alreadyCompleted": {
+      "heading": "Du hast Full Moon Cèrcol bereits abgeschlossen",
+      "body": "Die Persönlichkeit verändert sich in kurzen Zeiträumen nicht wesentlich. Dein vorhandenes Ergebnis bleibt präzise — eine Wiederholung würde sehr ähnliche Werte ergeben.",
+      "cta": "Bericht anzeigen"
     }
   },
   "fmResults": {
@@ -636,7 +708,8 @@
       "statusComplete": "Abgeschlossen",
       "existingHeading": "Deine Zeugen",
       "viewReport": "Vollständigen Bericht ansehen",
-      "error": "Etwas ist schiefgelaufen. Versuche es erneut."
+      "error": "Etwas ist schiefgelaufen. Versuche es erneut.",
+      "linkedNote": "Wenn deine Zeugen angemeldet sind, können sie die Sitzung mit ihrem Profil für künftige Team-Funktionen verknüpfen."
     },
     "page": {
       "loading": "Lädt…",
@@ -646,7 +719,9 @@
         "subjectLabel": "Du beschreibst",
         "youAreLabel": "Du bist",
         "youArePlaceholder": "Dein Name",
-        "cta": "Start"
+        "cta": "Start",
+        "linkLabel": "Diese Sitzung mit meinem Profil verknüpfen",
+        "linkNote": "Ermöglicht künftigen Team-Funktionen, dich mit dieser Person zu verbinden."
       },
       "tooltipLabel": "Über dieses Wort",
       "progress": "{{current}} von {{total}}",

@@ -13,6 +13,7 @@ import ca from './locales/ca.json'
 import es from './locales/es.json'
 import fr from './locales/fr.json'
 import de from './locales/de.json'
+import da from './locales/da.json'
 
 const STORAGE_KEY = 'cercol-lang'
 const saved   = localStorage.getItem(STORAGE_KEY)
@@ -20,6 +21,7 @@ const browser = navigator.language?.startsWith('fr') ? 'fr'
               : navigator.language?.startsWith('de') ? 'de'
               : navigator.language?.startsWith('ca') ? 'ca'
               : navigator.language?.startsWith('es') ? 'es'
+              : navigator.language?.startsWith('da') ? 'da'
               : 'en'
 const initialLang = saved ?? browser
 
@@ -32,6 +34,7 @@ i18n
       es: { translation: es },
       fr: { translation: fr },
       de: { translation: de },
+      da: { translation: da },
     },
     lng: initialLang,
     fallbackLng: 'en',

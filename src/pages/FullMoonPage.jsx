@@ -69,7 +69,8 @@ export default function FullMoonPage() {
   // 'checking'   — waiting for auth + premium check
   // 'paywall'    — logged in, not premium
   // 'processing' — payment=success in URL, polling for premium
-  // 'ready'      — premium confirmed, show test
+  // 'completed'  — premium, but user already has a fullMoon result
+  // 'ready'      — premium confirmed, no prior result, show test
   const [gateState,       setGateState]       = useState('checking')
   const [checkoutLoading, setCheckoutLoading] = useState(false)
   const [checkoutError,   setCheckoutError]   = useState(null)
@@ -95,7 +96,15 @@ export default function FullMoonPage() {
       if (cancelled) return
 
       if (data?.premium) {
-        setGateState('ready')
+        // Check if the user already has a Full Moon result
+        const { data: existing } = await supabase
+          .from('results')
+          .select('id')
+          .eq('user_id', user.id)
+          .eq('instrument', 'fullMoon')
+          .limit(1)
+        if (cancelled) return
+        setGateState(existing?.length ? 'completed' : 'ready')
         return
       }
 
@@ -275,6 +284,27 @@ export default function FullMoonPage() {
           ) : (
             <p className="text-gray-500 text-sm">{t('fm.paywall.processing')}</p>
           )}
+        </div>
+      </main>
+    )
+  }
+
+  if (gateState === 'completed') {
+    return (
+      <main className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)]">
+        <div className="w-full max-w-md">
+          <Card className="shadow-sm p-8 text-center">
+            <FullMoonIcon size={36} className="mb-4 mx-auto" style={{ color: colors.blue }} />
+            <h1 className="text-xl font-bold text-gray-900 mb-3">
+              {t('fm.alreadyCompleted.heading')}
+            </h1>
+            <p className="text-sm text-gray-500 leading-relaxed mb-6">
+              {t('fm.alreadyCompleted.body')}
+            </p>
+            <Button variant="primary" onClick={() => navigate('/full-moon/report')} className="w-full">
+              {t('fm.alreadyCompleted.cta')}
+            </Button>
+          </Card>
         </div>
       </main>
     )

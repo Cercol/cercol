@@ -79,12 +79,23 @@ export async function getWitnessSession(token) {
  * completeWitnessSession — submit domain scores for a witness session.
  * @param {string} token
  * @param {{presence, bond, discipline, depth, vision}} scores
+ * @param {boolean} linkAsUser — if true and the user is signed in, attaches Bearer
+ *   so the backend can record witness_user_id on the session.
  */
-export async function completeWitnessSession(token, scores) {
-  return publicFetch(`/witness/session/${token}/complete`, {
+export async function completeWitnessSession(token, scores, linkAsUser = false) {
+  const fetcher = linkAsUser ? authFetch : publicFetch
+  return fetcher(`/witness/session/${token}/complete`, {
     method: 'POST',
     body: JSON.stringify({ scores }),
   })
+}
+
+/**
+ * getMyWitnessContributions — returns sessions the signed-in user has completed as a witness.
+ * @returns {Promise<Array<{subject_display: string, completed_at: string}>>}
+ */
+export async function getMyWitnessContributions() {
+  return authFetch('/witness/my-contributions')
 }
 
 /**
@@ -93,4 +104,60 @@ export async function completeWitnessSession(token, scores) {
  */
 export async function getMyWitnessSessions() {
   return authFetch('/witness/my-sessions')
+}
+
+// ── Groups ────────────────────────────────────────────────────────────────
+
+/**
+ * createGroup — creates a new group and optionally invites members by email.
+ * @param {string} name
+ * @param {string[]} emails
+ * @returns {Promise<{id: string, name: string, errors: string[]}>}
+ */
+export async function createGroup(name, emails = []) {
+  return authFetch('/groups', {
+    method: 'POST',
+    body: JSON.stringify({ name, emails }),
+  })
+}
+
+/**
+ * getMyGroups — returns all groups the signed-in user is an active member of.
+ * @returns {Promise<Array>}
+ */
+export async function getMyGroups() {
+  return authFetch('/groups/mine')
+}
+
+/**
+ * getPendingInvitations — returns pending group invitations for the signed-in user.
+ * @returns {Promise<Array<{group_id, group_name, invited_at}>>}
+ */
+export async function getPendingInvitations() {
+  return authFetch('/groups/pending')
+}
+
+/**
+ * acceptGroupInvitation — accept a pending invitation.
+ * @param {string} groupId
+ */
+export async function acceptGroupInvitation(groupId) {
+  return authFetch(`/groups/${groupId}/accept`, { method: 'POST' })
+}
+
+/**
+ * declineGroupInvitation — decline (delete) a pending invitation.
+ * @param {string} groupId
+ */
+export async function declineGroupInvitation(groupId) {
+  return authFetch(`/groups/${groupId}/decline`, { method: 'POST' })
+}
+
+/**
+ * getGroupReportData — fetch member OCEAN z-scores and roles for a group.
+ * Requires active membership.
+ * @param {string} groupId
+ */
+export async function getGroupReportData(groupId) {
+  return authFetch(`/groups/${groupId}/report-data`)
 }

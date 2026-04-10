@@ -18,6 +18,7 @@ const LANGS = [
   { code: 'es', label: 'ES' },
   { code: 'fr', label: 'FR' },
   { code: 'de', label: 'DE' },
+  { code: 'da', label: 'DA' },
 ]
 
 export default function LanguageToggle() {

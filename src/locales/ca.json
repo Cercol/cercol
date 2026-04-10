@@ -13,12 +13,79 @@
     "loading": "Carregant…",
     "error": "No s'han pogut carregar els resultats. Torna-ho a intentar més tard.",
     "empty": "Encara no hi ha resultats. Completa una avaluació per veure el teu perfil aquí.",
-    "startCta": "Comença una avaluació"
+    "startCta": "Comença una avaluació",
+    "contributionsHeading": "Participació com a testimoni",
+    "contributionsEmpty": "Encara no has completat cap sessió de testimoni.",
+    "contributionItem": "Has descrit {{name}}"
   },
   "account": {
     "profile": "Perfil",
     "myResults": "Els meus resultats",
+    "groups": "Grups",
     "signOut": "Tancar sessió"
+  },
+  "groups": {
+    "heading": "Grups",
+    "newGroup": "Nou grup",
+    "cancelCreate": "Cancel·la",
+    "createHeading": "Crea un grup",
+    "nameLabel": "Nom del grup",
+    "namePlaceholder": "p. ex. Equip de disseny",
+    "emailsLabel": "Convida membres (opcional)",
+    "emailsPlaceholder": "alice@example.com, bob@example.com",
+    "emailsNote": "Correus separats per comes. Els membres han de tenir un compte a Cèrcol.",
+    "createCta": "Crear grup",
+    "creating": "Creant…",
+    "createError": "Alguna cosa ha fallat. Torna-ho a intentar.",
+    "loading": "Carregant…",
+    "loadError": "No s'han pogut carregar els grups. Torna-ho a intentar més tard.",
+    "empty": "Encara no hi ha cap grup.",
+    "emptyNote": "Crea un grup per compartir els resultats de Full Moon amb el teu equip.",
+    "activeHeading": "Els teus grups",
+    "pendingHeading": "Invitacions pendents",
+    "memberCount": "{{count}} membre",
+    "memberCount_plural": "{{count}} membres",
+    "completedCount": "{{ratio}} completats",
+    "creatorBadge": "Creador/a",
+    "invitedOn": "Convidat/da el {{date}}",
+    "accept": "Accepta",
+    "decline": "Rebutja",
+    "accepting": "Acceptant…",
+    "declining": "Rebutjant…"
+  },
+  "lastQuarter": {
+    "title": "Informe d'equip",
+    "loading": "Carregant…",
+    "error": "No s'han pogut carregar les dades del grup. Torna-ho a intentar.",
+    "notMember": "No ets membre d'aquest grup.",
+    "compositionHeading": "Composició de l'equip",
+    "pendingLabel": "Pendent",
+    "pendingNote": "{{count}} membre encara no ha completat el Full Moon.",
+    "pendingNote_plural": "{{count}} membres encara no han completat el Full Moon.",
+    "arcLabel": "Arc:",
+    "balanceHeading": "Anàlisi de l'equilibri",
+    "balanceState": {
+      "balanced": "Equilibrat",
+      "tiltedHigh": "Inclinat cap amunt",
+      "tiltedLow": "Inclinat cap avall",
+      "stronglyHigh": "Fortament alt",
+      "stronglyLow": "Fortament baix",
+      "highGood": "Alt",
+      "lowCaution": "Baix — atenció",
+      "highCaution": "Alt — atenció",
+      "lowGood": "Baix"
+    },
+    "narrativeHeading": "Narrativa de l'equip",
+    "narrative": {
+      "moveHeading": "Com es mou el teu grup",
+      "watchOutHeading": "Atenció",
+      "helpHeading": "Què ajudaria"
+    },
+    "shareHeading": "Compartir",
+    "copyLink": "Copiar l'enllaç",
+    "copied": "Copiat!",
+    "downloadPdf": "Descarregar PDF",
+    "viewReport": "Veure informe"
   },
   "cookies": {
     "notice": "Cèrcol utilitza únicament galetes funcionals — sense analítiques, sense rastreig publicitari.",
@@ -273,6 +340,11 @@
       "guidance": "Tu et coneixes. Fes-te'n cas.",
       "partNote": "Aquesta és la Part 1 d'un instrument de dues parts. El Testimoni Cèrcol seguirà als teus resultats.",
       "cta": "Comença"
+    },
+    "alreadyCompleted": {
+      "heading": "Ja has completat el Cèrcol de Lluna Plena",
+      "body": "La personalitat no canvia significativament en períodes curts. El teu resultat continua sent precís — tornar-lo a fer donaria puntuacions molt similars.",
+      "cta": "Veure el teu informe"
     }
   },
   "fmResults": {
@@ -636,7 +708,8 @@
       "statusComplete": "Fet",
       "existingHeading": "Els teus testimonis",
       "viewReport": "Veure l'informe complet",
-      "error": "Alguna cosa ha anat malament. Torna-ho a intentar."
+      "error": "Alguna cosa ha anat malament. Torna-ho a intentar.",
+      "linkedNote": "Si els teus testimonis tenen sessió iniciada, podran vincular la sessió al seu perfil per a futures funcions d'equip."
     },
     "page": {
       "loading": "Carregant…",
@@ -646,7 +719,9 @@
         "subjectLabel": "Estàs descrivint",
         "youAreLabel": "Tu ets",
         "youArePlaceholder": "El teu nom",
-        "cta": "Començar"
+        "cta": "Començar",
+        "linkLabel": "Vincula aquesta sessió al meu perfil",
+        "linkNote": "Permet que les funcions d'equip futures et connecten amb aquesta persona."
       },
       "tooltipLabel": "Sobre aquesta paraula",
       "progress": "{{current}} de {{total}}",

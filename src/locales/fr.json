@@ -13,12 +13,79 @@
     "loading": "Chargement…",
     "error": "Impossible de charger les résultats. Réessayez plus tard.",
     "empty": "Aucun résultat pour l'instant. Complétez une évaluation pour voir votre profil ici.",
-    "startCta": "Commencer une évaluation"
+    "startCta": "Commencer une évaluation",
+    "contributionsHeading": "Contributions en tant que témoin",
+    "contributionsEmpty": "Vous n'avez pas encore complété de session témoin.",
+    "contributionItem": "Vous avez décrit {{name}}"
   },
   "account": {
     "profile": "Profil",
     "myResults": "Mes résultats",
+    "groups": "Groupes",
     "signOut": "Se déconnecter"
+  },
+  "groups": {
+    "heading": "Groupes",
+    "newGroup": "Nouveau groupe",
+    "cancelCreate": "Annuler",
+    "createHeading": "Créer un groupe",
+    "nameLabel": "Nom du groupe",
+    "namePlaceholder": "ex. Équipe design",
+    "emailsLabel": "Inviter des membres (facultatif)",
+    "emailsPlaceholder": "alice@example.com, bob@example.com",
+    "emailsNote": "E-mails séparés par des virgules. Les membres doivent avoir un compte Cèrcol.",
+    "createCta": "Créer le groupe",
+    "creating": "Création…",
+    "createError": "Une erreur est survenue. Réessayez.",
+    "loading": "Chargement…",
+    "loadError": "Impossible de charger les groupes. Réessayez plus tard.",
+    "empty": "Aucun groupe pour l'instant.",
+    "emptyNote": "Créez un groupe pour partager vos résultats Full Moon avec votre équipe.",
+    "activeHeading": "Vos groupes",
+    "pendingHeading": "Invitations en attente",
+    "memberCount": "{{count}} membre",
+    "memberCount_plural": "{{count}} membres",
+    "completedCount": "{{ratio}} complété(s)",
+    "creatorBadge": "Créateur/trice",
+    "invitedOn": "Invité·e le {{date}}",
+    "accept": "Accepter",
+    "decline": "Refuser",
+    "accepting": "Acceptation…",
+    "declining": "Refus…"
+  },
+  "lastQuarter": {
+    "title": "Rapport d'équipe",
+    "loading": "Chargement…",
+    "error": "Impossible de charger les données du groupe. Réessayez.",
+    "notMember": "Vous n'êtes pas membre de ce groupe.",
+    "compositionHeading": "Composition de l'équipe",
+    "pendingLabel": "En attente",
+    "pendingNote": "{{count}} membre n'a pas encore complété Full Moon.",
+    "pendingNote_plural": "{{count}} membres n'ont pas encore complété Full Moon.",
+    "arcLabel": "Arc :",
+    "balanceHeading": "Analyse de l'équilibre",
+    "balanceState": {
+      "balanced": "Équilibré",
+      "tiltedHigh": "Penché vers le haut",
+      "tiltedLow": "Penché vers le bas",
+      "stronglyHigh": "Fortement élevé",
+      "stronglyLow": "Fortement bas",
+      "highGood": "Élevé",
+      "lowCaution": "Bas — vigilance",
+      "highCaution": "Élevé — vigilance",
+      "lowGood": "Bas"
+    },
+    "narrativeHeading": "Récit de l'équipe",
+    "narrative": {
+      "moveHeading": "Comment votre groupe fonctionne",
+      "watchOutHeading": "Points de vigilance",
+      "helpHeading": "Ce qui aiderait"
+    },
+    "shareHeading": "Partager",
+    "copyLink": "Copier le lien",
+    "copied": "Copié !",
+    "downloadPdf": "Télécharger PDF",
+    "viewReport": "Voir le rapport"
   },
   "cookies": {
     "notice": "Cèrcol utilise uniquement des cookies fonctionnels — sans analytiques, sans traqueurs publicitaires.",
@@ -273,6 +340,11 @@
       "guidance": "Vous vous connaissez. Faites-vous confiance.",
       "partNote": "Ceci est la Partie 1 d'un instrument en deux parties. Témoin Cèrcol suit après vos résultats.",
       "cta": "Commencer"
+    },
+    "alreadyCompleted": {
+      "heading": "Vous avez déjà complété Full Moon Cèrcol",
+      "body": "La personnalité ne change pas significativement sur de courtes périodes. Votre résultat existant reste précis — le reprendre donnerait des scores très similaires.",
+      "cta": "Voir votre rapport"
     }
   },
   "fmResults": {
@@ -636,7 +708,8 @@
       "statusComplete": "Terminé",
       "existingHeading": "Vos témoins",
       "viewReport": "Voir le rapport complet",
-      "error": "Une erreur s'est produite. Réessayez."
+      "error": "Une erreur s'est produite. Réessayez.",
+      "linkedNote": "Si vos témoins sont connectés, ils pourront lier la session à leur profil pour les futures fonctionnalités d'équipe."
     },
     "page": {
       "loading": "Chargement…",
@@ -646,7 +719,9 @@
         "subjectLabel": "Vous décrivez",
         "youAreLabel": "Vous êtes",
         "youArePlaceholder": "Votre nom",
-        "cta": "Commencer"
+        "cta": "Commencer",
+        "linkLabel": "Lier cette session à mon profil",
+        "linkNote": "Permet aux futures fonctionnalités d'équipe de vous connecter à cette personne."
       },
       "tooltipLabel": "À propos de ce mot",
       "progress": "{{current}} sur {{total}}",

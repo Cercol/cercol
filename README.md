@@ -8,13 +8,13 @@ Cèrcol is a personality assessment platform built on peer-reviewed, public-doma
 
 All instruments are drawn from open item pools with no restrictions on use. Every scoring algorithm is documented and citable. The code is open source.
 
+Available in English, Català/Valencià, Español, Français, and Deutsch.
+
 The long-term goal is a scientifically grounded team role assessment. First we collect real data. Then we let the data shape the instrument.
 
 ## Live instruments
 
-Both instruments are completely free.
-
-### 🌑 New Moon Cèrcol
+### 🌑 New Moon Cèrcol — free
 
 10 items. About 2 minutes. Five personality dimensions.
 
@@ -22,13 +22,21 @@ A quick orientation snapshot. Good for when you want a first reading, not a deep
 
 [Take New Moon Cèrcol](https://cercol.team)
 
-### 🌓 First Quarter Cèrcol
+### 🌓 First Quarter Cèrcol — free
 
 60 items. About 10 minutes. Five dimensions, 30 facets.
 
 A full personality portrait. Same five dimensions as New Moon, but resolved into 30 facets so you can see the texture inside each one.
 
 [Take First Quarter Cèrcol](https://cercol.team)
+
+### 🌕 Full Moon Cèrcol — paid (one-time)
+
+120 items. About 20 minutes. Five dimensions, 30 facets, role result, and Witness Cèrcol.
+
+The complete portrait. Includes a 120-item self-report, an observer assessment from someone who knows you, and a cognitive ability measure. Produces a primary role result and team report.
+
+[Take Full Moon Cèrcol](https://cercol.team)
 
 ## Personality dimensions
 
@@ -49,7 +57,7 @@ All items come from the International Personality Item Pool (IPIP), a public-dom
 **References**
 
 - Gosling, S. D., Rentfrow, P. J., & Swann, W. B., Jr. (2003). A very brief measure of the Big Five personality domains. *Journal of Research in Personality, 37*, 504-528.
-- Goldberg, L. R., Johnson, J. A., Eber, H. W., Hogan, R., Ashton, M. C., Cloninger, C. R., & Gough, H. C. (2006). The International Personality Item Pool and the future of public-domain personality measures. *Journal of Research in Personality, 40*, 84-96. https://doi.org/10.1177/1073191106293419
+- Goldberg, L. R., Johnson, J. A., Eber, H. W., Hogan, R., Ashton, M. C., Cloninger, C. R., & Gough, H. C. (2006). The International Personality Item Pool and the future of public-domain personality measures. *Journal of Research in Personality, 40*, 84-96. https://doi.org/10.1016/j.jrp.2005.08.007
 - Maples-Keller, J. L., Williamson, R. L., Sleep, C. E., Carter, N. T., Campbell, W. K., & Miller, J. D. (2019). Using item response theory to develop a 60-item representation of the NEO PI-R using the International Personality Item Pool: Development of the IPIP-NEO-60. *Psychological Assessment, 31*(2), 188-203.
 - Condon, D. M., & Revelle, W. (2014). The International Cognitive Ability Resource. *Intelligence, 46*, 79-90.
 - Hofstee, W. K. B., De Raad, B., & Goldberg, L. R. (1992). Integration of the Big Five and circumplex approaches to trait structure. *Journal of Personality and Social Psychology, 63*, 146-163.
@@ -58,19 +66,17 @@ Full item pool: https://ipip.ori.org
 
 ## Privacy
 
-No account required for either instrument. No personal data collected.
+No account required for any instrument. No personal data collected during assessment.
 
-When you complete an assessment, only anonymous scores are logged: the instrument name, your language preference, and your five domain scores. Nothing that identifies you. Creating an account is optional and only used to save your result history.
+When you complete an assessment, only anonymous scores are logged: the instrument name, your language preference, and your five domain scores. Nothing that identifies you. Creating an account is optional and only used to save your result history and access Full Moon features.
 
-Data is stored in Supabase with row-level security. No third-party analytics, no cookies, no tracking.
+Data is stored in Supabase with row-level security. No third-party analytics. Functional cookies are used only to persist your language preference across visits.
 
 ## Roadmap
 
-**Now** New Moon and First Quarter Cèrcol are live and fully free. Data collection in progress.
+**Now** New Moon, First Quarter, and Full Moon Cèrcol are live. New Moon and First Quarter are free. Full Moon is a one-time payment. Data collection in progress.
 
-**Next** Full Moon Cèrcol — a deeper assessment combining a 120-item personality portrait, observer ratings from people who know you, and a cognitive ability measure. One-time payment per session. Role result and team report included.
-
-**Later** Last Quarter Cèrcol — team-level instrument built on accumulated real data from Full Moon sessions. Observer assessment. Cognitive ability integration.
+**Next** Last Quarter Cèrcol — team-level instrument built on accumulated real data from Full Moon sessions.
 
 No dates. No promises. Just the order things need to happen in.
 

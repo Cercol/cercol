@@ -21,22 +21,25 @@ All scoring algorithms and item sources are documented and citable.
 All colors, fonts and spacing live in `src/design/tokens.js`.
 NEVER hardcode colors or fonts anywhere else.
 Always import from tokens.
-Cèrcol brand identity will be introduced in a future phase.
-When that happens, only tokens.js needs updating.
+Brand palette: `#cf3339` red · `#0047ba` blue · `#f1c22f` yellow · `#427c42` green.
+Typography: Playfair Display (headings/display) + Roboto (body/UI).
 
 ## Code conventions
 - Comments and docstrings always in English
 - Component names in PascalCase
-- User-facing text in English and Catalan/Valencian (via react-i18next)
+- User-facing text in six languages: English, Catalan/Valencian, Spanish, French, German, Danish (via react-i18next)
 - No inline styles, always Tailwind classes
 - Keep components small and single-responsibility
 - NEVER use academic instrument names in user-facing text or comments:
   use "New Moon Cèrcol", "First Quarter Cèrcol", "Full Moon Cèrcol", never "TIPI", "IPIP", "Big Five", "NEO"
-- NEVER use "observer" anywhere — always "Witness" / "Testimoni" (see PRODUCT.md)
+- NEVER use "observer" anywhere — always "Witness" (EN) / "Testimoni" (CA) / "Testigo" (ES) / "Témoin" (FR) / "Zeuge/Zeugin" (DE) / "Vidne" (DA) — see PRODUCT.md
 - All instrument pages use English phase names as base:
   NewMoonPage.jsx, FirstQuarterPage.jsx, FullMoonPage.jsx, LastQuarterPage.jsx
 - All instruments are based on IPIP (public domain). Never introduce items from
   copyrighted instruments (NEO-PI-R, BFI-2, etc.)
+- All icons live in `src/components/MoonIcons.jsx`. Never create inline SVG outside this file.
+  Use `RoleIcon({ role, size })` and `DimensionIcon({ domain, size })` wrappers for role/dimension icons.
+  Potrace SVGs are imported as `import raw from './path.svg?raw'` (Vite raw string).
 
 ## Claude Code workflow
 After every successful npm run deploy, Claude Code must:
@@ -52,7 +55,7 @@ User-facing strings live in src/locales/{lang}.json (react-i18next).
 One file per language, key-value format.
 Test item text (questions) uses { en, ca, es, ... } structure inside data files.
 Future: migrate to a spreadsheet or translation management tool
-(Tolgee, Localazy, or Google Sheets export) when languages > 3.
+(Tolgee, Localazy, or Google Sheets export) if managing more than five languages.
 
 ## Adding new languages
 
@@ -67,7 +70,7 @@ When adding a new language to Cèrcol:
    has direct effects on what construct is being measured.
 4. Document the translation methodology in SCIENCE.md.
 5. Update `src/i18n.js` to import the new locale and add browser detection.
-6. Update `src/components/LanguageToggle.jsx` to include the new language in the cycle.
+6. Add the new language code and label to the `LANGS` array in `src/components/LanguageToggle.jsx`.
 
 ## File structure
 src/
@@ -79,6 +82,7 @@ src/
   data/          # test items, scoring keys (always cite source)
   utils/         # scoring logic, logger.js, translationFeedback.js
   locales/       # i18n translation files (en.json, ca.json, ...)
+  assets/        # static assets: icons/animals/, illustrations/
 
 ## Extended documentation
 - Phase history and roadmap: ROADMAP.md

@@ -206,6 +206,11 @@ export default function WitnessSetupPage() {
         {/* Non-blocking profile completion prompt */}
         {profile && !profile.first_name && <ProfilePrompt t={t} />}
 
+        {/* Informational: authenticated witnesses get linked for team features */}
+        <p className="text-xs text-gray-400 leading-relaxed">
+          {t('witness.setup.linkedNote')}
+        </p>
+
         {/* New links (shown after successful create) */}
         {newLinks.length > 0 && (
           <Card className="shadow-sm p-5 flex flex-col gap-3">

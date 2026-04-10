@@ -18,6 +18,7 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { useAuth } from '../context/AuthContext'
 import { getWitnessSession, completeWitnessSession } from '../lib/api'
 import { buildRounds, computeWitnessScores } from '../utils/witness-scoring'
 import { Card, Button, SectionLabel } from '../components/ui'
@@ -78,10 +79,12 @@ export default function WitnessPage() {
   const navigate     = useNavigate()
   const { t, i18n } = useTranslation()
   const lang         = i18n.language
+  const { user }     = useAuth()
 
   const [phase,          setPhase]          = useState('loading')
   const [subjectDisplay, setSubjectDisplay] = useState('')   // read-only: who they are describing
   const [witnessName,    setWitnessName]    = useState('')   // editable: the witness's own name
+  const [linkAsUser,     setLinkAsUser]     = useState(false) // opt-in: link session to profile
   const [rounds,         setRounds]         = useState([])
   const [currentRound,   setCurrentRound]   = useState(0)
 
@@ -161,7 +164,7 @@ export default function WitnessPage() {
 
     try {
       const scores = computeWitnessScores(rounds)
-      await completeWitnessSession(token, scores)
+      await completeWitnessSession(token, scores, linkAsUser)
       setPhase('complete')
     } catch {
       setPhase('error')
@@ -268,6 +271,26 @@ export default function WitnessPage() {
               placeholder={t('witness.page.intro.youArePlaceholder')}
             />
           </div>
+
+          {/* Identity link opt-in — only shown to authenticated users */}
+          {user && (
+            <label className="flex items-start gap-3 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={linkAsUser}
+                onChange={(e) => setLinkAsUser(e.target.checked)}
+                className="mt-0.5 h-4 w-4 shrink-0 rounded border-gray-300 accent-[#0047ba]"
+              />
+              <div>
+                <p className="text-sm font-medium text-gray-900 leading-snug">
+                  {t('witness.page.intro.linkLabel')}
+                </p>
+                <p className="text-xs text-gray-400 mt-0.5">
+                  {t('witness.page.intro.linkNote')}
+                </p>
+              </div>
+            </label>
+          )}
 
           <Button variant="primary" onClick={handleStart} className="w-full shadow-sm">
             {t('witness.page.intro.cta')}

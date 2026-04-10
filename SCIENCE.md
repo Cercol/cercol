@@ -270,6 +270,29 @@ the project.
 
 ## Translation methodology
 
+### Catalan/Valencian (CA) test items
+
+The Catalan/Valencian translation of IPIP items in Cèrcol is in partial progress.
+
+**Current state:**
+All 190 items (10 TIPI + 60 IPIP-NEO-60 + 120 IPIP-NEO-120) are translated into Catalan/Valencian
+and in production.
+
+**Translation approach (when applied):** Same direct translation methodology as all other
+languages — exact psychological meaning preserved, Valencian orthographic standard
+(normativa de l'Acadèmia Valenciana de la Llengua), no regional softening or register
+elevation that would affect construct measurement. Gender-inclusive Catalan forms
+(e.g. -at/ada contracted as -at/da) used where the source item requires it.
+
+**No published IPIP-CA validation study exists** at the time of writing. The translation
+methodology follows the same principled approach as the other languages and is documented
+here for transparency. Human review by a translator with psychometric context is required
+before any item text enters the source files.
+
+**Ongoing correction:** The translation feedback system allows Catalan-speaking users to
+suggest corrections. Feedback is stored in Supabase with `language: 'ca'` and reviewed
+by maintainers.
+
 ### Spanish (ES) test items
 
 The Spanish translation of IPIP items used in Cèrcol follows a direct translation
@@ -343,9 +366,40 @@ of public-domain items, documented as such.
 
 **Ongoing correction:** Feedback stored in Supabase with `language` field set to `'de'`.
 
+### Danish (DA) test items
+
+The Danish translation of IPIP items used in Cèrcol is based on the Vedel, Gøtzsche-Astrup
+& Holm (2018) validated Danish IPIP-NEO-120 adaptation, published in *Nordic Psychology* and
+listed on ipip.ori.org. This is the strongest scientific basis of any Cèrcol language after
+English: the full five-factor structure has been validated in a Danish population with the
+specific IPIP-NEO-120 item set.
+
+**Source language:** English (ipip.ori.org public domain corpus)
+
+**Translation approach:** Direct translation following the Vedel et al. (2018) methodology.
+Standard Danish (Rigsdansk) is used — no regional variants (not Faroese, not Greenlandic).
+Gender-neutral or inclusive forms are used where the source item requires it.
+
+**Altered items (Vedel et al. 2018):** Two items in the Values/Compass facet were altered
+for legal reasons related to Danish voting behaviour context. For the item originally reading
+"Tend to vote for conservative political candidates.", the Danish translation uses the source
+"View myself as predominantly conservative politically." (Vedel formulation) rather than the
+original voting formulation. If a liberal item is added in a future update, the same alteration
+applies: "View myself as predominantly liberal politically."
+
+This is not a formally validated translation — it is a principled open-source translation
+of public-domain items, following the Vedel et al. methodology, documented as such.
+
+**Ongoing correction:** Feedback stored in Supabase with `language` field set to `'da'`.
+
 ---
 
 ## References
+
+- Cupani, M., de Minzi, M. C. R., Pérez, E. R., & Pjurisdición, M. A. (2014).
+  An assessment of a short measure of personality: The IPIP-NEO-60 in an
+  Argentine sample. *Psychological Reports, 114*(3), 777–797.
+  https://doi.org/10.2466/03.PR0.114k25w4
 
 - Barrick, M. R., & Mount, M. K. (1991). The Big Five personality dimensions
   and job performance: A meta-analysis. *Personnel Psychology, 44*(1), 1–26.
@@ -398,3 +452,17 @@ of public-domain items, documented as such.
 - Neuman, G. A., & Wright, J. (1999). Team effectiveness: Beyond skills and
   cognitive ability. *Journal of Applied Psychology, 84*(3), 376–389.
   https://doi.org/10.1037/0021-9010.84.3.376
+
+- Ostendorf, F., & Angleitner, A. (1994). A comparison of different instruments
+  proposed to measure the Big Five. *European Review of Applied Psychology,
+  44*(1), 45–53. [German NEO-PI-R validation establishing five-factor replication
+  in German-speaking populations.]
+
+- Thiry, B., & Piolti, M. (2023). *Adaptation française de l'IPIP* [French
+  adaptation of the IPIP]. University of Mons. Listed on ipip.ori.org as a
+  peer-reviewed French IPIP adaptation.
+
+- Vedel, A., Gøtzsche-Astrup, O., & Holm, P. (2018). The Danish IPIP-NEO-120:
+  A free, validated five-factor measure of personality. *Nordic Psychology,
+  71*(1), 62–77.
+  https://doi.org/10.1080/19012276.2018.1470108

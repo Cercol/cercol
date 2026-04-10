@@ -121,6 +121,24 @@ def get_current_user(
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
 
 
+def get_optional_user(
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(_bearer),
+) -> Optional[dict]:
+    """Returns the authenticated user payload, or None if unauthenticated.
+    Used by endpoints that support both anonymous and authenticated access."""
+    if credentials is None:
+        return None
+    try:
+        header  = jwt.get_unverified_header(credentials.credentials)
+        kid     = header.get("kid", "")
+        alg     = header.get("alg", "ES256")
+        key     = _get_key(kid, alg)
+        payload = jwt.decode(credentials.credentials, key, algorithms=[alg], audience=_AUDIENCE)
+        return payload
+    except JWTError:
+        return None
+
+
 # ---------------------------------------------------------------------------
 # Supabase REST helpers (service_role — server-side only)
 # ---------------------------------------------------------------------------
@@ -192,6 +210,11 @@ class DomainScores(BaseModel):
 
 class CompleteSessionBody(BaseModel):
     scores: DomainScores
+
+
+class CreateGroupBody(BaseModel):
+    name: str
+    emails: List[str] = []
 
 
 # ---------------------------------------------------------------------------
@@ -342,12 +365,17 @@ def get_witness_session(token: str):
 
 @app.post("/witness/session/{token}/complete")
 @limiter.limit("10/minute")
-def complete_witness_session(request: Request, token: str, body: CompleteSessionBody):
+def complete_witness_session(
+    request: Request,
+    token: str,
+    body: CompleteSessionBody,
+    user: Optional[dict] = Depends(get_optional_user),
+):
     """
-    Public endpoint — no auth required.
-    Receives domain scores from the witness, inserts a witness_response row,
-    and marks the session as completed.
-    Called once per witness at the end of the instrument.
+    Supports both anonymous and authenticated witnesses.
+    If the request carries a valid Bearer token, the witness's user_id is stored
+    in witness_user_id — enabling team features in Last Quarter.
+    Anonymous witnesses (no token) are unaffected; behaviour is identical.
     """
     rows = _supabase_get("witness_sessions", f"token=eq.{token}&select=id,completed_at")
     if not rows:
@@ -368,17 +396,400 @@ def complete_witness_session(request: Request, token: str, body: CompleteSession
     except Exception:
         raise HTTPException(status_code=500, detail="Failed to save response")
 
-    # Mark session as completed
+    # Mark session as completed; include witness_user_id if authenticated
     now = datetime.now(timezone.utc).isoformat()
+    patch_data: dict = {"completed_at": now}
+    if user:
+        patch_data["witness_user_id"] = user["sub"]
     try:
-        _supabase_patch(
-            f"witness_sessions?id=eq.{session_id}",
-            {"completed_at": now},
-        )
+        _supabase_patch(f"witness_sessions?id=eq.{session_id}", patch_data)
     except Exception:
         raise HTTPException(status_code=500, detail="Failed to mark session complete")
 
     return {"ok": True}
+
+
+@app.get("/witness/my-contributions")
+def get_my_contributions(user: dict = Depends(get_current_user)):
+    """
+    Returns the witness sessions this user has completed as a witness
+    (i.e. where witness_user_id = current user).
+    Returns subject_display and completed_at only — no scores.
+    """
+    user_id = user["sub"]
+    sessions = _supabase_get(
+        "witness_sessions",
+        f"witness_user_id=eq.{user_id}&order=completed_at.desc&select=subject_display,completed_at",
+    )
+    return sessions
+
+
+# ---------------------------------------------------------------------------
+# Groups — team system (Phase 12.2)
+# ---------------------------------------------------------------------------
+
+# Normative priors for z-score computation (from SCIENCE.md)
+_NORM = {
+    "presence":   {"mean": 3.3, "sd": 0.72},
+    "bond":       {"mean": 3.9, "sd": 0.58},
+    "discipline": {"mean": 3.7, "sd": 0.62},
+    "depth":      {"mean": 2.8, "sd": 0.72},
+    "vision":     {"mean": 3.7, "sd": 0.60},
+}
+
+# Theoretical role centroids in 5D OCEAN space (presence, bond, vision, discipline, depth)
+# Each centroid is (presence, bond, vision, discipline, depth) as z-scores.
+# Source: AB5C / Bell 2007 — same as FullMoonReportPage scoring.
+_ROLE_CENTROIDS = {
+    "R01": ( 1.0,  1.0,  0.0,  0.0,  0.0),
+    "R02": ( 1.0, -1.0,  0.0,  0.0,  0.0),
+    "R03": (-1.0,  1.0,  0.0,  0.0,  0.0),
+    "R04": (-1.0, -1.0,  0.0,  0.0,  0.0),
+    "R05": ( 1.0,  0.0,  1.0,  0.0,  0.0),
+    "R06": ( 1.0,  0.0, -1.0,  0.0,  0.0),
+    "R07": (-1.0,  0.0,  1.0,  0.0,  0.0),
+    "R08": (-1.0,  0.0, -1.0,  0.0,  0.0),
+    "R09": ( 0.0,  1.0,  1.0,  0.0,  0.0),
+    "R10": ( 0.0,  1.0, -1.0,  0.0,  0.0),
+    "R11": ( 0.0, -1.0,  1.0,  0.0,  0.0),
+    "R12": ( 0.0, -1.0, -1.0,  0.0,  0.0),
+}
+
+
+def _compute_role(z: dict) -> str:
+    """Return the nearest role label for a z-score dict."""
+    import math
+    best_role = "R01"
+    best_dist = float("inf")
+    vec = (z["presence"], z["bond"], z["vision"], z["discipline"], z["depth"])
+    for role, centroid in _ROLE_CENTROIDS.items():
+        dist = math.sqrt(sum((a - b) ** 2 for a, b in zip(vec, centroid)))
+        if dist < best_dist:
+            best_dist = dist
+            best_role = role
+    return best_role
+
+
+def _scores_to_zscores(scores: dict) -> dict:
+    """Convert raw 1-5 domain scores to z-scores using normative priors."""
+    return {
+        domain: (scores[domain] - _NORM[domain]["mean"]) / _NORM[domain]["sd"]
+        for domain in _NORM
+        if domain in scores
+    }
+
+
+@app.post("/groups")
+def create_group(
+    body: CreateGroupBody,
+    user: dict = Depends(get_current_user),
+):
+    """
+    Creates a group and optionally invites members by email.
+    The creator is added as an active member automatically.
+    Invited emails are matched against auth.users; if found the user_id is stored;
+    otherwise only invited_email is stored (for future registration matching).
+    """
+    user_id = user["sub"]
+    name = body.name.strip()
+    if not name:
+        raise HTTPException(status_code=400, detail="Group name is required")
+
+    # Create the group row
+    try:
+        group = _supabase_post("groups", {"name": name, "created_by": user_id})
+    except Exception:
+        raise HTTPException(status_code=500, detail="Failed to create group")
+
+    group_id = group["id"]
+
+    # Add creator as active member
+    try:
+        _supabase_post("group_members", {
+            "group_id":  group_id,
+            "user_id":   user_id,
+            "status":    "active",
+            "joined_at": datetime.now(timezone.utc).isoformat(),
+        })
+    except Exception:
+        raise HTTPException(status_code=500, detail="Failed to add creator as member")
+
+    # Invite each email
+    errors = []
+    for raw_email in body.emails:
+        email = raw_email.strip().lower()
+        if not email:
+            continue
+        if email == (user.get("email") or "").lower():
+            continue  # Skip self-invite
+
+        # Try to resolve email to a user_id via auth.users (service_role only)
+        invited_user_id = None
+        try:
+            rows = _supabase_get("auth.users", f"email=eq.{email}&select=id")
+            # auth.users is not accessible via the REST /rest/v1/ path;
+            # use the admin endpoint instead.
+            pass
+        except Exception:
+            pass
+
+        # Query via profiles table which mirrors auth.users emails via triggers
+        try:
+            profile_rows = _supabase_get("profiles", f"email=eq.{email}&select=id")
+            if profile_rows:
+                invited_user_id = profile_rows[0]["id"]
+        except Exception:
+            pass
+
+        member_row: dict = {
+            "group_id":      group_id,
+            "status":        "pending",
+            "invited_email": email,
+            "invited_at":    datetime.now(timezone.utc).isoformat(),
+        }
+        if invited_user_id:
+            member_row["user_id"] = invited_user_id
+
+        try:
+            _supabase_post("group_members", member_row)
+        except Exception:
+            errors.append(email)
+
+    return {"id": group_id, "name": name, "errors": errors}
+
+
+@app.get("/groups/mine")
+def get_my_groups(user: dict = Depends(get_current_user)):
+    """
+    Returns all groups the authenticated user is an active member of,
+    with basic stats: member count (active) and completion count.
+    """
+    user_id = user["sub"]
+
+    # Find all groups where this user has an active membership
+    memberships = _supabase_get(
+        "group_members",
+        f"user_id=eq.{user_id}&status=eq.active&select=group_id",
+    )
+    group_ids = [m["group_id"] for m in memberships]
+
+    if not group_ids:
+        return []
+
+    result = []
+    for gid in group_ids:
+        # Get group metadata
+        groups = _supabase_get("groups", f"id=eq.{gid}&select=id,name,created_by,created_at")
+        if not groups:
+            continue
+        g = groups[0]
+
+        # Count active members
+        active_members = _supabase_get(
+            "group_members",
+            f"group_id=eq.{gid}&status=eq.active&select=user_id",
+        )
+        member_count = len(active_members)
+
+        # Count how many active members have completed Full Moon (have a result)
+        completed = 0
+        for m in active_members:
+            if not m["user_id"]:
+                continue
+            fm_results = _supabase_get(
+                "results",
+                f"user_id=eq.{m['user_id']}&instrument=eq.fullMoon&select=presence&limit=1",
+            )
+            if fm_results:
+                completed += 1
+
+        result.append({
+            "id":           g["id"],
+            "name":         g["name"],
+            "created_by":   g["created_by"],
+            "created_at":   g["created_at"],
+            "member_count": member_count,
+            "completed":    completed,
+            "is_creator":   g["created_by"] == user_id,
+        })
+
+    return result
+
+
+@app.get("/groups/pending")
+def get_pending_invitations(user: dict = Depends(get_current_user)):
+    """
+    Returns all pending group invitations for the authenticated user.
+    """
+    user_id = user["sub"]
+
+    pending = _supabase_get(
+        "group_members",
+        f"user_id=eq.{user_id}&status=eq.pending&select=group_id,invited_at",
+    )
+
+    result = []
+    for p in pending:
+        groups = _supabase_get("groups", f"id=eq.{p['group_id']}&select=id,name,created_by")
+        if not groups:
+            continue
+        g = groups[0]
+        result.append({
+            "group_id":   g["id"],
+            "group_name": g["name"],
+            "invited_at": p["invited_at"],
+        })
+
+    return result
+
+
+@app.post("/groups/{group_id}/accept")
+def accept_group_invitation(
+    group_id: str,
+    user: dict = Depends(get_current_user),
+):
+    """Accept a pending group invitation."""
+    user_id = user["sub"]
+
+    rows = _supabase_get(
+        "group_members",
+        f"group_id=eq.{group_id}&user_id=eq.{user_id}&status=eq.pending&select=group_id",
+    )
+    if not rows:
+        raise HTTPException(status_code=404, detail="Pending invitation not found")
+
+    try:
+        _supabase_patch(
+            f"group_members?group_id=eq.{group_id}&user_id=eq.{user_id}&status=eq.pending",
+            {"status": "active", "joined_at": datetime.now(timezone.utc).isoformat()},
+        )
+    except Exception:
+        raise HTTPException(status_code=500, detail="Failed to accept invitation")
+
+    return {"ok": True}
+
+
+@app.post("/groups/{group_id}/decline")
+def decline_group_invitation(
+    group_id: str,
+    user: dict = Depends(get_current_user),
+):
+    """Decline (delete) a pending group invitation."""
+    user_id = user["sub"]
+
+    rows = _supabase_get(
+        "group_members",
+        f"group_id=eq.{group_id}&user_id=eq.{user_id}&status=eq.pending&select=group_id",
+    )
+    if not rows:
+        raise HTTPException(status_code=404, detail="Pending invitation not found")
+
+    try:
+        url = f"{_SUPABASE_URL}/rest/v1/group_members?group_id=eq.{group_id}&user_id=eq.{user_id}&status=eq.pending"
+        data = b""
+        req = urllib.request.Request(url, data=data, method="DELETE")
+        for k, v in _supabase_headers().items():
+            req.add_header(k, v)
+        with urllib.request.urlopen(req, timeout=5):
+            pass
+    except Exception:
+        raise HTTPException(status_code=500, detail="Failed to decline invitation")
+
+    return {"ok": True}
+
+
+@app.get("/groups/{group_id}/report-data")
+def get_group_report_data(
+    group_id: str,
+    user: dict = Depends(get_current_user),
+):
+    """
+    Returns report data for all active members of a group.
+    Requires the requesting user to be an active member.
+    For each member with a Full Moon result: profile display name, role (R01–R12),
+    and OCEAN z-scores.
+    """
+    user_id = user["sub"]
+
+    # Verify requester is an active member
+    membership = _supabase_get(
+        "group_members",
+        f"group_id=eq.{group_id}&user_id=eq.{user_id}&status=eq.active&select=group_id",
+    )
+    if not membership:
+        raise HTTPException(status_code=403, detail="Not a member of this group")
+
+    # Get group name
+    groups = _supabase_get("groups", f"id=eq.{group_id}&select=id,name")
+    if not groups:
+        raise HTTPException(status_code=404, detail="Group not found")
+    group_name = groups[0]["name"]
+
+    # Get all active members
+    active_members = _supabase_get(
+        "group_members",
+        f"group_id=eq.{group_id}&status=eq.active&select=user_id",
+    )
+
+    members_data = []
+    for m in active_members:
+        mid = m["user_id"]
+        if not mid:
+            continue
+
+        # Get display name from profile
+        display_name = None
+        try:
+            profiles = _supabase_get("profiles", f"id=eq.{mid}&select=first_name,last_name")
+            if profiles:
+                p = profiles[0]
+                full = f"{p.get('first_name') or ''} {p.get('last_name') or ''}".strip()
+                if full:
+                    display_name = full
+        except Exception:
+            pass
+
+        # Get Full Moon result (latest)
+        results = _supabase_get(
+            "results",
+            f"user_id=eq.{mid}&instrument=eq.fullMoon&order=created_at.desc&select=presence,bond,vision,discipline,depth&limit=1",
+        )
+        if not results:
+            members_data.append({
+                "user_id":      mid,
+                "display_name": display_name,
+                "role":         None,
+                "zscores":      None,
+                "completed":    False,
+                "is_self":      mid == user_id,
+            })
+            continue
+
+        r = results[0]
+        raw_scores = {
+            "presence":   r["presence"],
+            "bond":       r["bond"],
+            "vision":     r["vision"],
+            "discipline": r["discipline"],
+            "depth":      r["depth"],
+        }
+        zscores = _scores_to_zscores(raw_scores)
+        role = _compute_role(zscores)
+
+        members_data.append({
+            "user_id":      mid,
+            "display_name": display_name,
+            "role":         role,
+            "zscores":      zscores,
+            "completed":    True,
+            "is_self":      mid == user_id,
+        })
+
+    return {
+        "group_id":   group_id,
+        "group_name": group_name,
+        "members":    members_data,
+    }
 
 
 @app.get("/witness/my-sessions")

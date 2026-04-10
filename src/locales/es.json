@@ -13,12 +13,79 @@
     "loading": "Cargando…",
     "error": "No se pudieron cargar los resultados. Inténtalo de nuevo más tarde.",
     "empty": "Aún no hay resultados. Completa una evaluación para ver tu perfil aquí.",
-    "startCta": "Comenzar una evaluación"
+    "startCta": "Comenzar una evaluación",
+    "contributionsHeading": "Participación como testigo",
+    "contributionsEmpty": "Todavía no has completado ninguna sesión de testigo.",
+    "contributionItem": "Describiste a {{name}}"
   },
   "account": {
     "profile": "Perfil",
     "myResults": "Mis resultados",
+    "groups": "Grupos",
     "signOut": "Cerrar sesión"
+  },
+  "groups": {
+    "heading": "Grupos",
+    "newGroup": "Nuevo grupo",
+    "cancelCreate": "Cancelar",
+    "createHeading": "Crear un grupo",
+    "nameLabel": "Nombre del grupo",
+    "namePlaceholder": "p. ej. Equipo de diseño",
+    "emailsLabel": "Invitar miembros (opcional)",
+    "emailsPlaceholder": "alice@example.com, bob@example.com",
+    "emailsNote": "Correos separados por comas. Los miembros deben tener una cuenta en Cèrcol.",
+    "createCta": "Crear grupo",
+    "creating": "Creando…",
+    "createError": "Algo salió mal. Inténtalo de nuevo.",
+    "loading": "Cargando…",
+    "loadError": "No se pudieron cargar los grupos. Inténtalo de nuevo más tarde.",
+    "empty": "Todavía no hay grupos.",
+    "emptyNote": "Crea un grupo para compartir tus resultados de Full Moon con tu equipo.",
+    "activeHeading": "Tus grupos",
+    "pendingHeading": "Invitaciones pendientes",
+    "memberCount": "{{count}} miembro",
+    "memberCount_plural": "{{count}} miembros",
+    "completedCount": "{{ratio}} completados",
+    "creatorBadge": "Creador/a",
+    "invitedOn": "Invitado/a el {{date}}",
+    "accept": "Aceptar",
+    "decline": "Rechazar",
+    "accepting": "Aceptando…",
+    "declining": "Rechazando…"
+  },
+  "lastQuarter": {
+    "title": "Informe de equipo",
+    "loading": "Cargando…",
+    "error": "No se pudieron cargar los datos del grupo. Inténtalo de nuevo.",
+    "notMember": "No eres miembro de este grupo.",
+    "compositionHeading": "Composición del equipo",
+    "pendingLabel": "Pendiente",
+    "pendingNote": "{{count}} miembro aún no ha completado Full Moon.",
+    "pendingNote_plural": "{{count}} miembros aún no han completado Full Moon.",
+    "arcLabel": "Arco:",
+    "balanceHeading": "Análisis de equilibrio",
+    "balanceState": {
+      "balanced": "Equilibrado",
+      "tiltedHigh": "Inclinado alto",
+      "tiltedLow": "Inclinado bajo",
+      "stronglyHigh": "Muy alto",
+      "stronglyLow": "Muy bajo",
+      "highGood": "Alto",
+      "lowCaution": "Bajo — atención",
+      "highCaution": "Alto — atención",
+      "lowGood": "Bajo"
+    },
+    "narrativeHeading": "Narrativa del equipo",
+    "narrative": {
+      "moveHeading": "Cómo se mueve tu grupo",
+      "watchOutHeading": "Atención",
+      "helpHeading": "Qué ayudaría"
+    },
+    "shareHeading": "Compartir",
+    "copyLink": "Copiar enlace",
+    "copied": "¡Copiado!",
+    "downloadPdf": "Descargar PDF",
+    "viewReport": "Ver informe"
   },
   "cookies": {
     "notice": "Cèrcol usa solo cookies funcionales — sin analíticas, sin rastreadores publicitarios.",
@@ -273,6 +340,11 @@
       "guidance": "Te conoces a ti mismo/a. Confía en ello.",
       "partNote": "Esta es la Parte 1 de un instrumento en dos partes. Testigo Cèrcol viene después de tus resultados.",
       "cta": "Comenzar"
+    },
+    "alreadyCompleted": {
+      "heading": "Ya has completado Full Moon Cèrcol",
+      "body": "La personalidad no cambia significativamente en periodos cortos. Tu resultado sigue siendo preciso — repetirlo daría puntuaciones muy similares.",
+      "cta": "Ver tu informe"
     }
   },
   "fmResults": {
@@ -636,7 +708,8 @@
       "statusComplete": "Completado",
       "existingHeading": "Tus testigos",
       "viewReport": "Ver informe completo",
-      "error": "Algo salió mal. Inténtalo de nuevo."
+      "error": "Algo salió mal. Inténtalo de nuevo.",
+      "linkedNote": "Si tus testigos tienen sesión iniciada, podrán vincular la sesión a su perfil para futuras funciones de equipo."
     },
     "page": {
       "loading": "Cargando…",
@@ -646,7 +719,9 @@
         "subjectLabel": "Estás describiendo a",
         "youAreLabel": "Tú eres",
         "youArePlaceholder": "Tu nombre",
-        "cta": "Comenzar"
+        "cta": "Comenzar",
+        "linkLabel": "Vincular esta sesión a mi perfil",
+        "linkNote": "Permite que las futuras funciones de equipo te conecten con esta persona."
       },
       "tooltipLabel": "Sobre esta palabra",
       "progress": "{{current}} de {{total}}",
