@@ -19,31 +19,16 @@ import { NewMoonIcon, FirstQuarterIcon, FullMoonIcon, LastQuarterIcon, RoleIcon 
 const GITHUB_URL = 'https://github.com/miquelmatoses/cercol'
 const ISSUE_URL  = 'https://github.com/miquelmatoses/cercol/issues/new?title=Bug+report&labels=bug'
 
-/** Animal definitions: fixed role selection and size range. */
+/** Fixed icon size for the wallpaper — all animals the same scale. */
+const ICON_SIZE = 80
+
+/** Animal definitions: all 12 roles repeated to fill the background. */
 const ICON_DEFS = [
-  { id: 'a01', role: 'R01', size: 160 },
-  { id: 'a02', role: 'R05', size: 148 },
-  { id: 'a03', role: 'R10', size: 136 },
-  { id: 'a04', role: 'R11', size: 122 },
-  { id: 'a05', role: 'R03', size: 114 },
-  { id: 'a06', role: 'R07', size: 104 },
-  { id: 'a07', role: 'R09', size: 94  },
-  { id: 'a08', role: 'R04', size: 86  },
-  { id: 'a09', role: 'R02', size: 78  },
-  { id: 'a10', role: 'R06', size: 72  },
-  { id: 'a11', role: 'R08', size: 82  },
-  { id: 'a12', role: 'R12', size: 68  },
-  { id: 'b01', role: 'R01', size: 58  },
-  { id: 'b02', role: 'R05', size: 54  },
-  { id: 'b03', role: 'R10', size: 62  },
-  { id: 'b04', role: 'R03', size: 50  },
-  { id: 'b05', role: 'R07', size: 48  },
-  { id: 'b06', role: 'R11', size: 56  },
-  { id: 'b07', role: 'R09', size: 46  },
-  { id: 'b08', role: 'R04', size: 44  },
-  { id: 'b09', role: 'R02', size: 52  },
-  { id: 'b10', role: 'R06', size: 42  },
-]
+  'R01','R02','R03','R04','R05','R06',
+  'R07','R08','R09','R10','R11','R12',
+  'R01','R02','R03','R04','R05','R06',
+  'R07','R08','R09','R10',
+].map((role, i) => ({ id: `ic${i}`, role }))
 
 /**
  * Card grid exclusion zone in viewport-% coordinates.
@@ -66,14 +51,12 @@ const CARD_Y1 = 18, CARD_Y2 = 82
 function generateWallpaper() {
   const placed = []
 
-  return ICON_DEFS.map((def) => {
-    // Approximate icon radius in viewport-% units (assumes ~1300px viewport width)
-    const r = def.size / 13
-    const rotate = Math.round((Math.random() - 0.5) * 80)   // –40 ° to +40 °
+  const r = ICON_SIZE / 13   // icon radius in viewport-% (assumes ~1300px viewport width)
 
+  return ICON_DEFS.map((def) => {
     let cx = -10, cy = -10   // default: hidden off-screen if no slot found
 
-    for (let attempt = 0; attempt < 200; attempt++) {
+    for (let attempt = 0; attempt < 300; attempt++) {
       // Sample with slight bleed beyond viewport edges for corner/edge effects
       const x = Math.random() * 112 - 6   // –6 % to 106 %
       const y = Math.random() * 112 - 6
@@ -97,11 +80,10 @@ function generateWallpaper() {
     return {
       id:   def.id,
       role: def.role,
-      size: def.size,
       style: {
         left:      `${cx}%`,
         top:       `${cy}%`,
-        transform: `translate(-50%, -50%) rotate(${rotate}deg)`,
+        transform: `translate(-50%, -50%)`,
       },
     }
   })
@@ -182,9 +164,9 @@ export default function HomePage() {
     >
       {/* Decorative animal icons — randomised on each load, behind cards */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        {wallpaper.map(({ id, role, size, style }) => (
+        {wallpaper.map(({ id, role, style }) => (
           <div key={id} className="absolute" style={style}>
-            <RoleIcon role={role} size={size} style={{ color: 'white', opacity: 0.22 }} />
+            <RoleIcon role={role} size={ICON_SIZE} style={{ color: 'white', opacity: 0.38 }} />
           </div>
         ))}
       </div>

@@ -656,6 +656,19 @@ smaller duplicates); opacity increased from 0.12 → 0.22; min-distance factor r
 **Danish language toggle:** already fully implemented in Phase 12.3 (LanguageToggle.jsx +
 i18n.js + src/locales/da.json). DA appears as the 6th option in the language dropdown.
 
+### Phase 12.5 — GroupsPage navigation fix + wallpaper + avatar polish ✅ COMPLETE
+
+**Bug fix — `/groups` cards not clickable:** `GroupCard` had no navigation handler. Wrapped
+in a `<button>` with `onClick={() => navigate('/groups/${id}')}`. Cards now navigate to
+`/groups/:id` (LastQuarterPage) on click. Added `hover:shadow-md transition-shadow` feedback.
+
+**Homepage wallpaper redesign:** all 22 icons now the same fixed size (`ICON_SIZE = 80`);
+no rotation (all upright); opacity increased from 0.22 → 0.38; `r` computed once outside
+the loop since all icons are identical size; placement attempts increased to 300.
+
+**AccountButton avatar:** `RoleIcon` size increased 18 → 26 inside the 28×28px button,
+reducing padding from ~5px/side to ~1px/side for a much tighter icon fill.
+
 ### Phase 13 — Living model
 - GitHub Actions job every 28 days: update NORM_MEAN/NORM_SD at N≥200
 - At N≥300: k-means (k=12) in 5D; update centroids if divergence is systematic

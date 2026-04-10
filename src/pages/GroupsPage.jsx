@@ -24,32 +24,38 @@ function formatDate(iso, language) {
   })
 }
 
-function GroupCard({ group, t }) {
+function GroupCard({ group, onClick, t }) {
   const completionRatio = group.member_count > 0
     ? `${group.completed}/${group.member_count}`
     : '0/0'
 
   return (
-    <Card className="p-5 shadow-sm">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <p className="font-semibold text-gray-900 text-sm leading-tight">{group.name}</p>
-          <p className="text-xs text-gray-400 mt-1">
-            {t('groups.memberCount', { count: group.member_count })}
-            {' · '}
-            {t('groups.completedCount', { ratio: completionRatio })}
-          </p>
+    <button
+      type="button"
+      onClick={onClick}
+      className="w-full text-left"
+    >
+      <Card className="p-5 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <p className="font-semibold text-gray-900 text-sm leading-tight">{group.name}</p>
+            <p className="text-xs text-gray-400 mt-1">
+              {t('groups.memberCount', { count: group.member_count })}
+              {' · '}
+              {t('groups.completedCount', { ratio: completionRatio })}
+            </p>
+          </div>
+          {group.is_creator && (
+            <span
+              className="shrink-0 text-xs font-semibold px-2 py-0.5 rounded"
+              style={{ backgroundColor: colors.blue + '18', color: colors.blue }}
+            >
+              {t('groups.creatorBadge')}
+            </span>
+          )}
         </div>
-        {group.is_creator && (
-          <span
-            className="shrink-0 text-xs font-semibold px-2 py-0.5 rounded"
-            style={{ backgroundColor: colors.blue + '18', color: colors.blue }}
-          >
-            {t('groups.creatorBadge')}
-          </span>
-        )}
-      </div>
-    </Card>
+      </Card>
+    </button>
   )
 }
 
@@ -293,7 +299,7 @@ export default function GroupsPage() {
             </SectionLabel>
             <div className="flex flex-col gap-3">
               {groups.map(g => (
-                <GroupCard key={g.id} group={g} t={t} />
+                <GroupCard key={g.id} group={g} onClick={() => navigate(`/groups/${g.id}`)} t={t} />
               ))}
             </div>
           </section>

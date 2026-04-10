@@ -80,7 +80,7 @@ export default function AccountButton() {
         style={{ backgroundColor: colors.red }}
       >
         {roleCode
-          ? <RoleIcon role={roleCode} size={18} style={{ color: 'white' }} />
+          ? <RoleIcon role={roleCode} size={26} style={{ color: 'white' }} />
           : <span className="text-xs font-bold">{initial}</span>
         }
       </button>
