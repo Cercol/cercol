@@ -762,6 +762,25 @@ were translated; the full paragraph text fell back to EN.
 their computed balance flags to the browser console. Helps verify the balance classification is
 working correctly in development.
 
+### Phase 13.5 — Last Quarter layout: 3-column top + 2-column bottom ✅ COMPLETE
+
+**Top section — 3-column grid [40/30/30]:**
+- Column 1 (40%): toggle buttons + RadarChart
+- Column 2 (30%): 5 stacked dimension score rows with icon, name, bar, value
+- Column 3 (30%): member list (icon cluster + name)
+- Columns 2 and 3 separated by a subtle left border on md+. Mobile: stacks vertically.
+- Uses Tailwind arbitrary column widths: `grid-cols-[4fr_3fr_3fr]`
+
+**Bottom section — 2-column grid [50/50]:**
+- Column 1: Balance analysis card
+- Column 2: Team narrative card
+- Both cards at `h-full` to match heights. Mobile: stacks vertically.
+
+**Print fix — dimension bars:**
+- `DomainBAR_HEX` constant replaces Tailwind `bg-*` classes with inline `backgroundColor`.
+- Bar fill element: `WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact'` inline styles.
+- `@media print` in `index.css`: `* { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }` as belt-and-suspenders for all colored elements (pills, etc.).
+
 ### Phase 13 — Living model
 - GitHub Actions job every 28 days: update NORM_MEAN/NORM_SD at N≥200
 - At N≥300: k-means (k=12) in 5D; update centroids if divergence is systematic
