@@ -67,6 +67,21 @@
     "pendingNote_plural": "{{count}} Mitglieder haben Full Moon noch nicht abgeschlossen.",
     "arcLabel": "Bogen:",
     "balanceHeading": "Gleichgewichtsanalyse",
+    "balance": {
+      "topContributor": "Höchster:",
+      "compensates": "kann das ausbalancieren",
+      "suggestRole": "Niemand kompensiert — erwägen Sie ein {{role}}-Profil",
+      "suggestRoles": "Diese Profile würden das Team stärken:",
+      "notes": {
+        "presence_balanced": "Präsenz ist ausgewogen. Energie und Zuhören koexistieren.",
+        "bond_balanced": "Das Band ist gesund. Vertrauen und Herausforderung haben Raum.",
+        "vision_balanced": "Die Vision ist geerdet. Das Team kann erkunden und liefern.",
+        "c_ok": "Die Disziplin ist solide. Verpflichtungen werden eingehalten.",
+        "c_low": "Disziplin ist das strukturelle Risiko. Verantwortung und Fristen brauchen aktive Aufmerksamkeit.",
+        "n_ok": "Die Gruppe ist emotional stabil.",
+        "n_high": "Die emotionale Reaktivität ist erhöht. Das Team kann Stress sichtbar tragen."
+      }
+    },
     "balanceState": {
       "balanced": "Ausgeglichen",
       "tiltedHigh": "Hoch geneigt",

@@ -1,16 +1,16 @@
 /**
  * LastQuarterPage — team report for a group.
  * Route: /groups/:id
- * Phase 13.2
+ * Phase 13.3
  *
  * Sections:
  *  1. Team composition — toggle (My profile / Team average) + radar + dimension rows
- *                        + member list (icon cluster + name only)
- *  2. Balance analysis — group mean flags (unchanged)
- *  3. Team narrative   — deterministic decision tree text (unchanged)
- *  4. Share            — copy link + print/PDF (unchanged)
+ *                        + member list (icon cluster + name, CSS tooltips)
+ *  2. Balance analysis — per-dimension analysis (DimensionIcon + top contributor + note)
+ *  3. Team narrative   — deterministic decision tree text
+ *  4. Share            — copy link + print/PDF
  */
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
@@ -18,6 +18,7 @@ import { getGroupReportData } from '../lib/api'
 import { computeRole } from '../utils/role-scoring'
 import {
   computeGroupMeans,
+  computeDimensionAnalysis,
   generateNarrative,
   balanceFlagForPBV,
   balanceFlagForC,
@@ -56,6 +57,38 @@ const DOMAIN_ICON_COLOR = {
   discipline: 'text-blue-600',
   depth:      'text-red-500',
   vision:     'text-[#427c42]',
+}
+
+/**
+ * IconTooltip — CSS tooltip that appears after ~300 ms hover, cursor stays default.
+ * Replaces native `title` attribute which shows a `?` cursor and has a long OS delay.
+ */
+function IconTooltip({ label, children }) {
+  const [visible, setVisible] = useState(false)
+  const timerRef = useRef(null)
+
+  function show() { timerRef.current = setTimeout(() => setVisible(true), 300) }
+  function hide()  { clearTimeout(timerRef.current); setVisible(false) }
+
+  return (
+    <span
+      className="relative inline-flex"
+      style={{ cursor: 'default' }}
+      onMouseEnter={show}
+      onMouseLeave={hide}
+    >
+      {children}
+      {visible && (
+        <span
+          className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5
+                     bg-gray-900 text-white text-xs px-2 py-1 rounded whitespace-nowrap
+                     pointer-events-none z-50"
+        >
+          {label}
+        </span>
+      )}
+    </span>
+  )
 }
 
 function BalancePill({ flag, t }) {
@@ -131,35 +164,26 @@ function MemberRow({ member, t }) {
       <div className="flex items-end gap-0.5 shrink-0">
         {primaryRole ? (
           <>
-            <span
-              title={t(`roles.${primaryRole}.name`)}
-              style={{ cursor: 'help', display: 'inline-flex' }}
-            >
+            <IconTooltip label={t(`roles.${primaryRole}.name`)}>
               <RoleIcon role={primaryRole} size={30} style={{ color: primaryColor }} />
-            </span>
+            </IconTooltip>
             {arcRole1 && (
-              <span
-                title={t(`roles.${arcRole1}.name`)}
-                style={{ cursor: 'help', display: 'inline-flex' }}
-              >
+              <IconTooltip label={t(`roles.${arcRole1}.name`)}>
                 <RoleIcon
                   role={arcRole1}
                   size={20}
                   style={{ color: ROLE_COLORS[arcRole1] ?? colors.red, opacity: 0.7 }}
                 />
-              </span>
+              </IconTooltip>
             )}
             {arcRole2 && (
-              <span
-                title={t(`roles.${arcRole2}.name`)}
-                style={{ cursor: 'help', display: 'inline-flex' }}
-              >
+              <IconTooltip label={t(`roles.${arcRole2}.name`)}>
                 <RoleIcon
                   role={arcRole2}
                   size={15}
                   style={{ color: ROLE_COLORS[arcRole2] ?? colors.red, opacity: 0.5 }}
                 />
-              </span>
+              </IconTooltip>
             )}
           </>
         ) : (
@@ -271,7 +295,7 @@ export default function LastQuarterPage() {
   // Active scores depend on toggle
   const activeScores = radarMode === 'myProfile' ? selfScores : teamScores
 
-  // Balance flags (only if we have completed data)
+  // Balance flags — still used for BalancePill inside dimension analysis
   const flags = groupMeans ? {
     p: balanceFlagForPBV(groupMeans.p),
     b: balanceFlagForPBV(groupMeans.b),
@@ -279,6 +303,9 @@ export default function LastQuarterPage() {
     c: balanceFlagForC(groupMeans.c),
     n: balanceFlagForN(groupMeans.n),
   } : null
+
+  // Per-dimension analysis for the redesigned balance section
+  const dimAnalysis = groupMeans ? computeDimensionAnalysis(members, groupMeans) : null
 
   // Narrative keys
   const narrative = groupMeans ? generateNarrative(groupMeans) : null
@@ -365,34 +392,98 @@ export default function LastQuarterPage() {
           )}
         </Card>
 
-        {/* ── Section 2: Balance analysis (unchanged) ── */}
-        {flags && teamScores ? (
+        {/* ── Section 2: Balance analysis (per-dimension redesign) ── */}
+        {dimAnalysis && dimAnalysis.length > 0 ? (
           <Card className="shadow-sm p-6">
-            <SectionLabel color="gray" className="mb-4">
+            <SectionLabel color="gray" className="mb-5">
               {t('lastQuarter.balanceHeading')}
             </SectionLabel>
 
-            <div className="flex flex-col gap-2 mb-6">
-              {[
-                { key: 'presence',   label: t('fmDomains.presence.name'),   flag: flags.p },
-                { key: 'bond',       label: t('fmDomains.bond.name'),       flag: flags.b },
-                { key: 'vision',     label: t('fmDomains.vision.name'),     flag: flags.v },
-                { key: 'discipline', label: t('fmDomains.discipline.name'), flag: flags.c },
-                { key: 'depth',      label: t('fmDomains.depth.name'),      flag: flags.n },
-              ].map(({ key, label, flag }) => (
-                <div key={key} className="flex items-center justify-between gap-3">
-                  <span className="text-sm text-gray-700">{label}</span>
-                  <BalancePill flag={flag} t={t} />
-                </div>
-              ))}
-            </div>
+            <div className="flex flex-col divide-y divide-gray-100">
+              {dimAnalysis.map(({ dim, meanZ, flag, topMember, compensatingMember, suggestedRole, suggestedRoles }) => {
+                const isPBV = dim === 'presence' || dim === 'bond' || dim === 'vision'
+                const isTilted = Math.abs(meanZ) >= 0.5
 
-            <RadarChart
-              scores={teamScores}
-              maxScore={5}
-              domainKeys={DOMAIN_KEYS}
-              labelFn={k => t(`fmDomains.${k}.name`)}
-            />
+                // Determine note key
+                let noteKey = null
+                if (isPBV && !isTilted) noteKey = `${dim}_balanced`
+                else if (dim === 'discipline') noteKey = flag === 'lowCaution' ? 'c_low' : 'c_ok'
+                else if (dim === 'depth')      noteKey = flag === 'highCaution' ? 'n_high' : 'n_ok'
+
+                return (
+                  <div key={dim} className="py-4 first:pt-0 last:pb-0">
+                    {/* Row 1: dimension name + balance pill */}
+                    <div className="flex items-center justify-between mb-2">
+                      <span className={`text-sm font-semibold flex items-center gap-1.5 ${DOMAIN_ICON_COLOR[dim]}`}>
+                        <DimensionIcon domain={dim} size={14} />
+                        <span style={{ color: colors.textPrimary }}>{t(`fmDomains.${dim}.name`)}</span>
+                      </span>
+                      <BalancePill flag={flag} t={t} />
+                    </div>
+
+                    {/* Row 2: top contributor */}
+                    {topMember && topMember.role && (
+                      <div className="flex items-center gap-1.5 text-xs text-gray-500 mb-1.5">
+                        <span>{t('lastQuarter.balance.topContributor')}</span>
+                        <RoleIcon
+                          role={topMember.role}
+                          size={16}
+                          style={{ color: ROLE_COLORS[topMember.role] ?? colors.red }}
+                        />
+                        <span className="font-medium text-gray-700">
+                          {topMember.display_name?.split(' ')[0] ?? topMember.display_name}
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Row 3: note / compensation / suggestion */}
+                    {noteKey && (
+                      <p className="text-xs text-gray-500 leading-relaxed">
+                        {t(`lastQuarter.balance.notes.${noteKey}`)}
+                      </p>
+                    )}
+
+                    {isPBV && isTilted && compensatingMember && compensatingMember.role && (
+                      <div className="flex items-center gap-1.5 text-xs text-gray-500">
+                        <RoleIcon
+                          role={compensatingMember.role}
+                          size={16}
+                          style={{ color: ROLE_COLORS[compensatingMember.role] ?? colors.red }}
+                        />
+                        <span className="font-medium text-gray-700">
+                          {compensatingMember.display_name?.split(' ')[0] ?? compensatingMember.display_name}
+                        </span>
+                        <span>{t('lastQuarter.balance.compensates')}</span>
+                      </div>
+                    )}
+
+                    {isPBV && isTilted && suggestedRole && (
+                      <div className="flex items-center gap-1.5 text-xs text-gray-500">
+                        <RoleIcon
+                          role={suggestedRole}
+                          size={16}
+                          style={{ color: ROLE_COLORS[suggestedRole] ?? colors.red }}
+                        />
+                        <span>
+                          {t('lastQuarter.balance.suggestRole', { role: t(`roles.${suggestedRole}.name`) })}
+                        </span>
+                      </div>
+                    )}
+
+                    {suggestedRoles && suggestedRoles.length > 0 && (
+                      <div className="flex items-center gap-1.5 text-xs text-gray-500 flex-wrap mt-0.5">
+                        <span>{t('lastQuarter.balance.suggestRoles')}</span>
+                        {suggestedRoles.map(r => (
+                          <IconTooltip key={r} label={t(`roles.${r}.name`)}>
+                            <RoleIcon role={r} size={16} style={{ color: ROLE_COLORS[r] ?? colors.red }} />
+                          </IconTooltip>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
           </Card>
         ) : completedCount === 0 ? (
           <Card className="shadow-sm p-6 text-center">

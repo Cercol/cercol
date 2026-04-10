@@ -714,6 +714,34 @@ Single-series only: `scores, maxScore, domainKeys, labelFn`.
 **i18n:** `lastQuarter.toggleMyProfile` and `lastQuarter.toggleTeamAverage` added to all
 6 locale files (EN: "My profile" / "Team average", CA, ES, FR, DE, DA translated).
 
+### Phase 13.3 — Last Quarter report fixes and balance analysis redesign ✅ COMPLETE
+
+**Tooltip fix on member role icons:** replaced native `title` attribute (which shows a `?` cursor
+and a long OS-controlled delay) with a local `IconTooltip` React component using CSS transitions
+and a `setTimeout(300ms)` delay. Cursor is now `default`. Shows role name (translated via i18n)
+for primary and arc icons.
+
+**Radar tooltip precision:** all values in the radar tooltip are now rounded to 1 decimal place.
+
+**Balance analysis section — full redesign:** removed the repeated RadarChart. Replaced with
+per-dimension analysis for all 5 dimensions:
+- DimensionIcon + dimension name + BalancePill per row.
+- Top contributor (member with highest z-score in that dimension) — RoleIcon + first name.
+- For P/B/V balanced: brief positive note per dimension.
+- For P/B/V tilted: shows the member whose individual z-score is furthest in the compensating
+  direction. If no member compensates (all tilt the same way), suggests the best matching role
+  profile from SCIENCE.md centroids (RoleIcon + role name).
+- For Discipline (low): caution note + top 3 high-C roles (Tortoise, Owl, Bee) as icon row.
+- For Depth (high): caution note + top 3 low-N roles (Tortoise, Elephant, Bear) as icon row.
+- All balance logic in `team-narrative.js` (`computeDimensionAnalysis`). Deterministic, no AI.
+- Thresholds: |mean_z| < 0.5 → balanced, ≥ 0.5 → tilted (same for strongly tilted treatment).
+
+**`computeDimensionAnalysis` in `team-narrative.js`:** new export. Contains `CENTROIDS`,
+`SUGGEST_ROLE_FOR_TILT`, `TOP_HIGH_C_ROLES`, `TOP_LOW_N_ROLES` constants.
+
+**i18n:** `lastQuarter.balance.*` object added to all 6 locale files:
+`topContributor`, `compensates`, `suggestRole`, `suggestRoles`, and `notes.*` per dimension/state.
+
 ### Phase 13 — Living model
 - GitHub Actions job every 28 days: update NORM_MEAN/NORM_SD at N≥200
 - At N≥300: k-means (k=12) in 5D; update centroids if divergence is systematic

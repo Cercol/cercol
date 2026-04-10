@@ -67,6 +67,21 @@
     "pendingNote_plural": "{{count}} membres encara no han completat el Full Moon.",
     "arcLabel": "Arc:",
     "balanceHeading": "Anàlisi de l'equilibri",
+    "balance": {
+      "topContributor": "Màxim:",
+      "compensates": "pot equilibrar açò",
+      "suggestRole": "Ningú compensa — considera un perfil de {{role}}",
+      "suggestRoles": "Estos perfils enfortiran l'equip:",
+      "notes": {
+        "presence_balanced": "La Presència és equilibrada. L'energia i l'escolta coexisteixen.",
+        "bond_balanced": "El Vincle és sa. La confiança i el repte comparteixen espai.",
+        "vision_balanced": "La Visió és sòlida. L'equip pot explorar i entregar.",
+        "c_ok": "La Disciplina és sòlida. Els compromisos solen complir-se.",
+        "c_low": "La Disciplina és el risc estructural. Cal atendre activament qui fa cada cosa i quan.",
+        "n_ok": "El grup és emocionalment estable.",
+        "n_high": "La reactivitat emocional és elevada. L'equip pot mostrar l'estrès de manera visible."
+      }
+    },
     "balanceState": {
       "balanced": "Equilibrat",
       "tiltedHigh": "Inclinat cap amunt",

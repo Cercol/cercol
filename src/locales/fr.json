@@ -67,6 +67,21 @@
     "pendingNote_plural": "{{count}} membres n'ont pas encore complété Full Moon.",
     "arcLabel": "Arc :",
     "balanceHeading": "Analyse de l'équilibre",
+    "balance": {
+      "topContributor": "Meilleur :",
+      "compensates": "peut équilibrer ceci",
+      "suggestRole": "Personne ne compense — envisagez un profil {{role}}",
+      "suggestRoles": "Ces profils renforceraient l'équipe :",
+      "notes": {
+        "presence_balanced": "La Présence est équilibrée. Énergie et écoute coexistent.",
+        "bond_balanced": "Le Lien est sain. La confiance et le défi ont leur place.",
+        "vision_balanced": "La Vision est ancrée. L'équipe peut explorer et livrer.",
+        "c_ok": "La Discipline est solide. Les engagements tendent à aboutir.",
+        "c_low": "La Discipline est le risque structurel. La propriété et les délais demandent une attention active.",
+        "n_ok": "Le groupe est émotionnellement stable.",
+        "n_high": "La réactivité émotionnelle est élevée. L'équipe peut montrer son stress ouvertement."
+      }
+    },
     "balanceState": {
       "balanced": "Équilibré",
       "tiltedHigh": "Penché vers le haut",

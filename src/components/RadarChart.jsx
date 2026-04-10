@@ -91,7 +91,7 @@ export default function RadarChart({ scores, maxScore = 5, domainKeys, labelFn }
         />
         <Tooltip
           formatter={(value, name, props) => [
-            `${props.payload.rawScore} / ${maxScore}`,
+            `${Number(props.payload.rawScore).toFixed(1)} / ${maxScore}`,
             props.payload.dimension,
           ]}
           contentStyle={{

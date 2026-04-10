@@ -67,6 +67,21 @@
     "pendingNote_plural": "{{count}} medlemmer har endnu ikke gennemført Full Moon.",
     "arcLabel": "Bue:",
     "balanceHeading": "Balanceanalyse",
+    "balance": {
+      "topContributor": "Højeste:",
+      "compensates": "kan balancere dette",
+      "suggestRole": "Ingen kompenserer — overvej en {{role}}-profil",
+      "suggestRoles": "Disse profiler ville styrke teamet:",
+      "notes": {
+        "presence_balanced": "Tilstedeværelse er afbalanceret. Energi og lytning sameksisterer.",
+        "bond_balanced": "Båndet er sundt. Tillid og udfordring har begge plads.",
+        "vision_balanced": "Visionen er jordet. Teamet kan udforske og levere.",
+        "c_ok": "Disciplinen er solid. Forpligtelser har tendens til at lande.",
+        "c_low": "Disciplin er den strukturelle risiko. Ejerskab og tidsfrister kræver aktiv opmærksomhed.",
+        "n_ok": "Gruppen er følelsesmæssigt stabil.",
+        "n_high": "Følelsesmæssig reaktivitet er forhøjet. Teamet kan bære stress synligt."
+      }
+    },
     "balanceState": {
       "balanced": "Afbalanceret",
       "tiltedHigh": "Hældt op",

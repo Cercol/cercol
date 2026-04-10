@@ -67,6 +67,21 @@
     "pendingNote_plural": "{{count}} members haven't completed Full Moon yet.",
     "arcLabel": "Arc:",
     "balanceHeading": "Balance analysis",
+    "balance": {
+      "topContributor": "Highest:",
+      "compensates": "can balance this",
+      "suggestRole": "No one compensates — consider a {{role}} profile",
+      "suggestRoles": "These profiles would strengthen the team:",
+      "notes": {
+        "presence_balanced": "Presence is balanced. Energy and listening coexist.",
+        "bond_balanced": "Bond is healthy. Trust and challenge both have room.",
+        "vision_balanced": "Vision is grounded. The team can explore and deliver.",
+        "c_ok": "Discipline is solid. Commitments tend to land.",
+        "c_low": "Discipline is the structural risk. Ownership and timelines need active attention.",
+        "n_ok": "The group is emotionally steady.",
+        "n_high": "Emotional reactivity is elevated. The team may carry stress visibly."
+      }
+    },
     "balanceState": {
       "balanced": "Balanced",
       "tiltedHigh": "Tilted high",
