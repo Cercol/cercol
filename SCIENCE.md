@@ -299,6 +299,50 @@ allows Spanish-speaking users to suggest corrections to individual items. Feedba
 stored in Supabase with the `language` field set to `'es'` and reviewed by maintainers
 before any item text is updated in the source files.
 
+### French (FR) test items
+
+The French translation of IPIP items used in Cèrcol follows the same direct translation
+methodology as the Spanish adaptation.
+
+**Source language:** English (ipip.ori.org public domain corpus)
+
+**Translation approach:** Direct translation preserving the precise psychological meaning
+of each item. Neutral European French is used — no regional variants (not Québécois),
+no register elevation that would affect construct measurement. Gender-inclusive forms
+(e.g. the mid-dot notation -·e) are used where the source item's meaning requires it.
+
+**Scientific basis:** The French adaptation of the IPIP is the adaptation by Thiry, B.,
+& Piolti, M. (2023), University of Mons, listed on ipip.ori.org as a peer-reviewed
+adaptation. This constitutes a stronger published scientific basis than the Spanish
+adaptation: the five-factor structure has been validated in French-speaking populations
+and the item-level translation methodology is documented. Cèrcol's translation follows
+the same item-level approach.
+This is not a formally validated translation — it is a principled open-source translation
+of public-domain items, documented as such.
+
+**Ongoing correction:** Feedback stored in Supabase with `language` field set to `'fr'`.
+
+### German (DE) test items
+
+The German translation of IPIP items used in Cèrcol follows the same direct translation
+methodology as the Spanish and French adaptations.
+
+**Source language:** English (ipip.ori.org public domain corpus)
+
+**Translation approach:** Direct translation preserving the precise psychological meaning
+of each item. Standard High German (Hochdeutsch) is used — no regional variants (not
+Austrian, not Swiss German), neutral register. Gender-inclusive forms are used where
+the source item's meaning requires it.
+
+**Scientific basis:** German adaptations of the IPIP are referenced in the published
+psychometric literature and listed on ipip.ori.org. The five-factor structure replicates
+in German-speaking populations (see e.g. Ostendorf & Angleitner 1994 for the German
+NEO-PI-R). Cèrcol's translation follows the same item-level direct translation methodology.
+This is not a formally validated translation — it is a principled open-source translation
+of public-domain items, documented as such.
+
+**Ongoing correction:** Feedback stored in Supabase with `language` field set to `'de'`.
+
 ---
 
 ## References

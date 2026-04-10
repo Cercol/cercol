@@ -595,7 +595,28 @@ Follow-up fixes to Phase 11:
   opens a menu with English / Català / Español, active language highlighted, outside-click
   to close; same pattern as `AccountButton.jsx`
 
-### Phase 12 — Living model
+### Phase 12 — French (FR) + German (DE) language support + UI polish ✅ COMPLETE
+
+Added French and German as the fourth and fifth languages, and refined the language selector:
+
+- `src/locales/fr.json` — full French UI translation (neutral European French)
+- `src/locales/de.json` — full German UI translation (Hochdeutsch)
+- `src/data/new-moon.js` — `fr` and `de` keys added to all 10 TIPI items
+- `src/data/first-quarter.js` — `fr` and `de` keys added to all 60 IPIP-NEO-60 items
+- `src/data/full-moon.js` — `fr` and `de` keys added to all 120 IPIP-NEO-120 items
+- `src/i18n.js` — FR and DE locales imported; `fr*` and `de*` browser detection added
+- `src/components/LanguageToggle.jsx` — dropdown now shows ISO 639-1 codes (EN, CA, ES, FR, DE);
+  active code displayed beside the GlobeIcon so language is always visible without opening menu
+- `src/pages/ProfilePage.jsx` — removed separate "Valencian" entry from native language selector;
+  Catalan covers both (`ca`)
+- `SCIENCE.md` — FR and DE translation methodology sections added
+
+Instrument names: "Cèrcol de Nouvelle Lune" / "Cèrcol des Neumondes", etc.
+FR scientific basis: Thiry & Piolti (2023) IPIP adaptation (University of Mons), listed on ipip.ori.org.
+DE scientific basis: German IPIP adaptations referenced in published literature (ipip.ori.org).
+Both translations follow the direct translation methodology documented in SCIENCE.md.
+
+### Phase 14 — Living model
 - GitHub Actions job every 28 days: update NORM_MEAN/NORM_SD at N≥200
 - At N≥300: k-means (k=12) in 5D; update centroids if divergence
   is systematic

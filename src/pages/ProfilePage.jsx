@@ -108,7 +108,6 @@ const LANGUAGES = [
   { code: 'tr',    name: 'Turkish' },
   { code: 'uk',    name: 'Ukrainian' },
   { code: 'ur',    name: 'Urdu' },
-  { code: 'val',   name: 'Valencian' },
   { code: 'vi',    name: 'Vietnamese' },
 ]
 

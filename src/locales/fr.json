@@ -1,0 +1,963 @@
+{
+  "nav": {
+    "brand": "Cèrcol",
+    "about": "À propos",
+    "instruments": "Instruments",
+    "roles": "Rôles",
+    "science": "Science",
+    "faq": "FAQ"
+  },
+  "myResults": {
+    "link": "Mes résultats",
+    "heading": "Mes résultats",
+    "loading": "Chargement…",
+    "error": "Impossible de charger les résultats. Réessayez plus tard.",
+    "empty": "Aucun résultat pour l'instant. Complétez une évaluation pour voir votre profil ici.",
+    "startCta": "Commencer une évaluation"
+  },
+  "account": {
+    "profile": "Profil",
+    "myResults": "Mes résultats",
+    "signOut": "Se déconnecter"
+  },
+  "cookies": {
+    "notice": "Cèrcol utilise uniquement des cookies fonctionnels — sans analytiques, sans traqueurs publicitaires.",
+    "learnMore": "Politique de confidentialité",
+    "ok": "OK",
+    "dismiss": "Fermer l'avis sur les cookies"
+  },
+  "privacy": {
+    "eyebrow": "Mentions légales",
+    "title": "Politique de confidentialité",
+    "lastUpdated": "Dernière mise à jour : avril 2026",
+    "intro": "Cette politique explique quelles données Cèrcol collecte, pourquoi, et ce que vous pouvez en faire. Elle est rédigée en langage clair — si quelque chose n'est pas clair, écrivez-nous.",
+    "collected": {
+      "heading": "Ce que nous collectons",
+      "body": "Selon la façon dont vous utilisez Cèrcol, nous pouvons conserver :",
+      "email": "Votre adresse e-mail — lorsque vous créez un compte ou vous connectez.",
+      "results": "Vos résultats aux tests — des scores liés à votre compte lorsque vous êtes connecté·e. Les scores anonymes (sans compte) sont stockés sans aucune information d'identification.",
+      "profile": "Les champs de profil que vous fournissez volontairement : prénom, nom, pays, langue maternelle. Tous optionnels sauf le prénom.",
+      "payment": "Données de paiement — traitées entièrement par Stripe. Cèrcol ne voit ni ne stocke jamais les détails de votre carte.",
+      "anonymous": "Données d'utilisation anonymes — si vous complétez une évaluation sans compte, seuls les scores sont stockés. Aucun nom, e-mail, IP ou information sur l'appareil."
+    },
+    "why": {
+      "heading": "Pourquoi nous les collectons",
+      "body": "Nous collectons des données à trois fins uniquement :",
+      "function": "Pour fournir le service — votre e-mail est nécessaire pour vous authentifier ; vos résultats sont stockés pour que vous puissiez consulter votre historique.",
+      "research": "Recherche anonymisée — des scores agrégés et dé-identifiés sont utilisés pour améliorer le modèle de personnalité et valider les normes entre les populations. Les résultats individuels ne sont jamais publiés.",
+      "payment": "Pour traiter votre paiement — Stripe a besoin des détails de votre carte pour vous facturer Cèrcol de Pleine Lune. Nous ne recevons qu'une confirmation.",
+      "noAds": "Nous ne vendons pas de données. Nous n'utilisons pas les données à des fins publicitaires. Nous ne partageons pas les données avec des tiers sauf tel que décrit ci-dessus."
+    },
+    "retention": {
+      "heading": "Combien de temps nous les conservons",
+      "body": "Nous conservons vos données tant que votre compte est actif. Plus précisément :",
+      "account": "Données du compte (e-mail, profil, résultats) — conservées jusqu'à ce que vous supprimiez votre compte.",
+      "anonymous": "Scores de tests anonymes — conservés indéfiniment en tant que données de recherche, sans lien avec aucune personne.",
+      "payment": "Dossiers de paiement — conservés par Stripe selon leur propre politique (généralement 7 ans pour la conformité fiscale)."
+    },
+    "cookies": {
+      "heading": "Cookies",
+      "body": "Cèrcol utilise un seul cookie strictement nécessaire : le jeton de session d'authentification défini par Supabase lors de votre connexion. Aucun cookie analytique, aucun traqueur publicitaire, aucun suivi tiers d'aucune sorte. Les cookies strictement nécessaires ne nécessitent pas votre consentement en vertu du RGPD."
+    },
+    "rights": {
+      "heading": "Vos droits",
+      "body": "En vertu du RGPD, si vous êtes basé·e dans l'UE ou l'EEE, vous avez le droit de :",
+      "access": "Accès — demander une copie des données personnelles que nous détenons sur vous.",
+      "deletion": "Suppression — demander que votre compte et toutes les données personnelles associées soient supprimés.",
+      "portability": "Portabilité — demander vos résultats de tests dans un format lisible par machine.",
+      "correction": "Rectification — mettre à jour ou corriger les informations de votre profil à tout moment via la page de profil.",
+      "how": "Pour exercer l'un de ces droits, écrivez-nous. Nous répondrons dans un délai de 30 jours."
+    },
+    "thirdParties": {
+      "heading": "Services tiers",
+      "supabase": "L'authentification et le stockage des données sont gérés par Supabase (Supabase, Inc.), une société américaine opérant sous des clauses contractuelles types pour les transferts de données de l'UE.",
+      "stripe": "Les paiements sont gérés par Stripe (Stripe, Inc.), une société américaine conforme aux transferts de données de l'UE. Cèrcol ne reçoit aucune donnée de carte de paiement — seulement une confirmation de transaction.",
+      "noTrackers": "Aucun autre service tiers ne reçoit vos données personnelles. Il n'y a aucune plateforme d'analyse, aucun réseau publicitaire ni traqueur de réseaux sociaux sur ce site."
+    },
+    "contact": {
+      "heading": "Contact",
+      "body": "Pour les demandes de données, questions ou réclamations :",
+      "email": "hello@cercol.team"
+    }
+  },
+  "profile": {
+    "eyebrow": "Votre compte",
+    "title": "Votre profil",
+    "subtitle": "Aidez-nous à comprendre la diversité des personnalités selon les cultures. Le pays et la langue sont utilisés uniquement à des fins de recherche.",
+    "loading": "Chargement…",
+    "firstNameLabel": "Prénom",
+    "firstNamePlaceholder": "Votre prénom",
+    "lastNameLabel": "Nom",
+    "lastNamePlaceholder": "Votre nom",
+    "countryLabel": "Pays",
+    "countryPlaceholder": "Sélectionnez votre pays",
+    "languageLabel": "Langue maternelle",
+    "languagePlaceholder": "Sélectionnez votre langue",
+    "saveButton": "Enregistrer",
+    "saving": "Enregistrement…",
+    "saved": "Profil enregistré.",
+    "error": "Une erreur s'est produite. Réessayez.",
+    "cancel": "Annuler",
+    "completionPrompt": {
+      "body": "Ajoutez votre nom pour personnaliser votre expérience.",
+      "cta": "Configurer le profil"
+    }
+  },
+  "auth": {
+    "signIn": "Se connecter",
+    "signOut": "Se déconnecter",
+    "emailLabel": "Votre e-mail",
+    "emailPlaceholder": "vous@exemple.com",
+    "passwordLabel": "Mot de passe",
+    "passwordPlaceholder": "Votre mot de passe",
+    "passwordNewPlaceholder": "Choisissez un mot de passe",
+    "continueWithGoogle": "Continuer avec Google",
+    "or": "ou",
+    "methodPassword": "Mot de passe",
+    "methodMagic": "Lien magique",
+    "signInCta": "Se connecter",
+    "createAccount": "Créer un compte",
+    "noAccount": "Pas encore de compte ?",
+    "haveAccount": "Vous avez déjà un compte ?",
+    "sendLink": "Envoyer le lien magique",
+    "sending": "Veuillez patienter…",
+    "sentHeading": "Vérifiez votre boîte de réception",
+    "sentBody": "Nous avons envoyé un lien à {{email}}. Cliquez dessus pour vous connecter.",
+    "confirmHeading": "Confirmez votre e-mail",
+    "confirmBody": "Nous avons envoyé un lien de confirmation à {{email}}. Cliquez dessus pour activer votre compte.",
+    "sentNote": "Pas d'e-mail ? Vérifiez votre dossier de courrier indésirable.",
+    "signingIn": "Connexion en cours…",
+    "tryAgain": "Réessayer",
+    "error": "Une erreur s'est produite. Réessayez."
+  },
+  "home": {
+    "subtitle": "Mieux vous connaître.",
+    "headline": "Choisissez votre évaluation",
+    "privacy": "Confidentialité",
+    "newMoon": {
+      "name": "Cèrcol de Nouvelle Lune",
+      "tagline": "Aperçu rapide",
+      "meta": "10 questions · ~2 min",
+      "description": "Un regard rapide sur vos cinq dimensions fondamentales."
+    },
+    "firstQuarter": {
+      "name": "Cèrcol de Premier Quartier",
+      "tagline": "Portrait complet",
+      "meta": "60 questions · ~10 min",
+      "description": "Un regard plus approfondi, décomposé en 30 facettes."
+    },
+    "fullMoon": {
+      "name": "Cèrcol de Pleine Lune",
+      "tagline": "Portrait définitif",
+      "meta": "120 questions · ~20 min",
+      "description": "L'auto-évaluation la plus approfondie — les 30 facettes en pleine résolution.",
+      "paid": "Paiement unique"
+    },
+    "footnote": "Code source ouvert · ",
+    "viewOnGitHub": "Voir sur GitHub"
+  },
+  "newMoon": {
+    "subtitle": "Cèrcol de Nouvelle Lune",
+    "progress": "Question {{current}} sur {{total}}",
+    "instructions": "Évaluez dans quelle mesure chaque paire de traits vous correspond.",
+    "itemPrefix": "Je me perçois comme",
+    "back": "Retour",
+    "next": "Suivant",
+    "seeResults": "Voir mes résultats",
+    "intro": {
+      "heading": "Cèrcol de Nouvelle Lune",
+      "meta": "10 questions · ~2 min",
+      "scale": "1–7 · Pas du tout d'accord → Tout à fait d'accord",
+      "guidance": "Suivez votre première intuition. Il n'y a pas de bonnes réponses.",
+      "cta": "Commencer"
+    }
+  },
+  "newMoonResults": {
+    "title": "Votre instantané",
+    "subtitle": "Cèrcol de Nouvelle Lune · 5 dimensions en un coup d'œil",
+    "domainSection": "Cinq dimensions",
+    "share": "Partager les résultats",
+    "copied": "Copié !",
+    "retake": "Recommencer",
+    "disclaimer": "Les scores reflètent des tendances au moment de l'évaluation. Chaque extrémité d'une dimension a ses propres forces — aucun score n'est bon ou mauvais.",
+    "upgrade": {
+      "heading": "Vous voulez une image plus complète ?",
+      "body": "Cèrcol de Premier Quartier vous donne 5 dimensions décomposées en 30 facettes.",
+      "cta": "Commencer Cèrcol de Premier Quartier"
+    }
+  },
+  "fq": {
+    "subtitle": "Cèrcol de Premier Quartier",
+    "blockProgress": "{{current}} sur {{total}} dans ce bloc",
+    "blockLabel": "Bloc {{current}} sur {{total}}",
+    "overallProgress": "{{current}} sur {{total}} au total",
+    "instructions": "Évaluez dans quelle mesure chaque affirmation vous correspond.",
+    "itemPrefix": "Je me perçois comme quelqu'un qui",
+    "back": "Retour",
+    "next": "Suivant",
+    "seeResults": "Voir mes résultats",
+    "transition": {
+      "blockDone": "{{name}} terminé·e",
+      "nextUp": "Ensuite :",
+      "cta": "Continuer avec {{name}}"
+    },
+    "intro": {
+      "heading": "Cèrcol de Premier Quartier",
+      "meta": "60 questions · ~10 min",
+      "scale": "1–5 · Pas du tout d'accord → Tout à fait d'accord",
+      "guidance": "Pas de bonnes réponses. Allez avec ce qui est vrai pour vous maintenant.",
+      "cta": "Commencer"
+    }
+  },
+  "fqResults": {
+    "title": "Votre profil",
+    "subtitle": "Cèrcol de Premier Quartier · 5 dimensions · 30 facettes",
+    "domainSection": "Cinq dimensions",
+    "facetSection": "Détail des facettes",
+    "roleSection": "Votre rôle · Premier aperçu",
+    "scoreLabels": {
+      "low": "Bas",
+      "moderate": "Modéré",
+      "high": "Élevé"
+    },
+    "fullMoonCta": {
+      "eyebrow": "Cèrcol de Pleine Lune",
+      "heading": "Vous voulez deux fois plus de précision ?",
+      "body": "Cèrcol de Pleine Lune utilise 4 questions par facette au lieu de 2. Le même portrait, plus net.",
+      "cta": "Essayer Cèrcol de Pleine Lune"
+    },
+    "share": "Partager les résultats",
+    "copied": "Copié !",
+    "retake": "Recommencer",
+    "disclaimer": "Les scores reflètent des tendances au moment de l'évaluation. Chaque extrémité d'une dimension a ses propres forces — aucun score n'est bon ou mauvais.",
+    "paymentSuccess": "Paiement reçu. Le détail complet de vos facettes est maintenant débloqué.",
+    "unlock": {
+      "heading": "30 facettes. Un paiement.",
+      "body": "Découvrez le détail derrière chaque dimension — ce qui vous motive, où vous vous retenez, et comment vous évoluez dans le monde.",
+      "cta": "Débloquer le rapport complet",
+      "loading": "Redirection vers le paiement…",
+      "signInNote": "Vous devez d'abord vous connecter."
+    }
+  },
+  "fm": {
+    "subtitle": "Cèrcol de Pleine Lune",
+    "paywall": {
+      "heading": "Cèrcol de Pleine Lune",
+      "body": "Le même portrait, construit à partir de 120 questions au lieu de 60. Chaque facette mesurée en pleine résolution.",
+      "includes": "30 facettes · Résultat de rôle · À vous pour toujours",
+      "cta": "Débloquer Cèrcol de Pleine Lune",
+      "loading": "Redirection vers le paiement…",
+      "processing": "Paiement reçu. Configuration de votre accès…",
+      "processingTimeout": "Votre paiement est en cours de traitement.",
+      "processingTimeoutNote": "Rafraîchissez cette page dans un moment pour commencer.",
+      "error": "Une erreur s'est produite. Réessayez.",
+      "permanentNote": "Paiement unique. L'accès est permanent."
+    },
+    "blockProgress": "{{current}} sur {{total}} dans ce bloc",
+    "blockLabel": "Bloc {{current}} sur {{total}}",
+    "overallProgress": "{{current}} sur {{total}} au total",
+    "instructions": "Évaluez dans quelle mesure chaque affirmation vous correspond.",
+    "itemPrefix": "Je me perçois comme quelqu'un qui",
+    "back": "Retour",
+    "next": "Suivant",
+    "seeResults": "Voir mes résultats",
+    "transition": {
+      "blockDone": "{{name}} terminé·e",
+      "nextUp": "Ensuite :",
+      "cta": "Continuer avec {{name}}"
+    },
+    "intro": {
+      "heading": "Cèrcol de Pleine Lune",
+      "meta": "120 questions · ~20 min",
+      "scale": "1–5 · Pas du tout d'accord → Tout à fait d'accord",
+      "guidance": "Vous vous connaissez. Faites-vous confiance.",
+      "partNote": "Ceci est la Partie 1 d'un instrument en deux parties. Témoin Cèrcol suit après vos résultats.",
+      "cta": "Commencer"
+    }
+  },
+  "fmResults": {
+    "title": "Votre portrait complet",
+    "subtitle": "Cèrcol de Pleine Lune · 5 dimensions · 30 facettes",
+    "domainSection": "Cinq dimensions",
+    "facetSection": "Détail des facettes",
+    "roleSection": "Votre rôle · Premier aperçu",
+    "scoreLabels": {
+      "low": "Bas",
+      "moderate": "Modéré",
+      "high": "Élevé"
+    },
+    "share": "Partager les résultats",
+    "copied": "Copié !",
+    "retake": "Recommencer",
+    "disclaimer": "Les scores reflètent des tendances au moment de l'évaluation. Chaque extrémité d'une dimension a ses propres forces — aucun score n'est bon ou mauvais.",
+    "witnessCta": {
+      "eyebrow": "Témoin Cèrcol",
+      "heading": "Voyez-vous de l'extérieur.",
+      "body": "Demandez à quelqu'un qui vous connaît bien de vous décrire. Cela lui prend 5 minutes et vous montre ce que vous ne pouvez pas voir en vous-même.",
+      "cta": "Inviter un·e témoin",
+      "report": "Voir le rapport complet"
+    }
+  },
+  "fmDomains": {
+    "depth":      { "name": "Profondeur", "description": "Comment vous traitez les émotions et naviguez dans l'incertitude.", "blockIntro": "Ces questions explorent votre paysage émotionnel — comment vous répondez au stress, au changement et aux tensions intérieures." },
+    "presence":   { "name": "Présence",   "description": "Quelle énergie vous apportez dans les espaces sociaux.", "blockIntro": "Ces questions explorent comment vous vous manifestez dans les situations sociales et vous connectez aux autres." },
+    "vision":     { "name": "Vision",     "description": "Comment vous vous engagez avec les idées, la beauté et la nouveauté.", "blockIntro": "Ces questions explorent votre curiosité, votre imagination et votre ouverture à de nouvelles perspectives." },
+    "bond":       { "name": "Lien",       "description": "Comment vous vous reliez aux autres et la chaleur que vous apportez.", "blockIntro": "Ces questions explorent comment vous construisez la confiance, exprimez le soin et vous reliez aux personnes autour de vous." },
+    "discipline": { "name": "Discipline", "description": "Comment vous abordez les tâches, les objectifs et le suivi.", "blockIntro": "Ces questions explorent comment vous organisez votre temps, tenez vos engagements et restez sur la bonne voie." }
+  },
+  "scale": {
+    "1": "Pas du tout d'accord",
+    "2": "Pas d'accord",
+    "3": "Ni d'accord ni en désaccord",
+    "4": "D'accord",
+    "5": "Tout à fait d'accord"
+  },
+  "scale7": {
+    "1": "Pas du tout d'accord",
+    "2": "Plutôt en désaccord",
+    "3": "Légèrement en désaccord",
+    "4": "Ni d'accord ni en désaccord",
+    "5": "Légèrement d'accord",
+    "6": "Plutôt d'accord",
+    "7": "Tout à fait d'accord"
+  },
+  "keyboard": {
+    "hint": "Astuce : touches numériques pour sélectionner · Entrée pour continuer · ← pour revenir"
+  },
+  "results": {
+    "title": "Votre profil",
+    "subtitle": "Cèrcol de Premier Quartier · 5 dimensions · 15 facettes",
+    "domainSection": "Cinq dimensions",
+    "facetSection": "Détail des facettes",
+    "scoreLabels": {
+      "low": "Bas",
+      "moderate": "Modéré",
+      "high": "Élevé"
+    },
+    "share": "Partager les résultats",
+    "copied": "Copié !",
+    "retake": "Recommencer",
+    "disclaimer": "Les scores reflètent des tendances au moment de l'évaluation. Chaque extrémité d'une dimension a ses propres forces — aucun score n'est bon ou mauvais."
+  },
+  "radarResults": {
+    "title": "Votre instantané",
+    "subtitle": "Cèrcol de Nouvelle Lune · 5 dimensions en un coup d'œil",
+    "domainSection": "Cinq dimensions",
+    "share": "Partager les résultats",
+    "copied": "Copié !",
+    "retake": "Recommencer",
+    "disclaimer": "Les scores reflètent des tendances au moment de l'évaluation. Chaque extrémité d'une dimension a ses propres forces — aucun score n'est bon ou mauvais.",
+    "upgrade": {
+      "heading": "Vous voulez une image plus complète ?",
+      "body": "Cèrcol de Premier Quartier vous donne 5 dimensions décomposées en 30 facettes.",
+      "cta": "Commencer Cèrcol de Premier Quartier"
+    }
+  },
+  "feedback": {
+    "reportIssue": "Signaler un problème",
+    "suggestTranslation": "Suggérer une traduction",
+    "panel": {
+      "title": "Suggérer une traduction",
+      "context": "Contexte",
+      "placeholder": "Qu'est-ce que vous changeriez ?",
+      "submit": "Envoyer",
+      "cancel": "Annuler",
+      "success": "Merci ! Nous examinerons votre suggestion."
+    }
+  },
+  "domains": {
+    "extraversion": {
+      "label": "Présence",
+      "description": "Quelle énergie vous apportez dans les espaces sociaux.",
+      "blockIntro": "Ces questions explorent comment vous vous manifestez dans les situations sociales et vous connectez aux autres."
+    },
+    "agreeableness": {
+      "label": "Lien",
+      "description": "Comment vous vous reliez aux autres et la chaleur que vous apportez.",
+      "blockIntro": "Ces questions explorent comment vous construisez la confiance, exprimez le soin et vous reliez aux personnes autour de vous."
+    },
+    "conscientiousness": {
+      "label": "Discipline",
+      "description": "Comment vous abordez les tâches, les objectifs et le suivi.",
+      "blockIntro": "Ces questions explorent comment vous organisez votre temps, tenez vos engagements et restez sur la bonne voie."
+    },
+    "negativeEmotionality": {
+      "label": "Profondeur",
+      "description": "Comment vous traitez les émotions et naviguez dans l'incertitude.",
+      "blockIntro": "Ces questions explorent votre paysage émotionnel — comment vous répondez au stress, au changement et aux tensions intérieures."
+    },
+    "openMindedness": {
+      "label": "Vision",
+      "description": "Comment vous vous engagez avec les idées, la beauté et la nouveauté.",
+      "blockIntro": "Ces questions explorent votre curiosité, votre imagination et votre ouverture à de nouvelles perspectives."
+    }
+  },
+  "fqDomains": {
+    "depth":      { "name": "Profondeur", "description": "Comment vous traitez les émotions et naviguez dans l'incertitude.", "blockIntro": "Ces questions explorent votre paysage émotionnel — comment vous répondez au stress, au changement et aux tensions intérieures." },
+    "presence":   { "name": "Présence",   "description": "Quelle énergie vous apportez dans les espaces sociaux.", "blockIntro": "Ces questions explorent comment vous vous manifestez dans les situations sociales et vous connectez aux autres." },
+    "vision":     { "name": "Vision",     "description": "Comment vous vous engagez avec les idées, la beauté et la nouveauté.", "blockIntro": "Ces questions explorent votre curiosité, votre imagination et votre ouverture à de nouvelles perspectives." },
+    "bond":       { "name": "Lien",       "description": "Comment vous vous reliez aux autres et la chaleur que vous apportez.", "blockIntro": "Ces questions explorent comment vous construisez la confiance, exprimez le soin et vous reliez aux personnes autour de vous." },
+    "discipline": { "name": "Discipline", "description": "Comment vous abordez les tâches, les objectifs et le suivi.", "blockIntro": "Ces questions explorent comment vous organisez votre temps, tenez vos engagements et restez sur la bonne voie." }
+  },
+  "dimensions": {
+    "presence": {
+      "high": "Vous apportez de l'énergie dans une pièce avant même d'avoir dit un mot. Les groupes gravitent vers vous, non pas parce que vous le cherchez, mais parce que l'immobilité n'est pas votre état naturel. Vous pensez à voix haute, et cela attire les autres.",
+      "low": "Vous n'avez pas besoin que la pièce vous remarque. Votre énergie va d'abord vers l'intérieur, ce qui signifie que lorsque vous parlez, cela porte. Vous observez plus que la plupart, et ce n'est pas rien."
+    },
+    "bond": {
+      "high": "Vous ressentez ce que les autres ressentent, parfois avant eux. Les conflits vous coûtent plus qu'aux autres, et vous désamorcez souvent les tensions pour maintenir une atmosphère sereine. C'est un don, tant que vous ne vous effacez pas dans le processus.",
+      "low": "Vous n'êtes pas là pour plaire, vous êtes là pour être utile. Vous direz la chose difficile quand les autres ne le feront pas, et vous n'avez pas besoin de consensus pour vous sentir confiant·e. Les groupes ont besoin de quelqu'un comme vous, même s'ils ne l'admettent pas."
+    },
+    "discipline": {
+      "high": "Vous finissez ce que vous commencez. Quand vous dites que quelque chose sera fait, c'est fait. La structure n'est pas une contrainte pour vous, c'est ainsi que vous construisez des choses qui durent. Les autres s'appuient là-dessus plus qu'ils ne le disent.",
+      "low": "Les règles ressemblent à la réponse de quelqu'un d'autre à un problème que vous résoudriez différemment. Vous êtes meilleur·e pour commencer les choses que pour les finir, ce qui signifie que vous avez besoin de personnes autour de vous qui adorent les 20 derniers %. Vous savez probablement déjà qui elles sont."
+    },
+    "depth": {
+      "high": "Vous ressentez les choses pleinement. Cela signifie que les moments difficiles frappent plus fort, mais aussi que vous captez des choses que les autres manquent entièrement. Votre sensibilité n'est pas un défaut du système, c'est ainsi que le système se calibre.",
+      "low": "La pression ne vous ébranle pas. Quand les choses déraillent, vous êtes souvent celui ou celle vers qui les autres se tournent, non pas parce que vous n'êtes pas affecté·e, mais parce que vous ne le montrez pas. Cette stabilité est plus rare qu'il n'y paraît."
+    },
+    "vision": {
+      "high": "Vous êtes attiré·e par l'idée avant le plan, par la question avant la réponse. Les nouveautés ne vous font pas peur, c'est la monotonie qui vous inquiète. Vous verrez souvent où quelque chose pourrait aller avant que quiconque d'autre ait levé les yeux de là où il se trouve.",
+      "low": "Vous faites confiance à ce qui fonctionne. Tous les problèmes n'ont pas besoin d'une nouvelle solution, et vous le savez. Quand tout le monde court après la prochaine chose, vous vous assurez que la chose actuelle tient vraiment la route. C'est sous-estimé."
+    }
+  },
+  "facets": {
+    "sociability": {
+      "label": "Sociabilité",
+      "high": "Vous ne supportez pas d'être seul·e longtemps. Les gens sont là où vous rechargez, où vous pensez, où vous vous épanouissez. Mettez-vous dans une pièce et vous aurez parlé à la moitié des personnes présentes avant que l'événement ne commence.",
+      "low": "Vous êtes sélectif·ve quant aux personnes qui méritent votre temps et votre énergie. Les conversations de surface vous coûtent quelque chose. Quand vous vous connectez, cela va en profondeur, et cela tend à compter plus que le volume."
+    },
+    "assertiveness": {
+      "label": "Assurance",
+      "high": "Vous n'attendez pas la permission. Quand quelque chose doit être dit ou décidé, vous le dites ou le décidez. Cette clarté coupe à travers le bruit, et la plupart des groupes en ont plus besoin qu'ils n'en ont.",
+      "low": "Vous préférez observer avant d'agir. Vous laissez les autres mener, et quand vous intervenez, c'est parce que vous avez déjà réfléchi. Cette délibération n'est pas de l'hésitation, c'est de la précision."
+    },
+    "energyLevel": {
+      "label": "Niveau d'énergie",
+      "high": "Vous fonctionnez à plein régime. Longues réunions, journées consécutives, projets exigeants — vous trouvez une deuxième vitesse là où les autres sont déjà épuisé·es. Le risque est que vous ne remarquiez pas toujours quand les personnes autour de vous ont cessé de suivre.",
+      "low": "Vous êtes durable·e. Vous connaissez votre rythme et vous le maintenez. Vous ne brûlerez pas brillamment pour vous effondrer, ce qui fait de vous quelqu'un sur qui les autres peuvent compter quand un projet dure longtemps."
+    },
+    "compassion": {
+      "label": "Compassion",
+      "high": "Quand quelqu'un dans la pièce souffre, vous le remarquez avant qu'il ne dise quoi que ce soit. Vous vous adaptez. Cette conscience fait que les gens se sentent vus, ce qui est l'une des choses les plus utiles qu'une personne puisse faire pour une autre.",
+      "low": "Vous ne prenez pas automatiquement en charge le poids émotionnel des autres. Ce n'est pas de la froideur, c'est un autre type de clarté. Vous vous concentrez sur le problème, pas sur les sentiments autour, et parfois c'est exactement ce dont on a besoin."
+    },
+    "respectfulness": {
+      "label": "Respect",
+      "high": "Vous traitez tout le monde comme s'il avait quelque chose qui vaut la peine d'être entendu. Cela signifie que vous écoutez plus attentivement que la plupart, que vous êtes en désaccord sans rejeter, et que vous ne faites rarement sentir les gens petits. Cela construit la confiance plus vite que presque n'importe quoi d'autre.",
+      "low": "Vous êtes direct·e, parfois brusquement. Vous n'adaptez pas votre ton pour mettre les gens à l'aise, et vous ne pensez pas que vous devriez. Cela peut être dur à entendre, mais cela signifie aussi que les gens savent toujours où ils en sont avec vous."
+    },
+    "trust": {
+      "label": "Confiance",
+      "high": "Votre réflexe par défaut est de croire que les gens ont de bonnes intentions. Cela vous rend facile à côtoyer et généreux·se pour les secondes chances. L'inconvénient est que vous pouvez être lent·e à voir quand quelqu'un ne joue pas franc jeu.",
+      "low": "Vous ne prenez pas les choses pour argent comptant. Vous observez, vous testez, vous vérifiez. Ce scepticisme vous a probablement sauvé·e plus d'une fois. Cela signifie aussi que la confiance, quand vous l'accordez, signifie vraiment quelque chose."
+    },
+    "organization": {
+      "label": "Organisation",
+      "high": "Vous savez où tout se trouve, quand tout est dû, et ce qui se passe si ce n'est pas le cas. Cet ordre mental vous libère pour vous concentrer, et travailler avec vous donne une impression de fiabilité difficile à remplacer.",
+      "low": "Votre espace de travail peut ressembler au chaos, mais vous savez où sont les choses, la plupart du temps. Vous travaillez par rafales et gérez par priorité, pas par système. Ce que vous perdez en rangement, vous le gagnez parfois en vitesse."
+    },
+    "productiveness": {
+      "label": "Productivité",
+      "high": "Vous êtes là pour accomplir des choses. Pas pour parler de les accomplir, pas pour planifier de les accomplir. Accomplies. Cette orientation vers le résultat est rare et génère des résultats difficiles à contester.",
+      "low": "Vous n'êtes pas motivé·e par le résultat pour lui-même. Vous avez besoin d'une raison, d'un but, de quelque chose qui compte. Quand vous l'avez, vous travaillez dur. Quand vous ne l'avez pas, vous ne ferez pas semblant."
+    },
+    "responsibility": {
+      "label": "Responsabilité",
+      "high": "Si vous avez dit que vous le feriez, c'est fait. Point final. Les gens cessent de s'inquiéter des choses qu'ils vous ont confiées, et c'est une forme de confiance qui prend longtemps à construire et compte énormément dans une équipe.",
+      "low": "Vous êtes meilleur·e dans les grands engagements que dans les petits. Les règles, les délais et les obligations qui semblent arbitraires tendent à glisser. Vous serez présent·e pour ce qui compte vraiment, mais vous devez d'abord croire que ça compte."
+    },
+    "anxiety": {
+      "label": "Anxiété",
+      "high": "Vous anticipez ce qui pourrait mal tourner, souvent avant que quiconque d'autre ait pensé à regarder. Cette vigilance détecte de vrais problèmes. Le coût est que l'alarme tourne parfois même quand tout va bien.",
+      "low": "Vous ne perdez pas le sommeil sur ce qui pourrait arriver. Vous gérez ce qui se passe, quand ça se passe. Ce calme face à l'incertitude est quelque chose dont les équipes ont plus besoin, surtout quand les choses se compliquent."
+    },
+    "depression": {
+      "label": "Humeur",
+      "high": "Vous portez les choses. Les revers ne rebondissent pas simplement sur vous, ils s'installent un moment. Cette profondeur de sentiment signifie que vous prenez les choses au sérieux d'une manière que les personnes superficielles ne feront jamais. Ça vaut quelque chose, même quand ça ne le semble pas.",
+      "low": "Vous récupérez vite. Les mauvaises journées ne se transforment pas en mauvaises semaines. Cette résilience n'est pas l'absence de sentiment, c'est la capacité à traverser les choses sans rester coincé·e. Les groupes ont besoin de ce type d'équilibre."
+    },
+    "emotionalVolatility": {
+      "label": "Stabilité émotionnelle",
+      "high": "Vos réactions sont visibles. Quand quelque chose ne va pas, les gens le savent. Quand quelque chose va bien, ils le savent aussi. Cette transparence peut être déstabilisante, mais elle signifie aussi que vous ne jouez jamais une humeur que vous ne ressentez pas.",
+      "low": "Vous gardez un cap régulier quoi qu'il se passe autour de vous. Les gens ne peuvent pas facilement vous lire, ce qui peut les frustrer, mais cela signifie aussi que vous n'ajoutez pas de bruit quand la situation en a déjà assez."
+    },
+    "intellectualCuriosity": {
+      "label": "Curiosité intellectuelle",
+      "high": "Vous voulez comprendre comment les choses fonctionnent, pas seulement qu'elles fonctionnent. Donnez-vous un problème et vous le démonterez avant d'essayer de le résoudre. Cette profondeur d'investigation trouve des choses que la pensée superficielle manque à chaque fois.",
+      "low": "Vous êtes praticien·ne, pas théoricien·ne. Vous voulez des outils qui fonctionnent, des explications qui aident, des réponses que vous pouvez utiliser. Toutes les questions n'ont pas besoin d'être rouvertes, et vous savez lesquelles ne le sont pas."
+    },
+    "aestheticSensitivity": {
+      "label": "Sensibilité esthétique",
+      "high": "Vous remarquez quand quelque chose est beau et quand ce ne l'est pas. Cette attention à la forme n'est pas superficielle, c'est ainsi que vous traitez la qualité. Vous sentirez souvent que quelque chose ne va pas avant de pouvoir dire pourquoi, et vous avez généralement raison.",
+      "low": "La fonction compte plus que la forme pour vous. Si ça marche, ça marche. Vous n'allez pas passer du temps à rendre quelque chose beau quand le rendre meilleur est encore sur la table. Cette concentration sur la substance fait avancer les choses."
+    },
+    "creativeImagination": {
+      "label": "Imagination créative",
+      "high": "Vous pensez en possibilités. La situation actuelle n'est toujours qu'une version de ce qui pourrait être. Cette capacité à imaginer des alternatives est là d'où viennent les nouvelles idées, et les nouvelles idées sont ce dont les équipes ont besoin quand les anciennes réponses cessent de fonctionner.",
+      "low": "Vous êtes ancré·e dans ce qui existe, pas dans ce qui pourrait être. Vous préférez améliorer ce qui est là plutôt qu'inventer quelque chose de nouveau. Ce réalisme empêche beaucoup de mauvaises idées d'aller trop loin, ce qui est un rôle plus précieux que les gens ne le pensent."
+    }
+  },
+  "fqFacets": {
+    "vigil":     { "label": "Vigil",     "high": "Vous exécutez constamment la détection des menaces. La plupart du temps, il n'y a rien, mais parfois vous détectez quelque chose de réel avant que quiconque d'autre ait levé les yeux. Cette vigilance est épuisante et parfois inestimable.", "low": "Vous n'empruntez pas de problèmes au futur. Vous gérez ce qui est devant vous, quand ça arrive. Cet ancrage est plus rare qu'il n'y paraît, surtout quand les choses deviennent incertaines." },
+    "blaze":     { "label": "Blaze",     "high": "Votre frustration se manifeste rapidement et visiblement. Les gens savent toujours où ils en sont avec vous, ce qui n'est pas rien. Le coût est que les petites choses reçoivent parfois la même réaction que les grandes.", "low": "Il faut beaucoup pour vous mettre en colère. Vous n'escaladez pas, vous ne correspondez pas à la chaleur des autres. Dans les moments tendus, cette stabilité change la température de toute la pièce." },
+    "hollow":    { "label": "Hollow",    "high": "Vous portez un poids. Les revers s'installent plutôt qu'ils ne rebondissent. Cette profondeur de sentiment signifie que vous prenez les choses au sérieux d'une manière que les personnes plus légères ne feront jamais. Ça vous coûte, et ça vaut quelque chose.", "low": "Vous récupérez vite. Les mauvaises journées ne deviennent pas de mauvaises semaines. Cette capacité à avancer n'est pas de l'indifférence, c'est une forme de résilience qui vous maintient fonctionnel·le quand les autres traitent encore." },
+    "veil":      { "label": "Veil",      "high": "Vous êtes conscient·e de l'effet que vous produisez, parfois de façon aiguë. Cette sensibilité sociale vous rend attentif·ve et considéré·e. Elle signifie aussi que vous dépensez de l'énergie sur la façon dont les choses atterrissent que les autres ne pensent jamais.", "low": "Vous ne gaspillez pas beaucoup d'énergie à vous inquiéter de ce que les gens pensent de vous. Cette aisance avec vous-même passe pour de la confiance, même quand c'est juste du confort. Dans tous les cas, cela tend à mettre les autres à l'aise aussi." },
+    "surge":     { "label": "Surge",     "high": "Vous agissez sur ce que vous ressentez, souvent avant que la pensée soit entièrement formée. Parfois cette vitesse est tout l'avantage. Parfois ce ne l'est pas, et vous le savez aussi.", "low": "Vous ne vous laissez pas facilement emporter. Les impulsions passent, les réactions sont filtrées, les décisions sont considérées. Cette autorégulation est le moteur silencieux derrière beaucoup de choses qui se passent vraiment bien." },
+    "fracture":  { "label": "Fracture",  "high": "Quand la pression monte, vous la ressentez pleinement. Cette sensibilité n'est pas une faiblesse, c'est un signal. Vous détectez la tension avant les autres, ce qui signifie que vous êtes souvent celui ou celle qui dit que quelque chose doit changer.", "low": "Vous tenez sous la pression sans fissures visibles. Les gens se tournent vers vous quand les choses deviennent difficiles, non pas parce que vous n'êtes pas affecté·e, mais parce que vous continuez à fonctionner. C'est un travail porteur dans toute équipe." },
+    "hearth":    { "label": "Hearth",    "high": "Les gens se sentent bienvenus près de vous sans vraiment savoir pourquoi. Vous faites l'effort de vous connecter, de vous souvenir, de demander. Cette chaleur n'est pas de la conversation de surface, c'est le fondement de la confiance.", "low": "Vous ne vous réchauffez pas instantanément et vous ne faites pas semblant. Les connexions que vous établissez sont genuines et durables. Les personnes qui vous connaissent bien savent qu'elles obtiennent quelque chose de réel." },
+    "gather":    { "label": "Gather",    "high": "Les groupes vous dynamisent. Plus il y a de personnes, mieux vous tendez à fonctionner. Vous êtes celui ou celle qui arrive tôt et part en dernier, et la pièce remarque généralement votre absence.", "low": "Vous pouvez gérer une pièce quand vous en avez besoin, mais cela vous coûte quelque chose. Vous êtes meilleur·e dans les configurations plus petites, où la profondeur est possible. La qualité avant le volume, à chaque fois." },
+    "command":   { "label": "Command",   "high": "Vous n'attendez pas la permission. Quand quelque chose doit être décidé, vous le décidez. Quand quelque chose doit être dit, vous le dites. Cette franchise coupe à travers le bruit et la plupart des groupes en ont plus besoin.", "low": "Vous observez avant d'agir. Vous laissez les autres mener, et quand vous intervenez, c'est parce que vous avez déjà réfléchi. Ce n'est pas de l'hésitation, c'est de la précision." },
+    "drive":     { "label": "Drive",     "high": "Vous fonctionnez à un rythme élevé. Journées consécutives, projets multiples, longues réunions — vous trouvez une deuxième vitesse là où les autres sont déjà épuisé·es. Vérifiez juste que les personnes autour de vous suivent encore.", "low": "Vous êtes durable·e. Vous connaissez votre rythme et vous le maintenez. Vous ne brûlerez pas brillamment pour vous effondrer, ce qui fait de vous quelqu'un sur qui les autres peuvent compter quand un projet dure plus longtemps que prévu." },
+    "thrill":    { "label": "Thrill",    "high": "La routine est là où votre attention va mourir. Vous avez besoin d'enjeux, de nouveauté, de quelque chose en jeu. Cette tendance vers l'intensité est là d'où vient une grande partie de votre meilleur travail.", "low": "Vous n'avez pas besoin d'adrénaline pour bien fonctionner. Les environnements calmes et stables font ressortir votre meilleur. Vous êtes celui ou celle qui continue à travailler quand tout le monde est distrait par le drame." },
+    "radiance":  { "label": "Radiance",  "high": "Votre enthousiasme est contagieux et authentique. Vous apportez de l'énergie aux choses avant qu'elles l'aient méritée, ce qui les amène parfois à la mériter. Les groupes se sentent différents quand vous êtes dedans.", "low": "Vous ne jouez pas un enthousiasme que vous ne ressentez pas. Votre approbation signifie quelque chose parce que vous ne la donnez pas automatiquement. Quand vous dites que quelque chose est bien, les gens vous croient." },
+    "dream":     { "label": "Dream",     "high": "Votre esprit va dans des endroits sans y être invité. La rêverie n'est pas une distraction pour vous, c'est là d'où viennent les idées. Le monde intérieur est riche, et il nourrit l'externe d'une manière qui n'est pas toujours visible.", "low": "Vous restez proche du sol. Ce qui est réel, ce qui est là, ce qui fonctionne. Cette concentration vous maintient utile d'une manière que les rêveurs parfois ne sont pas." },
+    "craft":     { "label": "Craft",     "high": "Vous remarquez quand quelque chose est beau et quand ce ne l'est pas. Cette attention à la forme n'est pas superficielle, c'est ainsi que vous traitez la qualité. Vous sentez que quelque chose ne va pas avant de pouvoir dire pourquoi, et vous avez généralement raison.", "low": "La fonction compte plus que la forme pour vous. Si ça marche, ça marche. Vous ne passerez pas de temps à rendre quelque chose beau quand le rendre meilleur est encore sur la table." },
+    "resonance": { "label": "Resonance", "high": "Vous êtes accordé·e sur le registre émotionnel, le vôtre et celui des autres. Cette sensibilité fait de vous un·e lecteur·trice attentif·ve des ambiances et un·e communicant·e réfléchi·e. Cela signifie aussi que vous portez plus que la plupart.", "low": "Vous menez avec la logique plutôt que le sentiment. Cela garde les choses claires et nettes. Dans les situations chargées émotionnellement, votre sang-froid est souvent exactement ce dont on a besoin." },
+    "drift":     { "label": "Drift",     "high": "La variété vous maintient engagé·e. De nouvelles approches, des contextes différents, un territoire inconnu — c'est là que vous réfléchissez le mieux. La répétition est là où vous perdez le plus vite l'intérêt.", "low": "Vous faites confiance à ce qui fonctionne et vous vous y tenez. Tous les problèmes n'ont pas besoin d'une nouvelle solution. Quand les autres courent après la nouveauté, vous vous assurez que la chose actuelle tient vraiment la route." },
+    "prism":     { "label": "Prism",     "high": "Vous voulez comprendre comment les choses fonctionnent, pas seulement qu'elles fonctionnent. Donnez-vous un problème et vous le démonterez avant d'essayer de le résoudre. Cette profondeur d'investigation trouve des choses que la pensée superficielle manque.", "low": "Vous êtes praticien·ne, pas théoricien·ne. Vous voulez des outils qui fonctionnent, des explications que vous pouvez utiliser. Toutes les questions n'ont pas besoin d'être rouvertes, et vous savez lesquelles ne le sont pas." },
+    "compass":   { "label": "Compass",   "high": "Vous remettez en question les règles héritées et les normes établies. Pas par rébellion, mais parce que vous réfléchissez et ne supposez pas que la valeur par défaut est juste. Cette volonté de reconsidérer est la façon dont les choses s'améliorent.", "low": "Vous valorisez la stabilité, les systèmes éprouvés et les normes partagées. Tout n'a pas besoin d'être remis en question, et vous savez ce qui ne le doit pas. Ce conservatisme évite que beaucoup de choses se cassent inutilement." },
+    "faith":     { "label": "Faith",     "high": "Votre réflexe par défaut est de croire que les gens ont de bonnes intentions. Cette générosité vous rend facile à côtoyer et prompt·e à donner des secondes chances. Le risque est que vous soyez parfois lent·e à voir quand quelqu'un ne joue pas franc jeu.", "low": "Vous ne prenez pas les choses pour argent comptant. Vous observez, vous testez, vous vérifiez. Ce scepticisme vous a probablement sauvé·e plus d'une fois. Et quand vous faites confiance à quelqu'un, cela signifie vraiment quelque chose." },
+    "edge":      { "label": "Edge",      "high": "Ce que vous dites est ce que vous voulez dire. Pas de mise en scène, pas de gestion des impressions, pas d'ambiguïté stratégique. Les gens savent toujours où ils en sont avec vous, ce qui est plus précieux que ça en a l'air.", "low": "Vous êtes habile à naviguer dans la complexité sociale. Vous savez quand retenir, quand formuler soigneusement, quand la franchise coûterait plus qu'elle ne vaut. Ce n'est pas de la malhonnêteté, c'est de la sophistication." },
+    "gift":      { "label": "Gift",      "high": "Vous faites sentir les gens bienvenus sans effort. Vous remarquez quand quelqu'un est à l'écart et vous faites quelque chose à ce sujet. Cette générosité d'attention est l'une des choses les plus sous-estimées qu'une personne puisse apporter à un groupe.", "low": "Vous n'êtes pas là pour prendre soin de tout le monde. Vous concentrez votre énergie là où ça compte et ne la dispersez pas sur des obligations. Cette concentration fait que ce que vous donnez compte vraiment." },
+    "yield":     { "label": "Yield",     "high": "Vous préférez trouver un accord plutôt que de gagner l'argument. Cet instinct collaboratif fait avancer les choses et maintient les relations intactes. Assurez-vous simplement de choisir la paix plutôt que d'y revenir par défaut.", "low": "Vous résistez. Vous ne cédez pas à la pression sociale et vous ne faites pas semblant d'être d'accord quand vous ne l'êtes pas. Les groupes ont besoin de cette friction, même quand ils ne l'apprécient pas sur le moment." },
+    "shadow":    { "label": "Shadow",    "high": "Vous ne prenez pas plus de place que nécessaire. Le crédit est partagé, les réalisations ne sont pas annoncées. Cette retenue construit un type de confiance que la self-promotion ne fait jamais.", "low": "Vous savez ce que vous valez et vous ne le cachez pas. Cette confiance en votre propre valeur n'est pas de l'arrogance, c'est de la clarté. Et parfois la pièce a besoin de quelqu'un qui est prêt·e à dire ce qu'il apporte." },
+    "shield":    { "label": "Shield",    "high": "Vous ressentez l'impact des choses sur des personnes qui ne sont pas dans la pièce. Cette attentivité éthique signifie que vous pensez aux conséquences que les autres manquent entièrement. Cela ralentit parfois les choses, pour de bonnes raisons.", "low": "Vous vous concentrez sur les faits et les résultats plutôt que sur les sentiments. Cette objectivité maintient l'analyse claire et les décisions ancrées. Toutes les situations n'ont pas besoin d'un audit émotionnel avant d'avancer." },
+    "mastery":   { "label": "Mastery",   "high": "Vous gérez bien les choses et vous le savez. Cette confiance en votre propre capacité n'est pas de l'arrogance, c'est précis. Vous ne vous remettez pas en question jusqu'à la paralysie parce que vous avez généralement fait le travail.", "low": "Vous êtes encore en train de comprendre les choses, et vous l'admettez honnêtement. Cette ouverture à l'apprentissage vous protège de la surconfiance qui fait trébucher les personnes qui pensent être déjà arrivées." },
+    "structure": { "label": "Structure", "high": "Vous savez où tout se trouve, quand tout est dû, et ce qui se passe si ce n'est pas le cas. Cet ordre mental vous libère pour vous concentrer, et travailler avec vous donne une impression de fiabilité difficile à remplacer.", "low": "Votre espace de travail peut ressembler au chaos, mais vous savez où sont les choses, la plupart du temps. Vous gérez par priorité, pas par système. Ce que vous perdez en rangement, vous le gagnez parfois en vitesse." },
+    "oath":      { "label": "Oath",      "high": "Si vous avez dit que vous le feriez, c'est fait. Les gens cessent de s'inquiéter des choses qu'ils vous ont confiées, et c'est une forme de confiance qui prend longtemps à construire et compte énormément dans une équipe.", "low": "Vous êtes meilleur·e dans les grands engagements que dans les petits. Les obligations qui semblent arbitraires tendent à glisser. Vous serez présent·e pour ce qui compte vraiment, mais vous devez d'abord croire que ça compte." },
+    "quest":     { "label": "Quest",     "high": "Vous êtes là pour accomplir des choses. Pas pour en parler, pas pour les planifier. Accomplies. Cette orientation vers le résultat est rare et génère des résultats difficiles à contester.", "low": "Vous n'êtes pas motivé·e par le résultat pour lui-même. Vous avez besoin d'une raison, d'un but, de quelque chose qui compte. Quand vous l'avez, vous travaillez dur. Quand vous ne l'avez pas, vous ne ferez pas semblant." },
+    "will":      { "label": "Will",      "high": "Vous démarrez les choses quand elles doivent être démarrées, pas quand vous en avez envie. Cette capacité à agir sans attendre la motivation est la façon dont les choses qui comptent sont vraiment terminées.", "low": "Vous avez besoin des bonnes conditions pour démarrer. Pression, intérêt, sens. Sans elles, commencer est difficile. Avec elles, vous pouvez aller en profondeur d'une manière que les personnes qui se contentent de travailler n'atteignent jamais." },
+    "counsel":   { "label": "Counsel",   "high": "Vous réfléchissez avant d'agir. Les décisions sont considérées, les mots sont choisis, les conséquences sont cartographiées. Ce soin prévient beaucoup de problèmes que les personnes impulsives doivent résoudre plus tard.", "low": "Vous décidez vite et vous ajustez en cours de route. Cette vitesse a un coût parfois, mais elle signifie aussi que vous bougez pendant que les autres délibèrent encore. Dans les situations qui évoluent vite, c'est important." }
+  },
+  "roles": {
+    "beta_label": "Bêta · Modèle théorique",
+    "arc_label": "Arc personnel",
+    "you": "Votre position",
+    "probability_label": "Correspondance de rôle",
+    "R01": {
+      "name": "Dolphin",  "ca": "Dolphin",
+      "essence": "Quand vous êtes dans la pièce, les gens parlent. Pas parce que vous le demandez — parce que vous l'avez rendu facile. L'équipe se réchauffe avec vous.",
+      "profile": "Présence et Lien élevés. Chaleureux·se, extraverti·e et facile à côtoyer. Les gens s'ouvrent en votre compagnie.",
+      "contributes": "Cohésion. Réduit l'énergie d'activation sociale dans la pièce.",
+      "misses": "La friction productive qui affûte les idées. La chaleur peut lisser de vrais désaccords."
+    },
+    "R02": {
+      "name": "Wolf",     "ca": "Wolf",
+      "essence": "Vous n'attendez pas la permission. Quand vous voyez le problème, vous le dites. L'équipe avance parce que vous ne restez pas silencieux·se.",
+      "profile": "Présence élevée, Lien bas. Direct·e, assuré·e et orienté·e vers l'action. N'attend pas le consensus.",
+      "contributes": "Initiative. Nomme ce qui doit être dit et fait avancer les choses.",
+      "misses": "Le coût relationnel de la franchise dans le temps. Les équipes peuvent perdre confiance si le défi est constant."
+    },
+    "R03": {
+      "name": "Elephant", "ca": "Elephant",
+      "essence": "Vous ne prenez pas de place — vous en créez. Les gens s'expliquent bien à vos côtés parce qu'ils savent que vous écoutez vraiment.",
+      "profile": "Présence basse, Lien élevé. Calme et profondément coopératif·ve. Crée de l'espace pour que les autres pensent à voix haute.",
+      "contributes": "Profondeur d'écoute. Les gens s'articulent mieux en votre présence.",
+      "misses": "Élan. L'équipe peut penser clairement ensemble mais ne pas bouger pour autant."
+    },
+    "R04": {
+      "name": "Owl",      "ca": "Owl",
+      "essence": "Vous voyez ce que les autres manquent parce que vous n'avez pas besoin d'être au centre. La distance vous est utile.",
+      "profile": "Présence et Lien bas. Indépendant·e, observateur·trice et précis·e. Fonctionne mieux avec de la distance.",
+      "contributes": "Clarté. Voit les problèmes structurels que les profils très sociaux manquent.",
+      "misses": "Chaleur et collaboration facile. La distance qui aide l'analyse peut isoler."
+    },
+    "R05": {
+      "name": "Eagle",    "ca": "Eagle",
+      "essence": "Vous voyez loin et vous y allez. Vous amenez l'équipe à des endroits où elle ne serait pas allée seule.",
+      "profile": "Présence et Vision élevées. Énergique et tourné·e vers l'avenir. Entraîne l'équipe vers de nouveaux horizons.",
+      "contributes": "Direction. Fixe des objectifs ambitieux que l'équipe ne se serait pas fixée seule.",
+      "misses": "Les détails d'exécution. L'horizon est clair ; le chemin peut être accidenté."
+    },
+    "R06": {
+      "name": "Falcon",   "ca": "Falcon",
+      "essence": "Ce n'est pas la vision — c'est le timing. Vous savez exactement quand agir, et quand vous le faites, l'équipe le remarque.",
+      "profile": "Présence élevée, Vision basse. Présent·e, décisif·ve et pratique. Sait exactement quand agir.",
+      "contributes": "Timing. Se déplace au bon moment et entraîne les gens avec soi.",
+      "misses": "La pensée à long horizon. Peut manquer la couche stratégique tout en exécutant bien à grande vitesse."
+    },
+    "R07": {
+      "name": "Octopus",  "ca": "Octopus",
+      "essence": "Les meilleures idées de l'équipe sont souvent passées par vous d'abord, en silence. Vous ne le savez pas toujours vous-même.",
+      "profile": "Présence basse, Vision élevée. Riche intérieurement et créatif·ve discrètement. Traite la complexité en privé.",
+      "contributes": "Pensée originale. Les idées les plus inhabituelles de l'équipe viennent souvent de là.",
+      "misses": "Faire circuler les idées. Travaille en silence ; les idées peuvent y rester."
+    },
+    "R08": {
+      "name": "Tortoise", "ca": "Tortoise",
+      "essence": "Vous ne ferez pas de bruit. Mais quand vous n'êtes pas là, l'équipe dérive. Vous êtes le sol sur lequel les autres construisent.",
+      "profile": "Présence et Vision basses. Stable, ancré·e et profondément fiable. Tient le sol pour que les autres puissent bouger.",
+      "contributes": "Stabilité. Les autres peuvent prendre des risques parce que ce profil tient le sol.",
+      "misses": "Adaptabilité quand la situation change fondamentalement."
+    },
+    "R09": {
+      "name": "Bee",      "ca": "Bee",
+      "essence": "Là où les autres voient le chaos, vous voyez la structure. Vous construisez des ponts entre des personnes et des idées que personne d'autre n'aurait connectées.",
+      "profile": "Lien et Vision élevés. Collaboratif·ve et intellectuellement générateur·trice. Connecte les personnes et les idées.",
+      "contributes": "Synthèse. Construit des ponts entre les personnes et entre des concepts que personne d'autre n'avait liés.",
+      "misses": "Le regard critique nécessaire pour tester si les connexions tiennent."
+    },
+    "R10": {
+      "name": "Bear",     "ca": "Bear",
+      "essence": "Vous ne changez pas sous la pression. L'équipe sait que vous êtes là, et ce savoir les libère pour prendre des risques.",
+      "profile": "Lien élevé, Vision basse. Fiable, ancré·e et constant·e. L'équipe sait où elle en est.",
+      "contributes": "Confiance. Les gens prennent plus de risques quand un profil Bear est présent.",
+      "misses": "Ouverture au changement quand l'approche actuelle ne fonctionne plus."
+    },
+    "R11": {
+      "name": "Fox",      "ca": "Fox",
+      "essence": "Vous voyez ce qui ne s'additionne pas — dans les idées et dans les relations. Votre inconfort est productif.",
+      "profile": "Lien bas, Vision élevée. Intellectuellement acéré·e et d'esprit critique. Repère l'incohérence rapidement.",
+      "contributes": "Distance critique. Détecte ce qui ne s'additionne pas avant que ça devienne un problème.",
+      "misses": "Aisance relationnelle. L'inconfort peut user une équipe qui a besoin de cohésion pour fonctionner."
+    },
+    "R12": {
+      "name": "Badger",   "ca": "Badger",
+      "essence": "Vous ne vous intéressez pas à ce qui devrait fonctionner. Vous vous intéressez à ce qui fonctionne. L'équipe a besoin de vous pour arrêter de se leurrer.",
+      "profile": "Lien et Vision bas. Pragmatique, direct·e et sans sentimentalisme. Ce qui fonctionne compte ; ce qui devrait fonctionner non.",
+      "contributes": "Vérité fondamentale. Empêche l'équipe de se leurrer avec optimisme ou complexité.",
+      "misses": "Adhésion. La franchise qui fait ressortir la vérité peut aussi créer de la résistance."
+    }
+  },
+  "witness": {
+    "setup": {
+      "checking": "Vérification de l'accès…",
+      "title": "Invitez vos témoins",
+      "subtitle": "Un·e témoin vous voit de l'extérieur. Ajoutez jusqu'à 12 personnes qui vous connaissent bien.",
+      "addHeading": "Ajouter des témoins",
+      "addRow": "Ajouter un·e autre témoin",
+      "generate": "Générer des liens",
+      "generating": "Création des liens…",
+      "linksHeading": "Vos liens de témoins",
+      "shareInstruction": "Envoyez chaque lien à la personne nommée. Chaque lien fonctionne une seule fois.",
+      "copyLink": "Copier le lien",
+      "statusPending": "En attente",
+      "statusComplete": "Terminé",
+      "existingHeading": "Vos témoins",
+      "viewReport": "Voir le rapport complet",
+      "error": "Une erreur s'est produite. Réessayez."
+    },
+    "page": {
+      "loading": "Chargement…",
+      "intro": {
+        "heading": "On vous a demandé de décrire quelqu'un.",
+        "body": "Vous verrez des groupes de mots et choisirez lequel correspond le mieux à cette personne — et lequel correspond le moins. Cela prend environ 5 minutes.",
+        "subjectLabel": "Vous décrivez",
+        "youAreLabel": "Vous êtes",
+        "youArePlaceholder": "Votre nom",
+        "cta": "Commencer"
+      },
+      "tooltipLabel": "À propos de ce mot",
+      "progress": "{{current}} sur {{total}}",
+      "instruction": "Quel mot correspond le mieux à {{name}} ?",
+      "instructionSub": "Choisissez-en un pour Meilleure correspondance et un pour Pire correspondance.",
+      "bestLabel": "Meilleure correspondance",
+      "worstLabel": "Pire correspondance",
+      "selectBothNote": "Choisissez une Meilleure et une Pire pour continuer.",
+      "next": "Suivant",
+      "back": "Retour",
+      "finish": "Soumettre",
+      "submitting": "Enregistrement de vos réponses…",
+      "done": {
+        "heading": "Terminé.",
+        "body": "Vos observations ont été enregistrées. Merci.",
+        "return": "Retour à Cèrcol"
+      },
+      "alreadyDone": {
+        "heading": "Déjà soumis.",
+        "body": "Ce lien a déjà été utilisé. Chaque lien ne peut être soumis qu'une seule fois."
+      },
+      "notFound": {
+        "heading": "Lien introuvable.",
+        "body": "Vérifiez le lien et réessayez."
+      },
+      "errorHeading": "Une erreur s'est produite.",
+      "errorBody": "Nous n'avons pas pu enregistrer votre réponse. Réessayez plus tard."
+    }
+  },
+  "witnessResults": {
+    "title": "Rapport Pleine Lune",
+    "subtitle": "Auto-évaluation · Témoin Cèrcol",
+    "loading": "Chargement de votre rapport…",
+    "error": "Impossible de charger le rapport. Réessayez plus tard.",
+    "noSelf": "Complétez d'abord Cèrcol de Pleine Lune pour voir votre rapport.",
+    "startFmCta": "Commencer Cèrcol de Pleine Lune",
+    "selfSection": "Votre auto-évaluation",
+    "selfRoleSection": "Votre rôle · Auto-évaluation",
+    "witnessSection": "Comment les témoins vous voient",
+    "witnessCount": "{{count}} témoin a complété",
+    "witnessCount_plural": "{{count}} témoins ont complété",
+    "pendingNote": "Vous avez besoin d'au moins 2 témoins pour voir cette section.",
+    "selfLabel": "Moi",
+    "witnessLabel": "Témoins",
+    "combinedLabel": "Combiné",
+    "combinedRoleSection": "Votre rôle",
+    "roleSection": "Votre rôle · Témoins",
+    "divergenceHeading": "Angles morts",
+    "divergenceNote": "Dimensions où votre auto-évaluation et les rapports des témoins diffèrent significativement.",
+    "divergenceDirection": {
+      "higher": "Les témoins évaluent {{domain}} plus haut que vous.",
+      "lower": "Les témoins évaluent {{domain}} plus bas que vous."
+    },
+    "noDivergence": "Forte alignement. Votre auto-perception correspond étroitement à la façon dont les autres vous voient.",
+    "setupCta": "Inviter des témoins",
+    "disclaimer": "Les résultats des témoins reflètent la perspective des personnes qui ont complété l'instrument. La divergence n'est pas un défaut — c'est de l'information.",
+    "definitiveLabel": "Témoin inclus",
+    "definitiveNote": "Le signal du témoin réduit l'incertitude dans l'attribution du rôle. C'est votre résultat le plus complet.",
+    "convergenceSection": "Alignement de rôle",
+    "convergenceHigh": "Votre témoin vous voit à peu près comme vous vous voyez.",
+    "convergenceMod": "Votre témoin voit une image similaire, avec quelques différences notables.",
+    "convergenceLow": "Votre témoin vous voit assez différemment de la façon dont vous vous voyez.",
+    "convergenceNote": "Chevauchement entre votre ensemble de rôles d'auto-évaluation (primaire + arc) et votre ensemble de rôles de témoin.",
+    "blindSpotsTitle": "Angles morts",
+    "blindSpotsNote": "Dimensions où les scores d'auto-évaluation et de témoins diffèrent de plus d'un écart-type.",
+    "domainsSection": "Les cinq dimensions",
+    "witnessSessionsSection": "Témoins",
+    "blindSpots": {
+      "presence": {
+        "selfHigher": "Vous vous voyez comme plus énergisant·e et visible que les autres ne vous perçoivent. Ce n'est pas un défaut — cela peut signifier que votre impact est plus interne que vous ne le réalisez.",
+        "witnessHigher": "Les autres vous vivent comme plus présent·e et énergisant·e que vous ne vous le reconnaissez. Vous sous-estimez peut-être l'effet que vous avez dans la pièce."
+      },
+      "bond": {
+        "selfHigher": "Vous vous voyez comme plus chaleureux·se et coopératif·ve que les autres ne le remarquent. Cela peut signifier que le soin est réel mais n'atterrit pas toujours — l'écart entre l'intention et l'impact.",
+        "witnessHigher": "Les autres vous vivent comme plus accommodant·e et coopératif·ve que vous ne vous voyez. Vous êtes peut-être plus une force cohésive dans l'équipe que vous ne le réalisez."
+      },
+      "vision": {
+        "selfHigher": "Vous vous voyez comme plus explorateur·trice et guidé·e par les idées que les autres ne l'observent. Votre originalité peut être moins visible pour les autres qu'elle ne le semble de l'intérieur.",
+        "witnessHigher": "Les autres voient plus de créativité et d'étendue en vous que vous ne le revendiquez. Vous sous-estimez peut-être votre capacité à penser dans de nouvelles directions."
+      },
+      "discipline": {
+        "selfHigher": "Vous vous voyez comme plus structuré·e et fiable que les autres ne l'observent. Il peut valoir la peine d'examiner où le suivi est visible et où il ne l'est pas.",
+        "witnessHigher": "Les autres vous vivent comme plus organisé·e et fiable que vous ne le ressentez intérieurement. La structure que vous créez peut être plus réelle qu'elle ne le semble."
+      },
+      "depth": {
+        "selfHigher": "Vous portez plus d'intensité émotionnelle que les autres ne le voient. Vous la gérez peut-être bien — ou cela peut signifier que votre expérience intérieure n'atteint pas entièrement l'extérieur.",
+        "witnessHigher": "Les autres perçoivent plus de sensibilité émotionnelle en vous que vous ne le rapportez. Vous sous-estimez peut-être à quel point votre humeur et vos réactions sont lues par les personnes autour de vous."
+      }
+    }
+  },
+  "about": {
+    "title": "À propos",
+    "intro": {
+      "eyebrow": "Évaluation de personnalité open source",
+      "heading": "Voyez-vous plus clairement.",
+      "body": "Cèrcol est trois instruments construits sur une science du domaine public. Chacun mesure les mêmes cinq dimensions — à différentes profondeurs. Aucun score ne vous dit quoi penser. Aucun résultat n'est bon ou mauvais.",
+      "founding": "Chaque contribution compte. Personne n'est indispensable, mais nous sommes tous nécessaires."
+    },
+    "philosophy": {
+      "heading": "Construit dans l'ouverture",
+      "body": "La plupart des évaluations de personnalité sont propriétaires. Les éléments, la notation, les données normatives — derrière des paywalls ou des NDA. Vous passez le test, obtenez un résultat, et n'avez aucun moyen de savoir si l'algorithme est solide. Cèrcol est différent. Chaque question provient de recherches du domaine public. La notation est sur GitHub. N'importe qui peut la lire, la questionner et l'améliorer. Nous pensons que les évaluations de personnalité devraient fonctionner ainsi."
+    },
+    "explore": {
+      "heading": "Aller plus loin",
+      "instruments": {
+        "label": "Instruments",
+        "desc": "Comment fonctionne chaque instrument, ce qu'il mesure et ce que vous obtenez."
+      },
+      "roles": {
+        "label": "Rôles",
+        "desc": "Les douze rôles, leur origine et leurs limites honnêtes."
+      },
+      "science": {
+        "label": "Science",
+        "desc": "Le fondement de la recherche, le processus de notation et les questions ouvertes."
+      }
+    },
+    "dimensions": {
+      "heading": "Cinq dimensions",
+      "subheading": "Chaque score se situe sur un spectre. Les deux extrémités sont valides — elles décrivent différentes façons d'être efficace.",
+      "presence": { "name": "Présence",   "desc": "Quelle énergie vous dirigez vers l'extérieur. Élevé : vous attirez les gens. Bas : vous allez en profondeur avec moins de personnes." },
+      "bond":     { "name": "Lien",       "desc": "Comment vous vous connectez et coopérez. Élevé : vous privilégiez la confiance et l'harmonie. Bas : vous tenez votre position." },
+      "discipline":{ "name": "Discipline","desc": "Comment vous abordez la structure et le travail. Élevé : fiable, méthodique. Bas : flexible, guidé·e par l'instinct." },
+      "depth":    { "name": "Profondeur", "desc": "Avec quelle intensité vous traitez le stress et les émotions. Élevé : sensible, alerte. Bas : stable, difficile à ébranler." },
+      "vision":   { "name": "Vision",     "desc": "Quelle nouveauté et complexité vous recherchez. Élevé : créatif·ve, explorateur·trice. Bas : pratique, ancré·e." }
+    },
+    "notThis": {
+      "heading": "Ce que Cèrcol n'est pas",
+      "item1": "Un outil diagnostique. Ces résultats n'ont aucune validité clinique.",
+      "item2": "Une étiquette fixe. Les scores changent avec le contexte, le temps et l'état d'esprit.",
+      "item3": "Un classement. Aucune dimension n'est meilleure ou pire qu'une autre.",
+      "item4": "Un prédicteur de succès. Les tendances décrivent comment vous avez tendance à fonctionner — pas ce que vous accomplirez."
+    },
+    "framing": {
+      "heading": "Une note sur les scores",
+      "body": "Ce sont des tendances, pas des étiquettes. Le même trait qui crée de la friction dans un contexte est exactement ce dont on a besoin dans un autre. Une Discipline basse n'est pas un échec — c'est souvent ce qui maintient les choses en mouvement quand le plan s'effondre."
+    }
+  },
+  "science": {
+    "title": "Science",
+    "openInstruments": {
+      "eyebrow": "Instruments ouverts",
+      "heading": "Pas de tests propriétaires.",
+      "body": "Chaque question de Cèrcol provient d'une collection du domaine public d'éléments de personnalité utilisés dans des centaines d'études revues par des pairs. Aucune restriction de licence, aucune boîte noire. N'importe qui peut lire les éléments, exécuter la notation et vérifier les résultats."
+    },
+    "fiveFactors": {
+      "eyebrow": "Le modèle à cinq facteurs",
+      "heading": "Le résultat le plus répliqué en psychologie de la personnalité.",
+      "body": "À travers les cultures, les langues et les méthodes, la recherche récupère systématiquement les mêmes cinq grandes dimensions de personnalité. Cèrcol les utilise sous des noms différents — Présence, Lien, Discipline, Profondeur, Vision — pour rendre le langage plus chaleureux sans changer ce qui est mesuré.",
+      "note": "Répliqué dans plus de 50 pays. Le résultat de consensus le plus solide en psychologie différentielle."
+    },
+    "dimensions": {
+      "eyebrow": "Cinq dimensions",
+      "heading": "Ce que Cèrcol mesure réellement.",
+      "intro": "Cinq grandes dimensions de personnalité — chacune couvrant un axe différent de variation humaine. Les dimensions sont les mêmes dans les trois instruments. Seule la résolution change.",
+      "presence": {
+        "academic": "Extraversion",
+        "body": "Quelle énergie vous apportez dans une pièce — et combien vous tirez d'être entouré·e d'autres personnes. Une Présence élevée signifie initiative, expressivité et aisance sous les projecteurs. Une Présence basse signifie profondeur dans le travail ciblé et une qualité d'écoute que la plupart des groupes sous-estiment. Les équipes ont besoin des deux.",
+        "ref": "Bell, 2007"
+      },
+      "bond": {
+        "academic": "Agréabilité",
+        "body": "Comment vous naviguez la tension entre harmonie et honnêteté. Un Lien élevé signifie chaleur, confiance et vrai soin des personnes autour de vous. Un Lien bas signifie que vous tenez votre position, remettez en question les hypothèses et empêchez le groupe de se leurrer. Les deux extrémités sont fonctionnelles. La plupart des équipes ont besoin des deux.",
+        "ref": "Bell, 2007"
+      },
+      "vision": {
+        "academic": "Ouverture à l'expérience",
+        "body": "Dans quelle mesure vous êtes attiré·e par les idées, la nouveauté et la complexité. Une Vision élevée stimule la curiosité, l'imagination et l'aisance avec l'inconnu. Une Vision basse ancre une équipe dans ce qui est réel, testé et actionnable. Aucune équipe saine n'est homogène sur cette dimension.",
+        "ref": "Bell, 2007"
+      },
+      "discipline": {
+        "academic": "Conscience",
+        "body": "Avec quelle fiabilité vous suivez vos engagements. Une Discipline élevée signifie planification, structure et faire ce que vous aviez dit que vous feriez. C'est le prédicteur le plus répliqué de la performance professionnelle dans la littérature de recherche — non pas parce que les personnes rigides font mieux, mais parce que les personnes cohérentes le font.",
+        "ref": "Barrick & Mount, 1991"
+      },
+      "depth": {
+        "academic": "Neuroticisme",
+        "body": "Avec quelle facilité vous éprouvez des émotions négatives — inquiétude, frustration, sensibilité. Une Profondeur élevée s'accompagne souvent d'une vigilance accrue et d'une forte empathie. Une Profondeur basse signifie stabilité sous pression. Aucun extrême n'est un défaut ; les deux reflètent différentes façons de lire le monde.",
+        "ref": "Bell, 2007"
+      }
+    },
+    "roles": {
+      "eyebrow": "Taxonomie des rôles",
+      "heading": "Douze rôles. Dérivés de la recherche, pas inventés.",
+      "body": "La taxonomie des rôles est fondée sur le circumplex AB5C (Hofstee, De Raad & Goldberg, 1992) et la littérature sur la composition des équipes (Bell, 2007). Trois dimensions OCEAN — Présence, Lien et Vision — nécessitent un équilibre dans les équipes. Les douze rôles couvrent les six intersections de ces trois dimensions aux deux pôles. La Discipline et la Profondeur modulent comment chaque rôle est exprimé.",
+      "beta": "Les attributions de rôles actuelles utilisent des centroïdes théoriques dérivés de recherches publiées. À mesure que les données réelles s'accumulent — objectif : 300 complétions de Pleine Lune — les centroïdes seront remplacés par des valeurs empiriques issues de profils réels.",
+      "betaNote": "La notation des rôles est étiquetée bêta dans l'interface. Elle est illustrative, pas diagnostique."
+    },
+    "fullMoon": {
+      "eyebrow": "Cèrcol de Pleine Lune",
+      "heading": "Deux perspectives sur la même personne.",
+      "selfReport": {
+        "heading": "Auto-évaluation",
+        "body": "120 éléments sur 5 domaines et 30 facettes — deux fois la résolution de Premier Quartier. Forme le résultat de rôle principal."
+      },
+      "witness": {
+        "heading": "Témoin Cèrcol",
+        "body": "Une tâche à choix forcé donnée à quelqu'un qui vous connaît bien. À chaque tour, le·la témoin voit cinq mots et choisit celui qui vous correspond le mieux et le moins — un adjectif par dimension. Le choix forcé élimine le biais de désirabilité sociale qui fausse l'auto-évaluation.",
+        "idealWitness": "Un·e témoin idéal·e a travaillé avec vous, vécu avec vous ou passé du vrai temps autour de vous. Pas votre plus grand·e allié·e, pas votre critique le·la plus sévère — quelqu'un qui vous voit tel·le que vous êtes vraiment.",
+        "blindSpots": "Le résultat du·de la témoin est comparé à l'auto-évaluation. Là où ils divergent significativement, un angle mort est signalé — une dimension que vous percevez différemment de ceux qui vous entourent."
+      }
+    },
+    "sources": {
+      "heading": "Références"
+    },
+    "openSource": {
+      "heading": "Le code est ouvert.",
+      "body": "Cèrcol est open source. La logique de notation, le corpus d'éléments et l'algorithme de rôles sont tous lisibles.",
+      "cta": "Voir sur GitHub"
+    }
+  },
+  "faq": {
+    "title": "FAQ",
+    "heading": "Questions",
+    "q1": { "q": "Mes données sont-elles privées ?", "a": "Les instruments gratuits enregistrent des scores anonymes sans information personnelle — pas de nom, pas d'e-mail, pas d'adresse IP. Si vous créez un compte, votre e-mail est stocké par Supabase et vos résultats sont liés à votre compte. Vous pouvez supprimer votre compte à tout moment. Aucune donnée n'est vendue ni partagée avec des tiers." },
+    "q2": { "q": "Les résultats sont-ils précis ?", "a": "Les questions proviennent d'instruments revus par des pairs et largement validés. Les scores à cinq dimensions sont fiables pour un outil d'auto-évaluation de cette longueur. La notation des rôles est clairement étiquetée bêta — elle utilise des points de départ théoriques et deviendra plus précise à mesure que les données réelles s'accumulent. Prenez les dimensions au sérieux ; traitez le rôle comme une première estimation utile." },
+    "q3": { "q": "Qu'est-ce que le·la Témoin et qui dois-je inviter ?", "a": "Le·la Témoin est quelqu'un que vous invitez à vous décrire de l'extérieur. Il ou elle verra des groupes de mots et choisira ceux qui vous correspondent le mieux et le moins — une courte tâche à choix forcé qui prend environ 5 minutes. Un·e témoin idéal·e est quelqu'un qui a passé du vrai temps avec vous : un·e collègue, un·e colocataire, un·e ami·e proche. Pas votre plus grand·e admirateur·trice, pas votre critique le·la plus sévère. Quelqu'un qui vous voit tel·le que vous êtes vraiment." },
+    "q4": { "q": "Quelle est la différence entre les trois instruments ?", "a": "Nouvelle Lune comporte 10 questions et prend 2 minutes — une orientation rapide. Premier Quartier comporte 60 questions et prend 10 minutes — une image plus complète avec 30 facettes et un premier aperçu de votre rôle. Pleine Lune comporte 120 questions, inclut l'évaluation du·de la témoin et est payant — c'est le résultat définitif. Chaque instrument est autonome ; vous pouvez commencer n'importe lequel." },
+    "q5": { "q": "Cèrcol de Pleine Lune vaut-il le coup de payer ?", "a": "Si Premier Quartier vous semble insuffisant — si vous voulez comprendre une facette spécifique plus en profondeur, voir comment les autres vous perçoivent, ou obtenir un résultat de rôle fiable — alors oui. La comparaison avec le·la témoin est la partie la plus distinctive : elle montre où votre auto-perception correspond à la vision extérieure et où elle ne le fait pas. Cet écart est souvent là où réside l'information la plus utile." },
+    "q6": { "q": "Puis-je reprendre les évaluations ?", "a": "Oui. Les instruments gratuits n'ont pas de limite. Chaque soumission est indépendante — reprendre ne remplace pas les résultats précédents dans votre compte. Les gens trouvent souvent utile de reprendre Premier Quartier six mois ou un an plus tard pour voir ce qui a changé." }
+  },
+  "instruments": {
+    "title": "Instruments",
+    "intro": {
+      "heading": "Trois instruments. Une échelle.",
+      "body": "Chaque instrument mesure les mêmes cinq dimensions — à différentes profondeurs et résolutions. Ils sont conçus pour être utilisés en séquence, mais chacun se tient seul."
+    },
+    "freeLabel": "Gratuit",
+    "paidLabel": "Paiement unique · Pas un abonnement",
+    "sampleHeading": "Questions exemples",
+    "newMoon": {
+      "heading": "Cèrcol de Nouvelle Lune",
+      "eyebrow": "Aperçu rapide",
+      "meta": "10 questions · ~2 min",
+      "scaleNote": "Échelle à 7 points : 'Pas du tout d'accord' à 'Tout à fait d'accord'. Chaque point a un sens — pas seulement deux extrêmes avec des chiffres entre les deux.",
+      "measures": "Cinq dimensions. Un score par dimension. Pas de détail de facettes.",
+      "get": "Un graphique radar de votre position sur les cinq dimensions. Bon pour une orientation rapide. Pas assez précis pour des affirmations détaillées sur les facettes — c'est à ça que sert Premier Quartier.",
+      "items": ["Extraverti·e, enthousiaste.", "Fiable, autodiscipliné·e.", "Ouvert·e aux nouvelles expériences, complexe."],
+      "itemPrefix": "Je me perçois comme :"
+    },
+    "firstQuarter": {
+      "heading": "Cèrcol de Premier Quartier",
+      "eyebrow": "Portrait complet",
+      "meta": "60 questions · ~10 min",
+      "scaleNote": "Échelle à 5 points : 'Pas du tout d'accord' à 'Tout à fait d'accord'. Les échelles à cinq points sont standard pour la mesure de personnalité au niveau des facettes.",
+      "measures": "Cinq dimensions, chacune décomposée en 6 facettes — 30 points de données. Deux éléments par facette.",
+      "get": "Graphique de domaine, détail de 30 facettes et une première lecture bêta de votre rôle. Le détail des facettes est là où réside l'information utile — les totaux de domaine ne sont que le titre.",
+      "items": ["Prends les choses en main.", "Me préoccupe des choses.", "Ai une imagination vive."],
+      "itemPrefix": "Je me perçois comme quelqu'un qui :"
+    },
+    "fullMoon": {
+      "heading": "Cèrcol de Pleine Lune",
+      "eyebrow": "Portrait définitif",
+      "system": "Pleine Lune est un système de deux parties utilisées ensemble.",
+      "part1": {
+        "label": "Partie 1",
+        "heading": "Auto-évaluation",
+        "meta": "120 questions · ~20 min · Échelle à 5 points",
+        "body": "Les mêmes 30 facettes que Premier Quartier — à deux fois la résolution. Quatre éléments par facette au lieu de deux. En termes psychométriques, plus d'éléments par facette signifie des scores plus fiables, surtout pour les facettes proches du centre de l'échelle où deux éléments peuvent donner un résultat bruité.",
+        "items": ["Me sens rarement triste.", "Anticipe les besoins des autres.", "Me mets au travail tout de suite."],
+        "itemPrefix": "Je me perçois comme quelqu'un qui :"
+      },
+      "part2": {
+        "label": "Partie 2",
+        "heading": "Témoin Cèrcol",
+        "whyHeading": "Pourquoi un·e Témoin ?",
+        "whyBody": "Les auto-évaluations ont une limitation connue : nous ne nous percevons pas toujours comme nous apparaissons aux autres. Les personnes à Profondeur élevée peuvent sous-rapporter — l'émotion semble normale de l'intérieur. Les personnes à Lien élevé peuvent sur-rapporter la chaleur — l'intention est authentique mais l'impact peut différer. L'auto-évaluation est un signal filtré. Le·la Témoin en ajoute un indépendant.",
+        "howHeading": "Comment ça fonctionne",
+        "howBody": "Chaque Témoin reçoit un lien unique. La tâche prend environ 5 minutes. Il·elle verra 20 séries de 5 mots — un adjectif par dimension — et choisira celui qui correspond le mieux et le moins. Choix forcé : pas d'échelle de Likert, pas de possibilité de donner toutes les réponses positives.",
+        "whoHeading": "Qui est un·e Témoin idéal·e ?",
+        "whoBody": "Quelqu'un qui a travaillé avec vous, vécu avec vous ou vous a vu sous pression. Pas votre plus grand·e défenseur·e — quelqu'un d'assez honnête pour noter là où vous avez des angles. Vous pouvez inviter jusqu'à 12 Témoins. Plus de Témoins réduisent le bruit : les scores sont moyennés.",
+        "privacyHeading": "Confidentialité",
+        "privacyBody": "Les Témoins ne voient jamais vos scores. Vous voyez le résultat moyenné de tous les Témoins — pas les réponses individuelles.",
+        "blindSpotsHeading": "Angles morts",
+        "blindSpotsBody": "Là où vos scores d'auto-évaluation et de Témoins divergent significativement, un angle mort est signalé. Non pas parce que l'un est juste et l'autre faux — mais parce que l'écart lui-même est informatif. Une dimension que vous percevez très différemment de ceux qui vous entourent vaut la peine d'être examinée."
+      }
+    }
+  },
+  "rolesPage": {
+    "title": "Rôles",
+    "intro": {
+      "heading": "Douze rôles. Une taxonomie.",
+      "body1": "Les profils de personnalité décrivent comment vous êtes. Les rôles décrivent comment vous avez tendance à déplacer l'équilibre d'une équipe. L'écart entre ces deux choses est là où Cèrcol essaie de travailler.",
+      "body2": "Les douze rôles sont dérivés du circumplex AB5C (Hofstee, De Raad & Goldberg, 1992) et de la littérature sur la composition des équipes (Bell, 2007). Trois dimensions OCEAN nécessitent un équilibre dans les équipes — Présence, Lien et Vision. Les douze rôles couvrent les six intersections de ces dimensions aux deux pôles. Les noms sont les nôtres. La structure vient de la littérature."
+    },
+    "beta": {
+      "heading": "Il s'agit d'une hypothèse de départ, pas d'un instrument validé.",
+      "body": "Les attributions de rôles actuelles utilisent des centroïdes théoriques dérivés de recherches publiées. À mesure que les données réelles s'accumulent — objectif : 300 complétions de Pleine Lune — les centroïdes seront remplacés par des valeurs empiriques issues de profils réels. La notation des rôles est étiquetée bêta dans l'interface exactement pour cette raison."
+    },
+    "critique": {
+      "heading": "Vous voyez un problème avec ce modèle ?",
+      "body": "Cette taxonomie est une hypothèse. Si vous avez une formation en psychométrie, en psychologie organisationnelle ou en dynamique d'équipe et que vous voyez une faille — dans les centroïdes, les noms, le design à choix forcé, quoi que ce soit — ouvrez un ticket.",
+      "cta": "Ouvrir un ticket sur GitHub"
+    },
+    "grid": {
+      "heading": "Les douze rôles",
+      "profileLabel": "Tendance",
+      "contributesLabel": "Apporte à l'équipe",
+      "missesLabel": "A tendance à manquer"
+    },
+    "centreNote": {
+      "heading": "Qu'en est-il des profils proches du centre ?",
+      "body": "Il n'y a pas de rôle central. Un profil avec des scores bas en Présence, Lien et Vision est mieux décrit par ses valeurs de Discipline et de Profondeur qu'en lui attribuant une étiquette de rôle sans contenu fonctionnel. Le résultat de rôle montrera le centroïde le plus proche par distance, avec une probabilité maximale basse indiquant un profil diffus."
+    },
+    "arcNote": {
+      "heading": "Arc personnel",
+      "body": "La plupart des résultats de rôle incluent un arc — des rôles secondaires qui ont scoré près du primaire dans l'espace de probabilité. Un Wolf avec un arc Falcon apporte initiative et timing décisif. Un Bee avec un arc Elephant apporte synthèse et écoute profonde. L'arc donne au résultat une texture qu'une seule étiquette ne peut pas."
+    },
+    "contextNote": {
+      "heading": "Les rôles ne sont pas des destins",
+      "body": "La même personne peut fonctionner différemment dans différentes compositions d'équipe. Un Wolf dans une équipe qui confronte déjà tout peut reculer. Un Tortoise dans une équipe qui a besoin de mouvement peut accélérer. Ce sont des tendances en contexte — pas des identités fixes. N'utilisez pas un résultat de rôle comme plafond."
+    }
+  }
+}
