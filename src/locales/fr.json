@@ -61,6 +61,8 @@
     "compositionHeading": "Composition de l'équipe",
     "pendingLabel": "En attente",
     "selfLabel": "toi",
+    "toggleMyProfile": "Mon profil",
+    "toggleTeamAverage": "Moyenne de l'équipe",
     "pendingNote": "{{count}} membre n'a pas encore complété Full Moon.",
     "pendingNote_plural": "{{count}} membres n'ont pas encore complété Full Moon.",
     "arcLabel": "Arc :",

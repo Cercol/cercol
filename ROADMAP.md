@@ -694,6 +694,26 @@ is fully preserved — all existing usages unchanged.
 **i18n:** `lastQuarter.selfLabel` added to all 6 locale files
 (EN: "you", CA: "tu", ES: "tú", FR: "toi", DE: "du", DA: "dig").
 
+### Phase 13.2 — Last Quarter report refinements ✅ COMPLETE
+
+**Radar toggle:** replaced multi-series radar with a "My profile / Team average" toggle.
+Default is team average. "My profile" is disabled if the current user has no completed
+Full Moon result. Toggle buttons use primary (active) / secondary (inactive) styling.
+
+**Dimension rows:** below the radar, five rows showing DimensionIcon + domain name +
+coloured bar + `.toFixed(1)` value, reflecting whichever toggle is active.
+
+**Member list — icon-only:** `MemberRow` now renders an icon cluster instead of text roles.
+Primary role icon at 30px in ROLE_COLOR; 2nd-arc icon at 20px (0.7 opacity); 3rd-arc icon at
+15px (0.5 opacity). Each icon has a native `title` tooltip with the role name. No role-name
+text. Member name, self-label, and pending label are still shown.
+
+**RadarChart cleaned up:** `series` prop and multi-series branch removed entirely.
+Single-series only: `scores, maxScore, domainKeys, labelFn`.
+
+**i18n:** `lastQuarter.toggleMyProfile` and `lastQuarter.toggleTeamAverage` added to all
+6 locale files (EN: "My profile" / "Team average", CA, ES, FR, DE, DA translated).
+
 ### Phase 13 — Living model
 - GitHub Actions job every 28 days: update NORM_MEAN/NORM_SD at N≥200
 - At N≥300: k-means (k=12) in 5D; update centroids if divergence is systematic

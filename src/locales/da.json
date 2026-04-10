@@ -61,6 +61,8 @@
     "compositionHeading": "Teamsammensætning",
     "pendingLabel": "Afventer",
     "selfLabel": "dig",
+    "toggleMyProfile": "Min profil",
+    "toggleTeamAverage": "Teamgennemsnit",
     "pendingNote": "{{count}} medlem har endnu ikke gennemført Full Moon.",
     "pendingNote_plural": "{{count}} medlemmer har endnu ikke gennemført Full Moon.",
     "arcLabel": "Bue:",

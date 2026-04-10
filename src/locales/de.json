@@ -61,6 +61,8 @@
     "compositionHeading": "Teamzusammensetzung",
     "pendingLabel": "Ausstehend",
     "selfLabel": "du",
+    "toggleMyProfile": "Mein Profil",
+    "toggleTeamAverage": "Teamdurchschnitt",
     "pendingNote": "{{count}} Mitglied hat Full Moon noch nicht abgeschlossen.",
     "pendingNote_plural": "{{count}} Mitglieder haben Full Moon noch nicht abgeschlossen.",
     "arcLabel": "Bogen:",
