@@ -236,7 +236,7 @@ export default function WitnessPage() {
         <Card className="w-full max-w-sm shadow-sm p-7 flex flex-col gap-5">
           <div>
             <SectionLabel color="blue" className="mb-3">
-              Witness Cèrcol
+              {t('fmResults.witnessCta.eyebrow')}
             </SectionLabel>
             <h1 className="text-xl font-bold text-gray-900 mb-2">
               {t('witness.page.intro.heading')}

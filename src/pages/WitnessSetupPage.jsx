@@ -197,7 +197,7 @@ export default function WitnessSetupPage() {
         {/* Header */}
         <div>
           <SectionLabel color="blue" className="mb-1 flex items-center gap-1.5">
-            <FullMoonIcon size={13} />Witness Cèrcol
+            <FullMoonIcon size={13} />{t('fmResults.witnessCta.eyebrow')}
           </SectionLabel>
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">{t('witness.setup.title')}</h1>
           <p className="mt-1 text-gray-500 text-sm">{t('witness.setup.subtitle')}</p>

@@ -45,7 +45,7 @@
       "body": "Recopilamos datos con tres fines únicamente:",
       "function": "Para ofrecer el servicio — tu correo electrónico es necesario para autenticarte; tus resultados se almacenan para que puedas consultar tu historial.",
       "research": "Investigación anonimizada — las puntuaciones agregadas y anonimizadas se utilizan para mejorar el modelo de personalidad y validar normas entre poblaciones. Los resultados individuales nunca se publican.",
-      "payment": "Para procesar tu pago — Stripe necesita los datos de tu tarjeta para cobrarte por Full Moon Cèrcol. Solo recibimos una confirmación.",
+      "payment": "Para procesar tu pago — Stripe necesita los datos de tu tarjeta para cobrarte por Cèrcol de Luna Llena. Solo recibimos una confirmación.",
       "noAds": "No vendemos datos. No usamos datos para publicidad. No compartimos datos con terceros salvo lo descrito anteriormente."
     },
     "retention": {
@@ -135,19 +135,19 @@
     "headline": "Elige tu evaluación",
     "privacy": "Privacidad",
     "newMoon": {
-      "name": "New Moon Cèrcol",
+      "name": "Cèrcol de Luna Nueva",
       "tagline": "Visión rápida",
       "meta": "10 preguntas · ~2 min",
       "description": "Una mirada rápida a tus cinco dimensiones fundamentales."
     },
     "firstQuarter": {
-      "name": "First Quarter Cèrcol",
+      "name": "Cèrcol de Cuarto Creciente",
       "tagline": "Retrato completo",
       "meta": "60 preguntas · ~10 min",
       "description": "Una mirada más profunda, dividida en 30 facetas."
     },
     "fullMoon": {
-      "name": "Full Moon Cèrcol",
+      "name": "Cèrcol de Luna Llena",
       "tagline": "Retrato definitivo",
       "meta": "120 preguntas · ~20 min",
       "description": "El autoinforme más profundo — las 30 facetas a plena resolución.",
@@ -157,7 +157,7 @@
     "viewOnGitHub": "Ver en GitHub"
   },
   "newMoon": {
-    "subtitle": "New Moon Cèrcol",
+    "subtitle": "Cèrcol de Luna Nueva",
     "progress": "Pregunta {{current}} de {{total}}",
     "instructions": "Valora en qué medida cada par de rasgos te describe.",
     "itemPrefix": "Me veo a mí mismo/a como",
@@ -165,7 +165,7 @@
     "next": "Siguiente",
     "seeResults": "Ver mis resultados",
     "intro": {
-      "heading": "New Moon Cèrcol",
+      "heading": "Cèrcol de Luna Nueva",
       "meta": "10 preguntas · ~2 min",
       "scale": "1–7 · Totalmente en desacuerdo → Totalmente de acuerdo",
       "guidance": "Ve con tu primer instinto. No hay respuestas correctas.",
@@ -174,7 +174,7 @@
   },
   "newMoonResults": {
     "title": "Tu instantánea",
-    "subtitle": "New Moon Cèrcol · 5 dimensiones de un vistazo",
+    "subtitle": "Cèrcol de Luna Nueva · 5 dimensiones de un vistazo",
     "domainSection": "Cinco dimensiones",
     "share": "Compartir resultados",
     "copied": "¡Copiado!",
@@ -182,12 +182,12 @@
     "disclaimer": "Las puntuaciones reflejan tendencias en el momento de la evaluación. Cada extremo de una dimensión tiene sus propias fortalezas — ninguna puntuación es buena ni mala.",
     "upgrade": {
       "heading": "¿Quieres una imagen más completa?",
-      "body": "First Quarter Cèrcol te ofrece 5 dimensiones divididas en 30 facetas.",
-      "cta": "Comenzar First Quarter Cèrcol"
+      "body": "Cèrcol de Cuarto Creciente te ofrece 5 dimensiones divididas en 30 facetas.",
+      "cta": "Comenzar Cèrcol de Cuarto Creciente"
     }
   },
   "fq": {
-    "subtitle": "First Quarter Cèrcol",
+    "subtitle": "Cèrcol de Cuarto Creciente",
     "blockProgress": "{{current}} de {{total}} en este bloque",
     "blockLabel": "Bloque {{current}} de {{total}}",
     "overallProgress": "{{current}} de {{total}} en total",
@@ -202,7 +202,7 @@
       "cta": "Continuar con {{name}}"
     },
     "intro": {
-      "heading": "First Quarter Cèrcol",
+      "heading": "Cèrcol de Cuarto Creciente",
       "meta": "60 preguntas · ~10 min",
       "scale": "1–5 · Totalmente en desacuerdo → Totalmente de acuerdo",
       "guidance": "No hay respuestas correctas. Ve con lo que sea verdad para ti ahora mismo.",
@@ -211,7 +211,7 @@
   },
   "fqResults": {
     "title": "Tu perfil",
-    "subtitle": "First Quarter Cèrcol · 5 dimensiones · 30 facetas",
+    "subtitle": "Cèrcol de Cuarto Creciente · 5 dimensiones · 30 facetas",
     "domainSection": "Cinco dimensiones",
     "facetSection": "Desglose por facetas",
     "roleSection": "Tu rol · Primera lectura",
@@ -221,10 +221,10 @@
       "high": "Alto"
     },
     "fullMoonCta": {
-      "eyebrow": "Full Moon Cèrcol",
+      "eyebrow": "Cèrcol de Luna Llena",
       "heading": "¿Quieres el doble de precisión?",
-      "body": "Full Moon Cèrcol usa 4 preguntas por faceta en lugar de 2. El mismo retrato, más nítido.",
-      "cta": "Probar Full Moon Cèrcol"
+      "body": "Cèrcol de Luna Llena usa 4 preguntas por faceta en lugar de 2. El mismo retrato, más nítido.",
+      "cta": "Probar Cèrcol de Luna Llena"
     },
     "share": "Compartir resultados",
     "copied": "¡Copiado!",
@@ -240,12 +240,12 @@
     }
   },
   "fm": {
-    "subtitle": "Full Moon Cèrcol",
+    "subtitle": "Cèrcol de Luna Llena",
     "paywall": {
-      "heading": "Full Moon Cèrcol",
+      "heading": "Cèrcol de Luna Llena",
       "body": "El mismo retrato, construido a partir de 120 preguntas en lugar de 60. Cada faceta medida a plena resolución.",
       "includes": "30 facetas · Resultado de rol · Tuyo para siempre",
-      "cta": "Desbloquear Full Moon Cèrcol",
+      "cta": "Desbloquear Cèrcol de Luna Llena",
       "loading": "Llevándote al pago…",
       "processing": "Pago recibido. Configurando tu acceso…",
       "processingTimeout": "Tu pago está siendo procesado.",
@@ -267,17 +267,17 @@
       "cta": "Continuar con {{name}}"
     },
     "intro": {
-      "heading": "Full Moon Cèrcol",
+      "heading": "Cèrcol de Luna Llena",
       "meta": "120 preguntas · ~20 min",
       "scale": "1–5 · Totalmente en desacuerdo → Totalmente de acuerdo",
       "guidance": "Te conoces a ti mismo/a. Confía en ello.",
-      "partNote": "Esta es la Parte 1 de un instrumento en dos partes. Witness Cèrcol viene después de tus resultados.",
+      "partNote": "Esta es la Parte 1 de un instrumento en dos partes. Testigo Cèrcol viene después de tus resultados.",
       "cta": "Comenzar"
     }
   },
   "fmResults": {
     "title": "Tu retrato completo",
-    "subtitle": "Full Moon Cèrcol · 5 dimensiones · 30 facetas",
+    "subtitle": "Cèrcol de Luna Llena · 5 dimensiones · 30 facetas",
     "domainSection": "Cinco dimensiones",
     "facetSection": "Desglose por facetas",
     "roleSection": "Tu rol · Primera lectura",
@@ -291,7 +291,7 @@
     "retake": "Empezar de nuevo",
     "disclaimer": "Las puntuaciones reflejan tendencias en el momento de la evaluación. Cada extremo de una dimensión tiene sus propias fortalezas — ninguna puntuación es buena ni mala.",
     "witnessCta": {
-      "eyebrow": "Witness Cèrcol",
+      "eyebrow": "Testigo Cèrcol",
       "heading": "Mírate desde fuera.",
       "body": "Pide a alguien que te conozca bien que te describa. Le lleva 5 minutos y te muestra lo que no puedes ver en ti mismo/a.",
       "cta": "Invitar a un testigo",
@@ -326,7 +326,7 @@
   },
   "results": {
     "title": "Tu perfil",
-    "subtitle": "First Quarter Cèrcol · 5 dimensiones · 15 facetas",
+    "subtitle": "Cèrcol de Cuarto Creciente · 5 dimensiones · 15 facetas",
     "domainSection": "Cinco dimensiones",
     "facetSection": "Desglose por facetas",
     "scoreLabels": {
@@ -341,7 +341,7 @@
   },
   "radarResults": {
     "title": "Tu instantánea",
-    "subtitle": "New Moon Cèrcol · 5 dimensiones de un vistazo",
+    "subtitle": "Cèrcol de Luna Nueva · 5 dimensiones de un vistazo",
     "domainSection": "Cinco dimensiones",
     "share": "Compartir resultados",
     "copied": "¡Copiado!",
@@ -349,8 +349,8 @@
     "disclaimer": "Las puntuaciones reflejan tendencias en el momento de la evaluación. Cada extremo de una dimensión tiene sus propias fortalezas — ninguna puntuación es buena ni mala.",
     "upgrade": {
       "heading": "¿Quieres una imagen más completa?",
-      "body": "First Quarter Cèrcol te ofrece 5 dimensiones divididas en 30 facetas.",
-      "cta": "Comenzar First Quarter Cèrcol"
+      "body": "Cèrcol de Cuarto Creciente te ofrece 5 dimensiones divididas en 30 facetas.",
+      "cta": "Comenzar Cèrcol de Cuarto Creciente"
     }
   },
   "feedback": {
@@ -678,11 +678,11 @@
   },
   "witnessResults": {
     "title": "Informe Full Moon",
-    "subtitle": "Autoinforme · Witness Cèrcol",
+    "subtitle": "Autoinforme · Testigo Cèrcol",
     "loading": "Cargando tu informe…",
     "error": "No se pudo cargar el informe. Inténtalo de nuevo más tarde.",
-    "noSelf": "Completa primero Full Moon Cèrcol para ver tu informe.",
-    "startFmCta": "Comenzar Full Moon Cèrcol",
+    "noSelf": "Completa primero Cèrcol de Luna Llena para ver tu informe.",
+    "startFmCta": "Comenzar Cèrcol de Luna Llena",
     "selfSection": "Tu autoinforme",
     "selfRoleSection": "Tu rol · Autoinforme",
     "witnessSection": "Cómo te ven los testigos",
@@ -836,14 +836,14 @@
       "betaNote": "La puntuación de roles está etiquetada como beta en la interfaz. Es ilustrativa, no diagnóstica."
     },
     "fullMoon": {
-      "eyebrow": "Full Moon Cèrcol",
+      "eyebrow": "Cèrcol de Luna Llena",
       "heading": "Dos lentes sobre la misma persona.",
       "selfReport": {
         "heading": "Autoinforme",
         "body": "120 ítems en 5 dominios y 30 facetas — el doble de resolución que First Quarter. Forma el resultado principal del rol."
       },
       "witness": {
-        "heading": "Witness Cèrcol",
+        "heading": "Testigo Cèrcol",
         "body": "Una tarea de elección forzada dada a alguien que te conoce bien. En cada ronda, el testigo ve cinco palabras y elige la que mejor y peor te describe — un adjetivo por dimensión. La elección forzada elimina el sesgo de deseabilidad social que distorsiona el autoinforme.",
         "idealWitness": "Un testigo ideal ha trabajado contigo, ha vivido contigo o ha pasado tiempo real a tu alrededor. No tu mayor aliado/a, no tu crítico/a más severo/a — alguien que te ve como realmente eres.",
         "blindSpots": "El resultado del testigo se compara con el autoinforme. Donde divergen significativamente, se señala un punto ciego — una dimensión que percibes de manera diferente a las personas que te rodean."
@@ -878,7 +878,7 @@
     "paidLabel": "Pago único · No es una suscripción",
     "sampleHeading": "Preguntas de muestra",
     "newMoon": {
-      "heading": "New Moon Cèrcol",
+      "heading": "Cèrcol de Luna Nueva",
       "eyebrow": "Visión rápida",
       "meta": "10 preguntas · ~2 min",
       "scaleNote": "Escala de 7 puntos: 'Totalmente en desacuerdo' a 'Totalmente de acuerdo'. Cada punto tiene significado — no solo dos extremos con números en medio.",
@@ -888,7 +888,7 @@
       "itemPrefix": "Me veo a mí mismo/a como:"
     },
     "firstQuarter": {
-      "heading": "First Quarter Cèrcol",
+      "heading": "Cèrcol de Cuarto Creciente",
       "eyebrow": "Retrato completo",
       "meta": "60 preguntas · ~10 min",
       "scaleNote": "Escala de 5 puntos: 'Totalmente en desacuerdo' a 'Totalmente de acuerdo'. Las escalas de cinco puntos son estándar para la medición de personalidad a nivel de faceta.",
@@ -898,7 +898,7 @@
       "itemPrefix": "Me veo a mí mismo/a como alguien que:"
     },
     "fullMoon": {
-      "heading": "Full Moon Cèrcol",
+      "heading": "Cèrcol de Luna Llena",
       "eyebrow": "Retrato definitivo",
       "system": "Full Moon es un sistema de dos partes que se usan juntas.",
       "part1": {
@@ -911,7 +911,7 @@
       },
       "part2": {
         "label": "Parte 2",
-        "heading": "Witness Cèrcol",
+        "heading": "Testigo Cèrcol",
         "whyHeading": "¿Por qué un testigo?",
         "whyBody": "Los autoinformes tienen una limitación conocida: no siempre nos percibimos como nos ven los demás. Las personas con alta Profundidad pueden informar menos — la emoción se siente normal desde dentro. Las personas con alto Vínculo pueden informar más calidez — la intención es genuina pero el impacto puede diferir. La autoevaluación es una señal filtrada. El testigo añade una independiente.",
         "howHeading": "Cómo funciona",

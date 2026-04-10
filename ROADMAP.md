@@ -572,7 +572,7 @@ Added Spanish as the third language across the full stack:
 - `src/data/new-moon.js` — `es` key added to all 10 TIPI items
 - `src/data/first-quarter.js` — `es` key added to all 60 IPIP-NEO-60 items
 - `src/data/full-moon.js` — `es` key added to all 120 IPIP-NEO-120 items
-- `src/components/LanguageToggle.jsx` — binary EN↔CA extended to three-way cycle EN→CA→ES→EN
+- `src/components/LanguageToggle.jsx` — binary EN↔CA extended to three-way cycle EN→CA→ES→EN; later replaced with a dropdown (see Phase 11.1)
 - `src/i18n.js` — ES locale imported; browser `es*` detection added
 - `SCIENCE.md` — "Translation methodology" subsection added before References
 - `CLAUDE.md` — "Adding new languages" guidelines added
@@ -582,6 +582,18 @@ Translation methodology: direct translation from English source items, psycholog
 meaning preserved exactly. See SCIENCE.md for full methodology and validation precedent
 (Cupani et al. 2014). Translation feedback available to Spanish-speaking users via the
 suggestion panel on all instrument pages.
+
+### Phase 11.1 — Spanish instrument names + language dropdown ✅ COMPLETE
+
+Follow-up fixes to Phase 11:
+
+- `src/locales/es.json` — instrument names translated throughout: "Cèrcol de Luna Nueva",
+  "Cèrcol de Cuarto Creciente", "Cèrcol de Luna Llena", "Testigo Cèrcol"
+- `src/pages/WitnessSetupPage.jsx`, `WitnessPage.jsx`, `FullMoonReportPage.jsx` — three
+  hardcoded English instrument name strings replaced with `t()` calls
+- `src/components/LanguageToggle.jsx` — three-way cycle replaced with a dropdown: globe icon
+  opens a menu with English / Català / Español, active language highlighted, outside-click
+  to close; same pattern as `AccountButton.jsx`
 
 ### Phase 12 — Living model
 - GitHub Actions job every 28 days: update NORM_MEAN/NORM_SD at N≥200

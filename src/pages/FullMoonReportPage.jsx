@@ -345,7 +345,7 @@ export default function FullMoonReportPage() {
         {/* ── Header ── */}
         <div>
           <SectionLabel color="blue" className="mb-1 flex items-center gap-1.5">
-            <FullMoonIcon size={13} />Full Moon Cèrcol
+            <FullMoonIcon size={13} />{t('home.fullMoon.name')}
           </SectionLabel>
           <h1 className="text-2xl sm:text-3xl font-bold" style={{ color: colors.textPrimary }}>
             {t('witnessResults.title')}
