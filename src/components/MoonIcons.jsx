@@ -83,6 +83,40 @@ export function FirstQuarterIcon({ size = 32, className = '', style }) {
 }
 
 /**
+ * LastQuarterIcon — left half illuminated, mirrored terminator curve.
+ * Horizontally mirrored from FirstQuarterIcon (x → 32−x).
+ * Left arc is the lit half; terminator bows gently right.
+ */
+export function LastQuarterIcon({ size = 32, className = '', style }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 32 32"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className={className}
+      style={style}
+    >
+      {/*
+        Left arc (lit half): (16,4.5) → left around → (16,27.5)
+        Terminator (shadow boundary): (16,27.5) → slight rightward bow → (16,4.5)
+      */}
+      <path
+        strokeWidth="1.8"
+        d="M16 4.5
+           C9.5 4 3.5 9.5 4 16.5
+           C4.5 23 10.5 28 16 27.5
+           C17.5 21.5 18 10.5 16 4.5 Z"
+      />
+    </svg>
+  )
+}
+
+/**
  * FullMoonIcon — nearly-circular disk with three small irregular crater marks.
  */
 export function FullMoonIcon({ size = 32, className = '', style }) {

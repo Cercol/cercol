@@ -220,6 +220,11 @@
       "description": "Der tiefste Selbstbericht — alle 30 Facetten in voller Auflösung.",
       "paid": "Einmalige Zahlung"
     },
+    "lastQuarter": {
+      "name": "Letztes Viertel Cèrcol",
+      "meta": "Teambericht",
+      "description": "Das Rollenprofil Ihres Teams — Balance, Narrativ und gemeinsame blinde Flecken."
+    },
     "footnote": "Open Source · ",
     "viewOnGitHub": "Auf GitHub ansehen"
   },

@@ -220,6 +220,11 @@
       "description": "Den dybeste selvrapport — alle 30 facetter i fuld opløsning.",
       "paid": "Engangsbetaling"
     },
+    "lastQuarter": {
+      "name": "Sidste Kvarter Cèrcol",
+      "meta": "Teamrapport",
+      "description": "Dit teams rollerprofil — balance, fortælling og fælles blinde vinkler."
+    },
     "footnote": "Open source · ",
     "viewOnGitHub": "Se på GitHub"
   },

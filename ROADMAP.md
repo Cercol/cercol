@@ -639,6 +639,23 @@ Also exports `computeGroupMeans`, `balanceFlagForPBV`, `balanceFlagForC`, `balan
 added to all 6 locales. Non-English locales have structural keys translated; long narrative
 text falls back to English via `fallbackLng: 'en'`.
 
+### Phase 12.4 — Homepage polish + Last Quarter navigation ✅ COMPLETE
+
+**`LastQuarterIcon`:** new SVG icon in `MoonIcons.jsx` — horizontally mirrored `FirstQuarterIcon`
+(left half illuminated, terminator bows gently right). Replaces the temporary `FirstQuarterIcon`
+usage in `LastQuarterPage.jsx`.
+
+**4th homepage card:** "Last Quarter Cèrcol" card added to the instrument grid (black accent).
+Navigates to `/groups`. Grid changed from `lg:grid-cols-3` to `xl:grid-cols-4`.
+`home.lastQuarter.{name, meta, description}` added to all 6 locale files.
+
+**Animal wallpaper density:** ICON_DEFS expanded from 10 to 22 entries (all 12 roles + 10
+smaller duplicates); opacity increased from 0.12 → 0.22; min-distance factor reduced from
+1.25× to 1.05× for denser non-touching placement; placement attempts increased to 200.
+
+**Danish language toggle:** already fully implemented in Phase 12.3 (LanguageToggle.jsx +
+i18n.js + src/locales/da.json). DA appears as the 6th option in the language dropdown.
+
 ### Phase 13 — Living model
 - GitHub Actions job every 28 days: update NORM_MEAN/NORM_SD at N≥200
 - At N≥300: k-means (k=12) in 5D; update centroids if divergence is systematic

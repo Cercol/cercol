@@ -23,7 +23,7 @@ import {
   balanceFlagForN,
   zscoresToRaw,
 } from '../utils/team-narrative'
-import { RoleIcon, FirstQuarterIcon } from '../components/MoonIcons'
+import { RoleIcon, LastQuarterIcon } from '../components/MoonIcons'
 import RadarChart from '../components/RadarChart'
 import { Card, Button, Badge, SectionLabel } from '../components/ui'
 import { colors } from '../design/tokens'
@@ -191,7 +191,7 @@ export default function LastQuarterPage() {
 
         {/* Header */}
         <div className="flex items-start gap-3">
-          <FirstQuarterIcon size={32} style={{ color: colors.blue, flexShrink: 0, marginTop: 2 }} />
+          <LastQuarterIcon size={32} style={{ color: colors.blue, flexShrink: 0, marginTop: 2 }} />
           <div>
             <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-0.5">
               {t('lastQuarter.title')}

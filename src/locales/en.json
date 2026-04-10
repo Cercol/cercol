@@ -253,6 +253,11 @@
       "description": "The deepest self-report — all 30 facets at full resolution.",
       "paid": "One-time payment"
     },
+    "lastQuarter": {
+      "name": "Last Quarter Cèrcol",
+      "meta": "Team report",
+      "description": "Your team's role profile — balance, narrative, and shared blind spots."
+    },
     "footnote": "Open source · ",
     "viewOnGitHub": "View on GitHub"
   },

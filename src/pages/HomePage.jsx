@@ -14,23 +14,35 @@ import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { colors } from '../design/tokens'
-import { NewMoonIcon, FirstQuarterIcon, FullMoonIcon, RoleIcon } from '../components/MoonIcons'
+import { NewMoonIcon, FirstQuarterIcon, FullMoonIcon, LastQuarterIcon, RoleIcon } from '../components/MoonIcons'
 
 const GITHUB_URL = 'https://github.com/miquelmatoses/cercol'
 const ISSUE_URL  = 'https://github.com/miquelmatoses/cercol/issues/new?title=Bug+report&labels=bug'
 
 /** Animal definitions: fixed role selection and size range. */
 const ICON_DEFS = [
-  { role: 'R01', size: 160 },
-  { role: 'R05', size: 140 },
-  { role: 'R10', size: 130 },
-  { role: 'R11', size: 115 },
-  { role: 'R07', size: 100 },
-  { role: 'R09', size: 88  },
-  { role: 'R04', size: 78  },
-  { role: 'R02', size: 72  },
-  { role: 'R08', size: 82  },
-  { role: 'R12', size: 68  },
+  { id: 'a01', role: 'R01', size: 160 },
+  { id: 'a02', role: 'R05', size: 148 },
+  { id: 'a03', role: 'R10', size: 136 },
+  { id: 'a04', role: 'R11', size: 122 },
+  { id: 'a05', role: 'R03', size: 114 },
+  { id: 'a06', role: 'R07', size: 104 },
+  { id: 'a07', role: 'R09', size: 94  },
+  { id: 'a08', role: 'R04', size: 86  },
+  { id: 'a09', role: 'R02', size: 78  },
+  { id: 'a10', role: 'R06', size: 72  },
+  { id: 'a11', role: 'R08', size: 82  },
+  { id: 'a12', role: 'R12', size: 68  },
+  { id: 'b01', role: 'R01', size: 58  },
+  { id: 'b02', role: 'R05', size: 54  },
+  { id: 'b03', role: 'R10', size: 62  },
+  { id: 'b04', role: 'R03', size: 50  },
+  { id: 'b05', role: 'R07', size: 48  },
+  { id: 'b06', role: 'R11', size: 56  },
+  { id: 'b07', role: 'R09', size: 46  },
+  { id: 'b08', role: 'R04', size: 44  },
+  { id: 'b09', role: 'R02', size: 52  },
+  { id: 'b10', role: 'R06', size: 42  },
 ]
 
 /**
@@ -61,7 +73,7 @@ function generateWallpaper() {
 
     let cx = -10, cy = -10   // default: hidden off-screen if no slot found
 
-    for (let attempt = 0; attempt < 100; attempt++) {
+    for (let attempt = 0; attempt < 200; attempt++) {
       // Sample with slight bleed beyond viewport edges for corner/edge effects
       const x = Math.random() * 112 - 6   // –6 % to 106 %
       const y = Math.random() * 112 - 6
@@ -70,10 +82,10 @@ function generateWallpaper() {
       if (x + r > CARD_X1 && x - r < CARD_X2 &&
           y + r > CARD_Y1 && y - r < CARD_Y2) continue
 
-      // Reject if too close to an already-placed icon (1.25× combined radii)
+      // Reject if too close to an already-placed icon (1.05× combined radii — slight gap)
       if (placed.some(p => {
         const dx = x - p.x, dy = y - p.y
-        return Math.sqrt(dx * dx + dy * dy) < (r + p.r) * 1.25
+        return Math.sqrt(dx * dx + dy * dy) < (r + p.r) * 1.05
       })) continue
 
       cx = x; cy = y
@@ -83,6 +95,7 @@ function generateWallpaper() {
     placed.push({ x: cx, y: cy, r })
 
     return {
+      id:   def.id,
       role: def.role,
       size: def.size,
       style: {
@@ -169,16 +182,16 @@ export default function HomePage() {
     >
       {/* Decorative animal icons — randomised on each load, behind cards */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        {wallpaper.map(({ role, size, style }) => (
-          <div key={role} className="absolute" style={style}>
-            <RoleIcon role={role} size={size} style={{ color: 'white', opacity: 0.12 }} />
+        {wallpaper.map(({ id, role, size, style }) => (
+          <div key={id} className="absolute" style={style}>
+            <RoleIcon role={role} size={size} style={{ color: 'white', opacity: 0.22 }} />
           </div>
         ))}
       </div>
 
       {/* Instrument cards — vertically centered, 3-col desktop, 2 tablet, 1 mobile */}
       <div className="flex-1 flex items-center px-8 lg:px-16 py-12 relative">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-screen-xl mx-auto w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 max-w-screen-xl mx-auto w-full">
           <InstrumentCard
             icon={<NewMoonIcon size={80} />}
             name={t('home.newMoon.name')}
@@ -204,6 +217,14 @@ export default function HomePage() {
             darkHover
             paymentLabel={t('home.fullMoon.paid')}
             onClick={() => navigate('/full-moon')}
+          />
+          <InstrumentCard
+            icon={<LastQuarterIcon size={80} />}
+            name={t('home.lastQuarter.name')}
+            description={t('home.lastQuarter.description')}
+            meta={t('home.lastQuarter.meta')}
+            accentColor={colors.black}
+            onClick={() => navigate('/groups')}
           />
         </div>
       </div>

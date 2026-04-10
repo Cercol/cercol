@@ -220,6 +220,11 @@
       "description": "El autoinforme más profundo — las 30 facetas a plena resolución.",
       "paid": "Pago único"
     },
+    "lastQuarter": {
+      "name": "Cuarto Menguante Cèrcol",
+      "meta": "Informe de equipo",
+      "description": "El perfil de roles de tu equipo — equilibrio, narrativa y puntos ciegos compartidos."
+    },
     "footnote": "Código abierto · ",
     "viewOnGitHub": "Ver en GitHub"
   },

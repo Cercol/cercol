@@ -220,6 +220,11 @@
       "description": "L'autoinforme més complet — les 30 facetes a resolució completa.",
       "paid": "Pagament únic"
     },
+    "lastQuarter": {
+      "name": "Quart Minvant Cèrcol",
+      "meta": "Informe d'equip",
+      "description": "El perfil de rols del teu equip — equilibri, narrativa i punts cecs compartits."
+    },
     "footnote": "Codi obert · ",
     "viewOnGitHub": "Veure a GitHub"
   },

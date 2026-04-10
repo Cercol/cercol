@@ -220,6 +220,11 @@
       "description": "L'auto-évaluation la plus approfondie — les 30 facettes en pleine résolution.",
       "paid": "Paiement unique"
     },
+    "lastQuarter": {
+      "name": "Dernier Quartier Cèrcol",
+      "meta": "Rapport d'équipe",
+      "description": "Le profil de rôles de votre équipe — équilibre, récit et angles morts partagés."
+    },
     "footnote": "Code source ouvert · ",
     "viewOnGitHub": "Voir sur GitHub"
   },
