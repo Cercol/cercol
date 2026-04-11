@@ -48,9 +48,10 @@ const DOMAIN_ICON_COLOR = {
 const MIN_WITNESSES_FOR_REPORT = 2
 
 // ── CombinedRoleBars ──────────────────────────────────────────────────────────
-// Shows all 12 roles in a 2×6 grid.
-// If witnessResult present: single overlaid bar (combined / self / witness).
-// If witnessResult null: single bar (self/combined only).
+// Shows all 12 roles in a 2×6 grid using a dot-marker system.
+// Phase 13.8. Replaces overlaid filled-bar design.
+// If witnessResult present: three dot markers per role (combined, self, witness).
+// If witnessResult null: single filled dot per role.
 function CombinedRoleBars({ combinedResult, selfResult, witnessResult, t }) {
   const [hoveredRole, setHoveredRole] = useState(null)
   const sorted = Object.entries(combinedResult.probabilities).sort((a, b) => b[1] - a[1])
@@ -66,15 +67,41 @@ function CombinedRoleBars({ combinedResult, selfResult, witnessResult, t }) {
       {witnessResult && (
         <div className="flex items-center gap-4 text-xs flex-wrap" style={{ color: colors.textMuted }}>
           <span className="flex items-center gap-1.5 font-medium">
-            <span className="w-3 h-2.5 rounded-full inline-block" style={{ backgroundColor: colors.primary }} />
+            {/* Filled dot: combined */}
+            <span style={{
+              display: 'inline-block',
+              width: 10,
+              height: 10,
+              borderRadius: '50%',
+              backgroundColor: colors.primary,
+              flexShrink: 0,
+            }} />
             {t('witnessResults.combinedLabel')}
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="w-3 h-2.5 rounded-full inline-block" style={{ backgroundColor: colors.primary, opacity: 0.45 }} />
+            {/* Outlined dot: self */}
+            <span style={{
+              display: 'inline-block',
+              width: 8,
+              height: 8,
+              borderRadius: '50%',
+              border: `2px solid ${colors.primary}`,
+              backgroundColor: 'transparent',
+              flexShrink: 0,
+            }} />
             {t('witnessResults.selfLabel')}
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="w-3 h-2.5 rounded-full inline-block" style={{ backgroundColor: colors.blue, opacity: 0.5 }} />
+            {/* Outlined dot: witness (blue) */}
+            <span style={{
+              display: 'inline-block',
+              width: 8,
+              height: 8,
+              borderRadius: '50%',
+              border: `2px solid ${colors.blue}`,
+              backgroundColor: 'transparent',
+              flexShrink: 0,
+            }} />
             {t('witnessResults.witnessLabel')}
           </span>
         </div>
@@ -92,10 +119,16 @@ function CombinedRoleBars({ combinedResult, selfResult, witnessResult, t }) {
 
           const barColor   = isPrimary ? colors.primary : isArc ? colors.arcBar : colors.border
           const labelColor = isPrimary ? colors.textPrimary : isArc ? colors.arcLabel : colors.textMuted
+          const rowOpacity = isPrimary ? 1 : 0.45
           const isHovered  = hoveredRole === r
 
           return (
-            <div key={r}>
+            <div
+              key={r}
+              style={{ opacity: rowOpacity }}
+              onMouseEnter={() => witnessResult && setHoveredRole(r)}
+              onMouseLeave={() => setHoveredRole(null)}
+            >
               <div className="flex items-center justify-between mb-1">
                 <span
                   className={`text-sm flex items-center gap-1.5 ${isPrimary ? 'font-semibold' : 'font-normal'}`}
@@ -109,45 +142,70 @@ function CombinedRoleBars({ combinedResult, selfResult, witnessResult, t }) {
                 </span>
               </div>
 
-              {/* Overlaid bar track */}
-              <div
-                className="relative w-full h-3 rounded-full overflow-hidden"
-                style={{ backgroundColor: '#f3f4f6', cursor: witnessResult ? 'default' : undefined }}
-                onMouseEnter={() => witnessResult && setHoveredRole(r)}
-                onMouseLeave={() => setHoveredRole(null)}
-              >
-                {/* Layer 1: combined (base, full opacity) */}
-                <div
-                  className="absolute inset-y-0 left-0 rounded-full transition-all duration-500"
-                  style={{ width: `${combinedPct}%`, backgroundColor: barColor }}
-                />
-                {/* Layer 2: self (lighter, same color) */}
+              {/* Dot-marker track */}
+              <div style={{ position: 'relative', height: '12px', display: 'flex', alignItems: 'center' }}>
+                {/* Thin track line */}
+                <div style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: 0,
+                  width: '100%',
+                  height: '1px',
+                  backgroundColor: '#e5e7eb',
+                  transform: 'translateY(-50%)',
+                }} />
+                {/* Combined dot: filled, 10×10 */}
+                <div style={{
+                  position: 'absolute',
+                  width: 10,
+                  height: 10,
+                  borderRadius: '50%',
+                  backgroundColor: barColor,
+                  left: `${combinedPct}%`,
+                  top: '50%',
+                  transform: 'translate(-50%, -50%)',
+                }} />
+                {/* Self dot: outlined, 8×8 */}
                 {witnessResult && (
-                  <div
-                    className="absolute inset-y-0 left-0 rounded-full transition-all duration-500"
-                    style={{ width: `${selfPct}%`, backgroundColor: barColor, opacity: 0.45 }}
-                  />
+                  <div style={{
+                    position: 'absolute',
+                    width: 8,
+                    height: 8,
+                    borderRadius: '50%',
+                    border: `2px solid ${barColor}`,
+                    backgroundColor: 'transparent',
+                    left: `${selfPct}%`,
+                    top: '50%',
+                    transform: 'translate(-50%, -50%)',
+                  }} />
                 )}
-                {/* Layer 3: witness (blue, semi-transparent) */}
+                {/* Witness dot: outlined blue, 8×8 */}
                 {witnessResult && witnessPct !== null && (
-                  <div
-                    className="absolute inset-y-0 left-0 rounded-full transition-all duration-500"
-                    style={{ width: `${witnessPct}%`, backgroundColor: colors.blue, opacity: 0.5 }}
-                  />
+                  <div style={{
+                    position: 'absolute',
+                    width: 8,
+                    height: 8,
+                    borderRadius: '50%',
+                    border: `2px solid ${colors.blue}`,
+                    backgroundColor: 'transparent',
+                    left: `${witnessPct}%`,
+                    top: '50%',
+                    transform: 'translate(-50%, -50%)',
+                  }} />
                 )}
               </div>
 
-              {/* Hover tooltip */}
+              {/* Hover tooltip — shown on whole row hover when witness data present */}
               {isHovered && witnessResult && (
                 <div
                   className="mt-1 flex items-center gap-2 text-xs rounded px-2 py-1 w-fit"
                   style={{ backgroundColor: '#1f2937', color: '#f9fafb' }}
                 >
-                  <span style={{ color: barColor }}>{t('witnessResults.combinedLabel')}: {combinedPct}%</span>
+                  <span>{t('witnessResults.combinedLabel')}: {combinedPct}%</span>
                   <span style={{ color: '#6b7280' }}>·</span>
-                  <span style={{ color: barColor, opacity: 0.7 }}>{t('witnessResults.selfLabel')}: {selfPct}%</span>
+                  <span>{t('witnessResults.selfLabel')}: {selfPct}%</span>
                   <span style={{ color: '#6b7280' }}>·</span>
-                  <span style={{ color: '#99b3e0' }}>{t('witnessResults.witnessLabel')}: {witnessPct}%</span>
+                  <span>{t('witnessResults.witnessLabel')}: {witnessPct}%</span>
                 </div>
               )}
             </div>
@@ -193,30 +251,6 @@ function ConvergenceMeter({ ratio, t }) {
         {t('witnessResults.convergenceNote')}
       </p>
     </div>
-  )
-}
-
-// ── BlindSpotCard ─────────────────────────────────────────────────────────────
-function BlindSpotCard({ domain, selfScore, witnessScore, t }) {
-  const direction = witnessScore > selfScore ? 'witnessHigher' : 'selfHigher'
-  const desc = t(`witnessResults.blindSpots.${domain}.${direction}`)
-  const domainName = t(`fmDomains.${domain}.name`)
-
-  return (
-    <Card className="px-5 py-4">
-      <div className="flex items-center justify-between mb-2">
-        <p className="text-sm font-semibold" style={{ color: colors.textPrimary }}>
-          {domainName}
-        </p>
-        <div className="flex items-center gap-3 text-xs font-semibold shrink-0">
-          <span style={{ color: colors.textMuted }}>{selfScore.toFixed(1)}</span>
-          <span className="text-[#0047ba]">{witnessScore.toFixed(1)}</span>
-        </div>
-      </div>
-      <p className="text-sm leading-relaxed" style={{ color: colors.textMuted }}>
-        {desc}
-      </p>
-    </Card>
   )
 }
 
@@ -460,17 +494,23 @@ export default function FullMoonReportPage() {
                 </p>
               </Card>
             ) : (
-              <div className="flex flex-col gap-3">
-                {divergence.map(({ domain, selfScore, witnessScore }) => (
-                  <BlindSpotCard
-                    key={domain}
-                    domain={domain}
-                    selfScore={selfScore}
-                    witnessScore={witnessScore}
-                    t={t}
-                  />
-                ))}
-              </div>
+              <Card className="px-5 py-4">
+                <ul className="flex flex-col gap-2.5">
+                  {divergence.map(({ domain, selfScore, witnessScore }) => {
+                    const direction = witnessScore > selfScore ? 'witnessHigher' : 'selfHigher'
+                    const desc = t(`witnessResults.blindSpots.${domain}.${direction}`)
+                    const domainName = t(`fmDomains.${domain}.name`)
+                    return (
+                      <li key={domain} className="text-sm leading-relaxed flex items-start gap-2">
+                        <DimensionIcon domain={domain} size={14} className={`mt-0.5 shrink-0 ${DOMAIN_ICON_COLOR[domain]}`} />
+                        <span style={{ color: colors.textMuted }}>
+                          <span className="font-semibold" style={{ color: colors.textPrimary }}>{domainName}:</span>{' '}{desc}
+                        </span>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </Card>
             )}
           </section>
         )}

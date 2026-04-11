@@ -664,84 +664,84 @@
     "you": "Votre position",
     "probability_label": "Correspondance de rôle",
     "R01": {
-      "name": "Dolphin",  "ca": "Dolphin",
+      "name": "Dauphin",  "ca": "Dolphin",
       "essence": "Quand vous êtes dans la pièce, les gens parlent. Pas parce que vous le demandez — parce que vous l'avez rendu facile. L'équipe se réchauffe avec vous.",
       "profile": "Présence et Lien élevés. Chaleureux·se, extraverti·e et facile à côtoyer. Les gens s'ouvrent en votre compagnie.",
       "contributes": "Cohésion. Réduit l'énergie d'activation sociale dans la pièce.",
       "misses": "La friction productive qui affûte les idées. La chaleur peut lisser de vrais désaccords."
     },
     "R02": {
-      "name": "Wolf",     "ca": "Wolf",
+      "name": "Loup",     "ca": "Wolf",
       "essence": "Vous n'attendez pas la permission. Quand vous voyez le problème, vous le dites. L'équipe avance parce que vous ne restez pas silencieux·se.",
       "profile": "Présence élevée, Lien bas. Direct·e, assuré·e et orienté·e vers l'action. N'attend pas le consensus.",
       "contributes": "Initiative. Nomme ce qui doit être dit et fait avancer les choses.",
       "misses": "Le coût relationnel de la franchise dans le temps. Les équipes peuvent perdre confiance si le défi est constant."
     },
     "R03": {
-      "name": "Elephant", "ca": "Elephant",
+      "name": "Éléphant", "ca": "Elephant",
       "essence": "Vous ne prenez pas de place — vous en créez. Les gens s'expliquent bien à vos côtés parce qu'ils savent que vous écoutez vraiment.",
       "profile": "Présence basse, Lien élevé. Calme et profondément coopératif·ve. Crée de l'espace pour que les autres pensent à voix haute.",
       "contributes": "Profondeur d'écoute. Les gens s'articulent mieux en votre présence.",
       "misses": "Élan. L'équipe peut penser clairement ensemble mais ne pas bouger pour autant."
     },
     "R04": {
-      "name": "Owl",      "ca": "Owl",
+      "name": "Hibou",      "ca": "Owl",
       "essence": "Vous voyez ce que les autres manquent parce que vous n'avez pas besoin d'être au centre. La distance vous est utile.",
       "profile": "Présence et Lien bas. Indépendant·e, observateur·trice et précis·e. Fonctionne mieux avec de la distance.",
       "contributes": "Clarté. Voit les problèmes structurels que les profils très sociaux manquent.",
       "misses": "Chaleur et collaboration facile. La distance qui aide l'analyse peut isoler."
     },
     "R05": {
-      "name": "Eagle",    "ca": "Eagle",
+      "name": "Aigle",    "ca": "Eagle",
       "essence": "Vous voyez loin et vous y allez. Vous amenez l'équipe à des endroits où elle ne serait pas allée seule.",
       "profile": "Présence et Vision élevées. Énergique et tourné·e vers l'avenir. Entraîne l'équipe vers de nouveaux horizons.",
       "contributes": "Direction. Fixe des objectifs ambitieux que l'équipe ne se serait pas fixée seule.",
       "misses": "Les détails d'exécution. L'horizon est clair ; le chemin peut être accidenté."
     },
     "R06": {
-      "name": "Falcon",   "ca": "Falcon",
+      "name": "Faucon",   "ca": "Falcon",
       "essence": "Ce n'est pas la vision — c'est le timing. Vous savez exactement quand agir, et quand vous le faites, l'équipe le remarque.",
       "profile": "Présence élevée, Vision basse. Présent·e, décisif·ve et pratique. Sait exactement quand agir.",
       "contributes": "Timing. Se déplace au bon moment et entraîne les gens avec soi.",
       "misses": "La pensée à long horizon. Peut manquer la couche stratégique tout en exécutant bien à grande vitesse."
     },
     "R07": {
-      "name": "Octopus",  "ca": "Octopus",
+      "name": "Pieuvre",  "ca": "Octopus",
       "essence": "Les meilleures idées de l'équipe sont souvent passées par vous d'abord, en silence. Vous ne le savez pas toujours vous-même.",
       "profile": "Présence basse, Vision élevée. Riche intérieurement et créatif·ve discrètement. Traite la complexité en privé.",
       "contributes": "Pensée originale. Les idées les plus inhabituelles de l'équipe viennent souvent de là.",
       "misses": "Faire circuler les idées. Travaille en silence ; les idées peuvent y rester."
     },
     "R08": {
-      "name": "Tortoise", "ca": "Tortoise",
+      "name": "Tortue", "ca": "Tortoise",
       "essence": "Vous ne ferez pas de bruit. Mais quand vous n'êtes pas là, l'équipe dérive. Vous êtes le sol sur lequel les autres construisent.",
       "profile": "Présence et Vision basses. Stable, ancré·e et profondément fiable. Tient le sol pour que les autres puissent bouger.",
       "contributes": "Stabilité. Les autres peuvent prendre des risques parce que ce profil tient le sol.",
       "misses": "Adaptabilité quand la situation change fondamentalement."
     },
     "R09": {
-      "name": "Bee",      "ca": "Bee",
+      "name": "Abeille",      "ca": "Bee",
       "essence": "Là où les autres voient le chaos, vous voyez la structure. Vous construisez des ponts entre des personnes et des idées que personne d'autre n'aurait connectées.",
       "profile": "Lien et Vision élevés. Collaboratif·ve et intellectuellement générateur·trice. Connecte les personnes et les idées.",
       "contributes": "Synthèse. Construit des ponts entre les personnes et entre des concepts que personne d'autre n'avait liés.",
       "misses": "Le regard critique nécessaire pour tester si les connexions tiennent."
     },
     "R10": {
-      "name": "Bear",     "ca": "Bear",
+      "name": "Ours",     "ca": "Bear",
       "essence": "Vous ne changez pas sous la pression. L'équipe sait que vous êtes là, et ce savoir les libère pour prendre des risques.",
       "profile": "Lien élevé, Vision basse. Fiable, ancré·e et constant·e. L'équipe sait où elle en est.",
       "contributes": "Confiance. Les gens prennent plus de risques quand un profil Bear est présent.",
       "misses": "Ouverture au changement quand l'approche actuelle ne fonctionne plus."
     },
     "R11": {
-      "name": "Fox",      "ca": "Fox",
+      "name": "Renard",      "ca": "Fox",
       "essence": "Vous voyez ce qui ne s'additionne pas — dans les idées et dans les relations. Votre inconfort est productif.",
       "profile": "Lien bas, Vision élevée. Intellectuellement acéré·e et d'esprit critique. Repère l'incohérence rapidement.",
       "contributes": "Distance critique. Détecte ce qui ne s'additionne pas avant que ça devienne un problème.",
       "misses": "Aisance relationnelle. L'inconfort peut user une équipe qui a besoin de cohésion pour fonctionner."
     },
     "R12": {
-      "name": "Badger",   "ca": "Badger",
+      "name": "Blaireau",   "ca": "Badger",
       "essence": "Vous ne vous intéressez pas à ce qui devrait fonctionner. Vous vous intéressez à ce qui fonctionne. L'équipe a besoin de vous pour arrêter de se leurrer.",
       "profile": "Lien et Vision bas. Pragmatique, direct·e et sans sentimentalisme. Ce qui fonctionne compte ; ce qui devrait fonctionner non.",
       "contributes": "Vérité fondamentale. Empêche l'équipe de se leurrer avec optimisme ou complexité.",

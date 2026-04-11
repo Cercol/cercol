@@ -820,6 +820,39 @@ Legend row updated to match: colored dots (full / 0.45 / 0.5) with Combined / Se
 `RoleIcon` added back to each row label (was missing from the old combined version).
 Single-bar mode (no witnesses) unchanged — only the combined layer renders.
 
+### Phase 13.8 — Full Moon report visual upgrade + translation fixes ✅ COMPLETE
+
+**Dot-marker probability bars — `RoleProbabilityBars.jsx`:**
+Replaced filled h-2 bars with a dot-marker system. Track is now a 1px horizontal line inside
+a 12px-tall relative container (no overflow clip). One 10×10 filled circular dot per role,
+positioned at `left: ${pct}%` with `transform: translate(-50%, -50%)`. Primary dot uses
+`colors.primary`, arc dots use `colors.arcBar`, others use `colors.border`. Row opacity:
+1 / 0.7 / 0.45 for primary / arc / others. No tooltip, no legend (single data source).
+
+**Dot-marker probability bars — `CombinedRoleBars` in `FullMoonReportPage.jsx`:**
+Same thin-track approach with three dots when witnesses present:
+- Combined: 10×10 filled circle at `combinedPct%` (brand color)
+- Self: 8×8 outlined circle (2px border, same brand color) at `selfPct%`
+- Witness: 8×8 outlined circle (2px border, `colors.blue`) at `witnessPct%`
+Hover on row shows tooltip: `Combined: X% · Self: X% · Witnesses: X%`.
+Legend updated to circular dot swatches (filled / outlined / outlined blue).
+No-witness mode: single filled dot only, no legend.
+
+**Blind spots → bullet list:**
+Removed `BlindSpotCard` component. Replaced divergence list with a single `Card` containing
+a `<ul>`. Each `<li>`: colored `DimensionIcon` + **bold domain name**: plain description text.
+Warm, direct format — no card-per-item overhead.
+
+**Dimension rows → 2-col grid in `FullMoonResultsPage.jsx`:**
+Changed `flex flex-col divide-y divide-gray-100` to `grid grid-cols-2 gap-x-4 gap-y-2`.
+5 domains flow into 3+2 columns. Tighter vertical footprint.
+
+**Missing role name translations fixed:**
+- `fr.json`: R01–R12 `name` fields now in French (Dauphin, Loup, Éléphant, Hibou, Aigle,
+  Faucon, Pieuvre, Tortue, Abeille, Ours, Renard, Blaireau)
+- `da.json`: R01–R12 `name` fields now in Danish (Delfin, Ulv, Elefant, Ugle, Ørn, Falk,
+  Blæksprutte, Skildpadde, Bi, Bjørn, Ræv, Grævling)
+
 ### Phase 13 — Living model
 - GitHub Actions job every 28 days: update NORM_MEAN/NORM_SD at N≥200
 - At N≥300: k-means (k=12) in 5D; update centroids if divergence is systematic

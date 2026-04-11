@@ -664,84 +664,84 @@
     "you": "Din position",
     "probability_label": "Rolle-match",
     "R01": {
-      "name": "Dolphin",  "ca": "Dolphin",
+      "name": "Delfin",  "ca": "Dolphin",
       "essence": "Når du er i rummet, taler folk. Ikke fordi du spørger — fordi du gjorde det nemt. Teamet varmer op med dig.",
       "profile": "Høj Tilstedeværelse og Tilknytning. Varm, udadvendt og nem at være sammen med. Folk åbner sig i dit selskab.",
       "contributes": "Sammenhæng. Sænker den sociale aktiveringsenergi i rummet.",
       "misses": "Den produktive friktion, der skærper ideer. Varme kan glatte over reelle uenigheder."
     },
     "R02": {
-      "name": "Wolf",     "ca": "Wolf",
+      "name": "Ulv",     "ca": "Wolf",
       "essence": "Du venter ikke på tilladelse. Når du ser problemet, siger du det. Teamet bevæger sig, fordi du ikke tier.",
       "profile": "Høj Tilstedeværelse, lav Tilknytning. Direkte, selvhævdende og handlingsorienteret. Venter ikke på konsensus.",
       "contributes": "Initiativ. Nævner det, der skal siges, og får tingene i gang.",
       "misses": "Den relationelle pris af direkthed over tid. Teams kan miste tillid, hvis udfordringen er konstant."
     },
     "R03": {
-      "name": "Elephant", "ca": "Elephant",
+      "name": "Elefant", "ca": "Elephant",
       "essence": "Du tager ikke plads — du skaber den. Folk forklarer sig godt ved siden af dig, fordi de ved, at du virkelig lytter.",
       "profile": "Lav Tilstedeværelse, høj Tilknytning. Stille og dybt samarbejdende. Skaber plads til, at andre kan tænke højt.",
       "contributes": "Lyttedybde. Folk formulerer sig bedre i din tilstedeværelse.",
       "misses": "Fremdrift. Teamet kan tænke klart sammen, men stadig ikke bevæge sig."
     },
     "R04": {
-      "name": "Owl",      "ca": "Owl",
+      "name": "Ugle",      "ca": "Owl",
       "essence": "Du ser det, andre overser, fordi du ikke behøver at være i centrum. Afstanden er nyttig for dig.",
       "profile": "Lav Tilstedeværelse og Tilknytning. Uafhængig, observerende og præcis. Fungerer bedst med afstand.",
       "contributes": "Klarhed. Ser strukturelle problemer, som høj-sociale profiler overser.",
       "misses": "Varme og nem samarbejde. Den afstand, der hjælper analysen, kan isolere."
     },
     "R05": {
-      "name": "Eagle",    "ca": "Eagle",
+      "name": "Ørn",    "ca": "Eagle",
       "essence": "Du ser langt, og du bevæger dig derhen. Du bringer teamet til steder, det ikke ville have nået alene.",
       "profile": "Høj Tilstedeværelse og Vision. Energisk og fremtidsorienteret. Trækker teamet mod nyt terræn.",
       "contributes": "Retning. Sætter ambitiøse mål, som teamet ikke ville have sat alene.",
       "misses": "Udførelsesdetaljer. Horisonten er klar; vejen kan være ujævn."
     },
     "R06": {
-      "name": "Falcon",   "ca": "Falcon",
+      "name": "Falk",   "ca": "Falcon",
       "essence": "Det er ikke vision — det er timing. Du ved præcis, hvornår du skal bevæge dig, og når du gør det, bemærker teamet det.",
       "profile": "Høj Tilstedeværelse, lav Vision. Til stede, beslutsom og praktisk. Ved præcis, hvornår man skal handle.",
       "contributes": "Timing. Bevæger sig på det rette tidspunkt og tager folk med.",
       "misses": "Langsigtet tænkning. Kan gå glip af det strategiske lag, mens det udfører godt i højt tempo."
     },
     "R07": {
-      "name": "Octopus",  "ca": "Octopus",
+      "name": "Blæksprutte",  "ca": "Octopus",
       "essence": "Teamets bedste ideer gik ofte igennem dig først, i stilhed. Du ved det ikke altid selv.",
       "profile": "Lav Tilstedeværelse, høj Vision. Indre rig og stille kreativ. Behandler kompleksitet privat.",
       "contributes": "Original tænkning. Teamets mest usædvanlige ideer kommer ofte herfra.",
       "misses": "At få ideer i omløb. Arbejder i stilhed; ideerne kan blive der."
     },
     "R08": {
-      "name": "Tortoise", "ca": "Tortoise",
+      "name": "Skildpadde", "ca": "Tortoise",
       "essence": "Du laver ikke støj. Men når du ikke er der, driver teamet. Du er den grund, de andre bygger på.",
       "profile": "Lav Tilstedeværelse og Vision. Stabil, jordforbundet og dybt pålidelig. Holder grunden, så andre kan bevæge sig.",
       "contributes": "Stabilitet. Andre kan tage risici, fordi denne profil holder grunden.",
       "misses": "Tilpasningsevne, når situationen fundamentalt ændrer sig."
     },
     "R09": {
-      "name": "Bee",      "ca": "Bee",
+      "name": "Bi",      "ca": "Bee",
       "essence": "Hvor andre ser kaos, ser du struktur. Du bygger broer mellem mennesker og ideer, som ingen andre ville have forbundet.",
       "profile": "Høj Tilknytning og Vision. Samarbejdende og intellektuelt genererende. Forbinder mennesker og ideer.",
       "contributes": "Syntese. Bygger broer mellem mennesker og mellem begreber, som ingen andre havde forbundet.",
       "misses": "Den kritiske kant, der er nødvendig for at teste, om forbindelserne holder."
     },
     "R10": {
-      "name": "Bear",     "ca": "Bear",
+      "name": "Bjørn",     "ca": "Bear",
       "essence": "Du ændrer dig ikke under pres. Teamet ved, at du er der, og den viden frigør dem til at tage risici.",
       "profile": "Høj Tilknytning, lav Vision. Pålidelig, jordforbundet og konsistent. Teamet ved, hvor det står.",
       "contributes": "Tillid. Folk tager flere risici, når en Bear-profil er til stede.",
       "misses": "Åbenhed for forandring, når den nuværende tilgang ikke længere virker."
     },
     "R11": {
-      "name": "Fox",      "ca": "Fox",
+      "name": "Ræv",      "ca": "Fox",
       "essence": "Du ser det, der ikke hænger sammen — i ideer og i relationer. Dit ubehag er produktivt.",
       "profile": "Lav Tilknytning, høj Vision. Intellektuelt skarp og kritisk tænkende. Opfanger inkonsistens hurtigt.",
       "contributes": "Kritisk distance. Opfanger det, der ikke hænger sammen, inden det bliver et problem.",
       "misses": "Relationel lethed. Ubehaget kan belaste et team, der har brug for sammenhæng for at fungere."
     },
     "R12": {
-      "name": "Badger",   "ca": "Badger",
+      "name": "Grævling",   "ca": "Badger",
       "essence": "Du er ikke interesseret i, hvad der burde virke. Du er interesseret i, hvad der virker. Teamet har brug for dig til at stoppe med at narre sig selv.",
       "profile": "Lav Tilknytning og Vision. Pragmatisk, direkte og usentimental. Hvad der virker, tæller; hvad der burde virke, gør det ikke.",
       "contributes": "Grundsandhed. Stopper teamet fra at narre sig selv med optimisme eller kompleksitet.",

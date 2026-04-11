@@ -183,7 +183,7 @@ export default function FullMoonResultsPage() {
               <SectionLabel color="gray" className="mb-3">
                 {t('fmResults.domainSection')}
               </SectionLabel>
-              <div className="flex flex-col divide-y divide-gray-100">
+              <div className="grid grid-cols-2 gap-x-4 gap-y-2">
                 {domainKeys.map((key) => {
                   const score = domains[key]
                   const pct = fmScoreToPercent(score)
@@ -191,7 +191,7 @@ export default function FullMoonResultsPage() {
                   const barColor = DOMAIN_BAR_COLOR[key]
                   const descVariant = score > 3.5 ? 'high' : score < 2.5 ? 'low' : null
                   return (
-                    <div key={key} className="py-3 first:pt-0 last:pb-0">
+                    <div key={key}>
                       <div className="flex items-center justify-between mb-1.5">
                         <span className="text-sm font-semibold flex items-center gap-1.5" style={{ color: colors.textPrimary }}>
                           <DimensionIcon domain={key} size={15} className={DOMAIN_ICON_COLOR[key]} />
