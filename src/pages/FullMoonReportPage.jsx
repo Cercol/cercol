@@ -24,6 +24,7 @@ import { computeRole } from '../utils/role-scoring'
 import { RoleIcon } from '../components/MoonIcons'
 import { FullMoonIcon, BlindSpotsIcon, DimensionIcon } from '../components/MoonIcons'
 import { averageWitnessScores, detectDivergence, computeConvergence, computeCombinedRole } from '../utils/witness-scoring'
+import { fmScoreLabel } from '../utils/full-moon-scoring'
 import { DOMAIN_KEYS } from '../data/domains'
 import { colors } from '../design/tokens'
 import RadarChart from '../components/RadarChart'
@@ -46,6 +47,12 @@ const DOMAIN_ICON_COLOR = {
 }
 
 const MIN_WITNESSES_FOR_REPORT = 2
+
+const LABEL_STYLES = {
+  low:      'bg-gray-100 text-gray-600',
+  moderate: 'bg-blue-100 text-blue-700',
+  high:     'bg-[#0047ba] text-white',
+}
 
 // ── CombinedRoleBars ──────────────────────────────────────────────────────────
 // Shows all 12 roles in a 2×6 grid using a dot-marker system.
@@ -227,23 +234,32 @@ function ConvergenceMeter({ ratio, t }) {
 }
 
 // ── DomainComparisonRow ───────────────────────────────────────────────────────
-// Single bar (self) with a blue tick mark at witness position.
-function DomainComparisonRow({ selfScore, witnessScore, domainKey }) {
+// Full row: icon + name + scores + single bar + badge.
+function DomainComparisonRow({ selfScore, witnessScore, domainKey, t }) {
   const barHex     = DOMAIN_BAR_HEX[domainKey]
   const selfPct    = ((selfScore - 1) / 4) * 100
   const witnessPct = witnessScore !== null ? ((witnessScore - 1) / 4) * 100 : null
+  const label      = fmScoreLabel(selfScore)
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-1">
-        <span className="text-xs font-semibold flex items-center gap-1" style={{ color: colors.textPrimary }}>
-          {domainKey && <DimensionIcon domain={domainKey} size={13} className={DOMAIN_ICON_COLOR[domainKey]} />}
+      <div className="flex items-center gap-1.5 mb-1 flex-wrap">
+        <DimensionIcon domain={domainKey} size={13} className={DOMAIN_ICON_COLOR[domainKey]} />
+        <span className="text-xs font-semibold flex-1 min-w-0" style={{ color: colors.textPrimary }}>
+          {t(`fmDomains.${domainKey}.name`)}
         </span>
-        <div className="flex items-center gap-2 text-xs font-semibold tabular-nums shrink-0">
-          <span style={{ color: colors.textMuted }}>{selfScore.toFixed(1)}</span>
-          {witnessPct !== null && (
-            <span style={{ color: colors.blue }}>{witnessScore.toFixed(1)}</span>
+        <div className="flex items-center gap-1.5 shrink-0">
+          <span className="text-xs font-semibold tabular-nums" style={{ color: colors.textMuted }}>
+            {selfScore.toFixed(1)}
+          </span>
+          {witnessScore !== null && (
+            <span className="text-xs font-semibold tabular-nums" style={{ color: colors.blue }}>
+              {witnessScore.toFixed(1)}
+            </span>
           )}
+          <span className={`text-xs font-semibold px-1.5 py-0.5 rounded ${LABEL_STYLES[label]}`}>
+            {t(`fmResults.scoreLabels.${label}`)}
+          </span>
         </div>
       </div>
       {/* Bar + tick overlay */}
@@ -378,18 +394,16 @@ export default function FullMoonReportPage() {
           </p>
         </div>
 
-        {/* ── Section 1: Combined role card (top, full width) ── */}
+        {/* ── Section 1: Combined role card (full width) ── */}
         <section>
           <SectionLabel color="gray" className="mb-4">
             {t('witnessResults.combinedRoleSection')}
           </SectionLabel>
           <Card accent="red" className="overflow-hidden">
             <div className="flex flex-row">
-              {/* Left: icon column — full card height, icon centred */}
               <div className="w-40 shrink-0 flex items-center justify-center">
                 <RoleIcon role={combinedRole.role} size={128} style={{ color: colors.red }} />
               </div>
-              {/* Right: content */}
               <div className="flex-1 p-6 sm:p-8 flex flex-col gap-4">
                 {isDefinitive ? (
                   <div className="flex flex-col gap-1">
@@ -416,17 +430,12 @@ export default function FullMoonReportPage() {
                 </p>
                 {combinedRole.arc.length > 0 && (
                   <div className="flex flex-col gap-2">
-                    <p
-                      className="text-xs font-semibold uppercase tracking-widest"
-                      style={{ color: colors.textMuted }}
-                    >
+                    <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: colors.textMuted }}>
                       {t('roles.arc_label')}
                     </p>
                     <div className="flex flex-wrap gap-2">
                       {combinedRole.arc.map(r => (
-                        <Badge key={r} variant="default">
-                          {t(`roles.${r}.name`)}
-                        </Badge>
+                        <Badge key={r} variant="default">{t(`roles.${r}.name`)}</Badge>
                       ))}
                     </div>
                   </div>
@@ -436,14 +445,25 @@ export default function FullMoonReportPage() {
           </Card>
         </section>
 
-        {/* ── Section 2: Combined probability bars ── */}
+        {/* ── Section 2: Radar (left) + Probability bars (right) ── */}
         <section>
-          <CombinedRoleBars
-            combinedResult={combinedRole}
-            selfResult={selfRole}
-            witnessResult={witnessRole}
-            t={t}
-          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Left: Radar */}
+            <Card className="shadow-sm p-5 flex items-center justify-center">
+              <RadarChart
+                scores={selfReport}
+                domainKeys={DOMAIN_KEYS}
+                labelFn={(key) => t(`fmDomains.${key}.name`)}
+              />
+            </Card>
+            {/* Right: Combined probability bars */}
+            <CombinedRoleBars
+              combinedResult={combinedRole}
+              selfResult={selfRole}
+              witnessResult={witnessRole}
+              t={t}
+            />
+          </div>
         </section>
 
         {/* ── Section 3: Convergence (if ≥2 complete) ── */}
@@ -493,51 +513,40 @@ export default function FullMoonReportPage() {
           </section>
         )}
 
-        {/* ── Section 5: Domain comparison — two-column layout ── */}
+        {/* ── Section 5: Five dimensions (full width, 2-col grid 3+2) ── */}
         <section>
           <SectionLabel color="gray" className="mb-4">
             {t('witnessResults.domainsSection')}
           </SectionLabel>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Radar chart */}
-            <Card className="shadow-sm p-5">
-              <RadarChart
-                scores={selfReport}
-                domainKeys={DOMAIN_KEYS}
-                labelFn={(key) => t(`fmDomains.${key}.name`)}
-              />
-            </Card>
-
-            {/* Domain comparison rows */}
-            <Card className="shadow-sm p-5">
+          <Card className="shadow-sm p-5">
+            {/* Legend */}
+            <div className="flex items-center gap-4 text-xs font-medium mb-4" style={{ color: colors.textMuted }}>
+              <span className="flex items-center gap-1.5">
+                <span className="w-3 h-1.5 rounded-sm inline-block" style={{ backgroundColor: '#9ca3af' }} />
+                {t('witnessResults.selfLabel')}
+              </span>
               {witnessScores && (
-                <div className="flex items-center gap-4 text-xs font-medium mb-3" style={{ color: colors.textMuted }}>
-                  <span className="flex items-center gap-1.5">
-                    <span className="w-3 h-1.5 rounded-sm inline-block" style={{ backgroundColor: '#9ca3af' }} />
-                    {t('witnessResults.selfLabel')}
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <span className="inline-block w-0.5 h-3 rounded-sm" style={{ backgroundColor: colors.blue }} />
-                    {t('witnessResults.witnessLabel')}
-                  </span>
-                </div>
+                <span className="flex items-center gap-1.5">
+                  <span className="inline-block w-0.5 h-3 rounded-sm" style={{ backgroundColor: colors.blue }} />
+                  {t('witnessResults.witnessLabel')}
+                </span>
               )}
-              <div className="grid grid-cols-2 gap-x-4 gap-y-3">
-                {DOMAIN_KEYS.map(key => (
-                  <DomainComparisonRow
-                    key={key}
-                    selfScore={selfReport[key]}
-                    witnessScore={witnessScores ? witnessScores[key] : null}
-                    domainKey={key}
-                  />
-                ))}
-              </div>
-            </Card>
-          </div>
+            </div>
+            <div className="grid grid-cols-2 gap-x-6 gap-y-4">
+              {DOMAIN_KEYS.map(key => (
+                <DomainComparisonRow
+                  key={key}
+                  selfScore={selfReport[key]}
+                  witnessScore={witnessScores ? witnessScores[key] : null}
+                  domainKey={key}
+                  t={t}
+                />
+              ))}
+            </div>
+          </Card>
         </section>
 
-        {/* ── Section 6: Witness sessions + invite CTA ── */}
+        {/* ── Section 6: Witnesses ── */}
         <section>
           <div className="flex items-center justify-between mb-4">
             <SectionLabel color="gray">
@@ -547,7 +556,6 @@ export default function FullMoonReportPage() {
               {t('witnessResults.witnessCount', { count: completedSessions.length })}
             </span>
           </div>
-
           <Card className="shadow-sm p-5">
             {(completedSessions.length > 0 || pendingSessions.length > 0) && (
               <div className="flex flex-col gap-2 mb-4">
@@ -576,7 +584,7 @@ export default function FullMoonReportPage() {
           </Card>
         </section>
 
-        {/* Disclaimer */}
+        {/* ── Section 7: Disclaimer ── */}
         <div className="bg-gray-100 rounded px-5 py-4 text-xs leading-relaxed" style={{ color: colors.textMuted }}>
           {t('witnessResults.disclaimer')}
         </div>

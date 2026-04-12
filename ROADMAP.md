@@ -897,6 +897,28 @@ paragraph. Gap between sections increased from `gap-3` to `gap-4`.
 Share `Card` replaced with a minimal centered row of two plain text ghost buttons separated
 by a 1px vertical divider. No card chrome, no section label.
 
+### Phase 13.10 — Full Moon report + First Quarter report structural redesign ✅ COMPLETE
+
+Both pages rewritten from scratch (JSX structure only — all data logic/hooks preserved).
+
+**Full Moon report (`FullMoonReportPage.jsx`):**
+- Section 2: moved from standalone CombinedRoleBars to 2-col [Radar | CombinedRoleBars]
+- Section 5: removed radar from domain section; now full-width single Card with 2-col
+  `grid grid-cols-2` of `DomainComparisonRow`s. Each row: DimensionIcon + name + self score +
+  witness score + single bar + `fmResults.scoreLabels` badge. Added `fmScoreLabel` import
+  from `full-moon-scoring.js`. Added `LABEL_STYLES` constant.
+
+**First Quarter results (`FirstQuarterResultsPage.jsx`):**
+- Role name bumped to `text-5xl sm:text-6xl` for display dominance
+- Section 2: Radar stays left, Domain rows replaced with `RoleProbabilityBars` on the right
+- Section 3: Replaced 5-card facet grid with collapsible accordion (per-domain):
+  - Domain header: color dot + name + facet count + rotating chevron
+  - First domain expanded by default (`expandedDomains` state)
+  - Facet grid inside: 2-col, facet score + tinted badge in domain color (`barHex + '22'`)
+  - Added `DOMAIN_BAR_HEX` constant, `toggleDomain` helper
+- Section 4: CTA changed from plain Card to `Card accent="blue"` with FullMoonIcon layout
+- Added `fqResults.facetsCount` i18n key to all 6 locale files
+
 ### Phase 13 — Living model
 - GitHub Actions job every 28 days: update NORM_MEAN/NORM_SD at N≥200
 - At N≥300: k-means (k=12) in 5D; update centroids if divergence is systematic
