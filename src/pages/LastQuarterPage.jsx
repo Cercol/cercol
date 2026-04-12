@@ -25,7 +25,7 @@ import {
 } from '../utils/team-narrative'
 import { RoleIcon, LastQuarterIcon, DimensionIcon } from '../components/MoonIcons'
 import RadarChart from '../components/RadarChart'
-import { Card, Button, SectionLabel } from '../components/ui'
+import { Card, SectionLabel } from '../components/ui'
 import { colors, ROLE_COLORS } from '../design/tokens'
 import { DOMAIN_KEYS } from '../data/domains'
 
@@ -142,7 +142,7 @@ function DomainRows({ scores, t }) {
 }
 
 /**
- * MemberRow — compact member row with icon cluster + name.
+ * MemberRow — compact member row with primary role icon + name + arc role.
  */
 function MemberRow({ member, t }) {
   const roleResult = member.completed && member.zscores
@@ -155,53 +155,125 @@ function MemberRow({ member, t }) {
   const sortedArc = roleResult
     ? [...roleResult.arc].sort((a, b) => roleResult.probabilities[b] - roleResult.probabilities[a])
     : []
-  const arcRole1 = sortedArc[0] ?? null
-  const arcRole2 = sortedArc[1] ?? null
+  const arcRole = sortedArc[0] ?? null
 
   return (
     <div className="flex items-center gap-2 py-1.5">
-      {/* Icon cluster */}
-      <div className="flex items-end gap-0.5 shrink-0">
-        {primaryRole ? (
-          <>
-            <IconTooltip label={t(`roles.${primaryRole}.name`)}>
-              <RoleIcon role={primaryRole} size={26} style={{ color: primaryColor }} />
-            </IconTooltip>
-            {arcRole1 && (
-              <IconTooltip label={t(`roles.${arcRole1}.name`)}>
-                <RoleIcon role={arcRole1} size={18} style={{ color: ROLE_COLORS[arcRole1] ?? colors.red, opacity: 0.7 }} />
-              </IconTooltip>
-            )}
-            {arcRole2 && (
-              <IconTooltip label={t(`roles.${arcRole2}.name`)}>
-                <RoleIcon role={arcRole2} size={13} style={{ color: ROLE_COLORS[arcRole2] ?? colors.red, opacity: 0.5 }} />
-              </IconTooltip>
-            )}
-          </>
-        ) : (
-          <div className="w-7 h-7 flex items-center justify-center">
-            <span className="text-gray-300 select-none">·</span>
-          </div>
-        )}
-      </div>
+      {/* Primary role icon — 28px, role color */}
+      {primaryRole ? (
+        <RoleIcon role={primaryRole} size={28} style={{ color: primaryColor, flexShrink: 0 }} />
+      ) : (
+        <div className="w-7 h-7 shrink-0" />
+      )}
 
-      {/* Name + self / pending */}
-      <div className="flex-1 min-w-0 flex items-center gap-1.5 flex-wrap">
-        <span className="text-xs font-semibold text-gray-900 truncate leading-snug">
+      {/* Name + pending label */}
+      <div className="flex-1 min-w-0">
+        <span className="text-xs font-semibold text-gray-900 block truncate leading-snug">
           {member.display_name ?? '—'}
         </span>
         {member.is_self && (
           <span className="text-xs text-gray-400">({t('lastQuarter.selfLabel')})</span>
         )}
         {!member.completed && (
-          <span
-            className="inline-block text-xs px-1.5 py-0.5 rounded"
-            style={{ backgroundColor: '#f3f4f6', color: '#9ca3af' }}
-          >
+          <span className="text-xs" style={{ color: '#9ca3af' }}>
             {t('lastQuarter.pendingLabel')}
           </span>
         )}
       </div>
+
+      {/* Secondary arc role icon — 16px, right-aligned, muted, with tooltip */}
+      {arcRole && (
+        <IconTooltip label={t(`roles.${arcRole}.name`)}>
+          <RoleIcon role={arcRole} size={16} style={{ color: ROLE_COLORS[arcRole] ?? colors.red, opacity: 0.55, flexShrink: 0 }} />
+        </IconTooltip>
+      )}
+    </div>
+  )
+}
+
+function BalanceDimRow({ dim, meanZ, flag, topMember, compensatingMember, suggestedRole, suggestedRoles, t }) {
+  const [expanded, setExpanded] = useState(false)
+  const isPBV    = dim === 'presence' || dim === 'bond' || dim === 'vision'
+  const isTilted = Math.abs(meanZ) >= 0.5
+
+  let noteKey = null
+  if (dim === 'discipline' && flag === 'lowCaution')  noteKey = 'c_low'
+  else if (dim === 'depth' && flag === 'highCaution') noteKey = 'n_high'
+
+  const hasExtra = noteKey || (isPBV && isTilted && (compensatingMember || suggestedRole)) || suggestedRoles?.length
+
+  return (
+    <div className="py-2 first:pt-0 last:pb-0">
+      {/* Main row */}
+      <div className="flex items-center gap-2">
+        <span className={`flex items-center gap-1 shrink-0 ${DOMAIN_ICON_COLOR[dim]}`}>
+          <DimensionIcon domain={dim} size={13} />
+        </span>
+        <span className="text-xs font-semibold text-gray-800 shrink-0">
+          {t(`fmDomains.${dim}.name`)}
+        </span>
+        <BalancePill flag={flag} t={t} />
+        <div className="ml-auto flex items-center gap-1.5 shrink-0">
+          {topMember?.role && (
+            <span className="flex items-center gap-1 text-xs text-gray-500">
+              <RoleIcon role={topMember.role} size={14} style={{ color: ROLE_COLORS[topMember.role] ?? colors.red }} />
+              <span className="font-medium text-gray-700">
+                {topMember.display_name?.split(' ')[0] ?? topMember.display_name}
+              </span>
+            </span>
+          )}
+          {hasExtra && (
+            <button
+              onClick={() => setExpanded(e => !e)}
+              className="text-gray-400 hover:text-gray-600 transition-colors p-0.5"
+              aria-label={expanded ? 'collapse' : 'expand'}
+            >
+              <svg
+                className={`w-3 h-3 transition-transform duration-150 ${expanded ? 'rotate-90' : ''}`}
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}
+              >
+                <path d="M9 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Expanded content */}
+      {hasExtra && expanded && (
+        <div className="mt-1 ml-5 flex flex-col gap-0.5">
+          {noteKey && (
+            <p className="text-xs text-gray-500 leading-snug">
+              {t(`lastQuarter.balance.notes.${noteKey}`)}
+            </p>
+          )}
+          {isPBV && isTilted && compensatingMember?.role && (
+            <div className="flex items-center gap-1 text-xs text-gray-500">
+              <RoleIcon role={compensatingMember.role} size={14} style={{ color: ROLE_COLORS[compensatingMember.role] ?? colors.red }} />
+              <span className="font-medium text-gray-700">
+                {compensatingMember.display_name?.split(' ')[0] ?? compensatingMember.display_name}
+              </span>
+              <span>{t('lastQuarter.balance.compensates')}</span>
+            </div>
+          )}
+          {isPBV && isTilted && suggestedRole && (
+            <div className="flex items-center gap-1 text-xs text-gray-500">
+              <RoleIcon role={suggestedRole} size={14} style={{ color: ROLE_COLORS[suggestedRole] ?? colors.red }} />
+              <span>{t('lastQuarter.balance.suggestRole', { role: t(`roles.${suggestedRole}.name`) })}</span>
+            </div>
+          )}
+          {suggestedRoles?.length > 0 && (
+            <div className="flex items-center gap-1 text-xs text-gray-500 flex-wrap">
+              <span>{t('lastQuarter.balance.suggestRoles')}</span>
+              {suggestedRoles.map(r => (
+                <IconTooltip key={r} label={t(`roles.${r}.name`)}>
+                  <RoleIcon role={r} size={14} style={{ color: ROLE_COLORS[r] ?? colors.red }} />
+                </IconTooltip>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   )
 }
@@ -221,79 +293,19 @@ function BalanceContent({ dimAnalysis, completedCount, members, t }) {
 
   return (
     <div className="flex flex-col divide-y divide-gray-100">
-      {dimAnalysis.map(({ dim, meanZ, flag, topMember, compensatingMember, suggestedRole, suggestedRoles }) => {
-        const isPBV    = dim === 'presence' || dim === 'bond' || dim === 'vision'
-        const isTilted = Math.abs(meanZ) >= 0.5
-
-        let noteKey = null
-        if (dim === 'discipline' && flag === 'lowCaution')  noteKey = 'c_low'
-        else if (dim === 'depth' && flag === 'highCaution') noteKey = 'n_high'
-
-        const hasExtra = noteKey || (isPBV && isTilted && (compensatingMember || suggestedRole)) || suggestedRoles?.length
-
-        return (
-          <div key={dim} className="py-2 first:pt-0 last:pb-0">
-            {/* Single-line: icon + name + pill + top contributor */}
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className={`flex items-center gap-1 shrink-0 ${DOMAIN_ICON_COLOR[dim]}`}>
-                <DimensionIcon domain={dim} size={13} />
-              </span>
-              <span className="text-xs font-semibold text-gray-800 shrink-0">
-                {t(`fmDomains.${dim}.name`)}
-              </span>
-              <BalancePill flag={flag} t={t} />
-              {topMember?.role && (
-                <span className="flex items-center gap-1 text-xs text-gray-500 ml-auto shrink-0">
-                  <span className="text-gray-400">{t('lastQuarter.balance.topContributor')}</span>
-                  <RoleIcon role={topMember.role} size={14} style={{ color: ROLE_COLORS[topMember.role] ?? colors.red }} />
-                  <span className="font-medium text-gray-700">
-                    {topMember.display_name?.split(' ')[0] ?? topMember.display_name}
-                  </span>
-                </span>
-              )}
-            </div>
-
-            {/* Expanded note — only when tilted/caution */}
-            {hasExtra && (
-              <div className="mt-1 ml-5 flex flex-col gap-0.5">
-                {noteKey && (
-                  <p className="text-xs text-gray-500 leading-snug">
-                    {t(`lastQuarter.balance.notes.${noteKey}`)}
-                  </p>
-                )}
-
-                {isPBV && isTilted && compensatingMember?.role && (
-                  <div className="flex items-center gap-1 text-xs text-gray-500">
-                    <RoleIcon role={compensatingMember.role} size={14} style={{ color: ROLE_COLORS[compensatingMember.role] ?? colors.red }} />
-                    <span className="font-medium text-gray-700">
-                      {compensatingMember.display_name?.split(' ')[0] ?? compensatingMember.display_name}
-                    </span>
-                    <span>{t('lastQuarter.balance.compensates')}</span>
-                  </div>
-                )}
-
-                {isPBV && isTilted && suggestedRole && (
-                  <div className="flex items-center gap-1 text-xs text-gray-500">
-                    <RoleIcon role={suggestedRole} size={14} style={{ color: ROLE_COLORS[suggestedRole] ?? colors.red }} />
-                    <span>{t('lastQuarter.balance.suggestRole', { role: t(`roles.${suggestedRole}.name`) })}</span>
-                  </div>
-                )}
-
-                {suggestedRoles?.length > 0 && (
-                  <div className="flex items-center gap-1 text-xs text-gray-500 flex-wrap">
-                    <span>{t('lastQuarter.balance.suggestRoles')}</span>
-                    {suggestedRoles.map(r => (
-                      <IconTooltip key={r} label={t(`roles.${r}.name`)}>
-                        <RoleIcon role={r} size={14} style={{ color: ROLE_COLORS[r] ?? colors.red }} />
-                      </IconTooltip>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        )
-      })}
+      {dimAnalysis.map(({ dim, meanZ, flag, topMember, compensatingMember, suggestedRole, suggestedRoles }) => (
+        <BalanceDimRow
+          key={dim}
+          dim={dim}
+          meanZ={meanZ}
+          flag={flag}
+          topMember={topMember}
+          compensatingMember={compensatingMember}
+          suggestedRole={suggestedRole}
+          suggestedRoles={suggestedRoles}
+          t={t}
+        />
+      ))}
     </div>
   )
 }
@@ -301,19 +313,25 @@ function BalanceContent({ dimAnalysis, completedCount, members, t }) {
 /** Narrative content (used inside a card in the bottom row). */
 function NarrativeContent({ narrative, t }) {
   if (!narrative) return null
+
+  const sections = [
+    { icon: '→', heading: t('lastQuarter.narrative.moveHeading'),     textKey: `lastQuarter.narrative.move.${narrative.moveKey}` },
+    { icon: '△', heading: t('lastQuarter.narrative.watchOutHeading'), textKey: `lastQuarter.narrative.watchOut.${narrative.watchOutKey}` },
+    { icon: '✦', heading: t('lastQuarter.narrative.helpHeading'),     textKey: `lastQuarter.narrative.help.${narrative.helpKey}` },
+  ]
+
   return (
-    <div className="flex flex-col gap-3">
-      {[
-        { heading: t('lastQuarter.narrative.moveHeading'),     key: narrative.moveKey,     section: 'move' },
-        { heading: t('lastQuarter.narrative.watchOutHeading'), key: narrative.watchOutKey, section: 'watchOut' },
-        { heading: t('lastQuarter.narrative.helpHeading'),     key: narrative.helpKey,     section: 'help' },
-      ].map(({ heading, key, section }) => (
-        <div key={section}>
-          <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-0.5">
-            {heading}
-          </p>
-          <p className="text-xs text-gray-700 leading-relaxed">
-            {t(`lastQuarter.narrative.${section}.${key}`)}
+    <div className="flex flex-col gap-4">
+      {sections.map(({ icon, heading, textKey }) => (
+        <div key={textKey}>
+          <div className="flex items-center gap-1.5 mb-1">
+            <span className="text-sm font-bold" style={{ color: colors.textMuted }}>{icon}</span>
+            <p className="text-xs font-bold uppercase tracking-widest" style={{ color: colors.textPrimary }}>
+              {heading}
+            </p>
+          </div>
+          <p className="text-xs leading-relaxed" style={{ color: colors.textMuted }}>
+            {t(textKey)}
           </p>
         </div>
       ))}
@@ -442,22 +460,28 @@ export default function LastQuarterPage() {
 
               {/* Col 1 (40%): toggle + radar */}
               <div>
-                <div className="flex gap-2 mb-3">
-                  <Button
-                    variant={radarMode === 'teamAverage' ? 'primary' : 'secondary'}
-                    size="sm"
+                <div className="flex mb-3 rounded border border-gray-200 overflow-hidden w-fit">
+                  <button
                     onClick={() => setRadarMode('teamAverage')}
+                    className={`text-xs font-semibold px-3 py-1.5 transition-colors ${
+                      radarMode === 'teamAverage'
+                        ? 'bg-[#0047ba] text-white'
+                        : 'bg-white text-gray-600 hover:bg-gray-50'
+                    }`}
                   >
                     {t('lastQuarter.toggleTeamAverage')}
-                  </Button>
-                  <Button
-                    variant={radarMode === 'myProfile' ? 'primary' : 'secondary'}
-                    size="sm"
-                    disabled={!selfScores}
+                  </button>
+                  <button
                     onClick={() => selfScores && setRadarMode('myProfile')}
+                    disabled={!selfScores}
+                    className={`text-xs font-semibold px-3 py-1.5 transition-colors border-l border-gray-200 disabled:opacity-40 ${
+                      radarMode === 'myProfile'
+                        ? 'bg-[#0047ba] text-white'
+                        : 'bg-white text-gray-600 hover:bg-gray-50'
+                    }`}
                   >
                     {t('lastQuarter.toggleMyProfile')}
-                  </Button>
+                  </button>
                 </div>
                 {activeScores && (
                   <RadarChart
@@ -471,11 +495,17 @@ export default function LastQuarterPage() {
 
               {/* Col 2 (30%): dimension score rows */}
               <div className="md:border-l md:border-gray-100 md:pl-4">
+                <SectionLabel color="gray" className="mb-2">
+                  {t('lastQuarter.compositionDimensionsHeading')}
+                </SectionLabel>
                 {activeScores && <DomainRows scores={activeScores} t={t} />}
               </div>
 
               {/* Col 3 (30%): member list */}
               <div className="flex flex-col divide-y divide-gray-100 md:border-l md:border-gray-100 md:pl-4">
+                <SectionLabel color="gray" className="mb-2">
+                  {t('lastQuarter.compositionMembersHeading')}
+                </SectionLabel>
                 {members.map(m => (
                   <MemberRow key={m.user_id} member={m} t={t} />
                 ))}
@@ -527,19 +557,21 @@ export default function LastQuarterPage() {
         )}
 
         {/* ── Share ── */}
-        <Card className="shadow-sm p-4 print:hidden">
-          <SectionLabel color="gray" className="mb-3">
-            {t('lastQuarter.shareHeading')}
-          </SectionLabel>
-          <div className="flex gap-3 flex-wrap">
-            <Button variant="secondary" size="sm" onClick={handleCopyLink}>
-              {copied ? t('lastQuarter.copied') : t('lastQuarter.copyLink')}
-            </Button>
-            <Button variant="secondary" size="sm" onClick={() => window.print()}>
-              {t('lastQuarter.downloadPdf')}
-            </Button>
-          </div>
-        </Card>
+        <div className="print:hidden flex items-center justify-center gap-3 py-2">
+          <button
+            onClick={handleCopyLink}
+            className="text-xs font-semibold px-4 py-2 text-gray-500 hover:text-gray-800 transition-colors"
+          >
+            {copied ? t('lastQuarter.copied') : t('lastQuarter.copyLink')}
+          </button>
+          <div className="w-px h-4 bg-gray-200" />
+          <button
+            onClick={() => window.print()}
+            className="text-xs font-semibold px-4 py-2 text-gray-500 hover:text-gray-800 transition-colors"
+          >
+            {t('lastQuarter.downloadPdf')}
+          </button>
+        </div>
 
       </div>
     </main>

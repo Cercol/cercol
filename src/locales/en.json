@@ -59,6 +59,8 @@
     "error": "Could not load group data. Try again later.",
     "notMember": "You are not a member of this group.",
     "compositionHeading": "Team composition",
+    "compositionDimensionsHeading": "Dimension Scores",
+    "compositionMembersHeading": "Team Members",
     "pendingLabel": "Pending",
     "selfLabel": "you",
     "toggleMyProfile": "My profile",

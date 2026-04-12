@@ -29,12 +29,12 @@ import { colors } from '../design/tokens'
 import RadarChart from '../components/RadarChart'
 import { Card, Button, Badge, SectionLabel } from '../components/ui'
 
-const DOMAIN_BAR_COLOR = {
-  depth:      'bg-red-500',
-  presence:   'bg-amber-400',
-  vision:     'bg-[#427c42]',
-  bond:       'bg-emerald-500',
-  discipline: 'bg-blue-600',
+const DOMAIN_BAR_HEX = {
+  depth:      '#ef4444',
+  presence:   '#fbbf24',
+  vision:     '#427c42',
+  bond:       '#10b981',
+  discipline: '#2563eb',
 }
 
 const DOMAIN_ICON_COLOR = {
@@ -67,41 +67,15 @@ function CombinedRoleBars({ combinedResult, selfResult, witnessResult, t }) {
       {witnessResult && (
         <div className="flex items-center gap-4 text-xs flex-wrap" style={{ color: colors.textMuted }}>
           <span className="flex items-center gap-1.5 font-medium">
-            {/* Filled dot: combined */}
-            <span style={{
-              display: 'inline-block',
-              width: 10,
-              height: 10,
-              borderRadius: '50%',
-              backgroundColor: colors.primary,
-              flexShrink: 0,
-            }} />
+            <span style={{ display: 'inline-block', width: 10, height: 10, borderRadius: '50%', backgroundColor: colors.red, flexShrink: 0 }} />
             {t('witnessResults.combinedLabel')}
           </span>
           <span className="flex items-center gap-1.5">
-            {/* Outlined dot: self */}
-            <span style={{
-              display: 'inline-block',
-              width: 8,
-              height: 8,
-              borderRadius: '50%',
-              border: `2px solid ${colors.primary}`,
-              backgroundColor: 'transparent',
-              flexShrink: 0,
-            }} />
+            <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', border: `1.5px solid ${colors.red}`, backgroundColor: '#ffffff', flexShrink: 0 }} />
             {t('witnessResults.selfLabel')}
           </span>
           <span className="flex items-center gap-1.5">
-            {/* Outlined dot: witness (blue) */}
-            <span style={{
-              display: 'inline-block',
-              width: 8,
-              height: 8,
-              borderRadius: '50%',
-              border: `2px solid ${colors.blue}`,
-              backgroundColor: 'transparent',
-              flexShrink: 0,
-            }} />
+            <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', border: `1.5px solid ${colors.blue}`, backgroundColor: '#ffffff', flexShrink: 0 }} />
             {t('witnessResults.witnessLabel')}
           </span>
         </div>
@@ -110,16 +84,14 @@ function CombinedRoleBars({ combinedResult, selfResult, witnessResult, t }) {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
         {sorted.map(([r, combinedProb]) => {
           const isPrimary   = r === primaryRole
-          const isArc       = arc.includes(r)
           const combinedPct = Math.round(combinedProb * 100)
           const selfPct     = Math.round((selfResult.probabilities[r] ?? 0) * 100)
           const witnessPct  = witnessResult
             ? Math.round((witnessResult.probabilities[r] ?? 0) * 100)
             : null
 
-          const barColor   = isPrimary ? colors.primary : isArc ? colors.arcBar : colors.border
-          const labelColor = isPrimary ? colors.textPrimary : isArc ? colors.arcLabel : colors.textMuted
-          const rowOpacity = isPrimary ? 1 : 0.45
+          const labelColor = isPrimary ? colors.textPrimary : colors.textMuted
+          const rowOpacity = isPrimary ? 1 : 0.6
           const isHovered  = hoveredRole === r
 
           return (
@@ -154,40 +126,40 @@ function CombinedRoleBars({ combinedResult, selfResult, witnessResult, t }) {
                   backgroundColor: '#e5e7eb',
                   transform: 'translateY(-50%)',
                 }} />
-                {/* Combined dot: filled, 10×10 */}
+                {/* Combined dot: filled red, 10×10 */}
                 <div style={{
                   position: 'absolute',
                   width: 10,
                   height: 10,
                   borderRadius: '50%',
-                  backgroundColor: barColor,
+                  backgroundColor: colors.red,
                   left: `${combinedPct}%`,
                   top: '50%',
                   transform: 'translate(-50%, -50%)',
                 }} />
-                {/* Self dot: outlined, 8×8 */}
+                {/* Self dot: outlined red, 8×8, white fill */}
                 {witnessResult && (
                   <div style={{
                     position: 'absolute',
                     width: 8,
                     height: 8,
                     borderRadius: '50%',
-                    border: `2px solid ${barColor}`,
-                    backgroundColor: 'transparent',
+                    border: `1.5px solid ${colors.red}`,
+                    backgroundColor: '#ffffff',
                     left: `${selfPct}%`,
                     top: '50%',
                     transform: 'translate(-50%, -50%)',
                   }} />
                 )}
-                {/* Witness dot: outlined blue, 8×8 */}
+                {/* Witness dot: outlined blue, 8×8, white fill */}
                 {witnessResult && witnessPct !== null && (
                   <div style={{
                     position: 'absolute',
                     width: 8,
                     height: 8,
                     borderRadius: '50%',
-                    border: `2px solid ${colors.blue}`,
-                    backgroundColor: 'transparent',
+                    border: `1.5px solid ${colors.blue}`,
+                    backgroundColor: '#ffffff',
                     left: `${witnessPct}%`,
                     top: '50%',
                     transform: 'translate(-50%, -50%)',
@@ -195,17 +167,17 @@ function CombinedRoleBars({ combinedResult, selfResult, witnessResult, t }) {
                 )}
               </div>
 
-              {/* Hover tooltip — shown on whole row hover when witness data present */}
+              {/* Hover tooltip */}
               {isHovered && witnessResult && (
                 <div
                   className="mt-1 flex items-center gap-2 text-xs rounded px-2 py-1 w-fit"
                   style={{ backgroundColor: '#1f2937', color: '#f9fafb' }}
                 >
-                  <span>{t('witnessResults.combinedLabel')}: {combinedPct}%</span>
+                  <span style={{ color: colors.red }}>{t('witnessResults.combinedLabel')}: {combinedPct}%</span>
                   <span style={{ color: '#6b7280' }}>·</span>
                   <span>{t('witnessResults.selfLabel')}: {selfPct}%</span>
                   <span style={{ color: '#6b7280' }}>·</span>
-                  <span>{t('witnessResults.witnessLabel')}: {witnessPct}%</span>
+                  <span style={{ color: '#99b3e0' }}>{t('witnessResults.witnessLabel')}: {witnessPct}%</span>
                 </div>
               )}
             </div>
@@ -255,32 +227,38 @@ function ConvergenceMeter({ ratio, t }) {
 }
 
 // ── DomainComparisonRow ───────────────────────────────────────────────────────
-function DomainComparisonRow({ selfScore, witnessScore, label, barColor, domainKey }) {
+// Single bar (self) with a blue tick mark at witness position.
+function DomainComparisonRow({ selfScore, witnessScore, domainKey }) {
+  const barHex     = DOMAIN_BAR_HEX[domainKey]
   const selfPct    = ((selfScore - 1) / 4) * 100
   const witnessPct = witnessScore !== null ? ((witnessScore - 1) / 4) * 100 : null
 
   return (
-    <div className="py-3 first:pt-0 last:pb-0">
-      <div className="flex items-center justify-between mb-1.5">
-        <span className="text-sm font-semibold flex items-center gap-1.5" style={{ color: colors.textPrimary }}>
-          {domainKey && <DimensionIcon domain={domainKey} size={15} className={DOMAIN_ICON_COLOR[domainKey]} />}
-          {label}
+    <div>
+      <div className="flex items-center justify-between mb-1">
+        <span className="text-xs font-semibold flex items-center gap-1" style={{ color: colors.textPrimary }}>
+          {domainKey && <DimensionIcon domain={domainKey} size={13} className={DOMAIN_ICON_COLOR[domainKey]} />}
         </span>
-        <div className="flex items-center gap-3 text-sm font-semibold shrink-0">
+        <div className="flex items-center gap-2 text-xs font-semibold tabular-nums shrink-0">
           <span style={{ color: colors.textMuted }}>{selfScore.toFixed(1)}</span>
           {witnessPct !== null && (
-            <span className="text-[#0047ba]">{witnessScore.toFixed(1)}</span>
+            <span style={{ color: colors.blue }}>{witnessScore.toFixed(1)}</span>
           )}
         </div>
       </div>
-      <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
-        <div className={`h-full rounded-full transition-all duration-500 ${barColor}`} style={{ width: `${selfPct}%` }} />
+      {/* Bar + tick overlay */}
+      <div className="relative w-full h-1.5 rounded-full overflow-hidden" style={{ backgroundColor: '#f3f4f6' }}>
+        <div
+          className="absolute inset-y-0 left-0 rounded-full transition-all duration-500"
+          style={{ width: `${selfPct}%`, backgroundColor: barHex, WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}
+        />
+        {witnessPct !== null && (
+          <div
+            className="absolute inset-y-0 w-0.5"
+            style={{ left: `${witnessPct}%`, backgroundColor: colors.blue, opacity: 0.85 }}
+          />
+        )}
       </div>
-      {witnessPct !== null && (
-        <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden mt-1">
-          <div className="h-full rounded-full transition-all duration-500 bg-[#99b3e0]" style={{ width: `${witnessPct}%` }} />
-        </div>
-      )}
     </div>
   )
 }
@@ -385,7 +363,7 @@ export default function FullMoonReportPage() {
 
   return (
     <main className="py-10 sm:py-16">
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-14">
 
         {/* ── Header ── */}
         <div>
@@ -428,7 +406,7 @@ export default function FullMoonReportPage() {
                   </Badge>
                 )}
                 <h2
-                  className="text-4xl sm:text-5xl font-bold leading-tight"
+                  className="text-5xl sm:text-6xl font-bold leading-tight"
                   style={{ color: colors.textPrimary }}
                 >
                   {t(`roles.${combinedRole.role}.name`)}
@@ -536,23 +514,21 @@ export default function FullMoonReportPage() {
               {witnessScores && (
                 <div className="flex items-center gap-4 text-xs font-medium mb-3" style={{ color: colors.textMuted }}>
                   <span className="flex items-center gap-1.5">
-                    <span className="w-3 h-1.5 rounded-full bg-gray-400 inline-block" />
+                    <span className="w-3 h-1.5 rounded-sm inline-block" style={{ backgroundColor: '#9ca3af' }} />
                     {t('witnessResults.selfLabel')}
                   </span>
                   <span className="flex items-center gap-1.5">
-                    <span className="w-3 h-1.5 rounded-full bg-[#99b3e0] inline-block" />
+                    <span className="inline-block w-0.5 h-3 rounded-sm" style={{ backgroundColor: colors.blue }} />
                     {t('witnessResults.witnessLabel')}
                   </span>
                 </div>
               )}
-              <div className="flex flex-col divide-y divide-gray-100">
+              <div className="grid grid-cols-2 gap-x-4 gap-y-3">
                 {DOMAIN_KEYS.map(key => (
                   <DomainComparisonRow
                     key={key}
                     selfScore={selfReport[key]}
                     witnessScore={witnessScores ? witnessScores[key] : null}
-                    label={t(`fmDomains.${key}.name`)}
-                    barColor={DOMAIN_BAR_COLOR[key]}
                     domainKey={key}
                   />
                 ))}

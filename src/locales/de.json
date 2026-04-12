@@ -59,6 +59,8 @@
     "error": "Gruppendaten konnten nicht geladen werden. Versuche es erneut.",
     "notMember": "Du bist kein Mitglied dieser Gruppe.",
     "compositionHeading": "Teamzusammensetzung",
+    "compositionDimensionsHeading": "Dimensionen",
+    "compositionMembersHeading": "Mitglieder",
     "pendingLabel": "Ausstehend",
     "selfLabel": "du",
     "toggleMyProfile": "Mein Profil",

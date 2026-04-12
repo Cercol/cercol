@@ -59,6 +59,8 @@
     "error": "No se pudieron cargar los datos del grupo. Inténtalo de nuevo.",
     "notMember": "No eres miembro de este grupo.",
     "compositionHeading": "Composición del equipo",
+    "compositionDimensionsHeading": "Puntuaciones",
+    "compositionMembersHeading": "Miembros",
     "pendingLabel": "Pendiente",
     "selfLabel": "tú",
     "toggleMyProfile": "Mi perfil",

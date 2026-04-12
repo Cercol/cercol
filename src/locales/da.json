@@ -59,6 +59,8 @@
     "error": "Kunne ikke indlæse gruppedata. Prøv igen.",
     "notMember": "Du er ikke medlem af denne gruppe.",
     "compositionHeading": "Teamsammensætning",
+    "compositionDimensionsHeading": "Dimensioner",
+    "compositionMembersHeading": "Medlemmer",
     "pendingLabel": "Afventer",
     "selfLabel": "dig",
     "toggleMyProfile": "Min profil",

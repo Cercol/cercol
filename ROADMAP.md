@@ -853,6 +853,50 @@ Changed `flex flex-col divide-y divide-gray-100` to `grid grid-cols-2 gap-x-4 ga
 - `da.json`: R01–R12 `name` fields now in Danish (Delfin, Ulv, Elefant, Ugle, Ørn, Falk,
   Blæksprutte, Skildpadde, Bi, Bjørn, Ræv, Grævling)
 
+### Phase 13.9 — Full Moon + Last Quarter visual upgrades ✅ COMPLETE
+
+**Full Moon report — role name dominance:**
+`h2` role name increased from `text-4xl sm:text-5xl` to `text-5xl sm:text-6xl`. Already in
+Playfair Display via global CSS. Section gap increased from `gap-10` to `gap-14`.
+
+**Full Moon report — dot marker colours fixed:**
+Combined dot now always `colors.red` (solid, 10px); Self dot outlined red (1.5px border,
+white fill, 8px); Witness dot outlined blue (1.5px border, white fill, 8px). Non-primary
+row opacity raised from 0.45 → 0.6 for better readability. Legend updated to match.
+
+**Full Moon report — dimension bars redesigned:**
+`DomainComparisonRow` replaced two stacked bars with a single colored bar (self value) and a
+narrow blue vertical tick at witness position. Numbers show self + witness side by side.
+`DOMAIN_BAR_COLOR` (Tailwind classes) replaced with `DOMAIN_BAR_HEX` (hex values, inline
+style, `printColorAdjust: exact`). Domain rows changed from `flex-col divide-y` to
+`grid grid-cols-2 gap-x-4 gap-y-3` (3+2 layout). Legend updated: bar swatch for self, tick
+line for witness.
+
+**Last Quarter — segmented control:**
+Toggle replaced from two `<Button>` components with a pill-shaped segmented control using
+native `<button>` elements (active = blue fill, inactive = white + hover bg-gray-50).
+
+**Last Quarter — column section labels:**
+`SectionLabel` added to Col 2 (Dimension Scores) and Col 3 (Team Members) using new i18n
+keys `compositionDimensionsHeading` / `compositionMembersHeading` — added to all 6 locales.
+
+**Last Quarter — member row redesign:**
+`MemberRow` simplified: 28px primary role icon (role color) + name block + single 16px arc
+role icon right-aligned with tooltip (55% opacity). Removed 3-icon cluster.
+
+**Last Quarter — balance rows collapsible:**
+Extracted `BalanceDimRow` from `BalanceContent` with local `useState` for expand/collapse.
+Tilted rows show a rotating chevron button; suggestion content hidden until expanded.
+Balanced rows have no chevron.
+
+**Last Quarter — narrative section icons:**
+`NarrativeContent` now shows → / △ / ✦ icon + bold uppercase heading before each prose
+paragraph. Gap between sections increased from `gap-3` to `gap-4`.
+
+**Last Quarter — share bar:**
+Share `Card` replaced with a minimal centered row of two plain text ghost buttons separated
+by a 1px vertical divider. No card chrome, no section label.
+
 ### Phase 13 — Living model
 - GitHub Actions job every 28 days: update NORM_MEAN/NORM_SD at N≥200
 - At N≥300: k-means (k=12) in 5D; update centroids if divergence is systematic

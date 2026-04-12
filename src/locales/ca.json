@@ -59,6 +59,8 @@
     "error": "No s'han pogut carregar les dades del grup. Torna-ho a intentar.",
     "notMember": "No ets membre d'aquest grup.",
     "compositionHeading": "Composició de l'equip",
+    "compositionDimensionsHeading": "Puntuacions",
+    "compositionMembersHeading": "Membres",
     "pendingLabel": "Pendent",
     "selfLabel": "tu",
     "toggleMyProfile": "El meu perfil",
