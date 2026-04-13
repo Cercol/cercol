@@ -1,14 +1,16 @@
 /**
- * FullMoonResultsPage — Cèrcol Full Moon results.
- * 5 domains · 30 facets · IPIP-NEO-120
+ * FullMoonResultsPage — unified Full Moon result page.
  *
- * Receives scores via:
- *   a) location.state.{ domains, facets, fromTest } — from FullMoonPage navigation
- *   b) ?r=BASE64 query param — encoded domain scores for sharing
- *      (facet scores not available in shared links)
+ * Phase 1 (instant): renders self-report result from location.state or ?r= param.
+ * Phase 2 (async):   if authenticated and NOT a shared link, loads Witness sessions
+ *                    and layers them on top when present.
  *
- * All facets are shown unconditionally — Full Moon is the complete portrait.
- * Facet labels and descriptions reuse the fqFacets namespace (same 30 facets).
+ * When ?r= is present: shared-link mode — Phase 2 is skipped entirely.
+ *
+ * Render order:
+ *   role card → radar + domain rows + probability bars → facet accordion →
+ *   convergence meter (≥2 witnesses) → blind spots (≥2 witnesses) →
+ *   witness session list + invite CTA → actions → disclaimer
  */
 import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
@@ -18,14 +20,25 @@ import { DOMAIN_KEYS } from '../data/domains'
 import { fmScoreToPercent, fmScoreLabel } from '../utils/full-moon-scoring'
 import { logResult } from '../utils/logger'
 import { computeRole } from '../utils/role-scoring'
-import { RoleIcon } from '../components/MoonIcons'
-import { FullMoonIcon, ShareIcon, DimensionIcon } from '../components/MoonIcons'
+import { averageWitnessScores, detectDivergence, computeConvergence, computeCombinedRole } from '../utils/witness-scoring'
+import { getMyWitnessSessions } from '../lib/api'
+import { RoleIcon, FullMoonIcon, ShareIcon, DimensionIcon, BlindSpotsIcon } from '../components/MoonIcons'
 import { useAuth } from '../context/AuthContext'
 import { colors } from '../design/tokens'
 import RadarChart from '../components/RadarChart'
 import RoleProbabilityBars from '../components/RoleProbabilityBars'
 import { Card, Button, Badge, SectionLabel } from '../components/ui'
-import { DimensionRow, FacetAccordion } from '../components/report'
+import { DimensionRow, FacetAccordion, ConvergenceMeter } from '../components/report'
+
+const DOMAIN_ICON_COLOR = {
+  depth:      'text-red-500',
+  presence:   'text-amber-400',
+  vision:     'text-[#427c42]',
+  bond:       'text-emerald-500',
+  discipline: 'text-blue-600',
+}
+
+const MIN_WITNESSES_FOR_REPORT = 2
 
 function encodeScores(domains) {
   const ordered = DOMAIN_KEYS.map((k) => domains[k] ?? 0)
@@ -47,12 +60,14 @@ export default function FullMoonResultsPage() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const { t, i18n } = useTranslation()
-  const { user } = useAuth()
+  const { user, loading: authLoading } = useAuth()
   const [copied, setCopied] = useState(false)
+  const [sessions, setSessions] = useState([])
   const loggedRef = useRef(false)
 
-  const stateScores = location.state
-  const sharedParam = searchParams.get('r')
+  const stateScores  = location.state
+  const sharedParam  = searchParams.get('r')
+  const isSharedLink = Boolean(sharedParam)
 
   let domains  = null
   let facets   = null
@@ -79,6 +94,14 @@ export default function FullMoonResultsPage() {
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Phase 2: load Witness sessions (skipped for shared links)
+  useEffect(() => {
+    if (isSharedLink || authLoading || !user) return
+    getMyWitnessSessions()
+      .then(setSessions)
+      .catch(() => {}) // silently fail — solo result still renders
+  }, [user, authLoading, isSharedLink]) // eslint-disable-line react-hooks/exhaustive-deps
+
   function handleShare() {
     const encoded = encodeScores(domains)
     const url = `${window.location.origin}${window.location.pathname}?r=${encoded}`
@@ -89,7 +112,29 @@ export default function FullMoonResultsPage() {
   }
 
   const domainKeys = DOMAIN_KEYS
-  const roleResult = computeRole(domains)
+  const selfRole   = computeRole(domains)
+
+  const completedSessions  = sessions.filter(s => s.completed_at && s.scores)
+  const pendingSessions    = sessions.filter(s => !s.completed_at)
+  const hasEnoughWitnesses = completedSessions.length >= MIN_WITNESSES_FOR_REPORT
+  const hasAnyWitness      = completedSessions.length >= 1
+
+  const witnessScores = hasAnyWitness
+    ? averageWitnessScores(completedSessions.map(s => s.scores))
+    : null
+  const witnessRole = witnessScores ? computeRole(witnessScores) : null
+
+  // Combined role: self × 2/3 + witness × 1/3 (falls back to selfRole when no witnesses)
+  const roleResult = computeCombinedRole(selfRole, witnessRole)
+
+  const divergence = hasEnoughWitnesses
+    ? detectDivergence(domains, witnessScores)
+    : []
+  const convergence = (hasEnoughWitnesses && witnessRole)
+    ? computeConvergence(selfRole, witnessRole)
+    : null
+
+  const showWitnessSection = !isSharedLink && (fromTest || user != null)
 
   return (
     <main className="py-10 sm:py-16">
@@ -97,23 +142,36 @@ export default function FullMoonResultsPage() {
 
         {/* Header */}
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold" style={{ color: colors.textPrimary }}>{t('fmResults.title')}</h1>
-          <p className="mt-1 text-sm" style={{ color: colors.textMuted }}>{t('fmResults.subtitle')}</p>
+          <h1 className="text-2xl sm:text-3xl font-bold" style={{ color: colors.textPrimary }}>
+            {t('fmResults.title')}
+          </h1>
+          <p className="mt-1 text-sm" style={{ color: colors.textMuted }}>
+            {t('fmResults.subtitle')}
+          </p>
         </div>
 
-        {/* ── Section 1: Role (top, full width) ── */}
+        {/* ── Section 1: Role card ── */}
         <section>
           <Card accent="red" className="overflow-hidden">
             <div className="flex flex-row">
-              {/* Left: icon column — full card height, icon centred */}
               <div className="w-40 shrink-0 flex items-center justify-center">
                 <RoleIcon role={roleResult.role} size={128} style={{ color: colors.red }} />
               </div>
-              {/* Right: content */}
               <div className="flex-1 p-6 sm:p-8 flex flex-col gap-4">
-                <Badge variant="beta" className="self-start">
-                  {t('roles.beta_label')}
-                </Badge>
+                {hasEnoughWitnesses ? (
+                  <div className="flex flex-col gap-1">
+                    <Badge className="self-start bg-[#e8eef8] text-[#0047ba]">
+                      {t('witnessResults.definitiveLabel')}
+                    </Badge>
+                    <p className="text-xs leading-relaxed" style={{ color: colors.textMuted }}>
+                      {t('witnessResults.definitiveNote')}
+                    </p>
+                  </div>
+                ) : (
+                  <Badge variant="beta" className="self-start">
+                    {t('roles.beta_label')}
+                  </Badge>
+                )}
                 <h2
                   className="text-4xl sm:text-5xl font-bold leading-tight"
                   style={{ color: colors.textPrimary }}
@@ -145,10 +203,10 @@ export default function FullMoonResultsPage() {
           </Card>
         </section>
 
-        {/* ── Section 2: Radar + domain rows ── */}
+        {/* ── Section 2: Radar + domain rows + probability bars ── */}
         <section>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Radar chart */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            {/* Left: Radar */}
             <Card className="shadow-sm p-5">
               <RadarChart
                 scores={domains}
@@ -157,16 +215,29 @@ export default function FullMoonResultsPage() {
               />
             </Card>
 
-            {/* Domain rows */}
+            {/* Right: Domain rows */}
             <Card className="shadow-sm p-5">
               <SectionLabel color="gray" className="mb-3">
                 {t('fmResults.domainSection')}
               </SectionLabel>
+              {witnessScores && (
+                <div className="flex items-center gap-4 text-xs font-medium mb-3" style={{ color: colors.textMuted }}>
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-3 h-1.5 rounded-sm inline-block" style={{ backgroundColor: '#9ca3af' }} />
+                    {t('witnessResults.selfLabel')}
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <span className="inline-block w-0.5 h-3 rounded-sm" style={{ backgroundColor: colors.blue }} />
+                    {t('witnessResults.witnessLabel')}
+                  </span>
+                </div>
+              )}
               <div className="grid grid-cols-2 gap-x-4 gap-y-4">
                 {domainKeys.map((key) => {
                   const score = domains[key]
                   const tier  = fmScoreLabel(score)
-                  const descVariant = score > 3.5 ? 'high' : score < 2.5 ? 'low' : null
+                  const wScore = witnessScores ? witnessScores[key] : undefined
+                  const descVariant = !witnessScores && (score > 3.5 ? 'high' : score < 2.5 ? 'low' : null)
                   return (
                     <DimensionRow
                       key={key}
@@ -176,6 +247,8 @@ export default function FullMoonResultsPage() {
                       pct={fmScoreToPercent(score)}
                       labelTier={tier}
                       labelText={t(`fmResults.scoreLabels.${tier}`)}
+                      witnessScore={wScore}
+                      witnessPct={wScore != null ? fmScoreToPercent(wScore) : undefined}
                       description={descVariant ? t(`dimensions.${key}.${descVariant}`) : undefined}
                     />
                   )
@@ -183,14 +256,12 @@ export default function FullMoonResultsPage() {
               </div>
             </Card>
           </div>
-        </section>
 
-        {/* ── Section 3: Role probability bars (2-column) ── */}
-        <section>
+          {/* Probability bars — full width below the grid */}
           <RoleProbabilityBars result={roleResult} columns={2} />
         </section>
 
-        {/* ── Section 4: Facet breakdown ── */}
+        {/* ── Section 3: Facet accordion ── */}
         {facets && (
           <section>
             <SectionLabel color="gray" className="mb-4">
@@ -210,33 +281,141 @@ export default function FullMoonResultsPage() {
           </section>
         )}
 
-        {/* ── Witness Cèrcol CTA ── */}
-        {fromTest && (
-          <Card className="shadow-sm p-5">
-            <SectionLabel color="blue" className="mb-2 flex items-center gap-1.5">
-              <FullMoonIcon size={13} />{t('fmResults.witnessCta.eyebrow')}
+        {/* ── Section 4: Convergence meter (≥2 witnesses) ── */}
+        {hasEnoughWitnesses && convergence !== null && (
+          <section>
+            <SectionLabel color="gray" className="mb-4">
+              {t('witnessResults.convergenceSection')}
             </SectionLabel>
-            <h3 className="font-semibold mb-1" style={{ color: colors.textPrimary }}>
-              {t('fmResults.witnessCta.heading')}
-            </h3>
-            <p className="text-sm mb-4 leading-relaxed" style={{ color: colors.textMuted }}>
-              {t('fmResults.witnessCta.body')}
+            <ConvergenceMeter ratio={convergence} t={t} />
+          </section>
+        )}
+
+        {/* ── Section 5: Blind spots (≥2 witnesses) ── */}
+        {hasEnoughWitnesses && (
+          <section>
+            <SectionLabel color="gray" className="mb-1 flex items-center gap-1.5">
+              <BlindSpotsIcon size={16} />{t('witnessResults.blindSpotsTitle')}
+            </SectionLabel>
+            <p className="text-xs mb-4" style={{ color: colors.textMuted }}>
+              {t('witnessResults.blindSpotsNote')}
             </p>
-            <div className="flex flex-col gap-2">
-              <Button variant="primary" onClick={() => navigate('/witness-setup')} className="w-full shadow-sm">
-                {t('fmResults.witnessCta.cta')}
-              </Button>
-              <Button variant="secondary" onClick={() => navigate('/full-moon/report')} className="w-full">
-                {t('fmResults.witnessCta.report')}
-              </Button>
-            </div>
-          </Card>
+            {divergence.length === 0 ? (
+              <Card className="px-5 py-4">
+                <p className="text-sm" style={{ color: colors.textMuted }}>
+                  {t('witnessResults.noDivergence')}
+                </p>
+              </Card>
+            ) : (
+              <Card className="px-5 py-4">
+                <ul className="flex flex-col gap-2.5">
+                  {divergence.map(({ domain, selfScore, witnessScore }) => {
+                    const direction  = witnessScore > selfScore ? 'witnessHigher' : 'selfHigher'
+                    const desc       = t(`witnessResults.blindSpots.${domain}.${direction}`)
+                    const domainName = t(`fmDomains.${domain}.name`)
+                    return (
+                      <li key={domain} className="text-sm leading-relaxed flex items-start gap-2">
+                        <DimensionIcon
+                          domain={domain}
+                          size={14}
+                          className={`mt-0.5 shrink-0 ${DOMAIN_ICON_COLOR[domain]}`}
+                        />
+                        <span style={{ color: colors.textMuted }}>
+                          <span className="font-semibold" style={{ color: colors.textPrimary }}>
+                            {domainName}:
+                          </span>{' '}
+                          {desc}
+                        </span>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </Card>
+            )}
+          </section>
+        )}
+
+        {/* ── Section 6: Witness session list + invite CTA ── */}
+        {showWitnessSection && (
+          <section>
+            {user != null ? (
+              /* Authenticated: full session list */
+              <>
+                <div className="flex items-center justify-between mb-4">
+                  <SectionLabel color="gray">
+                    {t('witnessResults.witnessSessionsSection')}
+                  </SectionLabel>
+                  <span className="text-xs font-medium" style={{ color: colors.textMuted }}>
+                    {t('witnessResults.witnessCount', { count: completedSessions.length })}
+                  </span>
+                </div>
+                <Card className="shadow-sm p-5">
+                  {(completedSessions.length > 0 || pendingSessions.length > 0) && (
+                    <div className="flex flex-col gap-2 mb-4">
+                      {completedSessions.map(s => (
+                        <div key={s.id} className="flex items-center justify-between text-sm">
+                          <span style={{ color: colors.textPrimary }}>{s.witness_name}</span>
+                          <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">
+                            Done
+                          </span>
+                        </div>
+                      ))}
+                      {pendingSessions.map(s => (
+                        <div key={s.id} className="flex items-center justify-between text-sm">
+                          <span style={{ color: colors.textPrimary }}>{s.witness_name}</span>
+                          <span
+                            className="text-xs font-medium bg-gray-100 px-2 py-0.5 rounded"
+                            style={{ color: colors.textMuted }}
+                          >
+                            Waiting
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  {!hasEnoughWitnesses && (
+                    <p className="text-sm mb-4" style={{ color: colors.textMuted }}>
+                      {t('witnessResults.pendingNote')}
+                    </p>
+                  )}
+                  <Button
+                    variant="primary"
+                    onClick={() => navigate('/witness-setup')}
+                    className="w-full shadow-sm"
+                  >
+                    {t('witnessResults.setupCta')}
+                  </Button>
+                </Card>
+              </>
+            ) : (
+              /* Not authenticated (fromTest): simple invite CTA */
+              <Card className="shadow-sm p-5">
+                <SectionLabel color="blue" className="mb-2 flex items-center gap-1.5">
+                  <FullMoonIcon size={13} />{t('fmResults.witnessCta.eyebrow')}
+                </SectionLabel>
+                <h3 className="font-semibold mb-1" style={{ color: colors.textPrimary }}>
+                  {t('fmResults.witnessCta.heading')}
+                </h3>
+                <p className="text-sm mb-4 leading-relaxed" style={{ color: colors.textMuted }}>
+                  {t('fmResults.witnessCta.body')}
+                </p>
+                <Button
+                  variant="primary"
+                  onClick={() => navigate('/witness-setup')}
+                  className="w-full shadow-sm"
+                >
+                  {t('fmResults.witnessCta.cta')}
+                </Button>
+              </Card>
+            )}
+          </section>
         )}
 
         {/* ── Actions row ── */}
         <div className="flex gap-3">
           <Button variant="primary" onClick={handleShare} className="flex-1 shadow-sm gap-1.5">
-            {!copied && <ShareIcon size={15} />}{copied ? t('fmResults.copied') : t('fmResults.share')}
+            {!copied && <ShareIcon size={15} />}
+            {copied ? t('fmResults.copied') : t('fmResults.share')}
           </Button>
           <Button variant="secondary" onClick={() => navigate('/')}>
             {t('fmResults.retake')}

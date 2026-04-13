@@ -936,6 +936,25 @@ Created `src/components/report/` as a shared report component directory.
 - `LastQuarterPage.jsx` — imports `DimensionRow` with `compact` prop; removed local `DOMAIN_BAR_HEX`.
 - `index.css` — added `.facet-accordion-panel { display: block !important; }` inside `@media print` so all accordion panels are forced open when printing.
 
+### Phase 13.12 — Merge FullMoonResultsPage and FullMoonReportPage ✅ COMPLETE
+
+Unified the two Full Moon pages into a single `FullMoonResultsPage` at `/full-moon/results`.
+
+**Architecture:**
+- Phase 1 (instant): renders solo self-report from `location.state` or `?r=` shared link.
+- Phase 2 (async): if authenticated and not a shared link, loads Witness sessions via API and layers them on top.
+- Shared links (`?r=` present): Phase 2 skipped entirely — no witness loading.
+
+**Render order:** role card → radar + domain rows + probability bars → facet accordion → convergence meter (≥2 witnesses) → blind spots (≥2 witnesses) → witness session list + invite CTA → actions → disclaimer.
+
+**Role card:** shows combined role (self × 2/3 + witness × 1/3) when witnesses present; "Definitive" badge replaces "Beta". Solo role and "Beta" badge otherwise.
+
+**Witness section:** authenticated users see full session list + invite CTA; unauthenticated `fromTest` users see simple invite card (no "View full report" button — already on correct page); hidden for shared links.
+
+**New shared component:** `ConvergenceMeter.jsx` moved from `FullMoonReportPage` to `src/components/report/` and exported from `index.js`.
+
+**Routing:** `/full-moon/report` → `<Navigate to="/full-moon/results" replace />` in `App.jsx`. `FullMoonReportPage.jsx` reduced to a re-export stub.
+
 ### Phase 13 — Living model
 - GitHub Actions job every 28 days: update NORM_MEAN/NORM_SD at N≥200
 - At N≥300: k-means (k=12) in 5D; update centroids if divergence is systematic

@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { FeedbackProvider, useFeedbackContext } from './context/FeedbackContext'
 import { AuthProvider } from './context/AuthContext'
 import Layout from './components/Layout'
@@ -9,7 +9,6 @@ import FirstQuarterPage from './pages/FirstQuarterPage'
 import FirstQuarterResultsPage from './pages/FirstQuarterResultsPage'
 import FullMoonPage from './pages/FullMoonPage'
 import FullMoonResultsPage from './pages/FullMoonResultsPage'
-import FullMoonReportPage from './pages/FullMoonReportPage'
 import WitnessSetupPage from './pages/WitnessSetupPage'
 import WitnessPage from './pages/WitnessPage'
 import AuthPage from './pages/AuthPage'
@@ -42,7 +41,7 @@ function AppContent() {
         {/* Full Moon */}
         <Route path="/full-moon" element={<FullMoonPage />} />
         <Route path="/full-moon/results" element={<FullMoonResultsPage />} />
-        <Route path="/full-moon/report" element={<FullMoonReportPage />} />
+        <Route path="/full-moon/report" element={<Navigate to="/full-moon/results" replace />} />
         {/* Witness Cèrcol */}
         <Route path="/witness-setup" element={<WitnessSetupPage />} />
         <Route path="/witness/:token" element={<WitnessPage />} />
