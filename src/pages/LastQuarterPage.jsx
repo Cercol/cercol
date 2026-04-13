@@ -24,6 +24,7 @@ import {
   zscoresToRaw,
 } from '../utils/team-narrative'
 import { RoleIcon, LastQuarterIcon, DimensionIcon } from '../components/MoonIcons'
+import { DimensionRow } from '../components/report'
 import RadarChart from '../components/RadarChart'
 import { Card, SectionLabel } from '../components/ui'
 import { colors, ROLE_COLORS } from '../design/tokens'
@@ -39,14 +40,6 @@ const BALANCE_COLOR = {
   lowGood:      { bg: '#f0fdf4', text: '#166534' },
   lowCaution:   { bg: '#fee2e2', text: '#991b1b' },
   highCaution:  { bg: '#fee2e2', text: '#991b1b' },
-}
-
-const DOMAIN_BAR_HEX = {
-  presence:   '#fbbf24', // amber-400
-  bond:       '#10b981', // emerald-500
-  discipline: '#2563eb', // blue-600
-  depth:      '#ef4444', // red-500
-  vision:     '#427c42', // brand green
 }
 
 const DOMAIN_ICON_COLOR = {
@@ -100,40 +93,20 @@ function BalancePill({ flag, t }) {
   )
 }
 
-/**
- * DomainRows — 5 stacked dimension score rows (one per domain).
- * Print fix: bar fill uses inline background-color + print-color-adjust so colors survive print.
- */
 function DomainRows({ scores, t }) {
   return (
     <div className="flex flex-col divide-y divide-gray-100">
       {DOMAIN_KEYS.map(key => {
-        const raw = scores[key] ?? 1
-        const pct = Math.round(((raw - 1) / 4) * 100)
+        const score = scores[key] ?? 1
         return (
           <div key={key} className="py-1.5 first:pt-0 last:pb-0">
-            <div className="flex items-center justify-between mb-1">
-              <span className={`text-xs font-semibold flex items-center gap-1 ${DOMAIN_ICON_COLOR[key]}`}>
-                <DimensionIcon domain={key} size={11} />
-                <span style={{ color: colors.textPrimary }}>{t(`fmDomains.${key}.name`)}</span>
-              </span>
-              <span className="text-xs font-bold shrink-0 ml-1.5" style={{ color: colors.textPrimary }}>
-                {Number(raw).toFixed(1)}
-              </span>
-            </div>
-            {/* Track */}
-            <div className="w-full h-1 rounded-full overflow-hidden" style={{ backgroundColor: '#f3f4f6' }}>
-              {/* Fill — inline backgroundColor + print-color-adjust ensures bars print */}
-              <div
-                className="h-full rounded-full"
-                style={{
-                  width: `${pct}%`,
-                  backgroundColor: DOMAIN_BAR_HEX[key],
-                  WebkitPrintColorAdjust: 'exact',
-                  printColorAdjust: 'exact',
-                }}
-              />
-            </div>
+            <DimensionRow
+              domainKey={key}
+              domainName={t(`fmDomains.${key}.name`)}
+              score={score}
+              pct={Math.round(((score - 1) / 4) * 100)}
+              compact
+            />
           </div>
         )
       })}

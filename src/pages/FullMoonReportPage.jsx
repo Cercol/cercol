@@ -24,19 +24,12 @@ import { computeRole } from '../utils/role-scoring'
 import { RoleIcon } from '../components/MoonIcons'
 import { FullMoonIcon, BlindSpotsIcon, DimensionIcon } from '../components/MoonIcons'
 import { averageWitnessScores, detectDivergence, computeConvergence, computeCombinedRole } from '../utils/witness-scoring'
-import { fmScoreLabel } from '../utils/full-moon-scoring'
+import { fmScoreLabel, fmScoreToPercent } from '../utils/full-moon-scoring'
+import { DimensionRow } from '../components/report'
 import { DOMAIN_KEYS } from '../data/domains'
 import { colors } from '../design/tokens'
 import RadarChart from '../components/RadarChart'
 import { Card, Button, Badge, SectionLabel } from '../components/ui'
-
-const DOMAIN_BAR_HEX = {
-  depth:      '#ef4444',
-  presence:   '#fbbf24',
-  vision:     '#427c42',
-  bond:       '#10b981',
-  discipline: '#2563eb',
-}
 
 const DOMAIN_ICON_COLOR = {
   depth:      'text-red-500',
@@ -47,12 +40,6 @@ const DOMAIN_ICON_COLOR = {
 }
 
 const MIN_WITNESSES_FOR_REPORT = 2
-
-const LABEL_STYLES = {
-  low:      'bg-gray-100 text-gray-600',
-  moderate: 'bg-blue-100 text-blue-700',
-  high:     'bg-[#0047ba] text-white',
-}
 
 // ── CombinedRoleBars ──────────────────────────────────────────────────────────
 // Shows all 12 roles in a 2×6 grid using a dot-marker system.
@@ -229,52 +216,6 @@ function ConvergenceMeter({ ratio, t }) {
       <p className="text-xs" style={{ color: colors.textMuted }}>
         {t('witnessResults.convergenceNote')}
       </p>
-    </div>
-  )
-}
-
-// ── DomainComparisonRow ───────────────────────────────────────────────────────
-// Full row: icon + name + scores + single bar + badge.
-function DomainComparisonRow({ selfScore, witnessScore, domainKey, t }) {
-  const barHex     = DOMAIN_BAR_HEX[domainKey]
-  const selfPct    = ((selfScore - 1) / 4) * 100
-  const witnessPct = witnessScore !== null ? ((witnessScore - 1) / 4) * 100 : null
-  const label      = fmScoreLabel(selfScore)
-
-  return (
-    <div>
-      <div className="flex items-center gap-1.5 mb-1 flex-wrap">
-        <DimensionIcon domain={domainKey} size={13} className={DOMAIN_ICON_COLOR[domainKey]} />
-        <span className="text-xs font-semibold flex-1 min-w-0" style={{ color: colors.textPrimary }}>
-          {t(`fmDomains.${domainKey}.name`)}
-        </span>
-        <div className="flex items-center gap-1.5 shrink-0">
-          <span className="text-xs font-semibold tabular-nums" style={{ color: colors.textMuted }}>
-            {selfScore.toFixed(1)}
-          </span>
-          {witnessScore !== null && (
-            <span className="text-xs font-semibold tabular-nums" style={{ color: colors.blue }}>
-              {witnessScore.toFixed(1)}
-            </span>
-          )}
-          <span className={`text-xs font-semibold px-1.5 py-0.5 rounded ${LABEL_STYLES[label]}`}>
-            {t(`fmResults.scoreLabels.${label}`)}
-          </span>
-        </div>
-      </div>
-      {/* Bar + tick overlay */}
-      <div className="relative w-full h-1.5 rounded-full overflow-hidden" style={{ backgroundColor: '#f3f4f6' }}>
-        <div
-          className="absolute inset-y-0 left-0 rounded-full transition-all duration-500"
-          style={{ width: `${selfPct}%`, backgroundColor: barHex, WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}
-        />
-        {witnessPct !== null && (
-          <div
-            className="absolute inset-y-0 w-0.5"
-            style={{ left: `${witnessPct}%`, backgroundColor: colors.blue, opacity: 0.85 }}
-          />
-        )}
-      </div>
     </div>
   )
 }
@@ -533,15 +474,24 @@ export default function FullMoonReportPage() {
               )}
             </div>
             <div className="grid grid-cols-2 gap-x-6 gap-y-4">
-              {DOMAIN_KEYS.map(key => (
-                <DomainComparisonRow
-                  key={key}
-                  selfScore={selfReport[key]}
-                  witnessScore={witnessScores ? witnessScores[key] : null}
-                  domainKey={key}
-                  t={t}
-                />
-              ))}
+              {DOMAIN_KEYS.map(key => {
+                const score = selfReport[key]
+                const tier  = fmScoreLabel(score)
+                const wScore = witnessScores ? witnessScores[key] : undefined
+                return (
+                  <DimensionRow
+                    key={key}
+                    domainKey={key}
+                    domainName={t(`fmDomains.${key}.name`)}
+                    score={score}
+                    pct={fmScoreToPercent(score)}
+                    labelTier={tier}
+                    labelText={t(`fmResults.scoreLabels.${tier}`)}
+                    witnessScore={wScore}
+                    witnessPct={wScore != null ? fmScoreToPercent(wScore) : undefined}
+                  />
+                )
+              })}
             </div>
           </Card>
         </section>

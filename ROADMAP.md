@@ -919,6 +919,23 @@ Both pages rewritten from scratch (JSX structure only — all data logic/hooks p
 - Section 4: CTA changed from plain Card to `Card accent="blue"` with FullMoonIcon layout
 - Added `fqResults.facetsCount` i18n key to all 6 locale files
 
+### Phase 13.11 — Centralise report styling into shared components ✅ COMPLETE
+
+Created `src/components/report/` as a shared report component directory.
+
+**New shared components:**
+- `DimensionRow.jsx` — two-mode dimension row: standard (FQ/FM: icon + name + score + optional witness tick + badge + bar) and compact (LQ: minimal inline row). Contains internal `DOMAIN_BAR_HEX`, `DOMAIN_ICON_COLOR`, `LABEL_STYLES` so pages stop duplicating them.
+- `FacetAccordion.jsx` — collapsible per-domain accordion. First domain open by default. Panel divs carry class `facet-accordion-panel` forced open by `@media print`. Accepts `domainNs`/`labelNs` props so it works for both FQ (`fqDomains`/`fqResults`) and FM (`fmDomains`/`fmResults`).
+- `index.js` — barrel export for both components.
+
+**Updated pages:**
+- `RoleProbabilityBars.jsx` — replaced dot-marker system with filled horizontal bars (`w-16 h-1.5`) + explicit `{pct}%` text at right. Bar colors: primary=red, arc=blue, others=gray.
+- `FullMoonResultsPage.jsx` — imports `DimensionRow` + `FacetAccordion`; removed per-page constants.
+- `FirstQuarterResultsPage.jsx` — imports `FacetAccordion`; removed `expandedDomains` state and `toggleDomain` helper.
+- `FullMoonReportPage.jsx` — imports `DimensionRow`; removed local `DomainComparisonRow` function.
+- `LastQuarterPage.jsx` — imports `DimensionRow` with `compact` prop; removed local `DOMAIN_BAR_HEX`.
+- `index.css` — added `.facet-accordion-panel { display: block !important; }` inside `@media print` so all accordion panels are forced open when printing.
+
 ### Phase 13 — Living model
 - GitHub Actions job every 28 days: update NORM_MEAN/NORM_SD at N≥200
 - At N≥300: k-means (k=12) in 5D; update centroids if divergence is systematic

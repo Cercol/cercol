@@ -46,6 +46,9 @@ button, input, textarea, select {
   /* Prevent page breaks inside cards */
   .lq-top-grid > *, .lq-bottom-grid > * { break-inside: avoid; }
 
+  /* Force all facet accordion panels open */
+  .facet-accordion-panel { display: block !important; }
+
   /* Ensure background colors (dimension bars, balance pills) print */
   * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
 }

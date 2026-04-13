@@ -25,28 +25,7 @@ import { colors } from '../design/tokens'
 import RadarChart from '../components/RadarChart'
 import RoleProbabilityBars from '../components/RoleProbabilityBars'
 import { Card, Button, Badge, SectionLabel } from '../components/ui'
-
-const LABEL_STYLES = {
-  low:      'bg-gray-100 text-gray-600',
-  moderate: 'bg-blue-100 text-blue-700',
-  high:     'bg-[#0047ba] text-white',
-}
-
-const DOMAIN_BAR_COLOR = {
-  depth:      'bg-red-500',
-  presence:   'bg-amber-400',
-  vision:     'bg-[#427c42]',
-  bond:       'bg-emerald-500',
-  discipline: 'bg-blue-600',
-}
-
-const DOMAIN_ICON_COLOR = {
-  depth:      'text-red-500',
-  presence:   'text-amber-400',
-  vision:     'text-[#427c42]',
-  bond:       'text-emerald-500',
-  discipline: 'text-blue-600',
-}
+import { DimensionRow, FacetAccordion } from '../components/report'
 
 function encodeScores(domains) {
   const ordered = DOMAIN_KEYS.map((k) => domains[k] ?? 0)
@@ -183,38 +162,22 @@ export default function FullMoonResultsPage() {
               <SectionLabel color="gray" className="mb-3">
                 {t('fmResults.domainSection')}
               </SectionLabel>
-              <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+              <div className="grid grid-cols-2 gap-x-4 gap-y-4">
                 {domainKeys.map((key) => {
                   const score = domains[key]
-                  const pct = fmScoreToPercent(score)
-                  const label = fmScoreLabel(score)
-                  const barColor = DOMAIN_BAR_COLOR[key]
+                  const tier  = fmScoreLabel(score)
                   const descVariant = score > 3.5 ? 'high' : score < 2.5 ? 'low' : null
                   return (
-                    <div key={key}>
-                      <div className="flex items-center justify-between mb-1.5">
-                        <span className="text-sm font-semibold flex items-center gap-1.5" style={{ color: colors.textPrimary }}>
-                          <DimensionIcon domain={key} size={15} className={DOMAIN_ICON_COLOR[key]} />
-                          {t(`fmDomains.${key}.name`)}
-                        </span>
-                        <div className="flex items-center gap-2 shrink-0 ml-2">
-                          <span className="text-sm font-bold" style={{ color: colors.textPrimary }}>
-                            {score}<span className="text-xs font-normal" style={{ color: colors.textMuted }}>/5</span>
-                          </span>
-                          <span className={`text-xs font-semibold px-2 py-0.5 rounded ${LABEL_STYLES[label]}`}>
-                            {t(`fmResults.scoreLabels.${label}`)}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                        <div className={`h-full rounded-full transition-all duration-500 ${barColor}`} style={{ width: `${pct}%` }} />
-                      </div>
-                      {descVariant && (
-                        <p className="text-xs leading-relaxed mt-1.5" style={{ color: colors.textMuted }}>
-                          {t(`dimensions.${key}.${descVariant}`)}
-                        </p>
-                      )}
-                    </div>
+                    <DimensionRow
+                      key={key}
+                      domainKey={key}
+                      domainName={t(`fmDomains.${key}.name`)}
+                      score={score}
+                      pct={fmScoreToPercent(score)}
+                      labelTier={tier}
+                      labelText={t(`fmResults.scoreLabels.${tier}`)}
+                      description={descVariant ? t(`dimensions.${key}.${descVariant}`) : undefined}
+                    />
                   )
                 })}
               </div>
@@ -233,52 +196,17 @@ export default function FullMoonResultsPage() {
             <SectionLabel color="gray" className="mb-4">
               {t('fmResults.facetSection')}
             </SectionLabel>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {domainKeys.map((domainKey) => {
-                const domainFacets = FM_DOMAIN_META[domainKey].facets
-                return (
-                  <Card key={domainKey} className="shadow-sm p-5">
-                    <h3 className="font-semibold mb-4 flex items-center gap-2" style={{ color: colors.textPrimary }}>
-                      <span className={`w-2 h-2 rounded-full inline-block ${DOMAIN_BAR_COLOR[domainKey]}`} />
-                      {t(`fmDomains.${domainKey}.name`)}
-                    </h3>
-                    <div className="flex flex-col gap-4">
-                      {domainFacets.map((facetKey) => {
-                        const facetScore       = facets[facetKey]
-                        const facetPct         = fmScoreToPercent(facetScore)
-                        const facetLabel       = fmScoreLabel(facetScore)
-                        const facetDescVariant = facetScore > 3.5 ? 'high' : facetScore < 2.5 ? 'low' : null
-                        return (
-                          <div key={facetKey}>
-                            <div className="flex items-center justify-between mb-1">
-                              {/* Reuse fqFacets — same 30 facets, same names and descriptions */}
-                              <span className="text-sm" style={{ color: colors.textPrimary }}>{t(`fqFacets.${facetKey}.label`)}</span>
-                              <div className="flex items-center gap-2 shrink-0 ml-2">
-                                <span className="text-sm font-semibold" style={{ color: colors.textPrimary }}>{facetScore}/5</span>
-                                <span className={`text-xs font-semibold px-2 py-0.5 rounded ${LABEL_STYLES[facetLabel]}`}>
-                                  {t(`fmResults.scoreLabels.${facetLabel}`)}
-                                </span>
-                              </div>
-                            </div>
-                            <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden mb-1">
-                              <div
-                                className={`h-full rounded-full transition-all duration-500 ${DOMAIN_BAR_COLOR[domainKey]}`}
-                                style={{ width: `${facetPct}%` }}
-                              />
-                            </div>
-                            {facetDescVariant && (
-                              <p className="text-xs leading-relaxed" style={{ color: colors.textMuted }}>
-                                {t(`fqFacets.${facetKey}.${facetDescVariant}`)}
-                              </p>
-                            )}
-                          </div>
-                        )
-                      })}
-                    </div>
-                  </Card>
-                )
-              })}
-            </div>
+            <FacetAccordion
+              domainKeys={domainKeys}
+              domainMeta={FM_DOMAIN_META}
+              facets={facets}
+              scoreToPercent={fmScoreToPercent}
+              scoreLabel={fmScoreLabel}
+              domainNs="fmDomains"
+              labelNs="fmResults"
+              facetCountLabel={t('fqResults.facetsCount')}
+              t={t}
+            />
           </section>
         )}
 
