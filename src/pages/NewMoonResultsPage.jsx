@@ -107,7 +107,6 @@ export default function NewMoonResultsPage() {
                   const score = scores[key]
                   const pct = radarScoreToPercent(score)
                   const tier = radarScoreLabel(score)
-                  const descVariant = score >= 5.0 ? 'high' : score <= 2.9 ? 'low' : null
                   return (
                     <div key={key} className="py-3 first:pt-0 last:pb-0">
                       <DimensionRow
@@ -118,7 +117,6 @@ export default function NewMoonResultsPage() {
                         labelTier={tier}
                         labelText={t(`results.scoreLabels.${tier}`)}
                         maxScore={7}
-                        description={descVariant ? t(`dimensions.${key}.${descVariant}`) : undefined}
                       />
                     </div>
                   )
@@ -146,18 +144,18 @@ export default function NewMoonResultsPage() {
 
         {/* ── Actions row ── */}
         <div className="flex gap-3">
-          <Button variant="secondary" onClick={handleShare} className="flex-1 shadow-sm">
+          <Button variant="primary" onClick={handleShare} className="flex-1 shadow-sm">
             {copied ? t('newMoonResults.copied') : t('newMoonResults.share')}
           </Button>
-          <Button variant="ghost" onClick={() => navigate('/')}>
+          <Button variant="secondary" onClick={() => navigate('/')}>
             {t('newMoonResults.retake')}
           </Button>
         </div>
 
         {/* Disclaimer */}
-        <p className="text-xs leading-relaxed text-center" style={{ color: colors.textMuted }}>
+        <div className="bg-gray-100 rounded px-5 py-4 text-xs leading-relaxed" style={{ color: colors.textMuted }}>
           {t('newMoonResults.disclaimer')}
-        </p>
+        </div>
 
       </div>
     </main>

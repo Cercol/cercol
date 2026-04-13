@@ -24,7 +24,7 @@ import {
   zscoresToRaw,
 } from '../utils/team-narrative'
 import { RoleIcon, LastQuarterIcon, DimensionIcon } from '../components/MoonIcons'
-import { DimensionRow, ReportPageHeader } from '../components/report'
+import { DimensionRow, ReportPageHeader, RadarDataCard } from '../components/report'
 import RadarChart from '../components/RadarChart'
 import { Card, SectionLabel } from '../components/ui'
 import { colors, ROLE_COLORS } from '../design/tokens'
@@ -414,20 +414,16 @@ export default function LastQuarterPage() {
         {/* Header */}
         <ReportPageHeader
           icon={<LastQuarterIcon size={20} style={{ color: colors.blue }} />}
-          eyebrow={t('lastQuarter.title')}
+          eyebrow={t('home.lastQuarter.name')}
           title={data?.group_name ?? '—'}
         />
 
-        {/* ── Top card: 3-column [40/30/30] ── */}
-        <Card className="shadow-sm p-5">
-          <SectionLabel color="gray" className="mb-3">
-            {t('lastQuarter.compositionHeading')}
-          </SectionLabel>
+        {/* ── Top card: 3-column (Radar | Dimensions | Members) ── */}
+        <SectionLabel color="gray">{t('lastQuarter.compositionHeading')}</SectionLabel>
 
-          {completedCount > 0 ? (
-            <div className="lq-top-grid grid grid-cols-1 md:grid-cols-[4fr_3fr_3fr] gap-4 items-start">
-
-              {/* Col 1 (40%): toggle + radar */}
+        {completedCount > 0 ? (
+          <RadarDataCard
+            customFirstCol={
               <div>
                 <div className="flex mb-3 rounded border border-gray-200 overflow-hidden w-fit">
                   <button
@@ -461,40 +457,41 @@ export default function LastQuarterPage() {
                   />
                 )}
               </div>
-
-              {/* Col 2 (30%): dimension score rows */}
-              <div className="md:border-l md:border-gray-100 md:pl-4">
-                <SectionLabel color="gray" className="mb-2">
-                  {t('lastQuarter.compositionDimensionsHeading')}
-                </SectionLabel>
-                {activeScores && <DomainRows scores={activeScores} t={t} />}
-              </div>
-
-              {/* Col 3 (30%): member list */}
-              <div className="flex flex-col divide-y divide-gray-100 md:border-l md:border-gray-100 md:pl-4">
-                <SectionLabel color="gray" className="mb-2">
-                  {t('lastQuarter.compositionMembersHeading')}
-                </SectionLabel>
-                {members.map(m => (
-                  <MemberRow key={m.user_id} member={m} t={t} />
-                ))}
-              </div>
+            }
+          >
+            {/* Col 2: dimension score rows */}
+            <div className="md:border-l md:border-gray-100 md:pl-4">
+              <SectionLabel color="gray" className="mb-2">
+                {t('lastQuarter.compositionDimensionsHeading')}
+              </SectionLabel>
+              {activeScores && <DomainRows scores={activeScores} t={t} />}
             </div>
-          ) : (
-            /* No completed members — just show the member list */
+            {/* Col 3: member list */}
+            <div className="flex flex-col divide-y divide-gray-100 md:border-l md:border-gray-100 md:pl-4">
+              <SectionLabel color="gray" className="mb-2">
+                {t('lastQuarter.compositionMembersHeading')}
+              </SectionLabel>
+              {members.map(m => (
+                <MemberRow key={m.user_id} member={m} t={t} />
+              ))}
+            </div>
+          </RadarDataCard>
+        ) : (
+          /* No completed members — plain card with member list */
+          <Card className="shadow-sm p-5">
             <div className="flex flex-col divide-y divide-gray-100">
               {members.map(m => (
                 <MemberRow key={m.user_id} member={m} t={t} />
               ))}
             </div>
-          )}
+          </Card>
+        )}
 
-          {pendingCount > 0 && (
-            <p className="mt-3 text-xs text-gray-400 pt-2 border-t border-gray-100">
-              {t('lastQuarter.pendingNote', { count: pendingCount })}
-            </p>
-          )}
-        </Card>
+        {pendingCount > 0 && (
+          <p className="text-xs text-gray-400">
+            {t('lastQuarter.pendingNote', { count: pendingCount })}
+          </p>
+        )}
 
         {/* ── Bottom row: 2-column [50/50] ── */}
         {(dimAnalysis?.length > 0 || narrative) && (
@@ -525,7 +522,7 @@ export default function LastQuarterPage() {
           </div>
         )}
 
-        {/* ── Share ── */}
+        {/* ── Copy / print row ── */}
         <div className="print:hidden flex items-center justify-center gap-3 py-2">
           <button
             onClick={handleCopyLink}
@@ -540,6 +537,11 @@ export default function LastQuarterPage() {
           >
             {t('lastQuarter.downloadPdf')}
           </button>
+        </div>
+
+        {/* Disclaimer */}
+        <div className="bg-gray-100 rounded px-5 py-4 text-xs leading-relaxed" style={{ color: colors.textMuted }}>
+          {t('fmResults.disclaimer')}
         </div>
 
       </div>

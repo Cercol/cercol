@@ -162,6 +162,11 @@ export default function FirstQuarterResultsPage() {
               domainNs="fqDomains"
               labelNs="fqResults"
               facetCountLabel={t('fqResults.facetsCount')}
+              domainDescFn={(key) => {
+                const score = domains[key]
+                const v = score > 3.5 ? 'high' : score < 2.5 ? 'low' : null
+                return v ? t(`dimensions.${key}.${v}`) : null
+              }}
               t={t}
             />
           </section>

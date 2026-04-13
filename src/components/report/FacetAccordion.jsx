@@ -30,6 +30,7 @@ export default function FacetAccordion({
   domainNs,         // i18n namespace for domain names, e.g. 'fqDomains' or 'fmDomains'
   labelNs,          // i18n namespace for score labels, e.g. 'fqResults' or 'fmResults'
   facetCountLabel,  // translated word for "facets" (e.g. "facets", "facetes")
+  domainDescFn,     // optional (domainKey) => string | null — description shown below domain header
   t,                // i18n translation function
 }) {
   const [expanded, setExpanded] = useState(
@@ -75,6 +76,11 @@ export default function FacetAccordion({
 
             {/* Facet grid — visible when expanded; forced open in print via CSS class */}
             <div className={`facet-accordion-panel${isExpanded ? '' : ' hidden'} px-5 pb-4 border-t border-gray-100`}>
+              {domainDescFn && domainDescFn(domainKey) && (
+                <p className="text-xs leading-relaxed mt-3 mb-1" style={{ color: colors.textMuted }}>
+                  {domainDescFn(domainKey)}
+                </p>
+              )}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 mt-4">
                 {domainFacets.map((facetKey) => {
                   const score       = facets[facetKey]

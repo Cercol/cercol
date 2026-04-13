@@ -979,6 +979,18 @@ Unified the two Full Moon pages into a single `FullMoonResultsPage` at `/full-mo
 - `LastQuarterPage` — uses `ReportPageHeader` (eyebrow = "Team report", title = group name); top card padding `p-4` → `p-5`
 - `report/index.js` — exports `ReportPageHeader`, `RoleCard`, `RadarDataCard`
 
+### Phase 13.14 — Visual polish: dimension descriptions, LQ header, bottom section unification ✅ COMPLETE
+
+- **Dimension descriptions relocated**: moved from `DimensionRow` (inside `RadarDataCard`) into `FacetAccordion` via new `domainDescFn` prop — shown below each domain header before facet rows. `RadarDataCard` now shows no description text in any page.
+- **FacetAccordion** — new `domainDescFn?: (key) => string | null` prop; description appears inside the expanded panel above the facet grid.
+- **RadarDataCard** — new `customFirstCol` prop for custom first-column content (used by Last Quarter for toggle + radar).
+- **Last Quarter header** — eyebrow changed from `lastQuarter.title` ("Team report") to `home.lastQuarter.name` ("Last Quarter Cèrcol"), matching the pattern of all other report pages.
+- **Last Quarter radar** — replaced custom Card + `grid-cols-[4fr_3fr_3fr]` with `RadarDataCard` + `customFirstCol` prop; now uses equal `grid-cols-3` proportions matching FQ and FM.
+- **Bottom section unified** across all four pages:
+  - New Moon: Share upgraded to `variant="primary"`, Retake to `variant="secondary"`, disclaimer moved from `<p>` to gray box.
+  - First Quarter / Full Moon: already correct — no changes.
+  - Last Quarter: disclaimer gray box added after copy/print row; reuses `fmResults.disclaimer` key.
+
 ### Phase 13 — Living model
 - GitHub Actions job every 28 days: update NORM_MEAN/NORM_SD at N≥200
 - At N≥300: k-means (k=12) in 5D; update centroids if divergence is systematic

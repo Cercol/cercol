@@ -252,10 +252,9 @@ export default function FullMoonResultsPage() {
               )}
               <div className="flex flex-col divide-y divide-gray-100">
                 {domainKeys.map((key) => {
-                  const score = domains[key]
-                  const tier  = fmScoreLabel(score)
+                  const score  = domains[key]
+                  const tier   = fmScoreLabel(score)
                   const wScore = witnessScores ? witnessScores[key] : undefined
-                  const descVariant = !witnessScores && (score > 3.5 ? 'high' : score < 2.5 ? 'low' : null)
                   return (
                     <div key={key} className="py-3 first:pt-0 last:pb-0">
                       <DimensionRow
@@ -267,7 +266,6 @@ export default function FullMoonResultsPage() {
                         labelText={t(`fmResults.scoreLabels.${tier}`)}
                         witnessScore={wScore}
                         witnessPct={wScore != null ? fmScoreToPercent(wScore) : undefined}
-                        description={descVariant ? t(`dimensions.${key}.${descVariant}`) : undefined}
                       />
                     </div>
                   )
@@ -293,6 +291,11 @@ export default function FullMoonResultsPage() {
               domainNs="fmDomains"
               labelNs="fmResults"
               facetCountLabel={t('fqResults.facetsCount')}
+              domainDescFn={(key) => {
+                const score = domains[key]
+                const v = !witnessScores && (score > 3.5 ? 'high' : score < 2.5 ? 'low' : null)
+                return v ? t(`dimensions.${key}.${v}`) : null
+              }}
               t={t}
             />
           </section>
