@@ -24,7 +24,7 @@ import {
   zscoresToRaw,
 } from '../utils/team-narrative'
 import { RoleIcon, LastQuarterIcon, DimensionIcon } from '../components/MoonIcons'
-import { DimensionRow } from '../components/report'
+import { DimensionRow, ReportPageHeader } from '../components/report'
 import RadarChart from '../components/RadarChart'
 import { Card, SectionLabel } from '../components/ui'
 import { colors, ROLE_COLORS } from '../design/tokens'
@@ -412,18 +412,14 @@ export default function LastQuarterPage() {
       <div className="w-full px-4 flex flex-col gap-4">
 
         {/* Header */}
-        <div className="flex items-start gap-3">
-          <LastQuarterIcon size={28} style={{ color: colors.blue, flexShrink: 0, marginTop: 2 }} />
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-0.5">
-              {t('lastQuarter.title')}
-            </p>
-            <h1 className="text-xl font-bold text-gray-900">{data?.group_name}</h1>
-          </div>
-        </div>
+        <ReportPageHeader
+          icon={<LastQuarterIcon size={20} style={{ color: colors.blue }} />}
+          eyebrow={t('lastQuarter.title')}
+          title={data?.group_name ?? '—'}
+        />
 
         {/* ── Top card: 3-column [40/30/30] ── */}
-        <Card className="shadow-sm p-4">
+        <Card className="shadow-sm p-5">
           <SectionLabel color="gray" className="mb-3">
             {t('lastQuarter.compositionHeading')}
           </SectionLabel>

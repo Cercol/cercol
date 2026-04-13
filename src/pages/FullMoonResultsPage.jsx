@@ -25,13 +25,12 @@ import { computeRole } from '../utils/role-scoring'
 import { averageWitnessScores, detectDivergence, computeConvergence, computeCombinedRole } from '../utils/witness-scoring'
 import { getMyWitnessSessions } from '../lib/api'
 import { supabase } from '../lib/supabase'
-import { RoleIcon, FullMoonIcon, ShareIcon, DimensionIcon, BlindSpotsIcon } from '../components/MoonIcons'
+import { FullMoonIcon, ShareIcon, DimensionIcon, BlindSpotsIcon } from '../components/MoonIcons'
 import { useAuth } from '../context/AuthContext'
 import { colors } from '../design/tokens'
-import RadarChart from '../components/RadarChart'
 import RoleProbabilityBars from '../components/RoleProbabilityBars'
 import { Card, Button, Badge, SectionLabel } from '../components/ui'
-import { DimensionRow, FacetAccordion, ConvergenceMeter } from '../components/report'
+import { DimensionRow, FacetAccordion, ConvergenceMeter, ReportPageHeader, RoleCard, RadarDataCard } from '../components/report'
 
 const DOMAIN_ICON_COLOR = {
   depth:      'text-red-500',
@@ -67,6 +66,7 @@ export default function FullMoonResultsPage() {
   const [copied, setCopied] = useState(false)
   const [sessions, setSessions] = useState([])
   const [loadedDomains, setLoadedDomains] = useState(null)
+  const [loadedFacets, setLoadedFacets] = useState(null)
   const loggedRef = useRef(false)
 
   const stateScores  = location.state
@@ -75,21 +75,22 @@ export default function FullMoonResultsPage() {
 
   // Scores available synchronously (from state or ?r= param)
   let stateDomains = null
-  let facets       = null
+  let stateFacets  = null
   let fromTest     = false
 
   if (stateScores?.domains) {
     stateDomains = stateScores.domains
-    facets       = stateScores.facets ?? null
+    stateFacets  = stateScores.facets ?? null
     fromTest     = stateScores.fromTest === true
   } else if (sharedParam) {
     stateDomains = decodeScores(sharedParam)
   }
 
-  // Effective domains: synchronous source first, Supabase fallback second
+  // Effective domains and facets: synchronous source first, Supabase fallback second
   const domains = stateDomains ?? loadedDomains
+  const facets  = stateFacets ?? loadedFacets
 
-  // Supabase fallback: load domains when navigating directly (no state, no ?r=)
+  // Supabase fallback: load domains (+ facets) when navigating directly (no state, no ?r=)
   useEffect(() => {
     if (stateDomains !== null) return    // already have scores
     if (isSharedLink) return             // bad ?r= param → handled below
@@ -98,7 +99,7 @@ export default function FullMoonResultsPage() {
 
     supabase
       .from('results')
-      .select('presence,bond,discipline,depth,vision')
+      .select('presence,bond,discipline,depth,vision,facets')
       .eq('user_id', user.id)
       .eq('instrument', 'fullMoon')
       .order('created_at', { ascending: false })
@@ -113,6 +114,7 @@ export default function FullMoonResultsPage() {
             depth:      r.depth,
             vision:     r.vision,
           })
+          setLoadedFacets(r.facets ?? null)
         } else {
           navigate('/')
         }
@@ -124,7 +126,7 @@ export default function FullMoonResultsPage() {
   useEffect(() => {
     if (fromTest && domains && !loggedRef.current) {
       loggedRef.current = true
-      logResult(domains, i18n.language, 'fullMoon', user?.id ?? null)
+      logResult(domains, i18n.language, 'fullMoon', user?.id ?? null, stateFacets)
     }
   }, [domains]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -185,87 +187,54 @@ export default function FullMoonResultsPage() {
 
   const showWitnessSection = !isSharedLink && (fromTest || user != null)
 
+  const headerSubtitle = hasAnyWitness
+    ? t('witnessResults.subtitle')
+    : t('fmResults.subtitle')
+
   return (
     <main className="py-10 sm:py-16">
       <div className="flex flex-col gap-8">
 
         {/* Header */}
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-bold" style={{ color: colors.textPrimary }}>
-            {t('fmResults.title')}
-          </h1>
-          <p className="mt-1 text-sm" style={{ color: colors.textMuted }}>
-            {t('fmResults.subtitle')}
-          </p>
-        </div>
+        <ReportPageHeader
+          icon={<FullMoonIcon size={18} style={{ color: colors.textMuted }} />}
+          eyebrow={t('home.fullMoon.name')}
+          title={t('fmResults.title')}
+          subtitle={headerSubtitle}
+        />
 
         {/* ── Section 1: Role card ── */}
         <section>
-          <Card accent="red" className="overflow-hidden">
-            <div className="flex flex-row">
-              <div className="w-40 shrink-0 flex items-center justify-center">
-                <RoleIcon role={roleResult.role} size={128} style={{ color: colors.red }} />
-              </div>
-              <div className="flex-1 p-6 sm:p-8 flex flex-col gap-4">
-                {hasEnoughWitnesses ? (
-                  <div className="flex flex-col gap-1">
-                    <Badge className="self-start bg-[#e8eef8] text-[#0047ba]">
-                      {t('witnessResults.definitiveLabel')}
-                    </Badge>
-                    <p className="text-xs leading-relaxed" style={{ color: colors.textMuted }}>
-                      {t('witnessResults.definitiveNote')}
-                    </p>
-                  </div>
-                ) : (
-                  <Badge variant="beta" className="self-start">
-                    {t('roles.beta_label')}
-                  </Badge>
-                )}
-                <h2
-                  className="text-4xl sm:text-5xl font-bold leading-tight"
-                  style={{ color: colors.textPrimary }}
-                >
-                  {t(`roles.${roleResult.role}.name`)}
-                </h2>
-                <p className="text-base leading-relaxed" style={{ color: colors.textMuted }}>
-                  {t(`roles.${roleResult.role}.essence`)}
-                </p>
-                {roleResult.arc.length > 0 && (
-                  <div className="flex flex-col gap-2">
-                    <p
-                      className="text-xs font-semibold uppercase tracking-widest"
-                      style={{ color: colors.textMuted }}
-                    >
-                      {t('roles.arc_label')}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {roleResult.arc.map(r => (
-                        <Badge key={r} variant="default">
-                          {t(`roles.${r}.name`)}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </Card>
+          <RoleCard
+            role={roleResult.role}
+            roleName={t(`roles.${roleResult.role}.name`)}
+            roleEssence={t(`roles.${roleResult.role}.essence`)}
+            arc={roleResult.arc}
+            arcName={(r) => t(`roles.${r}.name`)}
+            arcLabel={t('roles.arc_label')}
+            badge={
+              hasEnoughWitnesses ? (
+                <Badge className="self-start bg-[#e8eef8] text-[#0047ba]">
+                  {t('witnessResults.definitiveLabel')}
+                </Badge>
+              ) : (
+                <Badge variant="beta" className="self-start">
+                  {t('roles.beta_label')}
+                </Badge>
+              )
+            }
+            badgeNote={hasEnoughWitnesses ? t('witnessResults.definitiveNote') : undefined}
+          />
         </section>
 
-        {/* ── Section 2: Radar + domain rows + probability bars ── */}
+        {/* ── Section 2: Radar (col 1) + Domain rows (col 2) + Prob bars (col 3) ── */}
         <section>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            {/* Left: Radar */}
-            <Card className="shadow-sm p-5">
-              <RadarChart
-                scores={domains}
-                domainKeys={domainKeys}
-                labelFn={(key) => t(`fmDomains.${key}.name`)}
-              />
-            </Card>
-
-            {/* Right: Domain rows */}
-            <Card className="shadow-sm p-5">
+          <RadarDataCard
+            scores={domains}
+            domainKeys={domainKeys}
+            labelFn={(key) => t(`fmDomains.${key}.name`)}
+          >
+            <div>
               <SectionLabel color="gray" className="mb-3">
                 {t('fmResults.domainSection')}
               </SectionLabel>
@@ -281,33 +250,32 @@ export default function FullMoonResultsPage() {
                   </span>
                 </div>
               )}
-              <div className="grid grid-cols-2 gap-x-4 gap-y-4">
+              <div className="flex flex-col divide-y divide-gray-100">
                 {domainKeys.map((key) => {
                   const score = domains[key]
                   const tier  = fmScoreLabel(score)
                   const wScore = witnessScores ? witnessScores[key] : undefined
                   const descVariant = !witnessScores && (score > 3.5 ? 'high' : score < 2.5 ? 'low' : null)
                   return (
-                    <DimensionRow
-                      key={key}
-                      domainKey={key}
-                      domainName={t(`fmDomains.${key}.name`)}
-                      score={score}
-                      pct={fmScoreToPercent(score)}
-                      labelTier={tier}
-                      labelText={t(`fmResults.scoreLabels.${tier}`)}
-                      witnessScore={wScore}
-                      witnessPct={wScore != null ? fmScoreToPercent(wScore) : undefined}
-                      description={descVariant ? t(`dimensions.${key}.${descVariant}`) : undefined}
-                    />
+                    <div key={key} className="py-3 first:pt-0 last:pb-0">
+                      <DimensionRow
+                        domainKey={key}
+                        domainName={t(`fmDomains.${key}.name`)}
+                        score={score}
+                        pct={fmScoreToPercent(score)}
+                        labelTier={tier}
+                        labelText={t(`fmResults.scoreLabels.${tier}`)}
+                        witnessScore={wScore}
+                        witnessPct={wScore != null ? fmScoreToPercent(wScore) : undefined}
+                        description={descVariant ? t(`dimensions.${key}.${descVariant}`) : undefined}
+                      />
+                    </div>
                   )
                 })}
               </div>
-            </Card>
-          </div>
-
-          {/* Probability bars — full width below the grid */}
-          <RoleProbabilityBars result={roleResult} columns={2} />
+            </div>
+            <RoleProbabilityBars result={roleResult} bare />
+          </RadarDataCard>
         </section>
 
         {/* ── Section 3: Facet accordion ── */}

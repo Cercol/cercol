@@ -45,6 +45,7 @@ export default function DimensionRow({
   witnessScore,      // optional number 1–5
   witnessPct,        // optional number 0–100
   compact = false,   // true = Last Quarter compact mode
+  maxScore = 5,      // denominator shown next to score (e.g. 7 for New Moon)
 }) {
   const barHex = DOMAIN_BAR_HEX[domainKey]
 
@@ -79,15 +80,15 @@ export default function DimensionRow({
   // ── Standard mode ─────────────────────────────────────────────────────────────
   return (
     <div>
-      <div className="flex items-center gap-1.5 mb-1 flex-wrap">
+      <div className="flex items-center gap-1.5 mb-1">
         <DimensionIcon domain={domainKey} size={14} className={DOMAIN_ICON_COLOR[domainKey]} />
-        <span className="text-sm font-semibold flex-1 min-w-0" style={{ color: colors.textPrimary }}>
+        <span className="text-sm font-semibold flex-1 min-w-0 truncate" style={{ color: colors.textPrimary }}>
           {domainName}
         </span>
         <div className="flex items-center gap-1.5 shrink-0">
           <span className="text-sm font-bold tabular-nums" style={{ color: colors.textPrimary }}>
             {Number(score).toFixed(1)}
-            <span className="text-xs font-normal" style={{ color: colors.textMuted }}>/5</span>
+            <span className="text-xs font-normal" style={{ color: colors.textMuted }}>/{maxScore}</span>
           </span>
           {witnessScore != null && (
             <span className="text-sm font-bold tabular-nums" style={{ color: colors.blue }}>

@@ -955,6 +955,30 @@ Unified the two Full Moon pages into a single `FullMoonResultsPage` at `/full-mo
 
 **Routing:** `/full-moon/report` → `<Navigate to="/full-moon/results" replace />` in `App.jsx`. `FullMoonReportPage.jsx` reduced to a re-export stub.
 
+### Phase 13.13 — Facet persistence + visual unification of all four report pages ✅ COMPLETE
+
+**Part 1 — Facet persistence:**
+- `sql/add_facets_column.sql` — migration: `ALTER TABLE results ADD COLUMN IF NOT EXISTS facets JSONB`
+- `logger.js` — added `facetScores = null` as 5th parameter; inserted into payload when present
+- `FirstQuarterResultsPage` — passes `facets` to `logResult` on test completion
+- `FullMoonResultsPage` — passes `stateFacets` to `logResult`; Supabase fallback query now selects `facets`; added `loadedFacets` state (`setLoadedFacets(r.facets ?? null)`); effective `facets = stateFacets ?? loadedFacets`
+- `MyResultsPage` — FM card click now navigates to `/full-moon/results` with `{ domains, facets, fromTest: false }` state instead of bare `/full-moon/report`
+- `sql/seed_fq_facets.sql` / `sql/seed_fm_facets.sql` — manual seed scripts (Box-Muller, mean=3.0, SD=0.6, clamped [1,5], 2dp) for backfilling null-facets rows
+
+**Part 2 — Shared report components (new):**
+- `ReportPageHeader` — moon phase icon + eyebrow (uppercase tracking-widest) + h1 + optional subtitle
+- `RoleCard` — unified role card for FQ and FM; role name `text-5xl sm:text-6xl`; accepts `badge` and `badgeNote` props
+- `RadarDataCard` — Card wrapping RadarChart + 1 or 2 data columns; auto grid-cols-2 / grid-cols-3
+
+**Part 3 — Visual unification:**
+- `DimensionRow` — removed `flex-wrap` from standard header; added `truncate` to name span; added `maxScore` prop (default 5)
+- `RoleProbabilityBars` — added `bare` prop to skip Card wrapper when used inside `RadarDataCard`
+- `NewMoonResultsPage` — uses `ReportPageHeader` + `RadarDataCard` (2 col) + `DimensionRow maxScore={7}`
+- `FirstQuarterResultsPage` — uses `ReportPageHeader` + `RoleCard` + `RadarDataCard` (3 col: Radar | DimensionRows | ProbBars bare); dimension rows added back
+- `FullMoonResultsPage` — uses `ReportPageHeader` (subtitle reflects witness presence) + `RoleCard` + `RadarDataCard` (3 col: Radar | DimensionRows | ProbBars bare)
+- `LastQuarterPage` — uses `ReportPageHeader` (eyebrow = "Team report", title = group name); top card padding `p-4` → `p-5`
+- `report/index.js` — exports `ReportPageHeader`, `RoleCard`, `RadarDataCard`
+
 ### Phase 13 — Living model
 - GitHub Actions job every 28 days: update NORM_MEAN/NORM_SD at N≥200
 - At N≥300: k-means (k=12) in 5D; update centroids if divergence is systematic

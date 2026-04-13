@@ -96,7 +96,23 @@ function ResultCard({ result, t, language, navigate }) {
 
   if (isFullMoon) {
     return (
-      <button type="button" className="w-full text-left" onClick={() => navigate('/full-moon/report')}>
+      <button
+        type="button"
+        className="w-full text-left"
+        onClick={() => navigate('/full-moon/results', {
+          state: {
+            domains: {
+              presence:   result.presence,
+              bond:       result.bond,
+              discipline: result.discipline,
+              depth:      result.depth,
+              vision:     result.vision,
+            },
+            facets: result.facets ?? null,
+            fromTest: false,
+          }
+        })}
+      >
         {inner}
       </button>
     )

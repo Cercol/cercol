@@ -15,14 +15,14 @@ import { colors } from '../design/tokens'
 import { Card, SectionLabel } from './ui'
 import { RoleIcon } from './MoonIcons'
 
-export default function RoleProbabilityBars({ result, columns = 1 }) {
+export default function RoleProbabilityBars({ result, columns = 1, bare = false }) {
   const { t } = useTranslation()
   const { role: primaryRole, arc, probabilities } = result
 
   const sorted = Object.entries(probabilities).sort((a, b) => b[1] - a[1])
 
-  return (
-    <Card className="shadow-sm p-5 flex flex-col gap-3">
+  const content = (
+    <>
       <SectionLabel color="gray">
         {t('roles.probability_label')}
       </SectionLabel>
@@ -59,6 +59,16 @@ export default function RoleProbabilityBars({ result, columns = 1 }) {
           )
         })}
       </div>
+    </>
+  )
+
+  if (bare) {
+    return <div className="flex flex-col gap-3">{content}</div>
+  }
+
+  return (
+    <Card className="shadow-sm p-5 flex flex-col gap-3">
+      {content}
     </Card>
   )
 }

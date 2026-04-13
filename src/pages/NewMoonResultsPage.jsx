@@ -13,31 +13,9 @@ import { radarScoreToPercent, radarScoreLabel } from '../utils/new-moon-scoring'
 import { logResult } from '../utils/logger'
 import { useAuth } from '../context/AuthContext'
 import { colors } from '../design/tokens'
-import RadarChart from '../components/RadarChart'
 import { Card, Button, SectionLabel } from '../components/ui'
-import { DimensionIcon } from '../components/MoonIcons'
-
-const DOMAIN_ICON_COLOR = {
-  presence:   'text-amber-400',
-  bond:       'text-emerald-500',
-  discipline: 'text-blue-600',
-  depth:      'text-red-500',
-  vision:     'text-[#427c42]',
-}
-
-const LABEL_STYLES = {
-  low:      'bg-gray-100 text-gray-600',
-  moderate: 'bg-blue-100 text-blue-700',
-  high:     'bg-[#0047ba] text-white',
-}
-
-const DOMAIN_BAR_COLOR = {
-  presence:   'bg-amber-400',
-  bond:       'bg-emerald-500',
-  discipline: 'bg-blue-600',
-  depth:      'bg-red-500',
-  vision:     'bg-[#427c42]',
-}
+import { NewMoonIcon } from '../components/MoonIcons'
+import { DimensionRow, ReportPageHeader, RadarDataCard } from '../components/report'
 
 function encodeScores(scores) {
   const ordered = DOMAIN_KEYS.map((k) => scores[k] ?? 0)
@@ -105,26 +83,22 @@ export default function NewMoonResultsPage() {
       <div className="flex flex-col gap-8">
 
         {/* Header */}
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-bold" style={{ color: colors.textPrimary }}>{t('newMoonResults.title')}</h1>
-          <p className="mt-1 text-sm" style={{ color: colors.textMuted }}>{t('newMoonResults.subtitle')}</p>
-        </div>
+        <ReportPageHeader
+          icon={<NewMoonIcon size={18} style={{ color: colors.textMuted }} />}
+          eyebrow={t('home.newMoon.name')}
+          title={t('newMoonResults.title')}
+          subtitle={t('newMoonResults.subtitle')}
+        />
 
         {/* ── Radar + domain rows ── */}
         <section>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Radar chart */}
-            <Card className="shadow-sm p-5">
-              <RadarChart
-                scores={scores}
-                maxScore={7}
-                domainKeys={domainKeys}
-                labelFn={(key) => t(`fqDomains.${key}.name`)}
-              />
-            </Card>
-
-            {/* Domain rows */}
-            <Card className="shadow-sm p-5">
+          <RadarDataCard
+            scores={scores}
+            maxScore={7}
+            domainKeys={domainKeys}
+            labelFn={(key) => t(`fqDomains.${key}.name`)}
+          >
+            <div>
               <SectionLabel color="gray" className="mb-3">
                 {t('newMoonResults.domainSection')}
               </SectionLabel>
@@ -132,39 +106,26 @@ export default function NewMoonResultsPage() {
                 {domainKeys.map((key) => {
                   const score = scores[key]
                   const pct = radarScoreToPercent(score)
-                  const label = radarScoreLabel(score)
-                  const barColor = DOMAIN_BAR_COLOR[key]
+                  const tier = radarScoreLabel(score)
                   const descVariant = score >= 5.0 ? 'high' : score <= 2.9 ? 'low' : null
                   return (
                     <div key={key} className="py-3 first:pt-0 last:pb-0">
-                      <div className="flex items-center justify-between mb-1.5">
-                        <span className="text-sm font-semibold flex items-center gap-1.5" style={{ color: colors.textPrimary }}>
-                          <DimensionIcon domain={key} size={15} className={DOMAIN_ICON_COLOR[key]} />
-                          {t(`fqDomains.${key}.name`)}
-                        </span>
-                        <div className="flex items-center gap-2 shrink-0 ml-2">
-                          <span className="text-sm font-bold" style={{ color: colors.textPrimary }}>
-                            {score}<span className="text-xs font-normal" style={{ color: colors.textMuted }}>/7</span>
-                          </span>
-                          <span className={`text-xs font-semibold px-2 py-0.5 rounded ${LABEL_STYLES[label]}`}>
-                            {t(`results.scoreLabels.${label}`)}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                        <div className={`h-full rounded-full transition-all duration-500 ${barColor}`} style={{ width: `${pct}%` }} />
-                      </div>
-                      {descVariant && (
-                        <p className="text-xs leading-relaxed mt-1.5" style={{ color: colors.textMuted }}>
-                          {t(`dimensions.${key}.${descVariant}`)}
-                        </p>
-                      )}
+                      <DimensionRow
+                        domainKey={key}
+                        domainName={t(`fqDomains.${key}.name`)}
+                        score={score}
+                        pct={pct}
+                        labelTier={tier}
+                        labelText={t(`results.scoreLabels.${tier}`)}
+                        maxScore={7}
+                        description={descVariant ? t(`dimensions.${key}.${descVariant}`) : undefined}
+                      />
                     </div>
                   )
                 })}
               </div>
-            </Card>
-          </div>
+            </div>
+          </RadarDataCard>
         </section>
 
         {/* ── Upgrade prompt ── */}

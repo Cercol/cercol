@@ -17,37 +17,12 @@ import { DOMAIN_KEYS } from '../data/domains'
 import { fqScoreToPercent, fqScoreLabel } from '../utils/first-quarter-scoring'
 import { logResult } from '../utils/logger'
 import { computeRole } from '../utils/role-scoring'
-import { RoleIcon } from '../components/MoonIcons'
-import { FullMoonIcon, ShareIcon, DimensionIcon } from '../components/MoonIcons'
+import { FullMoonIcon, ShareIcon, FirstQuarterIcon } from '../components/MoonIcons'
 import { useAuth } from '../context/AuthContext'
 import { colors } from '../design/tokens'
-import RadarChart from '../components/RadarChart'
 import RoleProbabilityBars from '../components/RoleProbabilityBars'
 import { Card, Button, Badge, SectionLabel } from '../components/ui'
-import { FacetAccordion } from '../components/report'
-
-const LABEL_STYLES = {
-  low:      'bg-gray-100 text-gray-600',
-  moderate: 'bg-blue-100 text-blue-700',
-  high:     'bg-[#0047ba] text-white',
-}
-
-const DOMAIN_BAR_COLOR = {
-  depth:      'bg-red-500',
-  presence:   'bg-amber-400',
-  vision:     'bg-[#427c42]',
-  bond:       'bg-emerald-500',
-  discipline: 'bg-blue-600',
-}
-
-const DOMAIN_ICON_COLOR = {
-  depth:      'text-red-500',
-  presence:   'text-amber-400',
-  vision:     'text-[#427c42]',
-  bond:       'text-emerald-500',
-  discipline: 'text-blue-600',
-}
-
+import { DimensionRow, FacetAccordion, ReportPageHeader, RoleCard, RadarDataCard } from '../components/report'
 
 function encodeScores(domains) {
   const ordered = DOMAIN_KEYS.map((k) => domains[k] ?? 0)
@@ -97,7 +72,7 @@ export default function FirstQuarterResultsPage() {
   useEffect(() => {
     if (fromTest && !loggedRef.current) {
       loggedRef.current = true
-      logResult(domains, i18n.language, 'firstQuarter', user?.id ?? null)
+      logResult(domains, i18n.language, 'firstQuarter', user?.id ?? null, facets)
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -118,60 +93,58 @@ export default function FirstQuarterResultsPage() {
       <div className="flex flex-col gap-8">
 
         {/* Header */}
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-bold" style={{ color: colors.textPrimary }}>{t('fqResults.title')}</h1>
-          <p className="mt-1 text-sm" style={{ color: colors.textMuted }}>{t('fqResults.subtitle')}</p>
-        </div>
+        <ReportPageHeader
+          icon={<FirstQuarterIcon size={18} style={{ color: colors.textMuted }} />}
+          eyebrow={t('home.firstQuarter.name')}
+          title={t('fqResults.title')}
+          subtitle={t('fqResults.subtitle')}
+        />
 
-        {/* ── Section 1: Role card (full width, red left border) ── */}
+        {/* ── Section 1: Role card ── */}
         <section>
-          <Card accent="red" className="overflow-hidden">
-            <div className="flex flex-row">
-              <div className="w-40 shrink-0 flex items-center justify-center">
-                <RoleIcon role={roleResult.role} size={128} style={{ color: colors.red }} />
-              </div>
-              <div className="flex-1 p-6 sm:p-8 flex flex-col gap-4">
-                <Badge variant="beta" className="self-start">
-                  {t('roles.beta_label')}
-                </Badge>
-                <h2
-                  className="text-5xl sm:text-6xl font-bold leading-tight"
-                  style={{ color: colors.textPrimary }}
-                >
-                  {t(`roles.${roleResult.role}.name`)}
-                </h2>
-                <p className="text-base leading-relaxed" style={{ color: colors.textMuted }}>
-                  {t(`roles.${roleResult.role}.essence`)}
-                </p>
-                {roleResult.arc.length > 0 && (
-                  <div className="flex flex-col gap-2">
-                    <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: colors.textMuted }}>
-                      {t('roles.arc_label')}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {roleResult.arc.map(r => (
-                        <Badge key={r} variant="default">{t(`roles.${r}.name`)}</Badge>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </Card>
+          <RoleCard
+            role={roleResult.role}
+            roleName={t(`roles.${roleResult.role}.name`)}
+            roleEssence={t(`roles.${roleResult.role}.essence`)}
+            arc={roleResult.arc}
+            arcName={(r) => t(`roles.${r}.name`)}
+            arcLabel={t('roles.arc_label')}
+            badge={<Badge variant="beta" className="self-start">{t('roles.beta_label')}</Badge>}
+          />
         </section>
 
-        {/* ── Section 2: Radar (left) + Role probability bars (right) ── */}
+        {/* ── Section 2: Radar (col 1) + Dimension rows (col 2) + Prob bars (col 3) ── */}
         <section>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card className="shadow-sm p-5 flex items-center justify-center">
-              <RadarChart
-                scores={domains}
-                domainKeys={domainKeys}
-                labelFn={(key) => t(`fqDomains.${key}.name`)}
-              />
-            </Card>
-            <RoleProbabilityBars result={roleResult} columns={1} />
-          </div>
+          <RadarDataCard
+            scores={domains}
+            domainKeys={domainKeys}
+            labelFn={(key) => t(`fqDomains.${key}.name`)}
+          >
+            <div>
+              <SectionLabel color="gray" className="mb-3">
+                {t('fqResults.domainSection')}
+              </SectionLabel>
+              <div className="flex flex-col divide-y divide-gray-100">
+                {domainKeys.map((key) => {
+                  const score = domains[key]
+                  const tier  = fqScoreLabel(score)
+                  return (
+                    <div key={key} className="py-3 first:pt-0 last:pb-0">
+                      <DimensionRow
+                        domainKey={key}
+                        domainName={t(`fqDomains.${key}.name`)}
+                        score={score}
+                        pct={fqScoreToPercent(score)}
+                        labelTier={tier}
+                        labelText={t(`fqResults.scoreLabels.${tier}`)}
+                      />
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+            <RoleProbabilityBars result={roleResult} bare />
+          </RadarDataCard>
         </section>
 
         {/* ── Section 3: 30 facets accordion (only when facets available) ── */}
