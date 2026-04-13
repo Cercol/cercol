@@ -991,6 +991,12 @@ Unified the two Full Moon pages into a single `FullMoonResultsPage` at `/full-mo
   - First Quarter / Full Moon: already correct — no changes.
   - Last Quarter: disclaimer gray box added after copy/print row; reuses `fmResults.disclaimer` key.
 
+### Phase 13.15 — Radar polygon rendering fix ✅ COMPLETE
+
+- **Root cause**: Recharts v3.8.1 `useAnimationId` uses reference equality on the entire `props` object, which is a new object every React render. This caused the `JavascriptAnimate` component to remount on every render (via changing `key`), restarting the radar polygon animation from `t=0` (all points at chart center). The polygon was permanently invisible.
+- **Fix**: Added `isAnimationActive={false}` to `<Radar>` in `RadarChart.jsx` — `JavascriptAnimate` initialises to `t=1` immediately, rendering the polygon at full size without animation.
+- **Gradient fix**: `cx`/`cy`/`outerRadius` are not passed to custom shapes in Recharts v3 (commented out in source). `OrganicRadarShape` now derives `cx`/`cy` from `points[0].cx` / `points[0].cy` (per-point properties) and estimates `outerRadius` as 1.4× the max distance from center to any point.
+
 ### Phase 13 — Living model
 - GitHub Actions job every 28 days: update NORM_MEAN/NORM_SD at N≥200
 - At N≥300: k-means (k=12) in 5D; update centroids if divergence is systematic

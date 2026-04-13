@@ -44,8 +44,13 @@ function smoothClosedPath(points, tension = 0.4) {
 }
 
 /** Organic radar fill: smooth cubic-bezier shape with moon-like radial gradient. */
-function OrganicRadarShape({ points, cx, cy, outerRadius, stroke, strokeWidth }) {
+function OrganicRadarShape({ points, stroke, strokeWidth }) {
   if (!points || points.length === 0) return null
+  // cx/cy are per-point properties in Recharts v3 (chart center coords)
+  const cx = points[0]?.cx ?? 0
+  const cy = points[0]?.cy ?? 0
+  // Estimate outerRadius as max distance from center across all points
+  const outerRadius = Math.max(...points.map(p => Math.sqrt((p.x - cx) ** 2 + (p.y - cy) ** 2))) * 1.4
   const d = smoothClosedPath(points)
   return (
     <g>
@@ -104,6 +109,7 @@ export default function RadarChart({ scores, maxScore = 5, domainKeys, labelFn }
           dataKey="score"
           stroke={colors.red}
           strokeWidth={2}
+          isAnimationActive={false}
           shape={<OrganicRadarShape />}
         />
       </RechartsRadar>
