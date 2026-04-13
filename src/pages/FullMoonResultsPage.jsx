@@ -1,11 +1,13 @@
 /**
  * FullMoonResultsPage — unified Full Moon result page.
  *
- * Phase 1 (instant): renders self-report result from location.state or ?r= param.
- * Phase 2 (async):   if authenticated and NOT a shared link, loads Witness sessions
- *                    and layers them on top when present.
+ * Score resolution (in priority order):
+ *   1. location.state.domains — from FullMoonPage navigation after test
+ *   2. ?r=BASE64 — shared link (domain scores only; facets not available)
+ *   3. Supabase — most recent fullMoon row for authenticated users navigating directly
  *
- * When ?r= is present: shared-link mode — Phase 2 is skipped entirely.
+ * Phase 2 (async): if authenticated and NOT a shared link, loads Witness sessions
+ * and layers them on top when present. Skipped entirely for shared links.
  *
  * Render order:
  *   role card → radar + domain rows + probability bars → facet accordion →
@@ -22,6 +24,7 @@ import { logResult } from '../utils/logger'
 import { computeRole } from '../utils/role-scoring'
 import { averageWitnessScores, detectDivergence, computeConvergence, computeCombinedRole } from '../utils/witness-scoring'
 import { getMyWitnessSessions } from '../lib/api'
+import { supabase } from '../lib/supabase'
 import { RoleIcon, FullMoonIcon, ShareIcon, DimensionIcon, BlindSpotsIcon } from '../components/MoonIcons'
 import { useAuth } from '../context/AuthContext'
 import { colors } from '../design/tokens'
@@ -63,36 +66,67 @@ export default function FullMoonResultsPage() {
   const { user, loading: authLoading } = useAuth()
   const [copied, setCopied] = useState(false)
   const [sessions, setSessions] = useState([])
+  const [loadedDomains, setLoadedDomains] = useState(null)
   const loggedRef = useRef(false)
 
   const stateScores  = location.state
   const sharedParam  = searchParams.get('r')
   const isSharedLink = Boolean(sharedParam)
 
-  let domains  = null
-  let facets   = null
-  let fromTest = false
+  // Scores available synchronously (from state or ?r= param)
+  let stateDomains = null
+  let facets       = null
+  let fromTest     = false
 
   if (stateScores?.domains) {
-    domains  = stateScores.domains
-    facets   = stateScores.facets ?? null
-    fromTest = stateScores.fromTest === true
+    stateDomains = stateScores.domains
+    facets       = stateScores.facets ?? null
+    fromTest     = stateScores.fromTest === true
   } else if (sharedParam) {
-    domains = decodeScores(sharedParam)
+    stateDomains = decodeScores(sharedParam)
   }
 
-  if (!domains) {
-    navigate('/')
-    return null
-  }
+  // Effective domains: synchronous source first, Supabase fallback second
+  const domains = stateDomains ?? loadedDomains
+
+  // Supabase fallback: load domains when navigating directly (no state, no ?r=)
+  useEffect(() => {
+    if (stateDomains !== null) return    // already have scores
+    if (isSharedLink) return             // bad ?r= param → handled below
+    if (authLoading) return              // wait for auth to resolve
+    if (!user) { navigate('/'); return } // not authenticated → home
+
+    supabase
+      .from('results')
+      .select('presence,bond,discipline,depth,vision')
+      .eq('user_id', user.id)
+      .eq('instrument', 'fullMoon')
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .then(({ data }) => {
+        if (data?.length) {
+          const r = data[0]
+          setLoadedDomains({
+            presence:   r.presence,
+            bond:       r.bond,
+            discipline: r.discipline,
+            depth:      r.depth,
+            vision:     r.vision,
+          })
+        } else {
+          navigate('/')
+        }
+      })
+      .catch(() => navigate('/'))
+  }, [user, authLoading]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Log on real test completion only
   useEffect(() => {
-    if (fromTest && !loggedRef.current) {
+    if (fromTest && domains && !loggedRef.current) {
       loggedRef.current = true
       logResult(domains, i18n.language, 'fullMoon', user?.id ?? null)
     }
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [domains]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Phase 2: load Witness sessions (skipped for shared links)
   useEffect(() => {
@@ -101,6 +135,21 @@ export default function FullMoonResultsPage() {
       .then(setSessions)
       .catch(() => {}) // silently fail — solo result still renders
   }, [user, authLoading, isSharedLink]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Redirect if ?r= param is malformed
+  if (isSharedLink && stateDomains === null) {
+    navigate('/')
+    return null
+  }
+
+  // Loading: waiting for auth to resolve or Supabase to return
+  if (!domains) {
+    return (
+      <main className="flex items-center justify-center min-h-[calc(100vh-4rem)]">
+        <p className="text-sm text-gray-400">{t('witnessResults.loading')}</p>
+      </main>
+    )
+  }
 
   function handleShare() {
     const encoded = encodeScores(domains)
