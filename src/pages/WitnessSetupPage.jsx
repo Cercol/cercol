@@ -16,7 +16,7 @@ import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
 import { createWitnessSessions, getMyWitnessSessions } from '../lib/api'
 import { Card, Button, SectionLabel } from '../components/ui'
-import { FullMoonIcon, CheckIcon } from '../components/MoonIcons'
+import { FullMoonIcon, CheckIcon, CloseIcon } from '../components/MoonIcons'
 
 const MAX_WITNESSES = 12
 
@@ -45,9 +45,7 @@ function WitnessRow({ index, name, email, onChange, onRemove, showRemove }) {
           className="shrink-0 text-gray-300 hover:text-gray-500 transition-colors pt-2"
           aria-label="Remove"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
-          </svg>
+          <CloseIcon size={18} />
         </button>
       )}
     </div>

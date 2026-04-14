@@ -12,22 +12,7 @@ import { getMyWitnessContributions } from '../lib/api'
 import { DOMAIN_KEYS } from '../data/domains'
 import { Card, Button, SectionLabel } from '../components/ui'
 import { ChevronRightIcon, DimensionIcon } from '../components/MoonIcons'
-
-const DOMAIN_BAR_COLOR = {
-  presence:   'bg-amber-400',
-  bond:       'bg-emerald-500',
-  discipline: 'bg-blue-600',
-  depth:      'bg-red-500',
-  vision:     'bg-[#427c42]',
-}
-
-const DOMAIN_ICON_COLOR = {
-  presence:   'text-amber-400',
-  bond:       'text-emerald-500',
-  discipline: 'text-blue-600',
-  depth:      'text-red-500',
-  vision:     'text-[#427c42]',
-}
+import { DOMAIN_BG_CLASSES, DOMAIN_ICON_CLASSES } from '../design/tokens'
 
 const INSTRUMENT_SCALE = {
   newMoon:      { min: 1, max: 7 },
@@ -70,7 +55,7 @@ function ResultCard({ result, t, language, navigate }) {
           const pct = scorePercent(score, result.instrument)
           return (
             <div key={key} className="flex items-center gap-3">
-              <span className={`w-24 shrink-0 text-xs font-semibold flex items-center gap-1.5 ${DOMAIN_ICON_COLOR[key]}`}>
+              <span className={`w-24 shrink-0 text-xs font-semibold flex items-center gap-1.5 ${DOMAIN_ICON_CLASSES[key]}`}>
                 <DimensionIcon domain={key} size={13} />
                 <span className="text-gray-600">
                   {t(`dimensions.${key}.label`, { defaultValue: key })}
@@ -78,7 +63,7 @@ function ResultCard({ result, t, language, navigate }) {
               </span>
               <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
                 <div
-                  className={`h-full rounded-full ${DOMAIN_BAR_COLOR[key]}`}
+                  className={`h-full rounded-full ${DOMAIN_BG_CLASSES[key]}`}
                   style={{ width: `${pct}%` }}
                 />
               </div>

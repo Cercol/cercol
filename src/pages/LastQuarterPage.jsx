@@ -26,29 +26,10 @@ import {
 import { RoleIcon, LastQuarterIcon, DimensionIcon } from '../components/MoonIcons'
 import { DimensionRow, ReportPageHeader, RadarDataCard } from '../components/report'
 import RadarChart from '../components/RadarChart'
-import { Card, SectionLabel } from '../components/ui'
-import { colors, ROLE_COLORS } from '../design/tokens'
+import { Card, SectionLabel, Button } from '../components/ui'
+import { colors, ROLE_COLORS, DOMAIN_ICON_CLASSES, BALANCE_COLORS } from '../design/tokens'
 import { DOMAIN_KEYS } from '../data/domains'
 
-const BALANCE_COLOR = {
-  balanced:     { bg: '#f0fdf4', text: '#166534' },
-  tiltedHigh:   { bg: '#fef9c3', text: '#854d0e' },
-  tiltedLow:    { bg: '#fef9c3', text: '#854d0e' },
-  stronglyHigh: { bg: '#fee2e2', text: '#991b1b' },
-  stronglyLow:  { bg: '#fee2e2', text: '#991b1b' },
-  highGood:     { bg: '#f0fdf4', text: '#166534' },
-  lowGood:      { bg: '#f0fdf4', text: '#166534' },
-  lowCaution:   { bg: '#fee2e2', text: '#991b1b' },
-  highCaution:  { bg: '#fee2e2', text: '#991b1b' },
-}
-
-const DOMAIN_ICON_COLOR = {
-  presence:   'text-amber-400',
-  bond:       'text-emerald-500',
-  discipline: 'text-blue-600',
-  depth:      'text-red-500',
-  vision:     'text-[#427c42]',
-}
 
 /**
  * IconTooltip — CSS tooltip that appears after ~300 ms hover, cursor stays default.
@@ -82,7 +63,7 @@ function IconTooltip({ label, children }) {
 }
 
 function BalancePill({ flag, t }) {
-  const { bg, text } = BALANCE_COLOR[flag] ?? BALANCE_COLOR.balanced
+  const { bg, text } = BALANCE_COLORS[flag] ?? BALANCE_COLORS.balanced
   return (
     <span
       className="inline-block text-xs font-semibold px-1.5 py-0.5 rounded-full shrink-0"
@@ -179,7 +160,7 @@ function BalanceDimRow({ dim, meanZ, flag, topMember, compensatingMember, sugges
     <div className="py-2 first:pt-0 last:pb-0">
       {/* Main row */}
       <div className="flex items-center gap-2">
-        <span className={`flex items-center gap-1 shrink-0 ${DOMAIN_ICON_COLOR[dim]}`}>
+        <span className={`flex items-center gap-1 shrink-0 ${DOMAIN_ICON_CLASSES[dim]}`}>
           <DimensionIcon domain={dim} size={13} />
         </span>
         <span className="text-xs font-semibold text-gray-800 shrink-0">
@@ -430,7 +411,7 @@ export default function LastQuarterPage() {
                     onClick={() => setRadarMode('teamAverage')}
                     className={`text-xs font-semibold px-3 py-1.5 transition-colors ${
                       radarMode === 'teamAverage'
-                        ? 'bg-[#0047ba] text-white'
+                        ? 'bg-blue-700 text-white'
                         : 'bg-white text-gray-600 hover:bg-gray-50'
                     }`}
                   >
@@ -441,7 +422,7 @@ export default function LastQuarterPage() {
                     disabled={!selfScores}
                     className={`text-xs font-semibold px-3 py-1.5 transition-colors border-l border-gray-200 disabled:opacity-40 ${
                       radarMode === 'myProfile'
-                        ? 'bg-[#0047ba] text-white'
+                        ? 'bg-blue-700 text-white'
                         : 'bg-white text-gray-600 hover:bg-gray-50'
                     }`}
                   >
@@ -522,21 +503,14 @@ export default function LastQuarterPage() {
           </div>
         )}
 
-        {/* ── Copy / print row ── */}
-        <div className="print:hidden flex items-center justify-center gap-3 py-2">
-          <button
-            onClick={handleCopyLink}
-            className="text-xs font-semibold px-4 py-2 text-gray-500 hover:text-gray-800 transition-colors"
-          >
+        {/* ── Actions row ── */}
+        <div className="print:hidden flex gap-3">
+          <Button variant="primary" onClick={handleCopyLink} className="flex-1 shadow-sm">
             {copied ? t('lastQuarter.copied') : t('lastQuarter.copyLink')}
-          </button>
-          <div className="w-px h-4 bg-gray-200" />
-          <button
-            onClick={() => window.print()}
-            className="text-xs font-semibold px-4 py-2 text-gray-500 hover:text-gray-800 transition-colors"
-          >
+          </Button>
+          <Button variant="secondary" onClick={() => window.print()}>
             {t('lastQuarter.downloadPdf')}
-          </button>
+          </Button>
         </div>
 
         {/* Disclaimer */}

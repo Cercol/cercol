@@ -997,6 +997,23 @@ Unified the two Full Moon pages into a single `FullMoonResultsPage` at `/full-mo
 - **Fix**: Added `isAnimationActive={false}` to `<Radar>` in `RadarChart.jsx` — `JavascriptAnimate` initialises to `t=1` immediately, rendering the polygon at full size without animation.
 - **Gradient fix**: `cx`/`cy`/`outerRadius` are not passed to custom shapes in Recharts v3 (commented out in source). `OrganicRadarShape` now derives `cx`/`cy` from `points[0].cx` / `points[0].cy` (per-point properties) and estimates `outerRadius` as 1.4× the max distance from center to any point.
 
+### Phase 13.16 — Audit cleanup + visual unification ✅ COMPLETE
+
+**Part 1 — Audit cleanup:**
+- **Migration consolidated**: `sql/add_facets_column.sql` moved to `supabase/migrations/010_add_facets.sql` — all 10 migrations now in one place.
+- **Domain color tokens centralised**: added `DOMAIN_COLORS` (hex for bars), `DOMAIN_ICON_CLASSES` (Tailwind text classes), `DOMAIN_BG_CLASSES` (Tailwind bg classes), and `BALANCE_COLORS` to `tokens.js`. Removed all 8 local `DOMAIN_BAR_HEX` / `DOMAIN_ICON_COLOR` / `DOMAIN_ACCENT` / `BALANCE_COLOR` definitions from `DimensionRow`, `FacetAccordion`, `MyResultsPage`, `FullMoonResultsPage`, `FullMoonPage`, `FirstQuarterPage`, `LastQuarterPage`, `SciencePage`.
+- **Inline SVGs moved to `MoonIcons.jsx`**: added `HamburgerIcon`, `CloseIcon`, `ExternalLinkIcon`, `InfoIcon`, `TranslationIcon`. Updated `Layout.jsx`, `InstrumentsPage.jsx`, `RolesPage.jsx`, `SciencePage.jsx`, `AboutPage.jsx`, `WitnessSetupPage.jsx`, `FeedbackButton.jsx`, `FacetAccordion.jsx`. Google logo in `AuthPage.jsx` kept as documented exception.
+- **SQL organisation**: added `sql/README.md`. Deleted `scripts/generate-dolphin.js` (one-off icon generation script, already run).
+- **Orphan assets deleted**: `src/assets/icons_raw/` (12 duplicates of `icons/animals/`), `src/assets/illustrations/` (12 JPGs + 1 SVG, unused since Phase 10.14), `src/assets/react.svg`, `src/assets/vite.svg`.
+- **Dead files deleted**: `src/data/roles.js` (empty, no exports, no imports), `src/pages/FullMoonReportPage.jsx` (stub re-export, route already a `<Navigate>` in `App.jsx`).
+- **`sharp` devDependency removed** (`npm uninstall --save-dev sharp`).
+- **`homepage` in `package.json` fixed** to `https://cercol.team` (was pointing to `github.io`).
+- **Hardcoded hex fixed**: radar toggle buttons in `LastQuarterPage` use `bg-blue-700` instead of `bg-[#0047ba]`; `FullMoonResultsPage` definitive badge uses `bg-blue-100 text-blue-700`; `BALANCE_COLORS` moved to `tokens.js`.
+- **`observer` comment in `WitnessPage.jsx`** rewritten to not contain the banned word itself.
+
+**Part 2 — Visual unification:**
+- **Last Quarter actions row**: copy/print plain `<button>` elements replaced with `Button` component (`variant="primary"` for Copy, `variant="secondary"` for Print). Matches the same actions row pattern across all four report pages.
+
 ### Phase 13 — Living model
 - GitHub Actions job every 28 days: update NORM_MEAN/NORM_SD at N≥200
 - At N≥300: k-means (k=12) in 5D; update centroids if divergence is systematic

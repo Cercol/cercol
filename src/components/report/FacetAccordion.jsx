@@ -11,15 +11,8 @@
  */
 import { useState } from 'react'
 import { Card } from '../ui'
-import { colors } from '../../design/tokens'
-
-const DOMAIN_BAR_HEX = {
-  depth:      '#ef4444',
-  presence:   '#fbbf24',
-  vision:     '#427c42',
-  bond:       '#10b981',
-  discipline: '#2563eb',
-}
+import { colors, DOMAIN_COLORS } from '../../design/tokens'
+import { ChevronRightIcon } from '../MoonIcons'
 
 export default function FacetAccordion({
   domainKeys,       // string[] — ordered domain list (e.g. DOMAIN_KEYS)
@@ -46,7 +39,7 @@ export default function FacetAccordion({
       {domainKeys.map((domainKey) => {
         const domainFacets = domainMeta[domainKey].facets
         const isExpanded   = expanded[domainKey] ?? false
-        const barHex       = DOMAIN_BAR_HEX[domainKey]
+        const barHex       = DOMAIN_COLORS[domainKey]
 
         return (
           <Card key={domainKey} className="overflow-hidden">
@@ -65,13 +58,11 @@ export default function FacetAccordion({
               <span className="text-xs tabular-nums" style={{ color: colors.textMuted }}>
                 {domainFacets.length} {facetCountLabel}
               </span>
-              <svg
-                className={`w-4 h-4 transition-transform duration-200 shrink-0 ${isExpanded ? 'rotate-90' : ''}`}
-                viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}
+              <ChevronRightIcon
+                size={16}
+                className={`transition-transform duration-200 shrink-0 ${isExpanded ? 'rotate-90' : ''}`}
                 style={{ color: colors.textMuted }}
-              >
-                <path d="M9 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+              />
             </button>
 
             {/* Facet grid — visible when expanded; forced open in print via CSS class */}

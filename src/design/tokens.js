@@ -54,6 +54,65 @@ export const spacing = {
  * all at similar saturation/darkness so each is legible on white.
  * Brand anchors: R01 uses brand red, R05 uses brand green.
  */
+/**
+ * DOMAIN_COLORS — hex bar fill for each Big Five domain.
+ * Used in DimensionRow, FacetAccordion, MyResultsPage, SciencePage, etc.
+ * All files must import from here — never hardcode these values locally.
+ */
+export const DOMAIN_COLORS = {
+  presence:   '#fbbf24',   // amber-400
+  bond:       '#10b981',   // emerald-500
+  vision:     '#427c42',   // brand green
+  discipline: '#2563eb',   // blue-600
+  depth:      '#ef4444',   // red-500
+}
+
+/**
+ * DOMAIN_ICON_CLASSES — Tailwind text-color class per domain.
+ * Used wherever DimensionIcon or a domain label needs the matching color.
+ */
+export const DOMAIN_ICON_CLASSES = {
+  presence:   'text-amber-400',
+  bond:       'text-emerald-500',
+  vision:     'text-[#427c42]',
+  discipline: 'text-blue-600',
+  depth:      'text-red-500',
+}
+
+/**
+ * DOMAIN_BG_CLASSES — Tailwind bg-color class per domain.
+ * Used where a filled background (e.g. progress bar via Tailwind class) is needed.
+ */
+export const DOMAIN_BG_CLASSES = {
+  presence:   'bg-amber-400',
+  bond:       'bg-emerald-500',
+  vision:     'bg-[#427c42]',
+  discipline: 'bg-blue-600',
+  depth:      'bg-red-500',
+}
+
+/**
+ * BALANCE_COLORS — semantic status colors for BalancePill in LastQuarterPage.
+ * Three states: good (green), caution (yellow), warning (red).
+ */
+export const BALANCE_COLORS = {
+  balanced:     { bg: '#f0fdf4', text: '#166534' },
+  tiltedHigh:   { bg: '#fef9c3', text: '#854d0e' },
+  tiltedLow:    { bg: '#fef9c3', text: '#854d0e' },
+  stronglyHigh: { bg: '#fee2e2', text: '#991b1b' },
+  stronglyLow:  { bg: '#fee2e2', text: '#991b1b' },
+  highGood:     { bg: '#f0fdf4', text: '#166534' },
+  lowGood:      { bg: '#f0fdf4', text: '#166534' },
+  lowCaution:   { bg: '#fee2e2', text: '#991b1b' },
+  highCaution:  { bg: '#fee2e2', text: '#991b1b' },
+}
+
+/**
+ * ROLE_COLORS — one distinct color per role (R01–R12).
+ * Hues are evenly distributed across the full color wheel (30° apart),
+ * all at similar saturation/darkness so each is legible on white.
+ * Brand anchors: R01 uses brand red, R05 uses brand green.
+ */
 export const ROLE_COLORS = {
   R01: '#cf3339',   // Dolphin  — red       (brand)
   R02: '#d46010',   // Wolf     — orange

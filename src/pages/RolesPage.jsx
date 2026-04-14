@@ -5,7 +5,7 @@
  */
 import { useTranslation } from 'react-i18next'
 import { Card, SectionLabel } from '../components/ui'
-import { RoleIcon } from '../components/MoonIcons'
+import { RoleIcon, ArrowRightIcon } from '../components/MoonIcons'
 
 const ROLES = [
   { key: 'R01', accent: 'text-emerald-600', bg: 'bg-emerald-50' }, // Dolphin  P+ B+
@@ -150,9 +150,7 @@ export default function RolesPage() {
             className="text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors flex items-center gap-1.5"
           >
             {t('rolesPage.critique.cta')}
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
-            </svg>
+            <ArrowRightIcon size={14} />
           </a>
         </Card>
 

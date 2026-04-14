@@ -20,6 +20,7 @@ import AccountButton from './AccountButton'
 import LanguageToggle from './LanguageToggle'
 import CercolLogo from './CercolLogo'
 import { colors } from '../design/tokens'
+import { HamburgerIcon, CloseIcon } from './MoonIcons'
 
 export default function Layout({ children }) {
   const { t }        = useTranslation()
@@ -81,17 +82,9 @@ export default function Layout({ children }) {
               style={{ color: colors.white }}
             >
               {menuOpen ? (
-                /* × close icon */
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
-                </svg>
+                <CloseIcon size={20} />
               ) : (
-                /* ≡ hamburger icon */
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <line x1="3" y1="6" x2="21" y2="6"/>
-                  <line x1="3" y1="12" x2="21" y2="12"/>
-                  <line x1="3" y1="18" x2="21" y2="18"/>
-                </svg>
+                <HamburgerIcon size={20} />
               )}
             </button>
           </div>

@@ -27,6 +27,7 @@ import ProgressBar from '../components/ProgressBar'
 import { Card, Button, SectionLabel } from '../components/ui'
 import { colors } from '../design/tokens'
 import { FullMoonIcon, ArrowLeftIcon, ArrowRightIcon, DimensionIcon } from '../components/MoonIcons'
+import { DOMAIN_BG_CLASSES, DOMAIN_ICON_CLASSES } from '../design/tokens'
 
 const DOMAIN_ORDER = ['depth', 'presence', 'vision', 'bond', 'discipline']
 
@@ -42,21 +43,6 @@ const SCALE_POINTS = 5
 const MAX_POLL_ATTEMPTS = 8
 const POLL_INTERVAL_MS  = 1500
 
-const DOMAIN_ACCENT = {
-  depth:      'bg-red-500',
-  presence:   'bg-amber-400',
-  vision:     'bg-[#427c42]',
-  bond:       'bg-emerald-500',
-  discipline: 'bg-blue-600',
-}
-
-const DOMAIN_ICON_COLOR = {
-  depth:      'text-red-500',
-  presence:   'text-amber-400',
-  vision:     'text-[#427c42]',
-  bond:       'text-emerald-500',
-  discipline: 'text-blue-600',
-}
 
 export default function FullMoonPage() {
   const navigate = useNavigate()
@@ -390,7 +376,7 @@ export default function FullMoonPage() {
       <main className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)]">
         <div className="w-full max-w-xl flex flex-col items-center text-center gap-6">
           <div className="flex items-center gap-2">
-            <span className={`w-3 h-3 rounded-full ${DOMAIN_ACCENT[domainKey]}`} />
+            <span className={`w-3 h-3 rounded-full ${DOMAIN_BG_CLASSES[domainKey]}`} />
             <span className="text-sm font-semibold text-gray-500">
               {t('fm.transition.blockDone', { name: t(`fmDomains.${domainKey}.name`) })}
             </span>
@@ -399,7 +385,7 @@ export default function FullMoonPage() {
           <div>
             <p className="text-sm text-gray-400 mb-1">{t('fm.transition.nextUp')}</p>
             <div className="flex items-center justify-center gap-2">
-              <span className={`w-3 h-3 rounded-full ${DOMAIN_ACCENT[nextDomainKey]}`} />
+              <span className={`w-3 h-3 rounded-full ${DOMAIN_BG_CLASSES[nextDomainKey]}`} />
               <h2 className="text-2xl font-bold text-gray-900">
                 {t(`fmDomains.${nextDomainKey}.name`)}
               </h2>
@@ -428,7 +414,7 @@ export default function FullMoonPage() {
         {/* Block header */}
         <div className="bg-white rounded border border-gray-200 px-5 py-4">
           <div className="flex items-center gap-2 mb-0.5">
-            <DimensionIcon domain={domainKey} size={16} className={`shrink-0 ${DOMAIN_ICON_COLOR[domainKey]}`} />
+            <DimensionIcon domain={domainKey} size={16} className={`shrink-0 ${DOMAIN_ICON_CLASSES[domainKey]}`} />
             <span className="text-xs font-semibold uppercase tracking-widest text-gray-500">
               {t(`fmDomains.${domainKey}.name`)} · {t('fm.blockLabel', { current: blockIdx + 1, total: TOTAL_BLOCKS })}
             </span>

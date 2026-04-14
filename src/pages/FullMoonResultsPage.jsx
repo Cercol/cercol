@@ -27,18 +27,10 @@ import { getMyWitnessSessions } from '../lib/api'
 import { supabase } from '../lib/supabase'
 import { FullMoonIcon, ShareIcon, DimensionIcon, BlindSpotsIcon } from '../components/MoonIcons'
 import { useAuth } from '../context/AuthContext'
-import { colors } from '../design/tokens'
+import { colors, DOMAIN_ICON_CLASSES } from '../design/tokens'
 import RoleProbabilityBars from '../components/RoleProbabilityBars'
 import { Card, Button, Badge, SectionLabel } from '../components/ui'
 import { DimensionRow, FacetAccordion, ConvergenceMeter, ReportPageHeader, RoleCard, RadarDataCard } from '../components/report'
-
-const DOMAIN_ICON_COLOR = {
-  depth:      'text-red-500',
-  presence:   'text-amber-400',
-  vision:     'text-[#427c42]',
-  bond:       'text-emerald-500',
-  discipline: 'text-blue-600',
-}
 
 const MIN_WITNESSES_FOR_REPORT = 2
 
@@ -214,7 +206,7 @@ export default function FullMoonResultsPage() {
             arcLabel={t('roles.arc_label')}
             badge={
               hasEnoughWitnesses ? (
-                <Badge className="self-start bg-[#e8eef8] text-[#0047ba]">
+                <Badge className="self-start bg-blue-100 text-blue-700">
                   {t('witnessResults.definitiveLabel')}
                 </Badge>
               ) : (
@@ -338,7 +330,7 @@ export default function FullMoonResultsPage() {
                         <DimensionIcon
                           domain={domain}
                           size={14}
-                          className={`mt-0.5 shrink-0 ${DOMAIN_ICON_COLOR[domain]}`}
+                          className={`mt-0.5 shrink-0 ${DOMAIN_ICON_CLASSES[domain]}`}
                         />
                         <span style={{ color: colors.textMuted }}>
                           <span className="font-semibold" style={{ color: colors.textPrimary }}>

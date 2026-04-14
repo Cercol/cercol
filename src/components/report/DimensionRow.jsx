@@ -10,23 +10,7 @@
  * pre-resolved strings so it has no i18n dependency.
  */
 import { DimensionIcon } from '../MoonIcons'
-import { colors } from '../../design/tokens'
-
-const DOMAIN_BAR_HEX = {
-  depth:      '#ef4444',
-  presence:   '#fbbf24',
-  vision:     '#427c42',
-  bond:       '#10b981',
-  discipline: '#2563eb',
-}
-
-const DOMAIN_ICON_COLOR = {
-  depth:      'text-red-500',
-  presence:   'text-amber-400',
-  vision:     'text-[#427c42]',
-  bond:       'text-emerald-500',
-  discipline: 'text-blue-600',
-}
+import { colors, DOMAIN_COLORS, DOMAIN_ICON_CLASSES } from '../../design/tokens'
 
 const LABEL_STYLES = {
   low:      'bg-gray-100 text-gray-600',
@@ -47,14 +31,14 @@ export default function DimensionRow({
   compact = false,   // true = Last Quarter compact mode
   maxScore = 5,      // denominator shown next to score (e.g. 7 for New Moon)
 }) {
-  const barHex = DOMAIN_BAR_HEX[domainKey]
+  const barHex = DOMAIN_COLORS[domainKey]
 
   // ── Compact mode ─────────────────────────────────────────────────────────────
   if (compact) {
     return (
       <div>
         <div className="flex items-center justify-between mb-1">
-          <span className={`text-xs font-semibold flex items-center gap-1 ${DOMAIN_ICON_COLOR[domainKey]}`}>
+          <span className={`text-xs font-semibold flex items-center gap-1 ${DOMAIN_ICON_CLASSES[domainKey]}`}>
             <DimensionIcon domain={domainKey} size={11} />
             <span style={{ color: colors.textPrimary }}>{domainName}</span>
           </span>
@@ -81,7 +65,7 @@ export default function DimensionRow({
   return (
     <div>
       <div className="flex items-center gap-1.5 mb-1">
-        <DimensionIcon domain={domainKey} size={14} className={DOMAIN_ICON_COLOR[domainKey]} />
+        <DimensionIcon domain={domainKey} size={14} className={DOMAIN_ICON_CLASSES[domainKey]} />
         <span className="text-sm font-semibold flex-1 min-w-0 truncate" style={{ color: colors.textPrimary }}>
           {domainName}
         </span>

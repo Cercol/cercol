@@ -7,18 +7,10 @@
  */
 import { useTranslation } from 'react-i18next'
 import { Card, SectionLabel } from '../components/ui'
-import { DimensionIcon } from '../components/MoonIcons'
-import { colors } from '../design/tokens'
+import { DimensionIcon, ExternalLinkIcon } from '../components/MoonIcons'
+import { colors, DOMAIN_COLORS } from '../design/tokens'
 
 const DIMENSION_KEYS = ['presence', 'bond', 'vision', 'discipline', 'depth']
-
-const DIMENSION_COLOR = {
-  presence:   '#fbbf24',
-  bond:       '#10b981',
-  vision:     '#427c42',
-  discipline: '#2563eb',
-  depth:      '#ef4444',
-}
 
 function Section({ eyebrow, heading, children, accent = 'gray' }) {
   return (
@@ -122,7 +114,7 @@ export default function SciencePage() {
             {DIMENSION_KEYS.map((key) => (
               <Card key={key} className="px-5 py-4">
                 <div className="flex items-center gap-2 mb-2">
-                  <DimensionIcon domain={key} size={16} style={{ color: DIMENSION_COLOR[key] }} />
+                  <DimensionIcon domain={key} size={16} style={{ color: DOMAIN_COLORS[key] }} />
                   <span className="text-sm font-bold" style={{ color: colors.textPrimary }}>
                     {t(`fqDomains.${key}.name`)}
                   </span>
@@ -252,11 +244,7 @@ export default function SciencePage() {
             className="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-700 hover:text-gray-900 underline transition-colors"
           >
             {t('science.openSource.cta')}
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-              <polyline points="15 3 21 3 21 9"/>
-              <line x1="10" y1="14" x2="21" y2="3"/>
-            </svg>
+            <ExternalLinkIcon size={13} />
           </a>
         </Card>
 

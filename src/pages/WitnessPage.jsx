@@ -13,7 +13,7 @@
  *   error      — network or API failure
  *
  * Scoring: all client-side, domain scores sent to API on completion.
- * Never called "observer" anywhere — always "Witness".
+ * Always "Witness" — never use the term "observer" in this file.
  */
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'

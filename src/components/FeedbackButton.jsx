@@ -9,6 +9,7 @@ import { useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { colors } from '../design/tokens'
 import { sendTranslationFeedback } from '../utils/translationFeedback'
+import { TranslationIcon } from './MoonIcons'
 
 const ISSUE_URL =
   'https://github.com/miquelmatoses/cercol/issues/new?title=Bug+report&labels=bug'
@@ -156,25 +157,7 @@ export default function FeedbackButton({ itemId = null, itemText = null }) {
           style={{ color: colors.textMuted, borderColor: colors.border }}
           className="flex items-center gap-1.5 px-3 py-2 rounded border bg-white text-xs font-medium shadow-sm hover:shadow-md transition-all"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="13"
-            height="13"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-          >
-            <path d="m5 8 6 6" />
-            <path d="m4 14 6-6 2-3" />
-            <path d="M2 5h12" />
-            <path d="M7 2h1" />
-            <path d="m22 22-5-10-5 10" />
-            <path d="M14 18h6" />
-          </svg>
+          <TranslationIcon size={13} />
           {t('feedback.suggestTranslation')}
         </button>
       )}
