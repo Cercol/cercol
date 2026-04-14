@@ -1048,6 +1048,23 @@ Exhaustive codebase audit followed by targeted refactoring. No behaviour changes
 **Grup 6 — Dead code:**
 - `CENTROIDS` object in `team-narrative.js` was defined but never referenced. Deleted (15 lines).
 
+### Phase 13.18 — Vitest + Unit Tests ✅ COMPLETE
+
+Added Vitest as the test runner and wrote 80 unit tests covering all critical scoring functions.
+
+**Test infrastructure:**
+- `vitest` added as devDependency; `"test": "vitest run"` script added to `package.json`.
+- `vitest.config.js` created (`environment: 'node'` — utils are pure JS with no browser APIs).
+- Test files in `src/utils/__tests__/`.
+
+**Coverage (80 tests, all passing):**
+- `scoreToPercent5`, `scoreLabel5` (`scoring-utils.test.js` — 9 tests): scale conversion, boundary values.
+- `computeRole`, `DOMAIN_MAP` (`role-scoring.test.js` — 12 tests): return shape, probability invariants, centroid-aligned profiles, arc membership.
+- `computeWitnessScores`, `detectDivergence` (`witness-scoring.test.js` — 16 tests): vote formula, clamping, multi-round averaging, z-score diff computation using imported NORM constants.
+- `balanceFlagForPBV`, `balanceFlagForC`, `balanceFlagForN`, `generateNarrative`, `computeGroupMeans`, `computeDimensionAnalysis` (`team-narrative.test.js` — 43 tests): all flag boundaries, narrative key selection, structural risk overrides, compensating member and suggestedRole logic.
+
+**Convention:** all expected values derived from implementation; NORM_MEAN/NORM_SD/ARC_PROBABILITY_THRESHOLD imported from source — no hardcoded constants.
+
 ### Phase 13 — Living model
 - GitHub Actions job every 28 days: update NORM_MEAN/NORM_SD at N≥200
 - At N≥300: k-means (k=12) in 5D; update centroids if divergence is systematic
