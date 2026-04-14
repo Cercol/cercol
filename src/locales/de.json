@@ -848,6 +848,8 @@
     "blindSpotsNote": "Dimensionen, in denen Selbstbericht- und Zeugenwerte um mehr als eine Standardabweichung abweichen.",
     "domainsSection": "Die fünf Dimensionen",
     "witnessSessionsSection": "Zeugen",
+    "statusDone": "Abgeschlossen",
+    "statusWaiting": "Ausstehend",
     "blindSpots": {
       "presence": {
         "selfHigher": "Du siehst dich als energetisierender und sichtbarer, als andere dich wahrnehmen. Das ist kein Fehler — es könnte bedeuten, dass deine Wirkung innerlicher ist, als du erkennst.",

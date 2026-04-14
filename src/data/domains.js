@@ -17,6 +17,13 @@ export const DOMAINS = {
 /** Canonical key order — determines encoding order for share URLs. Do not reorder. */
 export const DOMAIN_KEYS = ['presence', 'bond', 'discipline', 'depth', 'vision']
 
+/**
+ * Block order for test pages (FQ and FM).
+ * Chosen to interleave activation-style domains with inhibition-style domains
+ * so the instrument does not feel monotonic. Do not reorder.
+ */
+export const INSTRUMENT_DOMAIN_ORDER = ['depth', 'presence', 'vision', 'bond', 'discipline']
+
 /** Map from TIPI academic key → Cèrcol domain key */
 export const TIPI_TO_CERCOL = Object.fromEntries(
   Object.entries(DOMAINS).map(([cercol, meta]) => [meta.academic.tipi, cercol])

@@ -848,6 +848,8 @@
     "blindSpotsNote": "Dimensions where self-report and Witness scores differ by more than one standard deviation.",
     "domainsSection": "The five dimensions",
     "witnessSessionsSection": "Witnesses",
+    "statusDone": "Done",
+    "statusWaiting": "Waiting",
     "blindSpots": {
       "presence": {
         "selfHigher": "You see yourself as more energising and visible than others perceive you. This is not a flaw — it may mean your impact is more internal than you realise.",

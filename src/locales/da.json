@@ -848,6 +848,8 @@
     "blindSpotsNote": "Dimensioner, hvor selvrapport og vidne-scorer afviger med mere end én standardafvigelse.",
     "domainsSection": "De fem dimensioner",
     "witnessSessionsSection": "Vidner",
+    "statusDone": "Udført",
+    "statusWaiting": "Afventer",
     "blindSpots": {
       "presence": {
         "selfHigher": "Du ser dig selv som mere energigivende og synlig, end andre opfatter dig. Det er ikke en fejl — det kan betyde, at din påvirkning er mere intern, end du er klar over.",

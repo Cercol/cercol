@@ -19,12 +19,12 @@ import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { FM_DOMAIN_META } from '../data/full-moon'
 import { DOMAIN_KEYS } from '../data/domains'
+import { encodeScores, decodeScores, CLIPBOARD_FEEDBACK_MS } from '../utils/share-url'
 import { fmScoreToPercent, fmScoreLabel } from '../utils/full-moon-scoring'
 import { logResult } from '../utils/logger'
 import { computeRole } from '../utils/role-scoring'
 import { averageWitnessScores, detectDivergence, computeConvergence, computeCombinedRole } from '../utils/witness-scoring'
-import { getMyWitnessSessions } from '../lib/api'
-import { supabase } from '../lib/supabase'
+import { getMyWitnessSessions, getLatestFullMoonResult } from '../lib/api'
 import { FullMoonIcon, ShareIcon, DimensionIcon, BlindSpotsIcon } from '../components/MoonIcons'
 import { useAuth } from '../context/AuthContext'
 import { colors, DOMAIN_ICON_CLASSES } from '../design/tokens'
@@ -34,20 +34,6 @@ import { DimensionRow, FacetAccordion, ConvergenceMeter, ReportPageHeader, RoleC
 
 const MIN_WITNESSES_FOR_REPORT = 2
 
-function encodeScores(domains) {
-  const ordered = DOMAIN_KEYS.map((k) => domains[k] ?? 0)
-  return btoa(ordered.join(','))
-}
-
-function decodeScores(b64) {
-  try {
-    const values = atob(b64).split(',').map(Number)
-    if (values.length !== DOMAIN_KEYS.length) return null
-    return Object.fromEntries(DOMAIN_KEYS.map((k, i) => [k, values[i]]))
-  } catch {
-    return null
-  }
-}
 
 export default function FullMoonResultsPage() {
   const location = useLocation()
@@ -89,24 +75,17 @@ export default function FullMoonResultsPage() {
     if (authLoading) return              // wait for auth to resolve
     if (!user) { navigate('/'); return } // not authenticated → home
 
-    supabase
-      .from('results')
-      .select('presence,bond,discipline,depth,vision,facets')
-      .eq('user_id', user.id)
-      .eq('instrument', 'fullMoon')
-      .order('created_at', { ascending: false })
-      .limit(1)
-      .then(({ data }) => {
-        if (data?.length) {
-          const r = data[0]
+    getLatestFullMoonResult(user.id)
+      .then(row => {
+        if (row) {
           setLoadedDomains({
-            presence:   r.presence,
-            bond:       r.bond,
-            discipline: r.discipline,
-            depth:      r.depth,
-            vision:     r.vision,
+            presence:   row.presence,
+            bond:       row.bond,
+            discipline: row.discipline,
+            depth:      row.depth,
+            vision:     row.vision,
           })
-          setLoadedFacets(r.facets ?? null)
+          setLoadedFacets(row.facets ?? null)
         } else {
           navigate('/')
         }
@@ -150,7 +129,7 @@ export default function FullMoonResultsPage() {
     const url = `${window.location.origin}${window.location.pathname}?r=${encoded}`
     navigator.clipboard.writeText(url).then(() => {
       setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
+      setTimeout(() => setCopied(false), CLIPBOARD_FEEDBACK_MS)
     })
   }
 
@@ -233,7 +212,7 @@ export default function FullMoonResultsPage() {
               {witnessScores && (
                 <div className="flex items-center gap-4 text-xs font-medium mb-3" style={{ color: colors.textMuted }}>
                   <span className="flex items-center gap-1.5">
-                    <span className="w-3 h-1.5 rounded-sm inline-block" style={{ backgroundColor: '#9ca3af' }} />
+                    <span className="w-3 h-1.5 rounded-sm inline-block" style={{ backgroundColor: colors.selfBar }} />
                     {t('witnessResults.selfLabel')}
                   </span>
                   <span className="flex items-center gap-1.5">
@@ -368,7 +347,7 @@ export default function FullMoonResultsPage() {
                         <div key={s.id} className="flex items-center justify-between text-sm">
                           <span style={{ color: colors.textPrimary }}>{s.witness_name}</span>
                           <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">
-                            Done
+                            {t('witnessResults.statusDone')}
                           </span>
                         </div>
                       ))}
@@ -379,7 +358,7 @@ export default function FullMoonResultsPage() {
                             className="text-xs font-medium bg-gray-100 px-2 py-0.5 rounded"
                             style={{ color: colors.textMuted }}
                           >
-                            Waiting
+                            {t('witnessResults.statusWaiting')}
                           </span>
                         </div>
                       ))}

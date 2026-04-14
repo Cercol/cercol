@@ -46,7 +46,7 @@ export default function DimensionRow({
             {Number(score).toFixed(1)}
           </span>
         </div>
-        <div className="w-full h-1 rounded-full overflow-hidden" style={{ backgroundColor: '#f3f4f6' }}>
+        <div className="w-full h-1 rounded-full overflow-hidden" style={{ backgroundColor: colors.trackBg }}>
           <div
             className="h-full rounded-full"
             style={{
@@ -89,7 +89,7 @@ export default function DimensionRow({
       {/* Bar + optional witness tick */}
       <div
         className="relative w-full h-1.5 rounded-full overflow-hidden"
-        style={{ backgroundColor: '#f3f4f6' }}
+        style={{ backgroundColor: colors.trackBg }}
       >
         <div
           className="absolute inset-y-0 left-0 rounded-full transition-all duration-500"

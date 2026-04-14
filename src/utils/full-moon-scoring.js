@@ -7,6 +7,7 @@
  */
 
 import { FM_ITEMS, FM_DOMAIN_META } from '../data/full-moon'
+import { scoreToPercent5, scoreLabel5 } from './scoring-utils'
 
 /**
  * Compute domain and facet scores from raw answers.
@@ -40,25 +41,8 @@ export function computeFMScores(answers) {
   return { domains, facets }
 }
 
-/**
- * Convert a score (1–5) to 0–100% for progress bars.
- *
- * @param {number} score
- * @returns {number}
- */
-export function fmScoreToPercent(score) {
-  return Math.round(((score - 1) / 4) * 100)
-}
+/** Convert a score (1–5) to 0–100% for progress bars. */
+export const fmScoreToPercent = scoreToPercent5
 
-/**
- * Return a tier label for a given score.
- * Thresholds: <2.5 → low, 2.5–3.5 → moderate, >3.5 → high
- *
- * @param {number} score
- * @returns {'low'|'moderate'|'high'}
- */
-export function fmScoreLabel(score) {
-  if (score < 2.5) return 'low'
-  if (score <= 3.5) return 'moderate'
-  return 'high'
-}
+/** Return a tier label for a given score on a 1–5 scale. */
+export const fmScoreLabel = scoreLabel5

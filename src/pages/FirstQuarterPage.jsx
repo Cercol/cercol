@@ -11,6 +11,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { FQ_ITEMS, FQ_SCALE_LABELS } from '../data/first-quarter'
+import { INSTRUMENT_DOMAIN_ORDER } from '../data/domains'
 import { computeFQScores } from '../utils/first-quarter-scoring'
 import { useFeedbackContext } from '../context/FeedbackContext'
 import QuestionCard from '../components/QuestionCard'
@@ -19,7 +20,7 @@ import { Button, SectionLabel } from '../components/ui'
 import { colors, DOMAIN_BG_CLASSES, DOMAIN_ICON_CLASSES } from '../design/tokens'
 import { FirstQuarterIcon, ArrowLeftIcon, ArrowRightIcon, DimensionIcon } from '../components/MoonIcons'
 
-const DOMAIN_ORDER = ['depth', 'presence', 'vision', 'bond', 'discipline']
+const DOMAIN_ORDER = INSTRUMENT_DOMAIN_ORDER
 
 const BLOCKS = DOMAIN_ORDER.map((domain) =>
   FQ_ITEMS.filter((item) => item.domain === domain)

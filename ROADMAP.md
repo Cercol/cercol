@@ -1014,6 +1014,40 @@ Unified the two Full Moon pages into a single `FullMoonResultsPage` at `/full-mo
 **Part 2 — Visual unification:**
 - **Last Quarter actions row**: copy/print plain `<button>` elements replaced with `Button` component (`variant="primary"` for Copy, `variant="secondary"` for Print). Matches the same actions row pattern across all four report pages.
 
+### Phase 13.17 — Refactorització i consolidació del codebase ✅ COMPLETE
+
+Exhaustive codebase audit followed by targeted refactoring. No behaviour changes.
+
+**Grup 1 — Scientific constants centralised:**
+- `NORM_MEAN`, `NORM_SD` exported from `role-scoring.js` (authoritative). Removed local redefinitions in `witness-scoring.js` (factor-keyed) and `team-narrative.js` (domain-keyed, now derived via `DOMAIN_FACTOR` map). Eliminates desync risk when switching to empirical statistics at N≥200.
+- `ARC_PROBABILITY_THRESHOLD = 0.15` exported from `role-scoring.js`; imported in `witness-scoring.js`.
+- `DOMAIN_MAP` exported from `role-scoring.js`.
+
+**Grup 2 — Scoring utils unified:**
+- Created `src/utils/scoring-utils.js` with `scoreToPercent5` and `scoreLabel5` for 1-5 scale instruments.
+- `fqScoreToPercent` / `fqScoreLabel` and `fmScoreToPercent` / `fmScoreLabel` are now aliases — identical implementations removed.
+- Inline `pct` formula in `LastQuarterPage.jsx` replaced with `fmScoreToPercent(score)`.
+
+**Grup 3 — i18n bug + SVG + imports:**
+- `"Done"` / `"Waiting"` hardcoded English strings in `FullMoonResultsPage` replaced with `t('witnessResults.statusDone')` / `t('witnessResults.statusWaiting')`. Added translations to all 6 locales.
+- Inline SVG chevron in `LastQuarterPage` (CLAUDE.md violation) replaced with `<ChevronRightIcon size={12} />`.
+- Duplicate `from '../design/tokens'` import in `FullMoonPage` merged into one.
+
+**Grup 4 — Tokens and hardcoded colours:**
+- Added `colors.selfBar = '#9ca3af'` and `colors.trackBg = '#f3f4f6'` to `tokens.js`.
+- `DimensionRow` progress track background uses `colors.trackBg`.
+- `FullMoonResultsPage` witness legend bar uses `colors.selfBar`.
+- Radar toggle active buttons in `LastQuarterPage` now use exact brand blue (`colors.blue`) via inline style instead of approximate `bg-blue-700`.
+- Orphan ROLE_COLORS docstring block removed from `tokens.js`.
+
+**Grup 5 — Shared utilities:**
+- Created `src/utils/share-url.js` with `encodeScores`, `decodeScores`, `CLIPBOARD_FEEDBACK_MS = 2000`. Three result pages (NM, FQ, FM) and `LastQuarterPage` now use this shared module.
+- `INSTRUMENT_DOMAIN_ORDER` exported from `src/data/domains.js`; `FirstQuarterPage` and `FullMoonPage` use it instead of a local duplicate.
+- `getLatestFullMoonResult(userId)` added to `lib/api.js`. Inline Supabase query removed from `FullMoonResultsPage` (was a layer violation).
+
+**Grup 6 — Dead code:**
+- `CENTROIDS` object in `team-narrative.js` was defined but never referenced. Deleted (15 lines).
+
 ### Phase 13 — Living model
 - GitHub Actions job every 28 days: update NORM_MEAN/NORM_SD at N≥200
 - At N≥300: k-means (k=12) in 5D; update centroids if divergence is systematic

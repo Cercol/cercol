@@ -14,6 +14,7 @@ import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { FQ_DOMAIN_META } from '../data/first-quarter'
 import { DOMAIN_KEYS } from '../data/domains'
+import { encodeScores, decodeScores, CLIPBOARD_FEEDBACK_MS } from '../utils/share-url'
 import { fqScoreToPercent, fqScoreLabel } from '../utils/first-quarter-scoring'
 import { logResult } from '../utils/logger'
 import { computeRole } from '../utils/role-scoring'
@@ -24,20 +25,6 @@ import RoleProbabilityBars from '../components/RoleProbabilityBars'
 import { Card, Button, Badge, SectionLabel } from '../components/ui'
 import { DimensionRow, FacetAccordion, ReportPageHeader, RoleCard, RadarDataCard } from '../components/report'
 
-function encodeScores(domains) {
-  const ordered = DOMAIN_KEYS.map((k) => domains[k] ?? 0)
-  return btoa(ordered.join(','))
-}
-
-function decodeScores(b64) {
-  try {
-    const values = atob(b64).split(',').map(Number)
-    if (values.length !== DOMAIN_KEYS.length) return null
-    return Object.fromEntries(DOMAIN_KEYS.map((k, i) => [k, values[i]]))
-  } catch {
-    return null
-  }
-}
 
 export default function FirstQuarterResultsPage() {
   const location = useLocation()
@@ -81,7 +68,7 @@ export default function FirstQuarterResultsPage() {
     const url = `${window.location.origin}${window.location.pathname}?r=${encoded}`
     navigator.clipboard.writeText(url).then(() => {
       setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
+      setTimeout(() => setCopied(false), CLIPBOARD_FEEDBACK_MS)
     })
   }
 

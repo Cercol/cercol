@@ -1,3 +1,5 @@
+import { NORM_MEAN as NORM_MEAN_F, NORM_SD as NORM_SD_F } from './role-scoring'
+
 /**
  * team-narrative.js — deterministic narrative key selection for the Last Quarter team report.
  *
@@ -113,26 +115,11 @@ export function balanceFlagForN(z) {
   return 'balanced'
 }
 
-// Published normative statistics mirrored from role-scoring.js (Johnson 2014)
-// Used to convert z-scores back to approximate raw 1-5 scores for the radar chart.
-const NORM_MEAN = { presence: 3.3, bond: 3.9, vision: 3.7, discipline: 3.7, depth: 2.8 }
-const NORM_SD   = { presence: 0.72, bond: 0.58, vision: 0.60, discipline: 0.62, depth: 0.72 }
-
-// Theoretical centroids from SCIENCE.md (order: E=presence, A=bond, O=vision, C=discipline, N=depth)
-const CENTROIDS = {
-  R01: { e: +1.0, a: +1.0, o:  0.0, c:  0.0, n: -0.5 }, // Dolphin
-  R02: { e: +1.0, a: -1.0, o:  0.0, c: +0.5, n: +0.3 }, // Wolf
-  R03: { e: -1.0, a: +1.0, o:  0.0, c:  0.0, n: -0.8 }, // Elephant
-  R04: { e: -1.0, a: -1.0, o:  0.0, c: +0.8, n: -0.5 }, // Owl
-  R05: { e: +1.0, a:  0.0, o: +1.0, c: -0.3, n: -0.5 }, // Eagle
-  R06: { e: +1.0, a:  0.0, o: -1.0, c: +0.8, n: -0.3 }, // Falcon
-  R07: { e: -1.0, a:  0.0, o: +1.0, c: -0.8, n:  0.0 }, // Octopus
-  R08: { e: -1.0, a:  0.0, o: -1.0, c: +1.0, n: -0.8 }, // Tortoise
-  R09: { e:  0.0, a: +1.0, o: +1.0, c: +0.8, n: -0.5 }, // Bee
-  R10: { e:  0.0, a: +1.0, o: -1.0, c: +0.5, n: -0.8 }, // Bear
-  R11: { e:  0.0, a: -1.0, o: +1.0, c: -0.8, n: +0.3 }, // Fox
-  R12: { e:  0.0, a: -1.0, o: -1.0, c: +0.8, n: -0.3 }, // Badger
-}
+// Normative statistics imported from role-scoring.js (single source of truth).
+// Converted here from factor-keyed (E/A/O/C/N) to domain-keyed for use in zscoresToRaw.
+const DOMAIN_FACTOR = { presence: 'E', bond: 'A', vision: 'O', discipline: 'C', depth: 'N' }
+const NORM_MEAN = Object.fromEntries(Object.entries(DOMAIN_FACTOR).map(([d, f]) => [d, NORM_MEAN_F[f]]))
+const NORM_SD   = Object.fromEntries(Object.entries(DOMAIN_FACTOR).map(([d, f]) => [d, NORM_SD_F[f]]))
 
 // Maps dimension key → groupMeans shorthand key
 const DIM_TO_MEANS_KEY = { presence: 'p', bond: 'b', vision: 'v', discipline: 'c', depth: 'n' }

@@ -30,26 +30,32 @@ const CENTROIDS = {
 // ── OCEAN factor keys and domain mapping ──────────────────────────────────
 // Order matches CENTROIDS columns: E, A, O, C, N
 const FACTOR_KEYS = ['E', 'A', 'O', 'C', 'N']
-const DOMAIN_MAP  = { E: 'presence', A: 'bond', O: 'vision', C: 'discipline', N: 'depth' }
+export const DOMAIN_MAP  = { E: 'presence', A: 'bond', O: 'vision', C: 'discipline', N: 'depth' }
 
 // ── Published normative statistics for IPIP-NEO (1-5 scale) ───────────────
 // Source: Johnson (2014) doi:10.1016/j.jrp.2014.05.003;
 //         Maples-Keller et al. (2019) doi:10.1080/00223891.2018.1467425
 // Approximate cross-study means for general adult samples.
-const NORM_MEAN = {
+// These are the authoritative normative statistics for the whole codebase.
+// Import NORM_MEAN and NORM_SD from this file — never redefine them elsewhere.
+export const NORM_MEAN = {
   E: 3.3,  // Presence (Extraversion)
   A: 3.9,  // Bond (Agreeableness)
   O: 3.7,  // Vision (Openness)
   C: 3.7,  // Discipline (Conscientiousness)
   N: 2.8,  // Depth (Neuroticism)
 }
-const NORM_SD = {
+export const NORM_SD = {
   E: 0.72,
   A: 0.58,
   O: 0.60,
   C: 0.62,
   N: 0.72,
 }
+
+// ── Arc role probability threshold ────────────────────────────────────────
+// A role is included in the arc if its probability exceeds this value.
+export const ARC_PROBABILITY_THRESHOLD = 0.15
 
 // ── Softmax over negated distances ────────────────────────────────────────
 function softmax(values) {
@@ -92,7 +98,7 @@ export function computeRole(domainScores) {
   const role = roles.reduce((best, r) =>
     euclidean(z, CENTROIDS[r]) < euclidean(z, CENTROIDS[best]) ? r : best
   )
-  const arc = roles.filter(r => probMap[r] > 0.15 && r !== role)
+  const arc = roles.filter(r => probMap[r] > ARC_PROBABILITY_THRESHOLD && r !== role)
 
   return { role, arc, probabilities: probMap }
 }

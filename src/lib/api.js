@@ -161,3 +161,22 @@ export async function declineGroupInvitation(groupId) {
 export async function getGroupReportData(groupId) {
   return authFetch(`/groups/${groupId}/report-data`)
 }
+
+// ── Results ───────────────────────────────────────────────────────────────
+
+/**
+ * getLatestFullMoonResult — fetch the most recent fullMoon result row for a user.
+ * Returns null if no result exists.
+ * @param {string} userId
+ * @returns {Promise<{presence,bond,discipline,depth,vision,facets}|null>}
+ */
+export async function getLatestFullMoonResult(userId) {
+  const { data } = await supabase
+    .from('results')
+    .select('presence,bond,discipline,depth,vision,facets')
+    .eq('user_id', userId)
+    .eq('instrument', 'fullMoon')
+    .order('created_at', { ascending: false })
+    .limit(1)
+  return data?.length ? data[0] : null
+}

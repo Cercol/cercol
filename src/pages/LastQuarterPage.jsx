@@ -13,7 +13,9 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
 import { getGroupReportData } from '../lib/api'
+import { CLIPBOARD_FEEDBACK_MS } from '../utils/share-url'
 import { computeRole } from '../utils/role-scoring'
+import { fmScoreToPercent } from '../utils/full-moon-scoring'
 import {
   computeGroupMeans,
   computeDimensionAnalysis,
@@ -23,7 +25,7 @@ import {
   balanceFlagForN,
   zscoresToRaw,
 } from '../utils/team-narrative'
-import { RoleIcon, LastQuarterIcon, DimensionIcon } from '../components/MoonIcons'
+import { RoleIcon, LastQuarterIcon, DimensionIcon, ChevronRightIcon } from '../components/MoonIcons'
 import { DimensionRow, ReportPageHeader, RadarDataCard } from '../components/report'
 import RadarChart from '../components/RadarChart'
 import { Card, SectionLabel, Button } from '../components/ui'
@@ -85,7 +87,7 @@ function DomainRows({ scores, t }) {
               domainKey={key}
               domainName={t(`fmDomains.${key}.name`)}
               score={score}
-              pct={Math.round(((score - 1) / 4) * 100)}
+              pct={fmScoreToPercent(score)}
               compact
             />
           </div>
@@ -182,12 +184,10 @@ function BalanceDimRow({ dim, meanZ, flag, topMember, compensatingMember, sugges
               className="text-gray-400 hover:text-gray-600 transition-colors p-0.5"
               aria-label={expanded ? 'collapse' : 'expand'}
             >
-              <svg
-                className={`w-3 h-3 transition-transform duration-150 ${expanded ? 'rotate-90' : ''}`}
-                viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}
-              >
-                <path d="M9 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+              <ChevronRightIcon
+                size={12}
+                className={`transition-transform duration-150 ${expanded ? 'rotate-90' : ''}`}
+              />
             </button>
           )}
         </div>
@@ -324,7 +324,7 @@ export default function LastQuarterPage() {
   function handleCopyLink() {
     navigator.clipboard.writeText(window.location.href).then(() => {
       setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
+      setTimeout(() => setCopied(false), CLIPBOARD_FEEDBACK_MS)
     })
   }
 
@@ -411,9 +411,10 @@ export default function LastQuarterPage() {
                     onClick={() => setRadarMode('teamAverage')}
                     className={`text-xs font-semibold px-3 py-1.5 transition-colors ${
                       radarMode === 'teamAverage'
-                        ? 'bg-blue-700 text-white'
+                        ? 'text-white'
                         : 'bg-white text-gray-600 hover:bg-gray-50'
                     }`}
+                    style={radarMode === 'teamAverage' ? { backgroundColor: colors.blue } : undefined}
                   >
                     {t('lastQuarter.toggleTeamAverage')}
                   </button>
@@ -422,9 +423,10 @@ export default function LastQuarterPage() {
                     disabled={!selfScores}
                     className={`text-xs font-semibold px-3 py-1.5 transition-colors border-l border-gray-200 disabled:opacity-40 ${
                       radarMode === 'myProfile'
-                        ? 'bg-blue-700 text-white'
+                        ? 'text-white'
                         : 'bg-white text-gray-600 hover:bg-gray-50'
                     }`}
+                    style={radarMode === 'myProfile' ? { backgroundColor: colors.blue } : undefined}
                   >
                     {t('lastQuarter.toggleMyProfile')}
                   </button>

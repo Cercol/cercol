@@ -21,7 +21,7 @@
  */
 
 import { WITNESS_ADJECTIVES, ADJECTIVES_BY_FACTOR, FACTOR_TO_DOMAIN, FACTORS } from '../data/witness-adjectives'
-import { computeRole } from './role-scoring'
+import { computeRole, NORM_MEAN, NORM_SD, ARC_PROBABILITY_THRESHOLD } from './role-scoring'
 
 // ── Fisher-Yates shuffle ───────────────────────────────────────────────────
 function shuffle(arr) {
@@ -153,9 +153,7 @@ export function computeInterimRole(rounds) {
  * @returns {Array} of { domain, selfScore, witnessScore, diff } sorted by |diff| desc
  */
 
-// Published normative statistics (same as role-scoring.js)
-const NORM_MEAN = { E: 3.3, A: 3.9, C: 3.7, N: 2.8, O: 3.7 }
-const NORM_SD   = { E: 0.72, A: 0.58, C: 0.62, N: 0.72, O: 0.60 }
+// NORM_MEAN and NORM_SD are imported from role-scoring.js (single source of truth)
 const DOMAIN_TO_FACTOR = { presence: 'E', bond: 'A', discipline: 'C', depth: 'N', vision: 'O' }
 
 export function detectDivergence(selfDomains, witnessDomains, threshold = 0.8) {
@@ -222,7 +220,7 @@ export function computeCombinedRole(selfResult, witnessResult) {
   const role = entries[0][0]
 
   // Arc: combined probability > 15%, excluding primary
-  const arc = entries.filter(([r, p]) => r !== role && p > 0.15).map(([r]) => r)
+  const arc = entries.filter(([r, p]) => r !== role && p > ARC_PROBABILITY_THRESHOLD).map(([r]) => r)
 
   return { role, arc, probabilities: combined }
 }

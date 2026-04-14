@@ -848,6 +848,8 @@
     "blindSpotsNote": "Dimensions on l'autoinforme i el Testimoni difereixen en més d'una desviació estàndard.",
     "domainsSection": "Les cinc dimensions",
     "witnessSessionsSection": "Testimonis",
+    "statusDone": "Completat",
+    "statusWaiting": "Pendent",
     "blindSpots": {
       "presence": {
         "selfHigher": "Et veus com algú més energitzant i visible del que et perceben els altres. No és un defecte — pot significar que el teu impacte és més intern del que t'adones.",

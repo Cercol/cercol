@@ -17,6 +17,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { FM_ITEMS, FM_SCALE_LABELS } from '../data/full-moon'
+import { INSTRUMENT_DOMAIN_ORDER } from '../data/domains'
 import { computeFMScores } from '../utils/full-moon-scoring'
 import { useFeedbackContext } from '../context/FeedbackContext'
 import { useAuth } from '../context/AuthContext'
@@ -25,11 +26,10 @@ import { createCheckoutSession } from '../lib/api'
 import QuestionCard from '../components/QuestionCard'
 import ProgressBar from '../components/ProgressBar'
 import { Card, Button, SectionLabel } from '../components/ui'
-import { colors } from '../design/tokens'
+import { colors, DOMAIN_BG_CLASSES, DOMAIN_ICON_CLASSES } from '../design/tokens'
 import { FullMoonIcon, ArrowLeftIcon, ArrowRightIcon, DimensionIcon } from '../components/MoonIcons'
-import { DOMAIN_BG_CLASSES, DOMAIN_ICON_CLASSES } from '../design/tokens'
 
-const DOMAIN_ORDER = ['depth', 'presence', 'vision', 'bond', 'discipline']
+const DOMAIN_ORDER = INSTRUMENT_DOMAIN_ORDER
 
 const BLOCKS = DOMAIN_ORDER.map((domain) =>
   FM_ITEMS.filter((item) => item.domain === domain)

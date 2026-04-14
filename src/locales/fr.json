@@ -848,6 +848,8 @@
     "blindSpotsNote": "Dimensions où les scores d'auto-évaluation et de témoins diffèrent de plus d'un écart-type.",
     "domainsSection": "Les cinq dimensions",
     "witnessSessionsSection": "Témoins",
+    "statusDone": "Terminé",
+    "statusWaiting": "En attente",
     "blindSpots": {
       "presence": {
         "selfHigher": "Vous vous voyez comme plus énergisant·e et visible que les autres ne vous perçoivent. Ce n'est pas un défaut — cela peut signifier que votre impact est plus interne que vous ne le réalisez.",

@@ -848,6 +848,8 @@
     "blindSpotsNote": "Dimensiones donde las puntuaciones de autoinforme y de testigos difieren en más de una desviación estándar.",
     "domainsSection": "Las cinco dimensiones",
     "witnessSessionsSection": "Testigos",
+    "statusDone": "Completado",
+    "statusWaiting": "Pendiente",
     "blindSpots": {
       "presence": {
         "selfHigher": "Te ves a ti mismo/a como más energizante y visible de lo que te perciben los demás. No es un defecto — puede significar que tu impacto es más interno de lo que crees.",

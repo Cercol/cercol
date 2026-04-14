@@ -30,6 +30,10 @@ export const colors = {
   arcBar:      '#0047ba',   // brand blue — arc role bar fill
   arcLabel:    '#0047ba',   // brand blue — arc role label text
 
+  // Report UI
+  selfBar:     '#9ca3af',   // gray-400 — self-report bar in witness legend
+  trackBg:     '#f3f4f6',   // gray-100 — background track for progress bars
+
   // Big Five dimension colors (radar chart)
   openness:          '#0047ba',   // Vision    → blue
   conscientiousness: '#f1c22f',   // Discipline → yellow
@@ -48,12 +52,6 @@ export const spacing = {
   pageMax: '720px',   // max content width for doc pages
 }
 
-/**
- * ROLE_COLORS — one distinct color per role (R01–R12).
- * Hues are evenly distributed across the full color wheel (30° apart),
- * all at similar saturation/darkness so each is legible on white.
- * Brand anchors: R01 uses brand red, R05 uses brand green.
- */
 /**
  * DOMAIN_COLORS — hex bar fill for each Big Five domain.
  * Used in DimensionRow, FacetAccordion, MyResultsPage, SciencePage, etc.
