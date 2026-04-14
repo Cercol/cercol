@@ -33,7 +33,7 @@ export default function RoleProbabilityBars({ result, columns = 1, bare = false 
           const isArc      = arc.includes(r)
           const pct        = Math.round(prob * 100)
 
-          const barColor   = isPrimary ? colors.primary : isArc ? colors.arcBar : '#d1d5db'
+          const barColor   = isPrimary ? colors.primary : isArc ? colors.arcBar : colors.border
           const labelColor = isPrimary ? colors.textPrimary : isArc ? colors.arcLabel : colors.textMuted
           const rowOpacity = isPrimary ? 1 : isArc ? 0.7 : 0.45
 

@@ -12,9 +12,9 @@
 export default function Badge({ children, variant = 'default', className = '' }) {
   const variants = {
     default: 'bg-gray-100 text-gray-700',
-    beta:    'bg-[#f1c22f] text-[#111111]',
-    paid:    'bg-[#0047ba] text-white',
-    free:    'bg-[#427c42] text-white',
+    beta:    'bg-[var(--mm-color-yellow)] text-[var(--mm-color-black)]',
+    paid:    'bg-[var(--mm-color-blue)] text-white',
+    free:    'bg-[var(--mm-color-green)] text-white',
   }
 
   return (

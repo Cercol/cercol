@@ -7,11 +7,13 @@
  *
  * Padding, shadow, overflow are passed via className.
  */
+import { colors } from '../../design/tokens'
+
 const ACCENT_COLORS = {
-  red:    '#cf3339',
-  green:  '#427c42',
-  yellow: '#f1c22f',
-  blue:   '#0047ba',
+  red:    colors.red,
+  green:  colors.green,
+  yellow: colors.yellow,
+  blue:   colors.blue,
 }
 
 export default function Card({ children, accent, className = '' }) {

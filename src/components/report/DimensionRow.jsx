@@ -15,7 +15,7 @@ import { colors, DOMAIN_COLORS, DOMAIN_ICON_CLASSES } from '../../design/tokens'
 const LABEL_STYLES = {
   low:      'bg-gray-100 text-gray-600',
   moderate: 'bg-blue-100 text-blue-700',
-  high:     'bg-[#0047ba] text-white',
+  high:     'bg-[var(--mm-color-blue)] text-white',
 }
 
 export default function DimensionRow({

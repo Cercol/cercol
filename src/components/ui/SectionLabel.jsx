@@ -6,9 +6,9 @@
  *   Maps to brand palette. Default: gray.
  */
 const COLOR_MAP = {
-  blue:  'text-[#0047ba]',
-  red:   'text-[#cf3339]',
-  green: 'text-[#427c42]',
+  blue:  'text-[var(--mm-color-blue)]',
+  red:   'text-[var(--mm-color-red)]',
+  green: 'text-[var(--mm-color-green)]',
   amber: 'text-amber-500',
   gray:  'text-gray-400',
 }

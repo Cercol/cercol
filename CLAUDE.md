@@ -17,12 +17,15 @@ All scoring algorithms and item sources are documented and citable.
 - Supabase: anonymous result logging (anon key) + user auth + profiles (service_role key, backend only)
 - All scoring happens client-side in JavaScript
 
-## Design system
-All colors, fonts and spacing live in `src/design/tokens.js`.
-NEVER hardcode colors or fonts anywhere else.
-Always import from tokens.
+## Design system (mm-design)
+All design tokens come from **mm-design** (https://github.com/miquelmatoses/mm-design), installed as an npm git dependency.
+`src/design/tokens.js` is a re-export shim — it re-exports everything from mm-design. NEVER add local token values there.
+`src/components/MoonIcons.jsx` is a re-export shim — it re-exports from mm-design. NEVER create new icons in this repo.
+If a new icon is needed, add it to mm-design first (SVG + React export), then it appears here automatically.
+NEVER hardcode hex color values. Always import from tokens or use `var(--mm-*)` CSS custom properties.
 Brand palette: `#cf3339` red · `#0047ba` blue · `#f1c22f` yellow · `#427c42` green.
 Typography: Playfair Display (headings/display) + Roboto (body/UI).
+README badges must use mm-design palette: `cf3339`, `0047ba`, `f1c22f`, `427c42`, `111111`.
 
 ## Code conventions
 - Comments and docstrings always in English

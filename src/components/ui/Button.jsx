@@ -26,9 +26,9 @@ export default function Button({
   }
 
   const variants = {
-    primary:   'bg-[#0047ba] text-white hover:opacity-90 disabled:opacity-50',
-    secondary: 'bg-white border border-[#0047ba] text-[#0047ba] hover:bg-[#0047ba] hover:text-white disabled:opacity-50',
-    ghost:     'text-[#0047ba] hover:underline disabled:opacity-50',
+    primary:   'bg-[var(--mm-color-blue)] text-white hover:opacity-90 disabled:opacity-50',
+    secondary: 'bg-white border border-[var(--mm-color-blue)] text-[var(--mm-color-blue)] hover:bg-[var(--mm-color-blue)] hover:text-white disabled:opacity-50',
+    ghost:     'text-[var(--mm-color-blue)] hover:underline disabled:opacity-50',
   }
 
   return (

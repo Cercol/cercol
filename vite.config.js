@@ -6,4 +6,13 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   base: '/',
+  optimizeDeps: {
+    include: ['mm-design/icons/react/MoonIcons.jsx'],
+  },
+  ssr: {
+    noExternal: ['mm-design'],
+  },
+  resolve: {
+    dedupe: ['react', 'react-dom'],
+  },
 })

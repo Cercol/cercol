@@ -31,7 +31,7 @@ export default function LikertScale({ value, onChange, scalePoints = 5, scaleLab
                 'w-full flex items-center gap-3 px-4 py-3 rounded border text-sm font-medium transition-all',
                 isSelected
                   ? 'shadow-sm'
-                  : 'bg-white border-gray-200 text-gray-700 hover:border-[#0047ba] hover:bg-[#e8eef8]',
+                  : 'bg-white border-gray-200 text-gray-700 hover:border-[var(--mm-color-blue)] hover:bg-[var(--mm-color-interactive-hover-bg)]',
               ].join(' ')}
               style={isSelected ? {
                 backgroundColor: colors.blue,
@@ -64,7 +64,7 @@ export default function LikertScale({ value, onChange, scalePoints = 5, scaleLab
                   'flex-1 flex flex-col items-center py-3 rounded border text-sm font-semibold transition-all',
                   isSelected
                     ? 'shadow-sm'
-                    : 'bg-white border-gray-200 text-gray-600 hover:border-[#0047ba] hover:bg-[#e8eef8]',
+                    : 'bg-white border-gray-200 text-gray-600 hover:border-[var(--mm-color-blue)] hover:bg-[var(--mm-color-interactive-hover-bg)]',
                 ].join(' ')}
                 style={isSelected ? {
                   backgroundColor: colors.blue,
