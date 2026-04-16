@@ -1105,6 +1105,43 @@ Hierarchical empirical norm system with automatic 28-day background refresh.
 - `hello@cercol.team` receiving: Porkbun email forwarding → Gmail.
 - `hello@cercol.team` sending: Resend SMTP relay configured in Gmail "Send mail as".
 
+### Phase 13.23 — k-means centroid update
+
+Triggered when N≥300 fullMoon results in DB. Run k-means (k=12) in 5D z-score space, compare computed centroids against current `_ROLE_CENTROIDS`, update if divergence is systematic. Admin dashboard Norms tab will expose the comparison.
+
+---
+
+## Phase 14 — Onboarding
+
+Guided first-run experience for new users.
+
+- Welcome screen / modal on first visit explaining the three instruments and the suggested order (New Moon → First Quarter → Full Moon)
+- Progress indicator: shows which instruments the user has completed and what comes next
+- Contextual nudges: after completing New Moon, prompt towards First Quarter; after First Quarter, towards Full Moon
+- Empty state improvements on My Results page when no instruments are done yet
+- Optional: short animated intro sequence on the homepage for anonymous visitors
+
+## Phase 15 — Stripe paywall
+
+Define and enforce a premium tier beyond the current checkout skeleton.
+
+- Define which features are gated: e.g. Full Moon instrument, group creation, Witness Cèrcol, PDF export
+- Implement frontend guards: locked UI with upgrade prompt for non-premium users
+- Backend enforcement on gated endpoints
+- Upgrade flow: clear pricing page, one-click checkout (already wired), success/cancel handling
+- Admin dashboard: premium conversion metrics
+
+## Phase 16 — HR Suite
+
+Tools for companies and HR teams to use Cèrcol at scale.
+
+- Company account: admin can manage a team workspace with multiple groups
+- Bulk member import (CSV upload)
+- HR-specific group report: aggregated team profile, role distribution chart, hiring fit analysis
+- Candidate assessment flow: invite external candidates to complete instruments, review results in a dedicated pipeline view
+- White-label option: custom company name shown to candidates during assessment
+- Usage analytics for HR admins: completion rates, time-to-complete, drop-off points
+
 ---
 
 ## Roadmap maintenance rules
