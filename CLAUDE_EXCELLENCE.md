@@ -357,9 +357,9 @@ L'`index.html` no té cap capçalera CSP ni meta tag equivalent. Tota la càrreg
 | `zscoresToRaw` | Conversió inversa usada per mostrar dades al grup |
 | `_compute_role` (Python) | Si es corregissen els centroids, hauria de tenir tests propis |
 
-### 🔵 Sense Python tests al backend
+### ✅ ~~🔵 Sense Python tests al backend~~ — RESOLT (fase 13.19)
 
-`api/main.py` és el codi més crític des del punt de vista de la seguretat (JWT, Stripe webhooks, dades de grup) i no té cap test automatitzat. Cap endpoint verificat per a comportament correcte ni regressió.
+`api/scoring.py` (nou mòdul pur, sense dependències externes) conté `_scores_to_zscores` i `_compute_role`. `api/tests/test_scoring.py` cobreix 13 casos: valors al centroide, ±1 SD, dominis absents, None, propietat de veí més proper garantida i 50 vectors aleatoris. Tests passen en CI (job `test-backend`).
 
 ---
 
@@ -428,7 +428,7 @@ Un error no capturat en qualsevol component renderitza una pantalla blanca sense
 
 ## Resum executiu per prioritat
 
-> **Estat: fase 13.19 QUASI COMPLETAT** — 31/32 ítems resolts, 1 pendent (#30 tests Python).
+> **Estat: fase 13.19 COMPLETAT** — 32/32 ítems resolts.
 
 ```
 🔴 CRÍTICS (3)
@@ -467,7 +467,7 @@ Un error no capturat en qualsevol component renderitza una pantalla blanca sense
   27. ✅ Gradient ID hardcodat (conflicte si 2 radars)
   28. ✅ useAuth sense guarda de context
   29. ✅ WitnessRow key per index
-  30. ⏳ Sense tests Python al backend  [fase futura]
+  30. ✅ Sense tests Python al backend  → scoring.py + 13 tests pytest
   31. ✅ Constants màgiques de llindar no exportades
   32. ✅ colors.blue + '18' hack d'opacitat
 ```
