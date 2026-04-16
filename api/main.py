@@ -35,6 +35,7 @@ from scoring import (
     _NORM, _ROLE_CENTROIDS, _compute_role, _scores_to_zscores,
     DOMAINS, NORM_MIN_SAMPLE, NORM_REFRESH_DAYS, resolve_norm,
 )
+from emails import send_witness_assigned, send_witness_completed, send_group_invitation
 
 
 # ---------------------------------------------------------------------------
@@ -579,11 +580,20 @@ async def create_witness_sessions(
                 witness.name.strip(),
                 witness.email.strip() if witness.email else None,
             )
+            link = f"{_FRONTEND_URL}/witness/{token}"
             created.append({
                 "token": token,
                 "name":  witness.name.strip(),
-                "link":  f"{_FRONTEND_URL}/witness/{token}",
+                "link":  link,
             })
+            # Email the witness their link if we have their address
+            if witness.email and witness.email.strip():
+                asyncio.create_task(send_witness_assigned(
+                    witness_name    = witness.name.strip(),
+                    witness_email   = witness.email.strip(),
+                    subject_display = subject_display,
+                    link            = link,
+                ))
     return created
 
 
@@ -640,6 +650,24 @@ async def complete_witness_session(
             "UPDATE witness_sessions SET completed_at = $1, witness_user_id = $2 WHERE id = $3",
             datetime.now(timezone.utc), witness_user_id, session_id,
         )
+        # Fetch subject info to notify them by email
+        subject_row = await conn.fetchrow(
+            """
+            SELECT ws.witness_name, ws.subject_display, p.email AS subject_email
+            FROM witness_sessions ws
+            JOIN profiles p ON p.id = ws.subject_id
+            WHERE ws.id = $1
+            """,
+            session_id,
+        )
+
+    if subject_row and subject_row["subject_email"]:
+        asyncio.create_task(send_witness_completed(
+            subject_email = subject_row["subject_email"],
+            subject_name  = subject_row["subject_display"] or "",
+            witness_name  = subject_row["witness_name"],
+        ))
+
     return {"ok": True}
 
 
@@ -729,7 +757,19 @@ async def create_group(
         )
 
         errors = []
-        creator_email = (user.get("email") or "").lower()
+        invited_emails = []   # collect for post-commit email sending
+        creator_name   = user.get("email") or "Someone"
+        creator_email  = (user.get("email") or "").lower()
+
+        # Use creator's display name if available
+        creator_profile = await conn.fetchrow(
+            "SELECT first_name, last_name FROM profiles WHERE id = $1", user_id
+        )
+        if creator_profile:
+            full = f"{creator_profile['first_name'] or ''} {creator_profile['last_name'] or ''}".strip()
+            if full:
+                creator_name = full
+
         for raw_email in body.emails:
             email = raw_email.strip().lower()
             if not email or email == creator_email:
@@ -757,8 +797,17 @@ async def create_group(
                         """,
                         group_id, email,
                     )
+                invited_emails.append(email)
             except Exception:
                 errors.append(email)
+
+    # Send invitation emails outside the DB transaction (fire-and-forget)
+    for email in invited_emails:
+        asyncio.create_task(send_group_invitation(
+            invited_email = email,
+            group_name    = name,
+            inviter_name  = creator_name,
+        ))
 
     return {"id": str(group_id), "name": name, "errors": errors}
 
