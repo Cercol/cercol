@@ -1109,6 +1109,10 @@ Hierarchical empirical norm system with automatic 28-day background refresh.
 
 Triggered when N≥300 fullMoon results in DB. Run k-means (k=12) in 5D z-score space, compare computed centroids against current `_ROLE_CENTROIDS`, update if divergence is systematic. Admin dashboard Norms tab will expose the comparison.
 
+### Phase 13.24 — Home page wallpaper density ✅ COMPLETE
+
+Increased decorative animal icon count from 22 to 40 (`ICON_DEFS` — 3× full set of 12 + 4). Tightened collision radius (`÷20` instead of `÷13`) and gap multiplier (`1.02×` instead of `1.05×`) so all 40 icons pack densely in the corners and edges around the card grid. Icons remain uniform size (80px) and always upright (no rotation).
+
 ---
 
 ## Phase 14 — Onboarding
