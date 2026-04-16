@@ -1065,7 +1065,19 @@ Added Vitest as the test runner and wrote 80 unit tests covering all critical sc
 
 **Convention:** all expected values derived from implementation; NORM_MEAN/NORM_SD/ARC_PROBABILITY_THRESHOLD imported from source — no hardcoded constants.
 
-### Phase 13 — Living model
+### Phase 13.19 — Claude Excellence
+
+Full systematic resolution of all issues identified in CLAUDE_EXCELLENCE.md, prioritised by severity:
+
+**🔴 Crítics (3):** Backend centroids correctes + algorisme consistent amb frontend; eliminar `_NORM` duplicat del backend (única font de veritat transversal); unificar filtre de membres a `computeGroupMeans` i `computeDimensionAnalysis`.
+
+**🟠 Greus (8):** CORS HTTPS-only; JWKS cache amb TTL; rate limit a GET /witness/session/{token}; migrar consultes Supabase directes de MyResultsPage/FullMoonPage/WitnessSetupPage a lib/api.js; convertir helpers `_supabase_*` a async (httpx); eliminar N+1 amb consultes `IN`; reparar lookup d'email a create_group; afegir CI/CD pipeline (.github/workflows/).
+
+**🟡 Importants (13):** Unificar computeFQScores/computeFMScores; extreure hook useInstrumentKeyboard; extreure hook useScaleLabels; afegir `...rest` a Button; corregir navigate() durant render; corregir DIM_TO_CENTROID dead code; corregir i18n violations; corregir hardcoded colors; eliminar redirect innecessari.
+
+**🔵 Qualitat (8):** CSP header; ErrorBoundary; gradient ID únic; useAuth guard; WitnessRow key estable; tests Python; tests FQScores/FMScores/buildRounds; exportar constants de llindar.
+
+### Phase 13.20 — Living model
 - GitHub Actions job every 28 days: update NORM_MEAN/NORM_SD at N≥200
 - At N≥300: k-means (k=12) in 5D; update centroids if divergence is systematic
 - Internal validation dashboard (read-only, authenticated)

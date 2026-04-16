@@ -13,7 +13,7 @@ All scoring algorithms and item sources are documented and citable.
 ## Stack
 - React + Vite (frontend — GitHub Pages, cercol.team)
 - Tailwind CSS
-- FastAPI + uvicorn (backend — Railway, api.cercol.team) [Phase 4+]
+- FastAPI + uvicorn (backend — Hetzner VPS 188.245.60.20, api.cercol.team, systemd + Caddy) [Phase 4+]
 - Supabase: anonymous result logging (anon key) + user auth + profiles (service_role key, backend only)
 - All scoring happens client-side in JavaScript
 
