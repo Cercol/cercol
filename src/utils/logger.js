@@ -1,20 +1,20 @@
-import { supabase } from '../lib/supabase'
+import { logResult as apiLogResult } from '../lib/api'
 
+/**
+ * logResult — log an instrument result to the backend.
+ * Attaches auth token automatically if the user is signed in.
+ * The userId parameter is accepted for backward compatibility but is no longer
+ * needed — the backend reads the user ID from the JWT.
+ */
 export async function logResult(domainScores, language, instrument, userId = null, facetScores = null) {
   try {
-    const payload = {
-      language,
+    await apiLogResult({
       instrument,
-      presence:   domainScores.presence,
-      bond:       domainScores.bond,
-      discipline: domainScores.discipline,
-      depth:      domainScores.depth,
-      vision:     domainScores.vision,
-    }
-    if (userId) payload.user_id = userId
-    if (facetScores) payload.facets = facetScores
-    await supabase.from('results').insert(payload)
+      language,
+      ...domainScores,
+      facets: facetScores ?? undefined,
+    })
   } catch (_) {
-    // Silently ignore
+    // Silently ignore — result logging must never block the user
   }
 }

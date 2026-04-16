@@ -14,6 +14,7 @@
  */
 import { createContext, useContext, useEffect, useState, useCallback } from 'react'
 import { supabase } from '../lib/supabase'
+import { getMyProfile } from '../lib/api'
 
 const AuthContext = createContext(null)
 
@@ -24,12 +25,12 @@ export function AuthProvider({ children }) {
 
   const fetchProfile = useCallback(async (userId) => {
     if (!userId) { setProfile(null); return }
-    const { data } = await supabase
-      .from('profiles')
-      .select('id, first_name, last_name, country, native_language, premium')
-      .eq('id', userId)
-      .single()
-    setProfile(data ?? null)
+    try {
+      const data = await getMyProfile()
+      setProfile(data ?? null)
+    } catch {
+      setProfile(null)
+    }
   }, [])
 
   useEffect(() => {

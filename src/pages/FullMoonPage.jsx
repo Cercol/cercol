@@ -21,8 +21,7 @@ import { INSTRUMENT_DOMAIN_ORDER } from '../data/domains'
 import { computeFMScores } from '../utils/full-moon-scoring'
 import { useFeedbackContext } from '../context/FeedbackContext'
 import { useAuth } from '../context/AuthContext'
-import { supabase } from '../lib/supabase'
-import { createCheckoutSession } from '../lib/api'
+import { createCheckoutSession, getMyProfile, getMyResults } from '../lib/api'
 import QuestionCard from '../components/QuestionCard'
 import ProgressBar from '../components/ProgressBar'
 import { Card, Button, SectionLabel } from '../components/ui'
@@ -73,24 +72,16 @@ export default function FullMoonPage() {
     let cancelled = false
 
     async function checkPremium(attempt = 0) {
-      const { data } = await supabase
-        .from('profiles')
-        .select('premium')
-        .eq('id', user.id)
-        .single()
+      const profile = await getMyProfile().catch(() => null)
 
       if (cancelled) return
 
-      if (data?.premium) {
+      if (profile?.premium) {
         // Check if the user already has a Full Moon result
-        const { data: existing } = await supabase
-          .from('results')
-          .select('id')
-          .eq('user_id', user.id)
-          .eq('instrument', 'fullMoon')
-          .limit(1)
+        const results = await getMyResults().catch(() => [])
         if (cancelled) return
-        setGateState(existing?.length ? 'completed' : 'ready')
+        const hasFullMoon = results.some(r => r.instrument === 'fullMoon')
+        setGateState(hasFullMoon ? 'completed' : 'ready')
         return
       }
 

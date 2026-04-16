@@ -1,14 +1,12 @@
 /**
  * MyResultsPage — shows the authenticated user's past results.
  * Redirects to /auth if not signed in.
- * Fetches from Supabase using the anon client; RLS filters to own rows only.
  */
 import { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
-import { supabase } from '../lib/supabase'
-import { getMyWitnessContributions } from '../lib/api'
+import { getMyResults, getMyWitnessContributions } from '../lib/api'
 import { DOMAIN_KEYS } from '../data/domains'
 import { Card, Button, SectionLabel } from '../components/ui'
 import { ChevronRightIcon, DimensionIcon } from '../components/MoonIcons'
@@ -133,14 +131,9 @@ export default function MyResultsPage() {
       navigate('/auth', { replace: true })
       return
     }
-    supabase
-      .from('results')
-      .select('*')
-      .order('created_at', { ascending: false })
-      .then(({ data, error: err }) => {
-        if (err) { setError(true); return }
-        setResults(data ?? [])
-      })
+    getMyResults()
+      .then(data => setResults(data ?? []))
+      .catch(() => setError(true))
     getMyWitnessContributions()
       .then(setContributions)
       .catch(() => setContributions([]))

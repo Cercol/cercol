@@ -13,7 +13,6 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
-import { supabase } from '../lib/supabase'
 import { createWitnessSessions, getMyWitnessSessions } from '../lib/api'
 import { Card, Button, SectionLabel } from '../components/ui'
 import { FullMoonIcon, CheckIcon, CloseIcon } from '../components/MoonIcons'
@@ -113,19 +112,15 @@ export default function WitnessSetupPage() {
       return
     }
 
-    supabase
-      .from('profiles')
-      .select('premium')
-      .eq('id', user.id)
-      .single()
-      .then(({ data }) => {
-        if (data?.premium) {
-          setGateState('ready')
-        } else {
-          navigate('/full-moon')
-        }
-      })
-  }, [user, authLoading]) // eslint-disable-line react-hooks/exhaustive-deps
+    // profile is loaded by AuthContext — no separate API call needed
+    if (profile?.premium) {
+      setGateState('ready')
+    } else if (profile !== null) {
+      // profile loaded but not premium
+      navigate('/full-moon')
+    }
+    // if profile is still null (loading), the effect re-runs when it arrives
+  }, [user, profile, authLoading]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // ── Load existing sessions ─────────────────────────────────────────────
   useEffect(() => {

@@ -165,18 +165,53 @@ export async function getGroupReportData(groupId) {
 // ── Results ───────────────────────────────────────────────────────────────
 
 /**
- * getLatestFullMoonResult — fetch the most recent fullMoon result row for a user.
+ * logResult — log an instrument result via the backend API.
+ * Attaches auth token if the user is signed in (links result to account).
+ * @param {{ instrument, language?, presence?, bond?, discipline?, depth?, vision?, facets? }} params
+ */
+export async function logResult({ instrument, language, presence, bond, discipline, depth, vision, facets }) {
+  const { data: { session } } = await supabase.auth.getSession()
+  const fetcher = session ? authFetch : publicFetch
+  return fetcher('/results', {
+    method: 'POST',
+    body: JSON.stringify({ instrument, language, presence, bond, discipline, depth, vision, facets }),
+  })
+}
+
+/**
+ * getMyResults — returns all results for the authenticated user, newest first.
+ * @returns {Promise<Array>}
+ */
+export async function getMyResults() {
+  return authFetch('/me/results')
+}
+
+/**
+ * getMyProfile — returns the authenticated user's profile (including premium flag).
+ * Creates the profile row if it does not exist yet.
+ * @returns {Promise<{id, premium, first_name, last_name, country, native_language}>}
+ */
+export async function getMyProfile() {
+  return authFetch('/me/profile')
+}
+
+/**
+ * updateMyProfile — updates mutable profile fields.
+ * @param {{ first_name?, last_name?, country?, native_language? }} fields
+ */
+export async function updateMyProfile(fields) {
+  return authFetch('/me/profile', {
+    method: 'PATCH',
+    body: JSON.stringify(fields),
+  })
+}
+
+/**
+ * getLatestFullMoonResult — fetch the most recent fullMoon result for the signed-in user.
  * Returns null if no result exists.
- * @param {string} userId
  * @returns {Promise<{presence,bond,discipline,depth,vision,facets}|null>}
  */
-export async function getLatestFullMoonResult(userId) {
-  const { data } = await supabase
-    .from('results')
-    .select('presence,bond,discipline,depth,vision,facets')
-    .eq('user_id', userId)
-    .eq('instrument', 'fullMoon')
-    .order('created_at', { ascending: false })
-    .limit(1)
-  return data?.length ? data[0] : null
+export async function getLatestFullMoonResult() {
+  const results = await getMyResults()
+  return results.find(r => r.instrument === 'fullMoon') ?? null
 }

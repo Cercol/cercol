@@ -75,7 +75,7 @@ export default function FullMoonResultsPage() {
     if (authLoading) return              // wait for auth to resolve
     if (!user) { navigate('/'); return } // not authenticated → home
 
-    getLatestFullMoonResult(user.id)
+    getLatestFullMoonResult()
       .then(row => {
         if (row) {
           setLoadedDomains({
