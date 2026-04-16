@@ -51,7 +51,7 @@ def _base(content: str) -> str:
         <!-- Header -->
         <tr>
           <td style="background:{_BLUE};border-radius:12px 12px 0 0;padding:20px 32px;">
-            <img src="{FRONTEND_URL}/email-logo.svg" alt="Cèrcol" width="120" height="50"
+            <img src="{FRONTEND_URL}/email-logo.png" alt="Cèrcol" width="160" height="67"
                  style="display:block;border:0;" />
           </td>
         </tr>
