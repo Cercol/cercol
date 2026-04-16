@@ -169,8 +169,8 @@ describe('computeGroupMeans', () => {
 
   it('averages z-scores across completed members', () => {
     const members = [
-      { zscores: { presence: 1.0, bond: 0.0, vision: 0.5, discipline: -0.5, depth: 0.2 } },
-      { zscores: { presence: 0.0, bond: 1.0, vision: 0.5, discipline: 0.5,  depth: 0.6 } },
+      { completed: true,  zscores: { presence: 1.0, bond: 0.0, vision: 0.5, discipline: -0.5, depth: 0.2 } },
+      { completed: true,  zscores: { presence: 0.0, bond: 1.0, vision: 0.5, discipline: 0.5,  depth: 0.6 } },
     ]
     const means = computeGroupMeans(members)
     expect(means.p).toBeCloseTo(0.5, 10)
@@ -182,8 +182,17 @@ describe('computeGroupMeans', () => {
 
   it('ignores members without zscores', () => {
     const members = [
-      { zscores: { presence: 1.0, bond: 1.0, vision: 1.0, discipline: 1.0, depth: 1.0 } },
-      { zscores: null },
+      { completed: true,  zscores: { presence: 1.0, bond: 1.0, vision: 1.0, discipline: 1.0, depth: 1.0 } },
+      { completed: false, zscores: null },
+    ]
+    const means = computeGroupMeans(members)
+    expect(means.p).toBeCloseTo(1.0, 10)
+  })
+
+  it('ignores members with zscores but completed=false', () => {
+    const members = [
+      { completed: true,  zscores: { presence: 1.0, bond: 1.0, vision: 1.0, discipline: 1.0, depth: 1.0 } },
+      { completed: false, zscores: { presence: 9.0, bond: 9.0, vision: 9.0, discipline: 9.0, depth: 9.0 } },
     ]
     const means = computeGroupMeans(members)
     expect(means.p).toBeCloseTo(1.0, 10)
@@ -191,7 +200,7 @@ describe('computeGroupMeans', () => {
 
   it('returns object with keys p, b, v, c, n', () => {
     const members = [
-      { zscores: { presence: 0, bond: 0, vision: 0, discipline: 0, depth: 0 } },
+      { completed: true, zscores: { presence: 0, bond: 0, vision: 0, discipline: 0, depth: 0 } },
     ]
     const means = computeGroupMeans(members)
     expect(means).toHaveProperty('p')
