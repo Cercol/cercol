@@ -1093,6 +1093,18 @@ Hierarchical empirical norm system with automatic 28-day background refresh.
 - Frontend: `AdminRoute` guard (invisible redirect for non-admins); `AdminDashboardPage` with Overview / Users / Results / Norms tabs; IntersectionObserver infinite scroll; CSV download per tab.
 - Nav: Admin link only rendered when `profile.is_admin = true`.
 
+### Phase 13.22 — Transactional email + domain setup ✅ COMPLETE
+
+- Sending domain `mail.cercol.team` verified on Resend (DKIM + SPF via Porkbun DNS).
+- `api/emails.py`: branded HTML templates + 3 send functions (fire-and-forget via `asyncio.create_task`):
+  1. `send_witness_assigned` — witness receives evaluation link on session create
+  2. `send_witness_completed` — subject notified when witness finishes
+  3. `send_group_invitation` — invited members notified on group create
+- `reply_to: hello@cercol.team` on all outgoing emails.
+- Email logo: `public/email-logo.png` (320×134 RGBA PNG, converted from SVG via cairosvg).
+- `hello@cercol.team` receiving: Porkbun email forwarding → Gmail.
+- `hello@cercol.team` sending: Resend SMTP relay configured in Gmail "Send mail as".
+
 ---
 
 ## Roadmap maintenance rules
