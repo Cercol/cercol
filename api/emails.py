@@ -50,8 +50,9 @@ def _base(content: str) -> str:
 
         <!-- Header -->
         <tr>
-          <td style="background:{_BLUE};border-radius:12px 12px 0 0;padding:24px 32px;">
-            <span style="font-size:22px;font-weight:700;color:{_WHITE};letter-spacing:-0.5px;">Cèrcol</span>
+          <td style="background:{_BLUE};border-radius:12px 12px 0 0;padding:20px 32px;">
+            <img src="{FRONTEND_URL}/email-logo.svg" alt="Cèrcol" width="120" height="50"
+                 style="display:block;border:0;" />
           </td>
         </tr>
 
