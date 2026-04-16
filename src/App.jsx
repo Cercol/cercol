@@ -26,6 +26,8 @@ import GroupsPage from './pages/GroupsPage'
 import LastQuarterPage from './pages/LastQuarterPage'
 import FeedbackButton from './components/FeedbackButton'
 import CookieBanner from './components/CookieBanner'
+import AdminRoute from './components/AdminRoute'
+import AdminDashboardPage from './pages/AdminDashboardPage'
 
 /** Top-level error boundary — catches unexpected render errors and shows a minimal fallback. */
 class ErrorBoundary extends Component {
@@ -96,6 +98,8 @@ function AppContent() {
         <Route path="/faq"         element={<FaqPage />} />
         {/* Legal */}
         <Route path="/privacy"     element={<PrivacyPage />} />
+        {/* Admin — guarded by AdminRoute, invisible to non-admins */}
+        <Route path="/admin" element={<AdminRoute><AdminDashboardPage /></AdminRoute>} />
       </Routes>
       <FeedbackButton itemId={itemContext.itemId} itemText={itemContext.itemText} />
       <CookieBanner />

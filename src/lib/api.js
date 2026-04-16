@@ -29,6 +29,18 @@ async function authFetch(path, options = {}) {
   return res.json()
 }
 
+/** authFetchBlob — like authFetch but returns a Blob (for CSV downloads). */
+async function authFetchBlob(path) {
+  const { data: { session } } = await supabase.auth.getSession()
+  if (!session) throw new Error('Not authenticated')
+
+  const res = await fetch(`${API_URL}${path}`, {
+    headers: { Authorization: `Bearer ${session.access_token}` },
+  })
+  if (!res.ok) throw new Error(`API error ${res.status}`)
+  return res.blob()
+}
+
 async function publicFetch(path, options = {}) {
   const res = await fetch(`${API_URL}${path}`, {
     ...options,
@@ -214,4 +226,48 @@ export async function updateMyProfile(fields) {
 export async function getLatestFullMoonResult() {
   const results = await getMyResults()
   return results.find(r => r.instrument === 'fullMoon') ?? null
+}
+
+// ── Admin ─────────────────────────────────────────────────────────────────
+
+/** getAdminStats — global KPI counters (users + results). Admin only. */
+export async function getAdminStats() {
+  return authFetch('/admin/stats')
+}
+
+/**
+ * getAdminUsers — paginated user list.
+ * @param {{ offset?: number, limit?: number, search?: string }} params
+ */
+export async function getAdminUsers({ offset = 0, limit = 25, search = '' } = {}) {
+  const q = new URLSearchParams({ offset, limit, ...(search ? { search } : {}) })
+  return authFetch(`/admin/users?${q}`)
+}
+
+/**
+ * getAdminResults — paginated results list.
+ * @param {{ offset?: number, limit?: number, instrument?: string }} params
+ */
+export async function getAdminResults({ offset = 0, limit = 25, instrument = '' } = {}) {
+  const q = new URLSearchParams({ offset, limit, ...(instrument ? { instrument } : {}) })
+  return authFetch(`/admin/results?${q}`)
+}
+
+/**
+ * downloadAdminCSV — fetch a CSV export from the admin API and trigger a browser download.
+ * @param {'users' | 'results'} type
+ * @param {{ instrument?: string }} filters
+ */
+export async function downloadAdminCSV(type, filters = {}) {
+  const q = new URLSearchParams(filters)
+  const path = `/admin/${type}/export.csv${q.toString() ? '?' + q : ''}`
+  const blob = await authFetchBlob(path)
+  const url  = URL.createObjectURL(blob)
+  const a    = document.createElement('a')
+  a.href     = url
+  a.download = `cercol_${type}_${new Date().toISOString().split('T')[0]}.csv`
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
+  URL.revokeObjectURL(url)
 }

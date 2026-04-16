@@ -21,10 +21,12 @@ import LanguageToggle from './LanguageToggle'
 import CercolLogo from './CercolLogo'
 import { colors } from '../design/tokens'
 import { HamburgerIcon, CloseIcon } from './MoonIcons'
+import { useAuth } from '../context/AuthContext'
 
 export default function Layout({ children }) {
   const { t }        = useTranslation()
   const { pathname } = useLocation()
+  const { profile }  = useAuth()
   const isHome       = pathname === '/'
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -34,6 +36,7 @@ export default function Layout({ children }) {
     { to: '/roles',       label: t('nav.roles')       },
     { to: '/science',     label: t('nav.science')     },
     { to: '/faq',         label: t('nav.faq')         },
+    ...(profile?.is_admin ? [{ to: '/admin', label: 'Admin' }] : []),
   ]
 
   const navLinkClass = ({ isActive }) =>

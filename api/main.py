@@ -21,8 +21,9 @@ from typing import List, Optional
 
 import asyncpg
 import stripe
-from fastapi import Depends, FastAPI, HTTPException, Request, status
+from fastapi import Depends, FastAPI, HTTPException, Query, Request, status
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import StreamingResponse
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import JWTError, jwk, jwt
 from pydantic import BaseModel
@@ -286,7 +287,7 @@ async def get_profile(user: dict = Depends(get_current_user)):
     async with _pool.acquire() as conn:
         await ensure_profile(conn, user_id, user.get("email"))
         row = await conn.fetchrow(
-            "SELECT id, premium, first_name, last_name, country, native_language FROM profiles WHERE id = $1",
+            "SELECT id, premium, is_admin, first_name, last_name, country, native_language FROM profiles WHERE id = $1",
             user_id,
         )
     return dict(row)
@@ -815,3 +816,278 @@ async def get_group_report_data(
         "group_name": group["name"],
         "members":    members_data,
     }
+
+
+# ---------------------------------------------------------------------------
+# Admin helpers
+# ---------------------------------------------------------------------------
+
+async def require_admin(user: dict = Depends(get_current_user)) -> dict:
+    """Dependency — raises 403 unless the authenticated user has is_admin = true."""
+    user_id = user["sub"]
+    async with _pool.acquire() as conn:
+        row = await conn.fetchrow("SELECT is_admin FROM profiles WHERE id = $1", user_id)
+    if not row or not row["is_admin"]:
+        raise HTTPException(status_code=403, detail="Forbidden")
+    return user
+
+
+# ---------------------------------------------------------------------------
+# Routes — admin
+# ---------------------------------------------------------------------------
+
+@app.get("/admin/stats")
+async def admin_stats(_: dict = Depends(require_admin)):
+    """Global KPI counters: users and results."""
+    async with _pool.acquire() as conn:
+        p = await conn.fetchrow(
+            """
+            SELECT
+                COUNT(*)                                      AS total,
+                COUNT(*) FILTER (WHERE premium  = true)      AS premium,
+                COUNT(*) FILTER (WHERE is_admin = true)      AS admins
+            FROM profiles
+            """
+        )
+        r = await conn.fetchrow(
+            """
+            SELECT
+                COUNT(*)                                             AS total,
+                COUNT(*) FILTER (WHERE user_id IS NULL)             AS anonymous,
+                COUNT(*) FILTER (WHERE instrument = 'newMoon')      AS new_moon,
+                COUNT(*) FILTER (WHERE instrument = 'firstQuarter') AS first_quarter,
+                COUNT(*) FILTER (WHERE instrument = 'fullMoon')     AS full_moon
+            FROM results
+            """
+        )
+    return {
+        "users": {
+            "total":   p["total"],
+            "premium": p["premium"],
+            "admins":  p["admins"],
+        },
+        "results": {
+            "total":         r["total"],
+            "anonymous":     r["anonymous"],
+            "by_instrument": {
+                "newMoon":      r["new_moon"],
+                "firstQuarter": r["first_quarter"],
+                "fullMoon":     r["full_moon"],
+            },
+        },
+    }
+
+
+@app.get("/admin/users")
+async def admin_users(
+    offset: int = Query(0, ge=0),
+    limit:  int = Query(25, ge=1, le=100),
+    search: str = Query(""),
+    _: dict = Depends(require_admin),
+):
+    """Paginated user list. Optional full-text search on email/name."""
+    async with _pool.acquire() as conn:
+        rows = await conn.fetch(
+            """
+            SELECT
+                p.id, p.email, p.first_name, p.last_name,
+                p.premium, p.is_admin, p.created_at,
+                COUNT(r.id) AS result_count
+            FROM profiles p
+            LEFT JOIN results r ON r.user_id = p.id
+            WHERE $3 = ''
+               OR p.email      ILIKE '%' || $3 || '%'
+               OR p.first_name ILIKE '%' || $3 || '%'
+               OR p.last_name  ILIKE '%' || $3 || '%'
+            GROUP BY p.id
+            ORDER BY p.created_at DESC NULLS LAST
+            LIMIT $1 OFFSET $2
+            """,
+            limit + 1, offset, search,
+        )
+        total = await conn.fetchval(
+            """
+            SELECT COUNT(*) FROM profiles
+            WHERE $1 = ''
+               OR email      ILIKE '%' || $1 || '%'
+               OR first_name ILIKE '%' || $1 || '%'
+               OR last_name  ILIKE '%' || $1 || '%'
+            """,
+            search,
+        )
+
+    has_more = len(rows) > limit
+    items = rows[:limit]
+    return {
+        "total":    total,
+        "has_more": has_more,
+        "items": [
+            {
+                **{k: v for k, v in dict(r).items() if k not in ("id", "created_at")},
+                "id":         str(r["id"]),
+                "created_at": r["created_at"].isoformat() if r["created_at"] else None,
+                "result_count": r["result_count"],
+            }
+            for r in items
+        ],
+    }
+
+
+@app.get("/admin/users/export.csv")
+async def admin_users_csv(_: dict = Depends(require_admin)):
+    """Full users table as CSV download."""
+    async with _pool.acquire() as conn:
+        rows = await conn.fetch(
+            """
+            SELECT
+                p.id, p.email, p.first_name, p.last_name,
+                p.premium, p.is_admin, p.created_at,
+                COUNT(r.id) AS result_count
+            FROM profiles p
+            LEFT JOIN results r ON r.user_id = p.id
+            GROUP BY p.id
+            ORDER BY p.created_at DESC NULLS LAST
+            """
+        )
+
+    def _csv_val(v):
+        if v is None:
+            return ""
+        s = str(v)
+        # Minimal CSV quoting: wrap in quotes if value contains comma, quote, or newline
+        if any(c in s for c in (',', '"', '\n')):
+            return '"' + s.replace('"', '""') + '"'
+        return s
+
+    def generate():
+        yield "id,email,first_name,last_name,premium,is_admin,created_at,result_count\n"
+        for r in rows:
+            yield ",".join([
+                _csv_val(r["id"]),
+                _csv_val(r["email"]),
+                _csv_val(r["first_name"]),
+                _csv_val(r["last_name"]),
+                _csv_val(r["premium"]),
+                _csv_val(r["is_admin"]),
+                _csv_val(r["created_at"].isoformat() if r["created_at"] else None),
+                _csv_val(r["result_count"]),
+            ]) + "\n"
+
+    return StreamingResponse(
+        generate(),
+        media_type="text/csv",
+        headers={"Content-Disposition": "attachment; filename=cercol_users.csv"},
+    )
+
+
+@app.get("/admin/results")
+async def admin_results(
+    offset:     int = Query(0, ge=0),
+    limit:      int = Query(25, ge=1, le=100),
+    instrument: str = Query(""),
+    _: dict = Depends(require_admin),
+):
+    """Paginated results list. Optional filter by instrument."""
+    async with _pool.acquire() as conn:
+        rows = await conn.fetch(
+            """
+            SELECT
+                r.id, r.created_at, r.instrument, r.language, r.user_id,
+                r.presence, r.bond, r.discipline, r.depth, r.vision,
+                p.email AS user_email
+            FROM results r
+            LEFT JOIN profiles p ON p.id = r.user_id
+            WHERE $3 = '' OR r.instrument = $3
+            ORDER BY r.created_at DESC
+            LIMIT $1 OFFSET $2
+            """,
+            limit + 1, offset, instrument,
+        )
+        total = await conn.fetchval(
+            "SELECT COUNT(*) FROM results WHERE $1 = '' OR instrument = $1",
+            instrument,
+        )
+
+    has_more = len(rows) > limit
+    items = rows[:limit]
+
+    def _to_item(r):
+        role = None
+        if r["presence"] is not None:
+            raw = {k: r[k] for k in ("presence", "bond", "discipline", "depth", "vision")}
+            role = _compute_role(_scores_to_zscores(raw))
+        return {
+            "id":         str(r["id"]),
+            "created_at": r["created_at"].isoformat(),
+            "instrument": r["instrument"],
+            "language":   r["language"],
+            "user_id":    str(r["user_id"]) if r["user_id"] else None,
+            "user_email": r["user_email"],
+            "role":       role,
+        }
+
+    return {
+        "total":    total,
+        "has_more": has_more,
+        "items":    [_to_item(r) for r in items],
+    }
+
+
+@app.get("/admin/results/export.csv")
+async def admin_results_csv(
+    instrument: str = Query(""),
+    _: dict = Depends(require_admin),
+):
+    """Full results table as CSV download, optionally filtered by instrument."""
+    async with _pool.acquire() as conn:
+        rows = await conn.fetch(
+            """
+            SELECT
+                r.id, r.created_at, r.instrument, r.language, r.user_id,
+                r.presence, r.bond, r.discipline, r.depth, r.vision,
+                p.email AS user_email
+            FROM results r
+            LEFT JOIN profiles p ON p.id = r.user_id
+            WHERE $1 = '' OR r.instrument = $1
+            ORDER BY r.created_at DESC
+            """,
+            instrument,
+        )
+
+    def _csv_val(v):
+        if v is None:
+            return ""
+        s = str(v)
+        if any(c in s for c in (',', '"', '\n')):
+            return '"' + s.replace('"', '""') + '"'
+        return s
+
+    def _role(r):
+        if r["presence"] is None:
+            return ""
+        raw = {k: r[k] for k in ("presence", "bond", "discipline", "depth", "vision")}
+        return _compute_role(_scores_to_zscores(raw))
+
+    def generate():
+        yield "id,created_at,instrument,language,user_id,user_email,presence,bond,discipline,depth,vision,role\n"
+        for r in rows:
+            yield ",".join([
+                _csv_val(r["id"]),
+                _csv_val(r["created_at"].isoformat()),
+                _csv_val(r["instrument"]),
+                _csv_val(r["language"]),
+                _csv_val(r["user_id"]),
+                _csv_val(r["user_email"]),
+                _csv_val(r["presence"]),
+                _csv_val(r["bond"]),
+                _csv_val(r["discipline"]),
+                _csv_val(r["depth"]),
+                _csv_val(r["vision"]),
+                _csv_val(_role(r)),
+            ]) + "\n"
+
+    return StreamingResponse(
+        generate(),
+        media_type="text/csv",
+        headers={"Content-Disposition": "attachment; filename=cercol_results.csv"},
+    )
