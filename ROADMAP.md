@@ -1084,7 +1084,7 @@ Hierarchical empirical norm system with automatic 28-day background refresh.
 - `scoring.py`: `NORM_MIN_SAMPLE = 200`, `NORM_REFRESH_DAYS = 28` (configurable). `resolve_norm(instrument, language, cache)` applies 3-tier hierarchy: (instrument+language) ≥ 200 → instrument-wide ≥ 200 → researcher priors.
 - `main.py`: `_recompute_norms()` queries DB at startup and every 28 days via asyncio background task. All role-scoring calls use the resolved tier automatically.
 - Admin dashboard → Norms tab: live tier table per instrument×language with colour-coded pills and "Refresh now" button.
-- k-means centroid update (N≥300) deferred to Phase 13.22.
+- k-means centroid update (N≥300) deferred to Phase 13.23.
 
 ### Phase 13.21 — Staff admin dashboard ✅ COMPLETE
 

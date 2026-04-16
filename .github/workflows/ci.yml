@@ -67,4 +67,4 @@ jobs:
           cd api
           python -m pytest tests/ -v
         # Will report 'no tests found' until tests are added — not a failure
-        continue-on-error: true
+        continue-on-error: false
