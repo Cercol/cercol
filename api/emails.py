@@ -134,12 +134,15 @@ def _group_invitation_html(group_name: str, inviter_name: str) -> str:
 # Send helpers (run in thread — Resend SDK is synchronous)
 # ---------------------------------------------------------------------------
 
+REPLY_TO = "hello@cercol.team"
+
 def _send_sync(to: str, subject: str, html: str) -> None:
     resend.Emails.send({
-        "from":    FROM_ADDRESS,
-        "to":      [to],
-        "subject": subject,
-        "html":    html,
+        "from":     FROM_ADDRESS,
+        "to":       [to],
+        "reply_to": REPLY_TO,
+        "subject":  subject,
+        "html":     html,
     })
 
 
