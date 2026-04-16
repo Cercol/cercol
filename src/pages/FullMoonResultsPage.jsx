@@ -101,6 +101,11 @@ export default function FullMoonResultsPage() {
     }
   }, [domains]) // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Redirect if ?r= param is malformed — must be in an effect, not render body
+  useEffect(() => {
+    if (isSharedLink && stateDomains === null) navigate('/')
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
   // Phase 2: load Witness sessions (skipped for shared links)
   useEffect(() => {
     if (isSharedLink || authLoading || !user) return
@@ -108,12 +113,6 @@ export default function FullMoonResultsPage() {
       .then(setSessions)
       .catch(() => {}) // silently fail — solo result still renders
   }, [user, authLoading, isSharedLink]) // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Redirect if ?r= param is malformed
-  if (isSharedLink && stateDomains === null) {
-    navigate('/')
-    return null
-  }
 
   // Loading: waiting for auth to resolve or Supabase to return
   if (!domains) {

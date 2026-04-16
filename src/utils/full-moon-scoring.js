@@ -7,7 +7,7 @@
  */
 
 import { FM_ITEMS, FM_DOMAIN_META } from '../data/full-moon'
-import { scoreToPercent5, scoreLabel5 } from './scoring-utils'
+import { computeInstrumentScores, scoreToPercent5, scoreLabel5 } from './scoring-utils'
 
 /**
  * Compute domain and facet scores from raw answers.
@@ -16,29 +16,7 @@ import { scoreToPercent5, scoreLabel5 } from './scoring-utils'
  * @returns {{ domains: Record<string, number>, facets: Record<string, number> }}
  */
 export function computeFMScores(answers) {
-  const facetBuckets = {}
-
-  FM_ITEMS.forEach((item) => {
-    const raw = answers[item.id]
-    if (raw === undefined) return
-    const scored = item.reverse ? 6 - raw : raw
-    if (!facetBuckets[item.facet]) facetBuckets[item.facet] = []
-    facetBuckets[item.facet].push(scored)
-  })
-
-  const facets = {}
-  Object.keys(facetBuckets).forEach((facet) => {
-    const vals = facetBuckets[facet]
-    facets[facet] = Math.round((vals.reduce((a, b) => a + b, 0) / vals.length) * 10) / 10
-  })
-
-  const domains = {}
-  Object.entries(FM_DOMAIN_META).forEach(([domain, meta]) => {
-    const vals = meta.facets.map((f) => facets[f]).filter(Boolean)
-    domains[domain] = Math.round((vals.reduce((a, b) => a + b, 0) / vals.length) * 10) / 10
-  })
-
-  return { domains, facets }
+  return computeInstrumentScores(answers, FM_ITEMS, FM_DOMAIN_META)
 }
 
 /** Convert a score (1–5) to 0–100% for progress bars. */

@@ -21,7 +21,7 @@ import { Card, Button } from '../components/ui'
 
 const INPUT_CLASS =
   'w-full border border-gray-200 rounded px-4 py-3 text-sm text-gray-900 placeholder-gray-400 ' +
-  'focus:outline-none focus:border-[#0047ba] focus:ring-1 focus:ring-[#99b3e0] transition'
+  'focus:outline-none focus:border-[var(--mm-color-blue)] focus:ring-1 focus:ring-[var(--mm-color-blue)]/40 transition'
 
 export default function AuthPage() {
   const { t } = useTranslation()
@@ -83,7 +83,7 @@ export default function AuthPage() {
           <p className="text-xs text-gray-400 mt-4">{t('auth.sentNote')}</p>
           <button
             onClick={() => { setStatus('idle'); setErrorMsg('') }}
-            className="mt-6 text-sm text-[#0047ba] hover:underline"
+            className="mt-6 text-sm text-[var(--mm-color-blue)] hover:underline"
           >
             {t('auth.tryAgain')}
           </button>
@@ -162,7 +162,7 @@ export default function AuthPage() {
                   className={[
                     'flex-1 py-2 transition-colors',
                     method === m
-                      ? 'bg-[#0047ba] text-white'
+                      ? 'bg-[var(--mm-color-blue)] text-white'
                       : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50',
                   ].join(' ')}
                 >
@@ -207,7 +207,7 @@ export default function AuthPage() {
                 <button
                   type="button"
                   onClick={() => { setMode(mode === 'signin' ? 'signup' : 'signin'); setErrorMsg('') }}
-                  className="text-[#0047ba] hover:underline font-semibold"
+                  className="text-[var(--mm-color-blue)] hover:underline font-semibold"
                 >
                   {mode === 'signin' ? t('auth.createAccount') : t('auth.signInCta')}
                 </button>

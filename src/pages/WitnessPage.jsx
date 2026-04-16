@@ -267,7 +267,7 @@ export default function WitnessPage() {
               type="text"
               value={witnessName}
               onChange={(e) => setWitnessName(e.target.value)}
-              className="w-full rounded border border-gray-200 bg-white px-4 py-2.5 text-sm font-medium text-gray-900 placeholder-gray-300 focus:border-[#0047ba] focus:outline-none transition-colors"
+              className="w-full rounded border border-gray-200 bg-white px-4 py-2.5 text-sm font-medium text-gray-900 placeholder-gray-300 focus:border-[var(--mm-color-blue)] focus:outline-none transition-colors"
               placeholder={t('witness.page.intro.youArePlaceholder')}
             />
           </div>
@@ -279,7 +279,7 @@ export default function WitnessPage() {
                 type="checkbox"
                 checked={linkAsUser}
                 onChange={(e) => setLinkAsUser(e.target.checked)}
-                className="mt-0.5 h-4 w-4 shrink-0 rounded border-gray-300 accent-[#0047ba]"
+                className="mt-0.5 h-4 w-4 shrink-0 rounded border-gray-300 accent-[var(--mm-color-blue)]"
               />
               <div>
                 <p className="text-sm font-medium text-gray-900 leading-snug">
@@ -318,7 +318,7 @@ export default function WitnessPage() {
           </div>
           <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
             <div
-              className="h-full bg-[#0047ba] rounded-full transition-all duration-300"
+              className="h-full bg-[var(--mm-color-blue)] rounded-full transition-all duration-300"
               style={{ width: `${progress}%` }}
             />
           </div>

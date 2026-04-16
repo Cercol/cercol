@@ -186,12 +186,29 @@ def get_optional_user(
 # DB helpers
 # ---------------------------------------------------------------------------
 
-async def ensure_profile(conn: asyncpg.Connection, user_id: str) -> None:
-    """Create a profile row if it does not exist (replaces Supabase trigger)."""
-    await conn.execute(
-        "INSERT INTO profiles (id) VALUES ($1) ON CONFLICT (id) DO NOTHING",
-        user_id,
-    )
+async def ensure_profile(conn: asyncpg.Connection, user_id: str, email: str | None = None) -> None:
+    """Create/update profile row and claim any pending email-based group invitations."""
+    if email:
+        await conn.execute(
+            """
+            INSERT INTO profiles (id, email) VALUES ($1, $2)
+            ON CONFLICT (id) DO UPDATE SET email = EXCLUDED.email
+            """,
+            user_id, email.lower(),
+        )
+        # Link pending invitations sent to this email before the user registered
+        await conn.execute(
+            """
+            UPDATE group_members SET user_id = $1
+            WHERE invited_email = $2 AND user_id IS NULL AND status = 'pending'
+            """,
+            user_id, email.lower(),
+        )
+    else:
+        await conn.execute(
+            "INSERT INTO profiles (id) VALUES ($1) ON CONFLICT (id) DO NOTHING",
+            user_id,
+        )
 
 
 # ---------------------------------------------------------------------------
@@ -318,7 +335,7 @@ async def get_profile(user: dict = Depends(get_current_user)):
     """Return the authenticated user's full profile, including premium flag."""
     user_id = user["sub"]
     async with _pool.acquire() as conn:
-        await ensure_profile(conn, user_id)
+        await ensure_profile(conn, user_id, user.get("email"))
         row = await conn.fetchrow(
             "SELECT id, premium, first_name, last_name, country, native_language FROM profiles WHERE id = $1",
             user_id,
@@ -342,7 +359,7 @@ async def update_profile(
     set_clause = ", ".join(f"{c} = ${i + 2}" for i, c in enumerate(cols))
 
     async with _pool.acquire() as conn:
-        await ensure_profile(conn, user_id)
+        await ensure_profile(conn, user_id, user.get("email"))
         await conn.execute(
             f"UPDATE profiles SET {set_clause}, updated_at = now() WHERE id = $1",
             user_id, *vals,
@@ -389,7 +406,7 @@ async def log_result(
     user_id = user["sub"] if user else None
     async with _pool.acquire() as conn:
         if user_id:
-            await ensure_profile(conn, user_id)
+            await ensure_profile(conn, user_id, (user or {}).get("email"))
         row = await conn.fetchrow(
             """
             INSERT INTO results
@@ -624,7 +641,7 @@ async def create_group(
         raise HTTPException(status_code=400, detail="Group name is required")
 
     async with _pool.acquire() as conn:
-        await ensure_profile(conn, user_id)
+        await ensure_profile(conn, user_id, user.get("email"))
         row = await conn.fetchrow(
             "INSERT INTO groups (name, created_by) VALUES ($1, $2) RETURNING id",
             name, user_id,
@@ -646,14 +663,28 @@ async def create_group(
             if not email or email == creator_email:
                 continue
             try:
-                await conn.execute(
-                    """
-                    INSERT INTO group_members (group_id, status, invited_email)
-                    VALUES ($1, 'pending', $2)
-                    ON CONFLICT DO NOTHING
-                    """,
-                    group_id, email,
+                # If this email belongs to a registered user, invite them directly
+                existing = await conn.fetchrow(
+                    "SELECT id FROM profiles WHERE email = $1", email
                 )
+                if existing:
+                    await conn.execute(
+                        """
+                        INSERT INTO group_members (group_id, user_id, status, invited_at)
+                        VALUES ($1, $2, 'pending', now())
+                        ON CONFLICT DO NOTHING
+                        """,
+                        group_id, existing["id"],
+                    )
+                else:
+                    await conn.execute(
+                        """
+                        INSERT INTO group_members (group_id, status, invited_email)
+                        VALUES ($1, 'pending', $2)
+                        ON CONFLICT DO NOTHING
+                        """,
+                        group_id, email,
+                    )
             except Exception:
                 errors.append(email)
 

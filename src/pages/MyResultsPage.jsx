@@ -11,16 +11,12 @@ import { DOMAIN_KEYS } from '../data/domains'
 import { Card, Button, SectionLabel } from '../components/ui'
 import { ChevronRightIcon, DimensionIcon } from '../components/MoonIcons'
 import { DOMAIN_BG_CLASSES, DOMAIN_ICON_CLASSES } from '../design/tokens'
+import { radarScoreToPercent } from '../utils/new-moon-scoring'
+import { scoreToPercent5 } from '../utils/scoring-utils'
 
-const INSTRUMENT_SCALE = {
-  newMoon:      { min: 1, max: 7 },
-  firstQuarter: { min: 1, max: 5 },
-  fullMoon:     { min: 1, max: 5 },
-}
-
+/** Map a domain score to 0–100% for progress bars, using the correct scale per instrument. */
 function scorePercent(score, instrument) {
-  const { min, max } = INSTRUMENT_SCALE[instrument] ?? { min: 1, max: 5 }
-  return Math.round(((score - min) / (max - min)) * 100)
+  return instrument === 'newMoon' ? radarScoreToPercent(score) : scoreToPercent5(score)
 }
 
 function formatDate(iso, language) {

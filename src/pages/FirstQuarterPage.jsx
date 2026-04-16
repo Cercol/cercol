@@ -11,6 +11,8 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { FQ_ITEMS, FQ_SCALE_LABELS } from '../data/first-quarter'
+import { useScaleLabels } from '../hooks/useScaleLabels'
+import { useInstrumentKeyboard } from '../hooks/useInstrumentKeyboard'
 import { INSTRUMENT_DOMAIN_ORDER } from '../data/domains'
 import { computeFQScores } from '../utils/first-quarter-scoring'
 import { useFeedbackContext } from '../context/FeedbackContext'
@@ -65,12 +67,7 @@ export default function FirstQuarterPage() {
     return () => setItemContext({ itemId: null, itemText: null })
   }, [item?.id, showTransition]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const scaleLabels = Object.fromEntries(
-    Object.entries(FQ_SCALE_LABELS).map(([k, fallback]) => {
-      const translated = t(`scale.${k}`)
-      return [k, translated !== `scale.${k}` ? translated : fallback]
-    })
-  )
+  const scaleLabels = useScaleLabels('scale', FQ_SCALE_LABELS)
 
   function handleAnswer(value) {
     setAnswers((prev) => ({ ...prev, [item.id]: value }))
@@ -120,43 +117,20 @@ export default function FirstQuarterPage() {
   const showIntroRef = useRef(showIntro)
   showIntroRef.current = showIntro
 
-  useEffect(() => {
-    function onKeyDown(e) {
-      if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) return
+  const showTransitionRef = useRef(showTransition)
+  showTransitionRef.current = showTransition
 
-      if (showIntroRef.current) {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault()
-          setShowIntro(false)
-        }
-        return
-      }
-
-      if (showTransition) {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault()
-          handleContinueToNextBlockRef.current()
-        }
-        return
-      }
-
-      const n = parseInt(e.key, 10)
-      if (n >= 1 && n <= SCALE_POINTS) {
-        setAnswers((prev) => ({ ...prev, [item.id]: n }))
-        return
-      }
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault()
-        handleNextRef.current()
-        return
-      }
-      if (e.key === 'Backspace' || e.key === 'ArrowLeft') {
-        handleBackRef.current()
-      }
-    }
-    document.addEventListener('keydown', onKeyDown)
-    return () => document.removeEventListener('keydown', onKeyDown)
-  }, [item.id, showTransition])
+  useInstrumentKeyboard({
+    itemId:              item.id,
+    scalePoints:         SCALE_POINTS,
+    showIntroRef,
+    showTransitionRef,
+    onNumber:            (n) => setAnswers((prev) => ({ ...prev, [item.id]: n })),
+    onNextRef:           handleNextRef,
+    onBackRef:           handleBackRef,
+    onDismissIntro:      () => setShowIntro(false),
+    onContinueBlockRef:  handleContinueToNextBlockRef,
+  })
 
   // ── Intro screen ───────────────────────────────────────────────
   if (showIntro) {

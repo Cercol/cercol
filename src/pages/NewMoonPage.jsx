@@ -7,6 +7,8 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { TIPI_ITEMS, SCALE_LABELS } from '../data/new-moon'
+import { useScaleLabels } from '../hooks/useScaleLabels'
+import { useInstrumentKeyboard } from '../hooks/useInstrumentKeyboard'
 import { computeRadarScores } from '../utils/new-moon-scoring'
 import { useFeedbackContext } from '../context/FeedbackContext'
 import QuestionCard from '../components/QuestionCard'
@@ -36,12 +38,7 @@ export default function NewMoonPage() {
   }, [item.id]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Translate scale labels using i18n (scale7 namespace), fall back to English
-  const scaleLabels = Object.fromEntries(
-    Object.entries(SCALE_LABELS).map(([k, fallback]) => {
-      const translated = t(`scale7.${k}`)
-      return [k, translated !== `scale7.${k}` ? translated : fallback]
-    })
-  )
+  const scaleLabels = useScaleLabels('scale7', SCALE_LABELS)
 
   function handleAnswer(value) {
     setAnswers((prev) => ({ ...prev, [item.id]: value }))
@@ -70,35 +67,15 @@ export default function NewMoonPage() {
   const showIntroRef = useRef(showIntro)
   showIntroRef.current = showIntro
 
-  useEffect(() => {
-    function onKeyDown(e) {
-      if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) return
-
-      if (showIntroRef.current) {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault()
-          setShowIntro(false)
-        }
-        return
-      }
-
-      const n = parseInt(e.key, 10)
-      if (n >= 1 && n <= SCALE_POINTS) {
-        setAnswers((prev) => ({ ...prev, [item.id]: n }))
-        return
-      }
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault()
-        handleNextRef.current()
-        return
-      }
-      if (e.key === 'Backspace' || e.key === 'ArrowLeft') {
-        handleBackRef.current()
-      }
-    }
-    document.addEventListener('keydown', onKeyDown)
-    return () => document.removeEventListener('keydown', onKeyDown)
-  }, [item.id])
+  useInstrumentKeyboard({
+    itemId:        item.id,
+    scalePoints:   SCALE_POINTS,
+    showIntroRef,
+    onNumber:      (n) => setAnswers((prev) => ({ ...prev, [item.id]: n })),
+    onNextRef:     handleNextRef,
+    onBackRef:     handleBackRef,
+    onDismissIntro: () => setShowIntro(false),
+  })
 
   // ── Intro screen ───────────────────────────────────────────────
   if (showIntro) {

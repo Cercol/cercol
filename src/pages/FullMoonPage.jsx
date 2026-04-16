@@ -19,6 +19,8 @@ import { useTranslation } from 'react-i18next'
 import { FM_ITEMS, FM_SCALE_LABELS } from '../data/full-moon'
 import { INSTRUMENT_DOMAIN_ORDER } from '../data/domains'
 import { computeFMScores } from '../utils/full-moon-scoring'
+import { useScaleLabels } from '../hooks/useScaleLabels'
+import { useInstrumentKeyboard } from '../hooks/useInstrumentKeyboard'
 import { useFeedbackContext } from '../context/FeedbackContext'
 import { useAuth } from '../context/AuthContext'
 import { createCheckoutSession, getMyProfile, getMyResults } from '../lib/api'
@@ -150,12 +152,7 @@ export default function FullMoonPage() {
     return () => setItemContext({ itemId: null, itemText: null })
   }, [item?.id, showTransition, gateState]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const scaleLabels = Object.fromEntries(
-    Object.entries(FM_SCALE_LABELS).map(([k, fallback]) => {
-      const translated = t(`scale.${k}`)
-      return [k, translated !== `scale.${k}` ? translated : fallback]
-    })
-  )
+  const scaleLabels = useScaleLabels('scale', FM_SCALE_LABELS)
 
   function handleAnswer(value) {
     setAnswers((prev) => ({ ...prev, [item.id]: value }))
@@ -205,44 +202,21 @@ export default function FullMoonPage() {
   const showIntroRef = useRef(showIntro)
   showIntroRef.current = showIntro
 
-  useEffect(() => {
-    function onKeyDown(e) {
-      if (gateState !== 'ready') return
-      if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) return
+  const showTransitionRef = useRef(showTransition)
+  showTransitionRef.current = showTransition
 
-      if (showIntroRef.current) {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault()
-          setShowIntro(false)
-        }
-        return
-      }
-
-      if (showTransition) {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault()
-          handleContinueToNextBlockRef.current()
-        }
-        return
-      }
-
-      const n = parseInt(e.key, 10)
-      if (n >= 1 && n <= SCALE_POINTS) {
-        setAnswers((prev) => ({ ...prev, [item.id]: n }))
-        return
-      }
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault()
-        handleNextRef.current()
-        return
-      }
-      if (e.key === 'Backspace' || e.key === 'ArrowLeft') {
-        handleBackRef.current()
-      }
-    }
-    document.addEventListener('keydown', onKeyDown)
-    return () => document.removeEventListener('keydown', onKeyDown)
-  }, [item.id, showTransition, gateState])
+  useInstrumentKeyboard({
+    itemId:             item.id,
+    scalePoints:        SCALE_POINTS,
+    showIntroRef,
+    showTransitionRef,
+    enabled:            gateState === 'ready',
+    onNumber:           (n) => setAnswers((prev) => ({ ...prev, [item.id]: n })),
+    onNextRef:          handleNextRef,
+    onBackRef:          handleBackRef,
+    onDismissIntro:     () => setShowIntro(false),
+    onContinueBlockRef: handleContinueToNextBlockRef,
+  })
 
   // ── Gate screens ───────────────────────────────────────────────
   if (gateState === 'checking') {
