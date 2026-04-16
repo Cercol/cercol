@@ -24,10 +24,10 @@ const ICON_SIZE = 80
 
 /** Animal definitions: all 12 roles repeated to fill the background. */
 const ICON_DEFS = [
-  'R01','R02','R03','R04','R05','R06',
-  'R07','R08','R09','R10','R11','R12',
-  'R01','R02','R03','R04','R05','R06',
-  'R07','R08','R09','R10',
+  'R01','R02','R03','R04','R05','R06','R07','R08','R09','R10','R11','R12',
+  'R01','R02','R03','R04','R05','R06','R07','R08','R09','R10','R11','R12',
+  'R01','R02','R03','R04','R05','R06','R07','R08','R09','R10','R11','R12',
+  'R01','R02','R03','R04',
 ].map((role, i) => ({ id: `ic${i}`, role }))
 
 /**
@@ -51,7 +51,7 @@ const CARD_Y1 = 18, CARD_Y2 = 82
 function generateWallpaper() {
   const placed = []
 
-  const r = ICON_SIZE / 13   // icon radius in viewport-% (assumes ~1300px viewport width)
+  const r = ICON_SIZE / 20   // icon radius in viewport-% (assumes ~1300px viewport width)
 
   return ICON_DEFS.map((def) => {
     let cx = -10, cy = -10   // default: hidden off-screen if no slot found
@@ -68,7 +68,7 @@ function generateWallpaper() {
       // Reject if too close to an already-placed icon (1.05× combined radii — slight gap)
       if (placed.some(p => {
         const dx = x - p.x, dy = y - p.y
-        return Math.sqrt(dx * dx + dy * dy) < (r + p.r) * 1.05
+        return Math.sqrt(dx * dx + dy * dy) < (r + p.r) * 1.02
       })) continue
 
       cx = x; cy = y
