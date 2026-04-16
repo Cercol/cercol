@@ -235,6 +235,16 @@ export async function getAdminStats() {
   return authFetch('/admin/stats')
 }
 
+/** getAdminNorms — current norm cache state (tier active per instrument+language). Admin only. */
+export async function getAdminNorms() {
+  return authFetch('/admin/norms')
+}
+
+/** refreshAdminNorms — force an immediate norm recompute on the server. Admin only. */
+export async function refreshAdminNorms() {
+  return authFetch('/admin/norms/refresh', { method: 'POST' })
+}
+
 /**
  * getAdminUsers — paginated user list.
  * @param {{ offset?: number, limit?: number, search?: string }} params

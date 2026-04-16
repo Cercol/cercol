@@ -15,6 +15,8 @@ import {
   getAdminUsers,
   getAdminResults,
   downloadAdminCSV,
+  getAdminNorms,
+  refreshAdminNorms,
 } from '../lib/api'
 
 // ---------------------------------------------------------------------------
@@ -400,6 +402,122 @@ function ResultsTab() {
 }
 
 // ---------------------------------------------------------------------------
+// Norms tab
+// ---------------------------------------------------------------------------
+
+const LANGS       = ['en', 'ca', 'es', 'fr', 'de', 'da']
+const INSTRUMENTS = ['newMoon', 'firstQuarter', 'fullMoon']
+
+function TierPill({ tier }) {
+  if (!tier) return null
+  if (tier === 'prior')
+    return <span className="text-xs px-2 py-0.5 rounded-full bg-yellow-50 text-yellow-700 font-medium">prior</span>
+  if (tier.startsWith('empirical') && tier.endsWith(':*'))
+    return <span className="text-xs px-2 py-0.5 rounded-full bg-blue-50 text-[var(--mm-color-blue)] font-medium">instrument</span>
+  if (tier.startsWith('empirical'))
+    return <span className="text-xs px-2 py-0.5 rounded-full bg-green-50 text-green-700 font-medium">local</span>
+  return <span className="text-xs text-gray-400">{tier}</span>
+}
+
+function NormsTab() {
+  const [data,       setData]       = useState(null)
+  const [loading,    setLoading]    = useState(true)
+  const [refreshing, setRefreshing] = useState(false)
+  const [error,      setError]      = useState(null)
+
+  function load() {
+    setLoading(true)
+    setError(null)
+    getAdminNorms()
+      .then(setData)
+      .catch(err => setError(err.message))
+      .finally(() => setLoading(false))
+  }
+
+  useEffect(load, [])
+
+  async function handleRefresh() {
+    setRefreshing(true)
+    try { await refreshAdminNorms(); load() }
+    catch (err) { setError(err.message) }
+    finally { setRefreshing(false) }
+  }
+
+  if (loading) return <p className="py-12 text-center text-sm text-gray-400">Loading…</p>
+  if (error)   return <p className="py-12 text-center text-sm text-red-500">{error}</p>
+
+  return (
+    <div className="space-y-5">
+      {/* Header info */}
+      <div className="flex items-start justify-between flex-wrap gap-3">
+        <div className="space-y-1 text-sm text-gray-500">
+          <p>Threshold: <strong className="text-gray-800">{data.norm_min_sample} results</strong> to activate empirical norms</p>
+          <p>Refresh: every <strong className="text-gray-800">{data.norm_refresh_days} days</strong> (background task)</p>
+          {data.computed_at && (
+            <p>Last computed: <strong className="text-gray-800">{fmt(data.computed_at)}</strong></p>
+          )}
+        </div>
+        <button
+          type="button"
+          onClick={handleRefresh}
+          disabled={refreshing}
+          className="text-xs font-medium px-3 py-1.5 rounded-lg border border-gray-200 text-gray-600 hover:border-gray-300 hover:text-gray-900 transition-colors disabled:opacity-50"
+        >
+          {refreshing ? 'Refreshing…' : '↻ Refresh now'}
+        </button>
+      </div>
+
+      {/* Legend */}
+      <div className="flex items-center gap-4 text-xs text-gray-500">
+        <span className="flex items-center gap-1.5"><TierPill tier="empirical:x:en" /> instrument + language ≥ {data.norm_min_sample}</span>
+        <span className="flex items-center gap-1.5"><TierPill tier="empirical:x:*" /> instrument only ≥ {data.norm_min_sample}</span>
+        <span className="flex items-center gap-1.5"><TierPill tier="prior" /> researcher priors (fallback)</span>
+      </div>
+
+      {/* One table per instrument */}
+      {INSTRUMENTS.map(instr => {
+        const instrTiers = data.tiers?.[instr] ?? {}
+        return (
+          <section key={instr}>
+            <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-2">
+              {INSTRUMENT_LABELS[instr] ?? instr}
+              {instrTiers.__all__?.n != null && (
+                <span className="ml-2 normal-case font-normal text-gray-300">
+                  ({instrTiers.__all__.n} total results)
+                </span>
+              )}
+            </h2>
+            <div className="overflow-x-auto rounded-xl border border-gray-100 shadow-sm">
+              <table className="w-full bg-white">
+                <thead className="border-b border-gray-100">
+                  <tr>
+                    <Th>Language</Th>
+                    <Th>Active tier</Th>
+                    <Th>Sample n</Th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-50">
+                  {LANGS.map(lang => {
+                    const entry = instrTiers[lang]
+                    return (
+                      <tr key={lang} className="hover:bg-gray-50/50">
+                        <Td className="font-mono text-xs uppercase">{lang}</Td>
+                        <Td><TierPill tier={entry?.tier} /></Td>
+                        <Td className="text-xs text-gray-400">{entry?.n ?? '—'}</Td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        )
+      })}
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
 // Page
 // ---------------------------------------------------------------------------
 
@@ -407,6 +525,7 @@ const TABS = [
   { id: 'overview', label: 'Overview' },
   { id: 'users',    label: 'Users'    },
   { id: 'results',  label: 'Results'  },
+  { id: 'norms',    label: 'Norms'    },
 ]
 
 export default function AdminDashboardPage() {
@@ -441,6 +560,7 @@ export default function AdminDashboardPage() {
       {activeTab === 'overview' && <OverviewTab />}
       {activeTab === 'users'    && <UsersTab />}
       {activeTab === 'results'  && <ResultsTab />}
+      {activeTab === 'norms'    && <NormsTab />}
     </div>
   )
 }

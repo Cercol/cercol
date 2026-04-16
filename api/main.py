@@ -11,6 +11,7 @@ Phase 13.19: migrated from Supabase REST to local PostgreSQL (asyncpg).
              Fixed N+1 queries, async I/O, JWKS TTL cache, CORS HTTPS-only.
 """
 
+import asyncio
 import json
 import os
 import secrets
@@ -30,7 +31,10 @@ from pydantic import BaseModel
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 
-from scoring import _NORM, _ROLE_CENTROIDS, _compute_role, _scores_to_zscores
+from scoring import (
+    _NORM, _ROLE_CENTROIDS, _compute_role, _scores_to_zscores,
+    DOMAINS, NORM_MIN_SAMPLE, NORM_REFRESH_DAYS, resolve_norm,
+)
 
 
 # ---------------------------------------------------------------------------
@@ -54,6 +58,116 @@ limiter = Limiter(key_func=_get_client_ip)
 
 _pool: Optional[asyncpg.Pool] = None
 
+# ---------------------------------------------------------------------------
+# Living-model norm cache
+# ---------------------------------------------------------------------------
+
+# Populated by _recompute_norms() at startup and every NORM_REFRESH_DAYS days.
+# Structure: { instrument: { language: { domain: {mean, sd, n} }, "__all__": {...} } }
+_norm_cache: dict = {}
+_norm_cache_ts: float = 0.0   # unix timestamp of last successful recompute
+
+
+async def _recompute_norms() -> None:
+    """
+    Query the DB to compute empirical means and SDs at two tiers for each
+    instrument: per-language and pooled (all languages).  Updates _norm_cache
+    in-place so existing requests keep working during the refresh.
+    """
+    global _norm_cache, _norm_cache_ts
+
+    # Build the SQL aggregate expression for all five domains
+    agg_cols = ", ".join(
+        f"AVG({d}) AS {d}_mean, STDDEV_SAMP({d}) AS {d}_sd"
+        for d in DOMAINS
+    )
+    query = f"""
+        SELECT instrument, language,
+               COUNT(*) AS n,
+               {agg_cols}
+        FROM results
+        WHERE {" AND ".join(f"{d} IS NOT NULL" for d in DOMAINS)}
+        GROUP BY instrument, language
+        ORDER BY instrument, language
+    """
+
+    new_cache: dict = {}
+
+    async with _pool.acquire() as conn:
+        rows = await conn.fetch(query)
+
+    # Accumulate per-instrument totals for the "__all__" tier
+    # We use Welford-style incremental mean/variance merge via (n, sum, sum_sq)
+    instr_accum: dict = {}   # instrument -> domain -> {n, s, ss}
+
+    for row in rows:
+        instr = row["instrument"]
+        lang  = row["language"] or "__unknown__"
+        n     = row["n"]
+        if n < NORM_MIN_SAMPLE:
+            # Too few samples — skip tier-1 entry but still accumulate for tier-2
+            pass
+        else:
+            if instr not in new_cache:
+                new_cache[instr] = {}
+            new_cache[instr][lang] = {
+                d: {
+                    "mean": float(row[f"{d}_mean"]),
+                    "sd":   float(row[f"{d}_sd"] or 0),
+                    "n":    int(n),
+                }
+                for d in DOMAINS
+            }
+
+        # Always accumulate for tier-2 (regardless of NORM_MIN_SAMPLE)
+        if instr not in instr_accum:
+            instr_accum[instr] = {d: {"n": 0, "s": 0.0, "ss": 0.0} for d in DOMAINS}
+        for d in DOMAINS:
+            mean_val = row[f"{d}_mean"]
+            sd_val   = row[f"{d}_sd"]
+            if mean_val is None or sd_val is None:
+                continue
+            acc = instr_accum[instr][d]
+            # Merge: combine (n1, mean1, sd1) + (n2, mean2, sd2) into running totals
+            acc["n"]  += n
+            acc["s"]  += float(mean_val) * n
+            acc["ss"] += (float(sd_val) ** 2 + float(mean_val) ** 2) * n
+
+    # Build "__all__" tier from accumulated totals
+    for instr, domains in instr_accum.items():
+        total_n = domains[DOMAINS[0]]["n"]  # same n for all domains (same WHERE clause)
+        if total_n < NORM_MIN_SAMPLE:
+            continue
+        if instr not in new_cache:
+            new_cache[instr] = {}
+        all_norm = {}
+        for d in DOMAINS:
+            acc  = domains[d]
+            n    = acc["n"]
+            mean = acc["s"] / n if n else 0
+            var  = (acc["ss"] / n) - mean ** 2 if n else 0
+            all_norm[d] = {
+                "mean": round(mean, 4),
+                "sd":   round(var ** 0.5, 4),
+                "n":    n,
+            }
+        new_cache[instr]["__all__"] = all_norm
+
+    _norm_cache    = new_cache
+    _norm_cache_ts = time.time()
+
+
+async def _norm_refresh_loop() -> None:
+    """Background task: recompute norms every NORM_REFRESH_DAYS days."""
+    interval = NORM_REFRESH_DAYS * 24 * 60 * 60
+    while True:
+        await asyncio.sleep(interval)
+        try:
+            await _recompute_norms()
+        except Exception as exc:
+            # Never crash the server — log and retry next cycle
+            print(f"[norms] refresh failed: {exc}")
+
 
 async def _init_connection(conn: asyncpg.Connection) -> None:
     """Register JSON/JSONB codecs so asyncpg returns dicts, not strings."""
@@ -70,7 +184,15 @@ async def lifespan(app: FastAPI):
         max_size=10,
         init=_init_connection,
     )
+    # Compute empirical norms on startup (non-fatal if DB has no data yet)
+    try:
+        await _recompute_norms()
+    except Exception as exc:
+        print(f"[norms] initial compute failed (using priors): {exc}")
+    # Schedule periodic refresh every NORM_REFRESH_DAYS days
+    refresh_task = asyncio.create_task(_norm_refresh_loop())
     yield
+    refresh_task.cancel()
     await _pool.close()
 
 
@@ -795,8 +917,9 @@ async def get_group_report_data(
 
         has_result = row["presence"] is not None
         if has_result:
-            raw = {k: row[k] for k in ("presence", "bond", "discipline", "depth", "vision")}
-            zscores = _scores_to_zscores(raw)
+            raw  = {k: row[k] for k in ("presence", "bond", "discipline", "depth", "vision")}
+            norm, _ = resolve_norm("fullMoon", row.get("language"), _norm_cache)
+            zscores = _scores_to_zscores(raw, norm)
             role    = _compute_role(zscores)
         else:
             zscores = None
@@ -933,6 +1056,56 @@ async def admin_users(
     }
 
 
+@app.get("/admin/norms")
+async def admin_norms(_: dict = Depends(require_admin)):
+    """
+    Returns the current norm cache state: which tier is active per
+    (instrument, language) combination and when it was last computed.
+    """
+    computed_at = (
+        datetime.fromtimestamp(_norm_cache_ts, tz=timezone.utc).isoformat()
+        if _norm_cache_ts else None
+    )
+
+    tiers = {}
+    instruments = ["newMoon", "firstQuarter", "fullMoon"]
+    languages   = ["en", "ca", "es", "fr", "de", "da"]
+
+    for instr in instruments:
+        tiers[instr] = {}
+        for lang in languages:
+            norm, label = resolve_norm(instr, lang, _norm_cache)
+            sample_n = None
+            instr_cache = _norm_cache.get(instr, {})
+            lang_entry  = instr_cache.get(lang)
+            all_entry   = instr_cache.get("__all__")
+            if lang_entry:
+                sample_n = lang_entry[list(lang_entry.keys())[0]].get("n")
+            elif all_entry:
+                sample_n = all_entry[list(all_entry.keys())[0]].get("n")
+            tiers[instr][lang] = {"tier": label, "n": sample_n}
+        # Also show the instrument-wide entry
+        all_entry = _norm_cache.get(instr, {}).get("__all__")
+        tiers[instr]["__all__"] = {
+            "tier": f"empirical:{instr}:*" if all_entry else "prior",
+            "n": all_entry[list(all_entry.keys())[0]].get("n") if all_entry else None,
+        }
+
+    return {
+        "computed_at":       computed_at,
+        "norm_min_sample":   NORM_MIN_SAMPLE,
+        "norm_refresh_days": NORM_REFRESH_DAYS,
+        "tiers":             tiers,
+    }
+
+
+@app.post("/admin/norms/refresh")
+async def admin_norms_refresh(_: dict = Depends(require_admin)):
+    """Force an immediate recompute of the norm cache."""
+    await _recompute_norms()
+    return {"ok": True, "computed_at": datetime.fromtimestamp(_norm_cache_ts, tz=timezone.utc).isoformat()}
+
+
 @app.get("/admin/users/export.csv")
 async def admin_users_csv(_: dict = Depends(require_admin)):
     """Full users table as CSV download."""
@@ -1014,8 +1187,9 @@ async def admin_results(
     def _to_item(r):
         role = None
         if r["presence"] is not None:
-            raw = {k: r[k] for k in ("presence", "bond", "discipline", "depth", "vision")}
-            role = _compute_role(_scores_to_zscores(raw))
+            raw  = {k: r[k] for k in ("presence", "bond", "discipline", "depth", "vision")}
+            norm, _ = resolve_norm(r["instrument"], r["language"], _norm_cache)
+            role = _compute_role(_scores_to_zscores(raw, norm))
         return {
             "id":         str(r["id"]),
             "created_at": r["created_at"].isoformat(),
@@ -1065,8 +1239,9 @@ async def admin_results_csv(
     def _role(r):
         if r["presence"] is None:
             return ""
-        raw = {k: r[k] for k in ("presence", "bond", "discipline", "depth", "vision")}
-        return _compute_role(_scores_to_zscores(raw))
+        raw  = {k: r[k] for k in ("presence", "bond", "discipline", "depth", "vision")}
+        norm, _ = resolve_norm(r["instrument"], r["language"], _norm_cache)
+        return _compute_role(_scores_to_zscores(raw, norm))
 
     def generate():
         yield "id,created_at,instrument,language,user_id,user_email,presence,bond,discipline,depth,vision,role\n"
