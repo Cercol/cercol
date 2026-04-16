@@ -34,7 +34,7 @@ const SCALE_POINTS = 5
 
 export default function FirstQuarterPage() {
   const navigate = useNavigate()
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const { setItemContext } = useFeedbackContext()
 
   const [showIntro, setShowIntro] = useState(true)

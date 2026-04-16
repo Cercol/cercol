@@ -19,23 +19,23 @@ import { FullMoonIcon, CheckIcon, CloseIcon } from '../components/MoonIcons'
 
 const MAX_WITNESSES = 12
 
-function WitnessRow({ index, name, email, onChange, onRemove, showRemove }) {
+function WitnessRow({ index, name, email, onChange, onRemove, showRemove, t }) {
   return (
     <div className="flex gap-2 items-start">
       <div className="flex-1 flex gap-2">
         <input
           type="text"
-          placeholder={`Witness ${index + 1}`}
+          placeholder={`${t('witness.setup.witnessLabel')} ${index + 1}`}
           value={name}
           onChange={(e) => onChange(index, 'name', e.target.value)}
-          className="flex-1 border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#99b3e0]"
+          className="flex-1 border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--mm-color-blue)]/40"
         />
         <input
           type="email"
-          placeholder="Email (optional)"
+          placeholder={t('witness.setup.emailPlaceholder')}
           value={email}
           onChange={(e) => onChange(index, 'email', e.target.value)}
-          className="flex-1 border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#99b3e0]"
+          className="flex-1 border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--mm-color-blue)]/40"
         />
       </div>
       {showRemove && (
@@ -51,7 +51,7 @@ function WitnessRow({ index, name, email, onChange, onRemove, showRemove }) {
   )
 }
 
-function CopyButton({ text, label }) {
+function CopyButton({ text, label, copiedLabel }) {
   const [copied, setCopied] = useState(false)
 
   function handleCopy() {
@@ -64,9 +64,11 @@ function CopyButton({ text, label }) {
   return (
     <button
       onClick={handleCopy}
-      className="shrink-0 text-xs font-semibold text-[#0047ba] hover:text-[#003090] transition-colors"
+      className="shrink-0 text-xs font-semibold text-[var(--mm-color-blue)] hover:opacity-70 transition-opacity"
     >
-      {copied ? <span className="flex items-center gap-1"><CheckIcon size={12} />Copied</span> : label}
+      {copied
+        ? <span className="flex items-center gap-1"><CheckIcon size={12} />{copiedLabel}</span>
+        : label}
     </button>
   )
 }
@@ -92,8 +94,9 @@ export default function WitnessSetupPage() {
 
   const [gateState, setGateState] = useState('checking')
 
-  // Form state
-  const [witnesses, setWitnesses] = useState([{ name: '', email: '' }])
+  // Form state — each witness has a stable id for React key stability (C29)
+  const nextId = useRef(2)
+  const [witnesses, setWitnesses] = useState([{ id: 1, name: '', email: '' }])
   const [submitting, setSubmitting] = useState(false)
   const [formError,  setFormError]  = useState(null)
 
@@ -140,7 +143,7 @@ export default function WitnessSetupPage() {
 
   function handleAdd() {
     if (witnesses.length < MAX_WITNESSES) {
-      setWitnesses(prev => [...prev, { name: '', email: '' }])
+      setWitnesses(prev => [...prev, { id: nextId.current++, name: '', email: '' }])
     }
   }
 
@@ -163,7 +166,8 @@ export default function WitnessSetupPage() {
       const updated = await getMyWitnessSessions()
       setSessions(updated)
       // Reset form
-      setWitnesses([{ name: '', email: '' }])
+      nextId.current = 1
+      setWitnesses([{ id: nextId.current++, name: '', email: '' }])
     } catch {
       setFormError(t('witness.setup.error'))
     } finally {
@@ -215,7 +219,7 @@ export default function WitnessSetupPage() {
                   <p className="text-sm font-medium text-gray-900 truncate">{link.name}</p>
                   <p className="text-xs text-gray-400 truncate">{link.link}</p>
                 </div>
-                <CopyButton text={link.link} label={t('witness.setup.copyLink')} />
+                <CopyButton text={link.link} label={t('witness.setup.copyLink')} copiedLabel={t('witness.setup.copied')} />
               </div>
             ))}
           </Card>
@@ -227,13 +231,14 @@ export default function WitnessSetupPage() {
           <form onSubmit={handleSubmit} className="flex flex-col gap-3">
             {witnesses.map((w, i) => (
               <WitnessRow
-                key={i}
+                key={w.id}
                 index={i}
                 name={w.name}
                 email={w.email}
                 onChange={handleChange}
                 onRemove={handleRemove}
                 showRemove={witnesses.length > 1}
+                t={t}
               />
             ))}
 
@@ -297,7 +302,7 @@ export default function WitnessSetupPage() {
                     <span className="text-xs font-medium text-gray-400 bg-gray-100 px-2 py-0.5 rounded">
                       {t('witness.setup.statusPending')}
                     </span>
-                    <CopyButton text={s.link} label={t('witness.setup.copyLink')} />
+                    <CopyButton text={s.link} label={t('witness.setup.copyLink')} copiedLabel={t('witness.setup.copied')} />
                   </div>
                 </div>
               ))}
@@ -307,7 +312,7 @@ export default function WitnessSetupPage() {
 
         {/* View report CTA */}
         <div className="flex flex-col gap-3">
-          <Button variant="secondary" onClick={() => navigate('/full-moon/report')} className="w-full">
+          <Button variant="secondary" onClick={() => navigate('/full-moon/results')} className="w-full">
             {t('witness.setup.viewReport')}
           </Button>
         </div>

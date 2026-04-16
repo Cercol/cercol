@@ -20,8 +20,13 @@ import { NORM_MEAN as NORM_MEAN_F, NORM_SD as NORM_SD_F } from './role-scoring'
  *   discipline (c), and depth (n).
  * @returns {{ moveKey: string, watchOutKey: string, helpKey: string }}
  */
+/** Minimum absolute z-mean for a P/B/V dimension to be considered a primary driver. */
+export const PRIMARY_THRESHOLD = 0.4
+
+/** Minimum absolute z-mean for structural risk dimensions (C low / N high). */
+export const STRUCTURAL_RISK_THRESHOLD = 0.5
+
 export function generateNarrative({ p, b, v, c, n }) {
-  const PRIMARY_THRESHOLD = 0.4
 
   // Find the dominant dimension among P, B, V
   const pvb = [
@@ -37,8 +42,8 @@ export function generateNarrative({ p, b, v, c, n }) {
 
   // Risk is structural if discipline is notably low or emotional depth notably high
   let riskKey = moveKey
-  if (c < -0.5) riskKey = 'low_c'
-  else if (n > 0.5) riskKey = 'high_n'
+  if (c < -STRUCTURAL_RISK_THRESHOLD) riskKey = 'low_c'
+  else if (n > STRUCTURAL_RISK_THRESHOLD) riskKey = 'high_n'
 
   return {
     moveKey,
@@ -56,7 +61,7 @@ export function generateNarrative({ p, b, v, c, n }) {
  *   Returns null if no members have completed Full Moon.
  */
 export function computeGroupMeans(members) {
-  const completed = members.filter(m => m.zscores)
+  const completed = members.filter(m => m.zscores && m.completed)
   if (completed.length === 0) return null
 
   const sum = completed.reduce(
@@ -123,9 +128,6 @@ const NORM_SD   = Object.fromEntries(Object.entries(DOMAIN_FACTOR).map(([d, f]) 
 
 // Maps dimension key → groupMeans shorthand key
 const DIM_TO_MEANS_KEY = { presence: 'p', bond: 'b', vision: 'v', discipline: 'c', depth: 'n' }
-
-// Maps dimension key → centroid field
-const DIM_TO_CENTROID = { presence: 'e', bond: 'a', vision: 'o', discipline: 'c', depth: 'n' }
 
 // Best single role to suggest when no team member can compensate for a P/B/V tilt.
 // Chosen as the most functional counterbalance for each direction.

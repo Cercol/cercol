@@ -768,7 +768,10 @@
       "existingHeading": "Vos témoins",
       "viewReport": "Voir le rapport complet",
       "error": "Une erreur s'est produite. Réessayez.",
-      "linkedNote": "Si vos témoins sont connectés, ils pourront lier la session à leur profil pour les futures fonctionnalités d'équipe."
+      "linkedNote": "Si vos témoins sont connectés, ils pourront lier la session à leur profil pour les futures fonctionnalités d'équipe.",
+      "witnessLabel": "Témoin",
+      "emailPlaceholder": "E-mail (optionnel)",
+      "copied": "Copié"
     },
     "page": {
       "loading": "Chargement…",

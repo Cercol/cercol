@@ -41,10 +41,11 @@ export default function NewMoonResultsPage() {
     scores = decodeScores(sharedParam)
   }
 
-  if (!scores) {
-    navigate('/')
-    return null
-  }
+  useEffect(() => {
+    if (!scores) navigate('/')
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  if (!scores) return null
 
   // Log on real test completion only
   useEffect(() => {

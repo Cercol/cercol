@@ -18,6 +18,7 @@ export default function Button({
   disabled,
   type     = 'button',
   className = '',
+  ...rest
 }) {
   const sizes = {
     sm: 'text-xs px-3 py-1.5',
@@ -36,6 +37,7 @@ export default function Button({
       type={type}
       onClick={onClick}
       disabled={disabled}
+      {...rest}
       className={[
         'font-semibold inline-flex items-center justify-center transition-colors rounded',
         sizes[size],

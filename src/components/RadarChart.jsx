@@ -9,6 +9,7 @@
  *   domainKeys  {string[]}               — ordered list of domain keys (required)
  *   labelFn     {(key: string) => string} — maps a domain key to its display label (required)
  */
+import { useId } from 'react'
 import {
   Radar,
   RadarChart as RechartsRadar,
@@ -44,7 +45,7 @@ function smoothClosedPath(points, tension = 0.4) {
 }
 
 /** Organic radar fill: smooth cubic-bezier shape with moon-like radial gradient. */
-function OrganicRadarShape({ points, stroke, strokeWidth }) {
+function OrganicRadarShape({ points, stroke, strokeWidth, gradientId }) {
   if (!points || points.length === 0) return null
   // cx/cy are per-point properties in Recharts v3 (chart center coords)
   const cx = points[0]?.cx ?? 0
@@ -56,7 +57,7 @@ function OrganicRadarShape({ points, stroke, strokeWidth }) {
     <g>
       <defs>
         <radialGradient
-          id="cercol-radar-grad"
+          id={gradientId}
           gradientUnits="userSpaceOnUse"
           cx={cx}
           cy={cy}
@@ -69,7 +70,7 @@ function OrganicRadarShape({ points, stroke, strokeWidth }) {
       </defs>
       <path
         d={d}
-        fill="url(#cercol-radar-grad)"
+        fill={`url(#${gradientId})`}
         stroke={stroke}
         strokeWidth={strokeWidth}
         strokeLinejoin="round"
@@ -79,6 +80,9 @@ function OrganicRadarShape({ points, stroke, strokeWidth }) {
 }
 
 export default function RadarChart({ scores, maxScore = 5, domainKeys, labelFn }) {
+  const uid = useId()
+  const gradientId = `radar-grad-${uid.replace(/:/g, '')}`
+
   const data = domainKeys.map((key) => ({
     dimension: labelFn(key),
     domainKey: key,
@@ -110,7 +114,7 @@ export default function RadarChart({ scores, maxScore = 5, domainKeys, labelFn }
           stroke={colors.red}
           strokeWidth={2}
           isAnimationActive={false}
-          shape={<OrganicRadarShape />}
+          shape={<OrganicRadarShape gradientId={gradientId} />}
         />
       </RechartsRadar>
     </ResponsiveContainer>

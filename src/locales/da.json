@@ -768,7 +768,10 @@
       "existingHeading": "Dine vidner",
       "viewReport": "Se fuld rapport",
       "error": "Noget gik galt. Prøv igen.",
-      "linkedNote": "Hvis dine vidner er logget ind, kan de knytte sessionen til deres profil til fremtidige teamfunktioner."
+      "linkedNote": "Hvis dine vidner er logget ind, kan de knytte sessionen til deres profil til fremtidige teamfunktioner.",
+      "witnessLabel": "Vidne",
+      "emailPlaceholder": "E-mail (valgfri)",
+      "copied": "Kopieret"
     },
     "page": {
       "loading": "Indlæser…",

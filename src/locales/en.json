@@ -768,7 +768,10 @@
       "existingHeading": "Your witnesses",
       "viewReport": "View full report",
       "error": "Something went wrong. Try again.",
-      "linkedNote": "If your witnesses are signed in, they can link the session to their profile for future team features."
+      "linkedNote": "If your witnesses are signed in, they can link the session to their profile for future team features.",
+      "witnessLabel": "Witness",
+      "emailPlaceholder": "Email (optional)",
+      "copied": "Copied"
     },
     "page": {
       "loading": "Loading…",

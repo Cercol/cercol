@@ -16,7 +16,6 @@ import {
   declineGroupInvitation,
 } from '../lib/api'
 import { Card, Button, SectionLabel } from '../components/ui'
-import { colors } from '../design/tokens'
 
 function formatDate(iso, language) {
   return new Date(iso).toLocaleDateString(language === 'ca' ? 'ca' : 'en-GB', {
@@ -46,10 +45,7 @@ function GroupCard({ group, onClick, t }) {
             </p>
           </div>
           {group.is_creator && (
-            <span
-              className="shrink-0 text-xs font-semibold px-2 py-0.5 rounded"
-              style={{ backgroundColor: colors.blue + '18', color: colors.blue }}
-            >
+            <span className="shrink-0 text-xs font-semibold px-2 py-0.5 rounded bg-[var(--mm-color-blue)]/10 text-[var(--mm-color-blue)]">
               {t('groups.creatorBadge')}
             </span>
           )}

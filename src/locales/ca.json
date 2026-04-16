@@ -768,7 +768,10 @@
       "existingHeading": "Els teus testimonis",
       "viewReport": "Veure l'informe complet",
       "error": "Alguna cosa ha anat malament. Torna-ho a intentar.",
-      "linkedNote": "Si els teus testimonis tenen sessió iniciada, podran vincular la sessió al seu perfil per a futures funcions d'equip."
+      "linkedNote": "Si els teus testimonis tenen sessió iniciada, podran vincular la sessió al seu perfil per a futures funcions d'equip.",
+      "witnessLabel": "Testimoni",
+      "emailPlaceholder": "Correu (opcional)",
+      "copied": "Copiat"
     },
     "page": {
       "loading": "Carregant…",

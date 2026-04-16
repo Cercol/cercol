@@ -46,7 +46,7 @@ const POLL_INTERVAL_MS  = 1500
 export default function FullMoonPage() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const { setItemContext } = useFeedbackContext()
   const { user, loading: authLoading } = useAuth()
 
@@ -278,7 +278,7 @@ export default function FullMoonPage() {
             <p className="text-sm text-gray-500 leading-relaxed mb-6">
               {t('fm.alreadyCompleted.body')}
             </p>
-            <Button variant="primary" onClick={() => navigate('/full-moon/report')} className="w-full">
+            <Button variant="primary" onClick={() => navigate('/full-moon/results')} className="w-full">
               {t('fm.alreadyCompleted.cta')}
             </Button>
           </Card>

@@ -1,3 +1,4 @@
+import { Component } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { FeedbackProvider, useFeedbackContext } from './context/FeedbackContext'
 import { AuthProvider } from './context/AuthContext'
@@ -26,6 +27,40 @@ import LastQuarterPage from './pages/LastQuarterPage'
 import FeedbackButton from './components/FeedbackButton'
 import CookieBanner from './components/CookieBanner'
 
+/** Top-level error boundary — catches unexpected render errors and shows a minimal fallback. */
+class ErrorBoundary extends Component {
+  constructor(props) {
+    super(props)
+    this.state = { hasError: false, error: null }
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error }
+  }
+
+  componentDidCatch(error, info) {
+    // Log to console in development; replace with a reporting service (Sentry, etc.) if needed.
+    console.error('[ErrorBoundary]', error, info)
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="flex flex-col items-center justify-center min-h-screen gap-4 px-6 text-center">
+          <p className="text-gray-500 text-sm">Something went wrong. Please reload the page.</p>
+          <button
+            className="text-sm font-semibold text-[var(--mm-color-blue)] underline"
+            onClick={() => window.location.reload()}
+          >
+            Reload
+          </button>
+        </div>
+      )
+    }
+    return this.props.children
+  }
+}
+
 function AppContent() {
   const { itemContext } = useFeedbackContext()
   return (
@@ -41,7 +76,7 @@ function AppContent() {
         {/* Full Moon */}
         <Route path="/full-moon" element={<FullMoonPage />} />
         <Route path="/full-moon/results" element={<FullMoonResultsPage />} />
-        <Route path="/full-moon/report" element={<Navigate to="/full-moon/results" replace />} />
+
         {/* Witness Cèrcol */}
         <Route path="/witness-setup" element={<WitnessSetupPage />} />
         <Route path="/witness/:token" element={<WitnessPage />} />
@@ -70,12 +105,14 @@ function AppContent() {
 
 export default function App() {
   return (
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
-      <AuthProvider>
-        <FeedbackProvider>
-          <AppContent />
-        </FeedbackProvider>
-      </AuthProvider>
-    </BrowserRouter>
+    <ErrorBoundary>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
+        <AuthProvider>
+          <FeedbackProvider>
+            <AppContent />
+          </FeedbackProvider>
+        </AuthProvider>
+      </BrowserRouter>
+    </ErrorBoundary>
   )
 }

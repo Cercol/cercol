@@ -768,7 +768,10 @@
       "existingHeading": "Tus testigos",
       "viewReport": "Ver informe completo",
       "error": "Algo salió mal. Inténtalo de nuevo.",
-      "linkedNote": "Si tus testigos tienen sesión iniciada, podrán vincular la sesión a su perfil para futuras funciones de equipo."
+      "linkedNote": "Si tus testigos tienen sesión iniciada, podrán vincular la sesión a su perfil para futuras funciones de equipo.",
+      "witnessLabel": "Testigo",
+      "emailPlaceholder": "Correo (opcional)",
+      "copied": "Copiado"
     },
     "page": {
       "loading": "Cargando…",

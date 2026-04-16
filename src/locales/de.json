@@ -768,7 +768,10 @@
       "existingHeading": "Deine Zeugen",
       "viewReport": "Vollständigen Bericht ansehen",
       "error": "Etwas ist schiefgelaufen. Versuche es erneut.",
-      "linkedNote": "Wenn deine Zeugen angemeldet sind, können sie die Sitzung mit ihrem Profil für künftige Team-Funktionen verknüpfen."
+      "linkedNote": "Wenn deine Zeugen angemeldet sind, können sie die Sitzung mit ihrem Profil für künftige Team-Funktionen verknüpfen.",
+      "witnessLabel": "Zeuge",
+      "emailPlaceholder": "E-Mail (optional)",
+      "copied": "Kopiert"
     },
     "page": {
       "loading": "Lädt…",
