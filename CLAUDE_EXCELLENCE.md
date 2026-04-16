@@ -19,7 +19,7 @@
 
 ## I. Errors crítics de dades i algorisme
 
-### 🔴 Centroids de rols divergents entre backend i frontend
+### ✅ ~~🔴 Centroids de rols divergents entre backend i frontend~~ — RESOLT (fase 13.19)
 
 El `_compute_role` de `api/main.py` usa centroids simplificats on **C i N sempre valen 0.0** per a tots els rols:
 
@@ -58,7 +58,7 @@ Quan s'actualitzen `NORM_MEAN`/`NORM_SD` al frontend (previst a N≥200), caldr�
 
 **Fitxers afectats:** `api/main.py` (`_NORM`), `src/utils/role-scoring.js` (font de veritat).
 
-### 🔴 Inconsistència entre `computeGroupMeans` i `computeDimensionAnalysis`
+### ✅ ~~🔴 Inconsistència entre `computeGroupMeans` i `computeDimensionAnalysis`~~ — RESOLT (fase 13.19)
 
 ```js
 // computeGroupMeans (team-narrative.js, línia 59)
@@ -76,7 +76,7 @@ const completed = members.filter(m => m.zscores && m.completed)
 
 ## II. Vulnerabilitats de seguretat
 
-### 🟠 CORS accepta `http://cercol.team` (sense TLS)
+### ✅ ~~🟠 CORS accepta `http://cercol.team` (sense TLS)~~ — RESOLT (fase 13.19)
 
 ```python
 ALLOWED_ORIGINS = [
@@ -90,7 +90,7 @@ Qualsevol adversari en una xarxa intermèdia pot fer peticions a l'API des d'una
 
 **Fitxer afectat:** `api/main.py`.
 
-### 🟠 JWKS cache sense TTL — key rotation trenca l'auth indefinidament
+### ✅ ~~🟠 JWKS cache sense TTL — key rotation trenca l'auth indefinidament~~ — RESOLT (fase 13.19)
 
 ```python
 _key_cache: dict = {}
@@ -105,7 +105,7 @@ Si Supabase rota les claus (event documentat del seu calendari de manteniment), 
 
 **Fitxer afectat:** `api/main.py`.
 
-### 🟠 Enumeració de tokens de Witness — endpoint GET sense rate limiting
+### ✅ ~~🟠 Enumeració de tokens de Witness — endpoint GET sense rate limiting~~ — RESOLT (fase 13.19)
 
 ```python
 @app.get("/witness/session/{token}")
@@ -117,7 +117,7 @@ Un atacant pot iterar tokens (32 hex chars = 16^32 espai) amb peticions ràpides
 
 **Fitxer afectat:** `api/main.py`.
 
-### 🟠 `colors.blue + '18'` — pattern d'opacitat fràgil i insegur
+### ✅ ~~🟠 `colors.blue + '18'` — pattern d'opacitat fràgil i insegur~~ — RESOLT (fase 13.19)
 
 ```jsx
 // GroupsPage.jsx, línia 52
@@ -132,7 +132,7 @@ Açò afig `'18'` (hex α ≈ 9.4%) directament al valor hex del token. Si mai `
 
 ## III. Violacions arquitectòniques greus
 
-### 🟠 Quatre consultes Supabase directes en pàgines — violació de la capa `lib/api.js`
+### ✅ ~~🟠 Quatre consultes Supabase directes en pàgines — violació de la capa `lib/api.js`~~ — RESOLT (fase 13.19)
 
 | Fitxer | Consulta directa |
 |--------|-----------------|
@@ -143,7 +143,7 @@ Açò afig `'18'` (hex α ≈ 9.4%) directament al valor hex del token. Si mai `
 
 Aquesta violació va ser detectada i corregida per a `FullMoonResultsPage` a la fase 13.17, però no s'ha completat sistemàticament. La capa `lib/api.js` existeix precisament perquè cap pàgina no conega l'esquema directament.
 
-### 🟠 Backend FastAPI usa I/O síncrona en context async — bloqueja l'event loop
+### ✅ ~~🟠 Backend FastAPI usa I/O síncrona en context async — bloqueja l'event loop~~ — RESOLT (fase 13.19, migració a asyncpg)
 
 ```python
 def _supabase_get(table: str, query: str) -> list:
@@ -155,7 +155,7 @@ Totes les rutes de FastAPI haurien de ser `async def` amb un client HTTP asíncr
 
 **Fitxer afectat:** `api/main.py` (tots els helpers `_supabase_*`).
 
-### 🟠 N+1 queries al backend en `get_my_groups` i `get_group_report_data`
+### ✅ ~~🟠 N+1 queries al backend en `get_my_groups` i `get_group_report_data`~~ — RESOLT (fase 13.19)
 
 **`get_my_groups`:** Per cada grup, per cada membre actiu, fa una consulta `SELECT` per verificar si té resultat Full Moon. Amb 5 grups × 8 membres = 40 consultes seqüencials.
 
@@ -234,7 +234,7 @@ Existeixen `scoreToPercent5` i `radarScoreToPercent`. Caldria usar-les directame
 
 ## V. Violacions de les convencions del projecte (CLAUDE.md)
 
-### 🟡 Strings en anglès hardcoded a `WitnessSetupPage.jsx` (3 llocs)
+### ✅ ~~🟡 Strings en anglès hardcoded a `WitnessSetupPage.jsx` (3 llocs)~~ — RESOLT (fase 13.19)
 
 ```jsx
 placeholder={`Witness ${index + 1}`}
@@ -257,7 +257,7 @@ El logo de Google és un SVG inline directament al component. CLAUDE.md establei
 
 **Fitxer afectat:** `src/pages/AuthPage.jsx`.
 
-### 🟡 Colors hardcoded en 4 fitxers
+### ⚠️ 🟡 Colors hardcoded en 4 fitxers — PARCIAL (WitnessSetupPage resolt; AuthPage.jsx i WitnessPage.jsx pendents)
 
 | Fitxer | Valor hardcodat |
 |--------|----------------|
@@ -268,7 +268,7 @@ El logo de Google és un SVG inline directament al component. CLAUDE.md establei
 
 `#003090` ni tan sols és un token del sistema — és una versió fosca del blau que hauria de ser `colors.blueDark` a mm-design.
 
-### 🟡 `i18n` destructurat però no usat a dues pàgines
+### ✅ ~~🟡 `i18n` destructurat però no usat a dues pàgines~~ — RESOLT (fase 13.19)
 
 ```js
 // FirstQuarterPage.jsx — i18n mai usat
@@ -282,7 +282,7 @@ const { t, i18n } = useTranslation()
 
 ## VI. Codi mort i constants sense usar
 
-### 🟡 `DIM_TO_CENTROID` definida i mai usada a `team-narrative.js`
+### ✅ ~~🟡 `DIM_TO_CENTROID` definida i mai usada a `team-narrative.js`~~ — RESOLT (fase 13.19)
 
 ```js
 // team-narrative.js, línia 128
@@ -291,7 +291,7 @@ const DIM_TO_CENTROID = { presence: 'e', bond: 'a', vision: 'o', discipline: 'c'
 
 Definida, no exportada, no referenciada a cap lloc del fitxer. Codi mort pur.
 
-### 🔵 Redirect innecessari `/full-moon/report → /full-moon/results`
+### ✅ ~~🔵 Redirect innecessari `/full-moon/report → /full-moon/results`~~ — RESOLT (fase 13.19)
 
 ```js
 // App.jsx
@@ -311,7 +311,7 @@ El botó navega a un alias que immediatament redirigeix. Si el destí és `/full
 
 ## VII. Problemes d'accessibilitat
 
-### 🟠 `Button.jsx` no accepta props d'accessibilitat adicionals
+### ✅ ~~🟠 `Button.jsx` no accepta props d'accessibilitat adicionals~~ — RESOLT (fase 13.19)
 
 ```js
 export default function Button({ variant, size, children, onClick, disabled, type, className }) {
@@ -321,7 +321,7 @@ El component desestructura props individuals sense `...rest`. Qualsevol `aria-la
 
 **Fitxer afectat:** `src/components/ui/Button.jsx`.
 
-### 🔵 `RadarChart.jsx` usa un ID de gradient hardcodat
+### ✅ ~~🔵 `RadarChart.jsx` usa un ID de gradient hardcodat~~ — RESOLT (fase 13.19)
 
 ```jsx
 <radialGradient id="cercol-radar-grad" ...>
@@ -365,7 +365,7 @@ L'`index.html` no té cap capçalera CSP ni meta tag equivalent. Tota la càrreg
 
 ## IX. Mediocricitats puntuals
 
-### 🔵 `navigate()` cridat durant render en dues pàgines
+### ⚠️ 🔵 `navigate()` cridat durant render en dues pàgines — PARCIAL (NewMoonResultsPage resolt; FullMoonResultsPage pendent)
 
 ```jsx
 // NewMoonResultsPage.jsx i FullMoonResultsPage.jsx
@@ -379,7 +379,7 @@ Crides a `navigate()` fora d'un `useEffect`. React pot renderitzar el component 
 
 **Fitxers afectats:** `src/pages/NewMoonResultsPage.jsx`, `src/pages/FullMoonResultsPage.jsx`.
 
-### 🔵 `MyResultsPage` usa `select('*')` a la consulta de resultats
+### ✅ ~~🔵 `MyResultsPage` usa `select('*')` a la consulta de resultats~~ — RESOLT (fase 13.19, migració a API)
 
 ```js
 supabase.from('results').select('*')
@@ -389,7 +389,7 @@ Selecciona totes les columnes, incloent `facets` (JSON potencialment gran) per a
 
 **Fitxer afectat:** `src/pages/MyResultsPage.jsx`.
 
-### 🔵 `useAuth()` no avisa si s'usa fora del provider
+### ✅ ~~🔵 `useAuth()` no avisa si s'usa fora del provider~~ — RESOLT (fase 13.19)
 
 ```js
 export function useAuth() {
@@ -405,7 +405,7 @@ if (ctx === null) throw new Error('useAuth used outside AuthProvider')
 
 **Fitxer afectat:** `src/context/AuthContext.jsx`.
 
-### 🔵 `WitnessRow` usa index de l'array com a key de React
+### ✅ ~~🔵 `WitnessRow` usa index de l'array com a key de React~~ — RESOLT (fase 13.19)
 
 ```jsx
 {witnesses.map((w, i) => (
@@ -416,11 +416,11 @@ Quan s'elimina una fila del mig, React no sap que les files s'han desplaçat i p
 
 **Fitxer afectat:** `src/pages/WitnessSetupPage.jsx`.
 
-### 🔵 `PRIMARY_THRESHOLD` i altres llindars — constants màgiques no exportades
+### ✅ ~~🔵 `PRIMARY_THRESHOLD` i altres llindars — constants màgiques no exportades~~ — RESOLT (fase 13.19)
 
 Valors com `PRIMARY_THRESHOLD = 0.4` (team-narrative.js), `threshold = 0.8` (detectDivergence), `0.5` (compensating member), `MIN_WITNESSES_FOR_REPORT = 2` viuen aïllats dins funcions o pàgines. No hi ha cap fitxer que done una visió global de tots els paràmetres científics del sistema, dificultant la revisió i futura calibratge.
 
-### 🔵 Error sense boundary a `App.jsx`
+### ✅ ~~🔵 Error sense boundary a `App.jsx`~~ — RESOLT (fase 13.19)
 
 Un error no capturat en qualsevol component renderitza una pantalla blanca sense cap missatge d'error. Un `<ErrorBoundary>` al nivell d'`AppContent` mostraria un estat d'error amb context i opció de recuperació.
 
@@ -428,46 +428,48 @@ Un error no capturat en qualsevol component renderitza una pantalla blanca sense
 
 ## Resum executiu per prioritat
 
+> **Estat: fase 13.19 en curs** — 22/32 ítems resolts, 2 parcials, 8 pendents.
+
 ```
 🔴 CRÍTICS (3)
-   1. Centroids del backend incorrectes → rols del grup equivocats
-   2. _NORM duplicat entre JS i Python → derivació garantida al futur
-   3. computeGroupMeans vs computeDimensionAnalysis → poblacions inconsistents
+   1. ✅ Centroids del backend incorrectes → rols del grup equivocats
+   2. ⏳ _NORM duplicat entre JS i Python → derivació garantida al futur
+   3. ✅ computeGroupMeans vs computeDimensionAnalysis → poblacions inconsistents
 
 🟠 GREUS (8)
-   4. CORS http:// en producció
-   5. JWKS sense TTL → key rotation trenca l'auth
-   6. GET /witness/session/ sense rate limit → enumeració de tokens
-   7. 4 consultes Supabase directes en pàgines (viola lib/api.js)
-   8. FastAPI usa urllib síncrona → bloqueja l'event loop
-   9. N+1 queries a get_my_groups / get_group_report_data
-  10. lookup d'email per invitació de grup inoperatiu
-  11. Sense CI/CD pipeline
+   4. ✅ CORS http:// en producció
+   5. ✅ JWKS sense TTL → key rotation trenca l'auth
+   6. ✅ GET /witness/session/ sense rate limit → enumeració de tokens
+   7. ✅ 4 consultes Supabase directes en pàgines (viola lib/api.js)
+   8. ✅ FastAPI usa urllib síncrona → bloqueja l'event loop  [asyncpg]
+   9. ✅ N+1 queries a get_my_groups / get_group_report_data
+  10. ⏳ lookup d'email per invitació de grup inoperatiu
+  11. ⏳ Sense CI/CD pipeline
 
 🟡 IMPORTANTS (13)
-  12. Inline SVG Google (viola CLAUDE.md)
-  13. Strings hardcoded no traduits (WitnessSetupPage)
-  14. Colors #0047ba hardcoded en 4 fitxers
-  15. i18n destructurat i no usat (FQ + FM pages)
-  16. DIM_TO_CENTROID dead code
-  17. computeFQScores / computeFMScores idèntics (DRY)
-  18. Keyboard handler copiat 3 vegades
-  19. scaleLabels copiat 3 vegades
-  20. scorePercent reimplementat localment
-  21. navigate() durant render (× 2)
-  22. Button no accepta aria-* / data-*
-  23. select('*') a MyResultsPage
-  24. Redirect /full-moon/report innecessari
+  12. ⏳ Inline SVG Google (viola CLAUDE.md)
+  13. ✅ Strings hardcoded no traduits (WitnessSetupPage)
+  14. ⚠️ Colors #0047ba hardcoded en 4 fitxers  [WitnessSetupPage ✅, AuthPage + WitnessPage ⏳]
+  15. ✅ i18n destructurat i no usat (FQ + FM pages)
+  16. ✅ DIM_TO_CENTROID dead code
+  17. ⏳ computeFQScores / computeFMScores idèntics (DRY)
+  18. ⏳ Keyboard handler copiat 3 vegades
+  19. ⏳ scaleLabels copiat 3 vegades
+  20. ⏳ scorePercent reimplementat localment
+  21. ⚠️ navigate() durant render (× 2)  [NewMoonResultsPage ✅, FullMoonResultsPage ⏳]
+  22. ✅ Button no accepta aria-* / data-*
+  23. ✅ select('*') a MyResultsPage  [migrat a API]
+  24. ✅ Redirect /full-moon/report innecessari
 
 🔵 QUALITAT (8)
-  25. Sense CSP header
-  26. Sense error boundary
-  27. Gradient ID hardcodat (conflicte si 2 radars)
-  28. useAuth sense guarda de context
-  29. WitnessRow key per index
-  30. Sense tests Python al backend
-  31. Constants màgiques de llindar no exportades
-  32. colors.blue + '18' hack d'opacitat
+  25. ⏳ Sense CSP header
+  26. ✅ Sense error boundary
+  27. ✅ Gradient ID hardcodat (conflicte si 2 radars)
+  28. ✅ useAuth sense guarda de context
+  29. ✅ WitnessRow key per index
+  30. ⏳ Sense tests Python al backend
+  31. ✅ Constants màgiques de llindar no exportades
+  32. ✅ colors.blue + '18' hack d'opacitat
 ```
 
 ---
