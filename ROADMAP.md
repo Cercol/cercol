@@ -1077,11 +1077,21 @@ Full systematic resolution of all issues identified in CLAUDE_EXCELLENCE.md, pri
 
 **🔵 Qualitat (8):** CSP header; ErrorBoundary; gradient ID únic; useAuth guard; WitnessRow key estable; tests Python; tests FQScores/FMScores/buildRounds; exportar constants de llindar.
 
-### Phase 13.20 — Living model
-- GitHub Actions job every 28 days: update NORM_MEAN/NORM_SD at N≥200
-- At N≥300: k-means (k=12) in 5D; update centroids if divergence is systematic
-- Internal validation dashboard (read-only, authenticated)
-- If role model evolves to incorporate g: add ICAR collection then
+### Phase 13.20 — Living model ✅ COMPLETE
+
+Hierarchical empirical norm system with automatic 28-day background refresh.
+
+- `scoring.py`: `NORM_MIN_SAMPLE = 200`, `NORM_REFRESH_DAYS = 28` (configurable). `resolve_norm(instrument, language, cache)` applies 3-tier hierarchy: (instrument+language) ≥ 200 → instrument-wide ≥ 200 → researcher priors.
+- `main.py`: `_recompute_norms()` queries DB at startup and every 28 days via asyncio background task. All role-scoring calls use the resolved tier automatically.
+- Admin dashboard → Norms tab: live tier table per instrument×language with colour-coded pills and "Refresh now" button.
+- k-means centroid update (N≥300) deferred to Phase 13.22.
+
+### Phase 13.21 — Staff admin dashboard ✅ COMPLETE
+
+- DB: `is_admin BOOLEAN DEFAULT false` column on `profiles`.
+- Backend: `require_admin` dependency; `GET /admin/stats`, `GET /admin/users`, `GET /admin/results` (paginated, searchable/filterable), CSV export endpoints, `GET /admin/norms`, `POST /admin/norms/refresh`. `is_admin` included in `/me/profile`.
+- Frontend: `AdminRoute` guard (invisible redirect for non-admins); `AdminDashboardPage` with Overview / Users / Results / Norms tabs; IntersectionObserver infinite scroll; CSV download per tab.
+- Nav: Admin link only rendered when `profile.is_admin = true`.
 
 ---
 
