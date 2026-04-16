@@ -3,3 +3,4 @@ uvicorn[standard]==0.34.2
 python-jose[cryptography]==3.3.0
 stripe==12.1.0
 slowapi==0.1.9
+asyncpg==0.30.0
