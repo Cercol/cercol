@@ -163,7 +163,7 @@ Totes les rutes de FastAPI haurien de ser `async def` amb un client HTTP asíncr
 
 **Fitxer afectat:** `api/main.py`.
 
-### 🟠 `create_group` a l'API té un lookup d'email inoperatiu
+### ✅ ~~🟠 `create_group` a l'API té un lookup d'email inoperatiu~~ — RESOLT (fase 13.19)
 
 ```python
 try:
@@ -183,7 +183,7 @@ El codi reconeix explícitament que no funciona. En la pràctica, les invitacion
 
 ## IV. Codi duplicat que viola el principi DRY
 
-### 🟡 `computeFQScores` i `computeFMScores` son idèntics al 95%
+### ✅ ~~🟡 `computeFQScores` i `computeFMScores` son idèntics al 95%~~ — RESOLT (fase 13.19)
 
 Els dos fitxers defineixen exactament el mateix algorisme. L'única diferència és la font de dades (`FQ_ITEMS/FQ_DOMAIN_META` vs `FM_ITEMS/FM_DOMAIN_META`). Hauria d'existir una funció genèrica:
 
@@ -193,7 +193,7 @@ export function computeInstrumentScores(answers, items, domainMeta) { ... }
 
 **Fitxers afectats:** `src/utils/first-quarter-scoring.js`, `src/utils/full-moon-scoring.js`.
 
-### 🟡 El keyboard handler d'instrument es copia 3 vegades
+### ✅ ~~🟡 El keyboard handler d'instrument es copia 3 vegades~~ — RESOLT (fase 13.19, hook useInstrumentKeyboard)
 
 `NewMoonPage`, `FirstQuarterPage` i `FullMoonPage` contenen pràcticament el mateix `useEffect` de teclat (~30 línies cadascun) amb variacions mínimes. Hauria d'existir un hook:
 
@@ -203,7 +203,7 @@ useInstrumentKeyboard({ onNumber, onNext, onBack, onContinue, showIntroRef, show
 
 **Fitxers afectats:** `src/pages/NewMoonPage.jsx`, `src/pages/FirstQuarterPage.jsx`, `src/pages/FullMoonPage.jsx`.
 
-### 🟡 La computació de `scaleLabels` es repeteix en les 3 pàgines d'instrument
+### ✅ ~~🟡 La computació de `scaleLabels` es repeteix en les 3 pàgines d'instrument~~ — RESOLT (fase 13.19, hook useScaleLabels)
 
 ```js
 // Repetit idènticament a NewMoonPage, FirstQuarterPage i FullMoonPage
@@ -217,7 +217,7 @@ const scaleLabels = Object.fromEntries(
 
 Hauria d'existir `useScaleLabels(namespace, fallbackObj)` o una utilitat pura.
 
-### 🟡 `scorePercent` local a `MyResultsPage` reimplementa utilitats ja existents
+### ✅ ~~🟡 `scorePercent` local a `MyResultsPage` reimplementa utilitats ja existents~~ — RESOLT (fase 13.19)
 
 ```js
 function scorePercent(score, instrument) {
@@ -257,7 +257,7 @@ El logo de Google és un SVG inline directament al component. CLAUDE.md establei
 
 **Fitxer afectat:** `src/pages/AuthPage.jsx`.
 
-### ⚠️ 🟡 Colors hardcoded en 4 fitxers — PARCIAL (WitnessSetupPage resolt; AuthPage.jsx i WitnessPage.jsx pendents)
+### ✅ ~~🟡 Colors hardcoded en 4 fitxers~~ — RESOLT (fase 13.19)
 
 | Fitxer | Valor hardcodat |
 |--------|----------------|
@@ -335,7 +335,7 @@ Si mai dos `RadarChart` coexisteixen en la mateixa pàgina (possible a `LastQuar
 
 ## VIII. Absències estructurals
 
-### 🟠 Sense CI/CD — no hi ha `.github/workflows/`
+### ✅ ~~🟠 Sense CI/CD — no hi ha `.github/workflows/`~~ — RESOLT (fase 13.19)
 
 No existeix cap pipeline d'integració contínua. Cada deploy és manual. Açò significa:
 - Cap verificació automàtica que el build passa abans de desplegar
@@ -343,11 +343,11 @@ No existeix cap pipeline d'integració contínua. Cada deploy és manual. Açò 
 - Risc de deploiar codi trencat per distracció o pressa
 - Cap historial d'èxits/fallades de tests
 
-### 🟠 Sense Content Security Policy
+### ✅ ~~🟠 Sense Content Security Policy~~ — RESOLT (fase 13.19, Caddy header a api.cercol.team)
 
 L'`index.html` no té cap capçalera CSP ni meta tag equivalent. Tota la càrrega de scripts de tercers opera sense cap restricció declarada. Una injecció XSS podria exfiltrar tokens de sessió sense obstacles.
 
-### 🟡 Tests absents per a funcions crítiques
+### ⚠️ 🟡 Tests absents per a funcions crítiques — CI afegit; tests pendents de redactar (fase 30)
 
 | Funció | Motiu de criticitat |
 |--------|---------------------|
@@ -365,7 +365,7 @@ L'`index.html` no té cap capçalera CSP ni meta tag equivalent. Tota la càrreg
 
 ## IX. Mediocricitats puntuals
 
-### ⚠️ 🔵 `navigate()` cridat durant render en dues pàgines — PARCIAL (NewMoonResultsPage resolt; FullMoonResultsPage pendent)
+### ✅ ~~🔵 `navigate()` cridat durant render en dues pàgines~~ — RESOLT (fase 13.19)
 
 ```jsx
 // NewMoonResultsPage.jsx i FullMoonResultsPage.jsx
@@ -428,12 +428,12 @@ Un error no capturat en qualsevol component renderitza una pantalla blanca sense
 
 ## Resum executiu per prioritat
 
-> **Estat: fase 13.19 en curs** — 22/32 ítems resolts, 2 parcials, 8 pendents.
+> **Estat: fase 13.19 QUASI COMPLETAT** — 31/32 ítems resolts, 1 pendent (#30 tests Python).
 
 ```
 🔴 CRÍTICS (3)
    1. ✅ Centroids del backend incorrectes → rols del grup equivocats
-   2. ⏳ _NORM duplicat entre JS i Python → derivació garantida al futur
+   2. ✅ _NORM duplicat entre JS i Python → documentat + STRUCTURAL_RISK_THRESHOLD exportat
    3. ✅ computeGroupMeans vs computeDimensionAnalysis → poblacions inconsistents
 
 🟠 GREUS (8)
@@ -443,31 +443,31 @@ Un error no capturat en qualsevol component renderitza una pantalla blanca sense
    7. ✅ 4 consultes Supabase directes en pàgines (viola lib/api.js)
    8. ✅ FastAPI usa urllib síncrona → bloqueja l'event loop  [asyncpg]
    9. ✅ N+1 queries a get_my_groups / get_group_report_data
-  10. ⏳ lookup d'email per invitació de grup inoperatiu
-  11. ⏳ Sense CI/CD pipeline
+  10. ✅ lookup d'email per invitació de grup inoperatiu
+  11. ✅ Sense CI/CD pipeline  [.github/workflows/ci.yml]
 
 🟡 IMPORTANTS (13)
-  12. ⏳ Inline SVG Google (viola CLAUDE.md)
+  12. ⏳ Inline SVG Google (viola CLAUDE.md)  [pendent decisió mm-design]
   13. ✅ Strings hardcoded no traduits (WitnessSetupPage)
-  14. ⚠️ Colors #0047ba hardcoded en 4 fitxers  [WitnessSetupPage ✅, AuthPage + WitnessPage ⏳]
+  14. ✅ Colors #0047ba hardcoded en 4 fitxers
   15. ✅ i18n destructurat i no usat (FQ + FM pages)
   16. ✅ DIM_TO_CENTROID dead code
-  17. ⏳ computeFQScores / computeFMScores idèntics (DRY)
-  18. ⏳ Keyboard handler copiat 3 vegades
-  19. ⏳ scaleLabels copiat 3 vegades
-  20. ⏳ scorePercent reimplementat localment
-  21. ⚠️ navigate() durant render (× 2)  [NewMoonResultsPage ✅, FullMoonResultsPage ⏳]
+  17. ✅ computeFQScores / computeFMScores idèntics (DRY)  [computeInstrumentScores]
+  18. ✅ Keyboard handler copiat 3 vegades  [useInstrumentKeyboard hook]
+  19. ✅ scaleLabels copiat 3 vegades  [useScaleLabels hook]
+  20. ✅ scorePercent reimplementat localment
+  21. ✅ navigate() durant render (× 2)
   22. ✅ Button no accepta aria-* / data-*
   23. ✅ select('*') a MyResultsPage  [migrat a API]
   24. ✅ Redirect /full-moon/report innecessari
 
 🔵 QUALITAT (8)
-  25. ⏳ Sense CSP header
+  25. ✅ Sense CSP header  [Caddy header a api.cercol.team]
   26. ✅ Sense error boundary
   27. ✅ Gradient ID hardcodat (conflicte si 2 radars)
   28. ✅ useAuth sense guarda de context
   29. ✅ WitnessRow key per index
-  30. ⏳ Sense tests Python al backend
+  30. ⏳ Sense tests Python al backend  [fase futura]
   31. ✅ Constants màgiques de llindar no exportades
   32. ✅ colors.blue + '18' hack d'opacitat
 ```
