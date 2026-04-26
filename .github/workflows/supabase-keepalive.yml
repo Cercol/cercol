@@ -1,0 +1,28 @@
+name: Supabase keep-alive
+
+# Ping the Supabase project every 3 days to prevent automatic pausing on the free tier.
+# Uses a lightweight REST query (fetch 1 row from profiles) with the public anon key.
+
+on:
+  schedule:
+    - cron: '0 8 */3 * *'   # 08:00 UTC every 3 days
+  workflow_dispatch:          # allow manual trigger from the Actions tab
+
+jobs:
+  ping:
+    name: Ping Supabase
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Query Supabase REST API
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            "${{ secrets.SUPABASE_URL }}/rest/v1/profiles?limit=1" \
+            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}")
+          echo "HTTP status: $STATUS"
+          if [ "$STATUS" -lt 200 ] || [ "$STATUS" -ge 300 ]; then
+            echo "Unexpected status code — ping may have failed"
+            exit 1
+          fi
+          echo "Supabase project is alive ✓"
