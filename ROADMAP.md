@@ -1113,6 +1113,10 @@ Triggered when N≥300 fullMoon results in DB. Run k-means (k=12) in 5D z-score 
 
 Increased decorative animal icon count from 22 to 40 (`ICON_DEFS` — 3× full set of 12 + 4). Tightened collision radius (`÷20` instead of `÷13`) and gap multiplier (`1.02×` instead of `1.05×`) so all 40 icons pack densely in the corners and edges around the card grid. Icons remain uniform size (80px) and always upright (no rotation).
 
+### Phase 13.25 — Supabase keep-alive ✅ COMPLETE
+
+GitHub Actions cron workflow (`.github/workflows/supabase-keepalive.yml`) that pings the Supabase REST API every 3 days to prevent automatic project pausing on the free tier. Runs at 08:00 UTC; also triggerable manually. `SUPABASE_URL` and `SUPABASE_ANON_KEY` stored as GitHub repository secrets.
+
 ---
 
 ## Phase 14 — Onboarding
