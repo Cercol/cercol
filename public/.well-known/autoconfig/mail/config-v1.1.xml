@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Thunderbird / Mail client autoconfig for cercol.team
+  Incoming:  Stalwart IMAP  mail.topquaranta.cat:993  SSL/TLS
+  Outgoing:  Resend SMTP    smtp.resend.com:465        SSL/TLS
+             username: resend  |  password: Resend API key
+-->
+<clientConfig version="1.1">
+  <emailProvider id="cercol.team">
+    <domain>cercol.team</domain>
+    <displayName>Cèrcol</displayName>
+    <displayShortName>Cèrcol</displayShortName>
+
+    <!-- Incoming IMAP — Stalwart Mail Server -->
+    <incomingServer type="imap">
+      <hostname>mail.topquaranta.cat</hostname>
+      <port>993</port>
+      <socketType>SSL</socketType>
+      <authentication>password-cleartext</authentication>
+      <username>%EMAILADDRESS%</username>
+    </incomingServer>
+
+    <!-- Outgoing SMTP — Resend relay (good IP reputation, free tier 3k/month) -->
+    <outgoingServer type="smtp">
+      <hostname>smtp.resend.com</hostname>
+      <port>465</port>
+      <socketType>SSL</socketType>
+      <authentication>password-cleartext</authentication>
+      <username>resend</username>
+    </outgoingServer>
+
+  </emailProvider>
+</clientConfig>
