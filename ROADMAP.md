@@ -1117,6 +1117,24 @@ Increased decorative animal icon count from 22 to 40 (`ICON_DEFS` — 3× full s
 
 GitHub Actions cron workflow (`.github/workflows/supabase-keepalive.yml`) that pings the Supabase REST API every 3 days to prevent automatic project pausing on the free tier. Runs at 08:00 UTC; also triggerable manually. `SUPABASE_URL` and `SUPABASE_ANON_KEY` stored as GitHub repository secrets.
 
+### Phase 13.26 — Complete email suite
+
+Full resolution of email delivery issues and complete configuration of all sending identities for cercol.team.
+
+**Delivery fix (root cause):**
+- Brevo DNS records for `cercol.team` missing in Porkbun — outbound mail relayed through Brevo is accepted by the relay (250 OK) but rejected or silently dropped by recipients because SPF/DKIM for Brevo are not published. Add Brevo's required SPF include and DKIM TXT record to Porkbun DNS for `cercol.team`.
+- Verify end-to-end delivery to an external address (Gmail, Outlook) from `hello@cercol.team` via Stalwart → Brevo relay.
+
+**Email addresses and identities:**
+- Decide on the full set of `@cercol.team` addresses (e.g. `hello@`, `noreply@mail.`, etc.) and create accounts in Stalwart for each.
+- Configure display name per address (e.g. "Cèrcol" or "Cèrcol Team") in both Stalwart and the mail client.
+- Set up profile photo / avatar for each identity in the mail client (Spark).
+- Configure per-identity email signature in Spark.
+
+**Transactional path (Resend):** already working — `noreply@mail.cercol.team` via Resend API. Confirm reply-to header is `hello@cercol.team` on all transactional templates.
+
+**Mail client autoconfig:** `public/.well-known/autoconfig/mail/config-v1.1.xml` already updated to point outgoing SMTP to Stalwart (mail.topquaranta.cat:465). No further changes needed unless new addresses are added.
+
 ---
 
 ## Phase 14 — Onboarding
