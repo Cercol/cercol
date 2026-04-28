@@ -19,7 +19,7 @@ import resend
 
 resend.api_key = os.environ.get("RESEND_API_KEY", "")
 
-FROM_ADDRESS  = "Cèrcol <noreply@mail.cercol.team>"
+FROM_ADDRESS  = "Cèrcol <noreply@cercol.team>"
 FRONTEND_URL  = os.environ.get("FRONTEND_URL", "https://cercol.team")
 
 # ---------------------------------------------------------------------------
