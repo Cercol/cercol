@@ -112,7 +112,7 @@ const LANGUAGES = [
 ]
 
 const INPUT_CLASS =
-  'w-full border border-gray-200 rounded px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#99b3e0] bg-white disabled:bg-gray-50 disabled:text-gray-400'
+  'w-full border border-gray-200 rounded px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--mm-color-focus-ring)] bg-white disabled:bg-gray-50 disabled:text-gray-400'
 
 export default function ProfilePage() {
   const { t }                              = useTranslation()

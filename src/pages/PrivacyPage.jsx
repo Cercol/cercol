@@ -100,7 +100,7 @@ export default function PrivacyPage() {
           <p className="text-sm text-gray-600">
             <a
               href={`mailto:${p('contact.email')}`}
-              className="text-[#0047ba] underline hover:no-underline"
+              className="text-[var(--mm-color-blue)] underline hover:no-underline"
             >
               {p('contact.email')}
             </a>

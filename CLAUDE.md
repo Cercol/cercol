@@ -43,6 +43,10 @@ README badges must use mm-design palette: `cf3339`, `0047ba`, `f1c22f`, `427c42`
 - All icons live in `src/components/MoonIcons.jsx`. Never create inline SVG outside this file.
   Use `RoleIcon({ role, size })` and `DimensionIcon({ domain, size })` wrappers for role/dimension icons.
   Potrace SVGs are imported as `import raw from './path.svg?raw'` (Vite raw string).
+- **Exception — Google logo in `AuthPage.jsx`**: The Google OAuth button contains an inline SVG
+  with Google's official brand colours (#4285F4, #34A853, #FBBC05, #EA4335). These cannot be
+  replaced with mm-design tokens because Google's brand guidelines require exact colour reproduction.
+  This is the only permitted inline SVG exception outside MoonIcons.jsx.
 
 ## Claude Code workflow
 After every successful npm run deploy, Claude Code must:
@@ -77,15 +81,34 @@ When adding a new language to Cèrcol:
 
 ## File structure
 src/
-  components/    # UI components
-  pages/         # Route-level components
+  components/    # UI components (AdminRoute.jsx, CercolLogo.jsx, Layout.jsx, …)
+    ui/          # Reusable primitives: Button, Card, Badge, SectionLabel
+    report/      # Report-specific components: DimensionRow, FacetAccordion, …
+  pages/         # Route-level components (includes AdminDashboardPage.jsx)
   context/       # React context providers (AuthContext.jsx, FeedbackContext.jsx)
+  hooks/         # Custom React hooks (useInstrumentKeyboard.js, useScaleLabels.js)
   lib/           # Shared service clients (supabase.js, api.js)
   design/        # tokens.js and global styles
   data/          # test items, scoring keys (always cite source)
   utils/         # scoring logic, logger.js, translationFeedback.js
-  locales/       # i18n translation files (en.json, ca.json, ...)
+    __tests__/   # Vitest unit tests for all scoring utilities
+  locales/       # i18n translation files (en.json, ca.json, …) — 889 keys × 6 languages
   assets/        # static assets: icons/animals/, illustrations/
+
+api/             # FastAPI backend (Python) — deployed to Hetzner VPS via systemd + Caddy
+  main.py        # FastAPI app (routes, auth middleware, async DB helpers)
+  scoring.py     # Pure Python scoring — mirrors src/utils/role-scoring.js (no external deps)
+  emails.py      # Transactional email via Resend SDK
+  tests/         # pytest test suite (13 scoring tests)
+  railway.toml   # Legacy Railway deployment config — NOT the active deployment (Hetzner is)
+
+docs/            # One-off reference documents (not living project docs)
+  email-signature.html   # Spark HTML email signature for hello@cercol.team
+  CLAUDE_EXCELLENCE.md   # Full codebase audit (April 2026) — 32 issues, 31 resolved
+
+scripts/         # Utility scripts for seeding/clearing test data
+sql/             # Standalone SQL seeds (facet tables)
+supabase/        # Supabase migration history
 
 ## Extended documentation
 - Phase history and roadmap: ROADMAP.md

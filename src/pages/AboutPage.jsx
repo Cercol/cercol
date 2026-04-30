@@ -44,7 +44,7 @@ export default function AboutPage() {
     { key: 'bond',        accent: 'text-emerald-600' },
     { key: 'discipline',  accent: 'text-blue-600' },
     { key: 'depth',       accent: 'text-red-500' },
-    { key: 'vision',      accent: 'text-[#427c42]' },
+    { key: 'vision',      accent: 'text-[var(--mm-color-green)]' },
   ]
 
   const notThisItems = ['item1', 'item2', 'item3', 'item4']
@@ -94,7 +94,7 @@ export default function AboutPage() {
               label={t('about.explore.roles.label')}
               desc={t('about.explore.roles.desc')}
               to="/roles"
-              accent="text-[#0047ba]"
+              accent="text-[var(--mm-color-blue)]"
             />
             <ExploreCard
               label={t('about.explore.science.label')}

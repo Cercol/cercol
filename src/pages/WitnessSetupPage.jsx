@@ -246,7 +246,7 @@ export default function WitnessSetupPage() {
               <button
                 type="button"
                 onClick={handleAdd}
-                className="text-sm text-[#0047ba] hover:text-[#003090] font-medium text-left transition-colors"
+                className="text-sm text-[var(--mm-color-blue)] hover:text-[var(--mm-color-hover-text)] font-medium text-left transition-colors"
               >
                 + {t('witness.setup.addRow')}
               </button>

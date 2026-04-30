@@ -131,7 +131,7 @@ function MemberRow({ member, t }) {
           <span className="text-xs text-gray-400">({t('lastQuarter.selfLabel')})</span>
         )}
         {!member.completed && (
-          <span className="text-xs" style={{ color: '#9ca3af' }}>
+          <span className="text-xs text-gray-400">
             {t('lastQuarter.pendingLabel')}
           </span>
         )}
