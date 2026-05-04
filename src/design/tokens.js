@@ -19,4 +19,6 @@ export {
   ROLE_COLORS,
   INTERACTIVE_COLORS,
   GRAY,
+  BRAND_TINTS,
+  BRAND_COLOR_DATA,
 } from 'mm-design/tokens/index.js'

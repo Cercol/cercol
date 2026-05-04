@@ -26,6 +26,21 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Bundle sanity — brand colors present as hex strings
+        # Guards against mm-design exporting objects instead of hex strings,
+        # which causes style={{ backgroundColor: colors.blue }} to silently break.
+        run: |
+          JS=$(ls dist/assets/index-*.js | head -1)
+          echo "Checking bundle: $JS"
+          for COLOR in "0047ba" "cf3339" "f1c22f" "427c42" "ffffff" "111111"; do
+            if grep -q "$COLOR" "$JS"; then
+              echo "✓ #$COLOR found"
+            else
+              echo "✗ #$COLOR NOT found in bundle — design token may be broken"
+              exit 1
+            fi
+          done
+
   test-frontend:
     name: Frontend tests
     runs-on: ubuntu-latest
