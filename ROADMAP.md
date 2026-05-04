@@ -393,7 +393,7 @@ Collects demographic data (name, country, native language) to enrich the researc
 Country and language are scientifically relevant for personality norm validation across populations.
 
 **Database:**
-- `supabase/migrations/006_profile_fields.sql` — adds `first_name`, `last_name`, `country`, `native_language` (all nullable TEXT) to `public.profiles`. Existing RLS policies (SELECT + UPDATE own row) already cover these new columns.
+- `db/migrations/006_profile_fields.sql` — adds `first_name`, `last_name`, `country`, `native_language` (all nullable TEXT) to `public.profiles`. Existing RLS policies (SELECT + UPDATE own row) already cover these new columns.
 
 **Frontend — ProfilePage (`/profile`):**
 - Works as both first-time setup and ongoing editing.
@@ -417,7 +417,7 @@ Country and language are scientifically relevant for personality norm validation
 - `create_witness_sessions` (POST /witness/sessions): before creating sessions, queries `profiles` for the subject's `first_name` + `last_name`. Uses `"first last".strip()` as `subject_display` if available; falls back to email or user id. Profile lookup failure is swallowed to avoid blocking session creation.
 
 **Files modified/added:**
-- `supabase/migrations/006_profile_fields.sql` — new migration
+- `db/migrations/006_profile_fields.sql` — new migration
 - `src/pages/ProfilePage.jsx` — new page
 - `src/context/AuthContext.jsx` — added `profile`, `refreshProfile`, `fetchProfile`
 - `src/App.jsx` — `/profile` route added
@@ -482,7 +482,7 @@ session creation.
 - Anon key: correctly public (named `sb_publishable_*`); RLS adequate for its scope.
 
 **Files modified/added:**
-- `supabase/migrations/007_security_fixes.sql` — premium trigger + drop open witness_responses policy
+- `db/migrations/007_security_fixes.sql` — premium trigger + drop open witness_responses policy
 - `api/requirements.txt` — added `slowapi==0.1.9`
 - `api/main.py` — slowapi imports, `_get_client_ip`, limiter setup, `@limiter.limit` on two routes
 
@@ -546,7 +546,7 @@ instrument name translations in every language. Translation methodology document
 Dual-mode Witness system: anonymous sessions preserved unchanged; authenticated witnesses
 can opt in to link the session to their profile, enabling team features in Last Quarter.
 
-**Database (`supabase/migrations/008_witness_identity.sql`):**
+**Database (`db/migrations/008_witness_identity.sql`):**
 - `witness_user_id` (nullable UUID, FK `auth.users`) added to `witness_sessions`
 - Index on `witness_user_id WHERE NOT NULL`
 - RLS policy: authenticated witness can read rows where `witness_user_id = auth.uid()`
@@ -577,7 +577,7 @@ can opt in to link the session to their profile, enabling team features in Last 
 
 Group infrastructure enabling Last Quarter team reports.
 
-**Database (`supabase/migrations/009_groups.sql`):**
+**Database (`db/migrations/009_groups.sql`):**
 - `groups` table: `id`, `name`, `created_by` (FK `auth.users`), `created_at`
 - `group_members` table: `group_id`, `user_id` (nullable), `status` (pending/active),
   `invited_email`, `invited_at`, `joined_at`
@@ -1000,7 +1000,7 @@ Unified the two Full Moon pages into a single `FullMoonResultsPage` at `/full-mo
 ### Phase 13.16 — Audit cleanup + visual unification ✅ COMPLETE
 
 **Part 1 — Audit cleanup:**
-- **Migration consolidated**: `sql/add_facets_column.sql` moved to `supabase/migrations/010_add_facets.sql` — all 10 migrations now in one place.
+- **Migration consolidated**: `sql/add_facets_column.sql` moved to `db/migrations/010_add_facets.sql` — all 10 migrations now in one place.
 - **Domain color tokens centralised**: added `DOMAIN_COLORS` (hex for bars), `DOMAIN_ICON_CLASSES` (Tailwind text classes), `DOMAIN_BG_CLASSES` (Tailwind bg classes), and `BALANCE_COLORS` to `tokens.js`. Removed all 8 local `DOMAIN_BAR_HEX` / `DOMAIN_ICON_COLOR` / `DOMAIN_ACCENT` / `BALANCE_COLOR` definitions from `DimensionRow`, `FacetAccordion`, `MyResultsPage`, `FullMoonResultsPage`, `FullMoonPage`, `FirstQuarterPage`, `LastQuarterPage`, `SciencePage`.
 - **Inline SVGs moved to `MoonIcons.jsx`**: added `HamburgerIcon`, `CloseIcon`, `ExternalLinkIcon`, `InfoIcon`, `TranslationIcon`. Updated `Layout.jsx`, `InstrumentsPage.jsx`, `RolesPage.jsx`, `SciencePage.jsx`, `AboutPage.jsx`, `WitnessSetupPage.jsx`, `FeedbackButton.jsx`, `FacetAccordion.jsx`. Google logo in `AuthPage.jsx` kept as documented exception.
 - **SQL organisation**: added `sql/README.md`. Deleted `scripts/generate-dolphin.js` (one-off icon generation script, already run).

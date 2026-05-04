@@ -36,7 +36,7 @@ export default function Layout({ children }) {
     { to: '/roles',       label: t('nav.roles')       },
     { to: '/science',     label: t('nav.science')     },
     { to: '/faq',         label: t('nav.faq')         },
-    ...(profile?.is_admin ? [{ to: '/admin', label: 'Admin' }] : []),
+    ...(profile?.is_admin ? [{ to: '/admin', label: t('nav.admin') }] : []),
   ]
 
   const navLinkClass = ({ isActive }) =>

@@ -113,7 +113,7 @@ docs/            # One-off reference documents (not living project docs)
 
 scripts/         # Utility scripts for seeding/clearing test data
 sql/             # Standalone SQL seeds (facet tables)
-supabase/        # Supabase migration history
+db/              # PostgreSQL migrations (001–012; was supabase/ before Phase 14.5)
 
 ## Extended documentation
 - Phase history and roadmap: ROADMAP.md

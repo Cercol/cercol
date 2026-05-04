@@ -65,7 +65,7 @@ export default function FeedbackButton({ itemId = null, itemText = null }) {
     e.preventDefault()
     if (!suggestion.trim()) return
     setStatus('submitting')
-    await sendTranslationFeedback({
+    const ok = await sendTranslationFeedback({
       language: i18n.language,
       instrument: getInstrument(pathname),
       context: window.location.pathname,
@@ -73,6 +73,11 @@ export default function FeedbackButton({ itemId = null, itemText = null }) {
       itemId,
       itemText,
     })
+    if (ok === false) {
+      // Backend endpoint not yet available — close silently rather than showing fake success.
+      closePanel()
+      return
+    }
     setStatus('success')
     setTimeout(closePanel, 2000)
   }

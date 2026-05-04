@@ -1,11 +1,13 @@
 /**
- * sendTranslationFeedback — stub.
+ * sendTranslationFeedback — submits a translation suggestion to the backend.
  *
- * Previously wrote to the Supabase `translation_feedback` table.
- * After the Hetzner auth migration (Phase 15) Supabase is no longer used.
- * This function is kept as a no-op until a dedicated backend endpoint or
- * external feedback channel (e.g. a form submission service) is set up.
+ * Returns true on success, false if the endpoint is unavailable.
+ * The backend endpoint (POST /translation-feedback) is not yet implemented —
+ * it requires migration 013_translation_feedback.sql + a route in main.py.
+ *
+ * TODO (Phase X): create the table and endpoint, then remove the early return.
  */
 export async function sendTranslationFeedback(_payload) {
-  // no-op for now
+  // Backend endpoint not yet implemented — do not show fake success to users.
+  return false
 }

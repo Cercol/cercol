@@ -244,7 +244,7 @@ async def magic_link_request(request: Request, body: MagicLinkRequestBody):
 
     try:
         resend.Emails.send({
-            "from":    "Cèrcol <hello@cercol.team>",
+            "from":    "Cèrcol <noreply@cercol.team>",
             "to":      [email],
             "subject": "El teu accés a Cèrcol / Your Cèrcol link",
             "html":    _magic_link_email_html(link),

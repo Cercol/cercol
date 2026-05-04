@@ -1283,3 +1283,54 @@ async def admin_results_csv(
         media_type="text/csv",
         headers={"Content-Disposition": "attachment; filename=cercol_results.csv"},
     )
+
+
+# ---------------------------------------------------------------------------
+# Maintenance — expired token cleanup
+# ---------------------------------------------------------------------------
+# Suggested cron (server): run daily via systemd timer or cron job:
+#   curl -s -X POST https://api.cercol.team/admin/maintenance/purge-tokens \
+#        -H "Authorization: Bearer <admin_jwt>"
+
+@app.post("/admin/maintenance/purge-tokens")
+@limiter.limit("5/hour")
+async def admin_purge_expired_tokens(request: Request, _: dict = Depends(require_admin)):
+    """
+    Delete expired/used auth tokens to keep auth tables lean.
+    Safe to run repeatedly; all operations are idempotent.
+    Targets:
+      - magic_tokens expired more than 1 day ago (or already used)
+      - refresh_tokens expired or revoked more than 7 days ago
+      - oauth_states expired more than 1 day ago
+    """
+    def _count(status: str) -> int:
+        # asyncpg execute() returns a status string like "DELETE 5" → parse the count.
+        try:
+            return int(status.split()[-1])
+        except (IndexError, ValueError):
+            return 0
+
+    async with _pool.acquire() as conn:
+        magic_status = await conn.execute(
+            """
+            DELETE FROM magic_tokens
+            WHERE used_at IS NOT NULL
+               OR expires_at < now() - INTERVAL '1 day'
+            """
+        )
+        refresh_status = await conn.execute(
+            """
+            DELETE FROM refresh_tokens
+            WHERE (revoked_at IS NOT NULL AND revoked_at < now() - INTERVAL '7 days')
+               OR expires_at < now() - INTERVAL '7 days'
+            """
+        )
+        oauth_status = await conn.execute(
+            "DELETE FROM oauth_states WHERE expires_at < now() - INTERVAL '1 day'"
+        )
+
+    return {
+        "magic_tokens_purged":   _count(magic_status),
+        "refresh_tokens_purged": _count(refresh_status),
+        "oauth_states_purged":   _count(oauth_status),
+    }
