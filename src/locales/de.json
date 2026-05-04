@@ -12,7 +12,11 @@
     "heading": "Meine Ergebnisse",
     "loading": "Lädt…",
     "error": "Ergebnisse konnten nicht geladen werden. Versuche es später erneut.",
-    "empty": "Noch keine Ergebnisse. Schließe eine Auswertung ab, um dein Profil hier zu sehen.",
+    "empty": {
+      "heading": "Deine Ergebnisse werden hier erscheinen.",
+      "body": "Schließe eine Bewertung ab, um dein Profil zu sehen.",
+      "cta": "Neumond Cèrcol beginnen"
+    },
     "startCta": "Auswertung starten",
     "contributionsHeading": "Beiträge als Zeuge/Zeugin",
     "contributionsEmpty": "Du hast noch keine Zeugensitzungen abgeschlossen.",
@@ -102,34 +106,34 @@
       "helpHeading": "Was helfen würde",
       "move": {
         "high_p": "Dein Team hat eine starke äußere Präsenz — sichtbar, direkt und schnell beim Aufwerfen von Ideen. Meetings verlaufen mit Energie. Externe Stakeholder bemerken diese Gruppe.",
-        "low_p":  "Dein Team arbeitet mit stiller Tiefe. Ideen entwickeln sich langsam und sorgfältig. Die Gruppe neigt dazu, aus Reflexion statt aus Impuls heraus zu handeln.",
+        "low_p": "Dein Team arbeitet mit stiller Tiefe. Ideen entwickeln sich langsam und sorgfältig. Die Gruppe neigt dazu, aus Reflexion statt aus Impuls heraus zu handeln.",
         "high_b": "Kohäsion ist das Fundament dieses Teams. Menschen hören gut zu, unterstützen sich gegenseitig und tendieren dazu, Meinungsverschiedenheiten konstruktiv zu durchlaufen. Vertrauen ist hoch.",
-        "low_b":  "Dein Team ist direkt, aufgabenorientiert und effizient. Menschen sagen, was sie meinen. Soziale Reibung wird als Teil ehrlicher Arbeit akzeptiert.",
+        "low_b": "Dein Team ist direkt, aufgabenorientiert und effizient. Menschen sagen, was sie meinen. Soziale Reibung wird als Teil ehrlicher Arbeit akzeptiert.",
         "high_v": "Innovation ist der natürliche Modus der Gruppe. Kreative Erkundung und neue Ideen kommen leicht. Das Team fühlt sich in Mehrdeutigkeit wohl.",
-        "low_v":  "Dein Team ist pragmatisch und ausführungsorientiert. Konkrete Pläne, klare Schritte und messbarer Fortschritt sind die Sprache dieser Gruppe.",
-        "low_c":  "Dein Team ist flexibel und anpassungsfähig — kann aber Schwierigkeiten haben, Schwung zu erhalten oder Verantwortung ohne bewusste Struktur zu koordinieren.",
+        "low_v": "Dein Team ist pragmatisch und ausführungsorientiert. Konkrete Pläne, klare Schritte und messbarer Fortschritt sind die Sprache dieser Gruppe.",
+        "low_c": "Dein Team ist flexibel und anpassungsfähig — kann aber Schwierigkeiten haben, Schwung zu erhalten oder Verantwortung ohne bewusste Struktur zu koordinieren.",
         "high_n": "Emotionale Reaktivität ist in dieser Gruppe präsent. Das Team fühlt Dinge intensiv und kann Stress sichtbar tragen.",
         "balanced": "Dein Team zeigt ein gut verteiltes Profil über alle Dimensionen. Keine einzelne Tendenz dominiert, was Vielseitigkeit schafft — und aktive Koordination erfordert, um kohärent zu bleiben."
       },
       "watchOut": {
         "high_p": "Teams mit hoher Präsenz riskieren, die Diskussion zu dominieren. Stillere Mitglieder könnten Ideen zurückhalten. Das Team kann auf weniger stimmstarke Mitarbeiter überwältigend wirken.",
-        "low_p":  "Teams mit geringer Präsenz können für die Organisation unsichtbar sein. Konflikte könnten länger unter der Oberfläche bleiben als gesund ist.",
+        "low_p": "Teams mit geringer Präsenz können für die Organisation unsichtbar sein. Konflikte könnten länger unter der Oberfläche bleiben als gesund ist.",
         "high_b": "Teams mit hohem Band riskieren Übereinigung und Harmonieverzerrung. Schwierige Wahrheiten könnten abgemildert oder vermieden werden. Gruppendenken ist ein echtes Risiko.",
-        "low_b":  "Teams mit geringem Band können unter interpersoneller Reibung leiden und Direktheit als Feindseligkeit missverstehen. Vertrauen aufzubauen erfordert möglicherweise explizite Anstrengung.",
+        "low_b": "Teams mit geringem Band können unter interpersoneller Reibung leiden und Direktheit als Feindseligkeit missverstehen. Vertrauen aufzubauen erfordert möglicherweise explizite Anstrengung.",
         "high_v": "Visionslastige Teams kämpfen oft mit der Umsetzung. Ideen vermehren sich schneller als sie abgeschlossen werden. Ausführungsstrukturen brauchen bewusste Pflege.",
-        "low_v":  "Teams mit geringer Vision können strategische Chancen verpassen oder Schwierigkeiten haben, sich anzupassen, wenn ihr aktueller Ansatz nicht mehr funktioniert.",
-        "low_c":  "Teams mit geringer Disziplin lassen Verantwortung oft unklar und Zeitpläne weich. Das Risiko ist Ehrgeiz ohne Vollendung.",
+        "low_v": "Teams mit geringer Vision können strategische Chancen verpassen oder Schwierigkeiten haben, sich anzupassen, wenn ihr aktueller Ansatz nicht mehr funktioniert.",
+        "low_c": "Teams mit geringer Disziplin lassen Verantwortung oft unklar und Zeitpläne weich. Das Risiko ist Ehrgeiz ohne Vollendung.",
         "high_n": "Erhöhte Stressreaktivität kann interpersonelle Spannungen verstärken. Unter Druck kann die Stimmung des Teams destabilisieren, bevor Probleme gelöst werden.",
         "balanced": "Keine einzelne Dimension zeigt stark aus. Aufpassen auf diffuse Verantwortlichkeit — vielseitige Teams nehmen manchmal an, jemand anderes kümmere sich um eine Aufgabe."
       },
       "help": {
         "high_p": "Schafft bewusst Raum für weniger sichtbare Mitglieder. Rotiert, wer die Diskussion eröffnet. Gebt stillen Beitragenden die Erstautor-Verantwortung bei Schlüsselentscheidungen.",
-        "low_p":  "Investiert in Sichtbarkeit: Benennt jemanden, der die Arbeit des Teams nach außen kommuniziert. Schafft explizite Kanäle zum Ansprechen kleiner Frustrationen, bevor sie sich ansammeln.",
+        "low_p": "Investiert in Sichtbarkeit: Benennt jemanden, der die Arbeit des Teams nach außen kommuniziert. Schafft explizite Kanäle zum Ansprechen kleiner Frustrationen, bevor sie sich ansammeln.",
         "high_b": "Übt strukturierten Widerspruch: Weist in Entscheidungsprozessen Rollen des Advocatus Diaboli zu. Fragt 'Was würde das zu einer schlechten Idee machen?' bevor ihr euch verpflichtet.",
-        "low_b":  "Investiert in relationale Infrastruktur: regelmäßige aufgabenfreie Check-ins, gemeinsamen Kontext schaffen und explizite Wertschätzung von Beiträgen.",
+        "low_b": "Investiert in relationale Infrastruktur: regelmäßige aufgabenfreie Check-ins, gemeinsamen Kontext schaffen und explizite Wertschätzung von Beiträgen.",
         "high_v": "Verankert kreative Sitzungen an Lieferobjekte. Für jede erkundete Idee einen einzigen Verantwortlichen und einen konkreten nächsten Schritt zuweisen. Den Ideen-Rückstand regelmäßig reduzieren.",
-        "low_v":  "Plant Zeit für Horizontbeobachtung ein: Was ändert sich in eurem Umfeld? Welche Ansätze werdet ihr möglicherweise überstrapazieren?",
-        "low_c":  "Übernehmt leichte Verantwortungsrituale: eine Person pro Ergebnis benennen, ein Fälligkeitsdatum pro Entscheidung. Verpflichtungen wöchentlich überprüfen.",
+        "low_v": "Plant Zeit für Horizontbeobachtung ein: Was ändert sich in eurem Umfeld? Welche Ansätze werdet ihr möglicherweise überstrapazieren?",
+        "low_c": "Übernehmt leichte Verantwortungsrituale: eine Person pro Ergebnis benennen, ein Fälligkeitsdatum pro Entscheidung. Verpflichtungen wöchentlich überprüfen.",
         "high_n": "Investiert als Team in Stresskompetenz. Benennt, wann die Gruppe reaktiv versus reflektiv ist. Schafft risikoarme Kanäle zum Ablassen von Bedenken, bevor sie eskalieren.",
         "balanced": "Bei einem ausgewogenen Profil ist das Risiko der Koordinationsaufwand. Seid explizit über Entscheidungsrechte, Kommunikationsnormen und wer was leitet — nehmt keine Ausrichtung an."
       }
@@ -430,11 +434,31 @@
     }
   },
   "fmDomains": {
-    "depth":      { "name": "Tiefe",      "description": "Wie du Emotionen verarbeitest und mit Unsicherheit umgehst.", "blockIntro": "Diese Fragen erforschen deine emotionale Landschaft — wie du auf Stress, Veränderung und innere Anspannung reagierst." },
-    "presence":   { "name": "Präsenz",   "description": "Wie viel Energie du in soziale Räume einbringst.", "blockIntro": "Diese Fragen erforschen, wie du in sozialen Situationen auftrittst und dich mit anderen verbindest." },
-    "vision":     { "name": "Vision",    "description": "Wie du dich mit Ideen, Schönheit und neuem Denken auseinandersetzt.", "blockIntro": "Diese Fragen erforschen deine Neugier, Vorstellungskraft und Offenheit gegenüber neuen Perspektiven." },
-    "bond":       { "name": "Bindung",   "description": "Wie du dich zu anderen verhältst und die Wärme, die du einbringst.", "blockIntro": "Diese Fragen erforschen, wie du Vertrauen aufbaust, Fürsorge zeigst und dich zu den Menschen um dich herum verhältst." },
-    "discipline": { "name": "Disziplin", "description": "Wie du an Aufgaben, Ziele und Konsequenz herangehst.", "blockIntro": "Diese Fragen erforschen, wie du deine Zeit organisierst, Verpflichtungen einhältst und auf Kurs bleibst." }
+    "depth": {
+      "name": "Tiefe",
+      "description": "Wie du Emotionen verarbeitest und mit Unsicherheit umgehst.",
+      "blockIntro": "Diese Fragen erforschen deine emotionale Landschaft — wie du auf Stress, Veränderung und innere Anspannung reagierst."
+    },
+    "presence": {
+      "name": "Präsenz",
+      "description": "Wie viel Energie du in soziale Räume einbringst.",
+      "blockIntro": "Diese Fragen erforschen, wie du in sozialen Situationen auftrittst und dich mit anderen verbindest."
+    },
+    "vision": {
+      "name": "Vision",
+      "description": "Wie du dich mit Ideen, Schönheit und neuem Denken auseinandersetzt.",
+      "blockIntro": "Diese Fragen erforschen deine Neugier, Vorstellungskraft und Offenheit gegenüber neuen Perspektiven."
+    },
+    "bond": {
+      "name": "Bindung",
+      "description": "Wie du dich zu anderen verhältst und die Wärme, die du einbringst.",
+      "blockIntro": "Diese Fragen erforschen, wie du Vertrauen aufbaust, Fürsorge zeigst und dich zu den Menschen um dich herum verhältst."
+    },
+    "discipline": {
+      "name": "Disziplin",
+      "description": "Wie du an Aufgaben, Ziele und Konsequenz herangehst.",
+      "blockIntro": "Diese Fragen erforschen, wie du deine Zeit organisierst, Verpflichtungen einhältst und auf Kurs bleibst."
+    }
   },
   "scale": {
     "1": "Stimme überhaupt nicht zu",
@@ -524,11 +548,31 @@
     }
   },
   "fqDomains": {
-    "depth":      { "name": "Tiefe",      "description": "Wie du Emotionen verarbeitest und mit Unsicherheit umgehst.", "blockIntro": "Diese Fragen erforschen deine emotionale Landschaft — wie du auf Stress, Veränderung und innere Anspannung reagierst." },
-    "presence":   { "name": "Präsenz",   "description": "Wie viel Energie du in soziale Räume einbringst.", "blockIntro": "Diese Fragen erforschen, wie du in sozialen Situationen auftrittst und dich mit anderen verbindest." },
-    "vision":     { "name": "Vision",    "description": "Wie du dich mit Ideen, Schönheit und neuem Denken auseinandersetzt.", "blockIntro": "Diese Fragen erforschen deine Neugier, Vorstellungskraft und Offenheit gegenüber neuen Perspektiven." },
-    "bond":       { "name": "Bindung",   "description": "Wie du dich zu anderen verhältst und die Wärme, die du einbringst.", "blockIntro": "Diese Fragen erforschen, wie du Vertrauen aufbaust, Fürsorge zeigst und dich zu den Menschen um dich herum verhältst." },
-    "discipline": { "name": "Disziplin", "description": "Wie du an Aufgaben, Ziele und Konsequenz herangehst.", "blockIntro": "Diese Fragen erforschen, wie du deine Zeit organisierst, Verpflichtungen einhältst und auf Kurs bleibst." }
+    "depth": {
+      "name": "Tiefe",
+      "description": "Wie du Emotionen verarbeitest und mit Unsicherheit umgehst.",
+      "blockIntro": "Diese Fragen erforschen deine emotionale Landschaft — wie du auf Stress, Veränderung und innere Anspannung reagierst."
+    },
+    "presence": {
+      "name": "Präsenz",
+      "description": "Wie viel Energie du in soziale Räume einbringst.",
+      "blockIntro": "Diese Fragen erforschen, wie du in sozialen Situationen auftrittst und dich mit anderen verbindest."
+    },
+    "vision": {
+      "name": "Vision",
+      "description": "Wie du dich mit Ideen, Schönheit und neuem Denken auseinandersetzt.",
+      "blockIntro": "Diese Fragen erforschen deine Neugier, Vorstellungskraft und Offenheit gegenüber neuen Perspektiven."
+    },
+    "bond": {
+      "name": "Bindung",
+      "description": "Wie du dich zu anderen verhältst und die Wärme, die du einbringst.",
+      "blockIntro": "Diese Fragen erforschen, wie du Vertrauen aufbaust, Fürsorge zeigst und dich zu den Menschen um dich herum verhältst."
+    },
+    "discipline": {
+      "name": "Disziplin",
+      "description": "Wie du an Aufgaben, Ziele und Konsequenz herangehst.",
+      "blockIntro": "Diese Fragen erforschen, wie du deine Zeit organisierst, Verpflichtungen einhältst und auf Kurs bleibst."
+    }
   },
   "dimensions": {
     "presence": {
@@ -630,36 +674,156 @@
     }
   },
   "fqFacets": {
-    "vigil":     { "label": "Vigil",     "high": "Du hast die Bedrohungserkennung ständig am Laufen. Meistens ist nichts da, aber manchmal erkennst du etwas Echtes, bevor jemand anderes geschaut hat. Diese Wachsamkeit ist erschöpfend und gelegentlich unschätzbar.", "low": "Du borgst dir keine Probleme aus der Zukunft. Du gehst mit dem um, was vor dir liegt, wenn es ankommt. Diese Bodenhaftung ist seltener, als sie aussieht, besonders wenn die Dinge unsicher werden." },
-    "blaze":     { "label": "Blaze",     "high": "Deine Frustration taucht schnell und sichtbar auf. Die Leute wissen immer, woran sie mit dir sind, was nicht nichts ist. Der Preis ist, dass kleine Dinge manchmal die gleiche Reaktion bekommen wie große.", "low": "Es braucht viel, um dich zur Wut zu bringen. Du eskalierst nicht, du übernimmst nicht die Hitze anderer. In angespannten Momenten ändert diese Beständigkeit die Temperatur des gesamten Raums." },
-    "hollow":    { "label": "Hollow",    "high": "Du trägst Gewicht. Rückschläge setzen sich, statt abzuprallen. Diese Tiefe des Gefühls bedeutet, dass du Dinge ernst nimmst auf eine Weise, die leichtere Menschen niemals werden. Es kostet dich, und es ist etwas wert.", "low": "Du erholst dich schnell. Schlechte Tage werden nicht zu schlechten Wochen. Diese Fähigkeit, voranzugehen, ist keine Gleichgültigkeit — es ist eine Art Belastbarkeit, die dich funktionsfähig hält, wenn andere noch verarbeiten." },
-    "veil":      { "label": "Veil",      "high": "Du bist dir bewusst, wie du wirkst, manchmal akut so. Diese soziale Sensibilität macht dich sorgfältig und rücksichtsvoll. Es bedeutet auch, dass du Energie darauf verwendest, wie Dinge ankommen, worüber andere nie nachdenken.", "low": "Du verschwendest nicht viel Energie damit, dir Sorgen zu machen, was die Leute von dir denken. Diese Leichtigkeit mit dir selbst kommt als Selbstvertrauen rüber, auch wenn es nur Behaglichkeit ist. So oder so, es tendiert dazu, andere zu beruhigen." },
-    "surge":     { "label": "Surge",     "high": "Du handelst nach dem, was du fühlst, oft bevor der Gedanke vollständig geformt ist. Manchmal ist diese Schnelligkeit der ganze Vorteil. Manchmal nicht, und das weißt du auch.", "low": "Du lässt dich nicht leicht mitreißen. Impulse vergehen, Reaktionen werden gefiltert, Entscheidungen werden überlegt. Diese Selbstregulation ist der stille Motor hinter vielen Dingen, die tatsächlich gut laufen." },
-    "fracture":  { "label": "Fracture",  "high": "Wenn der Druck steigt, spürst du ihn vollständig. Diese Sensibilität ist keine Schwäche — sie ist ein Signal. Du nimmst Belastung wahr, bevor andere es tun, was bedeutet, dass du oft derjenige bist, der sagt, dass sich etwas ändern muss.", "low": "Du hältst dem Druck ohne sichtbare Risse stand. Die Leute schauen zu dir, wenn es schwierig wird, nicht weil du unberührt bist, sondern weil du weiter funktionierst. Das ist tragende Arbeit in jedem Team." },
-    "hearth":    { "label": "Hearth",    "high": "Menschen fühlen sich in deiner Nähe willkommen, ohne genau zu wissen warum. Du machst die Mühe, dich zu verbinden, dich zu erinnern, zu fragen. Diese Wärme ist kein Small Talk — sie ist die Grundlage des Vertrauens.", "low": "Du tauchst nicht sofort auf und tust nicht so als ob. Die Verbindungen, die du eingehst, sind echt und dauerhaft. Menschen, die dich gut kennen, wissen, dass sie etwas Echtes bekommen." },
-    "gather":    { "label": "Gather",    "high": "Gruppen energetisieren dich. Je mehr Menschen, desto besser tendierst du zu funktionieren. Du bist derjenige, der früh ankommt und spät geht, und der Raum bemerkt gewöhnlich, wenn du nicht da bist.", "low": "Du kannst in einem Raum arbeiten, wenn du musst, aber es kostet dich etwas. Du bist besser in kleineren Konfigurationen, wo Tiefe möglich ist. Qualität über Quantität, jedes Mal." },
-    "command":   { "label": "Command",   "high": "Du wartest nicht auf Erlaubnis. Wenn etwas entschieden werden muss, entscheidest du es. Wenn etwas gesagt werden muss, sagst du es. Diese Direktheit schneidet durch Lärm und die meisten Gruppen brauchen mehr davon.", "low": "Du beobachtest, bevor du handelst. Du lässt andere führen, und wenn du eingreifst, ist es weil du es bereits durchdacht hast. Das ist keine Zögerlichkeit — es ist Präzision." },
-    "drive":     { "label": "Drive",     "high": "Du läufst in einem hohen Tempo. Aufeinanderfolgende Tage, mehrere Projekte, lange Meetings — du findest einen zweiten Gang, wo andere schon fertig sind. Überprüfe nur, dass die Menschen um dich herum noch mithalten.", "low": "Du bist nachhaltig. Du kennst dein Tempo und hältst es. Du wirst nicht hell brennen und zusammenbrechen, was dich zu jemandem macht, auf den andere zählen können, wenn ein Projekt länger dauert als erwartet." },
-    "thrill":    { "label": "Thrill",    "high": "Routine ist, wo deine Aufmerksamkeit stirbt. Du brauchst Einsätze, Neuheit, etwas auf dem Spiel. Dieser Drang zur Intensität ist der Ursprung vieler deiner besten Arbeiten.", "low": "Du brauchst kein Adrenalin, um gut zu funktionieren. Ruhige, gleichmäßige Umgebungen bringen dein Bestes heraus. Du bist derjenige, der weiterarbeitet, wenn alle anderen von dem Drama abgelenkt sind." },
-    "radiance":  { "label": "Radiance",  "high": "Deine Begeisterung ist ansteckend und echt. Du bringst Energie zu Dingen, bevor sie sie verdient haben, was sie manchmal dazu bringt, sie zu verdienen. Gruppen fühlen sich anders, wenn du dabei bist.", "low": "Du spielst keine Begeisterung vor, die du nicht fühlst. Deine Zustimmung bedeutet etwas, weil du sie nicht automatisch gibst. Wenn du sagst, dass etwas gut ist, glauben dir die Leute." },
-    "dream":     { "label": "Dream",     "high": "Dein Geist geht unaufgefordert an Orte. Tagträumen ist für dich keine Ablenkung — es ist der Ursprung von Ideen. Die innere Welt ist reich und nährt die äußere auf Weisen, die nicht immer sichtbar sind.", "low": "Du bleibst nah am Boden. Was real ist, was hier ist, was funktioniert. Dieser Fokus hält dich nützlich auf Weisen, die Träumer*innen manchmal nicht sind." },
-    "craft":     { "label": "Craft",     "high": "Du merkst, wenn etwas schön ist und wenn nicht. Diese Aufmerksamkeit für die Form ist nicht oberflächlich — so verarbeitest du Qualität. Du spürst, dass etwas falsch ist, bevor du sagen kannst warum, und normalerweise hast du recht.", "low": "Funktion ist dir wichtiger als Form. Wenn es funktioniert, funktioniert es. Du wirst keine Zeit damit verbringen, etwas schön zu machen, wenn es noch verbessert werden kann." },
-    "resonance": { "label": "Resonance", "high": "Du bist auf den emotionalen Register eingestimmt — deinen und den anderer. Diese Abstimmung macht dich zu einem sorgfältigen Leser von Räumen und einem nachdenklichen Kommunikator. Es bedeutet auch, dass du mehr trägst als die meisten.", "low": "Du führst mit Logik statt mit Gefühl. Das hält die Dinge klar und unbelastet. In emotional aufgeladenen Situationen ist deine Ausgeglichenheit oft genau das, was gebraucht wird." },
-    "drift":     { "label": "Drift",     "high": "Abwechslung hält dich engagiert. Neue Ansätze, andere Kontexte, unbekanntes Terrain — dort denkst du am besten. Wiederholung ist, wo du das Interesse am schnellsten verlierst.", "low": "Du vertraust dem, was funktioniert, und bleibst dabei. Nicht jedes Problem braucht eine neue Lösung. Wenn andere Neuheit verfolgen, stellst du sicher, dass das Aktuelle wirklich hält." },
-    "prism":     { "label": "Prism",     "high": "Du willst verstehen, wie Dinge funktionieren, nicht nur, dass sie funktionieren. Gib dir ein Problem und du wirst es auseinandernehmen, bevor du es zu lösen versuchst. Diese Tiefe der Untersuchung findet Dinge, die oberflächliches Denken übersieht.", "low": "Du bist ein*e Praktiker*in, kein*e Theoretiker*in. Du willst Werkzeuge, die funktionieren, Erklärungen, die du nutzen kannst. Nicht jede Frage muss wieder geöffnet werden, und du weißt, welche nicht." },
-    "compass":   { "label": "Compass",   "high": "Du hinterfragst geerbte Regeln und etablierte Normen. Nicht aus Rebellion, sondern weil du Dinge durchdenkst und nicht davon ausgehst, dass die Voreinstellung richtig ist. Diese Bereitschaft zur Überprüfung ist, wie sich Dinge verbessern.", "low": "Du schätzt Stabilität, bewährte Systeme und gemeinsame Normen. Nicht alles muss hinterfragt werden, und du weißt, was nicht. Dieser Konservatismus verhindert, dass viele Dinge unnötig kaputtgehen." },
-    "faith":     { "label": "Faith",     "high": "Dein Standard ist, zu glauben, dass Menschen gute Absichten haben. Diese Großzügigkeit macht dich leicht zu arbeiten und schnell mit zweiten Chancen. Das Risiko ist, dass du manchmal langsam erkennst, wenn jemand nicht ehrlich spielt.", "low": "Du nimmst Dinge nicht für bare Münze. Du beobachtest, testest, überprüfst. Diese Skepsis hat dich wahrscheinlich mehr als einmal gerettet. Und wenn du jemandem vertraust, bedeutet das wirklich etwas." },
-    "edge":      { "label": "Edge",      "high": "Was du sagst, meinst du. Keine Vorstellung, kein Impressionsmanagement, keine strategische Mehrdeutigkeit. Die Leute wissen immer, woran sie mit dir sind, was wertvoller ist, als es klingt.", "low": "Du bist geschickt darin, soziale Komplexität zu navigieren. Du weißt, wann du dich zurückhalten solltest, wann du Dinge sorgfältig formulieren solltest, wann Direktheit mehr kosten würde, als es wert ist. Das ist keine Unehrlichkeit — das ist Raffinesse." },
-    "gift":      { "label": "Gift",      "high": "Du lässt Menschen mühelos willkommen fühlen. Du bemerkst, wenn jemand am Rande ist, und tust etwas dagegen. Diese Großzügigkeit der Aufmerksamkeit ist eine der am meisten unterschätzten Dinge, die eine Person in eine Gruppe einbringen kann.", "low": "Du bist nicht hier, um für alle zu sorgen. Du fokussierst deine Energie dort, wo es wichtig ist, und verteilst sie nicht dünn auf Verpflichtung. Dieser Fokus macht das, was du gibst, wirklich zählen." },
-    "yield":     { "label": "Yield",     "high": "Du findest lieber eine Einigung, als das Argument zu gewinnen. Dieser kollaborative Instinkt hält die Dinge in Bewegung und hält Beziehungen intakt. Stelle nur sicher, dass du den Frieden wählst, anstatt ihn als Standard zu wählen.", "low": "Du widersprichst. Du gibst dem sozialen Druck nicht nach und tust nicht so als würdest du zustimmen, wenn du es nicht tust. Gruppen brauchen diese Reibung, auch wenn sie sie im Moment nicht genießen." },
-    "shadow":    { "label": "Shadow",    "high": "Du nimmst nicht mehr Raum ein, als du brauchst. Verdienste werden geteilt, Leistungen werden nicht angekündigt. Diese Zurückhaltung baut eine Art Vertrauen auf, die Selbstpromotion niemals aufbaut.", "low": "Du weißt, was du wert bist, und versteckst es nicht. Dieses Selbstvertrauen in deinen eigenen Wert ist keine Arroganz — es ist Klarheit. Und manchmal braucht der Raum jemanden, der bereit ist zu sagen, was er einbringt." },
-    "shield":    { "label": "Shield",    "high": "Du spürst die Auswirkungen der Dinge auf Menschen, die nicht im Raum sind. Diese ethische Aufmerksamkeit bedeutet, dass du über Konsequenzen nachdenken, die andere völlig übersehen. Es verlangsamt die Dinge manchmal, aus gutem Grund.", "low": "Du konzentrierst dich auf Fakten und Ergebnisse statt auf Gefühle. Diese Objektivität hält die Analyse sauber und die Entscheidungen fundiert. Nicht jede Situation braucht eine emotionale Überprüfung, bevor man vorangeht." },
-    "mastery":   { "label": "Mastery",   "high": "Du gehst gut mit Dingen um und weißt es. Dieses Vertrauen in deine eigene Fähigkeit ist keine Arroganz — es ist akkurat. Du lähmst dich nicht mit Selbstzweifeln, weil du normalerweise die Arbeit getan hast.", "low": "Du findest noch heraus, wie die Dinge funktionieren, und bist ehrlich darüber. Diese Offenheit zum Lernen schützt dich vor der Überheblichkeit, die Leute stolpert, die glauben, sie seien schon angekommen." },
-    "structure": { "label": "Structure", "high": "Du weißt, wo alles ist, wann alles fällig ist und was passiert, wenn es nicht so ist. Diese mentale Ordnung befreit dich zum Fokussieren, und mit dir zu arbeiten fühlt sich zuverlässig an auf eine Weise, die schwer zu ersetzen ist.", "low": "Dein Arbeitsplatz könnte wie Chaos aussehen, aber du weißt, wo die Dinge sind, meistens. Du verwaltest nach Priorität, nicht nach System. Was du an Ordnung verlierst, gewinnst du manchmal an Geschwindigkeit." },
-    "oath":      { "label": "Oath",      "high": "Wenn du sagst, dass du es tun wirst, ist es erledigt. Menschen hören auf, sich um Dinge zu sorgen, die sie dir übergeben haben, und das ist eine Form von Vertrauen, die lange Zeit braucht, um aufgebaut zu werden, und in einem Team enorm wichtig ist.", "low": "Du bist besser bei großen Verpflichtungen als bei kleinen. Verpflichtungen, die willkürlich erscheinen, tendieren dazu, zu rutschen. Du wirst für das aufzeigen, was wirklich wichtig ist, aber du musst zuerst glauben, dass es wichtig ist." },
-    "quest":     { "label": "Quest",     "high": "Du bist hier, um Dinge zu erledigen. Nicht um darüber zu reden, nicht um es zu planen. Erledigen. Diese Ergebnisorientierung ist selten und treibt Resultate auf Weisen, die schwer zu bestreiten sind.", "low": "Du wirst nicht durch Leistung um ihrer selbst willen motiviert. Du brauchst einen Grund, einen Zweck, etwas, das wichtig ist. Wenn du es hast, arbeitest du hart. Wenn nicht, wirst du es nicht vortäuschen." },
-    "will":      { "label": "Will",      "high": "Du fängst Dinge an, wenn sie angefangen werden müssen, nicht wenn du Lust hast. Diese Fähigkeit, ohne Motivation zu handeln, ist die Art, wie Dinge, die wichtig sind, tatsächlich beendet werden.", "low": "Du brauchst die richtigen Bedingungen, um loszulegen. Druck, Interesse, Bedeutung. Ohne sie ist das Anfangen schwer. Mit ihnen kannst du in Tiefen gehen, die Menschen, die nur durchhalten, nie erreichen." },
-    "counsel":   { "label": "Counsel",   "high": "Du denkst nach, bevor du handelst. Entscheidungen werden überlegt, Worte werden gewählt, Konsequenzen werden abgewogen. Diese Sorgfalt verhindert viele Probleme, die impulsive Menschen später bereinigen müssen.", "low": "Du entscheidest schnell und passt dich unterwegs an. Diese Schnelligkeit hat manchmal einen Preis, bedeutet aber auch, dass du dich bewegst, während andere noch beraten. In schnell bewegenden Situationen ist das wichtig." }
+    "vigil": {
+      "label": "Vigil",
+      "high": "Du hast die Bedrohungserkennung ständig am Laufen. Meistens ist nichts da, aber manchmal erkennst du etwas Echtes, bevor jemand anderes geschaut hat. Diese Wachsamkeit ist erschöpfend und gelegentlich unschätzbar.",
+      "low": "Du borgst dir keine Probleme aus der Zukunft. Du gehst mit dem um, was vor dir liegt, wenn es ankommt. Diese Bodenhaftung ist seltener, als sie aussieht, besonders wenn die Dinge unsicher werden."
+    },
+    "blaze": {
+      "label": "Blaze",
+      "high": "Deine Frustration taucht schnell und sichtbar auf. Die Leute wissen immer, woran sie mit dir sind, was nicht nichts ist. Der Preis ist, dass kleine Dinge manchmal die gleiche Reaktion bekommen wie große.",
+      "low": "Es braucht viel, um dich zur Wut zu bringen. Du eskalierst nicht, du übernimmst nicht die Hitze anderer. In angespannten Momenten ändert diese Beständigkeit die Temperatur des gesamten Raums."
+    },
+    "hollow": {
+      "label": "Hollow",
+      "high": "Du trägst Gewicht. Rückschläge setzen sich, statt abzuprallen. Diese Tiefe des Gefühls bedeutet, dass du Dinge ernst nimmst auf eine Weise, die leichtere Menschen niemals werden. Es kostet dich, und es ist etwas wert.",
+      "low": "Du erholst dich schnell. Schlechte Tage werden nicht zu schlechten Wochen. Diese Fähigkeit, voranzugehen, ist keine Gleichgültigkeit — es ist eine Art Belastbarkeit, die dich funktionsfähig hält, wenn andere noch verarbeiten."
+    },
+    "veil": {
+      "label": "Veil",
+      "high": "Du bist dir bewusst, wie du wirkst, manchmal akut so. Diese soziale Sensibilität macht dich sorgfältig und rücksichtsvoll. Es bedeutet auch, dass du Energie darauf verwendest, wie Dinge ankommen, worüber andere nie nachdenken.",
+      "low": "Du verschwendest nicht viel Energie damit, dir Sorgen zu machen, was die Leute von dir denken. Diese Leichtigkeit mit dir selbst kommt als Selbstvertrauen rüber, auch wenn es nur Behaglichkeit ist. So oder so, es tendiert dazu, andere zu beruhigen."
+    },
+    "surge": {
+      "label": "Surge",
+      "high": "Du handelst nach dem, was du fühlst, oft bevor der Gedanke vollständig geformt ist. Manchmal ist diese Schnelligkeit der ganze Vorteil. Manchmal nicht, und das weißt du auch.",
+      "low": "Du lässt dich nicht leicht mitreißen. Impulse vergehen, Reaktionen werden gefiltert, Entscheidungen werden überlegt. Diese Selbstregulation ist der stille Motor hinter vielen Dingen, die tatsächlich gut laufen."
+    },
+    "fracture": {
+      "label": "Fracture",
+      "high": "Wenn der Druck steigt, spürst du ihn vollständig. Diese Sensibilität ist keine Schwäche — sie ist ein Signal. Du nimmst Belastung wahr, bevor andere es tun, was bedeutet, dass du oft derjenige bist, der sagt, dass sich etwas ändern muss.",
+      "low": "Du hältst dem Druck ohne sichtbare Risse stand. Die Leute schauen zu dir, wenn es schwierig wird, nicht weil du unberührt bist, sondern weil du weiter funktionierst. Das ist tragende Arbeit in jedem Team."
+    },
+    "hearth": {
+      "label": "Hearth",
+      "high": "Menschen fühlen sich in deiner Nähe willkommen, ohne genau zu wissen warum. Du machst die Mühe, dich zu verbinden, dich zu erinnern, zu fragen. Diese Wärme ist kein Small Talk — sie ist die Grundlage des Vertrauens.",
+      "low": "Du tauchst nicht sofort auf und tust nicht so als ob. Die Verbindungen, die du eingehst, sind echt und dauerhaft. Menschen, die dich gut kennen, wissen, dass sie etwas Echtes bekommen."
+    },
+    "gather": {
+      "label": "Gather",
+      "high": "Gruppen energetisieren dich. Je mehr Menschen, desto besser tendierst du zu funktionieren. Du bist derjenige, der früh ankommt und spät geht, und der Raum bemerkt gewöhnlich, wenn du nicht da bist.",
+      "low": "Du kannst in einem Raum arbeiten, wenn du musst, aber es kostet dich etwas. Du bist besser in kleineren Konfigurationen, wo Tiefe möglich ist. Qualität über Quantität, jedes Mal."
+    },
+    "command": {
+      "label": "Command",
+      "high": "Du wartest nicht auf Erlaubnis. Wenn etwas entschieden werden muss, entscheidest du es. Wenn etwas gesagt werden muss, sagst du es. Diese Direktheit schneidet durch Lärm und die meisten Gruppen brauchen mehr davon.",
+      "low": "Du beobachtest, bevor du handelst. Du lässt andere führen, und wenn du eingreifst, ist es weil du es bereits durchdacht hast. Das ist keine Zögerlichkeit — es ist Präzision."
+    },
+    "drive": {
+      "label": "Drive",
+      "high": "Du läufst in einem hohen Tempo. Aufeinanderfolgende Tage, mehrere Projekte, lange Meetings — du findest einen zweiten Gang, wo andere schon fertig sind. Überprüfe nur, dass die Menschen um dich herum noch mithalten.",
+      "low": "Du bist nachhaltig. Du kennst dein Tempo und hältst es. Du wirst nicht hell brennen und zusammenbrechen, was dich zu jemandem macht, auf den andere zählen können, wenn ein Projekt länger dauert als erwartet."
+    },
+    "thrill": {
+      "label": "Thrill",
+      "high": "Routine ist, wo deine Aufmerksamkeit stirbt. Du brauchst Einsätze, Neuheit, etwas auf dem Spiel. Dieser Drang zur Intensität ist der Ursprung vieler deiner besten Arbeiten.",
+      "low": "Du brauchst kein Adrenalin, um gut zu funktionieren. Ruhige, gleichmäßige Umgebungen bringen dein Bestes heraus. Du bist derjenige, der weiterarbeitet, wenn alle anderen von dem Drama abgelenkt sind."
+    },
+    "radiance": {
+      "label": "Radiance",
+      "high": "Deine Begeisterung ist ansteckend und echt. Du bringst Energie zu Dingen, bevor sie sie verdient haben, was sie manchmal dazu bringt, sie zu verdienen. Gruppen fühlen sich anders, wenn du dabei bist.",
+      "low": "Du spielst keine Begeisterung vor, die du nicht fühlst. Deine Zustimmung bedeutet etwas, weil du sie nicht automatisch gibst. Wenn du sagst, dass etwas gut ist, glauben dir die Leute."
+    },
+    "dream": {
+      "label": "Dream",
+      "high": "Dein Geist geht unaufgefordert an Orte. Tagträumen ist für dich keine Ablenkung — es ist der Ursprung von Ideen. Die innere Welt ist reich und nährt die äußere auf Weisen, die nicht immer sichtbar sind.",
+      "low": "Du bleibst nah am Boden. Was real ist, was hier ist, was funktioniert. Dieser Fokus hält dich nützlich auf Weisen, die Träumer*innen manchmal nicht sind."
+    },
+    "craft": {
+      "label": "Craft",
+      "high": "Du merkst, wenn etwas schön ist und wenn nicht. Diese Aufmerksamkeit für die Form ist nicht oberflächlich — so verarbeitest du Qualität. Du spürst, dass etwas falsch ist, bevor du sagen kannst warum, und normalerweise hast du recht.",
+      "low": "Funktion ist dir wichtiger als Form. Wenn es funktioniert, funktioniert es. Du wirst keine Zeit damit verbringen, etwas schön zu machen, wenn es noch verbessert werden kann."
+    },
+    "resonance": {
+      "label": "Resonance",
+      "high": "Du bist auf den emotionalen Register eingestimmt — deinen und den anderer. Diese Abstimmung macht dich zu einem sorgfältigen Leser von Räumen und einem nachdenklichen Kommunikator. Es bedeutet auch, dass du mehr trägst als die meisten.",
+      "low": "Du führst mit Logik statt mit Gefühl. Das hält die Dinge klar und unbelastet. In emotional aufgeladenen Situationen ist deine Ausgeglichenheit oft genau das, was gebraucht wird."
+    },
+    "drift": {
+      "label": "Drift",
+      "high": "Abwechslung hält dich engagiert. Neue Ansätze, andere Kontexte, unbekanntes Terrain — dort denkst du am besten. Wiederholung ist, wo du das Interesse am schnellsten verlierst.",
+      "low": "Du vertraust dem, was funktioniert, und bleibst dabei. Nicht jedes Problem braucht eine neue Lösung. Wenn andere Neuheit verfolgen, stellst du sicher, dass das Aktuelle wirklich hält."
+    },
+    "prism": {
+      "label": "Prism",
+      "high": "Du willst verstehen, wie Dinge funktionieren, nicht nur, dass sie funktionieren. Gib dir ein Problem und du wirst es auseinandernehmen, bevor du es zu lösen versuchst. Diese Tiefe der Untersuchung findet Dinge, die oberflächliches Denken übersieht.",
+      "low": "Du bist ein*e Praktiker*in, kein*e Theoretiker*in. Du willst Werkzeuge, die funktionieren, Erklärungen, die du nutzen kannst. Nicht jede Frage muss wieder geöffnet werden, und du weißt, welche nicht."
+    },
+    "compass": {
+      "label": "Compass",
+      "high": "Du hinterfragst geerbte Regeln und etablierte Normen. Nicht aus Rebellion, sondern weil du Dinge durchdenkst und nicht davon ausgehst, dass die Voreinstellung richtig ist. Diese Bereitschaft zur Überprüfung ist, wie sich Dinge verbessern.",
+      "low": "Du schätzt Stabilität, bewährte Systeme und gemeinsame Normen. Nicht alles muss hinterfragt werden, und du weißt, was nicht. Dieser Konservatismus verhindert, dass viele Dinge unnötig kaputtgehen."
+    },
+    "faith": {
+      "label": "Faith",
+      "high": "Dein Standard ist, zu glauben, dass Menschen gute Absichten haben. Diese Großzügigkeit macht dich leicht zu arbeiten und schnell mit zweiten Chancen. Das Risiko ist, dass du manchmal langsam erkennst, wenn jemand nicht ehrlich spielt.",
+      "low": "Du nimmst Dinge nicht für bare Münze. Du beobachtest, testest, überprüfst. Diese Skepsis hat dich wahrscheinlich mehr als einmal gerettet. Und wenn du jemandem vertraust, bedeutet das wirklich etwas."
+    },
+    "edge": {
+      "label": "Edge",
+      "high": "Was du sagst, meinst du. Keine Vorstellung, kein Impressionsmanagement, keine strategische Mehrdeutigkeit. Die Leute wissen immer, woran sie mit dir sind, was wertvoller ist, als es klingt.",
+      "low": "Du bist geschickt darin, soziale Komplexität zu navigieren. Du weißt, wann du dich zurückhalten solltest, wann du Dinge sorgfältig formulieren solltest, wann Direktheit mehr kosten würde, als es wert ist. Das ist keine Unehrlichkeit — das ist Raffinesse."
+    },
+    "gift": {
+      "label": "Gift",
+      "high": "Du lässt Menschen mühelos willkommen fühlen. Du bemerkst, wenn jemand am Rande ist, und tust etwas dagegen. Diese Großzügigkeit der Aufmerksamkeit ist eine der am meisten unterschätzten Dinge, die eine Person in eine Gruppe einbringen kann.",
+      "low": "Du bist nicht hier, um für alle zu sorgen. Du fokussierst deine Energie dort, wo es wichtig ist, und verteilst sie nicht dünn auf Verpflichtung. Dieser Fokus macht das, was du gibst, wirklich zählen."
+    },
+    "yield": {
+      "label": "Yield",
+      "high": "Du findest lieber eine Einigung, als das Argument zu gewinnen. Dieser kollaborative Instinkt hält die Dinge in Bewegung und hält Beziehungen intakt. Stelle nur sicher, dass du den Frieden wählst, anstatt ihn als Standard zu wählen.",
+      "low": "Du widersprichst. Du gibst dem sozialen Druck nicht nach und tust nicht so als würdest du zustimmen, wenn du es nicht tust. Gruppen brauchen diese Reibung, auch wenn sie sie im Moment nicht genießen."
+    },
+    "shadow": {
+      "label": "Shadow",
+      "high": "Du nimmst nicht mehr Raum ein, als du brauchst. Verdienste werden geteilt, Leistungen werden nicht angekündigt. Diese Zurückhaltung baut eine Art Vertrauen auf, die Selbstpromotion niemals aufbaut.",
+      "low": "Du weißt, was du wert bist, und versteckst es nicht. Dieses Selbstvertrauen in deinen eigenen Wert ist keine Arroganz — es ist Klarheit. Und manchmal braucht der Raum jemanden, der bereit ist zu sagen, was er einbringt."
+    },
+    "shield": {
+      "label": "Shield",
+      "high": "Du spürst die Auswirkungen der Dinge auf Menschen, die nicht im Raum sind. Diese ethische Aufmerksamkeit bedeutet, dass du über Konsequenzen nachdenken, die andere völlig übersehen. Es verlangsamt die Dinge manchmal, aus gutem Grund.",
+      "low": "Du konzentrierst dich auf Fakten und Ergebnisse statt auf Gefühle. Diese Objektivität hält die Analyse sauber und die Entscheidungen fundiert. Nicht jede Situation braucht eine emotionale Überprüfung, bevor man vorangeht."
+    },
+    "mastery": {
+      "label": "Mastery",
+      "high": "Du gehst gut mit Dingen um und weißt es. Dieses Vertrauen in deine eigene Fähigkeit ist keine Arroganz — es ist akkurat. Du lähmst dich nicht mit Selbstzweifeln, weil du normalerweise die Arbeit getan hast.",
+      "low": "Du findest noch heraus, wie die Dinge funktionieren, und bist ehrlich darüber. Diese Offenheit zum Lernen schützt dich vor der Überheblichkeit, die Leute stolpert, die glauben, sie seien schon angekommen."
+    },
+    "structure": {
+      "label": "Structure",
+      "high": "Du weißt, wo alles ist, wann alles fällig ist und was passiert, wenn es nicht so ist. Diese mentale Ordnung befreit dich zum Fokussieren, und mit dir zu arbeiten fühlt sich zuverlässig an auf eine Weise, die schwer zu ersetzen ist.",
+      "low": "Dein Arbeitsplatz könnte wie Chaos aussehen, aber du weißt, wo die Dinge sind, meistens. Du verwaltest nach Priorität, nicht nach System. Was du an Ordnung verlierst, gewinnst du manchmal an Geschwindigkeit."
+    },
+    "oath": {
+      "label": "Oath",
+      "high": "Wenn du sagst, dass du es tun wirst, ist es erledigt. Menschen hören auf, sich um Dinge zu sorgen, die sie dir übergeben haben, und das ist eine Form von Vertrauen, die lange Zeit braucht, um aufgebaut zu werden, und in einem Team enorm wichtig ist.",
+      "low": "Du bist besser bei großen Verpflichtungen als bei kleinen. Verpflichtungen, die willkürlich erscheinen, tendieren dazu, zu rutschen. Du wirst für das aufzeigen, was wirklich wichtig ist, aber du musst zuerst glauben, dass es wichtig ist."
+    },
+    "quest": {
+      "label": "Quest",
+      "high": "Du bist hier, um Dinge zu erledigen. Nicht um darüber zu reden, nicht um es zu planen. Erledigen. Diese Ergebnisorientierung ist selten und treibt Resultate auf Weisen, die schwer zu bestreiten sind.",
+      "low": "Du wirst nicht durch Leistung um ihrer selbst willen motiviert. Du brauchst einen Grund, einen Zweck, etwas, das wichtig ist. Wenn du es hast, arbeitest du hart. Wenn nicht, wirst du es nicht vortäuschen."
+    },
+    "will": {
+      "label": "Will",
+      "high": "Du fängst Dinge an, wenn sie angefangen werden müssen, nicht wenn du Lust hast. Diese Fähigkeit, ohne Motivation zu handeln, ist die Art, wie Dinge, die wichtig sind, tatsächlich beendet werden.",
+      "low": "Du brauchst die richtigen Bedingungen, um loszulegen. Druck, Interesse, Bedeutung. Ohne sie ist das Anfangen schwer. Mit ihnen kannst du in Tiefen gehen, die Menschen, die nur durchhalten, nie erreichen."
+    },
+    "counsel": {
+      "label": "Counsel",
+      "high": "Du denkst nach, bevor du handelst. Entscheidungen werden überlegt, Worte werden gewählt, Konsequenzen werden abgewogen. Diese Sorgfalt verhindert viele Probleme, die impulsive Menschen später bereinigen müssen.",
+      "low": "Du entscheidest schnell und passt dich unterwegs an. Diese Schnelligkeit hat manchmal einen Preis, bedeutet aber auch, dass du dich bewegst, während andere noch beraten. In schnell bewegenden Situationen ist das wichtig."
+    }
   },
   "roles": {
     "beta_label": "Beta · Theoretisches Modell",
@@ -667,84 +831,96 @@
     "you": "Deine Position",
     "probability_label": "Rollenpassung",
     "R01": {
-      "name": "Delfin",  "ca": "Delfin",
+      "name": "Delfin",
+      "ca": "Delfin",
       "essence": "Wenn du im Raum bist, reden die Leute. Nicht weil du fragst — weil du es leicht gemacht hast. Das Team erwärmt sich mit dir.",
       "profile": "Hohe Präsenz und Bindung. Warm, aufgeschlossen und leicht umzugehen. Menschen öffnen sich in deiner Gesellschaft.",
       "contributes": "Kohäsion. Senkt die soziale Aktivierungsenergie im Raum.",
       "misses": "Die produktive Reibung, die Ideen schärft. Wärme kann echte Meinungsverschiedenheiten glätten."
     },
     "R02": {
-      "name": "Wolf",    "ca": "Wolf",
+      "name": "Wolf",
+      "ca": "Wolf",
       "essence": "Du wartest nicht auf Erlaubnis. Wenn du das Problem siehst, sagst du es. Das Team bewegt sich, weil du nicht still bleibst.",
       "profile": "Hohe Präsenz, niedrige Bindung. Direkt, durchsetzungsstark und handlungsorientiert. Wartet nicht auf Konsens.",
       "contributes": "Initiative. Benennt, was gesagt werden muss, und bringt Dinge in Bewegung.",
       "misses": "Die relationale Kosten der Direktheit über Zeit. Teams können Vertrauen verlieren, wenn die Herausforderung konstant ist."
     },
     "R03": {
-      "name": "Elefant", "ca": "Elefant",
+      "name": "Elefant",
+      "ca": "Elefant",
       "essence": "Du nimmst keinen Raum ein — du schaffst ihn. Menschen erklären sich gut neben dir, weil sie wissen, dass du wirklich zuhörst.",
       "profile": "Niedrige Präsenz, hohe Bindung. Ruhig und zutiefst kooperativ. Schafft Raum für andere, laut zu denken.",
       "contributes": "Tiefe des Zuhörens. Menschen artikulieren sich besser in deiner Gegenwart.",
       "misses": "Schwung. Das Team kann klar zusammen denken, sich aber immer noch nicht bewegen."
     },
     "R04": {
-      "name": "Eule",    "ca": "Eule",
+      "name": "Eule",
+      "ca": "Eule",
       "essence": "Du siehst, was andere verpassen, weil du nicht im Zentrum sein musst. Die Distanz ist nützlich für dich.",
       "profile": "Niedrige Präsenz und Bindung. Unabhängig, beobachtend und präzise. Arbeitet am besten mit Distanz.",
       "contributes": "Klarheit. Sieht strukturelle Probleme, die hochsoziale Profile übersehen.",
       "misses": "Wärme und einfache Zusammenarbeit. Die Distanz, die der Analyse hilft, kann isolieren."
     },
     "R05": {
-      "name": "Adler",   "ca": "Adler",
+      "name": "Adler",
+      "ca": "Adler",
       "essence": "Du siehst weit und bewegst dich dorthin. Du bringst das Team an Orte, an die es alleine nicht gegangen wäre.",
       "profile": "Hohe Präsenz und Vision. Energisch und zukunftsorientiert. Zieht das Team in Richtung neuen Terrains.",
       "contributes": "Richtung. Setzt ehrgeizige Ziele, die das Team alleine nicht gesetzt hätte.",
       "misses": "Ausführungsdetail. Der Horizont ist klar; der Weg kann holprig sein."
     },
     "R06": {
-      "name": "Falke",   "ca": "Falke",
+      "name": "Falke",
+      "ca": "Falke",
       "essence": "Es ist keine Vision — es ist Timing. Du weißt genau, wann du dich bewegen solltest, und wenn du es tust, bemerkt es das Team.",
       "profile": "Hohe Präsenz, niedrige Vision. Präsent, entschlossen und praktisch. Weiß genau, wann man handeln soll.",
       "contributes": "Timing. Bewegt sich zum richtigen Moment und nimmt Menschen mit.",
       "misses": "Langfristiges Denken. Kann die strategische Ebene verpassen, während er gut in hohem Tempo ausführt."
     },
     "R07": {
-      "name": "Oktopus", "ca": "Oktopus",
+      "name": "Oktopus",
+      "ca": "Oktopus",
       "essence": "Die besten Ideen des Teams sind oft zuerst still durch dich gegangen. Du weißt es oft selbst nicht.",
       "profile": "Niedrige Präsenz, hohe Vision. Innerlich reich und leise kreativ. Verarbeitet Komplexität im Privaten.",
       "contributes": "Originelles Denken. Die ungewöhnlichsten Ideen des Teams kommen oft von hier.",
       "misses": "Ideen in Umlauf bringen. Arbeitet im Stillen; die Ideen können dort bleiben."
     },
     "R08": {
-      "name": "Schildkröte", "ca": "Schildkröte",
+      "name": "Schildkröte",
+      "ca": "Schildkröte",
       "essence": "Du wirst keinen Lärm machen. Aber wenn du nicht da bist, driftet das Team. Du bist der Boden, auf dem die anderen bauen.",
       "profile": "Niedrige Präsenz und Vision. Beständig, geerdet und zutiefst zuverlässig. Hält den Boden, damit andere sich bewegen können.",
       "contributes": "Stabilität. Andere können Risiken eingehen, weil dieses Profil den Boden hält.",
       "misses": "Anpassungsfähigkeit, wenn sich die Situation grundlegend ändert."
     },
     "R09": {
-      "name": "Biene",   "ca": "Biene",
+      "name": "Biene",
+      "ca": "Biene",
       "essence": "Wo andere Chaos sehen, siehst du Struktur. Du baust Brücken zwischen Menschen und Ideen, die sonst niemand verbunden hätte.",
       "profile": "Hohe Bindung und Vision. Kollaborativ und intellektuell generativ. Verbindet Menschen und Ideen.",
       "contributes": "Synthese. Baut Brücken zwischen Menschen und zwischen Konzepten, die sonst niemand verknüpft hatte.",
       "misses": "Den kritischen Rand, der gebraucht wird, um zu testen, ob die Verbindungen halten."
     },
     "R10": {
-      "name": "Bär",     "ca": "Bär",
+      "name": "Bär",
+      "ca": "Bär",
       "essence": "Du veränderst dich nicht unter Druck. Das Team weiß, dass du da bist, und dieses Wissen befreit sie, Risiken einzugehen.",
       "profile": "Hohe Bindung, niedrige Vision. Zuverlässig, geerdet und konsistent. Das Team weiß, wo es steht.",
       "contributes": "Vertrauen. Menschen gehen mehr Risiken ein, wenn ein Bär-Profil anwesend ist.",
       "misses": "Offenheit für Veränderung, wenn der aktuelle Ansatz nicht mehr funktioniert."
     },
     "R11": {
-      "name": "Fuchs",   "ca": "Fuchs",
+      "name": "Fuchs",
+      "ca": "Fuchs",
       "essence": "Du siehst, was nicht zusammenpasst — in Ideen und in Beziehungen. Dein Unbehagen ist produktiv.",
       "profile": "Niedrige Bindung, hohe Vision. Intellektuell scharf und kritisch denkend. Entdeckt Inkonsistenzen schnell.",
       "contributes": "Kritische Distanz. Erkennt, was nicht zusammenpasst, bevor es ein Problem wird.",
       "misses": "Relationale Leichtigkeit. Das Unbehagen kann ein Team belasten, das Kohäsion braucht, um zu funktionieren."
     },
     "R12": {
-      "name": "Dachs",   "ca": "Dachs",
+      "name": "Dachs",
+      "ca": "Dachs",
       "essence": "Du interessierst dich nicht für das, was funktionieren sollte. Du interessierst dich für das, was funktioniert. Das Team braucht dich, um sich nicht selbst zu täuschen.",
       "profile": "Niedrige Bindung und Vision. Pragmatisch, direkt und unsentimentalisch. Was funktioniert, zählt; was funktionieren sollte, nicht.",
       "contributes": "Grundwahrheit. Hält das Team davon ab, sich mit Optimismus oder Komplexität selbst zu täuschen.",
@@ -906,11 +1082,26 @@
     "dimensions": {
       "heading": "Fünf Dimensionen",
       "subheading": "Jedes Ergebnis liegt auf einem Spektrum. Beide Enden sind gültig — sie beschreiben verschiedene Wege, effektiv zu sein.",
-      "presence": { "name": "Präsenz",   "desc": "Wie viel Energie du nach außen richtest. Hoch: du bringst Menschen herein. Niedrig: du gehst mit weniger tief." },
-      "bond":     { "name": "Bindung",   "desc": "Wie du dich verbindest und kooperierst. Hoch: du priorisierst Vertrauen und Harmonie. Niedrig: du hältst deinen Standpunkt." },
-      "discipline":{ "name": "Disziplin","desc": "Wie du Struktur und Arbeit angehst. Hoch: zuverlässig, methodisch. Niedrig: flexibel, instinktgetrieben." },
-      "depth":    { "name": "Tiefe",     "desc": "Wie intensiv du Stress und Emotionen verarbeitest. Hoch: sensibel, wachsam. Niedrig: stabil, schwer zu erschüttern." },
-      "vision":   { "name": "Vision",    "desc": "Wie viel Neuheit und Komplexität du suchst. Hoch: kreativ, explorativ. Niedrig: praktisch, geerdet." }
+      "presence": {
+        "name": "Präsenz",
+        "desc": "Wie viel Energie du nach außen richtest. Hoch: du bringst Menschen herein. Niedrig: du gehst mit weniger tief."
+      },
+      "bond": {
+        "name": "Bindung",
+        "desc": "Wie du dich verbindest und kooperierst. Hoch: du priorisierst Vertrauen und Harmonie. Niedrig: du hältst deinen Standpunkt."
+      },
+      "discipline": {
+        "name": "Disziplin",
+        "desc": "Wie du Struktur und Arbeit angehst. Hoch: zuverlässig, methodisch. Niedrig: flexibel, instinktgetrieben."
+      },
+      "depth": {
+        "name": "Tiefe",
+        "desc": "Wie intensiv du Stress und Emotionen verarbeitest. Hoch: sensibel, wachsam. Niedrig: stabil, schwer zu erschüttern."
+      },
+      "vision": {
+        "name": "Vision",
+        "desc": "Wie viel Neuheit und Komplexität du suchst. Hoch: kreativ, explorativ. Niedrig: praktisch, geerdet."
+      }
     },
     "notThis": {
       "heading": "Was Cèrcol nicht ist",
@@ -1000,12 +1191,30 @@
   "faq": {
     "title": "FAQ",
     "heading": "Fragen",
-    "q1": { "q": "Sind meine Daten privat?", "a": "Die kostenlosen Instrumente speichern anonyme Ergebnisse ohne persönliche Informationen — kein Name, keine E-Mail, keine IP-Adresse. Wenn du ein Konto erstellst, wird deine E-Mail von Supabase gespeichert und deine Ergebnisse werden mit deinem Konto verknüpft. Du kannst dein Konto jederzeit löschen. Keine Daten werden an Dritte verkauft oder weitergegeben." },
-    "q2": { "q": "Sind die Ergebnisse genau?", "a": "Die Fragen stammen aus begutachteten, weitgehend validierten Instrumenten. Die Fünf-Dimensionen-Ergebnisse sind für ein Selbstberichts-Tool dieser Länge zuverlässig. Die Rollenbewertung ist klar als Beta gekennzeichnet — sie verwendet theoretische Ausgangspunkte und wird genauer, wenn sich reale Daten akkumulieren. Nimm die Dimensionen ernst; behandle die Rolle als nützliche erste Schätzung." },
-    "q3": { "q": "Was ist die Zeuge/Zeugin und wen soll ich einladen?", "a": "Die Zeuge/Zeugin ist jemand, den du einlädst, dich von außen zu beschreiben. Sie sehen Gruppen von Wörtern und wählen aus, welche am besten und schlechtesten zu dir passen — eine kurze Forced-Choice-Aufgabe, die etwa 5 Minuten dauert. Eine ideale Zeuge/Zeugin ist jemand, der echte Zeit mit dir verbracht hat: ein*e Kolleg*in, ein*e Mitbewohner*in, ein*e enge Freund*in. Nicht dein größter Fan, nicht dein härtester Kritiker. Jemand, der dich so sieht, wie du wirklich bist." },
-    "q4": { "q": "Was ist der Unterschied zwischen den drei Instrumenten?", "a": "Neumond hat 10 Fragen und dauert 2 Minuten — eine schnelle Orientierung. Erstes Viertel hat 60 Fragen und dauert 10 Minuten — ein vollständigeres Bild mit 30 Facetten und einem ersten Blick auf deine Rolle. Vollmond hat 120 Fragen, umfasst die Zeugenbewertung und ist kostenpflichtig — es ist das definitive Ergebnis. Jedes Instrument ist eigenständig; du kannst überall beginnen." },
-    "q5": { "q": "Lohnt es sich, für den Vollmond zu zahlen?", "a": "Wenn Erstes Viertel unzureichend erscheint — wenn du eine bestimmte Facette tiefer verstehen möchtest, siehst, wie andere dich wahrnehmen, oder ein zuverlässiges Rollenergebnis erhalten möchtest — dann ja. Der Zeugenvergleich ist der markanteste Teil: Er zeigt, wo deine Selbstwahrnehmung mit der Außensicht übereinstimmt und wo nicht. Diese Lücke ist oft der Ort, wo die nützlichsten Informationen liegen." },
-    "q6": { "q": "Kann ich die Auswertungen wiederholen?", "a": "Ja. Die kostenlosen Instrumente haben kein Limit. Jede Einreichung ist unabhängig — das Wiederholen überschreibt keine früheren Ergebnisse in deinem Konto. Viele finden es nützlich, Erstes Viertel sechs Monate oder ein Jahr später zu wiederholen, um zu sehen, was sich verändert hat." }
+    "q1": {
+      "q": "Sind meine Daten privat?",
+      "a": "Die kostenlosen Instrumente speichern anonyme Ergebnisse ohne persönliche Informationen — kein Name, keine E-Mail, keine IP-Adresse. Wenn du ein Konto erstellst, wird deine E-Mail von Supabase gespeichert und deine Ergebnisse werden mit deinem Konto verknüpft. Du kannst dein Konto jederzeit löschen. Keine Daten werden an Dritte verkauft oder weitergegeben."
+    },
+    "q2": {
+      "q": "Sind die Ergebnisse genau?",
+      "a": "Die Fragen stammen aus begutachteten, weitgehend validierten Instrumenten. Die Fünf-Dimensionen-Ergebnisse sind für ein Selbstberichts-Tool dieser Länge zuverlässig. Die Rollenbewertung ist klar als Beta gekennzeichnet — sie verwendet theoretische Ausgangspunkte und wird genauer, wenn sich reale Daten akkumulieren. Nimm die Dimensionen ernst; behandle die Rolle als nützliche erste Schätzung."
+    },
+    "q3": {
+      "q": "Was ist die Zeuge/Zeugin und wen soll ich einladen?",
+      "a": "Die Zeuge/Zeugin ist jemand, den du einlädst, dich von außen zu beschreiben. Sie sehen Gruppen von Wörtern und wählen aus, welche am besten und schlechtesten zu dir passen — eine kurze Forced-Choice-Aufgabe, die etwa 5 Minuten dauert. Eine ideale Zeuge/Zeugin ist jemand, der echte Zeit mit dir verbracht hat: ein*e Kolleg*in, ein*e Mitbewohner*in, ein*e enge Freund*in. Nicht dein größter Fan, nicht dein härtester Kritiker. Jemand, der dich so sieht, wie du wirklich bist."
+    },
+    "q4": {
+      "q": "Was ist der Unterschied zwischen den drei Instrumenten?",
+      "a": "Neumond hat 10 Fragen und dauert 2 Minuten — eine schnelle Orientierung. Erstes Viertel hat 60 Fragen und dauert 10 Minuten — ein vollständigeres Bild mit 30 Facetten und einem ersten Blick auf deine Rolle. Vollmond hat 120 Fragen, umfasst die Zeugenbewertung und ist kostenpflichtig — es ist das definitive Ergebnis. Jedes Instrument ist eigenständig; du kannst überall beginnen."
+    },
+    "q5": {
+      "q": "Lohnt es sich, für den Vollmond zu zahlen?",
+      "a": "Wenn Erstes Viertel unzureichend erscheint — wenn du eine bestimmte Facette tiefer verstehen möchtest, siehst, wie andere dich wahrnehmen, oder ein zuverlässiges Rollenergebnis erhalten möchtest — dann ja. Der Zeugenvergleich ist der markanteste Teil: Er zeigt, wo deine Selbstwahrnehmung mit der Außensicht übereinstimmt und wo nicht. Diese Lücke ist oft der Ort, wo die nützlichsten Informationen liegen."
+    },
+    "q6": {
+      "q": "Kann ich die Auswertungen wiederholen?",
+      "a": "Ja. Die kostenlosen Instrumente haben kein Limit. Jede Einreichung ist unabhängig — das Wiederholen überschreibt keine früheren Ergebnisse in deinem Konto. Viele finden es nützlich, Erstes Viertel sechs Monate oder ein Jahr später zu wiederholen, um zu sehen, was sich verändert hat."
+    }
   },
   "instruments": {
     "title": "Instrumente",
@@ -1023,7 +1232,11 @@
       "scaleNote": "7-Punkte-Skala: 'Stimme überhaupt nicht zu' bis 'Stimme vollständig zu'. Jeder Punkt trägt Bedeutung — nicht nur zwei Extreme mit Zahlen dazwischen.",
       "measures": "Fünf Dimensionen. Ein Ergebnis pro Dimension. Keine Facettenaufschlüsselung.",
       "get": "Ein Radardiagramm deiner Position auf allen fünf Dimensionen. Gut für eine schnelle Orientierung. Nicht präzise genug für differenzierte Aussagen über Facetten — das ist, wofür Erstes Viertel ist.",
-      "items": ["Extrovertiert, enthusiastisch.", "Zuverlässig, selbstdiszipliniert.", "Offen für neue Erfahrungen, komplex."],
+      "items": [
+        "Extrovertiert, enthusiastisch.",
+        "Zuverlässig, selbstdiszipliniert.",
+        "Offen für neue Erfahrungen, komplex."
+      ],
       "itemPrefix": "Ich sehe mich selbst als:"
     },
     "firstQuarter": {
@@ -1033,7 +1246,11 @@
       "scaleNote": "5-Punkte-Skala: 'Stimme überhaupt nicht zu' bis 'Stimme vollständig zu'. Fünf-Punkte-Skalen sind Standard für Facetten-Persönlichkeitsmessungen.",
       "measures": "Fünf Dimensionen, jede aufgeteilt in 6 Facetten — 30 Datenpunkte. Zwei Items pro Facette.",
       "get": "Domänendiagramm, 30-Facetten-Aufschlüsselung und einen ersten Beta-Blick auf deine Rolle. Die Facettenaufschlüsselung ist der Ort, wo die nützlichen Informationen liegen — die Domänensummen sind nur die Überschrift.",
-      "items": ["Die Führung übernehme.", "Mir Sorgen mache.", "Eine lebhafte Vorstellungskraft habe."],
+      "items": [
+        "Die Führung übernehme.",
+        "Mir Sorgen mache.",
+        "Eine lebhafte Vorstellungskraft habe."
+      ],
       "itemPrefix": "Ich sehe mich als jemanden, der/die:"
     },
     "fullMoon": {
@@ -1045,7 +1262,11 @@
         "heading": "Selbstbericht",
         "meta": "120 Fragen · ~20 Min. · 5-Punkte-Skala",
         "body": "Dieselben 30 Facetten wie Erstes Viertel — bei doppelter Auflösung. Vier Items pro Facette statt zwei. In psychometrischen Begriffen bedeuten mehr Items pro Facette zuverlässigere Ergebnisse, besonders für Facetten nahe der Skalenmitte, wo zwei Items ein verrauschtes Ergebnis liefern können.",
-        "items": ["Mich selten niedergeschlagen fühle.", "Die Bedürfnisse anderer vorhersehe.", "Aufgaben sofort erledige."],
+        "items": [
+          "Mich selten niedergeschlagen fühle.",
+          "Die Bedürfnisse anderer vorhersehe.",
+          "Aufgaben sofort erledige."
+        ],
         "itemPrefix": "Ich sehe mich als jemanden, der/die:"
       },
       "part2": {
@@ -1097,6 +1318,35 @@
     "contextNote": {
       "heading": "Rollen sind keine Schicksale",
       "body": "Dieselbe Person kann in verschiedenen Teamzusammensetzungen unterschiedlich funktionieren. Ein Wolf in einem Team, das bereits alles konfrontiert, könnte sich zurückziehen. Eine Schildkröte in einem Team, das Bewegung braucht, könnte beschleunigen. Das sind Tendenzen im Kontext — keine festen Identitäten. Verwende ein Rollenergebnis nicht als Deckel."
+    }
+  },
+  "onboarding": {
+    "heading": "Willkommen bei Cèrcol",
+    "intro": "Drei Instrumente. Eine Skala. Beginne, wo du möchtest — jedes steht für sich.",
+    "newMoon": {
+      "desc": "10 Fragen. Ein schneller Blick auf deine fünf Dimensionen."
+    },
+    "firstQuarter": {
+      "desc": "60 Fragen. Fünf Dimensionen in 30 Facetten aufgeteilt."
+    },
+    "fullMoon": {
+      "desc": "120 Fragen plus ein Zeuge. Das vollständigste Bild."
+    },
+    "suggestedOrder": "Nicht sicher, wo du anfangen sollst? Beginne mit Neumond.",
+    "primaryCta": "Mit Neumond beginnen",
+    "dismissCta": "Ich erkunde selbst"
+  },
+  "nudge": {
+    "nextUp": "Als nächstes",
+    "firstQuarter": {
+      "heading": "Tiefer gehen mit dem Ersten Viertel",
+      "body": "60 Fragen. Dieselben fünf Dimensionen mit vollständiger Facettenauflösung.",
+      "cta": "Erstes Viertel Cèrcol beginnen"
+    },
+    "fullMoon": {
+      "heading": "Dein Portrait mit dem Vollmond vervollständigen",
+      "body": "120 Fragen plus ein Zeuge — das präziseste Ergebnis.",
+      "cta": "Vollmond Cèrcol beginnen"
     }
   }
 }

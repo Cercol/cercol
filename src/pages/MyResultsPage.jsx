@@ -9,7 +9,8 @@ import { useAuth } from '../context/AuthContext'
 import { getMyResults, getMyWitnessContributions } from '../lib/api'
 import { DOMAIN_KEYS } from '../data/domains'
 import { Card, Button, SectionLabel } from '../components/ui'
-import { ChevronRightIcon, DimensionIcon } from '../components/MoonIcons'
+import { ChevronRightIcon, DimensionIcon, RoleIcon } from '../components/MoonIcons'
+import InstrumentNudge from '../components/InstrumentNudge'
 import { DOMAIN_BG_CLASSES, DOMAIN_ICON_CLASSES } from '../design/tokens'
 import { radarScoreToPercent } from '../utils/new-moon-scoring'
 import { scoreToPercent5 } from '../utils/scoring-utils'
@@ -153,30 +154,48 @@ export default function MyResultsPage() {
           <p className="text-sm text-red-500">{t('myResults.error')}</p>
         )}
 
-        {results !== null && results.length === 0 && (
-          <div className="text-center py-16">
-            <p className="text-gray-500 mb-6">{t('myResults.empty')}</p>
-            <Button variant="primary" size="lg" onClick={() => navigate('/')}>
-              {t('myResults.startCta')}
-            </Button>
-          </div>
-        )}
+        {results !== null && (() => {
+          const done = new Set(results.map(r => r.instrument))
+          const newMoonDone     = done.has('newMoon')
+          const fqDone          = done.has('firstQuarter')
+          const fmDone          = done.has('fullMoon')
 
-        {results !== null && results.length > 0 && (
-          <div className="flex flex-col gap-4">
-            {results.map((r) => (
-              <ResultCard key={r.id} result={r} t={t} language={i18n.language} navigate={navigate} />
-            ))}
-            <Button
-              variant="secondary"
-              size="lg"
-              onClick={() => navigate('/')}
-              className="mt-2 w-full"
-            >
-              {t('myResults.startCta')}
-            </Button>
-          </div>
-        )}
+          // Determine which instrument to nudge towards next.
+          const nudgeTarget = !newMoonDone ? null
+            : !fqDone ? 'firstQuarter'
+            : !fmDone ? 'fullMoon'
+            : null
+
+          if (results.length === 0) return (
+            <div className="text-center py-16 flex flex-col items-center gap-6">
+              <RoleIcon role="R01" size={80} className="text-gray-200" />
+              <div>
+                <p className="font-semibold text-gray-900">{t('myResults.empty.heading')}</p>
+                <p className="text-sm text-gray-500 mt-1">{t('myResults.empty.body')}</p>
+              </div>
+              <Button variant="primary" size="lg" onClick={() => navigate('/new-moon')}>
+                {t('myResults.empty.cta')}
+              </Button>
+            </div>
+          )
+
+          return (
+            <div className="flex flex-col gap-4">
+              {results.map((r) => (
+                <ResultCard key={r.id} result={r} t={t} language={i18n.language} navigate={navigate} />
+              ))}
+              {nudgeTarget && <InstrumentNudge target={nudgeTarget} />}
+              <Button
+                variant="secondary"
+                size="lg"
+                onClick={() => navigate('/')}
+                className="mt-2 w-full"
+              >
+                {t('myResults.startCta')}
+              </Button>
+            </div>
+          )
+        })()}
 
         {/* Witness contributions */}
         {contributions !== null && (

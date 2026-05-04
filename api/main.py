@@ -382,10 +382,11 @@ class LogResultBody(BaseModel):
 
 
 class UpdateProfileBody(BaseModel):
-    first_name:      Optional[str] = None
-    last_name:       Optional[str] = None
-    country:         Optional[str] = None
-    native_language: Optional[str] = None
+    first_name:       Optional[str]  = None
+    last_name:        Optional[str]  = None
+    country:          Optional[str]  = None
+    native_language:  Optional[str]  = None
+    onboarding_seen:  Optional[bool] = None
 
 
 # ---------------------------------------------------------------------------
@@ -410,7 +411,7 @@ async def get_profile(user: dict = Depends(get_current_user)):
     async with _pool.acquire() as conn:
         await ensure_profile(conn, user_id, user.get("email"))
         row = await conn.fetchrow(
-            "SELECT id, premium, is_admin, first_name, last_name, country, native_language FROM profiles WHERE id = $1",
+            "SELECT id, premium, is_admin, first_name, last_name, country, native_language, onboarding_seen FROM profiles WHERE id = $1",
             user_id,
         )
     return dict(row)

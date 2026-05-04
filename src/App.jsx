@@ -1,7 +1,8 @@
-import { Component } from 'react'
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { Component, useState, useEffect } from 'react'
+import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import { FeedbackProvider, useFeedbackContext } from './context/FeedbackContext'
-import { AuthProvider } from './context/AuthContext'
+import { AuthProvider, useAuth } from './context/AuthContext'
+import OnboardingModal from './components/OnboardingModal'
 import Layout from './components/Layout'
 import HomePage from './pages/HomePage'
 import NewMoonPage from './pages/NewMoonPage'
@@ -65,8 +66,35 @@ class ErrorBoundary extends Component {
 
 function AppContent() {
   const { itemContext } = useFeedbackContext()
+  const { user, profile, loading, markOnboardingSeen } = useAuth()
+  const navigate = useNavigate()
+  const [showOnboarding, setShowOnboarding] = useState(false)
+
+  // Show the onboarding modal once — on first sign-in for new users.
+  useEffect(() => {
+    if (loading || !user || !profile) return
+    const localSeen = localStorage.getItem('cercol_onboarding_seen') === '1'
+    if (!profile.onboarding_seen && !localSeen) {
+      setShowOnboarding(true)
+    }
+  }, [user, profile, loading])
+
+  function handleDismiss() {
+    markOnboardingSeen()
+    setShowOnboarding(false)
+  }
+
+  function handleGoToNewMoon() {
+    markOnboardingSeen()
+    setShowOnboarding(false)
+    navigate('/new-moon')
+  }
+
   return (
     <Layout>
+      {showOnboarding && (
+        <OnboardingModal onDismiss={handleDismiss} onGoToNewMoon={handleGoToNewMoon} />
+      )}
       <Routes>
         <Route path="/" element={<HomePage />} />
         {/* New Moon */}

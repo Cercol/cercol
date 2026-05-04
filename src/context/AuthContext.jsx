@@ -6,6 +6,7 @@
  *   profile                     — profiles row or null (loads after user resolves)
  *   loading                     — true while the initial session check is in progress
  *   refreshProfile()            — re-fetches profile from Supabase
+ *   markOnboardingSeen()        — sets onboarding_seen=true locally + persists to API
  *   signIn(email)               — sends a magic link; throws on error
  *   signInWithPassword(e, p)    — email + password sign-in; throws on error
  *   signUp(email, password)     — creates account; throws on error
@@ -14,7 +15,7 @@
  */
 import { createContext, useContext, useEffect, useState, useCallback } from 'react'
 import { supabase } from '../lib/supabase'
-import { getMyProfile } from '../lib/api'
+import { getMyProfile, updateMyProfile } from '../lib/api'
 
 const AuthContext = createContext(null)
 
@@ -54,6 +55,18 @@ export function AuthProvider({ children }) {
     if (user) await fetchProfile(user.id)
   }
 
+  async function markOnboardingSeen() {
+    // Optimistic local update — closes the modal immediately.
+    setProfile(prev => prev ? { ...prev, onboarding_seen: true } : prev)
+    // Persist to localStorage as a redundant browser-side guard.
+    localStorage.setItem('cercol_onboarding_seen', '1')
+    try {
+      await updateMyProfile({ onboarding_seen: true })
+    } catch {
+      // Silently fail — localStorage fallback prevents the modal re-appearing in this browser.
+    }
+  }
+
   async function signIn(email) {
     const { error } = await supabase.auth.signInWithOtp({
       email,
@@ -86,7 +99,7 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, profile, loading, refreshProfile, signIn, signInWithPassword, signUp, signInWithGoogle, signOut }}>
+    <AuthContext.Provider value={{ user, profile, loading, refreshProfile, markOnboardingSeen, signIn, signInWithPassword, signUp, signInWithGoogle, signOut }}>
       {children}
     </AuthContext.Provider>
   )

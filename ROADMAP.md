@@ -1138,15 +1138,17 @@ Full resolution of email delivery issues and complete configuration of all sendi
 
 ---
 
-## Phase 14 — Onboarding
+## Phase 14 — Onboarding ✅ COMPLETE
 
-Guided first-run experience for new users.
+Guided first-run experience for new users on first sign-in.
 
-- Welcome screen / modal on first visit explaining the three instruments and the suggested order (New Moon → First Quarter → Full Moon)
-- Progress indicator: shows which instruments the user has completed and what comes next
-- Contextual nudges: after completing New Moon, prompt towards First Quarter; after First Quarter, towards Full Moon
-- Empty state improvements on My Results page when no instruments are done yet
-- Optional: short animated intro sequence on the homepage for anonymous visitors
+- **OnboardingModal** (`src/components/OnboardingModal.jsx`): welcome modal shown once per new user. Visibility controlled by `profile.onboarding_seen` (Supabase) + `localStorage` fallback. Explains the three instruments and suggests starting with New Moon. Fully multilingual (6 languages).
+- **InstrumentNudge** (`src/components/InstrumentNudge.jsx`): reusable CTA card pointing to the next instrument. Replaces the ad-hoc upgrade cards in `NewMoonResultsPage` and `FirstQuarterResultsPage`. Sequencing: NM → FQ → FM.
+- **MyResultsPage progressive empty states**: 0 instruments → animal illustration + CTA; 1–2 instruments → results + nudge card; 3 instruments → existing layout unchanged.
+- **Supabase migration** `011_onboarding_seen.sql`: `onboarding_seen BOOLEAN NOT NULL DEFAULT FALSE` on `profiles`. Existing users backfilled to `TRUE` so the modal only appears for genuinely new accounts.
+- **Backend**: `GET /me/profile` now returns `onboarding_seen`; `PATCH /me/profile` accepts it via `UpdateProfileBody`.
+- **AuthContext**: added `markOnboardingSeen()` — optimistic local update + async persist + localStorage write.
+- Not implemented: animated intro for anonymous visitors (deferred — low priority).
 
 ## Phase 15 — Stripe paywall
 

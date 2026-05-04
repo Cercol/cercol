@@ -12,7 +12,11 @@
     "heading": "Mine resultater",
     "loading": "Indlæser…",
     "error": "Resultater kunne ikke indlæses. Prøv igen senere.",
-    "empty": "Ingen resultater endnu. Gennemfør en vurdering for at se din profil her.",
+    "empty": {
+      "heading": "Dine resultater vil leve her.",
+      "body": "Gennemfør en vurdering for at se din profil.",
+      "cta": "Begynd Nymåne Cèrcol"
+    },
     "startCta": "Start en vurdering",
     "contributionsHeading": "Vidnebidrag",
     "contributionsEmpty": "Du har endnu ikke gennemført nogen vidnesessioner.",
@@ -102,34 +106,34 @@
       "helpHeading": "Hvad der ville hjælpe",
       "move": {
         "high_p": "Dit team har en stærk udadvendt tilstedeværelse — synligt, direkte og hurtigt til at bringe ideer frem. Møder kører med energi. Eksterne interessenter bemærker denne gruppe.",
-        "low_p":  "Dit team arbejder med stille dybde. Ideer udvikler sig langsomt og omhyggeligt. Gruppen har tendens til at handle ud fra refleksion frem for impuls.",
+        "low_p": "Dit team arbejder med stille dybde. Ideer udvikler sig langsomt og omhyggeligt. Gruppen har tendens til at handle ud fra refleksion frem for impuls.",
         "high_b": "Sammenhæng er dette teams fundament. Folk lytter godt, støtter hinanden og har tendens til at bevæge sig konstruktivt gennem uenigheder. Tillid er høj.",
-        "low_b":  "Dit team er direkte, opgaveorienteret og effektivt. Folk siger, hvad de mener. Social friktion accepteres som en del af ærligt arbejde.",
+        "low_b": "Dit team er direkte, opgaveorienteret og effektivt. Folk siger, hvad de mener. Social friktion accepteres som en del af ærligt arbejde.",
         "high_v": "Innovation er gruppens naturlige tilstand. Kreativ udforskning og nye ideer kommer let. Teamet er komfortabelt med tvetydighed.",
-        "low_v":  "Dit team er pragmatisk og udførelsesfokuseret. Konkrete planer, klare skridt og målbart fremskridt er denne gruppes sprog.",
-        "low_c":  "Dit team er fleksibelt og tilpasningsdygtigt — men kan have svært ved at opretholde momentum eller koordinere ejerskab uden bevidst struktur.",
+        "low_v": "Dit team er pragmatisk og udførelsesfokuseret. Konkrete planer, klare skridt og målbart fremskridt er denne gruppes sprog.",
+        "low_c": "Dit team er fleksibelt og tilpasningsdygtigt — men kan have svært ved at opretholde momentum eller koordinere ejerskab uden bevidst struktur.",
         "high_n": "Følelsesmæssig reaktivitet er til stede i denne gruppe. Teamet mærker tingene intenst og kan bære stress synligt.",
         "balanced": "Dit team viser et veldistribueret profil på tværs af alle dimensioner. Ingen enkelt tendens dominerer, hvilket skaber alsidighed — og kræver aktiv koordinering for at forblive sammenhængende."
       },
       "watchOut": {
         "high_p": "Teams med høj tilstedeværelse risikerer at dominere diskussionen. Mere stille medlemmer kan tilbageholde ideer. Teamet kan virke overvældende på mindre vokale samarbejdspartnere.",
-        "low_p":  "Teams med lav tilstedeværelse kan være usynlige for den bredere organisation. Konflikter kan forblive under overfladen længere end sundt.",
+        "low_p": "Teams med lav tilstedeværelse kan være usynlige for den bredere organisation. Konflikter kan forblive under overfladen længere end sundt.",
         "high_b": "Teams med højt bånd risikerer overenighed og harmoni-bias. Svære sandheder kan blødgøres eller undgås. Grupmetænkning er en reel risiko.",
-        "low_b":  "Teams med lavt bånd kan lide under interpersonel friktion og fejlfortolke direkthed som fjendtlighed. At opbygge tillid kan kræve eksplicit indsats.",
+        "low_b": "Teams med lavt bånd kan lide under interpersonel friktion og fejlfortolke direkthed som fjendtlighed. At opbygge tillid kan kræve eksplicit indsats.",
         "high_v": "Visionstunge teams kæmper ofte med opfølgning. Ideer multiplicerer sig hurtigere end de færdiggøres. Udførelsesstrukturer kræver bevidst vedligeholdelse.",
-        "low_v":  "Teams med lav vision kan misse strategiske muligheder eller have svært ved at tilpasse sig, når deres nuværende tilgang holder op med at virke.",
-        "low_c":  "Teams med lav disciplin har tendens til at efterlade ejerskab uklart og tidsfrister løse. Risikoen er ambition uden færdiggørelse.",
+        "low_v": "Teams med lav vision kan misse strategiske muligheder eller have svært ved at tilpasse sig, når deres nuværende tilgang holder op med at virke.",
+        "low_c": "Teams med lav disciplin har tendens til at efterlade ejerskab uklart og tidsfrister løse. Risikoen er ambition uden færdiggørelse.",
         "high_n": "Forhøjet stressreaktivitet kan forstærke interpersonelle spændinger. Under pres kan teamets humør destabilisere, inden problemerne løses.",
         "balanced": "Ingen enkelt dimension markerer stærkt. Hold øje med diffus ansvarlighed — alsidige teams antager sommetider, at nogen anden ejer en opgave."
       },
       "help": {
         "high_p": "Skab bevidst plads til mindre synlige medlemmer. Rotér hvem der åbner diskussionen. Giv stille bidragsydere ejerskab over første udkast på vigtige beslutninger.",
-        "low_p":  "Investér i synlighed: udpeg nogen til at kommunikere teamets arbejde udadtil. Opret eksplicitte kanaler til at bringe små frustrationer frem, inden de hober sig op.",
+        "low_p": "Investér i synlighed: udpeg nogen til at kommunikere teamets arbejde udadtil. Opret eksplicitte kanaler til at bringe små frustrationer frem, inden de hober sig op.",
         "high_b": "Øv struktureret uenighed: tildel djævelens advokat-roller i beslutningstagning. Spørg 'hvad ville gøre dette til en dårlig idé?' inden I forpligter jer.",
-        "low_b":  "Investér i relationel infrastruktur: regelmæssige ikke-opgavebaserede check-ins, fælles kontekstsætning og eksplicit påskønnelse af bidrag.",
+        "low_b": "Investér i relationel infrastruktur: regelmæssige ikke-opgavebaserede check-ins, fælles kontekstsætning og eksplicit påskønnelse af bidrag.",
         "high_v": "Forankr kreative sessioner til leverancer. For hver udforsket idé, tildel én enkelt ejer og et konkret næste skridt. Reducer idébackloggen regelmæssigt.",
-        "low_v":  "Planlæg tid til horisontscanning: hvad ændrer sig i jeres miljø? Hvilke tilgange er I måske ved at overstole på?",
-        "low_c":  "Indfør lette ejerskabsritualer: navngiv én person per resultat, én deadline per beslutning. Gennemgå forpligtelser ugentligt.",
+        "low_v": "Planlæg tid til horisontscanning: hvad ændrer sig i jeres miljø? Hvilke tilgange er I måske ved at overstole på?",
+        "low_c": "Indfør lette ejerskabsritualer: navngiv én person per resultat, én deadline per beslutning. Gennemgå forpligtelser ugentligt.",
         "high_n": "Investér i stressforståelse som team. Navngiv hvornår gruppen er reaktiv versus reflektiv. Opret lavrisiko-kanaler til at ventilere bekymringer, inden de eskalerer.",
         "balanced": "Med et afbalanceret profil er risikoen koordinationsomkostninger. Vær eksplicit om beslutningsrettigheder, kommunikationsnormer og hvem der leder hvad — antag ikke tilpasning."
       }
@@ -430,11 +434,31 @@
     }
   },
   "fmDomains": {
-    "depth":      { "name": "Dybde",              "description": "Hvordan du behandler følelser og navigerer usikkerhed.", "blockIntro": "Disse spørgsmål udforsker dit følelsesmæssige landskab — hvordan du reagerer på stress, forandring og indre spænding." },
-    "presence":   { "name": "Tilstedeværelse",    "description": "Hvor meget energi du bringer ind i sociale rum.", "blockIntro": "Disse spørgsmål udforsker, hvordan du viser dig i sociale situationer og forbinder dig med andre." },
-    "vision":     { "name": "Vision",             "description": "Hvordan du engagerer dig med ideer, skønhed og ny tænkning.", "blockIntro": "Disse spørgsmål udforsker din nysgerrighed, fantasi og åbenhed over for nye perspektiver." },
-    "bond":       { "name": "Tilknytning",        "description": "Hvordan du forholder dig til andre og den varme du bringer.", "blockIntro": "Disse spørgsmål udforsker, hvordan du opbygger tillid, viser omsorg og forholder dig til menneskene omkring dig." },
-    "discipline": { "name": "Disciplin",          "description": "Hvordan du griber opgaver, mål og gennemførelse an.", "blockIntro": "Disse spørgsmål udforsker, hvordan du organiserer din tid, overholder forpligtelser og holder kursen." }
+    "depth": {
+      "name": "Dybde",
+      "description": "Hvordan du behandler følelser og navigerer usikkerhed.",
+      "blockIntro": "Disse spørgsmål udforsker dit følelsesmæssige landskab — hvordan du reagerer på stress, forandring og indre spænding."
+    },
+    "presence": {
+      "name": "Tilstedeværelse",
+      "description": "Hvor meget energi du bringer ind i sociale rum.",
+      "blockIntro": "Disse spørgsmål udforsker, hvordan du viser dig i sociale situationer og forbinder dig med andre."
+    },
+    "vision": {
+      "name": "Vision",
+      "description": "Hvordan du engagerer dig med ideer, skønhed og ny tænkning.",
+      "blockIntro": "Disse spørgsmål udforsker din nysgerrighed, fantasi og åbenhed over for nye perspektiver."
+    },
+    "bond": {
+      "name": "Tilknytning",
+      "description": "Hvordan du forholder dig til andre og den varme du bringer.",
+      "blockIntro": "Disse spørgsmål udforsker, hvordan du opbygger tillid, viser omsorg og forholder dig til menneskene omkring dig."
+    },
+    "discipline": {
+      "name": "Disciplin",
+      "description": "Hvordan du griber opgaver, mål og gennemførelse an.",
+      "blockIntro": "Disse spørgsmål udforsker, hvordan du organiserer din tid, overholder forpligtelser og holder kursen."
+    }
   },
   "scale": {
     "1": "Meget uenig",
@@ -524,11 +548,31 @@
     }
   },
   "fqDomains": {
-    "depth":      { "name": "Dybde",           "description": "Hvordan du behandler følelser og navigerer usikkerhed.", "blockIntro": "Disse spørgsmål udforsker dit følelsesmæssige landskab — hvordan du reagerer på stress, forandring og indre spænding." },
-    "presence":   { "name": "Tilstedeværelse", "description": "Hvor meget energi du bringer ind i sociale rum.", "blockIntro": "Disse spørgsmål udforsker, hvordan du viser dig i sociale situationer og forbinder dig med andre." },
-    "vision":     { "name": "Vision",          "description": "Hvordan du engagerer dig med ideer, skønhed og ny tænkning.", "blockIntro": "Disse spørgsmål udforsker din nysgerrighed, fantasi og åbenhed over for nye perspektiver." },
-    "bond":       { "name": "Tilknytning",     "description": "Hvordan du forholder dig til andre og den varme du bringer.", "blockIntro": "Disse spørgsmål udforsker, hvordan du opbygger tillid, viser omsorg og forholder dig til menneskene omkring dig." },
-    "discipline": { "name": "Disciplin",       "description": "Hvordan du griber opgaver, mål og gennemførelse an.", "blockIntro": "Disse spørgsmål udforsker, hvordan du organiserer din tid, overholder forpligtelser og holder kursen." }
+    "depth": {
+      "name": "Dybde",
+      "description": "Hvordan du behandler følelser og navigerer usikkerhed.",
+      "blockIntro": "Disse spørgsmål udforsker dit følelsesmæssige landskab — hvordan du reagerer på stress, forandring og indre spænding."
+    },
+    "presence": {
+      "name": "Tilstedeværelse",
+      "description": "Hvor meget energi du bringer ind i sociale rum.",
+      "blockIntro": "Disse spørgsmål udforsker, hvordan du viser dig i sociale situationer og forbinder dig med andre."
+    },
+    "vision": {
+      "name": "Vision",
+      "description": "Hvordan du engagerer dig med ideer, skønhed og ny tænkning.",
+      "blockIntro": "Disse spørgsmål udforsker din nysgerrighed, fantasi og åbenhed over for nye perspektiver."
+    },
+    "bond": {
+      "name": "Tilknytning",
+      "description": "Hvordan du forholder dig til andre og den varme du bringer.",
+      "blockIntro": "Disse spørgsmål udforsker, hvordan du opbygger tillid, viser omsorg og forholder dig til menneskene omkring dig."
+    },
+    "discipline": {
+      "name": "Disciplin",
+      "description": "Hvordan du griber opgaver, mål og gennemførelse an.",
+      "blockIntro": "Disse spørgsmål udforsker, hvordan du organiserer din tid, overholder forpligtelser og holder kursen."
+    }
   },
   "dimensions": {
     "presence": {
@@ -630,36 +674,156 @@
     }
   },
   "fqFacets": {
-    "vigil":     { "label": "Vigil",     "high": "Du kører trusselsdetektion konstant. Det meste af tiden er der intet der, men nogle gange opfanger du noget reelt, inden nogen anden har kigget op. Den årvågenhed er udmattende og lejlighedsvis uvurderlig.", "low": "Du låner ikke problemer fra fremtiden. Du håndterer det, der er foran dig, når det ankommer. Den jordforbindelse er sjældnere, end den ser ud, især når tingene bliver usikre." },
-    "blaze":     { "label": "Blaze",     "high": "Din frustration dukker hurtigt og synligt op. Folk ved altid, hvor de står med dig, hvilket ikke er ingenting. Prisen er, at små ting nogle gange får den samme reaktion som store ting.", "low": "Det kræver meget at ryste dig til vrede. Du eskalerer ikke, du overtager ikke andres varme. I spændte øjeblikke ændrer den stabilitet hele rummets temperatur." },
-    "hollow":    { "label": "Hollow",    "high": "Du bærer vægt. Tilbageslag sætter sig frem for at prale af. Den dybde af følelse betyder, at du tager ting alvorligt på en måde, som lettere mennesker aldrig vil. Det koster dig, og det er noget værd.", "low": "Du kommer dig hurtigt. Dårlige dage bliver ikke til dårlige uger. Den evne til at gå videre er ikke ligegyldighed — det er en slags modstandsdygtighed, der holder dig funktionsdygtig, når andre stadig behandler." },
-    "veil":      { "label": "Veil",      "high": "Du er opmærksom på, hvordan du fremstår, nogle gange akut så. Den sociale sensitivitet gør dig omhyggelig og hensynsfuld. Det betyder også, at du bruger energi på, hvordan tingene lander, som andre aldrig tænker over.", "low": "Du spilder ikke meget energi på at bekymre dig om, hvad folk tænker om dig. Den lethed med dig selv fremstår som selvtillid, selv når det bare er komfort. Uanset hvad, har det tendens til at berolige andre." },
-    "surge":     { "label": "Surge",     "high": "Du handler på det, du føler, ofte inden tanken er fuldt formet. Nogle gange er den hastighed hele fordelen. Nogle gange er det ikke, og det ved du også.", "low": "Du lader dig ikke let rive med. Impulser passerer, reaktioner filtreres, beslutninger overvejes. Den selvregulering er den stille motor bag mange ting, der faktisk går godt." },
-    "fracture":  { "label": "Fracture",  "high": "Når presset bygger op, mærker du det fuldt ud. Den sensitivitet er ikke svaghed — det er et signal. Du opfanger belastning, inden andre gør det, hvilket betyder, at du ofte er den, der siger, at noget skal ændres.", "low": "Du holder under pres uden synlige revner. Folk kigger på dig, når tingene bliver svære, ikke fordi du er upåvirket, men fordi du bliver ved med at fungere. Det er bærende arbejde på ethvert team." },
-    "hearth":    { "label": "Hearth",    "high": "Folk føler sig velkomne omkring dig uden at vide præcist hvorfor. Du gør en indsats for at forbinde, huske, spørge. Den varme er ikke smalltalk — det er fundamentet for tillid.", "low": "Du varmer ikke op øjeblikkeligt og giver ikke udtryk for at gøre det. De forbindelser, du skaber, er ægte og holdbare. Folk, der kender dig godt, ved, at de får noget reelt." },
-    "gather":    { "label": "Gather",    "high": "Grupper energiserer dig. Jo flere mennesker, jo bedre har du en tendens til at fungere. Du er den, der ankommer tidligt og går sent, og rummet bemærker som regel, når du ikke er der.", "low": "Du kan arbejde et rum, når du skal, men det koster dig noget. Du er bedre i mindre konfigurationer, hvor dybde er mulig. Kvalitet over mængde, hver gang." },
-    "command":   { "label": "Command",   "high": "Du venter ikke på tilladelse. Når noget skal besluttes, beslutter du det. Når noget skal siges, siger du det. Den direkthed skærer igennem støj, og de fleste grupper har brug for mere af den.", "low": "Du observerer inden du handler. Du lader andre lede, og når du træder ind, er det fordi du allerede har tænkt det igennem. Det er ikke tøven — det er præcision." },
-    "drive":     { "label": "Drive",     "high": "Du kører i et højt tempo. Dag efter dag, flere projekter, lange møder — du finder et ekstra gear, hvor andre allerede er færdige. Tjek bare, at menneskene omkring dig stadig følger med.", "low": "Du er bæredygtig. Du kender dit tempo og holder det. Du vil ikke brænde stærkt og bryde sammen, hvilket gør dig til én, andre kan stole på, når et projekt kører længere end forventet." },
-    "thrill":    { "label": "Thrill",    "high": "Rutine er der, hvor din opmærksomhed dør. Du har brug for indsats, nyhed, noget på spil. Det drive mod intensitet er der, hvor meget af dit bedste arbejde kommer fra.", "low": "Du har ikke brug for adrenalin for at fungere godt. Rolige, stabile miljøer bringer det bedste frem i dig. Du er den, der fortsætter med at arbejde, når alle andre er distraheret af dramaet." },
-    "radiance":  { "label": "Radiance",  "high": "Din entusiasme er smittende og ægte. Du bringer energi til ting, inden de har gjort sig fortjent til det, hvilket nogle gange får dem til at gøre sig fortjent til det. Grupper føles anderledes, når du er i dem.", "low": "Du optræder ikke entusiasme, du ikke føler. Din godkendelse betyder noget, fordi du ikke giver den automatisk. Når du siger, at noget er godt, tror folk dig." },
-    "dream":     { "label": "Dream",     "high": "Dit sind bevæger sig til steder uden at blive bedt om det. Dagdrømmeri er ikke distraktion for dig — det er der, ideer kommer fra. Den indre verden er rig, og den nærer den ydre på måder, der ikke altid er synlige.", "low": "Du holder dig tæt på jorden. Hvad der er reelt, hvad der er her, hvad der virker. Det fokus holder dig nyttig på måder, som drømmere nogle gange ikke er." },
-    "craft":     { "label": "Craft",     "high": "Du bemærker, når noget er smukt og når det ikke er. Den opmærksomhed på form er ikke overfladisk — det er sådan du behandler kvalitet. Du mærker, at noget er galt, inden du kan sige hvorfor, og du har som regel ret.", "low": "Funktion betyder mere for dig end form. Hvis det virker, virker det. Du vil ikke bruge tid på at gøre noget smukt, når det at gøre det bedre stadig er på bordet." },
-    "resonance": { "label": "Resonance", "high": "Du er stemt ind på følelsesregistret — dit og andres. Den indstilling gør dig til en omhyggelig læser af rum og en eftertænksom kommunikator. Det betyder også, at du bærer mere end de fleste.", "low": "Du leder med logik frem for følelse. Det holder tingene klare og ubelastede. I følelsesmæssigt ladede situationer er din ro ofte præcis, hvad der er brug for." },
-    "drift":     { "label": "Drift",     "high": "Variation holder dig engageret. Nye tilgange, forskellige kontekster, ukendt territorium — det er der, du tænker bedst. Gentagelse er der, hvor du mister interessen hurtigst.", "low": "Du stoler på det, der virker, og holder dig til det. Ikke hvert problem behøver en ny løsning. Når andre jager nyhed, sikrer du, at det nuværende faktisk holder." },
-    "prism":     { "label": "Prism",     "high": "Du vil forstå, hvordan ting virker, ikke bare at de virker. Giv dig et problem, og du vil skille det ad, inden du prøver at løse det. Den dybde af undersøgelse finder ting, som overfladisk tænkning overser.", "low": "Du er praktiker, ikke teoretiker. Du vil have værktøjer, der virker, forklaringer du kan bruge. Ikke hvert spørgsmål behøver at blive åbnet op igen, og du ved, hvilke der ikke gør." },
-    "compass":   { "label": "Compass",   "high": "Du sætter spørgsmålstegn ved nedarvet regler og etablerede normer. Ikke ud af oprør, men fordi du tænker tingene igennem og ikke antager, at standarden er rigtig. Den vilje til at genoverveje er sådan, tingene forbedres.", "low": "Du værdsætter stabilitet, gennemprøvede systemer og fælles normer. Ikke alt behøver at sættes spørgsmålstegn ved, og du ved, hvad der ikke gør. Den konservatisme forhindrer mange ting i at gå i stykker unødigt." },
-    "faith":     { "label": "Faith",     "high": "Din standard er at tro, at folk mener det godt. Den generøsitet gør dig nem at arbejde med og hurtig til at give nye chancer. Risikoen er, at du nogle gange er langsom til at se det, når nogen ikke spiller ærligt.", "low": "Du tager ikke ting for gode varer. Du observerer, tester, verificerer. Den skepsis har sikkert reddet dig mere end én gang. Og når du stoler på nogen, betyder det faktisk noget." },
-    "edge":      { "label": "Edge",      "high": "Det du siger er det, du mener. Ingen optræden, ingen styring af indtryk, ingen strategisk tvetydighed. Folk ved altid, hvor de står med dig, hvilket er mere værdifuldt, end det lyder.", "low": "Du er dygtig til at navigere social kompleksitet. Du ved, hvornår du skal holde tilbage, hvornår du skal formulere tingene omhyggeligt, hvornår direkthed ville koste mere, end det er værd. Det er ikke uærlighed — det er sofistikation." },
-    "gift":      { "label": "Gift",      "high": "Du får folk til at føle sig velkomne uden anstrengelse. Du bemærker, når nogen er på kanten, og du gør noget ved det. Den generøsitet i opmærksomhed er en af de mest undervurderede ting, et menneske kan bringe til en gruppe.", "low": "Du er ikke her for at tage dig af alle. Du fokuserer din energi der, hvor det betyder noget, og spreder den ikke tyndt på forpligtelse. Det fokus gør det, du giver, til noget der faktisk tæller." },
-    "yield":     { "label": "Yield",     "high": "Du ville hellere finde enighed end vinde argumentet. Det samarbejdende instinkt holder tingene i bevægelse og holder relationer intakte. Sørg bare for, at du vælger freden frem for at falde tilbage på den.", "low": "Du skubber tilbage. Du kapitulerer ikke for socialt pres, og du giver ikke udtryk for at være enig, når du ikke er det. Grupper har brug for den friktion, selv når de ikke nyder det i øjeblikket." },
-    "shadow":    { "label": "Shadow",    "high": "Du tager ikke mere plads end du har brug for. Anerkendelse deles, præstationer annonceres ikke. Den tilbageholdenhed opbygger en slags tillid, som selvpromovering aldrig gør.", "low": "Du ved, hvad du er værd, og du gemmer det ikke. Den selvtillid i din egen værdi er ikke arrogance — det er klarhed. Og nogle gange har rummet brug for nogen, der er villig til at sige, hvad de bringer." },
-    "shield":    { "label": "Shield",    "high": "Du mærker påvirkningen af ting på mennesker, der ikke er i rummet. Den etiske opmærksomhed betyder, at du tænker over konsekvenser, som andre fuldstændig overser. Det bremser tingene nogle gange, af god grund.", "low": "Du fokuserer på fakta og resultater frem for følelser. Den objektivitet holder analysen ren og beslutningerne forankrede. Ikke enhver situation behøver en følelsesmæssig gennemgang, inden vi går videre." },
-    "mastery":   { "label": "Mastery",   "high": "Du håndterer ting godt, og du ved det. Den selvtillid i dine egne evner er ikke arrogance — det er præcist. Du lammer dig ikke med selvtvivl, fordi du som regel har gjort arbejdet.", "low": "Du finder stadig ud af tingene, og du er ærlig om det. Den åbenhed for at lære holder dig fra den overmod, der snubler folk, der tror, de allerede er kommet frem." },
-    "structure": { "label": "Structure", "high": "Du ved, hvor alt er, hvornår alt er forfaldent, og hvad der sker, hvis det ikke er. Den mentale orden frigør dig til at fokusere, og det at arbejde med dig føles pålideligt på en måde, der er svær at erstatte.", "low": "Din arbejdsplads ser måske ud som kaos, men du ved, hvor tingene er — for det meste. Du styrer efter prioritet, ikke efter system. Hvad du mister i ryddelighed, vinder du nogle gange i hastighed." },
-    "oath":      { "label": "Oath",      "high": "Hvis du sagde, du ville gøre det, er det gjort. Folk holder op med at bekymre sig om ting, de har overdraget til dig, og det er en form for tillid, der tager lang tid at opbygge og betyder enormt meget på et team.", "low": "Du er bedre til store forpligtelser end små. Forpligtelser, der virker vilkårlige, har tendens til at glide. Du viser op for det, der virkelig betyder noget, men du skal tro, at det betyder noget først." },
-    "quest":     { "label": "Quest",     "high": "Du er her for at få ting gjort. Ikke til at tale om det, ikke til at planlægge det. Gjort. Den resultatorienterng er sjælden og driver resultater på måder, der er svære at argumentere imod.", "low": "Du motiveres ikke af output for dets egen skyld. Du har brug for en grund, et formål, noget der betyder noget. Når du har det, arbejder du hårdt. Når du ikke har det, vil du ikke lade som om." },
-    "will":      { "label": "Will",      "high": "Du starter ting, når de skal startes, ikke når du har lyst til det. Den evne til at handle uden at vente på motivation er sådan, ting der betyder noget, faktisk bliver afsluttet.", "low": "Du har brug for de rette betingelser for at komme i gang. Pres, interesse, mening. Uden dem er det svært at starte. Med dem kan du gå i dybden på måder, som folk der bare kæmper sig igennem, aldrig når." },
-    "counsel":   { "label": "Counsel",   "high": "Du tænker inden du handler. Beslutninger overvejes, ord vælges, konsekvenser kortlægges. Den omhu forhindrer mange problemer, som impulsive mennesker skal rydde op i efterfølgende.", "low": "Du beslutter hurtigt og tilpasser undervejs. Den hastighed har en pris nogle gange, men det betyder også, at du er i bevægelse, mens andre stadig overvejer. I hurtigt bevægende situationer betyder det noget." }
+    "vigil": {
+      "label": "Vigil",
+      "high": "Du kører trusselsdetektion konstant. Det meste af tiden er der intet der, men nogle gange opfanger du noget reelt, inden nogen anden har kigget op. Den årvågenhed er udmattende og lejlighedsvis uvurderlig.",
+      "low": "Du låner ikke problemer fra fremtiden. Du håndterer det, der er foran dig, når det ankommer. Den jordforbindelse er sjældnere, end den ser ud, især når tingene bliver usikre."
+    },
+    "blaze": {
+      "label": "Blaze",
+      "high": "Din frustration dukker hurtigt og synligt op. Folk ved altid, hvor de står med dig, hvilket ikke er ingenting. Prisen er, at små ting nogle gange får den samme reaktion som store ting.",
+      "low": "Det kræver meget at ryste dig til vrede. Du eskalerer ikke, du overtager ikke andres varme. I spændte øjeblikke ændrer den stabilitet hele rummets temperatur."
+    },
+    "hollow": {
+      "label": "Hollow",
+      "high": "Du bærer vægt. Tilbageslag sætter sig frem for at prale af. Den dybde af følelse betyder, at du tager ting alvorligt på en måde, som lettere mennesker aldrig vil. Det koster dig, og det er noget værd.",
+      "low": "Du kommer dig hurtigt. Dårlige dage bliver ikke til dårlige uger. Den evne til at gå videre er ikke ligegyldighed — det er en slags modstandsdygtighed, der holder dig funktionsdygtig, når andre stadig behandler."
+    },
+    "veil": {
+      "label": "Veil",
+      "high": "Du er opmærksom på, hvordan du fremstår, nogle gange akut så. Den sociale sensitivitet gør dig omhyggelig og hensynsfuld. Det betyder også, at du bruger energi på, hvordan tingene lander, som andre aldrig tænker over.",
+      "low": "Du spilder ikke meget energi på at bekymre dig om, hvad folk tænker om dig. Den lethed med dig selv fremstår som selvtillid, selv når det bare er komfort. Uanset hvad, har det tendens til at berolige andre."
+    },
+    "surge": {
+      "label": "Surge",
+      "high": "Du handler på det, du føler, ofte inden tanken er fuldt formet. Nogle gange er den hastighed hele fordelen. Nogle gange er det ikke, og det ved du også.",
+      "low": "Du lader dig ikke let rive med. Impulser passerer, reaktioner filtreres, beslutninger overvejes. Den selvregulering er den stille motor bag mange ting, der faktisk går godt."
+    },
+    "fracture": {
+      "label": "Fracture",
+      "high": "Når presset bygger op, mærker du det fuldt ud. Den sensitivitet er ikke svaghed — det er et signal. Du opfanger belastning, inden andre gør det, hvilket betyder, at du ofte er den, der siger, at noget skal ændres.",
+      "low": "Du holder under pres uden synlige revner. Folk kigger på dig, når tingene bliver svære, ikke fordi du er upåvirket, men fordi du bliver ved med at fungere. Det er bærende arbejde på ethvert team."
+    },
+    "hearth": {
+      "label": "Hearth",
+      "high": "Folk føler sig velkomne omkring dig uden at vide præcist hvorfor. Du gør en indsats for at forbinde, huske, spørge. Den varme er ikke smalltalk — det er fundamentet for tillid.",
+      "low": "Du varmer ikke op øjeblikkeligt og giver ikke udtryk for at gøre det. De forbindelser, du skaber, er ægte og holdbare. Folk, der kender dig godt, ved, at de får noget reelt."
+    },
+    "gather": {
+      "label": "Gather",
+      "high": "Grupper energiserer dig. Jo flere mennesker, jo bedre har du en tendens til at fungere. Du er den, der ankommer tidligt og går sent, og rummet bemærker som regel, når du ikke er der.",
+      "low": "Du kan arbejde et rum, når du skal, men det koster dig noget. Du er bedre i mindre konfigurationer, hvor dybde er mulig. Kvalitet over mængde, hver gang."
+    },
+    "command": {
+      "label": "Command",
+      "high": "Du venter ikke på tilladelse. Når noget skal besluttes, beslutter du det. Når noget skal siges, siger du det. Den direkthed skærer igennem støj, og de fleste grupper har brug for mere af den.",
+      "low": "Du observerer inden du handler. Du lader andre lede, og når du træder ind, er det fordi du allerede har tænkt det igennem. Det er ikke tøven — det er præcision."
+    },
+    "drive": {
+      "label": "Drive",
+      "high": "Du kører i et højt tempo. Dag efter dag, flere projekter, lange møder — du finder et ekstra gear, hvor andre allerede er færdige. Tjek bare, at menneskene omkring dig stadig følger med.",
+      "low": "Du er bæredygtig. Du kender dit tempo og holder det. Du vil ikke brænde stærkt og bryde sammen, hvilket gør dig til én, andre kan stole på, når et projekt kører længere end forventet."
+    },
+    "thrill": {
+      "label": "Thrill",
+      "high": "Rutine er der, hvor din opmærksomhed dør. Du har brug for indsats, nyhed, noget på spil. Det drive mod intensitet er der, hvor meget af dit bedste arbejde kommer fra.",
+      "low": "Du har ikke brug for adrenalin for at fungere godt. Rolige, stabile miljøer bringer det bedste frem i dig. Du er den, der fortsætter med at arbejde, når alle andre er distraheret af dramaet."
+    },
+    "radiance": {
+      "label": "Radiance",
+      "high": "Din entusiasme er smittende og ægte. Du bringer energi til ting, inden de har gjort sig fortjent til det, hvilket nogle gange får dem til at gøre sig fortjent til det. Grupper føles anderledes, når du er i dem.",
+      "low": "Du optræder ikke entusiasme, du ikke føler. Din godkendelse betyder noget, fordi du ikke giver den automatisk. Når du siger, at noget er godt, tror folk dig."
+    },
+    "dream": {
+      "label": "Dream",
+      "high": "Dit sind bevæger sig til steder uden at blive bedt om det. Dagdrømmeri er ikke distraktion for dig — det er der, ideer kommer fra. Den indre verden er rig, og den nærer den ydre på måder, der ikke altid er synlige.",
+      "low": "Du holder dig tæt på jorden. Hvad der er reelt, hvad der er her, hvad der virker. Det fokus holder dig nyttig på måder, som drømmere nogle gange ikke er."
+    },
+    "craft": {
+      "label": "Craft",
+      "high": "Du bemærker, når noget er smukt og når det ikke er. Den opmærksomhed på form er ikke overfladisk — det er sådan du behandler kvalitet. Du mærker, at noget er galt, inden du kan sige hvorfor, og du har som regel ret.",
+      "low": "Funktion betyder mere for dig end form. Hvis det virker, virker det. Du vil ikke bruge tid på at gøre noget smukt, når det at gøre det bedre stadig er på bordet."
+    },
+    "resonance": {
+      "label": "Resonance",
+      "high": "Du er stemt ind på følelsesregistret — dit og andres. Den indstilling gør dig til en omhyggelig læser af rum og en eftertænksom kommunikator. Det betyder også, at du bærer mere end de fleste.",
+      "low": "Du leder med logik frem for følelse. Det holder tingene klare og ubelastede. I følelsesmæssigt ladede situationer er din ro ofte præcis, hvad der er brug for."
+    },
+    "drift": {
+      "label": "Drift",
+      "high": "Variation holder dig engageret. Nye tilgange, forskellige kontekster, ukendt territorium — det er der, du tænker bedst. Gentagelse er der, hvor du mister interessen hurtigst.",
+      "low": "Du stoler på det, der virker, og holder dig til det. Ikke hvert problem behøver en ny løsning. Når andre jager nyhed, sikrer du, at det nuværende faktisk holder."
+    },
+    "prism": {
+      "label": "Prism",
+      "high": "Du vil forstå, hvordan ting virker, ikke bare at de virker. Giv dig et problem, og du vil skille det ad, inden du prøver at løse det. Den dybde af undersøgelse finder ting, som overfladisk tænkning overser.",
+      "low": "Du er praktiker, ikke teoretiker. Du vil have værktøjer, der virker, forklaringer du kan bruge. Ikke hvert spørgsmål behøver at blive åbnet op igen, og du ved, hvilke der ikke gør."
+    },
+    "compass": {
+      "label": "Compass",
+      "high": "Du sætter spørgsmålstegn ved nedarvet regler og etablerede normer. Ikke ud af oprør, men fordi du tænker tingene igennem og ikke antager, at standarden er rigtig. Den vilje til at genoverveje er sådan, tingene forbedres.",
+      "low": "Du værdsætter stabilitet, gennemprøvede systemer og fælles normer. Ikke alt behøver at sættes spørgsmålstegn ved, og du ved, hvad der ikke gør. Den konservatisme forhindrer mange ting i at gå i stykker unødigt."
+    },
+    "faith": {
+      "label": "Faith",
+      "high": "Din standard er at tro, at folk mener det godt. Den generøsitet gør dig nem at arbejde med og hurtig til at give nye chancer. Risikoen er, at du nogle gange er langsom til at se det, når nogen ikke spiller ærligt.",
+      "low": "Du tager ikke ting for gode varer. Du observerer, tester, verificerer. Den skepsis har sikkert reddet dig mere end én gang. Og når du stoler på nogen, betyder det faktisk noget."
+    },
+    "edge": {
+      "label": "Edge",
+      "high": "Det du siger er det, du mener. Ingen optræden, ingen styring af indtryk, ingen strategisk tvetydighed. Folk ved altid, hvor de står med dig, hvilket er mere værdifuldt, end det lyder.",
+      "low": "Du er dygtig til at navigere social kompleksitet. Du ved, hvornår du skal holde tilbage, hvornår du skal formulere tingene omhyggeligt, hvornår direkthed ville koste mere, end det er værd. Det er ikke uærlighed — det er sofistikation."
+    },
+    "gift": {
+      "label": "Gift",
+      "high": "Du får folk til at føle sig velkomne uden anstrengelse. Du bemærker, når nogen er på kanten, og du gør noget ved det. Den generøsitet i opmærksomhed er en af de mest undervurderede ting, et menneske kan bringe til en gruppe.",
+      "low": "Du er ikke her for at tage dig af alle. Du fokuserer din energi der, hvor det betyder noget, og spreder den ikke tyndt på forpligtelse. Det fokus gør det, du giver, til noget der faktisk tæller."
+    },
+    "yield": {
+      "label": "Yield",
+      "high": "Du ville hellere finde enighed end vinde argumentet. Det samarbejdende instinkt holder tingene i bevægelse og holder relationer intakte. Sørg bare for, at du vælger freden frem for at falde tilbage på den.",
+      "low": "Du skubber tilbage. Du kapitulerer ikke for socialt pres, og du giver ikke udtryk for at være enig, når du ikke er det. Grupper har brug for den friktion, selv når de ikke nyder det i øjeblikket."
+    },
+    "shadow": {
+      "label": "Shadow",
+      "high": "Du tager ikke mere plads end du har brug for. Anerkendelse deles, præstationer annonceres ikke. Den tilbageholdenhed opbygger en slags tillid, som selvpromovering aldrig gør.",
+      "low": "Du ved, hvad du er værd, og du gemmer det ikke. Den selvtillid i din egen værdi er ikke arrogance — det er klarhed. Og nogle gange har rummet brug for nogen, der er villig til at sige, hvad de bringer."
+    },
+    "shield": {
+      "label": "Shield",
+      "high": "Du mærker påvirkningen af ting på mennesker, der ikke er i rummet. Den etiske opmærksomhed betyder, at du tænker over konsekvenser, som andre fuldstændig overser. Det bremser tingene nogle gange, af god grund.",
+      "low": "Du fokuserer på fakta og resultater frem for følelser. Den objektivitet holder analysen ren og beslutningerne forankrede. Ikke enhver situation behøver en følelsesmæssig gennemgang, inden vi går videre."
+    },
+    "mastery": {
+      "label": "Mastery",
+      "high": "Du håndterer ting godt, og du ved det. Den selvtillid i dine egne evner er ikke arrogance — det er præcist. Du lammer dig ikke med selvtvivl, fordi du som regel har gjort arbejdet.",
+      "low": "Du finder stadig ud af tingene, og du er ærlig om det. Den åbenhed for at lære holder dig fra den overmod, der snubler folk, der tror, de allerede er kommet frem."
+    },
+    "structure": {
+      "label": "Structure",
+      "high": "Du ved, hvor alt er, hvornår alt er forfaldent, og hvad der sker, hvis det ikke er. Den mentale orden frigør dig til at fokusere, og det at arbejde med dig føles pålideligt på en måde, der er svær at erstatte.",
+      "low": "Din arbejdsplads ser måske ud som kaos, men du ved, hvor tingene er — for det meste. Du styrer efter prioritet, ikke efter system. Hvad du mister i ryddelighed, vinder du nogle gange i hastighed."
+    },
+    "oath": {
+      "label": "Oath",
+      "high": "Hvis du sagde, du ville gøre det, er det gjort. Folk holder op med at bekymre sig om ting, de har overdraget til dig, og det er en form for tillid, der tager lang tid at opbygge og betyder enormt meget på et team.",
+      "low": "Du er bedre til store forpligtelser end små. Forpligtelser, der virker vilkårlige, har tendens til at glide. Du viser op for det, der virkelig betyder noget, men du skal tro, at det betyder noget først."
+    },
+    "quest": {
+      "label": "Quest",
+      "high": "Du er her for at få ting gjort. Ikke til at tale om det, ikke til at planlægge det. Gjort. Den resultatorienterng er sjælden og driver resultater på måder, der er svære at argumentere imod.",
+      "low": "Du motiveres ikke af output for dets egen skyld. Du har brug for en grund, et formål, noget der betyder noget. Når du har det, arbejder du hårdt. Når du ikke har det, vil du ikke lade som om."
+    },
+    "will": {
+      "label": "Will",
+      "high": "Du starter ting, når de skal startes, ikke når du har lyst til det. Den evne til at handle uden at vente på motivation er sådan, ting der betyder noget, faktisk bliver afsluttet.",
+      "low": "Du har brug for de rette betingelser for at komme i gang. Pres, interesse, mening. Uden dem er det svært at starte. Med dem kan du gå i dybden på måder, som folk der bare kæmper sig igennem, aldrig når."
+    },
+    "counsel": {
+      "label": "Counsel",
+      "high": "Du tænker inden du handler. Beslutninger overvejes, ord vælges, konsekvenser kortlægges. Den omhu forhindrer mange problemer, som impulsive mennesker skal rydde op i efterfølgende.",
+      "low": "Du beslutter hurtigt og tilpasser undervejs. Den hastighed har en pris nogle gange, men det betyder også, at du er i bevægelse, mens andre stadig overvejer. I hurtigt bevægende situationer betyder det noget."
+    }
   },
   "roles": {
     "beta_label": "Beta · Teoretisk model",
@@ -667,84 +831,96 @@
     "you": "Din position",
     "probability_label": "Rolle-match",
     "R01": {
-      "name": "Delfin",  "ca": "Dolphin",
+      "name": "Delfin",
+      "ca": "Dolphin",
       "essence": "Når du er i rummet, taler folk. Ikke fordi du spørger — fordi du gjorde det nemt. Teamet varmer op med dig.",
       "profile": "Høj Tilstedeværelse og Tilknytning. Varm, udadvendt og nem at være sammen med. Folk åbner sig i dit selskab.",
       "contributes": "Sammenhæng. Sænker den sociale aktiveringsenergi i rummet.",
       "misses": "Den produktive friktion, der skærper ideer. Varme kan glatte over reelle uenigheder."
     },
     "R02": {
-      "name": "Ulv",     "ca": "Wolf",
+      "name": "Ulv",
+      "ca": "Wolf",
       "essence": "Du venter ikke på tilladelse. Når du ser problemet, siger du det. Teamet bevæger sig, fordi du ikke tier.",
       "profile": "Høj Tilstedeværelse, lav Tilknytning. Direkte, selvhævdende og handlingsorienteret. Venter ikke på konsensus.",
       "contributes": "Initiativ. Nævner det, der skal siges, og får tingene i gang.",
       "misses": "Den relationelle pris af direkthed over tid. Teams kan miste tillid, hvis udfordringen er konstant."
     },
     "R03": {
-      "name": "Elefant", "ca": "Elephant",
+      "name": "Elefant",
+      "ca": "Elephant",
       "essence": "Du tager ikke plads — du skaber den. Folk forklarer sig godt ved siden af dig, fordi de ved, at du virkelig lytter.",
       "profile": "Lav Tilstedeværelse, høj Tilknytning. Stille og dybt samarbejdende. Skaber plads til, at andre kan tænke højt.",
       "contributes": "Lyttedybde. Folk formulerer sig bedre i din tilstedeværelse.",
       "misses": "Fremdrift. Teamet kan tænke klart sammen, men stadig ikke bevæge sig."
     },
     "R04": {
-      "name": "Ugle",      "ca": "Owl",
+      "name": "Ugle",
+      "ca": "Owl",
       "essence": "Du ser det, andre overser, fordi du ikke behøver at være i centrum. Afstanden er nyttig for dig.",
       "profile": "Lav Tilstedeværelse og Tilknytning. Uafhængig, observerende og præcis. Fungerer bedst med afstand.",
       "contributes": "Klarhed. Ser strukturelle problemer, som høj-sociale profiler overser.",
       "misses": "Varme og nem samarbejde. Den afstand, der hjælper analysen, kan isolere."
     },
     "R05": {
-      "name": "Ørn",    "ca": "Eagle",
+      "name": "Ørn",
+      "ca": "Eagle",
       "essence": "Du ser langt, og du bevæger dig derhen. Du bringer teamet til steder, det ikke ville have nået alene.",
       "profile": "Høj Tilstedeværelse og Vision. Energisk og fremtidsorienteret. Trækker teamet mod nyt terræn.",
       "contributes": "Retning. Sætter ambitiøse mål, som teamet ikke ville have sat alene.",
       "misses": "Udførelsesdetaljer. Horisonten er klar; vejen kan være ujævn."
     },
     "R06": {
-      "name": "Falk",   "ca": "Falcon",
+      "name": "Falk",
+      "ca": "Falcon",
       "essence": "Det er ikke vision — det er timing. Du ved præcis, hvornår du skal bevæge dig, og når du gør det, bemærker teamet det.",
       "profile": "Høj Tilstedeværelse, lav Vision. Til stede, beslutsom og praktisk. Ved præcis, hvornår man skal handle.",
       "contributes": "Timing. Bevæger sig på det rette tidspunkt og tager folk med.",
       "misses": "Langsigtet tænkning. Kan gå glip af det strategiske lag, mens det udfører godt i højt tempo."
     },
     "R07": {
-      "name": "Blæksprutte",  "ca": "Octopus",
+      "name": "Blæksprutte",
+      "ca": "Octopus",
       "essence": "Teamets bedste ideer gik ofte igennem dig først, i stilhed. Du ved det ikke altid selv.",
       "profile": "Lav Tilstedeværelse, høj Vision. Indre rig og stille kreativ. Behandler kompleksitet privat.",
       "contributes": "Original tænkning. Teamets mest usædvanlige ideer kommer ofte herfra.",
       "misses": "At få ideer i omløb. Arbejder i stilhed; ideerne kan blive der."
     },
     "R08": {
-      "name": "Skildpadde", "ca": "Tortoise",
+      "name": "Skildpadde",
+      "ca": "Tortoise",
       "essence": "Du laver ikke støj. Men når du ikke er der, driver teamet. Du er den grund, de andre bygger på.",
       "profile": "Lav Tilstedeværelse og Vision. Stabil, jordforbundet og dybt pålidelig. Holder grunden, så andre kan bevæge sig.",
       "contributes": "Stabilitet. Andre kan tage risici, fordi denne profil holder grunden.",
       "misses": "Tilpasningsevne, når situationen fundamentalt ændrer sig."
     },
     "R09": {
-      "name": "Bi",      "ca": "Bee",
+      "name": "Bi",
+      "ca": "Bee",
       "essence": "Hvor andre ser kaos, ser du struktur. Du bygger broer mellem mennesker og ideer, som ingen andre ville have forbundet.",
       "profile": "Høj Tilknytning og Vision. Samarbejdende og intellektuelt genererende. Forbinder mennesker og ideer.",
       "contributes": "Syntese. Bygger broer mellem mennesker og mellem begreber, som ingen andre havde forbundet.",
       "misses": "Den kritiske kant, der er nødvendig for at teste, om forbindelserne holder."
     },
     "R10": {
-      "name": "Bjørn",     "ca": "Bear",
+      "name": "Bjørn",
+      "ca": "Bear",
       "essence": "Du ændrer dig ikke under pres. Teamet ved, at du er der, og den viden frigør dem til at tage risici.",
       "profile": "Høj Tilknytning, lav Vision. Pålidelig, jordforbundet og konsistent. Teamet ved, hvor det står.",
       "contributes": "Tillid. Folk tager flere risici, når en Bear-profil er til stede.",
       "misses": "Åbenhed for forandring, når den nuværende tilgang ikke længere virker."
     },
     "R11": {
-      "name": "Ræv",      "ca": "Fox",
+      "name": "Ræv",
+      "ca": "Fox",
       "essence": "Du ser det, der ikke hænger sammen — i ideer og i relationer. Dit ubehag er produktivt.",
       "profile": "Lav Tilknytning, høj Vision. Intellektuelt skarp og kritisk tænkende. Opfanger inkonsistens hurtigt.",
       "contributes": "Kritisk distance. Opfanger det, der ikke hænger sammen, inden det bliver et problem.",
       "misses": "Relationel lethed. Ubehaget kan belaste et team, der har brug for sammenhæng for at fungere."
     },
     "R12": {
-      "name": "Grævling",   "ca": "Badger",
+      "name": "Grævling",
+      "ca": "Badger",
       "essence": "Du er ikke interesseret i, hvad der burde virke. Du er interesseret i, hvad der virker. Teamet har brug for dig til at stoppe med at narre sig selv.",
       "profile": "Lav Tilknytning og Vision. Pragmatisk, direkte og usentimental. Hvad der virker, tæller; hvad der burde virke, gør det ikke.",
       "contributes": "Grundsandhed. Stopper teamet fra at narre sig selv med optimisme eller kompleksitet.",
@@ -906,11 +1082,26 @@
     "dimensions": {
       "heading": "Fem dimensioner",
       "subheading": "Enhver score befinder sig på et spektrum. Begge ender er gyldige — de beskriver forskellige måder at være effektiv på.",
-      "presence": { "name": "Tilstedeværelse", "desc": "Hvor meget energi du retter udad. Høj: du trækker folk ind. Lav: du går i dybden med færre." },
-      "bond":     { "name": "Tilknytning",     "desc": "Hvordan du forbinder dig og samarbejder. Høj: du prioriterer tillid og harmoni. Lav: du holder din position." },
-      "discipline":{ "name": "Disciplin",      "desc": "Hvordan du griber struktur og arbejde an. Høj: pålidelig, metodisk. Lav: fleksibel, instinktdrevet." },
-      "depth":    { "name": "Dybde",           "desc": "Hvor intenst du behandler stress og følelser. Høj: sensitiv, årvågen. Lav: stabil, svær at ryste." },
-      "vision":   { "name": "Vision",          "desc": "Hvor meget nyhed og kompleksitet du søger. Høj: kreativ, udforskende. Lav: praktisk, jordforbundet." }
+      "presence": {
+        "name": "Tilstedeværelse",
+        "desc": "Hvor meget energi du retter udad. Høj: du trækker folk ind. Lav: du går i dybden med færre."
+      },
+      "bond": {
+        "name": "Tilknytning",
+        "desc": "Hvordan du forbinder dig og samarbejder. Høj: du prioriterer tillid og harmoni. Lav: du holder din position."
+      },
+      "discipline": {
+        "name": "Disciplin",
+        "desc": "Hvordan du griber struktur og arbejde an. Høj: pålidelig, metodisk. Lav: fleksibel, instinktdrevet."
+      },
+      "depth": {
+        "name": "Dybde",
+        "desc": "Hvor intenst du behandler stress og følelser. Høj: sensitiv, årvågen. Lav: stabil, svær at ryste."
+      },
+      "vision": {
+        "name": "Vision",
+        "desc": "Hvor meget nyhed og kompleksitet du søger. Høj: kreativ, udforskende. Lav: praktisk, jordforbundet."
+      }
     },
     "notThis": {
       "heading": "Hvad Cèrcol ikke er",
@@ -1000,12 +1191,30 @@
   "faq": {
     "title": "FAQ",
     "heading": "Spørgsmål",
-    "q1": { "q": "Er mine data private?", "a": "De gratis instrumenter logger anonyme scorer uden personlige oplysninger — intet navn, ingen e-mail, ingen IP-adresse. Hvis du opretter en konto, gemmes din e-mail af Supabase, og dine resultater knyttes til din konto. Du kan slette din konto til enhver tid. Ingen data sælges eller deles med tredjeparter." },
-    "q2": { "q": "Er resultaterne nøjagtige?", "a": "Spørgsmålene kommer fra fagfællebedømte, bredt validerede instrumenter. Fem-dimensionsscorerne er pålidelige for et selvrapporteringsværktøj af denne længde. Rolle-scoringen er tydeligt markeret beta — den bruger teoretiske udgangspunkter og vil blive mere nøjagtig, efterhånden som reelle data akkumuleres. Tag dimensionerne alvorligt; behandl rollen som et nyttigt første gæt." },
-    "q3": { "q": "Hvad er vidnet, og hvem skal jeg invitere?", "a": "Vidnet er nogen, du inviterer til at beskrive dig udefra. De ser grupper af ord og vælger, hvilke der passer bedst og dårligst til dig — en kort tvungen-valg-opgave, der tager ca. 5 minutter. Et ideelt vidne er nogen, der har brugt reel tid med dig: en kollega, en bofælle, en nær ven. Ikke din største fan, ikke din hårdeste kritiker. Nogen, der ser dig, som du faktisk er." },
-    "q4": { "q": "Hvad er forskellen mellem de tre instrumenter?", "a": "Nymåne er 10 spørgsmål og tager 2 minutter — en hurtig orientering. Første Kvartal er 60 spørgsmål og tager 10 minutter — et mere fuldstændigt billede med 30 facetter og et første blik på din rolle. Fuldmåne er 120 spørgsmål, inkluderer vidnevurderingen og er betalt — det er det definitive resultat. Hvert instrument er selvstændigt; du kan starte hvor som helst." },
-    "q5": { "q": "Er Fuldmåne værd at betale for?", "a": "Hvis Første Kvartal føles utilstrækkeligt — hvis du vil forstå en specifik facet dybere, se hvordan andre opfatter dig, eller få et pålideligt rolleresultat — så ja. Vidnesammenligningen er den mest distinctive del: den viser, hvor din selvopfattelse matcher udefrasynspunktet, og hvor den ikke gør det. Den kløft er ofte der, hvor den mest nyttige information befinder sig." },
-    "q6": { "q": "Kan jeg gentage vurderingerne?", "a": "Ja. De gratis instrumenter har ingen grænse. Hvert indsend er uafhængigt — gentagelse overskriver ikke tidligere resultater i din konto. Folk finder det ofte nyttigt at gentage Første Kvartal seks måneder eller et år senere for at se, hvad der har ændret sig." }
+    "q1": {
+      "q": "Er mine data private?",
+      "a": "De gratis instrumenter logger anonyme scorer uden personlige oplysninger — intet navn, ingen e-mail, ingen IP-adresse. Hvis du opretter en konto, gemmes din e-mail af Supabase, og dine resultater knyttes til din konto. Du kan slette din konto til enhver tid. Ingen data sælges eller deles med tredjeparter."
+    },
+    "q2": {
+      "q": "Er resultaterne nøjagtige?",
+      "a": "Spørgsmålene kommer fra fagfællebedømte, bredt validerede instrumenter. Fem-dimensionsscorerne er pålidelige for et selvrapporteringsværktøj af denne længde. Rolle-scoringen er tydeligt markeret beta — den bruger teoretiske udgangspunkter og vil blive mere nøjagtig, efterhånden som reelle data akkumuleres. Tag dimensionerne alvorligt; behandl rollen som et nyttigt første gæt."
+    },
+    "q3": {
+      "q": "Hvad er vidnet, og hvem skal jeg invitere?",
+      "a": "Vidnet er nogen, du inviterer til at beskrive dig udefra. De ser grupper af ord og vælger, hvilke der passer bedst og dårligst til dig — en kort tvungen-valg-opgave, der tager ca. 5 minutter. Et ideelt vidne er nogen, der har brugt reel tid med dig: en kollega, en bofælle, en nær ven. Ikke din største fan, ikke din hårdeste kritiker. Nogen, der ser dig, som du faktisk er."
+    },
+    "q4": {
+      "q": "Hvad er forskellen mellem de tre instrumenter?",
+      "a": "Nymåne er 10 spørgsmål og tager 2 minutter — en hurtig orientering. Første Kvartal er 60 spørgsmål og tager 10 minutter — et mere fuldstændigt billede med 30 facetter og et første blik på din rolle. Fuldmåne er 120 spørgsmål, inkluderer vidnevurderingen og er betalt — det er det definitive resultat. Hvert instrument er selvstændigt; du kan starte hvor som helst."
+    },
+    "q5": {
+      "q": "Er Fuldmåne værd at betale for?",
+      "a": "Hvis Første Kvartal føles utilstrækkeligt — hvis du vil forstå en specifik facet dybere, se hvordan andre opfatter dig, eller få et pålideligt rolleresultat — så ja. Vidnesammenligningen er den mest distinctive del: den viser, hvor din selvopfattelse matcher udefrasynspunktet, og hvor den ikke gør det. Den kløft er ofte der, hvor den mest nyttige information befinder sig."
+    },
+    "q6": {
+      "q": "Kan jeg gentage vurderingerne?",
+      "a": "Ja. De gratis instrumenter har ingen grænse. Hvert indsend er uafhængigt — gentagelse overskriver ikke tidligere resultater i din konto. Folk finder det ofte nyttigt at gentage Første Kvartal seks måneder eller et år senere for at se, hvad der har ændret sig."
+    }
   },
   "instruments": {
     "title": "Instrumenter",
@@ -1023,7 +1232,11 @@
       "scaleNote": "7-punkts skala: 'Meget uenig' til 'Meget enig'. Hvert punkt bærer mening — ikke bare to ekstremer med tal imellem.",
       "measures": "Fem dimensioner. Én score pr. dimension. Ingen facet-opdeling.",
       "get": "Et radardiagram over din position på alle fem dimensioner. Godt til en hurtig orientering. Ikke præcist nok til finmaskede påstande om facetter — det er hvad Første Kvartal er til.",
-      "items": ["Ekstrovert, entusiastisk.", "Pålidelig, selvdisciplineret.", "Åben over for nye oplevelser, kompleks."],
+      "items": [
+        "Ekstrovert, entusiastisk.",
+        "Pålidelig, selvdisciplineret.",
+        "Åben over for nye oplevelser, kompleks."
+      ],
       "itemPrefix": "Jeg ser mig selv som:"
     },
     "firstQuarter": {
@@ -1033,7 +1246,11 @@
       "scaleNote": "5-punkts skala: 'Meget uenig' til 'Meget enig'. Fem-punkts skalaer er standard for facet-niveau personlighedsmåling.",
       "measures": "Fem dimensioner, hver opdelt i 6 facetter — 30 datapunkter. To elementer pr. facet.",
       "get": "Domænediagram, 30-facet-opdeling og et første beta-kig på din rolle. Facet-opdelingen er der, den nyttige information befinder sig — domænetotalerne er bare overskriften.",
-      "items": ["Tager styringen.", "Bekymrer mig om ting.", "Har en levende fantasi."],
+      "items": [
+        "Tager styringen.",
+        "Bekymrer mig om ting.",
+        "Har en levende fantasi."
+      ],
       "itemPrefix": "Jeg ser mig selv som én, der:"
     },
     "fullMoon": {
@@ -1045,7 +1262,11 @@
         "heading": "Selvrapport",
         "meta": "120 spørgsmål · ~20 min · 5-punkts skala",
         "body": "De samme 30 facetter som Første Kvartal — ved dobbelt opløsning. Fire elementer pr. facet i stedet for to. I psykometriske termer betyder flere elementer pr. facet mere pålidelige scorer, især for facetter tæt på skalens midte, hvor to elementer kan give et støjfyldt resultat.",
-        "items": ["Sjældent føler mig nedtrykt.", "Forudser andres behov.", "Får opgaver gjort med det samme."],
+        "items": [
+          "Sjældent føler mig nedtrykt.",
+          "Forudser andres behov.",
+          "Får opgaver gjort med det samme."
+        ],
         "itemPrefix": "Jeg ser mig selv som én, der:"
       },
       "part2": {
@@ -1097,6 +1318,35 @@
     "contextNote": {
       "heading": "Roller er ikke skæbner",
       "body": "Den samme person kan fungere forskelligt i forskellige teamkompositioner. En Wolf i et team, der allerede konfronterer alt, kan trække sig tilbage. En Tortoise i et team, der har brug for bevægelse, kan accelerere. Det er tendenser i kontekst — ikke faste identiteter. Brug ikke et rolleresultat som et loft."
+    }
+  },
+  "onboarding": {
+    "heading": "Velkommen til Cèrcol",
+    "intro": "Tre instrumenter. Én skala. Start hvor du vil — hvert enkelt står alene.",
+    "newMoon": {
+      "desc": "10 spørgsmål. Et hurtigt blik på dine fem dimensioner."
+    },
+    "firstQuarter": {
+      "desc": "60 spørgsmål. Fem dimensioner opdelt i 30 facetter."
+    },
+    "fullMoon": {
+      "desc": "120 spørgsmål og et Vidne. Det mest komplette billede."
+    },
+    "suggestedOrder": "Usikker på, hvor du skal starte? Begynd med Nymåne.",
+    "primaryCta": "Start med Nymåne",
+    "dismissCta": "Jeg udforsker selv"
+  },
+  "nudge": {
+    "nextUp": "Næste",
+    "firstQuarter": {
+      "heading": "Gå dybere med Første Kvartal",
+      "body": "60 spørgsmål. De samme fem dimensioner med fuld facetopløsning.",
+      "cta": "Begynd Første Kvartal Cèrcol"
+    },
+    "fullMoon": {
+      "heading": "Fuldfør dit portræt med Fuldmåne",
+      "body": "120 spørgsmål og et Vidne — det mest præcise resultat.",
+      "cta": "Begynd Fuldmåne Cèrcol"
     }
   }
 }

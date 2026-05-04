@@ -17,6 +17,7 @@ import { colors } from '../design/tokens'
 import { Card, Button, SectionLabel } from '../components/ui'
 import { NewMoonIcon } from '../components/MoonIcons'
 import { DimensionRow, ReportPageHeader, RadarDataCard } from '../components/report'
+import InstrumentNudge from '../components/InstrumentNudge'
 
 
 export default function NewMoonResultsPage() {
@@ -114,21 +115,8 @@ export default function NewMoonResultsPage() {
           </RadarDataCard>
         </section>
 
-        {/* ── Upgrade prompt ── */}
-        <Card className="px-6 py-5 flex flex-col gap-3 bg-gray-50 border-gray-200">
-          <div>
-            <p className="font-semibold" style={{ color: colors.textPrimary }}>{t('newMoonResults.upgrade.heading')}</p>
-            <p className="text-sm mt-1" style={{ color: colors.textMuted }}>{t('newMoonResults.upgrade.body')}</p>
-          </div>
-          <Button
-            variant="primary"
-            size="md"
-            onClick={() => navigate('/first-quarter')}
-            className="self-start shadow-sm"
-          >
-            {t('newMoonResults.upgrade.cta')}
-          </Button>
-        </Card>
+        {/* ── Next instrument nudge ── */}
+        <InstrumentNudge target="firstQuarter" />
 
         {/* ── Actions row ── */}
         <div className="flex gap-3">

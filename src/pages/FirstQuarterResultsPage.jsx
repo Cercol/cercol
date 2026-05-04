@@ -24,6 +24,7 @@ import { colors } from '../design/tokens'
 import RoleProbabilityBars from '../components/RoleProbabilityBars'
 import { Card, Button, Badge, SectionLabel } from '../components/ui'
 import { DimensionRow, FacetAccordion, ReportPageHeader, RoleCard, RadarDataCard } from '../components/report'
+import InstrumentNudge from '../components/InstrumentNudge'
 
 
 export default function FirstQuarterResultsPage() {
@@ -159,26 +160,8 @@ export default function FirstQuarterResultsPage() {
           </section>
         )}
 
-        {/* ── Section 4: Full Moon upgrade CTA ── */}
-        <Card accent="blue" className="p-5">
-          <div className="flex items-start gap-3">
-            <FullMoonIcon size={22} style={{ color: colors.blue, flexShrink: 0, marginTop: 2 }} />
-            <div className="flex-1">
-              <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: colors.blue }}>
-                {t('fqResults.fullMoonCta.eyebrow')}
-              </p>
-              <h3 className="font-bold mb-1" style={{ color: colors.textPrimary }}>
-                {t('fqResults.fullMoonCta.heading')}
-              </h3>
-              <p className="text-sm mb-4 leading-relaxed" style={{ color: colors.textMuted }}>
-                {t('fqResults.fullMoonCta.body')}
-              </p>
-              <Button variant="primary" onClick={() => navigate('/full-moon')} className="shadow-sm">
-                {t('fqResults.fullMoonCta.cta')}
-              </Button>
-            </div>
-          </div>
-        </Card>
+        {/* ── Section 4: Full Moon nudge ── */}
+        <InstrumentNudge target="fullMoon" />
 
         {/* ── Actions row ── */}
         <div className="flex gap-3">
