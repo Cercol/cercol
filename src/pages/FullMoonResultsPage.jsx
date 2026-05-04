@@ -114,7 +114,7 @@ export default function FullMoonResultsPage() {
       .catch(() => {}) // silently fail — solo result still renders
   }, [user, authLoading, isSharedLink]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Loading: waiting for auth to resolve or Supabase to return
+  // Loading: waiting for auth to resolve or API to return
   if (!domains) {
     return (
       <main className="flex items-center justify-center min-h-[calc(100vh-4rem)]">
