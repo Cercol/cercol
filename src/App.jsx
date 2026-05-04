@@ -28,6 +28,7 @@ import LastQuarterPage from './pages/LastQuarterPage'
 import FeedbackButton from './components/FeedbackButton'
 import CookieBanner from './components/CookieBanner'
 import AdminRoute from './components/AdminRoute'
+import RequireAuth from './components/RequireAuth'
 import AdminDashboardPage from './pages/AdminDashboardPage'
 
 /** Top-level error boundary — catches unexpected render errors and shows a minimal fallback. */
@@ -108,16 +109,16 @@ function AppContent() {
         <Route path="/full-moon/results" element={<FullMoonResultsPage />} />
 
         {/* Witness Cèrcol */}
-        <Route path="/witness-setup" element={<WitnessSetupPage />} />
+        <Route path="/witness-setup" element={<RequireAuth><WitnessSetupPage /></RequireAuth>} />
         <Route path="/witness/:token" element={<WitnessPage />} />
         {/* Auth */}
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/auth/callback" element={<AuthCallbackPage />} />
-        {/* Account */}
-        <Route path="/my-results" element={<MyResultsPage />} />
-        <Route path="/profile"    element={<ProfilePage />} />
-        <Route path="/groups"     element={<GroupsPage />} />
-        <Route path="/groups/:id" element={<LastQuarterPage />} />
+        {/* Account — require authentication */}
+        <Route path="/my-results" element={<RequireAuth><MyResultsPage /></RequireAuth>} />
+        <Route path="/profile"    element={<RequireAuth><ProfilePage /></RequireAuth>} />
+        <Route path="/groups"     element={<RequireAuth><GroupsPage /></RequireAuth>} />
+        <Route path="/groups/:id" element={<RequireAuth><LastQuarterPage /></RequireAuth>} />
         {/* Documentation */}
         <Route path="/about"       element={<AboutPage />} />
         <Route path="/instruments" element={<InstrumentsPage />} />

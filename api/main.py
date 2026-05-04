@@ -972,6 +972,16 @@ async def require_admin(user: dict = Depends(get_current_user)) -> dict:
     return user
 
 
+def _csv_val(v) -> str:
+    """Format a value as a CSV-safe string (minimal quoting)."""
+    if v is None:
+        return ""
+    s = str(v)
+    if any(c in s for c in (',', '"', '\n')):
+        return '"' + s.replace('"', '""') + '"'
+    return s
+
+
 # ---------------------------------------------------------------------------
 # Routes — admin
 # ---------------------------------------------------------------------------
@@ -1140,15 +1150,6 @@ async def admin_users_csv(_: dict = Depends(require_admin)):
             """
         )
 
-    def _csv_val(v):
-        if v is None:
-            return ""
-        s = str(v)
-        # Minimal CSV quoting: wrap in quotes if value contains comma, quote, or newline
-        if any(c in s for c in (',', '"', '\n')):
-            return '"' + s.replace('"', '""') + '"'
-        return s
-
     def generate():
         yield "id,email,first_name,last_name,premium,is_admin,created_at,result_count\n"
         for r in rows:
@@ -1244,14 +1245,6 @@ async def admin_results_csv(
             """,
             instrument,
         )
-
-    def _csv_val(v):
-        if v is None:
-            return ""
-        s = str(v)
-        if any(c in s for c in (',', '"', '\n')):
-            return '"' + s.replace('"', '""') + '"'
-        return s
 
     def _role(r):
         if r["presence"] is None:

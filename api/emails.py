@@ -154,9 +154,28 @@ async def _send(to: str, subject: str, html: str) -> None:
         print(f"[email] failed to send to {to}: {exc}")
 
 
+def _magic_link_html(link: str) -> str:
+    return _base(
+        _h1("Sign in to Cèrcol")
+        + _p("Fes clic al botó per accedir a Cèrcol. L'accés és vàlid durant 15 minuts.")
+        + _p("Click the button below to sign in. The link is valid for 15 minutes.")
+        + _btn(link, "Sign in / Accedir")
+        + _p("If you did not request this link, you can safely ignore this email.", muted=True)
+    )
+
+
 # ---------------------------------------------------------------------------
 # Public API — all return coroutines; schedule with asyncio.create_task()
 # ---------------------------------------------------------------------------
+
+async def send_magic_link(to_email: str, link: str) -> None:
+    """Send a sign-in magic link. Uses asyncio.to_thread so the event loop is not blocked."""
+    await _send(
+        to      = to_email,
+        subject = "El teu accés a Cèrcol / Your Cèrcol sign-in link",
+        html    = _magic_link_html(link),
+    )
+
 
 async def send_witness_assigned(
     witness_name: str,

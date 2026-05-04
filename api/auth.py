@@ -27,7 +27,6 @@ from urllib.parse import urlencode
 
 import asyncpg
 import httpx
-import resend
 from fastapi import APIRouter, HTTPException, Query, Request, status
 from fastapi.responses import RedirectResponse
 from jose import jwt
@@ -35,6 +34,7 @@ from passlib.context import CryptContext
 from pydantic import BaseModel
 from slowapi.errors import RateLimitExceeded  # noqa: F401 — used indirectly via app handler
 
+from emails import send_magic_link
 from limiter import limiter
 
 # ---------------------------------------------------------------------------
@@ -53,8 +53,6 @@ _BACKEND_URL          = os.environ.get("BACKEND_URL",  "https://api.cercol.team"
 _GOOGLE_CLIENT_ID     = os.environ.get("GOOGLE_CLIENT_ID", "")
 _GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET", "")
 _GOOGLE_REDIRECT_URI  = f"{_BACKEND_URL}/auth/google/callback"
-
-resend.api_key = os.environ.get("RESEND_API_KEY", "")
 
 _pwd = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -242,43 +240,14 @@ async def magic_link_request(request: Request, body: MagicLinkRequestBody):
 
     link = f"{_FRONTEND_URL}/auth/callback?type=magic&token={token}"
 
+    # send_magic_link uses asyncio.to_thread internally — no event-loop blocking.
     try:
-        resend.Emails.send({
-            "from":    "Cèrcol <noreply@cercol.team>",
-            "to":      [email],
-            "subject": "El teu accés a Cèrcol / Your Cèrcol link",
-            "html":    _magic_link_email_html(link),
-        })
+        await send_magic_link(email, link)
     except Exception as exc:
         # Log but do not leak error details to the client
         print(f"[auth] magic link email failed for {email}: {exc}")
 
     return {"detail": "Magic link sent"}
-
-
-def _magic_link_email_html(link: str) -> str:
-    return f"""
-<!DOCTYPE html>
-<html lang="ca">
-<head><meta charset="UTF-8"><title>Accés a Cèrcol</title></head>
-<body style="font-family:sans-serif;color:#111;max-width:480px;margin:0 auto;padding:32px 16px">
-  <p style="font-size:16px;margin-bottom:24px">
-    Fes clic al botó per accedir a Cèrcol. L'accés és vàlid durant 15 minuts.
-  </p>
-  <p style="margin-bottom:32px">
-    <a href="{link}"
-       style="display:inline-block;background:#0047ba;color:#fff;font-weight:700;
-              padding:14px 28px;border-radius:6px;text-decoration:none;font-size:16px">
-      Accedir a Cèrcol
-    </a>
-  </p>
-  <p style="font-size:13px;color:#888;border-top:1px solid #eee;padding-top:16px">
-    Si no has sol·licitat aquest accés, ignora aquest correu.<br>
-    <em>Click the button to sign in to Cèrcol. Link valid for 15 minutes.</em>
-  </p>
-</body>
-</html>
-""".strip()
 
 
 @router.post("/magic-link/verify")
