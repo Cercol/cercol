@@ -14,7 +14,7 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
-"@tailwindcss/vite": "^4.2.2",
+    "@tailwindcss/vite": "^4.2.2",
     "gh-pages": "^6.3.0",
     "i18next": "^26.0.3",
     "mm-design": "github:miquelmatoses/mm-design",
