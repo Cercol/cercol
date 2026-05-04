@@ -14,7 +14,11 @@ All scoring algorithms and item sources are documented and citable.
 - React + Vite (frontend — GitHub Pages, cercol.team)
 - Tailwind CSS
 - FastAPI + uvicorn (backend — Hetzner VPS 188.245.60.20, api.cercol.team, systemd + Caddy) [Phase 4+]
-- Supabase: anonymous result logging (anon key) + user auth + profiles (service_role key, backend only)
+- PostgreSQL 14 (Hetzner — all data, auth tables included since Phase 15)
+- Auth: self-hosted (api/auth.py) — magic link (Resend), password (bcrypt), Google OAuth (direct)
+  - JWT: HS256 / JWT_SECRET env var (replaces Supabase ES256/JWKS)
+  - Tokens: access token in JS module variable, refresh token in localStorage `cercol_rt`
+- Supabase: NO LONGER USED (migrated fully to Hetzner in Phase 15)
 - All scoring happens client-side in JavaScript
 
 ## Design system (mm-design)
@@ -88,7 +92,7 @@ src/
   pages/         # Route-level components (includes AdminDashboardPage.jsx)
   context/       # React context providers (AuthContext.jsx, FeedbackContext.jsx)
   hooks/         # Custom React hooks (useInstrumentKeyboard.js, useScaleLabels.js)
-  lib/           # Shared service clients (supabase.js, api.js)
+  lib/           # Shared service clients (tokens.js, api.js)
   design/        # tokens.js and global styles
   data/          # test items, scoring keys (always cite source)
   utils/         # scoring logic, logger.js, translationFeedback.js

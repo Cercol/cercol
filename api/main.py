@@ -9,6 +9,8 @@ Phase 10.19: slowapi rate limiting.
 Phase 13.19: migrated from Supabase REST to local PostgreSQL (asyncpg).
              Added /results and /me/profile endpoints.
              Fixed N+1 queries, async I/O, JWKS TTL cache, CORS HTTPS-only.
+Phase 15:   Replaced Supabase Auth (GoTrue) with self-hosted auth on Hetzner.
+             JWT now HS256 / JWT_SECRET (symmetric).  Auth routes live in auth.py.
 """
 
 import asyncio
@@ -26,7 +28,7 @@ from fastapi import Depends, FastAPI, HTTPException, Query, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from jose import JWTError, jwk, jwt
+from jose import JWTError, jwt
 from pydantic import BaseModel
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
@@ -36,6 +38,7 @@ from scoring import (
     DOMAINS, NORM_MIN_SAMPLE, NORM_REFRESH_DAYS, resolve_norm,
 )
 from emails import send_witness_assigned, send_witness_completed, send_group_invitation
+import auth as auth_module
 
 
 # ---------------------------------------------------------------------------
@@ -227,48 +230,26 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Auth routes (magic link, password, Google OAuth, refresh, signout)
+app.include_router(auth_module.router)
+
 # ---------------------------------------------------------------------------
 # Config
 # ---------------------------------------------------------------------------
 
-_SUPABASE_URL          = os.environ.get("SUPABASE_URL", "").rstrip("/")
 _FRONTEND_URL          = os.environ.get("FRONTEND_URL", "https://cercol.team")
 _STRIPE_PRICE_ID       = os.environ.get("STRIPE_PRICE_ID", "")
 _STRIPE_WEBHOOK_SECRET = os.environ.get("STRIPE_WEBHOOK_SECRET", "")
+_JWT_SECRET            = os.environ.get("JWT_SECRET", "")
 
 stripe.api_key = os.environ.get("STRIPE_SECRET_KEY", "")
 
 # ---------------------------------------------------------------------------
-# Auth — JWKS-based verification (Supabase ECC P-256 / ES256)
+# Auth — HS256 symmetric verification (self-hosted, replaces Supabase JWKS)
 # ---------------------------------------------------------------------------
 
-_JWKS_URL      = f"{_SUPABASE_URL}/auth/v1/.well-known/jwks.json"
-_AUDIENCE      = "authenticated"
-_JWKS_TTL      = 3600  # seconds — refresh key cache hourly (survives key rotation)
-_key_cache: dict = {}
-_key_cache_ts: float = 0.0
-
-
-def _fetch_jwks() -> list[dict]:
-    import urllib.request
-    with urllib.request.urlopen(_JWKS_URL, timeout=5) as resp:
-        return json.loads(resp.read())["keys"]
-
-
-def _get_key(kid: str, alg: str):
-    """Return the JWK for the given kid, refreshing the cache after TTL."""
-    global _key_cache, _key_cache_ts
-    now = time.monotonic()
-    if now - _key_cache_ts > _JWKS_TTL:
-        fresh: dict = {}
-        for k in _fetch_jwks():
-            fresh[k["kid"]] = jwk.construct(k, algorithm=k.get("alg", alg))
-        _key_cache    = fresh
-        _key_cache_ts = now
-    if kid not in _key_cache:
-        raise JWTError(f"Unknown kid: {kid!r}")
-    return _key_cache[kid]
-
+_JWT_ALGORITHM = "HS256"
+_JWT_AUDIENCE  = "authenticated"
 
 _bearer = HTTPBearer(auto_error=False)
 
@@ -278,13 +259,13 @@ def get_current_user(
 ) -> dict:
     if credentials is None:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Not authenticated")
-    token = credentials.credentials
     try:
-        header  = jwt.get_unverified_header(token)
-        kid     = header.get("kid", "")
-        alg     = header.get("alg", "ES256")
-        key     = _get_key(kid, alg)
-        payload = jwt.decode(token, key, algorithms=[alg], audience=_AUDIENCE)
+        payload = jwt.decode(
+            credentials.credentials,
+            _JWT_SECRET,
+            algorithms=[_JWT_ALGORITHM],
+            audience=_JWT_AUDIENCE,
+        )
         return payload
     except JWTError:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
@@ -297,12 +278,12 @@ def get_optional_user(
     if credentials is None:
         return None
     try:
-        header  = jwt.get_unverified_header(credentials.credentials)
-        kid     = header.get("kid", "")
-        alg     = header.get("alg", "ES256")
-        key     = _get_key(kid, alg)
-        payload = jwt.decode(credentials.credentials, key, algorithms=[alg], audience=_AUDIENCE)
-        return payload
+        return jwt.decode(
+            credentials.credentials,
+            _JWT_SECRET,
+            algorithms=[_JWT_ALGORITHM],
+            audience=_JWT_AUDIENCE,
+        )
     except JWTError:
         return None
 

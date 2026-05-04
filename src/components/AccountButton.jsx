@@ -9,7 +9,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
-import { supabase } from '../lib/supabase'
+import { getLatestFullMoonResult } from '../lib/api'
 import { computeRole } from '../utils/role-scoring'
 import { colors } from '../design/tokens'
 import { UserIcon, RoleIcon } from './MoonIcons'
@@ -25,19 +25,14 @@ export default function AccountButton() {
   // Fetch Full Moon result once per session to determine avatar icon
   useEffect(() => {
     if (!user) { setRoleCode(null); return }
-    supabase
-      .from('results')
-      .select('presence,bond,vision,discipline,depth')
-      .eq('user_id', user.id)
-      .eq('instrument', 'fullMoon')
-      .order('created_at', { ascending: false })
-      .limit(1)
-      .then(({ data }) => {
-        if (data?.[0]) {
-          const { role } = computeRole(data[0])
+    getLatestFullMoonResult()
+      .then((result) => {
+        if (result) {
+          const { role } = computeRole(result)
           setRoleCode(role)
         }
       })
+      .catch(() => { /* non-critical — keep null role icon */ })
   }, [user?.id])
 
   // Close dropdown on click outside

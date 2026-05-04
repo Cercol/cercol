@@ -1,25 +1,70 @@
 /**
  * Authenticated and public fetch helpers for the Cèrcol backend (api.cercol.team).
- * Authenticated calls attach the current Supabase session access token as Bearer.
+ *
+ * Authenticated calls attach the current access token as Bearer.
+ * On 401, a single automatic token refresh is attempted before failing.
  */
-import { supabase } from './supabase'
+import {
+  getAccessToken, setAccessToken, clearAccessToken,
+  getRefreshToken, setRefreshToken, clearRefreshToken,
+} from './tokens'
 
 const API_URL = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '')
 
-// ── Private helpers ────────────────────────────────────────────────────────
+// ── Token refresh ─────────────────────────────────────────────────────────────
+
+/**
+ * Attempt to refresh the access token using the stored refresh token.
+ * Returns the new access token on success, or null on failure (triggers signout).
+ */
+async function _tryRefresh() {
+  const rt = getRefreshToken()
+  if (!rt) return null
+
+  try {
+    const res = await fetch(`${API_URL}/auth/refresh`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ refresh_token: rt }),
+    })
+    if (!res.ok) return null
+    const data = await res.json()
+    setAccessToken(data.access_token)
+    setRefreshToken(data.refresh_token)
+    return data.access_token
+  } catch {
+    return null
+  }
+}
+
+// ── Private helpers ────────────────────────────────────────────────────────────
 
 async function authFetch(path, options = {}) {
-  const { data: { session } } = await supabase.auth.getSession()
-  if (!session) throw new Error('Not authenticated')
+  const token = getAccessToken()
+  if (!token) throw new Error('Not authenticated')
 
-  const res = await fetch(`${API_URL}${path}`, {
-    ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${session.access_token}`,
-      ...(options.headers ?? {}),
-    },
-  })
+  const makeRequest = (t) =>
+    fetch(`${API_URL}${path}`, {
+      ...options,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${t}`,
+        ...(options.headers ?? {}),
+      },
+    })
+
+  let res = await makeRequest(token)
+
+  // Auto-refresh on 401 and retry once
+  if (res.status === 401) {
+    const newToken = await _tryRefresh()
+    if (!newToken) {
+      clearAccessToken()
+      clearRefreshToken()
+      throw new Error('Session expired')
+    }
+    res = await makeRequest(newToken)
+  }
 
   if (!res.ok) {
     const text = await res.text().catch(() => '')
@@ -31,12 +76,26 @@ async function authFetch(path, options = {}) {
 
 /** authFetchBlob — like authFetch but returns a Blob (for CSV downloads). */
 async function authFetchBlob(path) {
-  const { data: { session } } = await supabase.auth.getSession()
-  if (!session) throw new Error('Not authenticated')
+  const token = getAccessToken()
+  if (!token) throw new Error('Not authenticated')
 
-  const res = await fetch(`${API_URL}${path}`, {
-    headers: { Authorization: `Bearer ${session.access_token}` },
-  })
+  const makeRequest = (t) =>
+    fetch(`${API_URL}${path}`, {
+      headers: { Authorization: `Bearer ${t}` },
+    })
+
+  let res = await makeRequest(token)
+
+  if (res.status === 401) {
+    const newToken = await _tryRefresh()
+    if (!newToken) {
+      clearAccessToken()
+      clearRefreshToken()
+      throw new Error('Session expired')
+    }
+    res = await makeRequest(newToken)
+  }
+
   if (!res.ok) throw new Error(`API error ${res.status}`)
   return res.blob()
 }
@@ -58,13 +117,13 @@ async function publicFetch(path, options = {}) {
   return res.json()
 }
 
-// ── Stripe ────────────────────────────────────────────────────────────────
+// ── Stripe ────────────────────────────────────────────────────────────────────
 
 export async function createCheckoutSession() {
   return authFetch('/checkout', { method: 'POST' })
 }
 
-// ── Witness Cèrcol ────────────────────────────────────────────────────────
+// ── Witness Cèrcol ────────────────────────────────────────────────────────────
 
 /**
  * createWitnessSessions — creates up to 12 witness sessions.
@@ -91,11 +150,12 @@ export async function getWitnessSession(token) {
  * completeWitnessSession — submit domain scores for a witness session.
  * @param {string} token
  * @param {{presence, bond, discipline, depth, vision}} scores
- * @param {boolean} linkAsUser — if true and the user is signed in, attaches Bearer
- *   so the backend can record witness_user_id on the session.
+ * @param {boolean} linkAsUser — if true and signed in, attaches Bearer so
+ *   the backend records witness_user_id on the session.
  */
 export async function completeWitnessSession(token, scores, linkAsUser = false) {
-  const fetcher = linkAsUser ? authFetch : publicFetch
+  const useAuth = linkAsUser && getAccessToken() !== null
+  const fetcher = useAuth ? authFetch : publicFetch
   return fetcher(`/witness/session/${token}/complete`, {
     method: 'POST',
     body: JSON.stringify({ scores }),
@@ -103,7 +163,7 @@ export async function completeWitnessSession(token, scores, linkAsUser = false) 
 }
 
 /**
- * getMyWitnessContributions — returns sessions the signed-in user has completed as a witness.
+ * getMyWitnessContributions — sessions the signed-in user has completed as a witness.
  * @returns {Promise<Array<{subject_display: string, completed_at: string}>>}
  */
 export async function getMyWitnessContributions() {
@@ -118,7 +178,7 @@ export async function getMyWitnessSessions() {
   return authFetch('/witness/my-sessions')
 }
 
-// ── Groups ────────────────────────────────────────────────────────────────
+// ── Groups ────────────────────────────────────────────────────────────────────
 
 /**
  * createGroup — creates a new group and optionally invites members by email.
@@ -174,19 +234,23 @@ export async function getGroupReportData(groupId) {
   return authFetch(`/groups/${groupId}/report-data`)
 }
 
-// ── Results ───────────────────────────────────────────────────────────────
+// ── Results ───────────────────────────────────────────────────────────────────
 
 /**
  * logResult — log an instrument result via the backend API.
  * Attaches auth token if the user is signed in (links result to account).
  * @param {{ instrument, language?, presence?, bond?, discipline?, depth?, vision?, facets? }} params
  */
-export async function logResult({ instrument, language, presence, bond, discipline, depth, vision, facets }) {
-  const { data: { session } } = await supabase.auth.getSession()
-  const fetcher = session ? authFetch : publicFetch
+export async function logResult({
+  instrument, language, presence, bond, discipline, depth, vision, facets,
+}) {
+  const useAuth = getAccessToken() !== null
+  const fetcher = useAuth ? authFetch : publicFetch
   return fetcher('/results', {
     method: 'POST',
-    body: JSON.stringify({ instrument, language, presence, bond, discipline, depth, vision, facets }),
+    body: JSON.stringify({
+      instrument, language, presence, bond, discipline, depth, vision, facets,
+    }),
   })
 }
 
@@ -228,7 +292,7 @@ export async function getLatestFullMoonResult() {
   return results.find(r => r.instrument === 'fullMoon') ?? null
 }
 
-// ── Admin ─────────────────────────────────────────────────────────────────
+// ── Admin ─────────────────────────────────────────────────────────────────────
 
 /** getAdminStats — global KPI counters (users + results). Admin only. */
 export async function getAdminStats() {
@@ -269,7 +333,7 @@ export async function getAdminResults({ offset = 0, limit = 25, instrument = '' 
  * @param {{ instrument?: string }} filters
  */
 export async function downloadAdminCSV(type, filters = {}) {
-  const q = new URLSearchParams(filters)
+  const q    = new URLSearchParams(filters)
   const path = `/admin/${type}/export.csv${q.toString() ? '?' + q : ''}`
   const blob = await authFetchBlob(path)
   const url  = URL.createObjectURL(blob)

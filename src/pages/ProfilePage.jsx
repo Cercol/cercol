@@ -1,13 +1,12 @@
 /**
  * ProfilePage — first-time setup and ongoing editing of the user's profile.
- * Requires authentication. Reads/writes public.profiles via the anon client.
- * RLS policies (001_profiles.sql) allow each user to SELECT/UPDATE their own row.
+ * Requires authentication. Reads/writes profiles via the backend API (PATCH /me/profile).
  */
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
-import { supabase } from '../lib/supabase'
+import { updateMyProfile } from '../lib/api'
 import { Card, Button, SectionLabel } from '../components/ui'
 
 // ── Country list (~55 entries, ISO 3166-1 alpha-2 codes) ─────────────────────
@@ -148,24 +147,19 @@ export default function ProfilePage() {
     setSaving(true)
     setStatus(null)
 
-    const { error } = await supabase
-      .from('profiles')
-      .update({
-        first_name:       firstName.trim(),
-        last_name:        lastName.trim() || null,
-        country:          country         || null,
-        native_language:  nativeLanguage  || null,
-        updated_at:       new Date().toISOString(),
+    try {
+      await updateMyProfile({
+        first_name:      firstName.trim(),
+        last_name:       lastName.trim() || null,
+        country:         country         || null,
+        native_language: nativeLanguage  || null,
       })
-      .eq('id', user.id)
-
-    setSaving(false)
-
-    if (error) {
-      setStatus('error')
-    } else {
       setStatus('saved')
       await refreshProfile()
+    } catch {
+      setStatus('error')
+    } finally {
+      setSaving(false)
     }
   }
 

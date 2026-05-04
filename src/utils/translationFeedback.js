@@ -1,23 +1,11 @@
-import { supabase } from '../lib/supabase'
-
-export async function sendTranslationFeedback({
-  language,
-  instrument,
-  context,
-  suggestion,
-  itemId,
-  itemText,
-}) {
-  try {
-    await supabase.from('translation_feedback').insert({
-      language,
-      instrument,
-      context,
-      suggestion,
-      item_id:   itemId  ?? '',
-      item_text: itemText ?? '',
-    })
-  } catch (_) {
-    // Silently ignore
-  }
+/**
+ * sendTranslationFeedback — stub.
+ *
+ * Previously wrote to the Supabase `translation_feedback` table.
+ * After the Hetzner auth migration (Phase 15) Supabase is no longer used.
+ * This function is kept as a no-op until a dedicated backend endpoint or
+ * external feedback channel (e.g. a form submission service) is set up.
+ */
+export async function sendTranslationFeedback(_payload) {
+  // no-op for now
 }
