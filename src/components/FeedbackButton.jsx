@@ -12,7 +12,7 @@ import { sendTranslationFeedback } from '../utils/translationFeedback'
 import { TranslationIcon } from './MoonIcons'
 
 const ISSUE_URL =
-  'https://github.com/miquelmatoses/cercol/issues/new?title=Bug+report&labels=bug'
+  'https://github.com/cercol/cercol/issues/new?title=Bug+report&labels=bug'
 
 /** Derive instrument from current route pathname */
 function getInstrument(pathname) {

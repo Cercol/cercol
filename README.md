@@ -84,7 +84,7 @@ No dates. No promises. Just the order things need to happen in.
 
 Contributions are welcome. Bug reports, translation fixes, accessibility improvements, new language support. Open an issue to start the conversation before opening a pull request.
 
-[GitHub Issues](https://github.com/miquelmatoses/cercol/issues)
+[GitHub Issues](https://github.com/cercol/cercol/issues)
 
 ## License
 

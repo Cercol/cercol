@@ -238,7 +238,7 @@ export default function SciencePage() {
             {t('science.openSource.body')}
           </p>
           <a
-            href="https://github.com/miquelmatoses/cercol"
+            href="https://github.com/cercol/cercol"
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-700 hover:text-gray-900 underline transition-colors"

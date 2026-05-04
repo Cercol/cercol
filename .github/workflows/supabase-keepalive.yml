@@ -1,11 +1,18 @@
 name: Supabase keep-alive
 
-# Ping the Supabase project every 3 days to prevent automatic pausing on the free tier.
-# Uses a lightweight REST query (fetch 1 row from profiles) with the public anon key.
+# Ping the Supabase project every 2 days to prevent automatic pausing on the free tier.
+# Makes a real DB query (SELECT count from profiles) which Supabase counts as activity.
+#
+# IMPORTANT: secrets must be set in the GitHub org/repo settings:
+#   SUPABASE_URL       — e.g. https://gxewhnwbnrwtbhqopthk.supabase.co
+#   SUPABASE_ANON_KEY  — public anon key from Supabase dashboard → Settings → API
+#
+# After transferring the repo to a new org, re-add these secrets in:
+#   GitHub → cercol/cercol → Settings → Secrets and variables → Actions
 
 on:
   schedule:
-    - cron: '0 8 */3 * *'   # 08:00 UTC every 3 days
+    - cron: '0 8 */2 * *'   # 08:00 UTC every 2 days — max gap <3 days, well under the 7-day pause threshold
   workflow_dispatch:          # allow manual trigger from the Actions tab
 
 jobs:
@@ -16,13 +23,18 @@ jobs:
     steps:
       - name: Query Supabase REST API
         run: |
+          if [ -z "${{ secrets.SUPABASE_URL }}" ] || [ -z "${{ secrets.SUPABASE_ANON_KEY }}" ]; then
+            echo "ERROR: SUPABASE_URL or SUPABASE_ANON_KEY secret is not set. Re-add secrets in repo settings."
+            exit 1
+          fi
           STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
-            "${{ secrets.SUPABASE_URL }}/rest/v1/profiles?limit=1" \
+            "${{ secrets.SUPABASE_URL }}/rest/v1/profiles?select=count&limit=1" \
             -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
-            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}")
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" \
+            -H "Prefer: count=exact")
           echo "HTTP status: $STATUS"
           if [ "$STATUS" -lt 200 ] || [ "$STATUS" -ge 300 ]; then
-            echo "Unexpected status code — ping may have failed"
+            echo "ERROR: Unexpected status $STATUS — Supabase may be paused or secrets are wrong"
             exit 1
           fi
           echo "Supabase project is alive ✓"

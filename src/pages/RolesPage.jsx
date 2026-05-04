@@ -144,7 +144,7 @@ export default function RolesPage() {
             {t('rolesPage.critique.body')}
           </p>
           <a
-            href="https://github.com/miquelmatoses/cercol/issues"
+            href="https://github.com/cercol/cercol/issues"
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors flex items-center gap-1.5"

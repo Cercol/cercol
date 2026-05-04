@@ -19,6 +19,7 @@ All scoring algorithms and item sources are documented and citable.
 
 ## Design system (mm-design)
 All design tokens come from **mm-design** (https://github.com/miquelmatoses/mm-design), installed as an npm git dependency.
+GitHub repository: https://github.com/cercol/cercol (transferred to the `cercol` org — April 2026).
 `src/design/tokens.js` is a re-export shim — it re-exports everything from mm-design. NEVER add local token values there.
 `src/components/MoonIcons.jsx` is a re-export shim — it re-exports from mm-design. NEVER create new icons in this repo.
 If a new icon is needed, add it to mm-design first (SVG + React export), then it appears here automatically.

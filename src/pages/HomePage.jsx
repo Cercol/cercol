@@ -16,8 +16,8 @@ import { useTranslation } from 'react-i18next'
 import { colors } from '../design/tokens'
 import { NewMoonIcon, FirstQuarterIcon, FullMoonIcon, LastQuarterIcon, RoleIcon } from '../components/MoonIcons'
 
-const GITHUB_URL = 'https://github.com/miquelmatoses/cercol'
-const ISSUE_URL  = 'https://github.com/miquelmatoses/cercol/issues/new?title=Bug+report&labels=bug'
+const GITHUB_URL = 'https://github.com/cercol/cercol'
+const ISSUE_URL  = 'https://github.com/cercol/cercol/issues/new?title=Bug+report&labels=bug'
 
 /** Fixed icon size for the wallpaper — all animals the same scale. */
 const ICON_SIZE = 80
