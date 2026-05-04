@@ -11,15 +11,15 @@
         // 404.html encodes the original path+search into the ?p= param.
         // URLSearchParams.get() already percent-decodes the value,
         // so we restore the URL directly — no extra decodeURIComponent.
-        // The hash is kept separate so Supabase auth fragments survive intact.
+        // The hash is kept separate so URL fragments survive intact.
         const p = new URLSearchParams(window.location.search).get('p')
         if (p) {
           window.history.replaceState(null, null, p + window.location.hash)
         }
       })()
     </script>
-    <script type="module" crossorigin src="/assets/index-BaO2WodG.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-Bn2bv4GZ.css">
+    <script type="module" crossorigin src="/assets/index-weUCstjf.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-B2R7mxBb.css">
   </head>
   <body>
     <div id="root"></div>
