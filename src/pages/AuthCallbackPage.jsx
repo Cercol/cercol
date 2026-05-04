@@ -26,6 +26,10 @@ export default function AuthCallbackPage() {
     if (handledRef.current) return
     handledRef.current = true
 
+    // Immediately clear tokens from the visible URL and browser history
+    // so they never appear in server logs or browser history entries.
+    window.history.replaceState({}, '', window.location.pathname)
+
     async function handle() {
       const type        = params.get('type')
       const accessToken = params.get('access_token')
@@ -83,7 +87,7 @@ export default function AuthCallbackPage() {
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <main className="min-h-screen bg-gray-50 flex items-center justify-center">
+    <main className="flex items-center justify-center py-24">
       <p className="text-sm text-gray-400">{t('auth.signingIn')}</p>
     </main>
   )

@@ -153,7 +153,7 @@
   "privacy": {
     "eyebrow": "Legal",
     "title": "Privacy policy",
-    "lastUpdated": "Last updated: April 2026",
+    "lastUpdated": "Last updated: May 2026",
     "intro": "This policy explains what data Cèrcol collects, why, and what you can do with it. It is written in plain language — if anything is unclear, email us.",
     "collected": {
       "heading": "What we collect",
@@ -181,7 +181,7 @@
     },
     "cookies": {
       "heading": "Cookies",
-      "body": "Cèrcol uses one strictly necessary cookie: the authentication session token set by Supabase when you sign in. No analytics cookies, no advertising trackers, no third-party tracking of any kind. Strictly necessary cookies do not require your consent under GDPR."
+      "body": "Cèrcol uses one strictly necessary cookie: the authentication session token stored in your browser when you sign in. No analytics cookies, no advertising trackers, no third-party tracking of any kind. Strictly necessary cookies do not require your consent under GDPR."
     },
     "rights": {
       "heading": "Your rights",
@@ -194,7 +194,7 @@
     },
     "thirdParties": {
       "heading": "Third-party services",
-      "supabase": "Authentication and data storage are handled by Supabase (Supabase, Inc.), a US-based company operating under standard contractual clauses for EU data transfers.",
+      "hosting": "Your account data and test results are stored on a dedicated server hosted by Hetzner Online GmbH (Germany, EU). Transactional emails (sign-in links) are sent via Resend (Resend, Inc.), a US-based company operating under standard contractual clauses for EU data transfers. Authentication is fully self-hosted — no third-party provider holds your credentials.",
       "stripe": "Payments are handled by Stripe (Stripe, Inc.), a US-based company with EU data transfer compliance. Cèrcol receives no payment card data — only a transaction confirmation.",
       "noTrackers": "No other third-party services receive your personal data. There are no analytics platforms, advertising networks, or social media trackers on this site."
     },
@@ -1193,7 +1193,7 @@
     "heading": "Questions",
     "q1": {
       "q": "Is my data private?",
-      "a": "The free instruments log anonymous scores with no personal information — no name, no email, no IP address. If you create an account, your email is stored by Supabase and your results are linked to your account. You can delete your account at any time. No data is sold or shared with third parties."
+      "a": "The free instruments log anonymous scores with no personal information — no name, no email, no IP address. If you create an account, your email is stored on our own servers and your results are linked to your account. You can delete your account at any time. No data is sold or shared with third parties."
     },
     "q2": {
       "q": "Are the results accurate?",

@@ -1145,10 +1145,24 @@ Guided first-run experience for new users on first sign-in.
 - **OnboardingModal** (`src/components/OnboardingModal.jsx`): welcome modal shown once per new user. Visibility controlled by `profile.onboarding_seen` (Supabase) + `localStorage` fallback. Explains the three instruments and suggests starting with New Moon. Fully multilingual (6 languages).
 - **InstrumentNudge** (`src/components/InstrumentNudge.jsx`): reusable CTA card pointing to the next instrument. Replaces the ad-hoc upgrade cards in `NewMoonResultsPage` and `FirstQuarterResultsPage`. Sequencing: NM → FQ → FM.
 - **MyResultsPage progressive empty states**: 0 instruments → animal illustration + CTA; 1–2 instruments → results + nudge card; 3 instruments → existing layout unchanged.
-- **Supabase migration** `011_onboarding_seen.sql`: `onboarding_seen BOOLEAN NOT NULL DEFAULT FALSE` on `profiles`. Existing users backfilled to `TRUE` so the modal only appears for genuinely new accounts.
+- **DB migration** `011_onboarding_seen.sql`: `onboarding_seen BOOLEAN NOT NULL DEFAULT FALSE` on `profiles`. Existing users backfilled to `TRUE` so the modal only appears for genuinely new accounts.
 - **Backend**: `GET /me/profile` now returns `onboarding_seen`; `PATCH /me/profile` accepts it via `UpdateProfileBody`.
 - **AuthContext**: added `markOnboardingSeen()` — optimistic local update + async persist + localStorage write.
 - Not implemented: animated intro for anonymous visitors (deferred — low priority).
+
+## Phase 14.5 — Self-hosted auth migration ✅ COMPLETE
+
+Full replacement of Supabase Auth (GoTrue) with self-hosted auth endpoints on Hetzner.
+
+- **`api/auth.py`**: FastAPI router at `/auth` prefix — magic link (Resend), password (bcrypt/passlib), Google OAuth (direct code exchange), JWT refresh rotation, signout.
+- **JWT**: Switched from ES256 / JWKS (Supabase) to HS256 / `JWT_SECRET` (symmetric). Same payload `{sub, email, aud, iat, exp}` for backward compatibility with `main.py` middleware.
+- **Token storage**: access token in JS module-level variable (`tokens.js`); refresh token in `localStorage` key `cercol_rt`. Refresh singleton in `api.js` prevents concurrent refresh stampede.
+- **AuthCallbackPage**: handles both magic link (`?type=magic&token=`) and Google OAuth (`?access_token=&refresh_token=`). Clears tokens from URL via `replaceState` immediately on mount.
+- **DB tables**: `auth_users`, `magic_tokens`, `refresh_tokens`, `oauth_states` — migration `012_auth_tables.sql`. Seeded from existing `profiles` table preserving all UUIDs.
+- **Rate limiting**: all 8 auth endpoints protected via `limiter.py` (shared instance, avoids circular import).
+- **Removed**: `@supabase/supabase-js`, `src/lib/supabase.js`, `supabase-keepalive.yml` CI workflow, `SUPABASE_URL`/`SUPABASE_SERVICE_ROLE_KEY` env vars.
+- **GDPR**: Privacy policy updated in all 6 locales — Supabase replaced by Hetzner Online GmbH + Resend.
+- **signOut**: clears local session first (immediate UX), then fire-and-forget backend revocation.
 
 ## Phase 15 — Stripe paywall
 

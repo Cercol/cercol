@@ -30,30 +30,16 @@ from fastapi.responses import StreamingResponse
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import JWTError, jwt
 from pydantic import BaseModel
-from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 
+from limiter import limiter, _get_client_ip
 from scoring import (
     _NORM, _ROLE_CENTROIDS, _compute_role, _scores_to_zscores,
     DOMAINS, NORM_MIN_SAMPLE, NORM_REFRESH_DAYS, resolve_norm,
 )
 from emails import send_witness_assigned, send_witness_completed, send_group_invitation
 import auth as auth_module
-
-
-# ---------------------------------------------------------------------------
-# Rate limiter
-# ---------------------------------------------------------------------------
-
-def _get_client_ip(request: Request) -> str:
-    """Extract real client IP, respecting Caddy's X-Forwarded-For."""
-    forwarded = request.headers.get("X-Forwarded-For", "")
-    if forwarded:
-        return forwarded.split(",")[0].strip()
-    return request.client.host if request.client else "unknown"
-
-
-limiter = Limiter(key_func=_get_client_ip)
 
 
 # ---------------------------------------------------------------------------

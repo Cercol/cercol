@@ -153,7 +153,7 @@
   "privacy": {
     "eyebrow": "Juridisk",
     "title": "Privatlivspolitik",
-    "lastUpdated": "Last updated: April 2026",
+    "lastUpdated": "Sidst opdateret: maj 2026",
     "intro": "Denne politik forklarer, hvilke data Cèrcol indsamler, hvorfor og hvad du kan gøre ved det. Den er skrevet i et klart sprog — hvis noget er uklart, så send os en e-mail.",
     "collected": {
       "heading": "Hvad vi indsamler",
@@ -181,7 +181,7 @@
     },
     "cookies": {
       "heading": "Cookies",
-      "body": "Cèrcol bruger én strengt nødvendig cookie: godkendelsessessions-tokenet sat af Supabase, når du logger ind. Ingen analysecookies, ingen reklame-trackere, ingen tredjepartssporing af nogen art. Strengt nødvendige cookies kræver ikke dit samtykke under GDPR."
+      "body": "Cèrcol bruger én strengt nødvendig cookie: godkendelsessessions-tokenet gemt i din browser, når du logger ind. Ingen analysecookies, ingen reklame-trackere, ingen tredjepartssporing af nogen art. Strengt nødvendige cookies kræver ikke dit samtykke under GDPR."
     },
     "rights": {
       "heading": "Dine rettigheder",
@@ -194,7 +194,7 @@
     },
     "thirdParties": {
       "heading": "Tredjepartstjenester",
-      "supabase": "Godkendelse og datalagring håndteres af Supabase (Supabase, Inc.), et amerikansk selskab der opererer under standardkontraktbestemmelser for EU-dataoverførsler.",
+      "hosting": "Dine kontodata og testresultater opbevares på en dedikeret server hostet af Hetzner Online GmbH (Tyskland, EU). Transaktionsmails (login-links) sendes via Resend (Resend, Inc.), et amerikansk selskab der opererer under standardkontraktbestemmelser for EU-dataoverførsler. Autentificering er fuldt selvhostet — ingen tredjepart har adgang til dine loginoplysninger.",
       "stripe": "Betalinger håndteres af Stripe (Stripe, Inc.), et amerikansk selskab med EU-dataoverførselsoverholdelse. Cèrcol modtager ingen betalingskortdata — kun en transaktionsbekræftelse.",
       "noTrackers": "Ingen andre tredjepartstjenester modtager dine personoplysninger. Der er ingen analyseplattforme, reklamenetværk eller sociale medie-trackere på dette websted."
     },
@@ -1193,7 +1193,7 @@
     "heading": "Spørgsmål",
     "q1": {
       "q": "Er mine data private?",
-      "a": "De gratis instrumenter logger anonyme scorer uden personlige oplysninger — intet navn, ingen e-mail, ingen IP-adresse. Hvis du opretter en konto, gemmes din e-mail af Supabase, og dine resultater knyttes til din konto. Du kan slette din konto til enhver tid. Ingen data sælges eller deles med tredjeparter."
+      "a": "De gratis instrumenter logger anonyme scorer uden personlige oplysninger — intet navn, ingen e-mail, ingen IP-adresse. Hvis du opretter en konto, gemmes din e-mail på vores egne servere, og dine resultater knyttes til din konto. Du kan slette din konto til enhver tid. Ingen data sælges eller deles med tredjeparter."
     },
     "q2": {
       "q": "Er resultaterne nøjagtige?",

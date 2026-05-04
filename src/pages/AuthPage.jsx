@@ -59,8 +59,8 @@ export default function AuthPage() {
         await signInWithPassword(email, password)
         // onAuthStateChange handles redirect; just stay busy
       } else {
-        const { needsConfirmation } = await signUp(email, password)
-        setStatus(needsConfirmation ? 'sent' : 'idle')
+        await signUp(email, password)
+        // Signup succeeded — access token is now set; AuthContext re-renders automatically
       }
     } catch (e) {
       setError(e.message ?? t('auth.error'))

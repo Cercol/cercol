@@ -90,7 +90,7 @@ export default function PrivacyPage() {
         </Section>
 
         <Section label={p('thirdParties.heading')}>
-          <P>{p('thirdParties.supabase')}</P>
+          <P>{p('thirdParties.hosting')}</P>
           <P>{p('thirdParties.stripe')}</P>
           <P>{p('thirdParties.noTrackers')}</P>
         </Section>

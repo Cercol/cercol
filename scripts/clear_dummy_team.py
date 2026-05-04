@@ -1,20 +1,26 @@
 """
 clear_dummy_team.py — removes all seed data created by seed_dummy_team.py.
 
-Usage:
-    SUPABASE_URL=https://xxx.supabase.co \\
-    SUPABASE_SERVICE_ROLE_KEY=eyJ... \\
-    python scripts/clear_dummy_team.py
+DEPRECATED — needs rewrite for self-hosted auth (Phase 15).
+This script was written for Supabase and no longer works.
+Rewrite to connect directly to PostgreSQL via psycopg2 or asyncpg.
 
 This script is safe to run multiple times (idempotent).
 It deletes: group members, group, witness responses, witness sessions,
 results, profiles, and auth users for the 7 seed users.
 """
 
-import os
 import sys
 
-from supabase import create_client
+print(
+    "ERROR: clear_dummy_team.py is deprecated and must be rewritten for Phase 15 (self-hosted auth).\n"
+    "The Supabase SDK is no longer installed. Rewrite to use psycopg2/asyncpg + DATABASE_URL.\n"
+    "See the TODO comment at the top of this file.",
+    file=sys.stderr,
+)
+sys.exit(1)
+
+import os  # noqa — unreachable, kept for future reference
 
 # ---------------------------------------------------------------------------
 # Config from environment — no defaults, fail immediately if missing

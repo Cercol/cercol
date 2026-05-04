@@ -28,11 +28,14 @@ from urllib.parse import urlencode
 import asyncpg
 import httpx
 import resend
-from fastapi import APIRouter, HTTPException, Query, status
+from fastapi import APIRouter, HTTPException, Query, Request, status
 from fastapi.responses import RedirectResponse
 from jose import jwt
 from passlib.context import CryptContext
 from pydantic import BaseModel
+from slowapi.errors import RateLimitExceeded  # noqa: F401 — used indirectly via app handler
+
+from limiter import limiter
 
 # ---------------------------------------------------------------------------
 # Config
@@ -215,7 +218,8 @@ class SignoutBody(BaseModel):
 # ── Magic link ───────────────────────────────────────────────────────────────
 
 @router.post("/magic-link/request", status_code=202)
-async def magic_link_request(body: MagicLinkRequestBody):
+@limiter.limit("3/minute")
+async def magic_link_request(request: Request, body: MagicLinkRequestBody):
     """
     Generate a one-time magic link and send it via Resend.
     Always returns 202 (no enumeration of registered emails).
@@ -278,7 +282,8 @@ def _magic_link_email_html(link: str) -> str:
 
 
 @router.post("/magic-link/verify")
-async def magic_link_verify(body: MagicLinkVerifyBody):
+@limiter.limit("10/minute")
+async def magic_link_verify(request: Request, body: MagicLinkVerifyBody):
     """
     Verify a magic link token.  On success: mark used, find/create user, return tokens.
     """
@@ -317,7 +322,8 @@ async def magic_link_verify(body: MagicLinkVerifyBody):
 # ── Password auth ────────────────────────────────────────────────────────────
 
 @router.post("/password/signup", status_code=201)
-async def password_signup(body: PasswordSignupBody):
+@limiter.limit("5/minute")
+async def password_signup(request: Request, body: PasswordSignupBody):
     """Create a new account with email + password."""
     email    = body.email.strip().lower()
     password = body.password
@@ -358,7 +364,8 @@ async def password_signup(body: PasswordSignupBody):
 
 
 @router.post("/password/signin")
-async def password_signin(body: PasswordSigninBody):
+@limiter.limit("5/minute")
+async def password_signin(request: Request, body: PasswordSigninBody):
     """Sign in with email + password."""
     email    = body.email.strip().lower()
     password = body.password
@@ -385,7 +392,8 @@ async def password_signin(body: PasswordSigninBody):
 # ── Token refresh + signout ───────────────────────────────────────────────────
 
 @router.post("/refresh")
-async def refresh_token(body: RefreshBody):
+@limiter.limit("30/minute")
+async def refresh_token(request: Request, body: RefreshBody):
     """
     Exchange a valid refresh token for a new access token.
     The refresh token itself is rotated (old revoked, new issued).
@@ -421,7 +429,8 @@ async def refresh_token(body: RefreshBody):
 
 
 @router.post("/signout", status_code=204)
-async def signout(body: SignoutBody):
+@limiter.limit("30/minute")
+async def signout(request: Request, body: SignoutBody):
     """Revoke a refresh token (sign out)."""
     async with _pool().acquire() as conn:
         await conn.execute(
@@ -434,7 +443,8 @@ async def signout(body: SignoutBody):
 # ── Google OAuth2 ─────────────────────────────────────────────────────────────
 
 @router.get("/google")
-async def google_auth():
+@limiter.limit("10/minute")
+async def google_auth(request: Request):
     """Redirect the user to Google's OAuth2 authorisation endpoint."""
     if not _GOOGLE_CLIENT_ID:
         raise HTTPException(status_code=500, detail="Google OAuth not configured")
@@ -469,7 +479,9 @@ async def google_auth():
 
 
 @router.get("/google/callback")
+@limiter.limit("10/minute")
 async def google_callback(
+    request: Request,
     code:  str = Query(...),
     state: str = Query(...),
     error: Optional[str] = Query(None),

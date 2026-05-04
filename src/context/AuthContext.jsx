@@ -162,7 +162,6 @@ export function AuthProvider({ children }) {
     const data = await res.json()
     _applyTokens(data.access_token, data.refresh_token)
     await fetchProfile()
-    return { needsConfirmation: false }
   }
 
   function signInWithGoogle() {
@@ -170,20 +169,20 @@ export function AuthProvider({ children }) {
     window.location.href = `${API_URL}/auth/google`
   }
 
-  async function signOut() {
+  function signOut() {
+    // Clear the local session immediately so the UI responds instantly.
     const rt = getRefreshToken()
-    if (rt) {
-      try {
-        await fetch(`${API_URL}/auth/signout`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ refresh_token: rt }),
-        })
-      } catch {
-        // Revocation is best-effort; clear locally regardless.
-      }
-    }
     _clearSession()
+
+    // Fire-and-forget: revoke the refresh token on the backend.
+    // If this request fails or times out, the token will expire naturally (30 days).
+    if (rt) {
+      fetch(`${API_URL}/auth/signout`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ refresh_token: rt }),
+      }).catch(() => {})
+    }
   }
 
   return (

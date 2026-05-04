@@ -1,10 +1,16 @@
 """
-seed_dummy_team.py — inserts a realistic dummy team into Supabase for development.
+seed_dummy_team.py — inserts a realistic dummy team for development/testing.
 
-Usage:
-    SUPABASE_URL=https://xxx.supabase.co \\
-    SUPABASE_SERVICE_ROLE_KEY=eyJ... \\
-    python scripts/seed_dummy_team.py
+DEPRECATED — needs rewrite for self-hosted auth (Phase 15).
+This script was written for Supabase and no longer works.
+It must be rewritten to connect directly to PostgreSQL via psycopg2 or asyncpg,
+using the same DATABASE_URL as the backend.
+
+TODO: rewrite to use:
+    DATABASE_URL=postgresql://cercol@localhost/cercol python scripts/seed_dummy_team.py
+
+Usage (once rewritten):
+    DATABASE_URL=... python scripts/seed_dummy_team.py
 
 The script is idempotent: running it twice will not duplicate data.
 
@@ -25,13 +31,20 @@ Role assignments (verified against role-scoring.js CENTROIDS):
   Roser Coll     → R10 Bear     (B+ V-)
 """
 
-import os
-import random
 import sys
+
+print(
+    "ERROR: seed_dummy_team.py is deprecated and must be rewritten for Phase 15 (self-hosted auth).\n"
+    "The Supabase SDK is no longer installed. Rewrite to use psycopg2/asyncpg + DATABASE_URL.\n"
+    "See the TODO comment at the top of this file.",
+    file=sys.stderr,
+)
+sys.exit(1)
+
+import os  # noqa — unreachable, kept for future reference
+import random
 import uuid
 from datetime import datetime, timezone
-
-from supabase import create_client
 
 # ---------------------------------------------------------------------------
 # Config from environment — no defaults, fail immediately if missing

@@ -7,7 +7,7 @@
     const hash = window.location.hash
     // Always redirect through the SPA entry point.
     // index.html restores the original path via replaceState.
-    // hash is appended raw so Supabase can read access_token fragments.
+    // hash is appended raw so URL fragments survive the SPA redirect.
     window.location.replace(
       '/?p=' + encodeURIComponent(path + search) + hash
     )

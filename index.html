@@ -11,7 +11,7 @@
         // 404.html encodes the original path+search into the ?p= param.
         // URLSearchParams.get() already percent-decodes the value,
         // so we restore the URL directly — no extra decodeURIComponent.
-        // The hash is kept separate so Supabase auth fragments survive intact.
+        // The hash is kept separate so URL fragments survive intact.
         const p = new URLSearchParams(window.location.search).get('p')
         if (p) {
           window.history.replaceState(null, null, p + window.location.hash)

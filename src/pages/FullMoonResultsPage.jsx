@@ -4,7 +4,7 @@
  * Score resolution (in priority order):
  *   1. location.state.domains — from FullMoonPage navigation after test
  *   2. ?r=BASE64 — shared link (domain scores only; facets not available)
- *   3. Supabase — most recent fullMoon row for authenticated users navigating directly
+ *   3. API — most recent fullMoon row for authenticated users navigating directly
  *
  * Phase 2 (async): if authenticated and NOT a shared link, loads Witness sessions
  * and layers them on top when present. Skipped entirely for shared links.
@@ -64,11 +64,11 @@ export default function FullMoonResultsPage() {
     stateDomains = decodeScores(sharedParam)
   }
 
-  // Effective domains and facets: synchronous source first, Supabase fallback second
+  // Effective domains and facets: synchronous source first, API fallback second
   const domains = stateDomains ?? loadedDomains
   const facets  = stateFacets ?? loadedFacets
 
-  // Supabase fallback: load domains (+ facets) when navigating directly (no state, no ?r=)
+  // API fallback: load domains (+ facets) when navigating directly (no state, no ?r=)
   useEffect(() => {
     if (stateDomains !== null) return    // already have scores
     if (isSharedLink) return             // bad ?r= param → handled below

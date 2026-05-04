@@ -153,7 +153,7 @@
   "privacy": {
     "eyebrow": "Legal",
     "title": "Política de privacitat",
-    "lastUpdated": "Última actualització: abril de 2026",
+    "lastUpdated": "Última actualització: maig de 2026",
     "intro": "Aquesta política explica quines dades recull Cèrcol, per què, i quines opcions tens. Està escrita en llenguatge clar — si alguna cosa no queda clara, envia'ns un correu.",
     "collected": {
       "heading": "Què recopilem",
@@ -181,7 +181,7 @@
     },
     "cookies": {
       "heading": "Galetes",
-      "body": "Cèrcol utilitza una sola galeta estrictament necessària: el token de sessió d'autenticació que estableix Supabase quan inicies sessió. Cap galeta analítica, cap rastrejador publicitari, cap seguiment de tercers de cap mena. Les galetes estrictament necessàries no requereixen el teu consentiment en virtut del RGPD."
+      "body": "Cèrcol utilitza una sola galeta estrictament necessària: el token de sessió d'autenticació emmagatzemat al teu navegador quan inicies sessió. Cap galeta analítica, cap rastrejador publicitari, cap seguiment de tercers de cap mena. Les galetes estrictament necessàries no requereixen el teu consentiment en virtut del RGPD."
     },
     "rights": {
       "heading": "Els teus drets",
@@ -194,7 +194,7 @@
     },
     "thirdParties": {
       "heading": "Serveis de tercers",
-      "supabase": "L'autenticació i l'emmagatzematge de dades estan a càrrec de Supabase (Supabase, Inc.), una empresa nord-americana que opera sota clàusules contractuals estàndard per a transferències de dades de la UE.",
+      "hosting": "Les dades del teu compte i els resultats dels tests s'emmagatzemen en un servidor propi allotjat a Hetzner Online GmbH (Alemanya, UE). Els correus transaccionals (enllaços d'accés) s'envien a través de Resend (Resend, Inc.), una empresa nord-americana que opera sota clàusules contractuals estàndard per a transferències de dades de la UE. L'autenticació és completament pròpia — cap proveïdor extern té accés a les teues credencials.",
       "stripe": "Els pagaments estan a càrrec de Stripe (Stripe, Inc.), una empresa nord-americana amb compliment de transferència de dades de la UE. Cèrcol no rep dades de targetes de pagament — únicament una confirmació de la transacció.",
       "noTrackers": "Cap altre servei de tercers rep les teues dades personals. No hi ha plataformes analítiques, xarxes publicitàries ni rastrejadors de xarxes socials en aquest lloc."
     },
@@ -1193,7 +1193,7 @@
     "heading": "Preguntes",
     "q1": {
       "q": "Les meues dades són privades?",
-      "a": "Els instruments gratuïts registren puntuacions anònimes sense informació personal — sense nom, sense correu, sense adreça IP. Si crees un compte, el teu correu és emmagatzemat per Supabase i els teus resultats es vinculen al teu compte. Pots eliminar el compte en qualsevol moment. Cap dada es ven ni es comparteix amb tercers."
+      "a": "Els instruments gratuïts registren puntuacions anònimes sense informació personal — sense nom, sense correu, sense adreça IP. Si crees un compte, el teu correu s'emmagatzema als nostres propis servidors i els teus resultats es vinculen al teu compte. Pots eliminar el compte en qualsevol moment. Cap dada es ven ni es comparteix amb tercers."
     },
     "q2": {
       "q": "Són precisos els resultats?",

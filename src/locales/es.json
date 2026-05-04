@@ -153,7 +153,7 @@
   "privacy": {
     "eyebrow": "Legal",
     "title": "Política de privacidad",
-    "lastUpdated": "Última actualización: abril de 2026",
+    "lastUpdated": "Última actualización: mayo de 2026",
     "intro": "Esta política explica qué datos recopila Cèrcol, por qué y qué puedes hacer con ellos. Está escrita en lenguaje claro — si algo no queda claro, escríbenos.",
     "collected": {
       "heading": "Qué recopilamos",
@@ -181,7 +181,7 @@
     },
     "cookies": {
       "heading": "Cookies",
-      "body": "Cèrcol utiliza una sola cookie estrictamente necesaria: el token de sesión de autenticación establecido por Supabase al iniciar sesión. Sin cookies analíticas, sin rastreadores publicitarios, sin seguimiento de terceros de ningún tipo. Las cookies estrictamente necesarias no requieren tu consentimiento según el RGPD."
+      "body": "Cèrcol utiliza una sola cookie estrictamente necesaria: el token de sesión de autenticación almacenado en tu navegador al iniciar sesión. Sin cookies analíticas, sin rastreadores publicitarios, sin seguimiento de terceros de ningún tipo. Las cookies estrictamente necesarias no requieren tu consentimiento según el RGPD."
     },
     "rights": {
       "heading": "Tus derechos",
@@ -194,7 +194,7 @@
     },
     "thirdParties": {
       "heading": "Servicios de terceros",
-      "supabase": "La autenticación y el almacenamiento de datos son gestionados por Supabase (Supabase, Inc.), una empresa con sede en EE. UU. que opera bajo cláusulas contractuales estándar para las transferencias de datos de la UE.",
+      "hosting": "Los datos de tu cuenta y tus resultados se almacenan en un servidor propio alojado por Hetzner Online GmbH (Alemania, UE). Los correos transaccionales (enlaces de acceso) se envían a través de Resend (Resend, Inc.), una empresa con sede en EE. UU. que opera bajo cláusulas contractuales estándar para las transferencias de datos de la UE. La autenticación es completamente propia — ningún proveedor externo tiene acceso a tus credenciales.",
       "stripe": "Los pagos son gestionados por Stripe (Stripe, Inc.), una empresa con sede en EE. UU. con cumplimiento de transferencia de datos de la UE. Cèrcol no recibe ningún dato de tarjeta de pago — solo una confirmación de transacción.",
       "noTrackers": "Ningún otro servicio de terceros recibe tus datos personales. No hay plataformas de analítica, redes publicitarias ni rastreadores de redes sociales en este sitio."
     },
@@ -1193,7 +1193,7 @@
     "heading": "Preguntas",
     "q1": {
       "q": "¿Son privados mis datos?",
-      "a": "Los instrumentos gratuitos registran puntuaciones anónimas sin información personal — sin nombre, sin correo electrónico, sin dirección IP. Si creas una cuenta, tu correo electrónico es almacenado por Supabase y tus resultados quedan vinculados a tu cuenta. Puedes eliminar tu cuenta en cualquier momento. No se venden ni se comparten datos con terceros."
+      "a": "Los instrumentos gratuitos registran puntuaciones anónimas sin información personal — sin nombre, sin correo electrónico, sin dirección IP. Si creas una cuenta, tu correo electrónico se almacena en nuestros propios servidores y tus resultados quedan vinculados a tu cuenta. Puedes eliminar tu cuenta en cualquier momento. No se venden ni se comparten datos con terceros."
     },
     "q2": {
       "q": "¿Son precisos los resultados?",

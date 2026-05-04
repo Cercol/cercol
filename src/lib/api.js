@@ -14,10 +14,14 @@ const API_URL = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '')
 // ── Token refresh ─────────────────────────────────────────────────────────────
 
 /**
- * Attempt to refresh the access token using the stored refresh token.
- * Returns the new access token on success, or null on failure (triggers signout).
+ * In-flight refresh promise — ensures concurrent 401s only fire one refresh
+ * request rather than a stampede of parallel calls.
+ * @type {Promise<string|null>|null}
  */
-async function _tryRefresh() {
+let _refreshPromise = null
+
+/** Execute a single refresh HTTP request. */
+async function _doRefresh() {
   const rt = getRefreshToken()
   if (!rt) return null
 
@@ -35,6 +39,20 @@ async function _tryRefresh() {
   } catch {
     return null
   }
+}
+
+/**
+ * Attempt to refresh the access token using the stored refresh token.
+ * Deduplicates concurrent calls — multiple simultaneous 401s share one request.
+ * Returns the new access token on success, or null on failure.
+ */
+function _tryRefresh() {
+  if (!_refreshPromise) {
+    _refreshPromise = _doRefresh().finally(() => {
+      _refreshPromise = null
+    })
+  }
+  return _refreshPromise
 }
 
 // ── Private helpers ────────────────────────────────────────────────────────────

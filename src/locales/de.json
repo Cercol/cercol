@@ -153,7 +153,7 @@
   "privacy": {
     "eyebrow": "Rechtliches",
     "title": "Datenschutzrichtlinie",
-    "lastUpdated": "Zuletzt aktualisiert: April 2026",
+    "lastUpdated": "Zuletzt aktualisiert: Mai 2026",
     "intro": "Diese Richtlinie erklärt, welche Daten Cèrcol erhebt, warum und was du damit tun kannst. Sie ist in einfacher Sprache verfasst — falls etwas unklar ist, schreib uns.",
     "collected": {
       "heading": "Was wir erheben",
@@ -181,7 +181,7 @@
     },
     "cookies": {
       "heading": "Cookies",
-      "body": "Cèrcol verwendet ein einziges streng notwendiges Cookie: den Authentifizierungs-Session-Token, der von Supabase bei der Anmeldung gesetzt wird. Keine Analyse-Cookies, keine Werbe-Tracker, kein Drittanbieter-Tracking jeglicher Art. Streng notwendige Cookies erfordern nach der DSGVO keine Einwilligung."
+      "body": "Cèrcol verwendet ein einziges streng notwendiges Cookie: den Authentifizierungs-Session-Token, der bei der Anmeldung in deinem Browser gespeichert wird. Keine Analyse-Cookies, keine Werbe-Tracker, kein Drittanbieter-Tracking jeglicher Art. Streng notwendige Cookies erfordern nach der DSGVO keine Einwilligung."
     },
     "rights": {
       "heading": "Deine Rechte",
@@ -194,7 +194,7 @@
     },
     "thirdParties": {
       "heading": "Drittanbieterdienste",
-      "supabase": "Authentifizierung und Datenspeicherung werden von Supabase (Supabase, Inc.) übernommen, einem in den USA ansässigen Unternehmen, das Standardvertragsklauseln für EU-Datenübertragungen anwendet.",
+      "hosting": "Deine Kontodaten und Testergebnisse werden auf einem eigenen Server gespeichert, der von Hetzner Online GmbH (Deutschland, EU) gehostet wird. Transaktions-E-Mails (Anmelde-Links) werden über Resend (Resend, Inc.) versendet, einem in den USA ansässigen Unternehmen, das Standardvertragsklauseln für EU-Datenübertragungen anwendet. Die Authentifizierung ist vollständig selbst gehostet — kein Drittanbieter hat Zugriff auf deine Anmeldedaten.",
       "stripe": "Zahlungen werden von Stripe (Stripe, Inc.) abgewickelt, einem in den USA ansässigen Unternehmen mit EU-konformer Datenübertragung. Cèrcol erhält keine Zahlungskartendaten — nur eine Transaktionsbestätigung.",
       "noTrackers": "Keine anderen Drittanbieterdienste erhalten deine personenbezogenen Daten. Auf dieser Website gibt es keine Analyseplattformen, Werbenetzwerke oder Social-Media-Tracker."
     },
@@ -1193,7 +1193,7 @@
     "heading": "Fragen",
     "q1": {
       "q": "Sind meine Daten privat?",
-      "a": "Die kostenlosen Instrumente speichern anonyme Ergebnisse ohne persönliche Informationen — kein Name, keine E-Mail, keine IP-Adresse. Wenn du ein Konto erstellst, wird deine E-Mail von Supabase gespeichert und deine Ergebnisse werden mit deinem Konto verknüpft. Du kannst dein Konto jederzeit löschen. Keine Daten werden an Dritte verkauft oder weitergegeben."
+      "a": "Die kostenlosen Instrumente speichern anonyme Ergebnisse ohne persönliche Informationen — kein Name, keine E-Mail, keine IP-Adresse. Wenn du ein Konto erstellst, wird deine E-Mail auf unseren eigenen Servern gespeichert und deine Ergebnisse werden mit deinem Konto verknüpft. Du kannst dein Konto jederzeit löschen. Keine Daten werden an Dritte verkauft oder weitergegeben."
     },
     "q2": {
       "q": "Sind die Ergebnisse genau?",
