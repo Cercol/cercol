@@ -30,6 +30,15 @@ Cèrcol is available at https://cercol.team and is free for New Moon (10-item Bi
 - Privacy: https://cercol.team/privacy
 - GitHub (source + SCIENCE.md): https://github.com/cercol/cercol
 
+## Blog articles
+
+Research-grounded articles on personality science and team assessment, written to be citable and honest.
+
+- Big Five vs DISC vs Belbin: a scientist's comparison: https://cercol.team/blog/big-five-vs-disc-vs-belbin — Compares three popular organisational personality frameworks on scientific grounds, explaining why the Big Five (measured via IPIP) is the only choice with full independent audit capability.
+- How to build a balanced team using personality science: https://cercol.team/blog/how-to-build-a-balanced-team — Summarises meta-analytic evidence (Bell 2007, Barrick & Mount 1991) on personality composition and team performance, with practical guidance and honest caveats.
+- Blind spots in teams: when self-perception diverges from peer perception: https://cercol.team/blog/blind-spots-in-teams — Explains self-other agreement research in the Big Five, why blind spots form in team settings, and how Witness Cèrcol's forced-choice task reduces acquiescence bias.
+- What is the IPIP and why does it matter?: https://cercol.team/blog/what-is-the-ipip — Explains the International Personality Item Pool (Goldberg et al. 2006), why public-domain measurement matters for science, and why Cèrcol uses IPIP items exclusively.
+
 ## Key references
 
 - Bell, S. T. (2007). Deep-level composition variables as predictors of team performance. Journal of Applied Psychology, 92(3), 595–615. https://doi.org/10.1037/0021-9010.92.3.595
