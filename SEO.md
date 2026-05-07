@@ -166,7 +166,7 @@ Persönlichkeitstest Team, Big Five Team kostenlos, IPIP Deutsch, Teamrollen Per
 
 ### Pending
 - [x] /science page enrichment: DOI links for all 9 references, validation plan section (6 languages)
-- [ ] Blog/guides section: /blog route + first 2 articles
+- [x] Blog/guides section: /blog route + 4 articles
 - [ ] og:image — 1200×630 branded image per route
 - [ ] Submit sitemap to Google Search Console
 - [ ] Submit sitemap to Bing Webmaster Tools
@@ -322,9 +322,9 @@ Record results in a simple doc/spreadsheet with date and screenshot.
 | FAQPage JSON-LD expanded (9 Q&A pairs) | ✅ | May 2026 |
 | GSC verified + sitemap submitted | ✅ | May 2026 |
 | Bing Webmaster Tools verified + sitemap | ✅ | May 2026 |
-| Blog: Big Five vs DISC vs Belbin | pending | — |
-| Blog: How to build a balanced team | pending | — |
-| Blog: Blind spots in teams | pending | — |
-| Blog: What is the IPIP? | pending | — |
+| Blog: Big Five vs DISC vs Belbin | ✅ | May 2026 |
+| Blog: How to build a balanced team | ✅ | May 2026 |
+| Blog: Blind spots in teams | ✅ | May 2026 |
+| Blog: What is the IPIP? | ✅ | May 2026 |
 | og:image 1200×630 per route | pending | — |
 | Google Search Console sitemap submit | pending | — |
