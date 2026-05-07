@@ -5,5 +5,5 @@ stripe==12.1.0
 slowapi==0.1.9
 asyncpg==0.30.0
 resend==2.10.0
-passlib[bcrypt]==1.7.4
+bcrypt==5.0.0
 httpx==0.28.1
