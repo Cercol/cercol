@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
-import { updateMyProfile } from '../lib/api'
+import { updateMyProfile, setMyPassword } from '../lib/api'
 import { Card, Button, SectionLabel } from '../components/ui'
 
 // ── Country list (~55 entries, ISO 3166-1 alpha-2 codes) ─────────────────────
@@ -125,6 +125,13 @@ export default function ProfilePage() {
   const [saving,          setSaving]          = useState(false)
   const [status,          setStatus]          = useState(null)  // 'saved' | 'error' | null
 
+  // Password section state
+  const [currentPw,   setCurrentPw]   = useState('')
+  const [newPw,       setNewPw]       = useState('')
+  const [pwSaving,    setPwSaving]    = useState(false)
+  const [pwStatus,    setPwStatus]    = useState(null)   // 'saved' | 'error' | 'minLength' | 'wrongCurrent' | null
+  const [pwErrorMsg,  setPwErrorMsg]  = useState('')
+
   // Redirect if not logged in
   useEffect(() => {
     if (loading) return
@@ -163,6 +170,39 @@ export default function ProfilePage() {
     }
   }
 
+  async function handlePasswordSubmit(e) {
+    e.preventDefault()
+    setPwStatus(null)
+    setPwErrorMsg('')
+
+    if (newPw.length < 8) {
+      setPwStatus('minLength')
+      return
+    }
+
+    setPwSaving(true)
+    try {
+      await setMyPassword({
+        currentPassword: profile?.has_password ? currentPw : undefined,
+        newPassword: newPw,
+      })
+      setPwStatus('saved')
+      setCurrentPw('')
+      setNewPw('')
+      await refreshProfile()
+    } catch (err) {
+      const msg = err.message ?? ''
+      if (msg.includes('Current password')) {
+        setPwStatus('wrongCurrent')
+      } else {
+        setPwStatus('error')
+        setPwErrorMsg(msg)
+      }
+    } finally {
+      setPwSaving(false)
+    }
+  }
+
   if (loading) {
     return (
       <main className="flex items-center justify-center min-h-[calc(100vh-4rem)]">
@@ -179,7 +219,7 @@ export default function ProfilePage() {
         <h1 className="text-2xl font-bold text-gray-900 mb-1">{t('profile.title')}</h1>
         <p className="text-sm text-gray-500 mb-8">{t('profile.subtitle')}</p>
 
-        <Card className="p-6 shadow-sm">
+        <Card className="p-6 shadow-sm mb-8">
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
 
             {/* First name */}
@@ -272,6 +312,76 @@ export default function ProfilePage() {
                 onClick={() => navigate(-1)}
               >
                 {t('profile.cancel')}
+              </Button>
+            </div>
+
+          </form>
+        </Card>
+
+        {/* Security — password */}
+        <SectionLabel color="gray" className="mb-1">{t('profile.security.title')}</SectionLabel>
+
+        {profile?.has_password === false && (
+          <p className="text-sm text-gray-500 mb-4">{t('profile.security.noPasswordNote')}</p>
+        )}
+
+        <Card className="p-6 shadow-sm">
+          <form onSubmit={handlePasswordSubmit} className="flex flex-col gap-5">
+
+            {/* Current password — only shown when account already has one */}
+            {profile?.has_password && (
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                  {t('profile.security.currentPasswordLabel')}
+                </label>
+                <input
+                  type="password"
+                  value={currentPw}
+                  onChange={(e) => setCurrentPw(e.target.value)}
+                  autoComplete="current-password"
+                  className={INPUT_CLASS}
+                  required
+                />
+              </div>
+            )}
+
+            {/* New password */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                {t('profile.security.newPasswordLabel')}
+              </label>
+              <input
+                type="password"
+                value={newPw}
+                onChange={(e) => setNewPw(e.target.value)}
+                autoComplete="new-password"
+                className={INPUT_CLASS}
+                required
+              />
+            </div>
+
+            {/* Status messages */}
+            {pwStatus === 'saved' && (
+              <p className="text-sm text-emerald-600">{t('profile.security.saved')}</p>
+            )}
+            {pwStatus === 'minLength' && (
+              <p className="text-sm text-red-600">{t('profile.security.minLength')}</p>
+            )}
+            {pwStatus === 'wrongCurrent' && (
+              <p className="text-sm text-red-600">{t('profile.security.wrongCurrent')}</p>
+            )}
+            {pwStatus === 'error' && (
+              <p className="text-sm text-red-600">{pwErrorMsg || t('profile.security.error')}</p>
+            )}
+
+            <div className="pt-1">
+              <Button
+                type="submit"
+                variant="primary"
+                size="md"
+                disabled={pwSaving || newPw.length === 0}
+              >
+                {pwSaving ? t('profile.security.saving') : t('profile.security.saveButton')}
               </Button>
             </div>
 

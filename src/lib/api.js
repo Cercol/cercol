@@ -135,6 +135,23 @@ async function publicFetch(path, options = {}) {
   return res.json()
 }
 
+// ── Password management ───────────────────────────────────────────────────────
+
+/**
+ * setMyPassword — set or change the password for the authenticated user.
+ * @param {{ currentPassword?: string, newPassword: string }} params
+ *   currentPassword is required when the account already has a password.
+ */
+export async function setMyPassword({ currentPassword, newPassword }) {
+  return authFetch('/auth/password/set', {
+    method: 'POST',
+    body: JSON.stringify({
+      password: newPassword,
+      ...(currentPassword ? { current_password: currentPassword } : {}),
+    }),
+  })
+}
+
 // ── Stripe ────────────────────────────────────────────────────────────────────
 
 export async function createCheckoutSession() {

@@ -226,6 +226,18 @@
     "completionPrompt": {
       "body": "Ajoutez votre nom pour personnaliser votre expérience.",
       "cta": "Configurer le profil"
+    },
+    "security": {
+      "title": "Mot de passe et sécurité",
+      "noPasswordNote": "Votre compte utilise Google. Vous pouvez définir un mot de passe pour vous connecter avec votre email.",
+      "currentPasswordLabel": "Mot de passe actuel",
+      "newPasswordLabel": "Nouveau mot de passe",
+      "saveButton": "Enregistrer le mot de passe",
+      "saving": "Enregistrement…",
+      "saved": "Mot de passe enregistré.",
+      "error": "Quelque chose s'est mal passé. Réessayez.",
+      "minLength": "Le mot de passe doit comporter au moins 8 caractères.",
+      "wrongCurrent": "Le mot de passe actuel est incorrect."
     }
   },
   "auth": {
@@ -253,7 +265,8 @@
     "sentNote": "Pas d'e-mail ? Vérifiez votre dossier de courrier indésirable.",
     "signingIn": "Connexion en cours…",
     "tryAgain": "Réessayer",
-    "error": "Une erreur s'est produite. Réessayez."
+    "error": "Une erreur s'est produite. Réessayez.",
+    "forgotPassword": "Mot de passe oublié ? Utilisez le lien magique."
   },
   "home": {
     "subtitle": "Mieux vous connaître.",

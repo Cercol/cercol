@@ -214,6 +214,19 @@ export default function AuthPage() {
               </p>
             )}
 
+            {/* Forgot password — password + signin mode only */}
+            {isPasswordMode && mode === 'signin' && (
+              <p className="text-center text-xs text-gray-400">
+                <button
+                  type="button"
+                  onClick={() => { setMethod('magic'); setErrorMsg('') }}
+                  className="text-[var(--mm-color-blue)] hover:underline"
+                >
+                  {t('auth.forgotPassword')}
+                </button>
+              </p>
+            )}
+
           </form>
         </Card>
       </div>

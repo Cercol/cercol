@@ -13,6 +13,7 @@
  *   user                        — { id, email } or null
  *   profile                     — profiles row or null (loads after user resolves)
  *   loading                     — true while the initial session check is in progress
+ *   applySession(at, rt)        — store tokens AND update user/profile state (use after OAuth/magic-link redirect)
  *   refreshProfile()            — re-fetches profile from the API
  *   markOnboardingSeen()        — sets onboarding_seen=true locally + persists to API
  *   signIn(email)               — sends a magic link; throws on error
@@ -106,6 +107,17 @@ export function AuthProvider({ children }) {
 
   // ── Public actions ──────────────────────────────────────────────────────────
 
+  /**
+   * applySession — store tokens AND update React state (user + profile).
+   * Called by AuthCallbackPage after a magic link or Google OAuth redirect.
+   * Direct token storage (setAccessToken/setRefreshToken) skips this and leaves
+   * user/profile as null — always use applySession from outside AuthContext.
+   */
+  async function applySession(accessToken, refreshToken) {
+    _applyTokens(accessToken, refreshToken)
+    await fetchProfile()
+  }
+
   async function refreshProfile() {
     if (getAccessToken()) await fetchProfile()
   }
@@ -188,7 +200,7 @@ export function AuthProvider({ children }) {
   return (
     <AuthContext.Provider value={{
       user, profile, loading,
-      refreshProfile, markOnboardingSeen,
+      applySession, refreshProfile, markOnboardingSeen,
       signIn, signInWithPassword, signUp, signInWithGoogle, signOut,
     }}>
       {children}
