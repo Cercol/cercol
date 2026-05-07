@@ -363,3 +363,23 @@ export async function downloadAdminCSV(type, filters = {}) {
   document.body.removeChild(a)
   URL.revokeObjectURL(url)
 }
+
+/**
+ * patchAdminUser — toggle premium or is_admin for a user.
+ * @param {string} userId
+ * @param {{ premium?: boolean, is_admin?: boolean }} fields
+ */
+export async function patchAdminUser(userId, fields) {
+  return authFetch(`/admin/users/${userId}`, {
+    method: 'PATCH',
+    body: JSON.stringify(fields),
+  })
+}
+
+/**
+ * getAdminActivity — daily registration + test counts for sparklines.
+ * @param {{ days?: number }} params
+ */
+export async function getAdminActivity({ days = 30 } = {}) {
+  return authFetch(`/admin/activity?days=${days}`)
+}
