@@ -7,6 +7,73 @@ Last reviewed: May 2026
 
 ---
 
+## Manual actions — owner only (cannot be automated)
+
+These tasks require a human login. Claude Code cannot do them.
+Check the box when each is done and add the date.
+
+### Search Console & webmaster tools
+
+- [ ] **Google Search Console** — https://search.google.com/search-console
+  1. Add property → "URL prefix" → https://cercol.team
+  2. Choose verification method "HTML tag" — Google gives you a meta tag like:
+     `<meta name="google-site-verification" content="XXXX" />`
+  3. Tell Claude Code the content value — it will add it to index.html and redeploy.
+  4. Click Verify.
+  5. Go to Sitemaps → submit https://cercol.team/sitemap.xml
+  6. Done date: —
+
+- [ ] **Bing Webmaster Tools** — https://www.bing.com/webmasters
+  1. Add site → https://cercol.team
+  2. Choose XML Sitemap method → submit https://cercol.team/sitemap.xml
+     (Bing can often auto-import from GSC — tick "Import from GSC" if shown)
+  3. If a meta verification tag is needed, tell Claude Code the value.
+  4. Done date: —
+
+### One-time checks (do once after GSC is set up)
+
+- [ ] **Rich Results Test** — https://search.google.com/test/rich-results
+  Test https://cercol.team — should show FAQPage and WebApplication schemas detected.
+  Done date: —
+
+- [ ] **PageSpeed Insights** — https://pagespeed.web.dev
+  Test https://cercol.team — note LCP, TBT, CLS scores before and after code splitting.
+  Target: LCP < 2.5 s, CLS < 0.1, INP < 200 ms.
+  Done date: —
+
+- [ ] **Mobile-Friendly Test** — https://search.google.com/test/mobile-friendly
+  Test https://cercol.team — confirm no issues.
+  Done date: —
+
+### Outreach (human-only, cannot be scripted)
+
+- [ ] **ipip.ori.org** — email Eugene Johnson (ipip@uoregon.edu or via the site contact)
+  asking to add Cèrcol to the list of IPIP implementations.
+  Message: "Cèrcol (https://cercol.team) is an open-source team personality assessment
+  platform using the IPIP public-domain item pool. The full instrument and scoring
+  pipeline are documented at https://github.com/cercol/cercol/blob/main/SCIENCE.md.
+  I'd be grateful if Cèrcol could be listed as an implementation on ipip.ori.org."
+  Done date: —
+
+- [ ] **Anders Vedel** (Danish IPIP-NEO-120 validation author, Univ. Southern Denmark)
+  Let him know Cèrcol uses his validated translation (Vedel et al. 2018).
+  Done date: —
+
+- [ ] **Thiry & Piolti** (French IPIP adaptation, Univ. Mons)
+  Notify that Cèrcol follows their methodology for the French translation.
+  Done date: —
+
+- [ ] **Product Hunt launch** — prepare listing, schedule launch.
+  Done date: —
+
+- [ ] **Hacker News "Show HN"** — post when there's something new to show
+  (Witness Cèrcol + peer assessment angle is the strongest hook).
+  Done date: —
+
+- [ ] **Google Search Console sitemap resubmit** — after every major content update.
+
+---
+
 ## Dual goal
 
 1. **Search engines (SEO)**: appear on page 1 of Google when someone searches
