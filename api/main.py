@@ -356,6 +356,11 @@ class UpdateProfileBody(BaseModel):
     onboarding_seen:  Optional[bool] = None
 
 
+class PasswordSetBody(BaseModel):
+    password:         str
+    current_password: Optional[str] = None
+
+
 # ---------------------------------------------------------------------------
 # Routes — health + auth
 # ---------------------------------------------------------------------------
@@ -373,15 +378,64 @@ async def me(user: dict = Depends(get_current_user)):
 
 @app.get("/me/profile")
 async def get_profile(user: dict = Depends(get_current_user)):
-    """Return the authenticated user's full profile, including premium flag."""
+    """Return the authenticated user's full profile, including premium flag and has_password."""
     user_id = user["sub"]
     async with _pool.acquire() as conn:
         await ensure_profile(conn, user_id, user.get("email"))
         row = await conn.fetchrow(
-            "SELECT id, premium, is_admin, first_name, last_name, country, native_language, onboarding_seen FROM profiles WHERE id = $1",
+            """
+            SELECT p.id, p.premium, p.is_admin, p.first_name, p.last_name,
+                   p.country, p.native_language, p.onboarding_seen,
+                   (au.password_hash IS NOT NULL) AS has_password
+            FROM profiles p
+            JOIN auth_users au ON au.id = p.id
+            WHERE p.id = $1
+            """,
             user_id,
         )
     return dict(row)
+
+
+@app.post("/me/password")
+@limiter.limit("5/minute")
+async def password_set(
+    request: Request,
+    body: PasswordSetBody,
+    user: dict = Depends(get_current_user),
+):
+    """
+    Set or change the password for the authenticated user.
+    - If the account has no password yet (Google-only), sets it without requiring the current one.
+    - If a password already exists, current_password is required.
+    """
+    from auth import _pwd  # noqa: PLC0415
+
+    new_password     = body.password
+    current_password = body.current_password
+
+    if len(new_password) < 8:
+        raise HTTPException(status_code=400, detail="Password must be at least 8 characters")
+
+    user_id = user["sub"]
+    async with _pool.acquire() as conn:
+        row = await conn.fetchrow(
+            "SELECT password_hash FROM auth_users WHERE id = $1", user_id
+        )
+        if row is None:
+            raise HTTPException(status_code=404, detail="User not found")
+
+        if row["password_hash"] is not None:
+            if not current_password:
+                raise HTTPException(status_code=400, detail="Current password required")
+            if not _pwd.verify(current_password, row["password_hash"]):
+                raise HTTPException(status_code=401, detail="Current password is incorrect")
+
+        hashed = _pwd.hash(new_password)
+        await conn.execute(
+            "UPDATE auth_users SET password_hash = $1 WHERE id = $2",
+            hashed, user_id,
+        )
+    return {"detail": "Password updated"}
 
 
 @app.patch("/me/profile")
@@ -1301,6 +1355,80 @@ async def admin_results_csv(
         media_type="text/csv",
         headers={"Content-Disposition": "attachment; filename=cercol_results.csv"},
     )
+
+
+# ---------------------------------------------------------------------------
+# Admin — user management
+# ---------------------------------------------------------------------------
+
+class AdminPatchUserBody(BaseModel):
+    premium:  bool | None = None
+    is_admin: bool | None = None
+
+@app.patch("/admin/users/{user_id}")
+async def admin_patch_user(
+    user_id: str,
+    body: AdminPatchUserBody,
+    _: dict = Depends(require_admin),
+):
+    """Toggle premium or is_admin for a specific user."""
+    updates = {k: v for k, v in body.model_dump().items() if v is not None}
+    if not updates:
+        raise HTTPException(status_code=400, detail="No fields to update")
+
+    set_clauses = ", ".join(f"{k} = ${i + 2}" for i, k in enumerate(updates))
+    values = list(updates.values())
+
+    async with _pool.acquire() as conn:
+        row = await conn.fetchrow(
+            f"UPDATE profiles SET {set_clauses} WHERE id = $1 "
+            f"RETURNING id, email, premium, is_admin",
+            user_id, *values,
+        )
+    if not row:
+        raise HTTPException(status_code=404, detail="User not found")
+    return {
+        "id":       str(row["id"]),
+        "email":    row["email"],
+        "premium":  row["premium"],
+        "is_admin": row["is_admin"],
+    }
+
+
+# ---------------------------------------------------------------------------
+# Admin — activity time series
+# ---------------------------------------------------------------------------
+
+@app.get("/admin/activity")
+async def admin_activity(
+    days: int = Query(30, ge=7, le=90),
+    _: dict = Depends(require_admin),
+):
+    """Daily registration + test counts for the last N days (for sparklines)."""
+    async with _pool.acquire() as conn:
+        reg_rows = await conn.fetch(
+            """
+            SELECT DATE(created_at) AS day, COUNT(*) AS count
+            FROM profiles
+            WHERE created_at >= NOW() - ($1 * INTERVAL '1 day')
+            GROUP BY day ORDER BY day
+            """,
+            days,
+        )
+        result_rows = await conn.fetch(
+            """
+            SELECT DATE(created_at) AS day, COUNT(*) AS count
+            FROM results
+            WHERE created_at >= NOW() - ($1 * INTERVAL '1 day')
+            GROUP BY day ORDER BY day
+            """,
+            days,
+        )
+    return {
+        "days": days,
+        "registrations": [{"day": str(r["day"]), "count": r["count"]} for r in reg_rows],
+        "results":       [{"day": str(r["day"]), "count": r["count"]} for r in result_rows],
+    }
 
 
 # ---------------------------------------------------------------------------
