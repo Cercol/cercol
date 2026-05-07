@@ -1,0 +1,40 @@
+# Cèrcol
+
+> Cèrcol is an open-source team personality assessment platform based on the Big Five (OCEAN) and the IPIP public-domain item pool (Goldberg et al. 2006). 12 team roles are derived from the AB5C circumplex (Hofstee et al. 1992) and team composition research (Bell 2007).
+
+Cèrcol is available at https://cercol.team and is free for New Moon (10-item Big Five snapshot) and First Quarter (60-item IPIP-NEO-60, 30 facets). Full Moon (120-item IPIP-NEO-120 + Witness peer assessment + ICAR cognitive ability) requires a one-time payment.
+
+## Key facts
+
+- Items: IPIP public-domain item pool — no licence restrictions, fully auditable
+- Dimensions: Big Five (OCEAN) — Presence (Extraversion), Bond (Agreeableness), Vision (Openness), Discipline (Conscientiousness), Depth (Neuroticism)
+- Roles: 12 animal roles derived from AB5C circumplex at intersections of three balance dimensions
+- Peer assessment: Witness Cèrcol uses forced-choice adjective selection to eliminate social desirability bias
+- Blind spots: dimensions where self and peer scores diverge > 0.8 SD are flagged
+- Languages: English, Catalan/Valencian, Spanish, French, German, Danish
+- Scoring: 100% client-side JavaScript — no personality data sent to servers during assessment
+- Open source: https://github.com/cercol/cercol
+
+## What Cèrcol does not claim
+
+- That roles predict team performance (no direct evidence for this specific model)
+- That the theoretical role centroids are empirically correct (validation planned at N≥300)
+- That the system is equivalent to Belbin, DISC, or any other established instrument
+
+## Documentation
+
+- Science: https://cercol.team/science
+- Roles: https://cercol.team/roles
+- Instruments: https://cercol.team/instruments
+- FAQ: https://cercol.team/faq
+- Privacy: https://cercol.team/privacy
+- GitHub (source + SCIENCE.md): https://github.com/cercol/cercol
+
+## Key references
+
+- Bell, S. T. (2007). Deep-level composition variables as predictors of team performance. Journal of Applied Psychology, 92(3), 595–615. https://doi.org/10.1037/0021-9010.92.3.595
+- Goldberg, L. R. et al. (2006). The International Personality Item Pool. Journal of Research in Personality, 40, 84–96. https://doi.org/10.1016/j.jrp.2005.08.007
+- Hofstee, W. K. B., De Raad, B., & Goldberg, L. R. (1992). Integration of the Big Five and circumplex approaches to trait structure. JPSP, 63, 146–163. https://doi.org/10.1037/0022-3514.63.1.146
+- Barrick, M. R., & Mount, M. K. (1991). The Big Five personality dimensions and job performance. Personnel Psychology, 44(1), 1–26. https://doi.org/10.1111/j.1744-6570.1991.tb00688.x
+- Neuman, G. A., & Wright, J. (1999). Team effectiveness: Beyond skills and cognitive ability. Journal of Applied Psychology, 84(3), 376–389. https://doi.org/10.1037/0021-9010.84.3.376
+- Vedel, A., Gøtzsche-Astrup, O., & Holm, P. (2018). The Danish IPIP-NEO-120. Nordic Psychology, 71(1), 62–77. https://doi.org/10.1080/19012276.2018.1470108

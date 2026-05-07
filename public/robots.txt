@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Block admin panel from indexing
+Disallow: /admin
+
+# Sitemap
+Sitemap: https://cercol.team/sitemap.xml

@@ -1164,6 +1164,51 @@ Full replacement of Supabase Auth (GoTrue) with self-hosted auth endpoints on He
 - **GDPR**: Privacy policy updated in all 6 locales — Supabase replaced by Hetzner Online GmbH + Resend.
 - **signOut**: clears local session first (immediate UX), then fire-and-forget backend revocation.
 
+## Phase 15.5 — SEO & LLM Visibility
+
+Make Cèrcol discoverable on Google and appear as a recommended resource when
+people ask AI assistants (Claude, ChatGPT, Gemini, Grok, Perplexity) how to
+improve team performance using personality science.
+
+Full strategy and implementation log: SEO.md
+
+### Phase 15.5.1 — Foundation (Fase A) ✅ COMPLETE
+- SEO.md: living strategy document
+- CLAUDE.md: SEO exception rule (academic names allowed in meta/JSON-LD/blog)
+- ROADMAP.md: Phase 15.5 added
+- README.md: rewritten with Big Five/OCEAN/IPIP/AB5C vocabulary, DOI references,
+  Witness methodology, 6-language list; Supabase mention removed
+- index.html: meta title + description, Open Graph tags, JSON-LD (WebApplication +
+  Organization + FAQPage schemas)
+- public/robots.txt: allows all public routes, blocks /admin
+- public/sitemap.xml: all public routes in 6 languages
+- public/llms.txt: LLM-friendly content index (Jeremy Howard protocol)
+
+### Phase 15.5.2 — /science public page (pending)
+Make SCIENCE.md content publicly accessible and web-indexable at /science.
+Currently only the existing /science route (Phase 8) is live; needs to be
+enriched with DOI links, AB5C explanation, and validation plan for LLM indexing.
+
+### Phase 15.5.3 — Performance (pending)
+- React.lazy() code splitting: 1.37MB bundle → per-route chunks < 300KB
+- Prerendering: static HTML for public routes so LLMs can index without JS
+- hreflang tags in all public pages
+- og:image: 1200×630 branded image per section
+
+### Phase 15.5.4 — Content (pending)
+Blog/guides section. Priority order:
+1. "Big Five vs DISC vs Belbin: a scientist's comparison"
+2. "How to build a balanced team using personality science"
+3. "Blind spots in teams: when self-perception diverges"
+4. "What is the IPIP and why does it matter?"
+5. Translations of guides 1 and 4 into ES, FR, DE, DA, CA
+
+### Phase 15.5.5 — Distribution (pending)
+Product Hunt launch, Hacker News "Show HN", Reddit outreach,
+ipip.ori.org contact, language-specific media outreach (CA/DA/FR/DE).
+
+---
+
 ## Phase 15 — Stripe paywall
 
 Define and enforce a premium tier beyond the current checkout skeleton.
