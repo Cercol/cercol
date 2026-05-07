@@ -1215,6 +1215,30 @@
     "q6": {
       "q": "Kan jeg gentage vurderingerne?",
       "a": "Ja. De gratis instrumenter har ingen grænse. Hvert indsend er uafhængigt — gentagelse overskriver ikke tidligere resultater i din konto. Folk finder det ofte nyttigt at gentage Første Kvartal seks måneder eller et år senere for at se, hvad der har ændret sig."
+    },
+    "q7": {
+      "q": "Er Cèrcol baseret på Big Five (OCEAN)?",
+      "a": "Ja. Cèrcol måler personlighed med OCEAN-modellen (Big Five) via IPIP — den International Personality Item Pool, en samling af spørgsmål i det offentlige domæne, valideret i tusindvis af publicerede studier. De fem dimensioner er Tilstedeværelse (Ekstraversion), Bånd (Venlighed), Vision (Åbenhed), Disciplin (Samvittighedsfuldhed) og Dybde (Neuroticisme). Da IPIP er i det offentlige domæne, er der ingen licensbegrænsninger: den fulde itempool og scoringslogik er åben og citerbar."
+    },
+    "q8": {
+      "q": "Hvad adskiller Cèrcol fra Belbin, DISC eller StrengthsFinder?",
+      "a": "Tre ting adskiller Cèrcol. For det første stammer itemsene fra Big Five (OCEAN), den mest replikerede personlighedsmodel i akademisk forskning — ikke fra en proprietær ramme. For det andet er den fulde itempool (IPIP) og scoringspipelinen i det offentlige domæne og reviderbar; ingen sort boks. For det tredje bruger Vidne Cèrcol tvunget adjektivvalg i stedet for Likert-skalaer, hvilket eliminerer den sociale ønskværdighedsbias, der påvirker de fleste 360-feedbackværktøjer. Belbin og DISC bruger lukkede, proprietære metoder."
+    },
+    "q9": {
+      "q": "Kan jeg bruge Cèrcol til at vurdere hele mit team?",
+      "a": "Sidste Kvartal Cèrcol — en teamrapport, der viser rollefordeling og balance i gruppen — er under udvikling. Foreløbig kan du invitere hvert teammedlem til at gennemføre Fuldmåne uafhængigt og bruge Vidnet til at indhente eksterne perspektiver på hver person. Når teamrapporten lanceres, vil alle eksisterende Fuldmåne-resultater automatisk blive integreret."
+    },
+    "q10": {
+      "q": "Hvilke sprog er Cèrcol tilgængeligt på?",
+      "a": "Cèrcol er tilgængeligt på engelsk, catalansk/valenciansk, spansk, fransk, tysk og dansk. Alle seks sprog dækker den fulde vurdering — instrumentspørgsmål, resultater og alt indhold. Den danske oversættelse er baseret på den validerede tilpasning af Vedel, Gøtzsche-Astrup og Holm (2018, Nordic Psychology). Den franske oversættelse følger Thiry og Pioltis (2023) peer-reviewede metode (Université de Mons)."
+    },
+    "q11": {
+      "q": "Hvordan fungerer Vidnet-vurderingen præcist?",
+      "a": "Du sender et Vidne — en der kender dig godt — et unikt link. De ser fem adjektiver per runde, ét per personlighedsdimension, og vælger det, der passer bedst på dig, og det, der passer mindst. Dette format med tvunget valg eliminerer den sociale ønskværdighedsbias, der opstår ved Likert-vurderinger. Efter 20 runder sammenlignes deres scores med din selvrapport. Dimensioner, hvor forskellen overstiger 0,8 standardafvigelser, markeres som mulige blinde pletter. Du kan invitere op til 12 Vidner; scores gennemsnittes."
+    },
+    "q12": {
+      "q": "Hvad er blinde pletter?",
+      "a": "En blind plet er en personlighedsdimension, hvor din selvopfattelse og andres opfattelse af dig afviger betydeligt — mere end 0,8 standardafvigelser. Hvis du f.eks. vurderer dig selv lavt på Tilstedeværelse, men dine Vidner konsekvent vurderer dig højt, er dette en blind plet. Blinde pletter er hverken gode eller dårlige. De er information: de viser, hvor din selvopfattelse og andres oplevelse af dig ikke stemmer overens — det er ofte mere nyttigt end selve scoren."
     }
   },
   "instruments": {

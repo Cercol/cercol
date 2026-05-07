@@ -1215,6 +1215,30 @@
     "q6": {
       "q": "¿Puedo volver a hacer las evaluaciones?",
       "a": "Sí. Los instrumentos gratuitos no tienen límite. Cada envío es independiente — repetir la prueba no sobreescribe los resultados anteriores en tu cuenta. Muchas personas encuentran útil repetir First Quarter seis meses o un año después para ver qué ha cambiado."
+    },
+    "q7": {
+      "q": "¿Cèrcol está basado en el Big Five (OCEAN)?",
+      "a": "Sí. Cèrcol mide la personalidad con el modelo OCEAN (Big Five) a través del IPIP — el International Personality Item Pool, una colección de dominio público validada en miles de estudios publicados. Las cinco dimensiones son Presencia (Extraversión), Vínculo (Amabilidad), Visión (Apertura), Disciplina (Responsabilidad) y Profundidad (Neuroticismo). Al usar el IPIP no hay restricciones de licencia: el conjunto de ítems y la lógica de puntuación son abiertos y citables."
+    },
+    "q8": {
+      "q": "¿En qué se diferencia Cèrcol de Belbin, DISC o StrengthsFinder?",
+      "a": "Tres cosas diferencian a Cèrcol. Primero, los ítems provienen del Big Five (OCEAN), el modelo de personalidad más replicado en la investigación académica — no de un marco propietario. Segundo, el conjunto completo de ítems (IPIP) y el pipeline de puntuación son de dominio público y auditables; no hay caja negra. Tercero, el Testigo Cèrcol usa selección forzada de adjetivos en lugar de escalas Likert, lo que elimina el sesgo de deseabilidad social que afecta a la mayoría de herramientas de feedback 360. Belbin y DISC usan metodologías cerradas y propietarias."
+    },
+    "q9": {
+      "q": "¿Puedo usar Cèrcol para evaluar a todo el equipo?",
+      "a": "El Cèrcol de Cuarto Menguante — un informe de equipo que muestra la distribución de roles y el equilibrio del grupo — está en desarrollo. Por ahora, puedes invitar a cada miembro del equipo a completar Full Moon de forma independiente y usar el Testigo para obtener perspectivas externas de cada persona. Cuando el informe de equipo esté disponible, todos los resultados de Full Moon existentes se integrarán automáticamente."
+    },
+    "q10": {
+      "q": "¿En qué idiomas está disponible Cèrcol?",
+      "a": "Cèrcol está disponible en inglés, catalán/valenciano, español, francés, alemán y danés. Los seis idiomas cubren la evaluación completa — preguntas del instrumento, resultados y todo el contenido. La traducción danesa se basa en la adaptación validada de Vedel, Gøtzsche-Astrup y Holm (2018, Nordic Psychology). La traducción francesa sigue la metodología peer-reviewed de Thiry y Piolti (2023, Universidad de Mons)."
+    },
+    "q11": {
+      "q": "¿Cómo funciona exactamente el Testigo?",
+      "a": "Envías a un Testigo — alguien que te conoce bien — un enlace único. Ve cinco adjetivos por ronda, uno por cada dimensión de personalidad, y elige el que mejor te describe y el que menos. Este formato de elección forzada elimina el sesgo de deseabilidad social que aparece en las valoraciones tipo Likert. Tras 20 rondas, sus puntuaciones se comparan con tu autoinforme. Las dimensiones donde la diferencia supera 0,8 desviaciones estándar se marcan como posibles puntos ciegos. Puedes invitar hasta 12 Testigos; las puntuaciones se promedian."
+    },
+    "q12": {
+      "q": "¿Qué son los puntos ciegos?",
+      "a": "Un punto ciego es una dimensión de la personalidad donde cómo te ves tú y cómo te ven los demás diverge significativamente — más de 0,8 desviaciones estándar en esa dimensión. Por ejemplo, si te valoras bajo en Presencia pero tus Testigos te valoran alto de forma consistente, esa diferencia es un punto ciego. Los puntos ciegos no son buenos ni malos. Son información: muestran dónde la autopercepción y la experiencia que los demás tienen de ti no coinciden, lo que a menudo es más útil que la puntuación en sí."
     }
   },
   "instruments": {

@@ -1215,6 +1215,30 @@
     "q6": {
       "q": "Kann ich die Auswertungen wiederholen?",
       "a": "Ja. Die kostenlosen Instrumente haben kein Limit. Jede Einreichung ist unabhängig — das Wiederholen überschreibt keine früheren Ergebnisse in deinem Konto. Viele finden es nützlich, Erstes Viertel sechs Monate oder ein Jahr später zu wiederholen, um zu sehen, was sich verändert hat."
+    },
+    "q7": {
+      "q": "Basiert Cèrcol auf dem Big Five (OCEAN)?",
+      "a": "Ja. Cèrcol misst die Persönlichkeit mit dem OCEAN-Modell (Big Five) über den IPIP — den International Personality Item Pool, eine gemeinfreie Sammlung von Items, die in Tausenden veröffentlichter Studien validiert wurde. Die fünf Dimensionen sind Präsenz (Extraversion), Band (Verträglichkeit), Vision (Offenheit), Disziplin (Gewissenhaftigkeit) und Tiefe (Neurotizismus). Da der IPIP gemeinfrei ist, gibt es keine Lizenzbeschränkungen: der vollständige Itempool und die Bewertungslogik sind offen und zitierbar."
+    },
+    "q8": {
+      "q": "Wie unterscheidet sich Cèrcol von Belbin, DISC oder StrengthsFinder?",
+      "a": "Drei Dinge unterscheiden Cèrcol. Erstens stammen die Items aus dem Big Five (OCEAN), dem am häufigsten replizierten Persönlichkeitsmodell der akademischen Forschung — nicht aus einem proprietären Rahmen. Zweitens sind der vollständige Itempool (IPIP) und die Bewertungspipeline gemeinfrei und prüfbar; keine schwarze Box. Drittens verwendet die Zeuge/Zeugin Cèrcol erzwungene Adjektivauswahl statt Likert-Skalen, was den Bias sozialer Erwünschtheit eliminiert, der die meisten 360-Feedback-Tools beeinträchtigt. Belbin und DISC verwenden geschlossene, proprietäre Methoden."
+    },
+    "q9": {
+      "q": "Kann ich Cèrcol verwenden, um mein gesamtes Team zu bewerten?",
+      "a": "Das letzte Viertel Cèrcol — ein Teambericht, der die Rollenverteilung und das Gleichgewicht der Gruppe zeigt — ist in Entwicklung. Für jetzt können Sie jedes Teammitglied einladen, den Vollmond unabhängig zu absolvieren und die Zeuge/Zeugin zu verwenden, um externe Perspektiven zu erhalten. Wenn der Teambericht verfügbar ist, werden alle vorhandenen Vollmond-Ergebnisse automatisch integriert."
+    },
+    "q10": {
+      "q": "In welchen Sprachen ist Cèrcol verfügbar?",
+      "a": "Cèrcol ist auf Englisch, Katalanisch/Valencianisch, Spanisch, Französisch, Deutsch und Dänisch verfügbar. Alle sechs Sprachen decken die vollständige Bewertung ab — Instrumentenfragen, Ergebnisse und alle Inhalte. Die dänische Übersetzung basiert auf der validierten Adaption von Vedel, Gøtzsche-Astrup und Holm (2018, Nordic Psychology). Die französische Übersetzung folgt der von Experten begutachteten Methodik von Thiry und Piolti (2023, Universität Mons)."
+    },
+    "q11": {
+      "q": "Wie funktioniert die Zeuge/Zeugin-Bewertung genau?",
+      "a": "Sie senden einer Zeuge/Zeugin — jemand, der Sie gut kennt — einen einzigartigen Link. Sie sehen pro Runde fünf Adjektive, eines pro Persönlichkeitsdimension, und wählen das, das am besten zu Ihnen passt, und das, das am wenigsten passt. Dieses Format erzwungener Wahl eliminiert den Bias sozialer Erwünschtheit, der bei Likert-Bewertungen auftritt. Nach 20 Runden werden ihre Werte mit Ihrer Selbsteinschätzung verglichen. Dimensionen, bei denen die Differenz 0,8 Standardabweichungen überschreitet, werden als mögliche blinde Flecken markiert. Sie können bis zu 12 Zeugen/Zeuginnen einladen; die Werte werden gemittelt."
+    },
+    "q12": {
+      "q": "Was sind blinde Flecken?",
+      "a": "Ein blinder Fleck ist eine Persönlichkeitsdimension, in der Ihre Selbstwahrnehmung und die Wahrnehmung anderer erheblich abweichen — mehr als 0,8 Standardabweichungen. Wenn Sie sich beispielsweise bei Präsenz niedrig einschätzen, Ihre Zeugen/Zeuginnen Sie aber konsequent hoch einschätzen, ist diese Lücke ein blinder Fleck. Blinde Flecken sind weder gut noch schlecht. Sie sind Informationen: Sie zeigen, wo Selbstwahrnehmung und die Erfahrung, die andere mit Ihnen machen, nicht übereinstimmen — das ist oft nützlicher als der Score selbst."
     }
   },
   "instruments": {
