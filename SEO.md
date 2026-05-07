@@ -14,7 +14,7 @@ Check the box when each is done and add the date.
 
 ### Search Console & webmaster tools
 
-- [ ] **Google Search Console** — https://search.google.com/search-console
+- [x] **Google Search Console** — verified May 2026. TXT record added via Porkbun API. Sitemap submitted.
   1. Add property → "URL prefix" → https://cercol.team
   2. Choose verification method "HTML tag" — Google gives you a meta tag like:
      `<meta name="google-site-verification" content="XXXX" />`
@@ -23,7 +23,7 @@ Check the box when each is done and add the date.
   5. Go to Sitemaps → submit https://cercol.team/sitemap.xml
   6. Done date: —
 
-- [ ] **Bing Webmaster Tools** — https://www.bing.com/webmasters
+- [x] **Bing Webmaster Tools** — verified May 2026. Sitemap submitted.
   1. Add site → https://cercol.team
   2. Choose XML Sitemap method → submit https://cercol.team/sitemap.xml
      (Bing can often auto-import from GSC — tick "Import from GSC" if shown)
@@ -318,6 +318,10 @@ Record results in a simple doc/spreadsheet with date and screenshot.
 | Prerendering (puppeteer, 7 routes) | ✅ | May 2026 |
 | deploy:full script | ✅ | May 2026 |
 | /science page enrichment | pending | — |
+| FAQ expanded: 6 → 12 questions (EN/CA/ES/FR/DE/DA) | ✅ | May 2026 |
+| FAQPage JSON-LD expanded (9 Q&A pairs) | ✅ | May 2026 |
+| GSC verified + sitemap submitted | ✅ | May 2026 |
+| Bing Webmaster Tools verified + sitemap | ✅ | May 2026 |
 | Blog: Big Five vs DISC vs Belbin | pending | — |
 | Blog: How to build a balanced team | pending | — |
 | Blog: Blind spots in teams | pending | — |
