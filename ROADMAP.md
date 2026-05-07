@@ -1189,11 +1189,16 @@ Make SCIENCE.md content publicly accessible and web-indexable at /science.
 Currently only the existing /science route (Phase 8) is live; needs to be
 enriched with DOI links, AB5C explanation, and validation plan for LLM indexing.
 
-### Phase 15.5.3 — Performance (pending)
-- React.lazy() code splitting: 1.37MB bundle → per-route chunks < 300KB
-- Prerendering: static HTML for public routes so LLMs can index without JS
-- hreflang tags in all public pages
-- og:image: 1200×630 branded image per section
+### Phase 15.5.3 — Performance ✅ COMPLETE
+- React.lazy() code splitting: 1.37MB monolith → 20+ small page chunks (1–33 kB each) +
+  vendor chunks (vendor-react 174 kB, vendor-router 42 kB, vendor-i18n 46 kB).
+  HomePage remains eager. PageLoader.jsx spinner as Suspense fallback.
+- Prerendering: scripts/prerender.mjs — headless Chrome renders 7 public routes
+  (/, /about, /instruments, /roles, /science, /faq, /privacy) and saves static HTML
+  to dist/<route>/index.html. Forced --lang=en-US for canonical English HTML.
+  npm run deploy:full = build + prerender + gh-pages.
+- hreflang: 6-language alternate links in index.html (added in Phase 15.5.1).
+- og:image pending (low priority — email-logo.png used as fallback).
 
 ### Phase 15.5.4 — Content (pending)
 Blog/guides section. Priority order:

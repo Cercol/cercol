@@ -81,25 +81,28 @@ Persönlichkeitstest Team, Big Five Team kostenlos, IPIP Deutsch, Teamrollen Per
 
 ## Technical SEO checklist
 
-### ✅ Implemented (Phase 17)
-- [ ] Meta tags (title + description) per public route
-- [ ] Open Graph tags (og:title, og:description, og:image, og:type)
-- [ ] hreflang for all 6 languages on all public pages
-- [ ] JSON-LD: WebApplication schema on home
-- [ ] JSON-LD: Organization schema on home
-- [ ] JSON-LD: FAQPage schema on home
-- [ ] public/sitemap.xml generated at build
-- [ ] public/robots.txt — allows all, blocks /admin
-- [ ] public/llms.txt — LLM-friendly content index
-- [ ] GitHub README rewritten (academic names, DOIs, topics)
-- [ ] GitHub repo topics: big-five, ocean-personality, ipip, etc.
+### ✅ Implemented (Phase 15.5.1 + 15.5.3)
+- [x] Meta tags (title + description) per public route
+- [x] Open Graph tags (og:title, og:description, og:image, og:type)
+- [x] hreflang for all 6 languages on all public pages
+- [x] JSON-LD: WebApplication schema on home
+- [x] JSON-LD: Organization schema on home
+- [x] JSON-LD: FAQPage schema on home (6 Q&A pairs)
+- [x] public/sitemap.xml — 8 routes × 6 languages with hreflang alternates
+- [x] public/robots.txt — allows all, blocks /admin
+- [x] public/llms.txt — LLM-friendly content index (Jeremy Howard protocol)
+- [x] GitHub README rewritten (academic names, DOIs, comparison table, 12 roles)
+- [x] GitHub repo topics: big-five, ocean-personality, ipip, ab5c, etc. (10 topics)
+- [x] React.lazy() code splitting: 1.37MB → page chunks 1–33 kB + vendor chunks
+- [x] Prerendering: 7 public routes → static HTML (scripts/prerender.mjs, puppeteer-core)
+- [x] deploy:full script: vite build + prerender + gh-pages
 
 ### Pending
-- [ ] Prerendering static HTML for public routes (vite-plugin-prerender)
-- [ ] Code splitting: React.lazy() per route (Core Web Vitals — 1.37MB bundle)
-- [ ] /science public page (currently internal SCIENCE.md only)
-- [ ] Blog/guides section (/blog route)
-- [ ] og:image — 1200×630 branded image per section
+- [ ] /science page enrichment: add DOI links, expand references section
+- [ ] Blog/guides section: /blog route + first 2 articles
+- [ ] og:image — 1200×630 branded image per route
+- [ ] Submit sitemap to Google Search Console
+- [ ] Submit sitemap to Bing Webmaster Tools
 
 ---
 
@@ -243,10 +246,14 @@ Record results in a simple doc/spreadsheet with date and screenshot.
 | public/sitemap.xml | ✅ | May 2026 |
 | public/llms.txt | ✅ | May 2026 |
 | GitHub repo topics (10 topics) | ✅ | May 2026 |
-| /science public page enriched | pending | — |
-| Prerendering (vite-plugin-prerender) | pending | — |
-| React.lazy() code splitting | pending | — |
+| React.lazy() code splitting | ✅ | May 2026 |
+| Vendor chunk splitting (cache) | ✅ | May 2026 |
+| Prerendering (puppeteer, 7 routes) | ✅ | May 2026 |
+| deploy:full script | ✅ | May 2026 |
+| /science page enrichment | pending | — |
 | Blog: Big Five vs DISC vs Belbin | pending | — |
 | Blog: How to build a balanced team | pending | — |
 | Blog: Blind spots in teams | pending | — |
 | Blog: What is the IPIP? | pending | — |
+| og:image 1200×630 per route | pending | — |
+| Google Search Console sitemap submit | pending | — |
