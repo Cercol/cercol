@@ -1214,6 +1214,30 @@
     "q6": {
       "q": "Puc repetir les avaluacions?",
       "a": "Sí. Els instruments gratuïts no tenen límit. Cada enviament és independent — repetir-ne un no sobreescriu els resultats anteriors del teu compte. Moltes persones troben útil repetir el Quart Creixent sis mesos o un any més tard per veure el que ha canviat."
+    },
+    "q7": {
+      "q": "Cèrcol es basa en el Big Five (OCEAN)?",
+      "a": "Sí. Cèrcol mesura la personalitat amb el model OCEAN (Big Five) a través de l'IPIP — l'International Personality Item Pool, una col·lecció de domini públic validada en milers d'estudis publicats. Les cinc dimensions són Presència (Extraversió), Vincle (Amabilitat), Visió (Obertura), Disciplina (Responsabilitat) i Profunditat (Neuroticisme). Com que l'IPIP és de domini públic no hi ha restriccions de llicència: el conjunt d'ítems i la lògica de puntuació són oberts i citats."
+    },
+    "q8": {
+      "q": "En què es diferencia Cèrcol de Belbin, DISC o StrengthsFinder?",
+      "a": "Tres coses diferencien Cèrcol. Primer, els ítems provenen del Big Five (OCEAN), el model de personalitat més replicat en la recerca acadèmica — no d'un marc propietari. Segon, el conjunt complet d'ítems (IPIP) i el pipeline de puntuació són de domini públic i auditables; no hi ha caixa negra. Tercer, el Testimoni Cèrcol usa selecció forçada d'adjectius en lloc d'escales Likert, cosa que elimina el biaix de desitjabilitat social que afecta la majoria d'eines de feedback 360. Belbin i DISC usen metodologies tancades i propietàries."
+    },
+    "q9": {
+      "q": "Puc usar Cèrcol per avaluar tot l'equip?",
+      "a": "El Quart Minvant Cèrcol — un informe d'equip que mostra la distribució de rols i l'equilibri del grup — està en desenvolupament. De moment, pots convidar cada membre de l'equip a completar la Lluna Plena independentment i usar el Testimoni per obtenir perspectives externes de cadascun. Quan l'informe d'equip s'active, tots els resultats de Lluna Plena existents s'hi integraran automàticament."
+    },
+    "q10": {
+      "q": "En quins idiomes està disponible Cèrcol?",
+      "a": "Cèrcol està disponible en anglès, català/valencià, espanyol, francès, alemany i danès. Els sis idiomes cobreixen l'avaluació completa — preguntes de l'instrument, resultats i tot el contingut. La traducció danesa es basa en l'adaptació validada de Vedel, Gøtzsche-Astrup i Holm (2018, Nordic Psychology). La traducció francesa segueix la metodologia peer-reviewed de Thiry i Piolti (2023, Universitat de Mons)."
+    },
+    "q11": {
+      "q": "Com funciona exactament el Testimoni?",
+      "a": "Envies a un Testimoni — algú que et coneix bé — un enllaç únic. Veu cinc adjectius per ronda, un per a cada dimensió de personalitat, i tria el que millor t'encaixa i el que menys. Aquest format de selecció forçada elimina el biaix de desitjabilitat social que apareix en les valoracions tipus Likert. Després de 20 rondes, les seues puntuacions es comparen amb el teu autoinforme. Les dimensions on la diferència supera 0,8 desviacions estàndard es marquen com a possibles punts cecs. Pots convidar fins a 12 Testimonis; les puntuacions es promitgen."
+    },
+    "q12": {
+      "q": "Què són els punts cecs?",
+      "a": "Un punt cec és una dimensió de la personalitat on com et veus tu i com et veuen els altres divergeix significativament — més de 0,8 desviacions estàndard en aquella dimensió. Per exemple, si et valores baix en Presència però els teus Testimonis et valoren alt de manera consistent, aquesta diferència és un punt cec. Els punts cecs no són bons ni dolents. Són informació: mostren on l'autopercepció i l'experiència que els altres tenen de tu no coincideixen, cosa que sovint és més útil que la puntuació en si."
     }
   },
   "instruments": {

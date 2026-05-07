@@ -1215,6 +1215,30 @@
     "q6": {
       "q": "Puis-je reprendre les évaluations ?",
       "a": "Oui. Les instruments gratuits n'ont pas de limite. Chaque soumission est indépendante — reprendre ne remplace pas les résultats précédents dans votre compte. Les gens trouvent souvent utile de reprendre Premier Quartier six mois ou un an plus tard pour voir ce qui a changé."
+    },
+    "q7": {
+      "q": "Cèrcol est-il basé sur le Big Five (OCEAN) ?",
+      "a": "Oui. Cèrcol mesure la personnalité avec le modèle OCEAN (Big Five) via l'IPIP — l'International Personality Item Pool, une collection dans le domaine public validée dans des milliers d'études publiées. Les cinq dimensions sont Présence (Extraversion), Lien (Agréabilité), Vision (Ouverture), Discipline (Conscienciosité) et Profondeur (Névrosisme). L'utilisation de l'IPIP signifie qu'il n'y a pas de restriction de licence : l'ensemble des items et la logique de scoring sont ouverts et citables."
+    },
+    "q8": {
+      "q": "En quoi Cèrcol se distingue-t-il de Belbin, DISC ou StrengthsFinder ?",
+      "a": "Trois points distinguent Cèrcol. Premièrement, les items proviennent du Big Five (OCEAN), le modèle de personnalité le plus répliqué en recherche académique — pas d'un cadre propriétaire. Deuxièmement, l'ensemble complet des items (IPIP) et le pipeline de scoring sont dans le domaine public et auditables ; pas de boîte noire. Troisièmement, le·la Témoin Cèrcol utilise une sélection forcée d'adjectifs plutôt que des échelles de Likert, ce qui élimine le biais de désirabilité sociale qui affecte la plupart des outils de feedback 360. Belbin et DISC utilisent des méthodologies fermées et propriétaires."
+    },
+    "q9": {
+      "q": "Puis-je utiliser Cèrcol pour évaluer toute mon équipe ?",
+      "a": "Le Cèrcol de Dernier Quartier — un rapport d'équipe montrant la distribution des rôles et l'équilibre du groupe — est en cours de développement. Pour l'instant, vous pouvez inviter chaque membre de l'équipe à compléter la Pleine Lune indépendamment et utiliser le·la Témoin pour obtenir des perspectives externes. Lorsque le rapport d'équipe sera disponible, tous les résultats de Pleine Lune existants s'y intégreront automatiquement."
+    },
+    "q10": {
+      "q": "Dans quelles langues Cèrcol est-il disponible ?",
+      "a": "Cèrcol est disponible en anglais, catalan/valencien, espagnol, français, allemand et danois. Les six langues couvrent l'évaluation complète — questions de l'instrument, résultats et tout le contenu. La traduction danoise est basée sur l'adaptation validée de Vedel, Gøtzsche-Astrup et Holm (2018, Nordic Psychology). La traduction française suit la méthodologie évaluée par les pairs de Thiry et Piolti (2023, Université de Mons)."
+    },
+    "q11": {
+      "q": "Comment fonctionne exactement l'évaluation par le·la Témoin ?",
+      "a": "Vous envoyez à un·e Témoin — quelqu'un qui vous connaît bien — un lien unique. Il ou elle voit cinq adjectifs par tour, un par dimension de personnalité, et choisit celui qui vous correspond le mieux et celui qui vous correspond le moins. Ce format de choix forcé élimine le biais de désirabilité sociale qui apparaît dans les évaluations de type Likert. Après 20 tours, ses scores sont comparés à votre autoévaluation. Les dimensions où l'écart dépasse 0,8 écart-type sont signalées comme des angles morts potentiels. Vous pouvez inviter jusqu'à 12 Témoins ; les scores sont moyennés."
+    },
+    "q12": {
+      "q": "Que sont les angles morts ?",
+      "a": "Un angle mort est une dimension de la personnalité où votre perception de vous-même et la perception des autres divergent significativement — plus de 0,8 écart-type sur cette dimension. Par exemple, si vous vous évaluez bas·se sur Présence mais que vos Témoins vous évaluent régulièrement haut·e, cet écart est un angle mort. Les angles morts ne sont ni bons ni mauvais. Ce sont des informations : ils montrent où votre auto-perception et l'expérience que les autres ont de vous ne coïncident pas, ce qui est souvent plus utile que le score lui-même."
     }
   },
   "instruments": {
