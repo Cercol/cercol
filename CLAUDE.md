@@ -115,9 +115,32 @@ scripts/         # Utility scripts for seeding/clearing test data
 sql/             # Standalone SQL seeds (facet tables)
 db/              # PostgreSQL migrations (001–012; was supabase/ before Phase 14.5)
 
+## SEO conventions
+
+Academic instrument names (Big Five, OCEAN, IPIP, NEO, AB5C) are PROHIBITED
+in all user-facing product text (CLAUDE.md § Code conventions), but are
+REQUIRED in SEO contexts so search engines and LLMs can index Cèrcol correctly.
+
+**Use academic names in:**
+- `<title>` and `<meta name="description">` tags
+- JSON-LD structured data (WebApplication, FAQPage, Organization)
+- `/science` public page and any `/blog` or `/guides` content
+- GitHub README.md and llms.txt
+- Open Graph tags (og:title, og:description)
+
+**Never use academic names in:**
+- Instrument pages (NewMoonPage, FirstQuarterPage, FullMoonPage, WitnessPage)
+- Results and report pages
+- Role cards, onboarding modal, any UI copy
+- i18n locale keys (src/locales/*.json)
+- Code comments (use Cèrcol dimension names)
+
+Full SEO and LLM visibility strategy: SEO.md
+
 ## Extended documentation
 - Phase history and roadmap: ROADMAP.md
 - Scientific foundation and scoring: SCIENCE.md
 - Product vocabulary, instruments and copy: PRODUCT.md
+- SEO and LLM visibility strategy: SEO.md
 
 Read these files when the task requires it. CLAUDE.md is always read first.
