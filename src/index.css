@@ -21,6 +21,8 @@ button, input, textarea, select {
   font-size: 1rem;
   line-height: 1.75;
 }
+
+/* Headings */
 .prose-article h2 {
   font-family: 'Playfair Display', Georgia, serif;
   font-size: 1.5rem;
@@ -29,67 +31,87 @@ button, input, textarea, select {
   margin-top: 2.5rem;
   margin-bottom: 0.75rem;
   line-height: 1.3;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid var(--mm-color-blue);
 }
 .prose-article h3 {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   font-weight: 700;
-  color: #1f2937;
+  color: #4b5563;
   margin-top: 2rem;
   margin-bottom: 0.5rem;
   line-height: 1.4;
 }
+
+/* Paragraphs and lists */
 .prose-article p {
   margin-bottom: 1.25rem;
 }
 .prose-article ul,
 .prose-article ol {
   margin-bottom: 1.25rem;
-  padding-left: 1.5rem;
+  padding-left: 1.75rem;
 }
 .prose-article ul { list-style-type: disc; }
 .prose-article ol { list-style-type: decimal; }
 .prose-article li {
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.5rem;
+  padding-left: 0.25rem;
 }
+
+/* Inline text styles */
 .prose-article strong {
   font-weight: 700;
-  color: #111827;
+  color: #111111;
 }
 .prose-article em {
   font-style: italic;
 }
 .prose-article a {
   color: var(--mm-color-blue);
-  text-decoration: underline;
+  text-decoration: none;
   text-underline-offset: 2px;
 }
 .prose-article a:hover {
-  opacity: 0.8;
+  text-decoration: underline;
+  opacity: 0.85;
 }
+
+/* Blockquote — blue left border, light blue background */
 .prose-article blockquote {
-  border-left: 3px solid var(--mm-color-blue);
-  padding-left: 1rem;
-  margin-left: 0;
-  margin-right: 0;
-  margin-bottom: 1.25rem;
-  color: #6b7280;
+  border-left: 4px solid var(--mm-color-blue);
+  background: var(--mm-color-blue-tint);
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  border-radius: 0 8px 8px 0;
   font-style: italic;
+  color: #1e3a5f;
 }
+.prose-article blockquote strong {
+  color: #1a3a6b;
+  font-style: normal;
+}
+
+/* Horizontal rule */
 .prose-article hr {
   border: none;
   border-top: 1px solid #e5e7eb;
   margin: 2rem 0;
 }
+
+/* Inline code */
 .prose-article code {
   font-family: ui-monospace, monospace;
   font-size: 0.875rem;
-  background-color: #f3f4f6;
+  background-color: var(--mm-color-gray-100);
   padding: 0.1rem 0.3rem;
   border-radius: 3px;
 }
+
+/* Code blocks */
 .prose-article pre {
-  background-color: #f3f4f6;
+  background-color: var(--mm-color-gray-100);
   border-radius: 8px;
   padding: 1rem;
   overflow-x: auto;
@@ -98,6 +120,47 @@ button, input, textarea, select {
 .prose-article pre code {
   background: none;
   padding: 0;
+}
+
+/* Images — rounded, centered, subtle shadow */
+.prose-article img {
+  max-width: 100%;
+  border-radius: 8px;
+  display: block;
+  margin: 1.5rem auto;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Tables — bordered, zebra-striped, responsive */
+.prose-article .table-wrapper {
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+.prose-article table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  overflow: hidden;
+}
+.prose-article th {
+  background: var(--mm-color-blue);
+  color: #ffffff;
+  text-align: left;
+  padding: 10px 14px;
+  font-weight: 600;
+}
+.prose-article td {
+  padding: 9px 14px;
+  border-bottom: 1px solid #e5e7eb;
+  vertical-align: top;
+}
+.prose-article tr:nth-child(even) {
+  background: var(--mm-color-gray-50);
+}
+.prose-article tr:hover {
+  background: var(--mm-color-blue-tint);
 }
 
 /* Print styles — Last Quarter report single-page layout */
