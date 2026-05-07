@@ -556,11 +556,18 @@ async def create_witness_sessions(
             })
             # Email the witness their link if we have their address
             if witness.email and witness.email.strip():
+                # Look up witness language (they may not have a profile yet)
+                witness_lang_row = await conn.fetchrow(
+                    "SELECT native_language FROM profiles WHERE email = $1",
+                    witness.email.strip().lower(),
+                )
+                witness_lang = witness_lang_row["native_language"] if witness_lang_row else None
                 asyncio.create_task(send_witness_assigned(
                     witness_name    = witness.name.strip(),
                     witness_email   = witness.email.strip(),
                     subject_display = subject_display,
                     link            = link,
+                    lang            = witness_lang or "en",
                 ))
     return created
 
@@ -630,10 +637,18 @@ async def complete_witness_session(
         )
 
     if subject_row and subject_row["subject_email"]:
+        # Look up subject's preferred language
+        async with _pool.acquire() as lang_conn:
+            subject_lang_row = await lang_conn.fetchrow(
+                "SELECT native_language FROM profiles WHERE email = $1",
+                subject_row["subject_email"],
+            )
+        subject_lang = subject_lang_row["native_language"] if subject_lang_row else "en"
         asyncio.create_task(send_witness_completed(
             subject_email = subject_row["subject_email"],
             subject_name  = subject_row["subject_display"] or "",
             witness_name  = subject_row["witness_name"],
+            lang          = subject_lang or "en",
         ))
 
     return {"ok": True}
@@ -770,12 +785,22 @@ async def create_group(
                 errors.append(email)
 
     # Send invitation emails outside the DB transaction (fire-and-forget)
-    for email in invited_emails:
-        asyncio.create_task(send_group_invitation(
-            invited_email = email,
-            group_name    = name,
-            inviter_name  = creator_name,
-        ))
+    # Look up each recipient's preferred language in one query
+    if invited_emails:
+        async with _pool.acquire() as lang_conn:
+            lang_rows = await lang_conn.fetch(
+                "SELECT email, native_language FROM profiles WHERE email = ANY($1)",
+                invited_emails,
+            )
+        lang_by_email = {r["email"]: r["native_language"] for r in lang_rows}
+
+        for email in invited_emails:
+            asyncio.create_task(send_group_invitation(
+                invited_email = email,
+                group_name    = name,
+                inviter_name  = creator_name,
+                lang          = lang_by_email.get(email) or "en",
+            ))
 
     return {"id": str(group_id), "name": name, "errors": errors}
 
