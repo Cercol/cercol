@@ -143,7 +143,7 @@ async function publicFetch(path, options = {}) {
  *   currentPassword is required when the account already has a password.
  */
 export async function setMyPassword({ currentPassword, newPassword }) {
-  return authFetch('/auth/password/set', {
+  return authFetch('/me/password', {
     method: 'POST',
     body: JSON.stringify({
       password: newPassword,
