@@ -15,11 +15,29 @@ All scoring algorithms and item sources are documented and citable.
 - Tailwind CSS
 - FastAPI + uvicorn (backend — Hetzner VPS 188.245.60.20, api.cercol.team, systemd + Caddy) [Phase 4+]
 - PostgreSQL 14 (Hetzner — all data, auth tables included since Phase 15)
-- Auth: self-hosted (api/auth.py) — magic link (Resend), password (bcrypt), Google OAuth (direct)
+- Auth: self-hosted (api/auth.py) — magic link (Resend), password (bcrypt direct, no passlib), Google OAuth (direct)
   - JWT: HS256 / JWT_SECRET env var (replaces Supabase ES256/JWKS)
   - Tokens: access token in JS module variable, refresh token in localStorage `cercol_rt`
 - Supabase: NO LONGER USED (migrated fully to Hetzner in Phase 15)
 - All scoring happens client-side in JavaScript
+
+## Deployment pipeline
+
+### Frontend (src/**, public/**, index.html, vite.config.js)
+Push to `main` → GitHub Action (`deploy-frontend.yml`) → `npm run build` → `gh-pages` → cercol.team
+
+VITE_API_URL is set in `.env.production` (committed, non-secret — it's just the public API URL).
+
+### Backend (api/**)
+Push to `main` → GitHub Action (`deploy-backend.yml`) → SSH to Hetzner → `git pull origin main` → `systemctl restart cercol-api`
+
+Both actions trigger automatically when their respective paths change.
+CI (`ci.yml`) runs on every push and PR: build, bundle sanity, frontend tests, backend tests.
+
+### Manual deploy (emergency only)
+Frontend: `npm run deploy` (builds locally and pushes dist/ to gh-pages branch)
+Backend: `scp api/*.py root@188.245.60.20:/home/cercol/api/api/ && ssh root@188.245.60.20 "systemctl restart cercol-api"`
+Avoid manual deploys — they desync local and server state.
 
 ## Design system (mm-design)
 All design tokens come from **mm-design** (https://github.com/miquelmatoses/mm-design), installed as an npm git dependency.
@@ -54,12 +72,15 @@ README badges must use mm-design palette: `cf3339`, `0047ba`, `f1c22f`, `427c42`
   This is the only permitted inline SVG exception outside MoonIcons.jsx.
 
 ## Claude Code workflow
-After every successful npm run deploy, Claude Code must:
+After completing a phase (frontend or backend), Claude Code must:
 1. Mark the current phase as ✅ COMPLETE in ROADMAP.md
 2. Update the phase description to reflect exactly what was implemented
    (remove items not done, add relevant notes if needed)
 3. Do not modify any other section of ROADMAP.md
 4. Run: git add -A && git commit -m "chore: complete [phase name]" && git push origin main
+
+GitHub Actions will auto-deploy whatever changed (frontend, backend, or both).
+Do NOT run `npm run deploy` manually — the Action does it.
 This applies to every phase, without exception.
 
 ## i18n
@@ -100,12 +121,19 @@ src/
   locales/       # i18n translation files (en.json, ca.json, …) — 889 keys × 6 languages
   assets/        # static assets: icons/animals/, illustrations/
 
-api/             # FastAPI backend (Python) — deployed to Hetzner VPS via systemd + Caddy
+api/             # FastAPI backend (Python) — auto-deployed to Hetzner via GitHub Actions
   main.py        # FastAPI app (routes, auth middleware, async DB helpers)
+  auth.py        # Auth routes: magic link, password (bcrypt direct), Google OAuth, JWT
   scoring.py     # Pure Python scoring — mirrors src/utils/role-scoring.js (no external deps)
-  emails.py      # Transactional email via Resend SDK
+  emails.py      # Transactional email via Resend SDK (6 languages, per-recipient)
+  requirements.txt  # Python deps — changing this does NOT auto-install on server (do manually)
   tests/         # pytest test suite (13 scoring tests)
   railway.toml   # Legacy Railway deployment config — NOT the active deployment (Hetzner is)
+
+.github/workflows/
+  ci.yml              # Build + lint + tests (all pushes and PRs)
+  deploy-frontend.yml # Auto-deploy frontend to GitHub Pages on push to main
+  deploy-backend.yml  # Auto-deploy backend to Hetzner on push to main
 
 docs/            # One-off reference documents (not living project docs)
   email-signature.html   # Spark HTML email signature for hello@cercol.team
