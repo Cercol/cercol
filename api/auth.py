@@ -30,7 +30,7 @@ import httpx
 from fastapi import APIRouter, HTTPException, Query, Request, status
 from fastapi.responses import RedirectResponse
 from jose import jwt
-from passlib.context import CryptContext
+import bcrypt as _bcrypt_lib
 from pydantic import BaseModel
 from slowapi.errors import RateLimitExceeded  # noqa: F401 — used indirectly via app handler
 
@@ -54,7 +54,16 @@ _GOOGLE_CLIENT_ID     = os.environ.get("GOOGLE_CLIENT_ID", "")
 _GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET", "")
 _GOOGLE_REDIRECT_URI  = f"{_BACKEND_URL}/auth/google/callback"
 
-_pwd = CryptContext(schemes=["bcrypt"], deprecated="auto")
+def _pwd_hash(password: str) -> str:
+    """Hash a plaintext password with bcrypt. Returns a UTF-8 string."""
+    return _bcrypt_lib.hashpw(password.encode("utf-8"), _bcrypt_lib.gensalt()).decode("utf-8")
+
+def _pwd_verify(password: str, hashed: str) -> bool:
+    """Verify a plaintext password against a bcrypt hash string."""
+    try:
+        return _bcrypt_lib.checkpw(password.encode("utf-8"), hashed.encode("utf-8"))
+    except Exception:
+        return False
 
 # ---------------------------------------------------------------------------
 # Pool accessor (deferred import avoids circular reference with main.py)
@@ -309,7 +318,7 @@ async def password_signup(request: Request, body: PasswordSignupBody):
     if len(password) < 8:
         raise HTTPException(status_code=400, detail="Password must be at least 8 characters")
 
-    hashed = _pwd.hash(password)
+    hashed = _pwd_hash(password)
 
     async with _pool().acquire() as conn:
         existing = await conn.fetchrow(
@@ -353,7 +362,7 @@ async def password_signin(request: Request, body: PasswordSigninBody):
 
         if row is None or row["password_hash"] is None:
             raise HTTPException(status_code=401, detail="Invalid credentials")
-        if not _pwd.verify(password, row["password_hash"]):
+        if not _pwd_verify(password, row["password_hash"]):
             raise HTTPException(status_code=401, detail="Invalid credentials")
 
         user_id = str(row["id"])
