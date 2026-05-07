@@ -40,6 +40,7 @@ from scoring import (
 )
 from emails import send_witness_assigned, send_witness_completed, send_group_invitation
 import auth as auth_module
+import blog as blog_module
 
 
 # ---------------------------------------------------------------------------
@@ -174,6 +175,7 @@ async def lifespan(app: FastAPI):
         max_size=10,
         init=_init_connection,
     )
+    app.state.pool = _pool  # expose to routers via request.app.state.pool
     # Compute empirical norms on startup (non-fatal if DB has no data yet)
     try:
         await _recompute_norms()
@@ -218,6 +220,9 @@ app.add_middleware(
 
 # Auth routes (magic link, password, Google OAuth, refresh, signout)
 app.include_router(auth_module.router)
+
+# Blog routes
+app.include_router(blog_module.router)
 
 # ---------------------------------------------------------------------------
 # Config
