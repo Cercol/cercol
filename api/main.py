@@ -408,7 +408,7 @@ async def password_set(
     - If the account has no password yet (Google-only), sets it without requiring the current one.
     - If a password already exists, current_password is required.
     """
-    from auth import _pwd  # noqa: PLC0415
+    from auth import _pwd_hash, _pwd_verify  # noqa: PLC0415
 
     new_password     = body.password
     current_password = body.current_password
@@ -427,10 +427,10 @@ async def password_set(
         if row["password_hash"] is not None:
             if not current_password:
                 raise HTTPException(status_code=400, detail="Current password required")
-            if not _pwd.verify(current_password, row["password_hash"]):
+            if not _pwd_verify(current_password, row["password_hash"]):
                 raise HTTPException(status_code=401, detail="Current password is incorrect")
 
-        hashed = _pwd.hash(new_password)
+        hashed = _pwd_hash(new_password)
         await conn.execute(
             "UPDATE auth_users SET password_hash = $1 WHERE id = $2",
             hashed, user_id,
