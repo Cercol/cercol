@@ -100,4 +100,54 @@
     <priority>0.3</priority>
   </url>
 
+  <!-- Blog index -->
+  <url>
+    <loc>https://cercol.team/blog</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog"/>
+    <lastmod>2026-05-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Blog: Big Five vs DISC vs Belbin -->
+  <url>
+    <loc>https://cercol.team/blog/big-five-vs-disc-vs-belbin</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/big-five-vs-disc-vs-belbin"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/big-five-vs-disc-vs-belbin"/>
+    <lastmod>2026-05-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Blog: How to build a balanced team -->
+  <url>
+    <loc>https://cercol.team/blog/how-to-build-a-balanced-team</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/how-to-build-a-balanced-team"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/how-to-build-a-balanced-team"/>
+    <lastmod>2026-05-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Blog: Blind spots in teams -->
+  <url>
+    <loc>https://cercol.team/blog/blind-spots-in-teams</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/blind-spots-in-teams"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/blind-spots-in-teams"/>
+    <lastmod>2026-05-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Blog: What is the IPIP -->
+  <url>
+    <loc>https://cercol.team/blog/what-is-the-ipip</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/what-is-the-ipip"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/what-is-the-ipip"/>
+    <lastmod>2026-05-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
 </urlset>
