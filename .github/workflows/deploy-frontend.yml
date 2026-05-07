@@ -34,9 +34,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build
-        run: npm run build
-        # VITE_API_URL is read from .env.production (committed, non-secret)
+      - name: Build + prerender
+        run: npm run build:full
+        # VITE_API_URL is read from .env.production (committed, non-secret).
+        # build:full = vite build + scripts/prerender.mjs (puppeteer-core).
+        # ubuntu-latest includes Chromium; CHROME_PATH points to it.
+        env:
+          CHROME_PATH: /usr/bin/google-chrome-stable
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4

@@ -165,7 +165,7 @@ Persönlichkeitstest Team, Big Five Team kostenlos, IPIP Deutsch, Teamrollen Per
 - [x] deploy:full script: vite build + prerender + gh-pages
 
 ### Pending
-- [ ] /science page enrichment: add DOI links, expand references section
+- [x] /science page enrichment: DOI links for all 9 references, validation plan section (6 languages)
 - [ ] Blog/guides section: /blog route + first 2 articles
 - [ ] og:image — 1200×630 branded image per route
 - [ ] Submit sitemap to Google Search Console
@@ -317,7 +317,7 @@ Record results in a simple doc/spreadsheet with date and screenshot.
 | Vendor chunk splitting (cache) | ✅ | May 2026 |
 | Prerendering (puppeteer, 7 routes) | ✅ | May 2026 |
 | deploy:full script | ✅ | May 2026 |
-| /science page enrichment | pending | — |
+| /science page enrichment | ✅ | May 2026 |
 | FAQ expanded: 6 → 12 questions (EN/CA/ES/FR/DE/DA) | ✅ | May 2026 |
 | FAQPage JSON-LD expanded (9 Q&A pairs) | ✅ | May 2026 |
 | GSC verified + sitemap submitted | ✅ | May 2026 |

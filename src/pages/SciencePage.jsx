@@ -29,34 +29,14 @@ function Section({ eyebrow, heading, children, accent = 'gray' }) {
 // Academic references — same in all languages; not i18n'd
 const REFERENCES = [
   {
-    key: 'tipi',
+    key: 'gosling2003',
     text: 'Gosling, S. D., Rentfrow, P. J., & Swann, W. B., Jr. (2003). A very brief measure of the Big Five personality domains. Journal of Research in Personality, 37, 504–528.',
-    url: null,
+    url: 'https://doi.org/10.1016/S0092-6566(03)00046-1',
   },
   {
-    key: 'ipip',
+    key: 'goldberg2006',
     text: 'Goldberg, L. R., et al. (2006). The International Personality Item Pool and the future of public-domain personality measures. Journal of Research in Personality, 40, 84–96.',
     url: 'https://doi.org/10.1177/1073191106293419',
-  },
-  {
-    key: 'ipip-neo-60',
-    text: 'Maples-Keller, J. L., et al. (2019). Using item response theory to develop a 60-item representation of the NEO PI-R using the IPIP. Psychological Assessment, 31(2), 188–203.',
-    url: 'https://doi.org/10.1037/pas0000571',
-  },
-  {
-    key: 'ab5c',
-    text: 'Hofstee, W. K. B., De Raad, B., & Goldberg, L. R. (1992). Integration of the Big Five and circumplex approaches to trait structure. Journal of Personality and Social Psychology, 63, 146–163.',
-    url: null,
-  },
-  {
-    key: 'digman',
-    text: 'Digman, J. M. (1997). Higher-order factors of the Big Five. Journal of Personality and Social Psychology, 73, 1246–1256.',
-    url: null,
-  },
-  {
-    key: 'nestsiarovich',
-    text: 'Nestsiarovich, A., & Pons, A. (2020). Team roles grounded in personality circumplex: A systematic review. PLoS ONE. PMC7071388.',
-    url: 'https://doi.org/10.1371/journal.pone.0230069',
   },
   {
     key: 'johnson2014',
@@ -65,8 +45,33 @@ const REFERENCES = [
   },
   {
     key: 'maples2019',
-    text: 'Maples-Keller, J. L., et al. (2019). [Normative data for IPIP-NEO-60.] Psychological Assessment, 31(2).',
-    url: 'https://doi.org/10.1080/00223891.2018.1467425',
+    text: 'Maples-Keller, J. L., et al. (2019). Using item response theory to develop a 60-item representation of the NEO PI-R using the IPIP. Psychological Assessment, 31(2), 188–203.',
+    url: 'https://doi.org/10.1037/pas0000571',
+  },
+  {
+    key: 'hofstee1992',
+    text: 'Hofstee, W. K. B., De Raad, B., & Goldberg, L. R. (1992). Integration of the Big Five and circumplex approaches to trait structure. Journal of Personality and Social Psychology, 63, 146–163.',
+    url: 'https://doi.org/10.1037/0022-3514.63.1.146',
+  },
+  {
+    key: 'digman1997',
+    text: 'Digman, J. M. (1997). Higher-order factors of the Big Five. Journal of Personality and Social Psychology, 73, 1246–1256.',
+    url: 'https://doi.org/10.1037/0022-3514.73.6.1246',
+  },
+  {
+    key: 'bell2007',
+    text: 'Bell, S. T. (2007). Deep-level composition variables as predictors of team performance: A meta-analysis. Journal of Applied Psychology, 92(3), 595–615.',
+    url: 'https://doi.org/10.1037/0021-9010.92.3.595',
+  },
+  {
+    key: 'barrick1991',
+    text: 'Barrick, M. R., & Mount, M. K. (1991). The Big Five personality dimensions and job performance: A meta-analysis. Personnel Psychology, 44(1), 1–26.',
+    url: 'https://doi.org/10.1111/j.1744-6570.1991.tb00688.x',
+  },
+  {
+    key: 'nestsiarovich2020',
+    text: 'Nestsiarovich, A., & Pons, A. (2020). Team roles grounded in personality circumplex: A systematic review. PLoS ONE, 15(3), e0230069.',
+    url: 'https://doi.org/10.1371/journal.pone.0230069',
   },
 ]
 
@@ -199,6 +204,32 @@ export default function SciencePage() {
             </Card>
 
           </div>
+        </Section>
+
+        {/* ── Validation plan ───────────────────────────────────── */}
+        <Section
+          eyebrow={t('science.validation.eyebrow')}
+          heading={t('science.validation.heading')}
+          accent="amber"
+        >
+          <p className="text-sm text-gray-600 leading-relaxed mb-4">
+            {t('science.validation.body')}
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {['n300', 'n1000', 'preprint'].map((key) => (
+              <Card key={key} className="px-4 py-3">
+                <p className="text-xs font-bold text-amber-600 uppercase tracking-widest mb-1">
+                  {t(`science.validation.milestones.${key}.label`)}
+                </p>
+                <p className="text-sm text-gray-700 leading-relaxed">
+                  {t(`science.validation.milestones.${key}.desc`)}
+                </p>
+              </Card>
+            ))}
+          </div>
+          <p className="text-xs text-gray-400 mt-4 leading-relaxed">
+            {t('science.validation.note')}
+          </p>
         </Section>
 
         {/* ── References ────────────────────────────────────────── */}
