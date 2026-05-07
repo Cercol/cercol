@@ -45,12 +45,9 @@ const SciencePage     = lazy(() => import('./pages/SciencePage'))
 const FaqPage         = lazy(() => import('./pages/FaqPage'))
 const PrivacyPage     = lazy(() => import('./pages/PrivacyPage'))
 
-// ── Blog (static articles — one chunk, rarely visited on first load) ──────────
-const BlogIndexPage       = lazy(() => import('./pages/BlogIndexPage'))
-const BigFiveVsDiscArticle   = lazy(() => import('./pages/blog/BigFiveVsDiscArticle'))
-const BalancedTeamArticle    = lazy(() => import('./pages/blog/BalancedTeamArticle'))
-const BlindSpotsArticle      = lazy(() => import('./pages/blog/BlindSpotsArticle'))
-const WhatIsIPIPArticle      = lazy(() => import('./pages/blog/WhatIsIPIPArticle'))
+// ── Blog (dynamic — fetches from backend API) ─────────────────────────────────
+const BlogIndexPage   = lazy(() => import('./pages/BlogIndexPage'))
+const BlogArticlePage = lazy(() => import('./pages/blog/BlogArticlePage'))
 
 // ── Admin (never part of the public bundle) ───────────────────────────────────
 const AdminDashboardPage = lazy(() => import('./pages/AdminDashboardPage'))
@@ -159,11 +156,8 @@ function AppContent() {
           <Route path="/faq"         element={<FaqPage />} />
 
           {/* Blog */}
-          <Route path="/blog"                               element={<BlogIndexPage />} />
-          <Route path="/blog/big-five-vs-disc-vs-belbin"   element={<BigFiveVsDiscArticle />} />
-          <Route path="/blog/how-to-build-a-balanced-team" element={<BalancedTeamArticle />} />
-          <Route path="/blog/blind-spots-in-teams"         element={<BlindSpotsArticle />} />
-          <Route path="/blog/what-is-the-ipip"             element={<WhatIsIPIPArticle />} />
+          <Route path="/blog"       element={<BlogIndexPage />} />
+          <Route path="/blog/:slug" element={<Suspense fallback={null}><BlogArticlePage /></Suspense>} />
 
           {/* Legal */}
           <Route path="/privacy" element={<PrivacyPage />} />

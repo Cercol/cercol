@@ -20,6 +20,7 @@
     "@tailwindcss/vite": "^4.2.2",
     "gh-pages": "^6.3.0",
     "i18next": "^26.0.3",
+    "marked": "^18.0.3",
     "mm-design": "github:miquelmatoses/mm-design",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",

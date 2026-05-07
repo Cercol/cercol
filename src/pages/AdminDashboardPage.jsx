@@ -20,6 +20,10 @@ import {
   refreshAdminNorms,
   patchAdminUser,
   getAdminActivity,
+  getBlogPosts,
+  createBlogPost,
+  updateBlogPost,
+  patchBlogPostStatus,
 } from '../lib/api'
 
 // ---------------------------------------------------------------------------
@@ -788,6 +792,349 @@ function SeoTab() {
 }
 
 // ---------------------------------------------------------------------------
+// Blog tab
+// ---------------------------------------------------------------------------
+
+const BLOG_LANGS = ['en', 'ca', 'es', 'fr', 'de', 'da']
+
+const EMPTY_FORM = {
+  slug:     '',
+  author:   '',
+  cover_url: '',
+  title:       { en: '', ca: '', es: '', fr: '', de: '', da: '' },
+  description: { en: '', ca: '', es: '', fr: '', de: '', da: '' },
+  content:     { en: '', ca: '', es: '', fr: '', de: '', da: '' },
+}
+
+function BlogTab() {
+  const [posts,     setPosts]     = useState([])
+  const [loading,   setLoading]   = useState(true)
+  const [error,     setError]     = useState(null)
+  const [form,      setForm]      = useState(null) // null = hidden, object = editing
+  const [isNew,     setIsNew]     = useState(false)
+  const [formLang,  setFormLang]  = useState('en')
+  const [saving,    setSaving]    = useState(false)
+  const [toggling,  setToggling]  = useState({}) // slug → bool
+
+  const loadPosts = useCallback(async () => {
+    setLoading(true)
+    setError(null)
+    try {
+      const data = await getBlogPosts()
+      setPosts(Array.isArray(data) ? data : [])
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
+  useEffect(() => { loadPosts() }, [loadPosts])
+
+  function openCreate() {
+    setForm({ ...EMPTY_FORM, title: { ...EMPTY_FORM.title }, description: { ...EMPTY_FORM.description }, content: { ...EMPTY_FORM.content } })
+    setIsNew(true)
+    setFormLang('en')
+  }
+
+  function openEdit(post) {
+    setForm({
+      slug:        post.slug,
+      author:      post.author || '',
+      cover_url:   post.cover_url || '',
+      title:       typeof post.title === 'object' ? { ...EMPTY_FORM.title, ...post.title } : { ...EMPTY_FORM.title, en: post.title || '' },
+      description: typeof post.description === 'object' ? { ...EMPTY_FORM.description, ...post.description } : { ...EMPTY_FORM.description, en: post.description || '' },
+      content:     typeof post.content === 'object' ? { ...EMPTY_FORM.content, ...post.content } : { ...EMPTY_FORM.content, en: post.content || '' },
+    })
+    setIsNew(false)
+    setFormLang('en')
+  }
+
+  function closeForm() {
+    setForm(null)
+  }
+
+  function setField(key, value) {
+    setForm(f => ({ ...f, [key]: value }))
+  }
+
+  function setLangField(key, lang, value) {
+    setForm(f => ({ ...f, [key]: { ...f[key], [lang]: value } }))
+  }
+
+  async function handleSave(publishStatus) {
+    if (!form) return
+    setSaving(true)
+    try {
+      const payload = {
+        author:      form.author,
+        cover_url:   form.cover_url || undefined,
+        title:       form.title,
+        description: form.description,
+        content:     form.content,
+      }
+      if (isNew) {
+        const created = await createBlogPost({ ...payload, slug: form.slug })
+        if (publishStatus === 'published') {
+          await patchBlogPostStatus(created.slug || form.slug, 'published')
+        }
+      } else {
+        await updateBlogPost(form.slug, payload)
+        if (publishStatus) {
+          await patchBlogPostStatus(form.slug, publishStatus)
+        }
+      }
+      await loadPosts()
+      closeForm()
+    } catch (err) {
+      alert(`Save failed: ${err.message}`)
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  async function handleToggleStatus(post) {
+    const next = post.status === 'published' ? 'draft' : 'published'
+    setToggling(t => ({ ...t, [post.slug]: true }))
+    try {
+      await patchBlogPostStatus(post.slug, next)
+      await loadPosts()
+    } catch (err) {
+      alert(`Status change failed: ${err.message}`)
+    } finally {
+      setToggling(t => ({ ...t, [post.slug]: false }))
+    }
+  }
+
+  function copyUrl(slug) {
+    navigator.clipboard.writeText(`https://cercol.team/blog/${slug}`)
+  }
+
+  return (
+    <div className="space-y-6">
+
+      {/* Header row */}
+      <div className="flex items-center justify-between">
+        <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-400">Blog posts</h2>
+        <button
+          type="button"
+          onClick={openCreate}
+          className="text-xs font-medium px-3 py-1.5 rounded-lg bg-[var(--mm-color-blue)] text-white hover:opacity-90 transition-opacity"
+        >
+          + New post
+        </button>
+      </div>
+
+      {/* Post list */}
+      {error && <p className="text-sm text-red-500">{error}</p>}
+
+      <div className="overflow-x-auto rounded-xl border border-gray-100 shadow-sm">
+        <table className="w-full bg-white">
+          <thead className="border-b border-gray-100">
+            <tr>
+              <Th>Title (EN)</Th>
+              <Th>Status</Th>
+              <Th>Views</Th>
+              <Th>Published</Th>
+              <Th>Actions</Th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-50">
+            {loading && <LoadingRow />}
+            {!loading && posts.length === 0 && <EmptyRow message="No blog posts yet." />}
+            {posts.map(post => {
+              const titleEn = typeof post.title === 'object' ? (post.title.en || '') : (post.title || '')
+              const busy = toggling[post.slug]
+              return (
+                <tr key={post.slug} className="hover:bg-gray-50/50 transition-colors">
+                  <Td className="max-w-[220px]">
+                    <span className="font-medium text-gray-800 line-clamp-1">{titleEn || post.slug}</span>
+                    <span className="block text-xs text-gray-400 font-mono">{post.slug}</span>
+                  </Td>
+                  <Td>
+                    <Badge variant={post.status === 'published' ? 'green' : 'yellow'}>
+                      {post.status ?? 'draft'}
+                    </Badge>
+                  </Td>
+                  <Td>
+                    <span className="text-xs text-gray-500">👁 {post.view_count ?? 0}</span>
+                  </Td>
+                  <Td className="whitespace-nowrap text-xs text-gray-400">
+                    {post.published_at ? fmt(post.published_at) : '—'}
+                  </Td>
+                  <Td>
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <a
+                        href={`/blog/${post.slug}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs px-2 py-1 rounded border border-gray-200 text-gray-500 hover:text-gray-800 transition-colors"
+                      >
+                        Open ↗
+                      </a>
+                      <button
+                        type="button"
+                        onClick={() => copyUrl(post.slug)}
+                        className="text-xs px-2 py-1 rounded border border-gray-200 text-gray-500 hover:text-gray-800 transition-colors"
+                      >
+                        Copy URL
+                      </button>
+                      <button
+                        type="button"
+                        disabled={busy}
+                        onClick={() => handleToggleStatus(post)}
+                        className="text-xs px-2 py-1 rounded border border-gray-200 text-gray-500 hover:text-gray-800 transition-colors disabled:opacity-40"
+                      >
+                        {busy ? '…' : post.status === 'published' ? 'Unpublish' : 'Publish'}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => openEdit(post)}
+                        className="text-xs px-2 py-1 rounded border border-[var(--mm-color-blue)]/30 text-[var(--mm-color-blue)] hover:border-[var(--mm-color-blue)] transition-colors"
+                      >
+                        Edit
+                      </button>
+                    </div>
+                  </Td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Create / Edit form */}
+      {form && (
+        <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6 space-y-5">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-semibold text-gray-800">
+              {isNew ? 'New post' : `Edit: ${form.slug}`}
+            </h3>
+            <button
+              type="button"
+              onClick={closeForm}
+              className="text-xs text-gray-400 hover:text-gray-700 transition-colors"
+            >
+              Cancel
+            </button>
+          </div>
+
+          {/* Slug (create only) + Author + Cover URL */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {isNew && (
+              <div>
+                <label className="block text-xs font-medium text-gray-500 mb-1">Slug *</label>
+                <input
+                  type="text"
+                  value={form.slug}
+                  onChange={e => setField('slug', e.target.value)}
+                  placeholder="my-article-slug"
+                  className="w-full text-sm px-3 py-1.5 rounded-lg border border-gray-200 focus:outline-none focus:border-[var(--mm-color-blue)] focus:ring-1 focus:ring-[var(--mm-color-blue)]/30 font-mono"
+                />
+              </div>
+            )}
+            <div>
+              <label className="block text-xs font-medium text-gray-500 mb-1">Author</label>
+              <input
+                type="text"
+                value={form.author}
+                onChange={e => setField('author', e.target.value)}
+                placeholder="First Last"
+                className="w-full text-sm px-3 py-1.5 rounded-lg border border-gray-200 focus:outline-none focus:border-[var(--mm-color-blue)] focus:ring-1 focus:ring-[var(--mm-color-blue)]/30"
+              />
+            </div>
+            <div className={isNew ? 'sm:col-span-2' : ''}>
+              <label className="block text-xs font-medium text-gray-500 mb-1">Cover URL (optional)</label>
+              <input
+                type="url"
+                value={form.cover_url}
+                onChange={e => setField('cover_url', e.target.value)}
+                placeholder="https://…"
+                className="w-full text-sm px-3 py-1.5 rounded-lg border border-gray-200 focus:outline-none focus:border-[var(--mm-color-blue)] focus:ring-1 focus:ring-[var(--mm-color-blue)]/30"
+              />
+            </div>
+          </div>
+
+          {/* Language tabs */}
+          <div>
+            <div className="flex items-center gap-1 mb-4 bg-gray-50 rounded-lg p-1 w-fit">
+              {BLOG_LANGS.map(l => (
+                <TabButton
+                  key={l}
+                  label={l.toUpperCase()}
+                  active={formLang === l}
+                  onClick={() => setFormLang(l)}
+                />
+              ))}
+            </div>
+
+            <div className="space-y-3">
+              <div>
+                <label className="block text-xs font-medium text-gray-500 mb-1">
+                  Title ({formLang.toUpperCase()})
+                </label>
+                <textarea
+                  rows={2}
+                  value={form.title[formLang] || ''}
+                  onChange={e => setLangField('title', formLang, e.target.value)}
+                  placeholder={`Title in ${formLang.toUpperCase()}…`}
+                  className="w-full text-sm px-3 py-2 rounded-lg border border-gray-200 focus:outline-none focus:border-[var(--mm-color-blue)] focus:ring-1 focus:ring-[var(--mm-color-blue)]/30 resize-none"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-gray-500 mb-1">
+                  Description / Meta ({formLang.toUpperCase()})
+                </label>
+                <textarea
+                  rows={2}
+                  value={form.description[formLang] || ''}
+                  onChange={e => setLangField('description', formLang, e.target.value)}
+                  placeholder="Short meta description…"
+                  className="w-full text-sm px-3 py-2 rounded-lg border border-gray-200 focus:outline-none focus:border-[var(--mm-color-blue)] focus:ring-1 focus:ring-[var(--mm-color-blue)]/30 resize-none"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-gray-500 mb-1">
+                  Content ({formLang.toUpperCase()}) — Markdown
+                </label>
+                <textarea
+                  rows={14}
+                  value={form.content[formLang] || ''}
+                  onChange={e => setLangField('content', formLang, e.target.value)}
+                  placeholder="Write article content in Markdown…"
+                  className="w-full text-sm px-3 py-2 rounded-lg border border-gray-200 focus:outline-none focus:border-[var(--mm-color-blue)] focus:ring-1 focus:ring-[var(--mm-color-blue)]/30 font-mono resize-y"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Save buttons */}
+          <div className="flex items-center gap-3 pt-1">
+            <button
+              type="button"
+              disabled={saving}
+              onClick={() => handleSave('draft')}
+              className="text-sm font-medium px-4 py-2 rounded-lg border border-gray-200 text-gray-600 hover:border-gray-300 hover:text-gray-900 transition-colors disabled:opacity-40"
+            >
+              {saving ? 'Saving…' : 'Save as draft'}
+            </button>
+            <button
+              type="button"
+              disabled={saving}
+              onClick={() => handleSave('published')}
+              className="text-sm font-medium px-4 py-2 rounded-lg bg-[var(--mm-color-blue)] text-white hover:opacity-90 transition-opacity disabled:opacity-40"
+            >
+              {saving ? 'Saving…' : 'Publish'}
+            </button>
+          </div>
+        </div>
+      )}
+
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
 // Page
 // ---------------------------------------------------------------------------
 
@@ -796,6 +1143,7 @@ const TABS = [
   { id: 'users',    label: 'Users'    },
   { id: 'results',  label: 'Results'  },
   { id: 'norms',    label: 'Norms'    },
+  { id: 'blog',     label: 'Blog'     },
   { id: 'seo',      label: 'SEO'      },
 ]
 
@@ -829,6 +1177,7 @@ export default function AdminDashboardPage() {
       {activeTab === 'users'    && <UsersTab />}
       {activeTab === 'results'  && <ResultsTab />}
       {activeTab === 'norms'    && <NormsTab />}
+      {activeTab === 'blog'     && <BlogTab />}
       {activeTab === 'seo'      && <SeoTab />}
     </div>
   )

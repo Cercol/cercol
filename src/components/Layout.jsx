@@ -35,6 +35,7 @@ export default function Layout({ children }) {
     { to: '/instruments', label: t('nav.instruments') },
     { to: '/roles',       label: t('nav.roles')       },
     { to: '/science',     label: t('nav.science')     },
+    { to: '/blog',        label: t('nav.blog')        },
     { to: '/faq',         label: t('nav.faq')         },
     ...(profile?.is_admin ? [{ to: '/admin', label: t('nav.admin') }] : []),
   ]
