@@ -236,15 +236,17 @@ Record results in a simple doc/spreadsheet with date and screenshot.
 |------|--------|------|
 | SEO.md created | ✅ | May 2026 |
 | CLAUDE.md SEO section added | ✅ | May 2026 |
-| ROADMAP.md Phase 17 added | ✅ | May 2026 |
+| ROADMAP.md Phase 15.5 added | ✅ | May 2026 |
 | README.md rewritten | ✅ | May 2026 |
 | index.html meta tags + JSON-LD | ✅ | May 2026 |
 | public/robots.txt | ✅ | May 2026 |
 | public/sitemap.xml | ✅ | May 2026 |
 | public/llms.txt | ✅ | May 2026 |
-| GitHub repo topics | pending | — |
-| /science public page | pending | — |
-| Prerendering | pending | — |
+| GitHub repo topics (10 topics) | ✅ | May 2026 |
+| /science public page enriched | pending | — |
+| Prerendering (vite-plugin-prerender) | pending | — |
 | React.lazy() code splitting | pending | — |
 | Blog: Big Five vs DISC vs Belbin | pending | — |
 | Blog: How to build a balanced team | pending | — |
+| Blog: Blind spots in teams | pending | — |
+| Blog: What is the IPIP? | pending | — |
