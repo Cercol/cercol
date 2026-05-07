@@ -1,35 +1,53 @@
-import { Component, useState, useEffect } from 'react'
+import { Component, lazy, Suspense, useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import { FeedbackProvider, useFeedbackContext } from './context/FeedbackContext'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import OnboardingModal from './components/OnboardingModal'
 import Layout from './components/Layout'
-import HomePage from './pages/HomePage'
-import NewMoonPage from './pages/NewMoonPage'
-import NewMoonResultsPage from './pages/NewMoonResultsPage'
-import FirstQuarterPage from './pages/FirstQuarterPage'
-import FirstQuarterResultsPage from './pages/FirstQuarterResultsPage'
-import FullMoonPage from './pages/FullMoonPage'
-import FullMoonResultsPage from './pages/FullMoonResultsPage'
-import WitnessSetupPage from './pages/WitnessSetupPage'
-import WitnessPage from './pages/WitnessPage'
-import AuthPage from './pages/AuthPage'
-import AuthCallbackPage from './pages/AuthCallbackPage'
-import MyResultsPage from './pages/MyResultsPage'
-import ProfilePage from './pages/ProfilePage'
-import AboutPage from './pages/AboutPage'
-import InstrumentsPage from './pages/InstrumentsPage'
-import RolesPage from './pages/RolesPage'
-import SciencePage from './pages/SciencePage'
-import FaqPage from './pages/FaqPage'
-import PrivacyPage from './pages/PrivacyPage'
-import GroupsPage from './pages/GroupsPage'
-import LastQuarterPage from './pages/LastQuarterPage'
+import PageLoader from './components/PageLoader'
 import FeedbackButton from './components/FeedbackButton'
 import CookieBanner from './components/CookieBanner'
 import AdminRoute from './components/AdminRoute'
 import RequireAuth from './components/RequireAuth'
-import AdminDashboardPage from './pages/AdminDashboardPage'
+
+// HomePage is eager — it is the first visible page for most visitors.
+import HomePage from './pages/HomePage'
+
+// ── Instrument pages (one chunk per test + its results page) ─────────────────
+const NewMoonPage         = lazy(() => import('./pages/NewMoonPage'))
+const NewMoonResultsPage  = lazy(() => import('./pages/NewMoonResultsPage'))
+
+const FirstQuarterPage        = lazy(() => import('./pages/FirstQuarterPage'))
+const FirstQuarterResultsPage = lazy(() => import('./pages/FirstQuarterResultsPage'))
+
+const FullMoonPage        = lazy(() => import('./pages/FullMoonPage'))
+const FullMoonResultsPage = lazy(() => import('./pages/FullMoonResultsPage'))
+
+// ── Witness (shared chunk — setup and assessment are always used together) ───
+const WitnessSetupPage = lazy(() => import('./pages/WitnessSetupPage'))
+const WitnessPage      = lazy(() => import('./pages/WitnessPage'))
+
+// ── Auth ─────────────────────────────────────────────────────────────────────
+const AuthPage         = lazy(() => import('./pages/AuthPage'))
+const AuthCallbackPage = lazy(() => import('./pages/AuthCallbackPage'))
+
+// ── Account pages (require auth — loaded only after sign-in) ─────────────────
+const MyResultsPage  = lazy(() => import('./pages/MyResultsPage'))
+const ProfilePage    = lazy(() => import('./pages/ProfilePage'))
+const GroupsPage     = lazy(() => import('./pages/GroupsPage'))
+const LastQuarterPage = lazy(() => import('./pages/LastQuarterPage'))
+
+// ── Documentation (static, rarely visited on first load) ─────────────────────
+const AboutPage       = lazy(() => import('./pages/AboutPage'))
+const InstrumentsPage = lazy(() => import('./pages/InstrumentsPage'))
+const RolesPage       = lazy(() => import('./pages/RolesPage'))
+const SciencePage     = lazy(() => import('./pages/SciencePage'))
+const FaqPage         = lazy(() => import('./pages/FaqPage'))
+const PrivacyPage     = lazy(() => import('./pages/PrivacyPage'))
+
+// ── Admin (never part of the public bundle) ───────────────────────────────────
+const AdminDashboardPage = lazy(() => import('./pages/AdminDashboardPage'))
+
 
 /** Top-level error boundary — catches unexpected render errors and shows a minimal fallback. */
 class ErrorBoundary extends Component {
@@ -96,40 +114,50 @@ function AppContent() {
       {showOnboarding && (
         <OnboardingModal onDismiss={handleDismiss} onGoToNewMoon={handleGoToNewMoon} />
       )}
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        {/* New Moon */}
-        <Route path="/new-moon" element={<NewMoonPage />} />
-        <Route path="/new-moon/results" element={<NewMoonResultsPage />} />
-        {/* First Quarter */}
-        <Route path="/first-quarter" element={<FirstQuarterPage />} />
-        <Route path="/first-quarter/results" element={<FirstQuarterResultsPage />} />
-        {/* Full Moon */}
-        <Route path="/full-moon" element={<FullMoonPage />} />
-        <Route path="/full-moon/results" element={<FullMoonResultsPage />} />
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
 
-        {/* Witness Cèrcol */}
-        <Route path="/witness-setup" element={<RequireAuth><WitnessSetupPage /></RequireAuth>} />
-        <Route path="/witness/:token" element={<WitnessPage />} />
-        {/* Auth */}
-        <Route path="/auth" element={<AuthPage />} />
-        <Route path="/auth/callback" element={<AuthCallbackPage />} />
-        {/* Account — require authentication */}
-        <Route path="/my-results" element={<RequireAuth><MyResultsPage /></RequireAuth>} />
-        <Route path="/profile"    element={<RequireAuth><ProfilePage /></RequireAuth>} />
-        <Route path="/groups"     element={<RequireAuth><GroupsPage /></RequireAuth>} />
-        <Route path="/groups/:id" element={<RequireAuth><LastQuarterPage /></RequireAuth>} />
-        {/* Documentation */}
-        <Route path="/about"       element={<AboutPage />} />
-        <Route path="/instruments" element={<InstrumentsPage />} />
-        <Route path="/roles"       element={<RolesPage />} />
-        <Route path="/science"     element={<SciencePage />} />
-        <Route path="/faq"         element={<FaqPage />} />
-        {/* Legal */}
-        <Route path="/privacy"     element={<PrivacyPage />} />
-        {/* Admin — guarded by AdminRoute, invisible to non-admins */}
-        <Route path="/admin" element={<AdminRoute><AdminDashboardPage /></AdminRoute>} />
-      </Routes>
+          {/* New Moon */}
+          <Route path="/new-moon"         element={<NewMoonPage />} />
+          <Route path="/new-moon/results" element={<NewMoonResultsPage />} />
+
+          {/* First Quarter */}
+          <Route path="/first-quarter"         element={<FirstQuarterPage />} />
+          <Route path="/first-quarter/results" element={<FirstQuarterResultsPage />} />
+
+          {/* Full Moon */}
+          <Route path="/full-moon"         element={<FullMoonPage />} />
+          <Route path="/full-moon/results" element={<FullMoonResultsPage />} />
+
+          {/* Witness Cèrcol */}
+          <Route path="/witness-setup"   element={<RequireAuth><WitnessSetupPage /></RequireAuth>} />
+          <Route path="/witness/:token"  element={<WitnessPage />} />
+
+          {/* Auth */}
+          <Route path="/auth"          element={<AuthPage />} />
+          <Route path="/auth/callback" element={<AuthCallbackPage />} />
+
+          {/* Account — require authentication */}
+          <Route path="/my-results" element={<RequireAuth><MyResultsPage /></RequireAuth>} />
+          <Route path="/profile"    element={<RequireAuth><ProfilePage /></RequireAuth>} />
+          <Route path="/groups"     element={<RequireAuth><GroupsPage /></RequireAuth>} />
+          <Route path="/groups/:id" element={<RequireAuth><LastQuarterPage /></RequireAuth>} />
+
+          {/* Documentation */}
+          <Route path="/about"       element={<AboutPage />} />
+          <Route path="/instruments" element={<InstrumentsPage />} />
+          <Route path="/roles"       element={<RolesPage />} />
+          <Route path="/science"     element={<SciencePage />} />
+          <Route path="/faq"         element={<FaqPage />} />
+
+          {/* Legal */}
+          <Route path="/privacy" element={<PrivacyPage />} />
+
+          {/* Admin — guarded by AdminRoute, invisible to non-admins */}
+          <Route path="/admin" element={<AdminRoute><AdminDashboardPage /></AdminRoute>} />
+        </Routes>
+      </Suspense>
       <FeedbackButton itemId={itemContext.itemId} itemText={itemContext.itemText} />
       <CookieBanner />
     </Layout>
