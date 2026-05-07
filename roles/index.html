@@ -1,0 +1,866 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary meta -->
+    <title>Cèrcol — Team Personality Assessment · Big Five · Free</title>
+    <meta name="description" content="Cèrcol maps your team's personality using the Big Five (OCEAN/IPIP). Free personality assessment with Witness peer review. Science-grounded, open source. 6 languages.">
+    <meta name="keywords" content="team personality assessment, Big Five, OCEAN, IPIP, personality test free, peer assessment, team roles, AB5C, blind spot, team balance">
+    <meta name="author" content="Cèrcol">
+    <link rel="canonical" href="https://cercol.team/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Cèrcol">
+    <meta property="og:title" content="Cèrcol — Team Personality Assessment · Big Five · Free">
+    <meta property="og:description" content="Cèrcol maps your team's personality using the Big Five (OCEAN/IPIP). Free personality assessment with Witness peer review. Science-grounded, open source.">
+    <meta property="og:url" content="https://cercol.team/">
+    <meta property="og:image" content="https://cercol.team/email-logo.png">
+    <meta property="og:locale" content="en_GB">
+    <meta property="og:locale:alternate" content="ca_ES">
+    <meta property="og:locale:alternate" content="es_ES">
+    <meta property="og:locale:alternate" content="fr_FR">
+    <meta property="og:locale:alternate" content="de_DE">
+    <meta property="og:locale:alternate" content="da_DK">
+
+    <!-- Twitter / X card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Cèrcol — Team Personality Assessment · Big Five · Free">
+    <meta name="twitter:description" content="Free Big Five personality assessment with Witness peer review. 12 science-derived team roles. Open source.">
+    <meta name="twitter:image" content="https://cercol.team/email-logo.png">
+
+    <!-- hreflang — all public pages are language-switched via ?lang= param -->
+    <link rel="alternate" hreflang="en" href="https://cercol.team/">
+    <link rel="alternate" hreflang="ca" href="https://cercol.team/?lang=ca">
+    <link rel="alternate" hreflang="es" href="https://cercol.team/?lang=es">
+    <link rel="alternate" hreflang="fr" href="https://cercol.team/?lang=fr">
+    <link rel="alternate" hreflang="de" href="https://cercol.team/?lang=de">
+    <link rel="alternate" hreflang="da" href="https://cercol.team/?lang=da">
+    <link rel="alternate" hreflang="x-default" href="https://cercol.team/">
+
+    <!-- JSON-LD: WebApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Cèrcol",
+      "url": "https://cercol.team",
+      "description": "Open-source team personality assessment platform based on the Big Five (OCEAN/IPIP). Includes Witness forced-choice peer assessment and 12 science-derived team roles (AB5C circumplex).",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "inLanguage": ["en", "ca", "es", "fr", "de", "da"],
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "New Moon Cèrcol",
+          "price": "0",
+          "priceCurrency": "EUR",
+          "description": "10-item Big Five snapshot. Always free."
+        },
+        {
+          "@type": "Offer",
+          "name": "First Quarter Cèrcol",
+          "price": "0",
+          "priceCurrency": "EUR",
+          "description": "60-item IPIP-NEO-60. Five dimensions, 30 facets. Always free."
+        },
+        {
+          "@type": "Offer",
+          "name": "Full Moon Cèrcol",
+          "description": "120-item IPIP-NEO-120 + Witness peer assessment + ICAR cognitive ability. One-time payment."
+        }
+      ],
+      "featureList": [
+        "Big Five personality assessment via IPIP public-domain item pool",
+        "Witness peer assessment with forced-choice adjective selection (eliminates social desirability bias)",
+        "12 team roles derived from AB5C circumplex (Hofstee et al. 1992)",
+        "Blind spot detection: self vs peer divergence > 0.8 SD flagged per dimension",
+        "Team balance report",
+        "6 languages: English, Catalan, Spanish, French, German, Danish",
+        "Scoring pipeline fully client-side and open source"
+      ],
+      "sameAs": "https://github.com/cercol/cercol"
+    }
+    </script>
+
+    <!-- JSON-LD: Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Cèrcol",
+      "url": "https://cercol.team",
+      "logo": "https://cercol.team/email-logo.png",
+      "email": "hello@cercol.team",
+      "sameAs": ["https://github.com/cercol/cercol"],
+      "description": "Open-source platform for science-grounded team personality assessment based on Big Five (OCEAN) and IPIP."
+    }
+    </script>
+
+    <!-- JSON-LD: FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is Cèrcol based on the Big Five?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Cèrcol measures personality using the OCEAN model (Big Five) via the IPIP public-domain item pool (Goldberg et al. 2006). The 12 team roles are derived from the AB5C circumplex (Hofstee et al. 1992) and team composition research (Bell 2007; Neuman & Wright 1999)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What makes Cèrcol different from Belbin or DISC?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Cèrcol's roles are grounded in the Big Five (OCEAN) personality model using the IPIP public-domain item pool. The scoring pipeline is fully open source and auditable. Witness Cèrcol uses forced-choice adjective selection — not Likert scales — to eliminate social desirability bias in peer assessment. Unlike Belbin or DISC, all items are public domain and the entire methodology is published and citable."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the personality assessment free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The New Moon Cèrcol (10 items, Big Five snapshot) and First Quarter Cèrcol (60 items, IPIP-NEO-60, 30 facets) are always free — no account required. The Full Moon Cèrcol (120 items, IPIP-NEO-120, Witness peer assessment, cognitive ability measure) requires a one-time payment."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is Witness Cèrcol?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Witness Cèrcol is a peer personality assessment where someone who knows you well rates you using a forced-choice adjective selection method — picking the best-fit and worst-fit adjective per round from a set covering all five OCEAN dimensions. Forced choice eliminates the social desirability bias that affects standard Likert-scale peer ratings. Dimensions where your self-rating and peer ratings diverge by more than 0.8 standard deviations are flagged as potential blind spots."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How are the 12 team roles derived?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The 12 roles are derived from the AB5C circumplex (Hofstee, De Raad & Goldberg 1992), covering all six intersections of the three team balance dimensions (Presence/Extraversion × Bond/Agreeableness × Vision/Openness) at both poles. The selection of these three dimensions as requiring team-level balance is grounded in Bell (2007) and Neuman & Wright (1999). Discipline (Conscientiousness) and Depth (Neuroticism) modulate role expression but do not define team balance."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is my data private?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No account is required for any instrument. During assessment, no personal data is collected — only anonymous scores are logged. Data is stored on our own servers (Hetzner Online GmbH). No third-party analytics. No data is shared with or sold to third parties."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <script>
+      (function() {
+        // Companion to public/404.html SPA redirect workaround.
+        // 404.html encodes the original path+search into the ?p= param.
+        // URLSearchParams.get() already percent-decodes the value,
+        // so we restore the URL directly — no extra decodeURIComponent.
+        // The hash is kept separate so URL fragments survive intact.
+        const p = new URLSearchParams(window.location.search).get('p')
+        if (p) {
+          window.history.replaceState(null, null, p + window.location.hash)
+        }
+      })()
+    </script>
+    <script type="module" crossorigin="" src="/assets/index-Dw3wT7pX.js"></script>
+    <link rel="modulepreload" crossorigin="" href="/assets/rolldown-runtime-Dw2cE7zH.js">
+    <link rel="modulepreload" crossorigin="" href="/assets/vendor-Dz1p22a5.js">
+    <link rel="modulepreload" crossorigin="" href="/assets/vendor-router-CIg1o_bn.js">
+    <link rel="modulepreload" crossorigin="" href="/assets/vendor-i18n-BS1-E5wD.js">
+    <link rel="modulepreload" crossorigin="" href="/assets/vendor-react-B5gETvtb.js">
+    <link rel="modulepreload" crossorigin="" href="/assets/tokens-DPxyEgAv.js">
+    <link rel="modulepreload" crossorigin="" href="/assets/api-Q4uHVqCy.js">
+    <link rel="stylesheet" crossorigin="" href="/assets/vendor-ByZQCE1g.css">
+    <link rel="stylesheet" crossorigin="" href="/assets/index-Co7NdbMB.css">
+  <link rel="modulepreload" as="script" crossorigin="" href="/assets/RolesPage-DKh0G0hJ.js"></head>
+  <body>
+    <div id="root"><header style="background-color: rgb(0, 71, 186);"><div class="h-16 flex items-center gap-6 px-6 lg:px-12"><a class="shrink-0" href="/" data-discover="true" style="color: rgb(255, 255, 255);"><svg viewBox="0 0 1122.52 470.92" xmlns="http://www.w3.org/2000/svg" class="h-7 w-auto" aria-label="Cèrcol" role="img"><path transform="matrix(0.13333333,0,0,-0.13333333,0,470.92)" d="m 3969.73,2230.29 c -93.36,-159.94 -143.58,-333.14 -53.28,-385.84 90.29,-52.7 208.72,63.02 302.08,222.96 104.65,179.29 131.96,339.92 53.28,385.85 -78.68,45.92 -197.43,-43.68 -302.08,-222.97" style="fill: currentcolor; fill-rule: nonzero; stroke: none;"></path><path transform="matrix(0.13333333,0,0,-0.13333333,0,470.92)" d="m 1212.64,2357.4 c -180.39,-41.94 -340.788,-124.34 -317.113,-226.18 23.676,-101.83 189.123,-108.48 369.503,-66.54 202.21,47.01 337.74,137.44 317.12,226.17 -20.64,88.74 -167.31,113.55 -369.51,66.55" style="fill: currentcolor; fill-rule: nonzero; stroke: none;"></path><path transform="matrix(0.13333333,0,0,-0.13333333,0,470.92)" d="m 5418.53,2357.4 c -180.39,-41.94 -340.79,-124.34 -317.11,-226.18 23.67,-101.83 189.12,-108.48 369.5,-66.54 202.21,47.01 337.74,137.44 317.12,226.17 -20.64,88.74 -167.31,113.55 -369.51,66.55" style="fill: currentcolor; fill-rule: nonzero; stroke: none;"></path><path transform="matrix(0.13333333,0,0,-0.13333333,0,470.92)" d="m 2193.43,1922.67 c 0,208.28 11.85,456.79 149.1,456.79 101.78,0 123.09,-111.22 123.09,-274.54 v -139.63 l -272.19,-52.09 z m 648.52,-369.23 c -71.01,-56.8 -203.57,-104.14 -328.99,-104.14 -170.43,0 -305.34,115.97 -319.53,418.93 h 631.95 v 134.91 c 0,298.24 -177.51,452.07 -471,452.07 -220.2,0 -400.26,-126.29 -499.25,-312.28 -53.16,-99.88 -83,-216.93 -83,-340.97 0,-7.44 0.22,-14.78 0.4,-22.14 8.24,-338.94 205.86,-586.14 548.72,-586.14 300.59,0 442.6,201.18 530.18,352.66 l -9.48,7.1" style="fill: currentcolor; fill-rule: nonzero; stroke: none;"></path><path transform="matrix(0.13333333,0,0,-0.13333333,0,470.92)" d="m 3697.19,1541.6 v 913.61 h -9.48 c -168.05,-42.59 -366.87,-87.57 -572.79,-106.5 v -9.48 c 130.19,-61.52 153.84,-113.61 153.84,-321.89 V 1541.6 c 0,-170.41 -14.18,-246.14 -130.15,-312.42 v -9.47 h 726.62 v 9.47 c -151.49,71 -168.04,142.01 -168.04,312.42" style="fill: currentcolor; fill-rule: nonzero; stroke: none;"></path><path transform="matrix(0.13333333,0,0,-0.13333333,0,470.92)" d="m 6595.9,1272.21 c -165.69,0 -189.36,265.08 -189.36,558.57 0,328.99 44.98,558.58 189.36,558.58 144.37,0 189.35,-229.59 189.35,-558.58 0,-293.49 -23.67,-558.57 -189.35,-558.57 z m 0,1190.52 c -207.75,0 -393.82,-85.75 -510.89,-236.5 -80.33,-103.44 -128.16,-237.48 -128.16,-395.45 0,-38.12 3.13,-75.07 8.85,-110.82 49.35,-308.2 303.58,-521.14 630.2,-521.14 364.48,0 639.05,265.1 639.05,631.96 0,388.15 -288.76,631.95 -639.05,631.95" style="fill: currentcolor; fill-rule: nonzero; stroke: none;"></path><path transform="matrix(0.13333333,0,0,-0.13333333,0,470.92)" d="m 8059.75,1541.6 v 1382.26 h -9.46 c -168.05,-42.62 -376.33,-87.58 -582.25,-106.52 v -9.47 c 130.19,-61.54 153.84,-113.6 153.84,-321.89 V 1541.6 c 0,-170.41 -14.18,-246.14 -130.17,-312.42 v -9.47 h 698.23 v 9.47 c -115.98,66.28 -130.19,142.01 -130.19,312.42" style="fill: currentcolor; fill-rule: nonzero; stroke: none;"></path><path transform="matrix(0.13333333,0,0,-0.13333333,0,470.92)" d="m 1415.87,1553.44 -6.6,3.55 c -63.84,-27.17 -133.98,-42.39 -207.75,-42.39 -293.391,0 -531.231,263.79 -531.231,557.19 0,139.21 53.613,265.85 141.234,360.58 2.754,4.45 5.711,8.77 8.582,13.15 l -10.449,7.52 -2.914,1.56 c -34.043,-3.3 -68.262,-9.31 -102.371,-18.56 -328.73,-89.1 -522.976,-453.75 -433.883,-782.47 89.106,-328.71 427.805,-522.96 756.522,-433.86 180.45,48.92 319.51,173.44 394.23,329.87 l -5.37,3.86" style="fill: currentcolor; fill-rule: nonzero; stroke: none;"></path><path transform="matrix(0.13333333,0,0,-0.13333333,0,470.92)" d="m 5600.71,1553.44 -1.82,0.98 c -62.26,-25.63 -130.42,-39.82 -201.92,-39.82 -293.4,0 -531.24,263.79 -531.24,557.19 0,139.21 53.61,265.85 141.24,360.58 3.19,5.16 6.6,10.18 9.95,15.24 l -7.54,5.43 -3.52,1.89 c -35.25,-3.21 -70.71,-9.31 -106.06,-18.89 -328.72,-89.1 -522.96,-453.75 -433.86,-782.47 89.1,-328.71 427.8,-522.96 756.52,-433.86 178.26,48.32 316.17,170.42 391.51,324.19 l -13.26,9.54" style="fill: currentcolor; fill-rule: nonzero; stroke: none;"></path><path transform="matrix(0.13333333,0,0,-0.13333333,0,470.92)" d="m 2264.79,2975.04 c -38.87,-97.06 -217.56,-72.84 -389.49,-4 -192.72,77.17 -298.8,181.46 -264.93,266.04 33.86,84.57 196.76,81.16 389.48,3.99 171.93,-68.84 303.79,-168.98 264.94,-266.03" style="fill: currentcolor; fill-rule: nonzero; stroke: none;"></path><path transform="matrix(0.13333333,0,0,-0.13333333,0,470.92)" d="m 4310.4,312.941 c -38.87,-97.062 -217.56,-72.839 -389.49,-4 -192.72,77.168 -298.8,181.457 -264.94,266.039 33.87,84.571 196.77,81.161 389.49,3.989 171.93,-68.84 303.79,-168.981 264.94,-266.028" style="fill: currentcolor; fill-rule: nonzero; stroke: none;"></path></svg></a><nav class="hidden md:flex flex-1 items-center gap-1 overflow-x-auto min-w-0" aria-label="Main navigation" style="scrollbar-width: none;"><a class="shrink-0 text-xs font-medium px-2.5 py-1.5 rounded transition-colors whitespace-nowrap text-white/70 hover:text-white hover:bg-white/10" href="/about" data-discover="true">About</a><a class="shrink-0 text-xs font-medium px-2.5 py-1.5 rounded transition-colors whitespace-nowrap text-white/70 hover:text-white hover:bg-white/10" href="/instruments" data-discover="true">Instruments</a><a aria-current="page" class="shrink-0 text-xs font-medium px-2.5 py-1.5 rounded transition-colors whitespace-nowrap text-white bg-white/20" href="/roles" data-discover="true">Roles</a><a class="shrink-0 text-xs font-medium px-2.5 py-1.5 rounded transition-colors whitespace-nowrap text-white/70 hover:text-white hover:bg-white/10" href="/science" data-discover="true">Science</a><a class="shrink-0 text-xs font-medium px-2.5 py-1.5 rounded transition-colors whitespace-nowrap text-white/70 hover:text-white hover:bg-white/10" href="/faq" data-discover="true">FAQ</a></nav><div class="flex items-center gap-3 shrink-0 ml-auto md:ml-0"><button aria-label="Sign in" class="p-1.5 rounded transition-colors hover:bg-white/10" style="color: rgba(255, 255, 255, 0.7);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class=""><circle cx="12" cy="8.5" r="3.2" stroke-width="1.7"></circle><path stroke-width="1.7" d="M4.5 20.5 C5 16 8.2 13.5 12 13.5 C15.8 13.5 19 16 19.5 20.5"></path></svg></button><div class="relative"><button aria-label="Select language" aria-expanded="false" class="flex items-center gap-1 p-1.5 rounded transition-colors hover:bg-white/10" style="color: rgba(255, 255, 255, 0.7);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class=""><circle cx="12" cy="12" r="9" stroke-width="1.7"></circle><path stroke-width="1.3" d="M3 12 C6 11 18 11 21 12"></path><path stroke-width="1.3" d="M12 3 C9.5 6.5 9.5 17.5 12 21 C14.5 17.5 14.5 6.5 12 3 Z"></path></svg><span class="text-xs font-semibold tracking-wide leading-none">EN</span></button></div><button type="button" aria-label="Open menu" aria-expanded="false" class="md:hidden flex flex-col justify-center gap-1.5 p-1" style="color: rgb(255, 255, 255);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class=""><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button></div></div></header><div class="bg-white min-h-[calc(100vh-4rem)]"><div class="max-w-4xl mx-auto px-4 sm:px-8"><main class="py-12"><section class="mb-12"><p class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">Roles</p><h1 class="text-3xl font-bold text-gray-900 mb-4">Twelve roles. One taxonomy.</h1><p class="text-base text-gray-600 leading-relaxed mb-3">Personality profiles describe how you are. Roles describe how you tend to move the balance of a team. The gap between those two things is where Cèrcol tries to work.</p><p class="text-sm text-gray-500 leading-relaxed">The twelve roles are derived from the AB5C circumplex (Hofstee, De Raad &amp; Goldberg, 1992) and the team composition literature (Bell, 2007). Three OCEAN dimensions require balance in teams — Presence, Bond, and Vision. The twelve roles cover the six intersections of these dimensions at both poles. The names are ours. The structure is from the literature.</p></section><section class="mb-12"><div class="bg-amber-50 border border-amber-200 rounded px-6 py-5"><p class="text-xs font-bold uppercase tracking-widest text-amber-600 mb-2">Beta</p><p class="text-sm font-semibold text-gray-900 mb-1">This is a starting hypothesis, not a validated instrument.</p><p class="text-sm text-gray-600 leading-relaxed">Current role assignments use theoretical centroids derived from published research. As real data accumulates — target: 300 Full Moon completions — centroids will be replaced with empirical values from actual profiles. Role scoring is labelled beta in the interface for exactly this reason.</p></div></section><section class="mb-12"><h2 class="text-xl font-bold text-gray-900 mb-6">The twelve roles</h2><div class="flex flex-col gap-4"><div class="bg-white border border-gray-200 rounded overflow-hidden"><div class="px-5 pt-5 pb-4 bg-emerald-50 flex items-start gap-3"><svg width="28" height="28" viewBox="0 0 400.000000 313.000000" fill="none" aria-hidden="true" class="shrink-0 mt-0.5 text-emerald-600"><g transform="translate(0.000000,313.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="none">
+<path d="M2295 2806 c-92 -18 -166 -47 -305 -119 l-115 -60 -70 12 c-184 29
+-258 33 -389 21 -588 -51 -1050 -367 -1061 -723 l-2 -77 -85 -88 c-125 -128
+-149 -215 -77 -276 54 -46 118 -38 320 39 304 117 502 157 531 108 57 -98 233
+-203 341 -203 77 0 84 27 32 124 -48 90 -45 94 33 37 293 -212 657 -227 456
+-19 -82 84 -80 86 48 54 374 -92 636 -274 859 -599 60 -86 60 -76 -7 -144 -99
+-101 -156 -284 -114 -364 13 -23 62 -26 81 -3 23 28 107 64 166 70 32 4 73 13
+90 20 30 12 37 11 78 -12 32 -18 69 -28 127 -34 101 -9 152 -26 222 -75 169
+-116 117 157 -63 330 -52 51 -212 167 -243 177 -6 2 -14 42 -19 88 -53 475
+-231 853 -550 1171 -91 90 -149 155 -151 170 -6 36 8 86 32 122 21 31 36 43
+128 107 133 94 -63 191 -293 146z m225 -82 c5 -6 -6 -15 -73 -64 -155 -112
+-137 -253 58 -440 302 -291 478 -644 545 -1100 21 -140 32 -168 78 -197 144
+-91 255 -192 311 -285 26 -43 25 -43 -44 -23 -27 9 -93 23 -145 31 -77 12
+-102 21 -132 45 -43 34 -73 37 -102 10 -14 -14 -45 -23 -97 -29 -41 -5 -94
+-19 -118 -31 l-43 -22 7 43 c8 53 56 136 108 186 l38 37 19 -22 c95 -117 21
+116 -93 290 -29 45 -73 118 -96 162 -154 285 -409 487 -738 584 -106 31 -256
+56 -273 46 -23 -14 -4 -23 103 -49 336 -83 567 -214 745 -423 92 -108 95 -125
+9 -55 -188 154 -416 256 -679 304 l-120 22 -34 73 c-29 61 -39 73 -59 73 -68
+0 15 -206 134 -332 42 -45 30 -49 -72 -22 -134 34 -247 106 -392 246 -117 113
+-152 132 -141 77 3 -18 13 -40 21 -49 23 -26 21 -27 -82 -33 -207 -14 -501
+-91 -698 -183 -86 -40 -185 -61 -108 -23 96 47 314 206 328 238 16 39 -22 23
+-139 -59 -181 -127 -306 -187 -306 -146 0 12 33 62 50 76 82 67 140 155 140
+209 0 401 626 755 1220 690 236 -26 254 -24 415 52 206 98 408 139 455 93z
+m-1210 -1047 c0 -12 11 -52 24 -89 27 -82 24 -83 -78 -33 -70 34 -175 119
+-162 132 7 7 196 21 209 15 4 -2 7 -13 7 -25z M1430 2514 c-177 -22 -352 -69
+-460 -124 -94 -47 -110 -90 -22 -56 285 110 516 143 805 113 134 -14 107 20
+-43 52 -54 11 -231 21 -280 15z M1935 2430 c-8 -13 53 -50 83 -50 32 0 28 27
+-8 45 -33 17 -66 20 -75 5z M769 1991 c-45 -45 -36 -67 26 -63 66 4 97 25 93
+60 -5 43 -77 45 -119 3z M2225 825 c-56 -55 -24 -88 92 -96 48 -4 100 -10 116
+-14 39 -10 37 23 -5 71 -59 67 -157 86 -203 39z m120 -35 c4 -6 -12 -10 -39
+-10 -25 0 -46 5 -46 10 0 6 18 10 39 10 22 0 43 -4 46 -10z M3748 830 c-54
+-16 -108 -73 -108 -112 0 -29 27 -21 71 22 25 24 51 40 65 40 34 0 30 -9 -11
+-26 -19 -8 -35 -19 -35 -25 0 -17 78 -4 101 17 51 46 -9 107 -83 84z M2155
+556 c-332 -83 -121 -301 299 -309 168 -4 124 25 -107 68 -323 61 -375 117
+-182 198 108 46 102 71 -10 43z M2440 544 c-72 -31 -92 -83 -48 -124 70 -65
+517 -110 535 -53 6 17 -17 21 -172 33 -291 23 -385 61 -275 112 83 38 45 69
+-40 32z M3650 547 c0 -10 12 -19 28 -23 41 -11 132 -55 132 -66 0 -24 -121
+-59 -290 -83 -160 -24 -157 -64 4 -50 297 25 432 118 291 201 -57 33 -165 46
+-165 21z M2982 219 c-13 -5 -22 -14 -20 -21 13 -39 413 -27 413 12 0 18 -352
+26 -393 9z"></path>
+</g></svg><div><p class="text-xs font-bold uppercase tracking-widest mb-0.5 text-emerald-600">Dolphin</p><p class="text-sm font-medium text-gray-800 leading-snug">When you are in the room, people talk. Not because you ask — because you made it easy. The team warms up with you.</p></div></div><div class="px-5 py-4 flex flex-col gap-3"><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Tendency</p><p class="text-sm text-gray-600 leading-relaxed">High Presence and Bond. Warm, outgoing, and easy to be around. People open up in your company.</p></div><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Contributes to a team</p><p class="text-sm text-gray-600 leading-relaxed">Cohesion. Lowers the social activation energy in the room.</p></div><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Tends to miss</p><p class="text-sm text-gray-600 leading-relaxed">The productive friction that sharpens ideas. Warmth can smooth over real disagreements.</p></div></div></div><div class="bg-white border border-gray-200 rounded overflow-hidden"><div class="px-5 pt-5 pb-4 bg-red-50 flex items-start gap-3"><svg width="28" height="28" viewBox="0 0 373.000000 400.000000" fill="none" aria-hidden="true" class="shrink-0 mt-0.5 text-red-500"><g transform="translate(0.000000,400.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="none">
+<path d="M2058 3753 c-26 -30 -46 -77 -73 -170 -30 -106 -105 -325 -114 -334
+-3 -4 -36 -9 -73 -12 l-67 -5 -3 37 c-3 41 -48 54 -111 32 -28 -10 -34 -8 -76
+27 -25 21 -75 58 -111 82 -97 65 -198 147 -260 211 -94 97 -127 96 -177 -2
+-58 -115 -52 -451 12 -695 21 -81 21 -82 -35 -148 -82 -95 -160 -225 -160
+-265 0 -5 -16 -26 -37 -46 l-36 -35 6 -150 c9 -205 2 -217 -228 -414 -44 -37
+-123 -109 -175 -160 -52 -50 -133 -125 -178 -166 -158 -142 -152 -210 37 -422
+36 -42 144 -108 185 -115 29 -4 40 -13 52 -39 70 -147 368 -172 678 -57 l118
+44 39 -26 c80 -53 122 -140 134 -280 15 -176 43 -205 121 -125 22 22 42 40 46
+40 15 0 39 -76 45 -138 9 -98 47 -118 117 -61 l38 32 -2 -44 c-5 -122 11 -136
+112 -99 207 73 426 233 560 409 l26 34 7 -57 c9 -69 23 -78 80 -47 88 47 256
+256 315 393 30 68 30 69 55 21 58 -113 86 -101 177 77 62 122 81 165 103 240
+9 30 20 69 26 86 5 18 12 68 16 113 7 95 12 98 73 36 44 -44 81 -57 96 -33 30
+49 -25 379 -81 488 -21 41 -20 43 23 35 74 -12 77 47 11 191 -51 110 -212 334
+-240 334 -22 0 -6 21 21 26 121 25 -106 249 -374 369 -83 38 -85 39 -96 84
+-82 326 -520 821 -622 704z m187 -200 c105 -102 183 -211 264 -369 22 -45 41
+-85 41 -89 0 -4 6 -21 14 -38 43 -95 69 -223 86 -422 22 -243 84 -158 83 113
+-1 72 2 132 6 132 27 0 270 -161 293 -194 9 -13 -10 -26 -39 -26 -61 0 -51
+-60 20 -120 140 -117 306 -364 232 -346 -64 16 -105 -30 -71 -79 42 -61 150
+-384 134 -400 -2 -3 -28 5 -57 17 -79 34 -84 27 -97 -129 -13 -145 -41 -252
+-104 -388 -47 -102 -52 -105 -87 -54 -57 85 -105 78 -132 -19 -30 -107 -112
+-248 -201 -346 l-54 -58 -11 56 c-24 118 -57 121 -140 11 -136 -181 -296 -324
+-441 -395 -96 -47 -104 -48 -104 -12 -1 129 -79 201 -136 126 l-28 -36 -12 33
+c-57 162 -124 226 -172 165 -23 -30 -32 -24 -32 19 0 77 -39 161 -109 237 -42
+45 -42 45 50 64 103 22 204 15 270 -19 64 -34 69 -34 69 2 0 160 -303 169
+-695 19 -218 -83 -356 -100 -455 -55 l-35 15 90 1 c130 1 235 34 423 133 126
+65 171 83 245 99 88 18 107 28 107 59 0 37 -18 45 -97 44 -85 -1 -67 6 -323
+-126 -224 -115 -437 -149 -597 -94 -58 19 -77 76 -37 108 86 68 124 137 124
+225 0 57 -90 123 -168 123 -53 0 -36 19 223 250 261 232 270 248 262 438 l-4
+127 50 105 c87 182 243 368 392 470 28 18 88 66 135 104 88 74 184 146 193
+146 3 0 8 -18 12 -39 9 -53 23 -56 117 -26 96 30 98 30 70 -38 -46 -115 -48
+-167 -6 -167 13 0 64 59 64 74 0 5 12 31 26 60 59 116 121 286 184 506 35 121
+43 121 165 3z m-1078 -72 c24 -25 254 -196 299 -223 l37 -22 -25 -20 c-90 -75
+-146 -116 -156 -116 -6 0 -16 17 -23 37 -6 21 -45 106 -85 189 -83 172 -93
+203 -47 155z m-87 -22 c0 -5 16 -43 35 -85 19 -41 35 -77 35 -79 0 -2 20 -46
+45 -98 25 -53 45 -102 45 -109 0 -8 5 -19 11 -25 8 -8 -11 -29 -68 -76 -92
+-78 -84 -87 -113 109 -19 129 -28 363 -14 377 8 8 24 -1 24 -14z m-695 -2023
+c66 -28 50 -145 -19 -132 -42 8 -55 -6 -63 -73 -7 -64 -9 -64 -71 8 -92 106
+-101 159 -32 196 33 19 142 19 185 1z M2172 3418 c-15 -15 -15 -52 -2 -98 30
+-101 -1 -444 -35 -390 -12 19 -54 11 -70 -14 -32 -48 -15 -216 24 -240 28 -18
+51 14 51 69 l0 55 29 -6 c46 -9 60 22 101 219 6 32 14 56 17 54 12 -12 24
+-100 33 -231 15 -247 85 -328 97 -114 19 329 -145 796 -245 696z M1195 2461
+c-66 -40 -122 -133 -132 -221 -10 -88 34 -135 58 -62 37 116 98 203 128 185
+31 -19 41 -17 104 28 77 55 79 90 2 63 -51 -18 -52 -18 -58 6 -7 26 -60 27
+-102 1z M2452 2391 c-9 -5 2 -26 36 -72 169 -224 211 -324 116 -274 -84 44
+-117 -1 -69 -94 43 -81 83 -251 59 -251 -3 0 -22 11 -42 25 -74 51 -92 32 -92
+-98 0 -183 -41 -303 -79 -229 -41 80 -82 72 -116 -23 -17 -51 -80 -162 -100
+-180 -33 -28 -67 -87 -58 -96 29 -29 129 39 188 129 31 47 40 44 50 -20 26
+-153 188 95 203 310 6 85 11 88 51 22 92 -150 143 130 65 353 -18 50 -15 53
+30 32 49 -23 66 -15 66 32 -1 125 -247 472 -308 434z M1324 2226 c-34 -15 -80
+-66 -110 -124 -11 -20 -27 -47 -35 -60 -28 -45 24 -81 64 -44 16 15 42 22 96
+27 41 3 88 12 105 19 38 16 159 141 154 159 -11 32 -213 49 -274 23z M3232
+822 c-36 -18 -51 -54 -31 -78 14 -17 115 -12 151 7 88 47 -29 116 -120 71z
+M2969 596 c-34 -74 55 -238 106 -196 17 14 20 88 5 139 -21 73 -88 107 -111
+57z"></path>
+</g></svg><div><p class="text-xs font-bold uppercase tracking-widest mb-0.5 text-red-500">Wolf</p><p class="text-sm font-medium text-gray-800 leading-snug">You do not wait for permission. When you see the problem, you say it. The team moves because you do not stay quiet.</p></div></div><div class="px-5 py-4 flex flex-col gap-3"><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Tendency</p><p class="text-sm text-gray-600 leading-relaxed">High Presence, low Bond. Direct, assertive, and action-oriented. Does not wait for consensus.</p></div><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Contributes to a team</p><p class="text-sm text-gray-600 leading-relaxed">Initiative. Names what needs to be said and gets things moving.</p></div><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Tends to miss</p><p class="text-sm text-gray-600 leading-relaxed">The relational cost of directness over time. Teams can lose trust if the challenge is constant.</p></div></div></div><div class="bg-white border border-gray-200 rounded overflow-hidden"><div class="px-5 pt-5 pb-4 bg-teal-50 flex items-start gap-3"><svg width="28" height="28" viewBox="0 0 400.000000 396.000000" fill="none" aria-hidden="true" class="shrink-0 mt-0.5 text-teal-600"><g transform="translate(0.000000,396.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="none">
+<path d="M1113 3702 c-63 -23 -107 -58 -244 -198 -307 -313 -364 -412 -363
+-629 0 -145 3 -156 117 -436 31 -75 61 -164 67 -199 13 -71 44 -176 70 -235
+38 -87 39 -92 29 -136 -10 -44 -64 -139 -79 -139 -4 0 -38 -26 -76 -57 -106
+-89 -251 -158 -387 -183 -61 -12 -77 -24 -77 -59 0 -102 256 -152 458 -90 l82
+26 0 -116 c1 -686 245 -1105 662 -1137 277 -21 451 124 529 442 17 70 40 150
+50 177 52 132 -32 218 -153 156 l-41 -21 -42 21 c-112 56 -158 6 -139 -151 13
+-110 -16 -168 -84 -168 -109 0 -162 222 -116 484 20 114 23 121 81 136 167 46
+325 182 419 362 24 48 49 87 54 85 4 -1 28 14 52 34 25 21 72 45 112 58 81 26
+182 75 213 103 l21 20 4 -169 c5 -252 60 -333 235 -341 106 -6 158 22 266 141
+156 174 186 199 274 230 88 30 140 69 238 179 44 49 80 77 134 105 121 62 162
+106 232 249 34 69 78 143 100 166 124 135 120 244 -23 602 -169 426 -310 593
+-558 662 -181 51 -588 -12 -828 -128 l-83 -40 -82 36 c-206 90 -489 108 -695
+44 -31 -9 -35 -7 -86 39 -89 81 -235 113 -343 75z m208 -92 c59 -19 120 -54
+109 -62 -3 -3 -29 -19 -58 -37 -53 -34 -126 -108 -144 -147 -9 -19 -21 -22
+-97 -26 -131 -8 -229 -65 -301 -179 -62 -95 -13 -107 75 -19 82 84 265 156
+265 106 0 -31 -65 -139 -125 -207 -112 -127 -153 -265 -116 -395 40 -136 27
+-263 -46 -468 -54 -150 -61 -150 -87 -3 -28 152 -35 177 -86 292 -194 448
+-166 555 264 1002 157 164 211 186 347 143z m1859 -25 c227 -53 358 -208 519
+-613 123 -308 129 -392 34 -493 -18 -19 -66 -97 -106 -174 -108 -207 -187
+-260 -198 -135 -8 93 -36 162 -97 238 -30 37 -69 97 -88 135 -36 70 -44 77
+-64 52 -22 -26 25 -141 104 -252 77 -108 98 -253 45 -319 -110 -141 -224 -227
+-309 -236 l-35 -3 -6 95 c-10 134 -58 255 -90 223 -7 -7 -5 -30 5 -71 10 -38
+16 -104 16 -182 l0 -122 -67 -85 c-136 -171 -165 -195 -251 -209 -132 -21
+-178 56 -174 296 5 448 17 523 106 684 65 118 79 184 70 346 -8 152 7 202 88
+298 208 245 439 280 589 90 61 -78 101 -51 46 30 -257 382 -900 50 -838 -433
+15 -119 4 -180 -54 -302 -54 -114 -71 -178 -84 -332 l-9 -114 -52 -52 c-49
+-50 -134 -100 -221 -130 l-41 -15 6 33 c28 163 30 297 2 297 -40 0 -60 -55
+-81 -217 -23 -183 -28 -191 -93 -148 -125 82 -244 49 -316 -89 -99 -188 -242
+-301 -430 -340 -188 -40 -90 -165 131 -166 77 0 77 -1 51 -96 -66 -244 -4
+-508 136 -579 146 -74 250 21 243 222 -1 51 0 93 3 93 3 -1 16 -7 30 -15 33
+-19 82 -19 127 0 48 20 49 17 19 -59 -14 -35 -26 -73 -26 -83 -2 -157 -107
+-340 -232 -405 -116 -61 -440 -32 -363 32 38 32 14 49 -29 21 -40 -27 -62 -14
+-159 89 -90 95 -97 120 -36 120 84 0 169 44 141 72 -8 8 -26 8 -69 -2 -135
+-31 -155 -22 -187 87 -41 138 -47 127 66 128 79 0 101 3 115 17 32 32 4 42
+-111 39 -125 -3 -126 -2 -129 117 l-2 77 45 3 c25 2 76 -4 114 -13 99 -24 118
+2 33 47 -31 16 -63 23 -122 25 l-80 2 -3 137 c-3 156 21 401 41 421 38 38 163
+27 275 -24 107 -49 127 -4 25 55 -89 52 -155 68 -224 53 -69 -15 -71 -11 -40
+94 26 88 26 89 66 101 79 24 153 17 234 -21 82 -39 93 -41 111 -20 52 62 -224
+157 -334 115 -31 -12 -31 -10 -5 71 45 135 134 146 339 43 102 -51 132 -35 58
+31 -72 66 -139 90 -246 90 l-94 0 6 30 c28 144 29 173 11 287 -36 232 -34 244
+85 393 66 83 170 259 170 288 0 19 84 138 113 160 259 197 838 118 1002 -137
+48 -75 69 -92 100 -78 50 23 13 136 -70 215 l-46 45 78 25 c295 96 569 135
+713 102z m-1376 -1896 c35 -27 33 -38 -15 -122 -108 -187 -289 -299 -506 -314
+-121 -8 -119 2 12 67 133 66 237 163 304 285 62 112 132 141 205 84z m-1070
+-101 c-4 -29 -9 -71 -13 -93 l-7 -40 -79 -24 c-44 -13 -115 -25 -157 -28 -121
+-8 -193 14 -105 32 80 17 282 129 331 184 30 33 37 25 30 -31z M2000 2774 c-8
+-1 -32 -5 -53 -9 -64 -10 -137 -90 -137 -150 0 -37 32 -32 64 9 46 60 91 81
+176 81 68 0 75 2 75 20 0 28 -77 58 -125 49z M1986 2630 c-56 -17 -110 -96
+-86 -125 31 -37 144 -23 180 22 61 78 11 134 -94 103z M1122 2448 c-52 -25
+-22 -43 83 -48 87 -5 109 -10 168 -40 70 -35 83 -35 73 -2 -23 70 -240 130
+-324 90z M2820 1094 c-74 -12 -93 -18 -120 -40 -86 -73 24 -132 134 -72 102
+57 93 128 -14 112z M2482 940 c-59 -24 -104 -205 -58 -235 59 -39 136 56 136
+167 0 72 -21 90 -78 68z M2712 754 c-48 -33 -33 -160 22 -179 40 -14 66 20 66
+84 0 80 -43 127 -88 95z"></path>
+</g></svg><div><p class="text-xs font-bold uppercase tracking-widest mb-0.5 text-teal-600">Elephant</p><p class="text-sm font-medium text-gray-800 leading-snug">You do not take up space — you create it. People explain themselves well beside you because they know you are really listening.</p></div></div><div class="px-5 py-4 flex flex-col gap-3"><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Tendency</p><p class="text-sm text-gray-600 leading-relaxed">Low Presence, high Bond. Quiet and deeply cooperative. Creates space for others to think out loud.</p></div><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Contributes to a team</p><p class="text-sm text-gray-600 leading-relaxed">Depth of listening. People articulate themselves better in your presence.</p></div><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Tends to miss</p><p class="text-sm text-gray-600 leading-relaxed">Momentum. The team can think clearly together but still not move.</p></div></div></div><div class="bg-white border border-gray-200 rounded overflow-hidden"><div class="px-5 pt-5 pb-4 bg-slate-50 flex items-start gap-3"><svg width="28" height="28" viewBox="0 0 400.000000 344.000000" fill="none" aria-hidden="true" class="shrink-0 mt-0.5 text-slate-600"><g transform="translate(0.000000,344.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="none">
+<path d="M353 3155 c-55 -39 2 -265 99 -394 24 -32 23 -39 -7 -33 -50 9 -38
+-49 25 -126 23 -28 27 -41 23 -71 -9 -63 65 -166 155 -218 26 -15 48 -28 50
+-29 2 -1 -16 -29 -40 -62 -213 -288 -319 -814 -243 -1197 18 -94 16 -109 -40
+-229 -91 -195 -105 -286 -44 -286 25 0 32 6 45 38 8 20 19 46 24 57 5 11 21
+52 36 90 15 39 42 98 62 133 39 71 39 75 7 272 -51 319 12 676 180 1013 83
+164 70 155 156 120 88 -35 93 -46 37 -71 -63 -28 -133 -109 -179 -207 -161
+-343 -92 -751 168 -996 141 -133 421 -215 431 -126 4 31 -16 42 -138 78 -287
+84 -459 350 -447 689 15 430 238 617 482 406 l39 -33 -57 -28 c-102 -50 -166
+-143 -175 -252 -25 -310 346 -471 565 -245 52 54 53 40 2 -61 -33 -66 -35 -77
+-16 -77 62 0 121 168 107 309 -3 33 -4 61 -3 61 2 0 46 -23 99 -50 127 -66
+149 -64 296 27 21 13 39 23 42 23 2 0 5 -49 8 -109 3 -101 6 -113 38 -176 59
+-116 103 -120 51 -5 -42 94 -40 115 4 62 147 -170 443 -131 539 73 77 161 -8
+379 -165 426 -48 15 -48 18 -1 56 217 174 384 87 463 -242 93 -388 -98 -758
+-443 -859 -122 -36 -120 -34 -116 -70 5 -56 128 -47 268 18 248 117 410 395
+410 702 0 271 -120 541 -271 610 -31 13 -52 34 -36 34 1 0 36 14 77 31 89 36
+76 46 161 -125 175 -349 234 -720 171 -1068 -24 -132 -26 -118 39 -254 26 -56
+58 -130 69 -165 29 -85 45 -109 76 -109 60 0 38 109 -64 320 -32 65 -34 126
+-13 342 38 381 -67 797 -272 1081 -14 18 -18 31 -11 34 102 36 224 196 193
+254 -8 16 -5 26 16 51 65 76 80 145 30 136 -32 -6 -31 0 2 48 104 153 152 352
+92 385 -32 16 -60 5 -174 -71 -57 -39 -106 -70 -109 -70 -10 0 -140 -82 -178
+-112 -32 -25 -39 -27 -44 -14 -24 61 -174 -61 -263 -214 -24 -41 -45 -77 -47
+-78 -1 -2 -49 12 -106 31 -361 122 -857 119 -1227 -8 -98 -33 -89 -37 -146 62
+-94 163 -220 265 -253 206 -9 -15 -14 -12 -50 18 -22 19 -80 57 -128 84 -49
+27 -128 75 -176 107 -102 67 -125 75 -155 53z m281 -227 c100 -61 241 -161
+252 -179 10 -17 34 -9 34 10 0 65 67 -8 164 -177 65 -112 147 -187 162 -148 6
+17 -23 66 -39 66 -35 0 24 24 133 55 343 96 766 94 1100 -6 126 -37 117 -30
+90 -74 -15 -25 -19 -40 -12 -47 28 -28 112 60 192 203 53 95 123 169 130 139
+9 -37 20 -33 98 29 74 59 292 195 300 186 31 -31 -1053 -1118 -1246 -1249
+-160 -108 -161 -108 -933 671 -374 378 -497 509 -533 571 -13 21 5 13 108 -50z
+m765 -1054 c132 -66 197 -168 170 -267 -76 -285 -499 -237 -499 56 0 175 175
+287 329 211z m1158 0 c229 -114 147 -453 -110 -454 -228 -1 -348 244 -185 380
+120 102 200 122 295 74z M1227 1766 c-107 -106 -5 -276 141 -236 78 20 113
+110 78 195 -34 80 -157 103 -219 41z M2374 1790 c-102 -41 -98 -212 6 -254
+123 -49 235 74 179 196 -25 55 -119 85 -185 58z M3513 2425 c-54 -38 -81 -135
+-37 -135 48 0 128 79 122 122 -4 29 -52 36 -85 13z M1827 1490 c-52 -41 -107
+-189 -107 -285 0 -73 101 -351 138 -382 60 -50 190 315 165 462 -29 171 -119
+265 -196 205z M1365 840 c-11 -18 5 -30 128 -90 67 -33 176 -91 242 -130 142
+-82 152 -83 251 -25 41 25 77 45 80 45 2 0 27 15 56 33 29 17 102 57 162 87
+117 59 140 80 84 80 -88 0 -300 -89 -416 -174 -75 -56 -69 -55 -134 -6 -129
+98 -430 218 -453 180z"></path>
+</g></svg><div><p class="text-xs font-bold uppercase tracking-widest mb-0.5 text-slate-600">Owl</p><p class="text-sm font-medium text-gray-800 leading-snug">You see what others miss because you do not need to be at the centre. The distance is useful to you.</p></div></div><div class="px-5 py-4 flex flex-col gap-3"><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Tendency</p><p class="text-sm text-gray-600 leading-relaxed">Low Presence and Bond. Independent, observant, and precise. Works best with distance.</p></div><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Contributes to a team</p><p class="text-sm text-gray-600 leading-relaxed">Clarity. Sees structural problems that high-social profiles miss.</p></div><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Tends to miss</p><p class="text-sm text-gray-600 leading-relaxed">Warmth and easy collaboration. The distance that helps analysis can isolate.</p></div></div></div><div class="bg-white border border-gray-200 rounded overflow-hidden"><div class="px-5 pt-5 pb-4 bg-amber-50 flex items-start gap-3"><svg width="28" height="28" viewBox="0 0 400.000000 331.000000" fill="none" aria-hidden="true" class="shrink-0 mt-0.5 text-amber-500"><g transform="translate(0.000000,331.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="none">
+<path d="M1910 3074 c-383 -35 -793 -189 -947 -357 -37 -40 -49 -61 -80 -137
+-8 -18 -30 -33 -84 -54 -349 -137 -520 -291 -609 -546 -25 -72 -25 -270 0
+-351 48 -159 151 -309 212 -309 l28 0 1 118 c0 64 6 133 12 152 13 38 14 38
+111 24 27 -4 134 -1 237 6 l187 13 69 -48 c297 -212 318 -451 69 -807 -85
+-122 -170 -327 -153 -371 18 -47 297 31 372 104 27 27 35 8 35 -85 0 -100 13
+-126 61 -126 35 0 230 168 276 237 16 24 33 22 33 -4 0 -35 42 -155 64 -179
+43 -50 139 11 232 147 27 39 50 64 52 57 65 -258 280 -525 354 -440 53 60 138
+320 138 422 0 28 4 25 83 -54 204 -206 282 -208 270 -8 -3 62 -3 112 0 112 4
+0 35 -18 69 -41 95 -61 174 -97 267 -120 142 -36 158 -11 87 137 -66 134 -63
+140 29 79 153 -103 343 -156 389 -109 23 22 21 31 -25 91 -101 135 -231 466
+-170 433 109 -58 95 141 -34 481 -28 76 -50 139 -48 139 2 0 13 -5 24 -11 133
+-71 14 269 -165 471 -51 58 -54 64 -23 56 148 -36 24 183 -181 322 l-53 35 31
+13 c82 35 -43 159 -252 250 -99 44 -92 38 -79 62 55 103 -520 229 -889 196z
+m327 -104 c103 -11 323 -52 367 -69 27 -11 28 -13 12 -30 -41 -46 -11 -79 94
+-106 108 -27 260 -93 260 -114 0 -4 -14 -12 -31 -18 -63 -24 -40 -68 74 -139
+54 -33 126 -86 160 -117 l62 -56 -51 0 c-99 -1 -94 -31 25 -157 74 -79 142
+-172 201 -276 34 -62 32 -65 -33 -47 -86 23 -88 -21 -10 -146 7 -11 19 -33 26
+-50 8 -16 24 -50 35 -75 40 -85 79 -195 96 -265 27 -115 27 -108 5 -101 -10 3
+-28 9 -38 12 -82 25 -30 -252 93 -491 22 -44 42 -83 44 -87 27 -59 -214 84
+-330 194 -94 90 -124 -80 -46 -261 10 -24 16 -46 13 -50 -15 -14 -241 118
+-318 186 -69 61 -104 5 -108 -168 -1 -33 -6 -62 -11 -65 -11 -7 -170 154 -189
+192 -87 174 -139 156 -150 -53 -10 -174 -66 -393 -100 -393 -57 0 -212 305
+-234 460 -14 102 -90 102 -129 0 -30 -77 -144 -240 -168 -240 -10 0 -9 -3 -43
+140 -45 190 -78 210 -139 86 -25 -51 -187 -236 -207 -236 -5 0 -9 35 -10 78
+-1 158 -36 187 -134 108 -61 -50 -103 -74 -186 -106 -63 -24 -59 -23 -59 -9 0
+40 56 130 112 179 33 30 81 85 105 122 52 80 60 81 42 3 -22 -101 43 -72 131
+58 33 49 43 43 55 -34 13 -83 30 -87 78 -20 45 62 96 205 104 289 6 65 13 74
+35 45 23 -31 78 -77 83 -71 16 16 23 126 14 200 -15 107 13 114 101 26 50 -51
+55 -27 13 60 -79 160 -264 271 -566 337 -136 30 -87 40 191 40 270 0 285 3
+331 61 65 82 -14 153 -192 173 -54 6 -130 22 -170 36 -40 13 -115 34 -167 45
+-241 52 -237 48 -242 243 -5 184 -47 267 -137 267 -33 0 -33 16 2 62 167 218
+791 395 1234 348z m-1222 -500 c42 -16 55 -63 55 -202 0 -192 19 -214 222
+-267 68 -18 168 -45 223 -61 55 -16 143 -34 195 -41 131 -15 165 -31 142 -65
+-24 -36 -64 -40 -342 -29 -214 7 -280 -6 -288 -60 -3 -20 -10 -21 -175 -23
+-95 -1 -213 -6 -262 -12 -196 -22 -276 -9 -145 23 36 9 117 30 180 47 244 65
+468 80 778 50 118 -11 136 -11 149 3 21 21 8 37 -29 37 -17 0 -94 9 -172 21
+-254 38 -574 21 -764 -40 -35 -12 -106 -28 -158 -36 -184 -29 -248 -85 -279
+-240 l-11 -60 -18 40 c-32 71 -35 79 -45 133 -48 236 89 506 322 636 77 43 80
+43 97 -21 28 -102 70 -163 114 -163 11 0 5 14 -20 52 -19 29 -34 58 -34 66 0
+7 -11 35 -25 62 -30 59 -30 66 -7 73 9 3 49 18 87 33 128 49 140 53 162 54 12
+0 33 -4 48 -10z M2045 2598 c-27 -4 -135 -32 -240 -62 -279 -80 -393 -95 -443
+-60 -47 33 -70 -10 -32 -59 28 -35 97 -59 172 -61 l63 -1 20 -42 c113 -234
+470 -182 470 69 0 91 -7 88 111 47 125 -43 360 -27 381 27 9 24 -1 27 -101 25
+-126 -3 -168 10 -221 64 -37 39 -58 49 -115 59 -8 1 -37 -1 -65 -6z m-78 -169
+c15 -46 3 -98 -32 -145 -76 -100 -263 -54 -268 67 -3 47 33 49 45 2 22 -83
+137 -100 176 -26 16 30 15 65 -3 89 -22 29 -18 42 13 47 47 7 57 3 69 -34z
+M2796 2242 c-3 -5 25 -32 62 -60 129 -98 135 -115 32 -87 -101 27 -108 10 -22
+-54 87 -65 145 -84 97 -31 -18 19 -17 20 4 20 33 0 81 28 81 48 -2 62 -227
+207 -254 164z M2056 2174 c-107 -59 -263 -74 -352 -35 -93 42 -90 5 3 -41 118
+-58 293 -36 376 46 36 37 20 55 -27 30z M3089 1899 c-18 -11 14 -71 65 -121
+44 -44 60 -44 64 -2 5 53 -92 146 -129 123z M2870 1841 c0 -23 105 -121 130
+-121 44 0 29 52 -31 103 -48 42 -99 51 -99 18z M2810 1622 c0 -10 20 -45 45
+-78 25 -32 55 -74 66 -91 27 -43 59 -44 59 -4 0 34 -69 142 -110 171 -35 25
+-60 26 -60 2z M3036 1561 c-3 -5 4 -21 15 -35 20 -26 20 -28 4 -40 -17 -12
+-14 -18 31 -79 71 -97 122 -105 110 -19 -12 85 -133 217 -160 173z M3273 1486
+c10 -59 59 -151 82 -151 42 0 24 89 -31 154 -36 43 -58 42 -51 -3z M2550 1388
+c0 -30 58 -120 73 -115 24 8 18 47 -15 91 -36 50 -58 58 -58 24z M2770 1352
+c0 -45 71 -196 96 -206 59 -23 31 117 -38 192 -21 21 -58 31 -58 14z M3046
+1221 c-6 -9 14 -74 33 -107 6 -11 17 -36 25 -57 24 -61 84 -59 70 2 -24 102
+-103 203 -128 162z M2387 1163 c-9 -16 12 -124 30 -156 23 -38 58 -48 68 -18
+17 55 -73 216 -98 174z M3304 1095 c-10 -26 55 -159 84 -170 36 -14 25 70 -18
+138 -30 47 -56 60 -66 32z M2596 1023 c15 -86 69 -187 105 -198 54 -17 79 75
+49 184 -14 52 -42 41 -38 -15 2 -30 -7 -54 -15 -43 -2 2 -18 28 -36 57 -42 66
+-76 74 -65 15z M2936 1011 c-6 -10 7 -58 24 -91 48 -89 95 -64 53 28 -28 62
+-61 89 -77 63z M2254 919 c-18 -31 3 -140 37 -183 45 -57 85 -19 74 70 -5 46
+-35 83 -35 44 0 -23 -19 -7 -30 24 -13 42 -35 63 -46 45z M1906 881 c-12 -19
+-19 -168 -9 -174 21 -13 35 24 37 92 1 67 -13 107 -28 82z M827 2293 c-24 -23
+51 -108 113 -128 22 -7 50 14 50 37 -1 49 -133 122 -163 91z"></path>
+</g></svg><div><p class="text-xs font-bold uppercase tracking-widest mb-0.5 text-amber-500">Eagle</p><p class="text-sm font-medium text-gray-800 leading-snug">You see far and you move there. You bring the team to places it would not have gone alone.</p></div></div><div class="px-5 py-4 flex flex-col gap-3"><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Tendency</p><p class="text-sm text-gray-600 leading-relaxed">High Presence and Vision. Energetic and future-oriented. Pulls the team toward new ground.</p></div><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Contributes to a team</p><p class="text-sm text-gray-600 leading-relaxed">Direction. Sets ambitious goals the team would not have set alone.</p></div><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Tends to miss</p><p class="text-sm text-gray-600 leading-relaxed">Execution detail. The horizon is clear; the path can be rough.</p></div></div></div><div class="bg-white border border-gray-200 rounded overflow-hidden"><div class="px-5 pt-5 pb-4 bg-orange-50 flex items-start gap-3"><svg width="28" height="28" viewBox="0 0 400.000000 335.000000" fill="none" aria-hidden="true" class="shrink-0 mt-0.5 text-orange-500"><g transform="translate(0.000000,335.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="none">
+<path d="M1730 3044 c-143 -22 -361 -78 -495 -129 -521 -197 -746 -426 -722
+-735 6 -74 5 -79 -17 -94 -364 -238 -480 -777 -239 -1108 70 -96 90 -80 103
+82 10 139 12 144 60 130 56 -16 180 -22 250 -12 78 11 77 12 117 -41 144 -191
+170 -417 88 -764 -48 -201 44 -172 110 35 90 279 39 618 -118 789 -16 18 -17
+23 -6 27 168 54 165 52 161 97 -7 63 140 127 313 138 136 8 145 11 145 51 0
+44 -43 86 -134 130 -162 77 -216 132 -248 251 -38 142 -94 214 -210 269 -93
+44 -148 47 -255 15 -29 -9 -31 38 -7 130 118 457 1254 804 1849 566 230 -93
+514 -331 626 -527 9 -16 33 -55 53 -88 61 -100 161 -312 241 -516 175 -444
+175 -445 205 -390 42 78 -224 774 -402 1051 -319 497 -860 734 -1468 643z
+m-918 -928 c126 -37 206 -129 235 -266 24 -115 78 -171 248 -260 138 -72 136
+-89 -5 -60 -25 5 -101 14 -170 20 -87 8 -127 15 -133 25 -25 45 -102 102 -212
+155 -129 63 -163 94 -191 172 -8 24 -23 56 -33 73 l-18 31 45 39 c91 79 149
+97 234 71z m-286 -208 c38 -115 73 -148 245 -232 102 -50 193 -105 186 -112
+-1 -1 -39 -7 -84 -14 -81 -11 -170 -37 -270 -81 l-53 -23 -27 26 c-16 14 -46
+37 -69 51 -62 38 -134 146 -134 201 0 50 141 227 187 236 1 0 9 -24 19 -52z
+m584 -425 c0 -5 -26 -21 -57 -38 -41 -21 -64 -41 -80 -69 -33 -61 -162 -95
+-388 -103 l-130 -4 35 30 c49 43 211 125 299 151 62 19 122 27 299 39 12 0 22
+-2 22 -6z M742 1954 c-22 -15 -30 -62 -16 -98 8 -20 40 -21 48 -1 9 24 49 20
+41 -4 -12 -39 54 -39 75 0 41 75 -73 156 -148 103z M3382 2955 c-23 -13 -53
+-25 -65 -27 -34 -5 -32 -69 3 -81 47 -17 180 60 180 104 0 36 -56 38 -118 4z
+M1965 2500 c-54 -9 -108 -21 -385 -89 -289 -72 -365 -129 -385 -296 -11 -97
+35 -136 57 -48 30 118 82 167 222 207 71 21 71 21 51 -49 -87 -299 362 -451
+523 -176 52 88 23 282 -49 326 -12 8 -2 25 15 25 7 0 57 -29 112 -64 54 -35
+126 -72 159 -82 80 -24 82 -27 38 -59 -21 -15 -90 -80 -153 -144 -235 -240
+-469 -275 -724 -108 -246 162 -210 -143 45 -376 109 -100 107 -114 -24 -133
+-149 -22 -143 -86 25 -233 143 -127 231 -232 294 -352 183 -351 535 -314 551
+59 5 93 3 104 -46 273 -80 277 -65 361 81 459 329 219 694 -15 603 -386 -33
+-131 -26 -159 32 -138 108 38 137 285 53 449 l-43 82 24 39 c66 107 15 297
+-115 426 -117 116 -228 166 -391 177 -134 9 -374 124 -306 146 102 32 -121 87
+-264 65z m-43 -224 c14 -31 5 -53 -27 -68 -44 -20 -88 45 -53 80 22 22 67 15
+80 -12z"></path>
+</g></svg><div><p class="text-xs font-bold uppercase tracking-widest mb-0.5 text-orange-500">Falcon</p><p class="text-sm font-medium text-gray-800 leading-snug">It is not vision — it is timing. You know exactly when to move, and when you do, the team notices.</p></div></div><div class="px-5 py-4 flex flex-col gap-3"><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Tendency</p><p class="text-sm text-gray-600 leading-relaxed">High Presence, low Vision. Present, decisive, and practical. Knows exactly when to act.</p></div><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Contributes to a team</p><p class="text-sm text-gray-600 leading-relaxed">Timing. Moves at the right moment and carries people with them.</p></div><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Tends to miss</p><p class="text-sm text-gray-600 leading-relaxed">Long-horizon thinking. Can miss the strategic layer while executing well at speed.</p></div></div></div><div class="bg-white border border-gray-200 rounded overflow-hidden"><div class="px-5 pt-5 pb-4 bg-[var(--mm-color-green-tint)] flex items-start gap-3"><svg width="28" height="28" viewBox="0 0 400.000000 383.000000" fill="none" aria-hidden="true" class="shrink-0 mt-0.5 text-[var(--mm-color-green)]"><g transform="translate(0.000000,383.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="none">
+<path d="M2647 3460 c-319 -54 -542 -242 -727 -615 -60 -119 -65 -127 -134
+-180 -70 -53 -98 -83 -126 -135 -10 -17 -16 -80 -20 -195 -9 -261 -83 -357
+-280 -359 -219 -3 -248 159 -77 418 104 155 132 252 108 365 -54 254 -437 297
+-517 58 -39 -118 33 -185 108 -98 56 65 113 77 160 34 35 -32 19 -115 -24
+-127 -30 -8 -60 -51 -68 -95 -4 -31 -15 -43 -75 -83 -72 -49 -104 -94 -105
+-148 0 -14 -16 -50 -36 -80 -37 -57 -46 -166 -16 -202 5 -7 15 -40 22 -73 6
+-33 21 -73 32 -88 26 -38 19 -42 -34 -19 -275 125 -515 72 -614 -137 -108
+-227 88 -508 284 -407 93 48 94 152 1 140 -54 -7 -98 23 -100 68 -5 105 43
+138 135 93 48 -23 60 -26 87 -16 34 12 89 -15 89 -44 0 -37 98 -93 142 -82 32
+9 98 -11 131 -37 l29 -23 -114 -55 c-228 -111 -327 -216 -374 -398 -53 -208
+91 -439 273 -440 149 0 201 130 62 154 -51 9 -83 37 -97 84 -17 56 -17 58 32
+106 29 27 48 57 55 84 14 51 22 56 87 53 59 -3 87 9 122 50 24 29 55 38 67 19
+21 -34 136 -2 177 48 15 19 45 37 87 51 84 27 81 28 81 -26 0 -74 24 -159 76
+-268 105 -225 112 -329 28 -406 -81 -74 -222 -7 -171 81 31 52 13 110 -34 110
+-117 0 -185 -164 -123 -295 117 -248 524 -206 659 68 59 120 69 295 20 370 -8
+13 -13 46 -13 80 0 44 -5 65 -24 95 -40 62 -34 224 11 259 40 32 61 72 61 119
+0 25 7 46 22 61 l21 23 18 -52 c10 -29 23 -54 29 -56 29 -10 60 -58 60 -94 0
+-61 75 -128 144 -128 19 0 32 -10 50 -39 35 -55 62 -71 121 -71 59 0 65 -4 87
+-52 12 -26 27 -40 52 -49 41 -15 42 -18 20 -61 -11 -22 -14 -43 -9 -75 12 -80
+-69 -132 -133 -87 -30 21 -29 64 4 93 73 64 -60 126 -146 68 -181 -121 -32
+-407 212 -407 364 0 517 479 248 773 l-52 57 30 0 c16 0 51 -9 77 -21 55 -24
+102 -21 166 11 46 24 57 25 98 4 31 -16 58 -15 137 1 28 6 35 3 64 -34 20 -24
+47 -45 69 -52 116 -37 59 -249 -67 -249 -33 0 -82 52 -82 87 0 105 -111 88
+-141 -21 -68 -252 298 -380 501 -177 279 279 45 781 -362 781 -21 0 -38 2 -38
+5 0 12 107 111 136 126 38 20 74 91 74 146 0 28 6 46 21 59 32 28 67 94 75
+139 17 100 146 128 188 41 37 -78 -2 -136 -90 -136 -102 0 -46 -129 60 -138
+301 -25 341 422 50 564 -200 98 -389 5 -524 -259 -136 -264 -268 -351 -442
+-291 -179 61 -178 231 2 306 36 15 99 41 141 58 280 114 437 303 498 598 85
+414 -267 746 -712 672z m288 -94 c334 -92 446 -406 273 -766 -78 -163 -204
+-260 -483 -375 -186 -77 -237 -142 -238 -310 -3 -264 189 -402 578 -415 206
+-7 236 -12 341 -62 234 -109 286 -435 97 -608 -147 -134 -364 -79 -363 92 l1
+43 19 -36 c57 -109 174 -124 268 -36 60 56 84 185 48 256 -9 16 -16 39 -16 50
+0 68 -57 111 -146 108 -55 -2 -63 0 -85 27 -37 43 -113 48 -156 12 -36 -30
+-78 -34 -106 -8 -30 27 -118 24 -151 -7 -32 -30 -65 -23 -96 22 -38 56 -111
+74 -159 41 -43 -31 -116 77 -166 246 -32 107 -55 101 -55 -15 1 -140 84 -268
+272 -414 199 -155 268 -329 200 -503 -86 -216 -374 -294 -481 -131 -44 67 -33
+165 21 194 25 14 32 6 19 -19 -80 -149 173 -250 271 -108 12 17 34 46 50 64
+35 41 37 91 4 148 -13 22 -26 63 -29 90 -6 59 -32 84 -88 84 -42 0 -89 24 -89
+44 0 31 -58 68 -109 70 -59 3 -69 11 -91 68 -13 36 -23 45 -65 63 -63 25 -63
+25 -58 99 6 63 -16 99 -69 119 -10 3 -10 9 1 28 35 58 44 86 49 149 7 97 -9
+93 -61 -14 -41 -85 -58 -107 -166 -216 -121 -121 -121 -122 -121 -169 0 -39
+-5 -52 -30 -76 -29 -28 -53 -84 -45 -108 2 -7 6 -25 10 -40 3 -16 17 -39 30
+-51 24 -23 25 -24 11 -71 -17 -56 -10 -84 36 -127 27 -26 30 -31 19 -54 -20
+-45 -14 -84 19 -114 l30 -28 -35 -35 c-38 -38 -43 -66 -21 -109 17 -33 0 -65
+-66 -123 -180 -159 -485 -62 -452 144 9 55 20 60 27 10 16 -119 143 -192 245
+-140 165 84 186 260 62 517 -112 235 -106 373 26 579 119 185 135 213 154 263
+46 122 7 157 -48 44 -17 -37 -70 -118 -116 -180 -46 -62 -99 -144 -118 -182
+-31 -66 -35 -70 -68 -70 -52 -1 -114 -39 -118 -73 -5 -39 -43 -56 -113 -50
+-52 5 -57 3 -92 -30 -42 -40 -92 -53 -131 -36 -39 18 -102 -3 -126 -43 -18
+-30 -95 -88 -116 -88 -29 0 -75 -71 -74 -113 1 -23 -1 -58 -5 -77 -16 -82 46
+-185 128 -213 40 -14 41 -15 16 -22 -107 -28 -227 99 -237 250 -13 206 114
+350 423 478 322 133 525 295 605 481 39 91 16 104 -43 22 -99 -138 -226 -251
+-348 -311 l-55 -27 -28 26 c-35 32 -88 43 -133 27 -49 -18 -88 -6 -112 34 -29
+50 -66 70 -131 70 -59 1 -90 10 -90 29 -3 76 -183 79 -293 3 -107 -74 -75
+-258 51 -283 47 -10 26 -27 -25 -21 -169 19 -210 263 -67 399 97 92 238 104
+399 33 361 -161 686 -79 883 220 74 114 94 185 90 333 -3 146 7 171 104 249
+86 68 114 107 190 258 134 268 279 410 503 494 112 42 308 55 410 27z m-1705
+-491 c131 -89 127 -225 -14 -438 -205 -309 -153 -516 134 -536 l85 -6 -62 -37
+c-186 -111 -353 -103 -358 15 -2 59 -30 98 -76 111 -46 13 -45 11 -15 46 34
+41 39 113 10 157 -21 34 -18 42 26 59 48 19 80 67 80 119 0 39 35 85 65 85 71
+0 105 64 121 230 13 132 -139 220 -245 142 -40 -29 -42 -6 -3 30 71 69 170 77
+252 23z m-60 -309 c0 -20 -22 -56 -35 -56 -18 0 -19 14 -5 41 9 16 40 28 40
+15z m-180 -211 c0 -8 -10 -25 -22 -37 -29 -29 -40 2 -12 33 21 23 34 24 34 4z
+m2665 -44 c190 -85 214 -387 34 -426 -44 -10 -45 -1 -4 24 47 27 69 78 63 149
+-13 152 -192 206 -306 92 -15 -15 -38 -29 -52 -33 -63 -16 -122 -148 -72 -164
+31 -11 12 -52 -33 -72 -53 -23 -85 -70 -85 -123 0 -50 -21 -68 -75 -66 -54 3
+-92 -22 -118 -77 l-18 -38 -64 7 c-150 15 -283 96 -340 206 l-15 29 47 -29
+c220 -136 451 -36 598 258 133 264 263 342 440 263z m-2753 -192 c-6 -55 -42
+-64 -42 -10 0 29 18 54 35 48 5 -2 8 -19 7 -38z m2504 -74 c7 -16 -20 -65 -35
+-65 -18 0 -21 33 -6 56 18 28 33 31 41 9z m-2452 -131 c22 -21 20 -44 -4 -44
+-18 0 -40 26 -40 49 0 16 26 13 44 -5z m2356 -111 c0 -20 -28 -53 -47 -53 -16
+0 -17 24 -1 50 16 24 48 26 48 3z m-2692 -151 c3 -10 -4 -13 -24 -10 -15 2
+-29 9 -32 16 -3 10 4 13 24 10 15 -2 29 -9 32 -16z m2512 -21 c0 -5 -14 -19
+-31 -32 -38 -27 -64 -12 -34 21 18 20 65 28 65 11z m-2286 -72 c29 -23 26 -39
+-8 -39 -28 0 -50 24 -42 45 7 20 18 19 50 -6z m274 -101 c4 -21 -27 -24 -59
+-8 -31 17 -22 31 18 28 27 -2 39 -8 41 -20z m998 -52 c9 -35 -5 -54 -23 -31
+-7 11 -13 27 -13 37 0 27 29 22 36 -6z m549 -60 c20 -14 15 -46 -8 -46 -16 0
+-57 36 -57 50 0 15 43 12 65 -4z m-765 -30 c0 -16 -26 -46 -41 -46 -14 0 -11
+22 8 42 19 22 33 23 33 4z m1271 3 c42 -22 0 -47 -48 -28 -27 10 -27 11 -9 25
+24 17 31 17 57 3z m-236 -29 c0 -18 -62 -27 -77 -12 -18 18 3 33 40 30 25 -2
+37 -8 37 -18z m-1465 -30 c0 -16 -43 -50 -62 -50 -23 0 -23 22 0 42 30 27 62
+30 62 8z m1920 -20 c20 -20 19 -40 -1 -40 -15 0 -50 40 -44 50 9 15 23 12 45
+-10z m-1157 -28 c22 -20 22 -42 -1 -42 -25 0 -56 35 -48 55 6 17 17 14 49 -13z
+m-985 -74 c-7 -21 -53 -42 -74 -34 -18 7 -18 8 5 27 26 21 75 26 69 7z m560
+-49 c-2 -19 -7 -34 -12 -34 -15 0 -24 39 -14 64 12 34 30 13 26 -30z m622 -7
+c23 -19 21 -42 -4 -42 -22 0 -60 36 -52 48 10 17 30 15 56 -6z m-1435 -2 c10
+-16 -15 -40 -41 -40 -30 0 -31 14 -2 34 26 19 35 20 43 6z m1629 -122 c5 -9 8
+-20 4 -23 -9 -9 -48 18 -48 33 0 18 30 11 44 -10z m-1830 -16 c3 -5 -2 -19
+-11 -31 -20 -29 -40 -13 -24 18 12 22 26 27 35 13z m1054 -66 c3 -20 0 -27
+-10 -24 -7 3 -14 17 -16 32 -3 20 0 27 10 24 7 -3 14 -17 16 -32z m827 -96 c0
+-13 -6 -25 -12 -27 -16 -6 -27 21 -19 43 9 23 31 11 31 -16z m-777 -89 c3 -16
+-1 -22 -10 -19 -7 3 -15 15 -16 27 -3 16 1 22 10 19 7 -3 15 -15 16 -27z m-8
+-143 c0 -25 -12 -58 -21 -58 -10 0 -12 31 -3 54 7 19 24 21 24 4z M2681 3311
+c-28 -8 -35 -20 -22 -40 15 -23 116 -2 116 24 0 22 -47 30 -94 16z M2500 3246
+c-136 -48 -351 -259 -308 -302 18 -19 20 -18 108 82 48 55 141 127 203 159 90
+47 87 94 -3 61z M2142 2908 c-34 -44 -47 -98 -23 -98 10 0 51 74 51 94 0 19
+-14 21 -28 4z M2349 2389 c-86 -50 -94 -199 -11 -199 30 0 79 46 87 80 4 19
+17 36 35 45 36 19 44 42 25 71 -20 31 -85 32 -136 3z M1643 3274 c-18 -8 -49
+-64 -56 -101 -15 -78 81 -49 111 33 23 62 0 90 -55 68z M3067 407 c-12 -31 79
+-97 133 -97 45 0 58 33 26 63 -42 39 -148 62 -159 34z"></path>
+</g></svg><div><p class="text-xs font-bold uppercase tracking-widest mb-0.5 text-[var(--mm-color-green)]">Octopus</p><p class="text-sm font-medium text-gray-800 leading-snug">The team's best ideas often passed through you first, in silence. You do not always know it yourself.</p></div></div><div class="px-5 py-4 flex flex-col gap-3"><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Tendency</p><p class="text-sm text-gray-600 leading-relaxed">Low Presence, high Vision. Internally rich and quietly creative. Processes complexity in private.</p></div><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Contributes to a team</p><p class="text-sm text-gray-600 leading-relaxed">Original thinking. The team's most unusual ideas often come from here.</p></div><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Tends to miss</p><p class="text-sm text-gray-600 leading-relaxed">Getting ideas into circulation. Works in silence; the ideas can stay there.</p></div></div></div><div class="bg-white border border-gray-200 rounded overflow-hidden"><div class="px-5 pt-5 pb-4 bg-stone-50 flex items-start gap-3"><svg width="28" height="28" viewBox="0 0 400.000000 252.000000" fill="none" aria-hidden="true" class="shrink-0 mt-0.5 text-stone-600"><g transform="translate(0.000000,252.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="none">
+<path d="M1585 2229 c-404 -52 -764 -273 -959 -589 -64 -105 -80 -139 -161
+-345 -63 -160 -69 -171 -131 -237 -119 -125 -101 -206 66 -303 36 -20 66 -38
+67 -39 1 -1 -14 -36 -34 -77 -149 -308 -64 -482 237 -483 200 -1 282 83 231
+237 -18 53 -6 101 22 92 12 -4 42 -12 67 -18 63 -17 67 -21 73 -73 10 -90 74
+-124 234 -123 167 1 233 27 233 91 l0 28 88 0 c244 0 580 48 811 116 22 6 24
+5 17 -17 -31 -113 -15 -277 32 -322 72 -69 345 -76 444 -12 44 29 49 49 52
+199 4 156 18 326 27 326 21 0 32 -50 31 -135 -3 -178 21 -208 172 -213 226 -9
+296 53 296 262 0 132 -28 229 -90 315 -37 50 -36 52 50 75 244 65 344 169 345
+356 0 233 -159 344 -434 301 -78 -12 -211 -62 -232 -87 -16 -20 -24 -18 -36 9
+-6 13 -44 43 -84 67 -50 29 -120 88 -215 181 -347 339 -752 477 -1219 418z
+m86 -111 c-37 -38 -91 -128 -91 -152 0 -10 -21 -26 -57 -41 -48 -22 -170 -91
+-224 -127 -13 -9 -35 -4 -100 24 -46 19 -92 38 -101 41 -19 7 -22 25 -11 77
+13 70 384 205 572 209 l43 1 -31 -32z m414 2 c186 -41 299 -89 263 -111 -10
+-5 -18 -15 -18 -22 0 -7 -9 -23 -20 -37 -11 -14 -20 -33 -20 -42 0 -16 -10
+-18 -73 -18 -84 0 -148 -17 -260 -67 l-78 -35 -72 50 c-40 27 -96 61 -124 76
+-60 30 -61 31 -31 83 32 57 47 72 113 116 l60 39 85 -6 c47 -3 126 -15 175
+-26z m394 -157 c84 -49 150 -103 273 -224 l123 -120 -66 6 c-64 6 -149 -9
+-188 -34 -11 -7 -44 18 -127 96 -172 162 -177 174 -113 262 36 48 39 49 98 14z
+m-1439 -67 c0 -28 -6 -38 -40 -60 -135 -89 -300 -317 -365 -503 -21 -60 -26
+-66 -53 -69 l-30 -4 20 58 c83 239 225 442 398 571 67 50 70 50 70 7z m648
+-53 c42 -26 97 -59 121 -75 57 -36 92 -35 182 3 101 43 153 58 229 65 l65 6
+19 -36 c18 -35 169 -190 228 -236 l28 -21 -30 -58 c-16 -33 -43 -69 -60 -82
+-17 -13 -69 -57 -116 -97 -98 -83 -122 -96 -255 -142 l-96 -34 -84 19 c-46 10
+-88 22 -93 26 -10 9 5 213 31 395 16 116 14 154 -6 154 -31 0 -105 -456 -86
+-533 8 -29 -27 -59 -105 -93 -61 -26 -456 -21 -500 6 -15 9 2 94 71 350 17 63
+33 150 36 193 4 58 9 77 20 77 8 0 49 19 91 42 254 137 215 128 310 71z m-563
+-46 c22 -10 57 -25 78 -34 34 -15 37 -20 32 -42 -4 -14 -21 -80 -37 -146 -16
+-66 -33 -133 -38 -150 -5 -16 -25 -88 -43 -160 l-34 -130 -64 -22 c-188 -63
+-442 52 -371 169 11 18 41 74 67 123 86 163 326 434 364 412 3 -2 24 -11 46
+-20z m1840 -244 c10 -3 -3 -20 -41 -55 -30 -28 -73 -83 -96 -122 -22 -39 -42
+-72 -43 -74 -3 -3 -170 48 -217 66 l-26 11 35 70 c19 39 36 71 36 71 1 0 29
+12 62 25 58 25 234 30 290 8z m618 3 c120 -36 170 -137 141 -285 l-7 -32 -58
+7 c-39 4 -80 1 -126 -9 -37 -9 -89 -19 -115 -22 -60 -8 -64 -30 -8 -46 30 -9
+53 -9 96 0 151 30 197 8 93 -45 -156 -79 -295 -108 -511 -108 -120 0 -158 -4
+-158 -13 0 -19 45 -44 89 -50 49 -7 44 -23 -7 -23 -20 0 -56 -5 -80 -10 -41
+-10 -45 -9 -83 24 -22 18 -61 44 -87 57 -26 13 -49 25 -51 26 -2 1 14 24 36
+50 41 50 125 191 137 231 5 15 15 22 31 22 52 0 133 41 201 101 137 121 318
+170 467 125z m-576 -111 c-27 -24 -47 -32 -47 -19 0 11 45 43 60 43 10 0 5 -8
+-13 -24z m-324 -180 c31 -9 57 -22 57 -29 0 -52 -218 -286 -267 -286 -4 0 -21
+23 -37 51 -16 28 -48 80 -72 115 -57 83 -57 83 84 192 l53 41 62 -34 c34 -18
+88 -41 120 -50z m-2069 -115 c19 -27 32 -51 27 -54 -4 -3 -16 -27 -25 -53 -10
+-26 -24 -61 -31 -78 -7 -16 -19 -47 -26 -68 -7 -20 -26 -49 -41 -64 l-28 -26
+-42 19 c-118 53 -127 83 -48 170 35 38 75 96 93 135 42 90 67 94 121 19z
+m1680 -4 c3 -13 33 -71 66 -128 33 -56 60 -106 60 -109 0 -18 -296 -149 -335
+-149 -13 0 -43 116 -50 195 -3 33 -8 77 -10 97 l-5 37 52 11 c29 6 85 24 123
+40 87 35 91 35 99 6z m-444 -31 c16 -8 57 -18 90 -22 56 -5 60 -7 53 -27 -17
+-45 -9 -229 11 -274 12 -26 16 -46 10 -51 -24 -24 -340 -89 -354 -74 -19 22
+-31 136 -26 246 l5 119 68 32 c37 18 74 40 82 49 17 21 24 21 61 2z m-1067
+-67 c59 -18 76 -26 71 -38 -3 -8 -14 -64 -25 -125 -36 -199 -21 -187 -174
+-139 -113 35 -115 37 -84 71 30 33 85 161 95 222 5 33 10 41 23 37 9 -3 51
+-16 94 -28z m377 15 c14 -6 34 -14 45 -18 18 -6 18 -7 4 -15 -54 -31 -83 -269
+-44 -362 9 -22 -8 -23 -122 -8 -207 27 -214 30 -189 79 19 35 40 192 33 242
+-5 38 -4 39 31 44 21 3 75 16 122 29 47 13 87 23 90 22 3 -1 16 -7 30 -13z
+m428 -48 c2 -2 -2 -47 -8 -100 -14 -105 -9 -169 16 -216 23 -46 15 -49 -172
+-56 -230 -8 -218 -17 -211 150 2 73 10 156 18 185 l13 54 170 -7 c94 -4 172
+-9 174 -10z m1116 -79 c104 -46 180 -148 195 -262 22 -159 -36 -431 -81 -386
+-20 20 -65 14 -82 -10 -12 -17 -18 -19 -30 -9 -29 24 -79 9 -99 -29 -18 -37
+-38 -41 -69 -13 -23 21 -24 154 -3 266 28 145 -5 242 -59 173 -11 -15 -94 12
+-153 51 -32 22 -31 24 44 63 74 38 202 120 246 156 34 29 25 29 91 0z m631
+-60 c72 -101 85 -176 24 -138 -26 17 -33 10 -25 -23 8 -31 32 -42 56 -27 22
+13 30 6 30 -27 0 -40 -17 -61 -31 -38 -15 25 -39 21 -39 -6 0 -29 18 -47 47
+-47 18 0 23 -6 23 -25 0 -21 -5 -25 -28 -25 -18 0 -38 -10 -52 -25 -16 -17
+-27 -22 -34 -15 -30 30 -96 -5 -96 -52 0 -14 -8 -18 -34 -18 -56 0 -66 19 -66
+123 -1 57 -7 107 -16 132 -28 73 -28 71 18 98 60 35 79 59 85 109 7 66 9 68
+52 68 38 0 43 -4 86 -64z m-225 -20 c0 -3 -113 -71 -141 -84 -7 -3 -29 44 -29
+63 0 8 13 15 33 18 47 6 137 8 137 3z m-839 -185 c22 -21 58 -47 80 -56 63
+-29 57 -33 -101 -69 -377 -86 -951 -87 -1237 -1 -62 18 -72 40 -15 31 336 -55
+851 -7 1142 107 85 33 84 33 131 -12z m-1645 -11 c28 -10 94 -28 147 -40 54
+-12 97 -23 97 -24 0 -1 -10 -22 -21 -47 -12 -24 -25 -55 -29 -69 -6 -24 -8
+-25 -87 -21 -121 5 -183 -29 -75 -42 165 -20 162 -19 162 -39 0 -10 -12 -30
+-27 -43 l-28 -24 -22 21 c-27 26 -58 17 -83 -24 -18 -30 -18 -30 -29 -9 -31
+58 -85 60 -115 4 l-14 -27 -36 36 c-44 44 -46 75 -12 168 48 131 90 211 106
+204 8 -3 38 -14 66 -24z m2774 -205 c0 -8 -7 -15 -15 -15 -16 0 -20 12 -8 23
+11 12 23 8 23 -8z m-112 -28 c2 -10 -3 -17 -12 -17 -10 0 -16 9 -16 21 0 24
+23 21 28 -4z m-1985 -18 c133 -13 137 -14 137 -32 0 -26 -209 -38 -267 -16
+-53 20 -64 76 -13 65 17 -3 81 -11 143 -17z m-477 -136 c-10 -10 -19 5 -10 18
+6 11 8 11 12 0 2 -7 1 -15 -2 -18z m-238 -11 c2 -7 -3 -12 -12 -12 -9 0 -16 7
+-16 16 0 17 22 14 28 -4z m142 -12 c0 -5 -7 -10 -16 -10 -8 0 -12 5 -9 10 3 6
+10 10 16 10 5 0 9 -4 9 -10z m2156 -27 c-11 -11 -19 6 -11 24 8 17 8 17 12 0
+3 -10 2 -21 -1 -24z m-206 -8 c0 -18 -5 -25 -20 -25 -21 0 -24 8 -14 34 10 25
+34 19 34 -9z m120 -6 c0 -12 -7 -19 -20 -19 -23 0 -24 4 -9 31 12 23 29 16 29
+-12z M3363 1519 c-76 -22 -105 -135 -50 -195 56 -62 191 -50 213 19 9 28 -3
+33 -29 10 -78 -73 -206 -22 -183 72 7 26 60 66 80 60 6 -2 24 -6 40 -10 16 -3
+44 -23 63 -43 l33 -36 0 26 c0 47 -83 115 -130 107 -3 0 -19 -5 -37 -10z
+M3370 1440 c-62 -62 24 -144 94 -89 34 26 34 62 0 88 -34 26 -68 27 -94 1z
+M3657 1424 c-17 -17 -7 -45 16 -42 14 2 22 10 22 23 0 20 -25 32 -38 19z
+M2730 767 c0 -72 87 -113 119 -56 21 37 6 74 -16 42 -22 -33 -40 -28 -53 12
+-16 48 -50 50 -50 2z M2649 677 c-12 -27 10 -83 37 -94 27 -10 64 14 64 42 0
+25 -14 33 -25 15 -13 -20 -36 -9 -42 20 -8 40 -20 47 -34 17z M2780 610 c0
+-31 37 -80 60 -80 26 0 50 22 50 45 0 25 -14 33 -25 15 -13 -20 -36 -9 -41 20
+-9 43 -44 42 -44 0z M2630 512 c0 -26 37 -57 54 -43 19 16 21 41 4 41 -7 0
+-23 3 -35 6 -13 4 -23 2 -23 -4z M2746 493 c-13 -13 -5 -50 13 -67 22 -20 56
+-14 65 10 9 23 -3 37 -19 24 -16 -13 -35 -5 -35 15 0 16 -14 27 -24 18z M3274
+836 c-8 -21 15 -58 34 -54 24 5 28 39 6 55 -23 17 -33 16 -40 -1z M3247 744
+c-16 -16 -6 -35 16 -32 12 2 22 10 22 18 0 16 -26 25 -38 14z M3255 641 c-9
+-16 14 -51 34 -51 20 0 37 29 24 41 -15 13 -51 20 -58 10z M664 549 c-10 -16
+18 -39 51 -42 43 -3 46 27 4 42 -40 14 -46 14 -55 0z M675 2159 c-50 -44 -45
+-89 8 -75 40 10 79 106 42 106 -8 0 -30 -14 -50 -31z M428 2129 c-22 -13 -23
+-45 -2 -53 53 -20 132 16 105 48 -15 18 -76 21 -103 5z M500 1959 c-97 -58
+-128 -149 -50 -149 23 0 105 56 122 83 47 73 5 112 -72 66z"></path>
+</g></svg><div><p class="text-xs font-bold uppercase tracking-widest mb-0.5 text-stone-600">Tortoise</p><p class="text-sm font-medium text-gray-800 leading-snug">You will not make noise. But when you are not there, the team drifts. You are the ground the others build on.</p></div></div><div class="px-5 py-4 flex flex-col gap-3"><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Tendency</p><p class="text-sm text-gray-600 leading-relaxed">Low Presence and Vision. Steady, grounded, and deeply reliable. Holds the ground so others can move.</p></div><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Contributes to a team</p><p class="text-sm text-gray-600 leading-relaxed">Stability. Others can take risks because this profile holds the ground.</p></div><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Tends to miss</p><p class="text-sm text-gray-600 leading-relaxed">Adaptability when the situation fundamentally changes.</p></div></div></div><div class="bg-white border border-gray-200 rounded overflow-hidden"><div class="px-5 pt-5 pb-4 bg-yellow-50 flex items-start gap-3"><svg width="28" height="28" viewBox="0 0 400.000000 369.000000" fill="none" aria-hidden="true" class="shrink-0 mt-0.5 text-yellow-600"><g transform="translate(0.000000,369.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="none">
+<path d="M1298 3400 c-93 -50 -127 -165 -77 -267 55 -114 198 -131 259 -30 45
+73 -10 172 -84 153 -48 -12 -43 -86 6 -86 28 0 19 -32 -14 -48 -80 -38 -149
+85 -94 168 101 152 311 6 417 -289 l23 -65 -28 -20 c-204 -148 -246 -299 -118
+-419 l30 -28 -33 -49 c-18 -27 -35 -55 -38 -62 -3 -10 -12 -8 -38 7 -584 336
+-971 448 -1241 357 -344 -115 -137 -633 331 -827 107 -44 104 -37 41 -113
+-160 -191 -152 -372 20 -460 198 -101 463 -18 715 222 44 42 81 76 82 76 1 0
+-8 -21 -19 -47 -183 -414 -22 -922 340 -1069 61 -24 70 -41 89 -162 3 -18 9
+-35 14 -38 5 -3 9 -13 9 -23 0 -26 38 -71 60 -71 28 0 45 31 83 160 l35 114
+64 26 c361 146 504 629 322 1085 -4 11 27 -12 70 -52 192 -179 358 -262 523
+-263 321 -1 428 265 205 511 -59 65 -59 70 3 89 336 105 634 508 527 716 -135
+263 -690 182 -1327 -195 -87 -51 -82 -52 -128 16 -32 47 -36 59 -25 67 126 97
+85 299 -82 406 -60 38 -62 51 -23 147 101 254 285 382 394 274 61 -62 24 -191
+-55 -191 -54 0 -78 42 -30 54 37 10 31 66 -9 80 -86 30 -130 -116 -56 -185
+155 -145 351 141 204 295 -153 158 -414 -2 -515 -317 -20 -62 -24 -68 -44 -62
+-126 40 -165 41 -246 7 l-45 -19 -33 89 c-105 281 -302 423 -464 338z m747
+-504 c72 -33 77 -42 59 -102 -16 -52 -12 -98 12 -168 16 -45 14 -52 -14 -37
+-11 6 -51 15 -89 21 -69 11 -81 10 -242 -27 l-25 -6 22 28 c43 54 51 152 19
+222 -12 27 -13 27 67 70 55 30 126 30 191 -1z m-1310 -281 c149 -45 340 -124
+530 -221 277 -140 250 -119 250 -200 l0 -69 -110 -2 c-181 -3 -329 -43 -511
+-138 l-105 -54 -89 29 c-351 115 -641 524 -456 645 83 55 325 59 491 10z
+m2890 4 c228 -114 -66 -553 -444 -665 l-74 -21 -103 52 c-181 93 -340 135
+-510 135 -57 0 -104 3 -105 8 -8 57 -6 132 4 140 13 11 124 70 257 137 434
+219 804 300 975 214z m-1527 -134 c200 -92 249 -339 102 -517 -129 -156 -419
+-124 -536 59 -174 272 134 595 434 458z m-603 -425 c-3 -5 -11 -10 -16 -10 -5
+0 -65 -21 -132 -46 -156 -58 -414 -110 -382 -76 38 39 261 106 410 123 55 6
+102 13 104 15 9 8 22 4 16 -6z m1110 -22 c73 -11 244 -66 305 -99 l35 -18 -45
+0 c-93 -1 -392 82 -469 129 -18 12 54 7 174 -12z m-1037 -50 c49 -49 -235
+-398 -420 -517 -398 -256 -724 2 -391 309 l63 57 73 -5 c166 -10 424 52 602
+146 47 25 57 26 73 10z m859 -24 c211 -97 318 -124 521 -131 l153 -6 57 -63
+c323 -352 -76 -553 -476 -240 -162 127 -379 406 -352 455 13 26 5 27 97 -15z
+m-615 -165 c110 -37 211 -37 310 1 l58 21 32 -37 c18 -20 37 -44 42 -53 5 -9
+18 -22 28 -29 131 -94 -378 -147 -630 -66 -64 21 -64 24 9 121 64 86 40 79
+151 42z m-92 -506 c179 -41 453 -18 615 52 96 42 94 43 97 -79 l3 -98 -70 -28
+c-233 -94 -657 -94 -845 -2 l-55 27 1 92 c2 131 -2 127 96 87 46 -18 117 -41
+158 -51z m614 -495 c-122 -237 -440 -302 -648 -132 -79 64 -162 184 -108 156
+101 -53 437 -75 587 -38 39 9 86 21 105 25 20 4 44 12 55 18 27 16 29 10 9
+-29z M837 3094 c-18 -19 30 -97 96 -156 50 -46 127 -9 97 46 -24 45 -173 130
+-193 110z M3069 1038 c-48 -39 -14 -91 66 -104 59 -8 99 4 103 33 6 42 -132
+100 -169 71z M2891 871 c-28 -28 -26 -66 5 -129 53 -107 134 -117 134 -16 0
+102 -89 195 -139 145z"></path>
+</g></svg><div><p class="text-xs font-bold uppercase tracking-widest mb-0.5 text-yellow-600">Bee</p><p class="text-sm font-medium text-gray-800 leading-snug">Where others see chaos, you see structure. You build bridges between people and ideas no one else would have connected.</p></div></div><div class="px-5 py-4 flex flex-col gap-3"><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Tendency</p><p class="text-sm text-gray-600 leading-relaxed">High Bond and Vision. Collaborative and intellectually generative. Connects people and ideas.</p></div><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Contributes to a team</p><p class="text-sm text-gray-600 leading-relaxed">Synthesis. Builds bridges between people and between concepts no one else had linked.</p></div><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Tends to miss</p><p class="text-sm text-gray-600 leading-relaxed">The critical edge needed to test whether the connections hold.</p></div></div></div><div class="bg-white border border-gray-200 rounded overflow-hidden"><div class="px-5 pt-5 pb-4 bg-amber-100 flex items-start gap-3"><svg width="28" height="28" viewBox="0 0 400.000000 353.000000" fill="none" aria-hidden="true" class="shrink-0 mt-0.5 text-amber-800"><g transform="translate(0.000000,353.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="none">
+<path d="M2839 3257 c-75 -26 -128 -59 -205 -129 l-52 -48 -58 21 c-154 53
+-302 64 -450 34 -92 -19 -192 -16 -304 10 -109 25 -230 16 -335 -24 -83 -32
+-119 -38 -130 -21 -39 63 -264 165 -344 156 -275 -31 -371 -353 -189 -634 38
+-58 40 -66 28 -85 -149 -238 -282 -785 -244 -1009 l18 -110 -22 -37 c-181
+-290 -345 -991 -232 -991 32 0 48 38 70 175 38 230 99 438 176 603 47 102 54
+108 72 58 58 -160 139 -151 93 10 -93 323 -101 473 -37 704 64 230 148 460
+202 549 44 73 44 76 -21 171 -117 171 -124 338 -20 442 78 79 186 69 322 -29
+99 -71 149 -96 176 -88 12 4 58 20 102 37 102 39 201 46 305 23 167 -36 190
+-38 295 -16 146 31 252 28 406 -10 150 -38 154 -37 244 41 171 148 310 153
+392 13 57 -99 35 -210 -76 -367 -53 -76 -56 -59 48 -270 151 -305 248 -657
+199 -714 -12 -13 -17 -51 -21 -152 -10 -250 -109 -528 -281 -790 -42 -63 -75
+-119 -73 -125 29 -86 251 188 343 424 53 135 52 134 98 43 87 -172 165 -455
+185 -671 10 -111 25 -141 67 -141 126 0 -11 619 -213 963 l-45 78 11 75 c6 41
+11 106 11 145 0 45 6 81 16 102 55 105 -63 546 -228 854 l-49 91 51 77 c203
+312 10 672 -301 562z M2900 3101 c-73 -23 -134 -79 -174 -159 -22 -42 -13 -53
+81 -109 36 -21 75 -50 86 -65 37 -51 82 -27 58 30 -12 29 -97 122 -112 122
+-19 0 -8 27 24 57 45 43 69 53 121 53 39 0 46 3 46 20 0 37 -77 68 -130 51z
+M932 3060 c-49 -30 -40 -54 23 -60 116 -13 141 -53 76 -118 -54 -55 -75 -119
+-52 -168 18 -41 45 -29 90 40 28 44 57 74 91 95 69 43 66 64 -24 159 -71 75
+-138 92 -204 52z M1453 2360 c-109 -66 22 -190 162 -151 52 14 52 21 1 -141
+-154 -487 -146 -733 27 -807 26 -11 47 -25 47 -31 0 -22 73 -89 118 -108 154
+-66 354 -26 438 89 19 27 43 49 53 49 65 0 122 112 129 252 7 162 -7 231 -132
+622 -30 92 -30 89 15 76 115 -35 255 68 187 137 -73 72 -233 11 -272 -104 -18
+-53 -13 -84 47 -284 80 -263 98 -442 56 -554 -30 -82 -35 -82 -229 -32 l-85
+22 -3 37 c-3 36 -3 36 72 72 135 65 186 198 114 299 -77 108 -407 99 -473 -13
+-63 -109 -3 -239 137 -292 59 -22 68 -31 68 -70 0 -34 -12 -40 -120 -66 -177
+-44 -198 -32 -220 124 -15 105 -6 174 52 399 79 310 82 334 42 403 -46 78
+-162 114 -231 72z m621 -1074 c128 -32 131 -38 54 -77 -95 -48 -247 -43 -332
+13 -56 36 -56 36 75 58 36 6 72 16 80 21 18 11 10 13 123 -15z M3000 2141 c0
+-11 10 -59 21 -108 36 -149 18 -362 -26 -313 -38 43 -70 21 -85 -59 -31 -165
+-66 -244 -164 -371 -84 -108 -68 -151 27 -72 101 84 178 212 199 331 11 66 13
+69 29 55 105 -94 133 377 33 534 -18 27 -34 29 -34 3z M917 2123 c-94 -189
+-22 -694 82 -581 16 16 21 18 24 7 29 -101 42 -134 74 -187 52 -86 86 -126
+145 -172 83 -66 117 -42 52 36 -127 151 -182 249 -213 382 -24 101 -67 120
+-93 40 -9 -26 -27 6 -42 72 -21 89 -20 191 1 288 28 128 10 196 -30 115z
+M3560 1592 c-60 -58 -66 -95 -17 -100 56 -7 131 63 125 116 -5 48 -48 42 -108
+-16z M3576 1341 c-24 -27 7 -82 65 -111 70 -36 104 -19 79 39 -29 70 -109 111
+-144 72z M873 1115 c-23 -62 89 -284 183 -363 25 -20 107 -72 182 -115 75 -43
+201 -121 279 -173 137 -92 163 -115 296 -268 56 -65 90 -29 48 52 -73 141
+-256 284 -595 464 -173 92 -257 179 -318 333 -29 75 -61 104 -75 70z M2439
+1058 c-41 -61 -103 -120 -200 -188 -88 -63 -209 -179 -209 -201 0 -26 -39 -3
+-70 42 -50 74 -93 107 -210 162 -89 42 -114 60 -167 116 -52 55 -63 63 -69 48
+-23 -60 74 -164 218 -235 101 -50 110 -56 163 -126 58 -78 69 -86 116 -86 44
+0 81 23 131 80 24 27 79 77 123 110 115 87 171 145 201 205 40 83 19 140 -27
+73z M2632 610 c-37 -40 -98 -99 -137 -132 -279 -240 -342 -308 -300 -324 29
+-11 61 6 155 87 52 45 129 107 170 139 156 120 243 250 195 290 -14 11 -26 3
+-83 -60z"></path>
+</g></svg><div><p class="text-xs font-bold uppercase tracking-widest mb-0.5 text-amber-800">Bear</p><p class="text-sm font-medium text-gray-800 leading-snug">You do not change under pressure. The team knows you are there, and that knowing frees them to take risks.</p></div></div><div class="px-5 py-4 flex flex-col gap-3"><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Tendency</p><p class="text-sm text-gray-600 leading-relaxed">High Bond, low Vision. Dependable, grounded, and consistent. The team knows where it stands.</p></div><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Contributes to a team</p><p class="text-sm text-gray-600 leading-relaxed">Trust. People take more risks when a Bear profile is present.</p></div><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Tends to miss</p><p class="text-sm text-gray-600 leading-relaxed">Openness to change when the current approach is no longer working.</p></div></div></div><div class="bg-white border border-gray-200 rounded overflow-hidden"><div class="px-5 pt-5 pb-4 bg-[var(--mm-color-green-tint)] flex items-start gap-3"><svg width="28" height="28" viewBox="0 0 400.000000 386.000000" fill="none" aria-hidden="true" class="shrink-0 mt-0.5 text-[var(--mm-color-green)]"><g transform="translate(0.000000,386.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="none">
+<path d="M2301 3582 c-68 -72 -213 -360 -276 -547 -39 -115 -52 -124 -89 -61
+-67 114 -197 249 -352 365 -54 41 -137 103 -183 138 -118 89 -142 85 -160 -27
+-35 -214 7 -586 86 -763 26 -57 26 -58 6 -80 -76 -85 -147 -220 -191 -357 -59
+-188 -137 -290 -324 -424 -139 -98 -195 -137 -245 -166 -142 -82 -95 -229 107
+-334 194 -101 344 -101 715 0 271 73 489 53 574 -54 44 -56 39 -59 -99 -61
+-530 -6 -930 -245 -1150 -686 -117 -236 -108 -329 28 -261 190 95 400 106 702
+36 923 -214 1330 -143 1813 319 345 330 372 888 59 1210 -65 66 -74 81 -86
+135 -50 215 -190 459 -359 627 -69 69 -87 93 -87 115 0 160 -162 543 -359 849
+-14 22 -26 41 -27 43 -14 27 -71 18 -103 -16z m105 -179 c125 -206 209 -395
+274 -618 19 -66 32 -265 21 -335 -12 -75 -7 -103 18 -98 23 5 48 62 61 142
+l12 70 40 -45 c163 -182 284 -438 354 -749 35 -160 62 -175 73 -43 l6 67 30
+-45 c225 -336 189 -762 -89 -1048 -282 -291 -627 -429 -1053 -419 -220 4 -219
+4 -149 78 81 85 78 102 -27 126 -63 15 -147 52 -147 65 0 4 36 19 79 34 121
+40 252 133 238 169 -18 45 -225 129 -369 148 -100 13 -103 16 -50 54 101 74
+121 109 80 138 -37 26 0 30 216 20 489 -21 641 -10 778 59 112 55 256 224 246
+289 -5 32 -21 32 -41 -1 -69 -117 -235 -227 -385 -255 l-34 -6 9 33 c16 63 9
+159 -16 210 -28 59 -24 65 37 48 96 -27 112 -10 72 77 -61 131 -207 203 -440
+218 -70 4 -119 12 -127 20 -31 31 -226 25 -338 -11 -22 -7 -53 -16 -70 -19
+-33 -8 -227 -79 -290 -106 -22 -10 -83 -37 -135 -60 -52 -23 -110 -48 -128
+-56 -125 -57 -382 -59 -382 -3 0 32 -19 79 -32 79 -22 0 -3 30 35 55 271 179
+385 310 448 514 101 330 311 535 677 661 78 27 74 33 62 -90 -15 -139 13 -170
+46 -52 74 266 153 459 262 644 26 46 51 91 55 101 11 30 24 19 73 -60z m-874
+-138 c100 -79 348 -317 348 -334 0 -4 -28 -16 -62 -26 -35 -11 -96 -34 -136
+-52 -79 -35 -76 -36 -87 32 -17 98 -80 258 -182 458 -11 21 23 -1 119 -78z
+m-185 28 c8 -21 38 -87 65 -148 39 -84 138 -345 138 -362 0 -2 -19 -15 -42
+-29 -24 -15 -55 -38 -70 -52 -34 -31 -30 -38 -61 88 -37 149 -57 300 -57 429
+0 121 3 130 27 74z m835 -1528 c178 -29 297 -72 376 -135 76 -61 75 -66 -8
+-62 -112 7 -126 -22 -59 -117 47 -67 57 -151 26 -224 l-17 -39 -147 6 c-82 4
+-176 9 -210 12 l-62 5 -16 55 c-57 197 -312 248 -715 142 -307 -81 -442 -89
+-568 -33 -68 30 -71 34 -42 60 16 15 42 18 177 19 183 3 233 15 443 109 427
+190 616 236 822 202z m-486 -705 l27 -11 -61 -42 c-78 -54 -140 -132 -125
+-155 8 -14 30 -17 124 -19 125 -2 223 -23 324 -68 l60 -26 -25 -19 c-37 -28
+-165 -78 -239 -93 -130 -27 -84 -119 97 -193 74 -30 74 -35 5 -74 -72 -41 -73
+-41 -318 14 -345 78 -498 87 -687 37 -60 -15 -108 -24 -108 -19 0 56 149 290
+249 389 201 202 527 336 677 279z M2380 3311 c0 -5 7 -26 16 -47 28 -66 54
+-249 54 -373 -1 -317 -68 -523 -110 -338 -42 179 -80 221 -128 137 -69 -121
+-26 155 68 439 67 203 54 241 -30 80 -156 -301 -174 -769 -24 -628 26 24 25
+26 45 -51 29 -116 73 -154 138 -123 124 61 165 531 67 772 -37 93 -96 173 -96
+132z M1587 2166 c-94 -35 -202 -239 -115 -218 52 13 132 32 179 41 63 13 172
+91 177 128 6 44 -163 78 -241 49z M323 1075 c-55 -24 -26 -55 64 -69 56 -8 73
+0 73 35 0 47 -69 64 -137 34z M430 833 c-78 -54 -109 -164 -42 -148 88 20 164
+155 92 163 -14 1 -36 -5 -50 -15z"></path>
+</g></svg><div><p class="text-xs font-bold uppercase tracking-widest mb-0.5 text-[var(--mm-color-green)]">Fox</p><p class="text-sm font-medium text-gray-800 leading-snug">You see what does not add up — in ideas and in relationships. Your discomfort is productive.</p></div></div><div class="px-5 py-4 flex flex-col gap-3"><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Tendency</p><p class="text-sm text-gray-600 leading-relaxed">Low Bond, high Vision. Intellectually sharp and critically minded. Spots inconsistency fast.</p></div><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Contributes to a team</p><p class="text-sm text-gray-600 leading-relaxed">Critical distance. Catches what does not add up before it becomes a problem.</p></div><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Tends to miss</p><p class="text-sm text-gray-600 leading-relaxed">Relational ease. The discomfort can wear on a team that needs cohesion to function.</p></div></div></div><div class="bg-white border border-gray-200 rounded overflow-hidden"><div class="px-5 pt-5 pb-4 bg-gray-50 flex items-start gap-3"><svg width="28" height="28" viewBox="0 0 400.000000 371.000000" fill="none" aria-hidden="true" class="shrink-0 mt-0.5 text-gray-600"><g transform="translate(0.000000,371.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="none">
+<path d="M770 3367 c-13 -7 -27 -23 -30 -37 -5 -23 -13 -25 -95 -36 -168 -21
+-215 -60 -182 -154 14 -41 14 -51 0 -110 -30 -129 2 -310 75 -425 l38 -60 -72
+-141 c-66 -126 -151 -326 -184 -426 -6 -21 -31 -64 -54 -95 -23 -32 -46 -64
+-50 -71 -12 -21 19 -58 79 -94 65 -38 66 -42 20 -69 -70 -42 -50 -90 79 -183
+19 -13 18 -14 -12 -30 -93 -48 -3 -133 318 -301 192 -101 227 -122 346 -211
+78 -58 202 -181 261 -259 233 -310 438 -430 728 -428 276 2 475 117 685 396
+53 71 255 266 344 333 70 53 126 84 366 207 222 113 320 221 238 263 l-29 15
+43 35 c116 95 124 117 58 160 -51 34 -51 33 18 72 86 50 98 91 40 140 -17 14
+-62 112 -124 267 -44 113 -124 282 -173 369 -22 39 -22 86 0 86 59 0 119 309
+88 461 -9 45 -8 65 5 107 27 94 -24 132 -203 148 -68 7 -74 9 -83 34 -37 108
+-355 43 -506 -103 -74 -73 -57 -70 -160 -29 -399 157 -872 147 -1297 -28 -30
+-12 -32 -11 -95 51 -126 124 -374 200 -480 146z m234 -117 c80 -27 156 -73
+220 -131 59 -54 81 -59 146 -33 48 19 67 14 81 -23 6 -15 16 -35 24 -43 17
+-19 53 -166 67 -277 9 -68 7 -130 -7 -313 -20 -262 -15 -335 36 -535 78 -308
+96 -433 84 -602 l-7 -106 -62 -61 c-57 -57 -86 -83 -113 -99 -7 -5 -15 16 -22
+61 -21 123 -58 203 -165 362 -83 122 -105 170 -142 300 -80 289 -121 388 -220
+535 -60 91 -158 203 -211 243 -71 54 -199 369 -145 361 71 -12 101 1 139 58
+91 137 235 160 397 62 87 -52 116 -50 102 6 -28 110 -224 190 -375 151 -76
+-19 -87 -26 -178 -118 l-73 -73 2 80 c1 44 -1 89 -6 101 -9 24 108 54 207 54
+58 0 87 14 87 40 0 27 57 27 134 0z m2185 -5 c5 -29 19 -35 91 -36 36 0 93 -8
+128 -17 l63 -17 3 -92 c4 -118 5 -117 -79 -29 -96 99 -141 120 -260 120 -149
+0 -295 -96 -295 -194 0 -22 63 -9 114 25 160 106 307 83 392 -61 26 -44 80
+-68 126 -56 23 6 23 -4 -2 -121 -11 -54 -95 -217 -119 -231 -158 -94 -350
+-423 -426 -726 -44 -179 -67 -230 -166 -377 -81 -119 -126 -220 -147 -327 -9
+-45 -17 -83 -19 -85 -2 -3 -59 41 -125 98 -99 86 -102 328 -8 686 68 262 73
+321 56 710 -16 369 59 630 164 570 48 -27 88 -19 142 30 125 112 355 194 367
+130z m-984 -45 c107 -13 286 -48 299 -60 4 -4 -4 -28 -18 -53 -78 -133 -108
+-406 -77 -709 19 -189 11 -279 -43 -493 -71 -284 -71 -284 -71 -495 0 -199 2
+-211 44 -290 4 -8 49 -51 100 -95 192 -167 204 -304 42 -465 -252 -252 -644
+-260 -892 -18 -178 174 -163 344 45 497 154 114 177 375 69 796 -75 296 -81
+360 -58 590 32 312 4 548 -83 689 -30 48 -32 47 126 79 186 39 343 47 517 27z
+m-1514 -777 c121 -129 238 -319 287 -468 36 -108 62 -198 62 -215 0 -25 60
+-203 75 -220 7 -8 14 -19 16 -25 2 -5 38 -62 80 -125 122 -187 131 -213 137
+-415 l5 -169 -110 110 c-128 130 -242 209 -481 334 -90 47 -177 97 -195 112
+l-32 26 27 11 c64 25 43 76 -62 148 -80 55 -80 54 -40 71 85 38 71 103 -34
+163 -89 50 -86 39 -37 131 22 40 50 100 62 133 12 33 25 65 29 70 4 6 12 24
+18 41 18 54 144 324 151 324 4 0 23 -17 42 -37z m2751 -30 c60 -134 70 -158
+119 -282 62 -157 86 -208 116 -247 33 -44 29 -57 -27 -88 -131 -71 -147 -147
+-39 -181 29 -10 24 -16 -57 -70 -111 -74 -132 -131 -56 -150 32 -8 -79 -84
+-233 -162 -199 -100 -338 -198 -474 -332 l-76 -76 -3 30 c-24 201 15 369 122
+519 109 155 140 227 205 476 53 206 163 413 295 555 30 33 55 63 56 68 1 26
+25 -3 52 -60z M1286 1798 c-67 -95 36 -222 181 -223 90 0 108 13 98 73 -19
+117 -225 227 -279 150z M2615 1801 c-97 -45 -173 -190 -116 -221 67 -35 201 2
+250 71 86 118 1 213 -134 150z M1945 1014 c-258 -36 -366 -176 -302 -388 88
+-288 619 -311 751 -33 119 254 -110 469 -449 421z m249 -129 c114 -41 175
+-165 82 -165 -25 0 -48 5 -51 10 -30 48 -145 -20 -145 -85 0 -45 83 -83 110
+-50 14 17 70 21 70 5 0 -35 -143 -90 -236 -90 -92 0 -234 55 -234 91 0 15 53
+10 71 -7 42 -38 110 19 93 78 -15 50 -55 74 -102 60 -78 -24 -112 -17 -112 22
+0 123 264 199 454 131z M3591 911 c-102 -36 -147 -117 -86 -157 68 -44 279
+102 240 166 -10 16 -96 11 -154 -9z M3209 603 c-83 -75 -124 -219 -78 -277 35
+-44 77 -25 132 59 103 159 62 322 -54 218z M3513 529 c-22 -22 -14 -54 28
+-112 58 -83 119 -87 119 -10 0 74 -107 162 -147 122z"></path>
+</g></svg><div><p class="text-xs font-bold uppercase tracking-widest mb-0.5 text-gray-600">Badger</p><p class="text-sm font-medium text-gray-800 leading-snug">You are not interested in what should work. You are interested in what works. The team needs you to stop fooling itself.</p></div></div><div class="px-5 py-4 flex flex-col gap-3"><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Tendency</p><p class="text-sm text-gray-600 leading-relaxed">Low Bond and Vision. Pragmatic, direct, and unsentimental. What works matters; what should work does not.</p></div><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Contributes to a team</p><p class="text-sm text-gray-600 leading-relaxed">Ground truth. Stops the team fooling itself with optimism or complexity.</p></div><div><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Tends to miss</p><p class="text-sm text-gray-600 leading-relaxed">Buy-in. The directness that surfaces truth can also create resistance.</p></div></div></div></div></section><section class="mb-12 flex flex-col gap-3"><div class="bg-white border border-gray-200 rounded px-6 py-5"><h3 class="text-sm font-bold mb-2 text-gray-900">What about profiles near the centre?</h3><p class="text-sm text-gray-600 leading-relaxed">There is no centre role. A profile with low scores on Presence, Bond, and Vision is better described by its Discipline and Depth values than assigned a role label with no functional content. The role result will show the closest centroid by distance, with a low maximum probability indicating a diffuse profile.</p></div><div class="bg-white border border-gray-200 rounded px-6 py-5"><h3 class="text-sm font-bold mb-2 text-gray-900">Personal arc</h3><p class="text-sm text-gray-600 leading-relaxed">Most role results include an arc — secondary roles that scored close to the primary in probability space. A Wolf with a Falcon arc brings initiative and decisive timing. A Bee with an Elephant arc brings synthesis and deep listening. The arc gives the result texture that a single label can't.</p></div><div class="bg-white border border-gray-200 rounded px-6 py-5"><h3 class="text-sm font-bold mb-2 text-gray-900">Roles are not destinies</h3><p class="text-sm text-gray-600 leading-relaxed">The same person can function differently in different team compositions. A Wolf in a team that already confronts everything may pull back. A Tortoise in a team that needs movement may accelerate. These are tendencies in context — not fixed identities. Don't use a role result as a ceiling.</p></div></section><div class="bg-white border border-gray-200 rounded px-6 py-6"><h2 class="text-base font-bold text-gray-900 mb-2">See a problem with this model?</h2><p class="text-sm text-gray-600 leading-relaxed mb-4">This taxonomy is a hypothesis. If you have background in psychometrics, organisational psychology, or team dynamics and see a flaw — in the centroids, the naming, the forced-choice design, anything — open an issue.</p><a href="https://github.com/cercol/cercol/issues" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors flex items-center gap-1.5">Open an issue on GitHub<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class=""><path stroke-width="1.9" d="M5 12 C8 12.2 15 11.8 18.5 12"></path><path stroke-width="1.9" d="M18.5 12 L14 7.5 M18.5 12 L14 16.5"></path></svg></a></div></main><div class="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-2"></div><div role="status" aria-live="polite" class="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-between gap-4 px-4 py-3 sm:px-6" style="background-color: rgb(17, 17, 17);"><p class="text-xs text-white/70 leading-relaxed">Cèrcol uses only functional cookies — no analytics, no advertising trackers. <a href="/privacy" class="underline text-white/90 hover:text-white transition-colors">Privacy policy</a></p><button class="shrink-0 text-xs font-semibold text-white px-3 py-1.5 rounded border border-white/30 hover:bg-white/10 transition-colors" aria-label="Dismiss cookie notice">OK</button></div></div></div></div>
+  
+
+</body></html>
