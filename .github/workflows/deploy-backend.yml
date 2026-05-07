@@ -1,0 +1,24 @@
+name: Deploy backend
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'api/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull and restart on Hetzner
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: 188.245.60.20
+          username: root
+          key: ${{ secrets.HETZNER_SSH_KEY }}
+          script: |
+            set -e
+            cd /home/cercol/api
+            git pull origin main
+            systemctl restart cercol-api
+            systemctl is-active cercol-api
