@@ -225,6 +225,18 @@
     "completionPrompt": {
       "body": "Afegeix el teu nom per personalitzar la teua experiència.",
       "cta": "Configura el perfil"
+    },
+    "security": {
+      "title": "Contrasenya i seguretat",
+      "noPasswordNote": "El teu compte utilitza Google. Pots establir una contrasenya per entrar amb correu electrònic.",
+      "currentPasswordLabel": "Contrasenya actual",
+      "newPasswordLabel": "Nova contrasenya",
+      "saveButton": "Desa la contrasenya",
+      "saving": "Desant…",
+      "saved": "Contrasenya desada.",
+      "error": "Quelcom ha anat malament. Torna-ho a intentar.",
+      "minLength": "La contrasenya ha de tenir almenys 8 caràcters.",
+      "wrongCurrent": "La contrasenya actual és incorrecta."
     }
   },
   "auth": {
@@ -252,7 +264,8 @@
     "sentNote": "Sense correu? Comprova la carpeta de correu brossa.",
     "signingIn": "Iniciant sessió…",
     "tryAgain": "Torna-ho a intentar",
-    "error": "Alguna cosa ha fallat. Torna-ho a intentar."
+    "error": "Alguna cosa ha fallat. Torna-ho a intentar.",
+    "forgotPassword": "Has oblidat la contrasenya? Utilitza l'enllaç màgic."
   },
   "home": {
     "subtitle": "Coneix-te millor.",

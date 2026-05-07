@@ -226,6 +226,18 @@
     "completionPrompt": {
       "body": "Añade tu nombre para personalizar tu experiencia.",
       "cta": "Configurar perfil"
+    },
+    "security": {
+      "title": "Contraseña y seguridad",
+      "noPasswordNote": "Tu cuenta usa Google. Puedes establecer una contraseña para iniciar sesión con email.",
+      "currentPasswordLabel": "Contraseña actual",
+      "newPasswordLabel": "Nueva contraseña",
+      "saveButton": "Guardar contraseña",
+      "saving": "Guardando…",
+      "saved": "Contraseña guardada.",
+      "error": "Algo salió mal. Inténtalo de nuevo.",
+      "minLength": "La contraseña debe tener al menos 8 caracteres.",
+      "wrongCurrent": "La contraseña actual es incorrecta."
     }
   },
   "auth": {
@@ -253,7 +265,8 @@
     "sentNote": "¿No recibes el correo? Revisa la carpeta de spam.",
     "signingIn": "Iniciando sesión…",
     "tryAgain": "Intentar de nuevo",
-    "error": "Algo salió mal. Inténtalo de nuevo."
+    "error": "Algo salió mal. Inténtalo de nuevo.",
+    "forgotPassword": "¿Olvidaste la contraseña? Usa el enlace mágico."
   },
   "home": {
     "subtitle": "Conócete mejor.",

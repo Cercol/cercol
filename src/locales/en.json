@@ -226,6 +226,18 @@
     "completionPrompt": {
       "body": "Add your name to personalise your experience.",
       "cta": "Set up profile"
+    },
+    "security": {
+      "title": "Password & security",
+      "noPasswordNote": "Your account uses Google sign-in. You can also set a password to sign in with email.",
+      "currentPasswordLabel": "Current password",
+      "newPasswordLabel": "New password",
+      "saveButton": "Save password",
+      "saving": "Saving…",
+      "saved": "Password saved.",
+      "error": "Something went wrong. Try again.",
+      "minLength": "Password must be at least 8 characters.",
+      "wrongCurrent": "Current password is incorrect."
     }
   },
   "auth": {
@@ -253,7 +265,8 @@
     "sentNote": "No email? Check your spam folder.",
     "signingIn": "Signing you in…",
     "tryAgain": "Try again",
-    "error": "Something went wrong. Try again."
+    "error": "Something went wrong. Try again.",
+    "forgotPassword": "Forgot password? Use magic link to sign in."
   },
   "home": {
     "subtitle": "Know yourself better.",

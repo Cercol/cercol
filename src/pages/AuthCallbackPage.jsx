@@ -12,7 +12,7 @@
 import { useEffect, useRef } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { setAccessToken, setRefreshToken } from '../lib/tokens'
+import { useAuth } from '../context/AuthContext'
 
 const API_URL = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '')
 
@@ -20,6 +20,7 @@ export default function AuthCallbackPage() {
   const navigate      = useNavigate()
   const [params]      = useSearchParams()
   const { t }         = useTranslation()
+  const { applySession } = useAuth()
   const handledRef    = useRef(false)
 
   useEffect(() => {
@@ -62,8 +63,7 @@ export default function AuthCallbackPage() {
             return
           }
           const data = await res.json()
-          setAccessToken(data.access_token)
-          setRefreshToken(data.refresh_token)
+          await applySession(data.access_token, data.refresh_token)
           navigate('/', { replace: true })
         } catch {
           navigate('/auth?error=network_error', { replace: true })
@@ -73,8 +73,7 @@ export default function AuthCallbackPage() {
 
       // Case 2: Google OAuth (tokens already in URL)
       if (accessToken && refreshToken) {
-        setAccessToken(accessToken)
-        setRefreshToken(refreshToken)
+        await applySession(accessToken, refreshToken)
         navigate('/', { replace: true })
         return
       }

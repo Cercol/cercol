@@ -226,6 +226,18 @@
     "completionPrompt": {
       "body": "Tilføj dit navn for at personliggøre din oplevelse.",
       "cta": "Opret profil"
+    },
+    "security": {
+      "title": "Adgangskode og sikkerhed",
+      "noPasswordNote": "Din konto bruger Google. Du kan oprette en adgangskode for at logge ind med email.",
+      "currentPasswordLabel": "Nuværende adgangskode",
+      "newPasswordLabel": "Ny adgangskode",
+      "saveButton": "Gem adgangskode",
+      "saving": "Gemmer…",
+      "saved": "Adgangskode gemt.",
+      "error": "Noget gik galt. Prøv igen.",
+      "minLength": "Adgangskoden skal være mindst 8 tegn.",
+      "wrongCurrent": "Den nuværende adgangskode er forkert."
     }
   },
   "auth": {
@@ -253,7 +265,8 @@
     "sentNote": "Ingen e-mail? Tjek din spam-mappe.",
     "signingIn": "Logger dig ind…",
     "tryAgain": "Prøv igen",
-    "error": "Noget gik galt. Prøv igen."
+    "error": "Noget gik galt. Prøv igen.",
+    "forgotPassword": "Glemt adgangskode? Brug magic link."
   },
   "home": {
     "subtitle": "Kend dig selv bedre.",
