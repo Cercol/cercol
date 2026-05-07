@@ -327,6 +327,73 @@ export async function getLatestFullMoonResult() {
   return results.find(r => r.instrument === 'fullMoon') ?? null
 }
 
+// ── Blog ──────────────────────────────────────────────────────────────────────
+
+/**
+ * getBlogPosts — fetch the list of published blog posts.
+ * @returns {Promise<Array<{slug, title, description, published_at, view_count, author, cover_url}>>}
+ */
+export async function getBlogPosts() {
+  return publicFetch('/blog')
+}
+
+/**
+ * getBlogPost — fetch a single blog post by slug.
+ * @param {string} slug
+ * @returns {Promise<{slug, title, description, content, published_at, view_count, author, cover_url, status}>}
+ */
+export async function getBlogPost(slug) {
+  return publicFetch(`/blog/${slug}`)
+}
+
+/**
+ * trackBlogView — fire-and-forget POST to record a view on a blog post.
+ * Never throws — any error is silently swallowed.
+ * @param {string} slug
+ */
+export async function trackBlogView(slug) {
+  try {
+    await publicFetch(`/blog/${slug}/view`, { method: 'POST' })
+  } catch {
+    // Intentionally ignored — view tracking is best-effort
+  }
+}
+
+/**
+ * createBlogPost — create a new blog post. Admin only.
+ * @param {{ slug, author, cover_url?, title, description, content }} data
+ */
+export async function createBlogPost(data) {
+  return authFetch('/blog', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  })
+}
+
+/**
+ * updateBlogPost — update an existing blog post. Admin only.
+ * @param {string} slug
+ * @param {{ author?, cover_url?, title?, description?, content? }} data
+ */
+export async function updateBlogPost(slug, data) {
+  return authFetch(`/blog/${slug}`, {
+    method: 'PUT',
+    body: JSON.stringify(data),
+  })
+}
+
+/**
+ * patchBlogPostStatus — change the status of a blog post. Admin only.
+ * @param {string} slug
+ * @param {'published'|'draft'} status
+ */
+export async function patchBlogPostStatus(slug, status) {
+  return authFetch(`/blog/${slug}/status`, {
+    method: 'PATCH',
+    body: JSON.stringify({ status }),
+  })
+}
+
 // ── Admin ─────────────────────────────────────────────────────────────────────
 
 /** getAdminStats — global KPI counters (users + results). Admin only. */
