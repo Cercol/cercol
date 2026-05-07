@@ -13,6 +13,9 @@ on:
       - 'package-lock.json'
       - '.env.production'
 
+permissions:
+  contents: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
