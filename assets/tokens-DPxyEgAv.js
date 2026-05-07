@@ -1,1 +1,0 @@
-var e=`cercol_rt`,t=null;function n(){return t}function r(e){t=e}function i(){t=null}function a(){try{return localStorage.getItem(e)}catch{return null}}function o(t){try{localStorage.setItem(e,t)}catch{}}function s(){try{localStorage.removeItem(e)}catch{}}export{r as a,a as i,s as n,o,n as r,i as t};
