@@ -1,1 +1,0 @@
-import{S as e}from"./api-q5j-nxsp.js";async function t(t,n,r,i=null,a=null){try{await e({instrument:r,language:n,...t,facets:a??void 0})}catch{}}export{t};
