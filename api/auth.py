@@ -229,6 +229,7 @@ async def magic_link_request(request: Request, body: MagicLinkRequestBody):
     token      = secrets.token_urlsafe(32)
     expires_at = datetime.now(timezone.utc) + _MAGIC_TTL
 
+    user_lang = "en"
     async with _pool().acquire() as conn:
         await conn.execute(
             """
@@ -237,12 +238,18 @@ async def magic_link_request(request: Request, body: MagicLinkRequestBody):
             """,
             email, token, expires_at,
         )
+        # Look up the user's preferred language (may not have a profile yet)
+        lang_row = await conn.fetchrow(
+            "SELECT native_language FROM profiles WHERE email = $1", email
+        )
+        if lang_row:
+            user_lang = lang_row["native_language"] or "en"
 
     link = f"{_FRONTEND_URL}/auth/callback?type=magic&token={token}"
 
     # send_magic_link uses asyncio.to_thread internally — no event-loop blocking.
     try:
-        await send_magic_link(email, link)
+        await send_magic_link(email, link, lang=user_lang)
     except Exception as exc:
         # Log but do not leak error details to the client
         print(f"[auth] magic link email failed for {email}: {exc}")
