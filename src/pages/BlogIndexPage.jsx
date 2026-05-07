@@ -1,19 +1,28 @@
 /**
  * BlogIndexPage — public blog index at /blog.
- * Fetches posts from the backend API and displays them with title, description,
- * published date, author, and view count. Language-aware: shows current locale
- * title/description with English as fallback.
+ * Fetches posts from the backend API and displays them as cards with cover images.
+ * Language-aware: shows current locale title/description with English as fallback.
  */
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Card, SectionLabel } from '../components/ui'
+import { SectionLabel } from '../components/ui'
 import { getBlogPosts } from '../lib/api'
 
 function formatDate(iso) {
   if (!iso) return ''
   const d = new Date(iso)
   return d.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })
+}
+
+/** Estimate reading time from description text as a rough approximation. */
+function estimateReadTime(text) {
+  if (!text) return null
+  const words = text.trim().split(/\s+/).length
+  // For index cards we only have the description, not the full article.
+  // Scale up to simulate full article length (description ~ 10% of article).
+  const mins = Math.max(3, Math.ceil((words * 10) / 200))
+  return `${mins} min read`
 }
 
 export default function BlogIndexPage() {
@@ -28,7 +37,7 @@ export default function BlogIndexPage() {
     const prev = document.title
     document.title = 'Blog — Personality science and team assessment · Cèrcol'
 
-    let metaDesc = document.querySelector('meta[name="description"]')
+    const metaDesc = document.querySelector('meta[name="description"]')
     const prevDesc = metaDesc?.getAttribute('content') ?? ''
     if (metaDesc) {
       metaDesc.setAttribute(
@@ -62,30 +71,35 @@ export default function BlogIndexPage() {
   return (
     <main className="py-12">
 
-      {/* Header */}
+      {/* Page header */}
       <SectionLabel color="blue" className="mb-3">
         Blog
       </SectionLabel>
-      <h1 className="text-3xl font-bold text-gray-900 mb-3">
+      <h1
+        className="text-3xl font-bold text-gray-900 mb-3"
+        style={{ fontFamily: 'var(--mm-font-display)' }}
+      >
         Personality science and team assessment
       </h1>
       <p className="text-sm text-gray-600 leading-relaxed mb-10 max-w-xl">
-        Research-grounded articles on the Big Five, IPIP, team composition,
-        and peer assessment. Written to be citable, honest, and useful.
+        Science-grounded articles on personality, teams, and open measurement.
+        Written to be citable, honest, and useful.
       </p>
 
       {/* Loading state */}
       {loading && (
-        <div className="flex flex-col gap-4">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {[1, 2, 3].map(i => (
             <div
               key={i}
-              className="rounded-2xl border border-gray-100 shadow-sm bg-white px-5 py-5 animate-pulse"
+              className="rounded-2xl border border-gray-100 shadow-sm bg-white overflow-hidden animate-pulse"
             >
-              <div className="h-3 bg-gray-100 rounded w-32 mb-3" />
-              <div className="h-4 bg-gray-100 rounded w-3/4 mb-2" />
-              <div className="h-3 bg-gray-100 rounded w-full mb-1" />
-              <div className="h-3 bg-gray-100 rounded w-5/6" />
+              <div className="h-40 bg-gray-100" />
+              <div className="p-5 space-y-3">
+                <div className="h-4 bg-gray-100 rounded w-3/4" />
+                <div className="h-3 bg-gray-100 rounded w-full" />
+                <div className="h-3 bg-gray-100 rounded w-5/6" />
+              </div>
             </div>
           ))}
         </div>
@@ -100,33 +114,70 @@ export default function BlogIndexPage() {
 
       {/* Empty state */}
       {!loading && !error && posts.length === 0 && (
-        <p className="text-sm text-gray-400 py-8 text-center">No articles published yet.</p>
+        <div className="py-16 text-center rounded-2xl border border-dashed border-gray-200">
+          <p className="text-sm text-gray-400">No articles published yet.</p>
+          <p className="text-xs text-gray-300 mt-1">Check back soon.</p>
+        </div>
       )}
 
-      {/* Post list */}
+      {/* Post grid */}
       {!loading && !error && posts.length > 0 && (
-        <div className="flex flex-col gap-4">
-          {posts.map(post => (
-            <Link
-              key={post.slug}
-              to={`/blog/${post.slug}`}
-              className="block group"
-            >
-              <Card className="px-5 py-5 transition-shadow group-hover:shadow-md">
-                <p className="text-xs text-gray-400 mb-2">
-                  {formatDate(post.published_at)}
-                  {post.author ? ` · ${post.author}` : ''}
-                  {post.view_count != null ? ` · 👁 ${post.view_count}` : ''}
-                </p>
-                <h2 className="text-base font-bold text-gray-900 mb-2 group-hover:text-[var(--mm-color-blue)] transition-colors">
-                  {localise(post.title)}
-                </h2>
-                <p className="text-sm text-gray-600 leading-relaxed">
-                  {localise(post.description)}
-                </p>
-              </Card>
-            </Link>
-          ))}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {posts.map(post => {
+            const desc = localise(post.description)
+            return (
+              <Link
+                key={post.slug}
+                to={`/blog/${post.slug}`}
+                className="block group rounded-2xl border border-gray-100 shadow-sm bg-white overflow-hidden hover:shadow-md transition-shadow"
+              >
+                {/* Cover image or gradient placeholder */}
+                <div className="relative h-40 overflow-hidden">
+                  {post.coverUrl ? (
+                    <img
+                      src={post.coverUrl}
+                      alt=""
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  ) : (
+                    <div
+                      className="w-full h-full"
+                      style={{
+                        background:
+                          'linear-gradient(135deg, var(--mm-color-blue) 0%, #00297a 100%)',
+                      }}
+                    />
+                  )}
+                </div>
+
+                {/* Card body */}
+                <div className="px-5 py-4 flex flex-col flex-1">
+                  <h2
+                    className="text-sm font-bold text-gray-900 mb-2 leading-snug group-hover:text-[var(--mm-color-blue)] transition-colors"
+                    style={{ fontFamily: 'var(--mm-font-display)' }}
+                  >
+                    {localise(post.title)}
+                  </h2>
+                  {desc && (
+                    <p className="text-xs text-gray-600 leading-relaxed line-clamp-3 mb-3">
+                      {desc}
+                    </p>
+                  )}
+
+                  {/* Meta footer */}
+                  <div className="mt-auto flex flex-wrap gap-x-2 gap-y-0.5 text-xs text-gray-400">
+                    {post.published_at && <span>{formatDate(post.published_at)}</span>}
+                    {estimateReadTime(desc) && (
+                      <><span>·</span><span>{estimateReadTime(desc)}</span></>
+                    )}
+                    {post.view_count != null && (
+                      <><span>·</span><span>👁 {post.view_count}</span></>
+                    )}
+                  </div>
+                </div>
+              </Link>
+            )
+          })}
         </div>
       )}
 
