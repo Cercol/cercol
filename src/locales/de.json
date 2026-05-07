@@ -1200,6 +1200,17 @@
       "heading": "Der Code ist offen.",
       "body": "Cèrcol ist Open Source. Die Bewertungslogik, der Item-Korpus und der Rollenalgorithmus sind alle lesbar.",
       "cta": "Auf GitHub ansehen"
+    },
+    "validation": {
+      "eyebrow": "Validierungsplan",
+      "heading": "Eine Arbeitshypothese, kein fertiges Produkt.",
+      "body": "Das Rollensystem von Cèrcol verwendet theoretische Zentroide, die aus veröffentlichter AB5C-Forschung abgeleitet wurden. Rollenzuweisungen sind illustrativ — sie wurden noch nicht empirisch gegen reale Teamergebnisse validiert. Die Validierung ist in drei Phasen geplant.",
+      "milestones": {
+        "n300": { "label": "N ≥ 300", "desc": "Interne Konsistenz der Rollenzuweisungen bestätigen und Selbst- vs. Zeuge-Konvergenz vergleichen." },
+        "n1000": { "label": "N ≥ 1 000", "desc": "Testen, ob Rollenvielfalt die Teamleistung in verschiedenen Bereichen vorhersagt." },
+        "preprint": { "label": "Preprint", "desc": "Ergebnisse auf PsyArXiv für offene Peer-Review veröffentlichen, bevor eine Zeitschrift eingereicht wird." }
+      },
+      "note": "Solange keine Validierungsdaten vorliegen, sollten Rollenergebnisse als Ausgangspunkt für Reflexion behandelt werden, nicht als diagnostisches Instrument. Der Bewertungsalgorithmus und alle Annahmen sind vollständig im Open-Source-Repository dokumentiert."
     }
   },
   "faq": {

@@ -662,7 +662,7 @@ const SEO_CHECKLIST = [
   { done: true,  item: 'Google Search Console verified + sitemap submitted' },
   { done: true,  item: 'Bing Webmaster Tools verified + sitemap submitted' },
   { done: true,  item: 'FAQ expanded: 12 questions across 6 languages' },
-  { done: false, item: '/science page enrichment — DOI links, expand references' },
+  { done: true,  item: '/science page enrichment — DOI links, validation plan section, 9 references' },
   { done: false, item: 'Blog: "Big Five vs DISC vs Belbin: a scientist\'s comparison"' },
   { done: false, item: 'Blog: "How to build a balanced team using personality science"' },
   { done: false, item: 'Blog: "Blind spots in teams: when self-perception diverges"' },

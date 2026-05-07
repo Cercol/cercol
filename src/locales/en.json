@@ -1200,6 +1200,17 @@
       "heading": "The code is open.",
       "body": "Cèrcol is open source. The scoring logic, item corpus, and role algorithm are all readable.",
       "cta": "View on GitHub"
+    },
+    "validation": {
+      "eyebrow": "Validation plan",
+      "heading": "A working hypothesis, not a finished product.",
+      "body": "Cèrcol's role system uses theoretical centroids derived from published AB5C research. Role assignments are illustrative — they have not yet been empirically validated against real team outcomes. Validation is planned in three stages.",
+      "milestones": {
+        "n300": { "label": "N ≥ 300", "desc": "Confirm internal consistency of role assignments and compare self vs. Witness convergence." },
+        "n1000": { "label": "N ≥ 1 000", "desc": "Test whether role diversity predicts team performance across domains." },
+        "preprint": { "label": "Preprint", "desc": "Publish findings on PsyArXiv for open peer review before any journal submission." }
+      },
+      "note": "Until validation data exist, treat role results as a starting point for reflection, not a diagnostic tool. The scoring algorithm and all assumptions are fully documented in the open-source repository."
     }
   },
   "faq": {

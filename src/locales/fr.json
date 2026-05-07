@@ -1200,6 +1200,17 @@
       "heading": "Le code est ouvert.",
       "body": "Cèrcol est open source. La logique de notation, le corpus d'éléments et l'algorithme de rôles sont tous lisibles.",
       "cta": "Voir sur GitHub"
+    },
+    "validation": {
+      "eyebrow": "Plan de validation",
+      "heading": "Une hypothèse de travail, pas un produit fini.",
+      "body": "Le système de rôles de Cèrcol utilise des centroïdes théoriques dérivés de la recherche publiée sur l'AB5C. Les attributions de rôles sont illustratives — elles n'ont pas encore été validées empiriquement par rapport à des résultats d'équipes réels. La validation est planifiée en trois étapes.",
+      "milestones": {
+        "n300": { "label": "N ≥ 300", "desc": "Confirmer la cohérence interne des attributions de rôles et comparer la convergence self vs. Témoin." },
+        "n1000": { "label": "N ≥ 1 000", "desc": "Tester si la diversité des rôles prédit la performance de l'équipe dans différents domaines." },
+        "preprint": { "label": "Préimpression", "desc": "Publier les résultats sur PsyArXiv pour une révision ouverte par les pairs avant toute soumission à une revue." }
+      },
+      "note": "Tant que des données de validation n'existent pas, traitez les résultats de rôles comme un point de départ pour la réflexion, et non comme un outil diagnostique. L'algorithme de notation et toutes les hypothèses sont entièrement documentés dans le dépôt open source."
     }
   },
   "faq": {
