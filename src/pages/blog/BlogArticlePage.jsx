@@ -208,19 +208,76 @@ export default function BlogArticlePage() {
       .catch(() => {})
   }, [slug, post])
 
-  // Set document title and hreflang/canonical tags when post loads
+  // Set document title, meta tags, hreflang, canonical, and JSON-LD when post loads
   useEffect(() => {
     if (!post) return
     const title = localise(post.title, urlLang) || slug
-    const prev = document.title
+    const description = localise(post.description, urlLang) || ''
+    const prevTitle = document.title
     document.title = `${title} · Cèrcol`
 
     const BASE = 'https://cercol.team'
-    // Remove stale hreflang/canonical tags first
-    document.querySelectorAll('link[rel="alternate"][hreflang], link[rel="canonical"]').forEach(el => el.remove())
-
-    const langs = ['en', 'ca', 'es', 'fr', 'de', 'da']
+    const canonicalUrl = urlLang === 'en' ? `${BASE}/blog/${slug}` : `${BASE}/${urlLang}/blog/${slug}`
     const addedEls = []
+
+    // Remove stale tags first
+    document.querySelectorAll('link[rel="alternate"][hreflang], link[rel="canonical"]').forEach(el => el.remove())
+    document.querySelectorAll('meta[name="description"][data-blog], meta[property^="og:"][data-blog], script[type="application/ld+json"][data-blog]').forEach(el => el.remove())
+
+    // Meta description
+    if (description) {
+      const metaDesc = document.createElement('meta')
+      metaDesc.name = 'description'
+      metaDesc.content = description
+      metaDesc.dataset.blog = '1'
+      document.head.appendChild(metaDesc)
+      addedEls.push(metaDesc)
+    }
+
+    // Open Graph tags
+    const ogTags = [
+      ['property', 'og:title', title],
+      ['property', 'og:description', description],
+      ['property', 'og:url', canonicalUrl],
+      ['property', 'og:type', 'article'],
+      ['property', 'og:site_name', 'Cèrcol'],
+    ]
+    ogTags.forEach(([attr, key, val]) => {
+      if (!val) return
+      const meta = document.createElement('meta')
+      meta[attr] = key
+      meta.content = val
+      meta.dataset.blog = '1'
+      document.head.appendChild(meta)
+      addedEls.push(meta)
+    })
+
+    // JSON-LD BlogPosting
+    const jsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: title,
+      description,
+      url: canonicalUrl,
+      datePublished: post.published_at || post.created_at,
+      dateModified: post.updated_at || post.published_at || post.created_at,
+      author: { '@type': 'Person', name: post.author || 'Miquel Matoses' },
+      publisher: {
+        '@type': 'Organization',
+        name: 'Cèrcol',
+        url: BASE,
+      },
+      inLanguage: urlLang,
+    }
+    const script = document.createElement('script')
+    script.type = 'application/ld+json'
+    script.dataset.blog = '1'
+    script.textContent = JSON.stringify(jsonLd)
+    document.head.appendChild(script)
+    addedEls.push(script)
+
+    // Hreflang alternates
+    const langs = ['en', 'ca', 'es', 'fr', 'de', 'da']
     langs.forEach(l => {
       const el = document.createElement('link')
       el.rel = 'alternate'
@@ -229,22 +286,20 @@ export default function BlogArticlePage() {
       document.head.appendChild(el)
       addedEls.push(el)
     })
-    // x-default
     const xd = document.createElement('link')
     xd.rel = 'alternate'
     xd.hreflang = 'x-default'
     xd.href = `${BASE}/blog/${slug}`
     document.head.appendChild(xd)
     addedEls.push(xd)
-    // canonical
     const canon = document.createElement('link')
     canon.rel = 'canonical'
-    canon.href = urlLang === 'en' ? `${BASE}/blog/${slug}` : `${BASE}/${urlLang}/blog/${slug}`
+    canon.href = canonicalUrl
     document.head.appendChild(canon)
     addedEls.push(canon)
 
     return () => {
-      document.title = prev
+      document.title = prevTitle
       addedEls.forEach(el => el.remove())
     }
   }, [post, urlLang, slug])
