@@ -174,17 +174,29 @@ export default function BlogArticlePage() {
       .finally(() => setLoading(false))
   }, [slug, navigate])
 
-  // Fetch related posts (other published articles)
+  // Extract internal /blog/[slug] links from all language versions of the content.
+  // This drives the "related articles" section automatically — no manual curation needed.
+  function extractLinkedSlugs(content) {
+    if (!content) return []
+    const all = Object.values(content).join('\n')
+    const matches = [...all.matchAll(/\(\/blog\/([a-z0-9-]+)\)/g)]
+    return [...new Set(matches.map(m => m[1]))]
+  }
+
+  // Fetch related posts: articles explicitly linked from the text come first;
+  // recent articles fill the remaining slots up to 3. Scales to any number of articles.
   useEffect(() => {
+    if (!post) return
     getBlogPosts()
       .then(data => {
-        const others = Array.isArray(data)
-          ? data.filter(p => p.slug !== slug).slice(0, 3)
-          : []
-        setRelatedPosts(others)
+        if (!Array.isArray(data)) return
+        const linkedSlugs = extractLinkedSlugs(post.content)
+        const linked   = data.filter(p => p.slug !== slug && linkedSlugs.includes(p.slug))
+        const fallback = data.filter(p => p.slug !== slug && !linkedSlugs.includes(p.slug))
+        setRelatedPosts([...linked, ...fallback].slice(0, 3))
       })
       .catch(() => {})
-  }, [slug])
+  }, [slug, post])
 
   // Set document title when post loads
   useEffect(() => {
