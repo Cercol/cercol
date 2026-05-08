@@ -1219,6 +1219,20 @@ enriched with DOI links, AB5C explanation, and validation plan for LLM indexing.
 Product Hunt launch, Hacker News "Show HN", Reddit outreach,
 ipip.ori.org contact, language-specific media outreach (CA/DA/FR/DE).
 
+### Phase 15.5.6 — Visual Enrichment ✅ COMPLETE
+Every blog article now has at least one inline visual element embedded in the markdown content
+(rendered via `marked` + `dangerouslySetInnerHTML`):
+- `src/index.css`: `.stat-grid` / `.stat-card`, `.callout` (blue/red/green/yellow variants),
+  `figure`/`figcaption`, and `svg.diagram` styles added to `.prose-article`.
+- 102 of 104 articles enriched with 1–2 visuals; 2 already had visuals.
+- Visual types by article cluster:
+  - "What is X" dimension articles: SVG trait spectrum (low↔high gradient) + stat-grid
+  - Science/methodology: SVG timeline, SVG pipeline, SVG bar chart, stat-grid
+  - Team/comparison: SVG two-column comparisons, 2×2 failure mode grids, balance bars
+  - Leadership/HR: SVG bid-Five radar, leadership correlation bar charts
+  - How-to/workshop: SVG workflow flows, agenda timelines, callout frameworks
+  - All other articles: contextually matched stat-grid or callout box
+
 ---
 
 ## Phase 15 — Stripe paywall
