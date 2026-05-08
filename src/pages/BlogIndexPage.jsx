@@ -3,7 +3,7 @@
  * Fetches posts from the backend API and displays them as cards with cover images.
  * Language-aware: shows current locale title/description with English as fallback.
  */
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { SectionLabel } from '../components/ui'
@@ -28,6 +28,13 @@ function estimateReadTime(text) {
 export default function BlogIndexPage() {
   const { i18n } = useTranslation()
   const lang = i18n.language?.slice(0, 2) || 'en'
+  const { pathname } = useLocation()
+  const BLOG_LANG_PREFIXES = ['ca', 'es', 'fr', 'de', 'da']
+  const urlLang = BLOG_LANG_PREFIXES.find(l => pathname.startsWith(`/${l}/`)) || 'en'
+
+  useEffect(() => {
+    if (urlLang !== i18n.language.slice(0, 2)) i18n.changeLanguage(urlLang)
+  }, [urlLang])
 
   const [posts,   setPosts]   = useState([])
   const [loading, setLoading] = useState(true)
@@ -65,7 +72,7 @@ export default function BlogIndexPage() {
   function localise(field) {
     if (!field) return ''
     if (typeof field === 'string') return field
-    return field[lang] || field.en || ''
+    return field[urlLang] || field.en || ''
   }
 
   return (
@@ -125,10 +132,11 @@ export default function BlogIndexPage() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {posts.map(post => {
             const desc = localise(post.description)
+            const href = urlLang === 'en' ? `/blog/${post.slug}` : `/${urlLang}/blog/${post.slug}`
             return (
               <Link
                 key={post.slug}
-                to={`/blog/${post.slug}`}
+                to={href}
                 className="block group rounded-2xl border border-gray-100 shadow-sm bg-white overflow-hidden hover:shadow-md transition-shadow"
               >
                 {/* Cover image or gradient placeholder */}

@@ -5,7 +5,7 @@
  * Features: cover banner, ToC, related articles, reading time, custom marked renderer.
  */
 import { useEffect, useState, useRef } from 'react'
-import { useParams, useNavigate, Link } from 'react-router-dom'
+import { useParams, useNavigate, Link, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { marked } from 'marked'
 import { getBlogPost, getBlogPosts, trackBlogView } from '../../lib/api'
@@ -147,6 +147,9 @@ export default function BlogArticlePage() {
   const navigate   = useNavigate()
   const { i18n }   = useTranslation()
   const lang       = i18n.language?.slice(0, 2) || 'en'
+  const { pathname } = useLocation()
+  const BLOG_LANG_PREFIXES = ['ca', 'es', 'fr', 'de', 'da']
+  const urlLang = BLOG_LANG_PREFIXES.find(l => pathname.startsWith(`/${l}/`)) || 'en'
 
   const [post,         setPost]         = useState(null)
   const [loading,      setLoading]      = useState(true)
@@ -154,6 +157,13 @@ export default function BlogArticlePage() {
   const [relatedPosts, setRelatedPosts] = useState([])
   const [tocOpen,      setTocOpen]      = useState(false)
   const articleRef = useRef(null)
+
+  // Sync i18n to URL language
+  useEffect(() => {
+    if (urlLang !== i18n.language.slice(0, 2)) {
+      i18n.changeLanguage(urlLang)
+    }
+  }, [urlLang])
 
   // Fetch the main article
   useEffect(() => {
@@ -198,14 +208,46 @@ export default function BlogArticlePage() {
       .catch(() => {})
   }, [slug, post])
 
-  // Set document title when post loads
+  // Set document title and hreflang/canonical tags when post loads
   useEffect(() => {
     if (!post) return
-    const title = localise(post.title, lang) || slug
+    const title = localise(post.title, urlLang) || slug
     const prev = document.title
     document.title = `${title} · Cèrcol`
-    return () => { document.title = prev }
-  }, [post, lang, slug])
+
+    const BASE = 'https://cercol.team'
+    // Remove stale hreflang/canonical tags first
+    document.querySelectorAll('link[rel="alternate"][hreflang], link[rel="canonical"]').forEach(el => el.remove())
+
+    const langs = ['en', 'ca', 'es', 'fr', 'de', 'da']
+    const addedEls = []
+    langs.forEach(l => {
+      const el = document.createElement('link')
+      el.rel = 'alternate'
+      el.hreflang = l
+      el.href = l === 'en' ? `${BASE}/blog/${slug}` : `${BASE}/${l}/blog/${slug}`
+      document.head.appendChild(el)
+      addedEls.push(el)
+    })
+    // x-default
+    const xd = document.createElement('link')
+    xd.rel = 'alternate'
+    xd.hreflang = 'x-default'
+    xd.href = `${BASE}/blog/${slug}`
+    document.head.appendChild(xd)
+    addedEls.push(xd)
+    // canonical
+    const canon = document.createElement('link')
+    canon.rel = 'canonical'
+    canon.href = urlLang === 'en' ? `${BASE}/blog/${slug}` : `${BASE}/${urlLang}/blog/${slug}`
+    document.head.appendChild(canon)
+    addedEls.push(canon)
+
+    return () => {
+      document.title = prev
+      addedEls.forEach(el => el.remove())
+    }
+  }, [post, urlLang, slug])
 
   if (loading) {
     return (
@@ -234,11 +276,14 @@ export default function BlogArticlePage() {
 
   if (!post) return null
 
-  const title       = localise(post.title, lang)
-  const description = localise(post.description, lang)
-  const rawContent  = post.content ? (post.content[lang] || post.content.en || '') : ''
-  const showNotice  = lang !== 'en' && rawContent === (post.content?.en || '') && !post.content?.[lang]
-  const htmlContent = rawContent ? marked.parse(rawContent) : ''
+  const title       = localise(post.title, urlLang)
+  const description = localise(post.description, urlLang)
+  const rawContent  = post.content ? (post.content[urlLang] || post.content.en || '') : ''
+  const showNotice  = urlLang !== 'en' && rawContent === (post.content?.en || '') && !post.content?.[urlLang]
+  const rawHtml     = rawContent ? marked.parse(rawContent) : ''
+  const htmlContent = urlLang === 'en'
+    ? rawHtml
+    : rawHtml.replace(/href="\/blog\//g, `href="/${urlLang}/blog/`)
   const headings    = extractHeadings(rawContent)
   const estTime     = readingTime(rawContent)
 
@@ -248,11 +293,11 @@ export default function BlogArticlePage() {
       {/* Breadcrumb */}
       <div className="mb-6 max-w-3xl">
         <Link
-          to="/blog"
+          to={urlLang === 'en' ? '/blog' : `/${urlLang}/blog`}
           className="text-sm font-medium hover:underline"
           style={{ color: 'var(--mm-color-blue)' }}
         >
-          {BACK_LABEL[lang] || BACK_LABEL.en}
+          {BACK_LABEL[urlLang] || BACK_LABEL.en}
         </Link>
       </div>
 
@@ -302,7 +347,7 @@ export default function BlogArticlePage() {
       </header>
 
       {/* Language notice */}
-      {showNotice && ONLY_ENGLISH_NOTICE[lang] && (
+      {showNotice && ONLY_ENGLISH_NOTICE[urlLang] && (
         <div
           className="mb-6 px-4 py-3 rounded-xl border text-sm flex gap-3 items-start max-w-3xl"
           style={{
@@ -326,7 +371,7 @@ export default function BlogArticlePage() {
               clipRule="evenodd"
             />
           </svg>
-          <span>{ONLY_ENGLISH_NOTICE[lang]}</span>
+          <span>{ONLY_ENGLISH_NOTICE[urlLang]}</span>
         </div>
       )}
 
@@ -344,7 +389,7 @@ export default function BlogArticlePage() {
                 onClick={() => setTocOpen(o => !o)}
                 className="w-full flex justify-between items-center px-4 py-3 rounded-xl border text-sm font-medium text-gray-700 bg-gray-50 hover:bg-gray-100 transition-colors"
               >
-                <span>{CONTENTS_LABEL[lang] || CONTENTS_LABEL.en}</span>
+                <span>{CONTENTS_LABEL[urlLang] || CONTENTS_LABEL.en}</span>
                 <span className="text-gray-400">{tocOpen ? '▾' : '▸'}</span>
               </button>
               {tocOpen && (
@@ -389,7 +434,7 @@ export default function BlogArticlePage() {
                 className="text-xs font-semibold uppercase tracking-widest mb-3"
                 style={{ color: 'var(--mm-color-blue)' }}
               >
-                {CONTENTS_LABEL[lang] || CONTENTS_LABEL.en}
+                {CONTENTS_LABEL[urlLang] || CONTENTS_LABEL.en}
               </p>
               <ul className="space-y-1.5">
                 {headings.map(h => (
@@ -418,24 +463,26 @@ export default function BlogArticlePage() {
             className="text-xl font-bold text-gray-900 mb-6"
             style={{ fontFamily: 'var(--mm-font-display)' }}
           >
-            {RELATED_LABEL[lang] || RELATED_LABEL.en}
+            {RELATED_LABEL[urlLang] || RELATED_LABEL.en}
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {relatedPosts.map(p => (
+            {relatedPosts.map(p => {
+              const relatedHref = urlLang === 'en' ? `/blog/${p.slug}` : `/${urlLang}/blog/${p.slug}`
+              return (
               <Link
                 key={p.slug}
-                to={`/blog/${p.slug}`}
+                to={relatedHref}
                 className="group block rounded-xl border p-4 hover:shadow-md transition-shadow bg-white"
               >
                 <h3
                   className="text-sm font-semibold text-gray-900 mb-1 group-hover:underline leading-snug"
                   style={{ fontFamily: 'var(--mm-font-display)' }}
                 >
-                  {localise(p.title, lang)}
+                  {localise(p.title, urlLang)}
                 </h3>
-                {localise(p.description, lang) && (
+                {localise(p.description, urlLang) && (
                   <p className="text-xs text-gray-500 leading-relaxed line-clamp-2">
-                    {localise(p.description, lang)}
+                    {localise(p.description, urlLang)}
                   </p>
                 )}
                 <span
@@ -445,7 +492,8 @@ export default function BlogArticlePage() {
                   Read →
                 </span>
               </Link>
-            ))}
+              )
+            })}
           </div>
         </section>
       )}
