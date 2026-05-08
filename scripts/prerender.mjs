@@ -32,16 +32,32 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url))
 const DIST_DIR   = resolve(__dirname, '../dist')
 const BASE_URL   = 'http://localhost:4173'
 
-// Public routes to prerender — auth-gated routes are excluded.
-const ROUTES = [
-  '/',
-  '/about',
-  '/instruments',
-  '/roles',
-  '/science',
-  '/faq',
-  '/privacy',
-]
+// Static routes to prerender — auth-gated routes are excluded.
+const STATIC_ROUTES = ['/', '/about', '/instruments', '/roles', '/science', '/faq', '/privacy']
+const BLOG_LANGS = ['en', 'ca', 'es', 'fr', 'de', 'da']
+
+async function fetchBlogSlugs() {
+  try {
+    const res = await globalThis.fetch('https://api.cercol.team/blog')
+    const posts = await res.json()
+    return Array.isArray(posts) ? posts.map(p => p.slug) : []
+  } catch (e) {
+    console.warn('[prerender] could not fetch blog slugs:', e.message)
+    return []
+  }
+}
+
+async function buildRoutes(slugs) {
+  const routes = STATIC_ROUTES.map(route => ({ route, lang: 'en' }))
+  for (const lang of BLOG_LANGS) {
+    const prefix = lang === 'en' ? '' : `/${lang}`
+    routes.push({ route: `${prefix}/blog`, lang })
+    for (const slug of slugs) {
+      routes.push({ route: `${prefix}/blog/${slug}`, lang })
+    }
+  }
+  return routes
+}
 
 // Chrome executable: environment variable takes priority (for CI/CD).
 const CHROME = process.env.CHROME_PATH ||
@@ -118,17 +134,25 @@ async function main() {
     ],
   })
 
-  console.log(`[prerender] prerendering ${ROUTES.length} routes…`)
+  const slugs = await fetchBlogSlugs()
+  const allRoutes = await buildRoutes(slugs)
+  console.log(`[prerender] prerendering ${allRoutes.length} routes…`)
 
-  for (const route of ROUTES) {
+  for (const { route, lang } of allRoutes) {
     const url = `${BASE_URL}${route}`
-    console.log(`[prerender]   → ${route}`)
+    console.log(`[prerender]   → ${route} (${lang})`)
 
     const page = await browser.newPage()
 
     // Suppress JS errors from the page (i18n fetch errors in static context are expected)
     page.on('pageerror', () => {})
     page.on('requestfailed', () => {})
+
+    // For non-English pages, set localStorage so i18n initialises correctly
+    if (lang !== 'en') {
+      await page.goto(`${BASE_URL}/`, { waitUntil: 'domcontentloaded', timeout: 10000 })
+      await page.evaluate((l) => localStorage.setItem('cercol-lang', l), lang)
+    }
 
     await page.goto(url, { waitUntil: 'networkidle0', timeout: 30000 })
 
@@ -151,7 +175,7 @@ async function main() {
   await browser.close()
   server.close()
 
-  console.log(`[prerender] done — ${ROUTES.length} routes prerendered ✓`)
+  console.log(`[prerender] done — ${allRoutes.length} routes prerendered ✓`)
 }
 
 main().catch((err) => {

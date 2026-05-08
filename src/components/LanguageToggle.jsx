@@ -8,6 +8,7 @@
  */
 import { useState, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { GlobeIcon } from './MoonIcons'
 import { colors } from '../design/tokens'
 
@@ -25,6 +26,17 @@ export default function LanguageToggle() {
   const { i18n } = useTranslation()
   const [open, setOpen] = useState(false)
   const ref = useRef(null)
+  const { pathname } = useLocation()
+  const navigate = useNavigate()
+
+  function getBlogLangUrl(pathname, newLang) {
+    const LANGS = ['ca', 'es', 'fr', 'de', 'da']
+    const currentLang = LANGS.find(l => pathname.startsWith(`/${l}/blog`)) ||
+      (pathname === '/blog' || pathname.startsWith('/blog/') ? 'en' : null)
+    if (currentLang === null) return null // not a blog page
+    const langlessPath = currentLang === 'en' ? pathname : pathname.replace(`/${currentLang}`, '')
+    return newLang === 'en' ? langlessPath : `/${newLang}${langlessPath}`
+  }
 
   // Close dropdown on click outside
   useEffect(() => {
@@ -40,6 +52,8 @@ export default function LanguageToggle() {
     i18n.changeLanguage(code)
     localStorage.setItem(STORAGE_KEY, code)
     setOpen(false)
+    const blogUrl = getBlogLangUrl(pathname, code)
+    if (blogUrl) navigate(blogUrl)
   }
 
   const activeLabel = LANGS.find(l => l.code === i18n.language)?.label ?? 'EN'

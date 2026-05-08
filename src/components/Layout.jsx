@@ -24,7 +24,7 @@ import { HamburgerIcon, CloseIcon } from './MoonIcons'
 import { useAuth } from '../context/AuthContext'
 
 export default function Layout({ children }) {
-  const { t }        = useTranslation()
+  const { t, i18n }  = useTranslation()
   const { pathname } = useLocation()
   const { profile }  = useAuth()
   const isHome       = pathname === '/'
@@ -35,7 +35,7 @@ export default function Layout({ children }) {
     { to: '/instruments', label: t('nav.instruments') },
     { to: '/roles',       label: t('nav.roles')       },
     { to: '/science',     label: t('nav.science')     },
-    { to: '/blog',        label: t('nav.blog')        },
+    { to: i18n.language === 'en' ? '/blog' : `/${i18n.language}/blog`, label: t('nav.blog') },
     { to: '/faq',         label: t('nav.faq')         },
     ...(profile?.is_admin ? [{ to: '/admin', label: t('nav.admin') }] : []),
   ]

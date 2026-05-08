@@ -158,6 +158,10 @@ function AppContent() {
           {/* Blog */}
           <Route path="/blog"       element={<BlogIndexPage />} />
           <Route path="/blog/:slug" element={<Suspense fallback={null}><BlogArticlePage /></Suspense>} />
+          {['ca', 'es', 'fr', 'de', 'da'].flatMap(lang => [
+            <Route key={`${lang}-blog`}      path={`/${lang}/blog`}        element={<Suspense fallback={null}><BlogIndexPage /></Suspense>} />,
+            <Route key={`${lang}-blog-slug`} path={`/${lang}/blog/:slug`}  element={<Suspense fallback={null}><BlogArticlePage /></Suspense>} />,
+          ])}
 
           {/* Legal */}
           <Route path="/privacy" element={<PrivacyPage />} />
