@@ -1200,13 +1200,20 @@ enriched with DOI links, AB5C explanation, and validation plan for LLM indexing.
 - hreflang: 6-language alternate links in index.html (added in Phase 15.5.1).
 - og:image pending (low priority — email-logo.png used as fallback).
 
-### Phase 15.5.4 — Content (pending)
-Blog/guides section. Priority order:
-1. "Big Five vs DISC vs Belbin: a scientist's comparison"
-2. "How to build a balanced team using personality science"
-3. "Blind spots in teams: when self-perception diverges"
-4. "What is the IPIP and why does it matter?"
-5. Translations of guides 1 and 4 into ES, FR, DE, DA, CA
+### Phase 15.5.4 — Content ✅ COMPLETE
+- 104 English blog articles seeded into PostgreSQL (Big Five science, team roles, dimensions,
+  research validity, cross-cultural personality, practical guides).
+- BlogArticlePage.jsx: useEffect injects `<meta description>`, Open Graph tags, and JSON-LD
+  BlogPosting schema per article (title, description, slug, datePublished).
+- SEO Pass 1: meta descriptions rewritten to 145-158 chars with primary keywords; all H2
+  headings made specific, keyword-rich, and scannable.
+- SEO Pass 2: every article has 4-6 internal `/blog/slug` links woven into prose, 2-4 external
+  authority links (Wikipedia, ipip.ori.org, academic DOIs, APA), and a contextually tailored
+  CTA directing readers toward the relevant Cèrcol tool (free test, roles page, team strategy,
+  or Witness peer assessment).
+- scripts/generate-sitemap.mjs: dynamic sitemap generation from live API (104 articles +
+  7 static routes + blog index = 112 entries, hreflang for 6 languages); wired into
+  `npm run build` so sitemap regenerates on every deploy.
 
 ### Phase 15.5.5 — Distribution (pending)
 Product Hunt launch, Hacker News "Show HN", Reddit outreach,
