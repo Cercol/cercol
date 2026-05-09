@@ -9,24 +9,29 @@ import { useTranslation } from 'react-i18next'
 import { SectionLabel } from '../components/ui'
 import { getBlogPosts } from '../lib/api'
 
-function formatDate(iso) {
+function formatDate(iso, lang) {
   if (!iso) return ''
   const d = new Date(iso)
-  return d.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })
+  const locale = lang === 'ca' ? 'ca-ES'
+    : lang === 'es' ? 'es-ES'
+    : lang === 'fr' ? 'fr-FR'
+    : lang === 'de' ? 'de-DE'
+    : lang === 'da' ? 'da-DK'
+    : 'en-GB'
+  return d.toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' })
 }
 
 /** Estimate reading time from description text as a rough approximation. */
-function estimateReadTime(text) {
+function estimateReadMins(text) {
   if (!text) return null
   const words = text.trim().split(/\s+/).length
   // For index cards we only have the description, not the full article.
   // Scale up to simulate full article length (description ~ 10% of article).
-  const mins = Math.max(3, Math.ceil((words * 10) / 200))
-  return `${mins} min read`
+  return Math.max(3, Math.ceil((words * 10) / 200))
 }
 
 export default function BlogIndexPage() {
-  const { i18n } = useTranslation()
+  const { t, i18n } = useTranslation()
   const lang = i18n.language?.slice(0, 2) || 'en'
   const { pathname } = useLocation()
   const BLOG_LANG_PREFIXES = ['ca', 'es', 'fr', 'de', 'da']
@@ -80,17 +85,16 @@ export default function BlogIndexPage() {
 
       {/* Page header */}
       <SectionLabel color="blue" className="mb-3">
-        Blog
+        {t('blog.label')}
       </SectionLabel>
       <h1
         className="text-3xl font-bold text-gray-900 mb-3"
         style={{ fontFamily: 'var(--mm-font-display)' }}
       >
-        Personality science and team assessment
+        {t('blog.heading')}
       </h1>
       <p className="text-sm text-gray-600 leading-relaxed mb-10 max-w-xl">
-        Science-grounded articles on personality, teams, and open measurement.
-        Written to be citable, honest, and useful.
+        {t('blog.subtitle')}
       </p>
 
       {/* Loading state */}
@@ -115,15 +119,15 @@ export default function BlogIndexPage() {
       {/* Error state */}
       {!loading && error && (
         <p className="text-sm text-red-500 py-8 text-center">
-          Could not load articles. Please try again later.
+          {t('blog.error')}
         </p>
       )}
 
       {/* Empty state */}
       {!loading && !error && posts.length === 0 && (
         <div className="py-16 text-center rounded-2xl border border-dashed border-gray-200">
-          <p className="text-sm text-gray-400">No articles published yet.</p>
-          <p className="text-xs text-gray-300 mt-1">Check back soon.</p>
+          <p className="text-sm text-gray-400">{t('blog.empty')}</p>
+          <p className="text-xs text-gray-300 mt-1">{t('blog.emptySubtext')}</p>
         </div>
       )}
 
@@ -174,9 +178,9 @@ export default function BlogIndexPage() {
 
                   {/* Meta footer */}
                   <div className="mt-auto flex flex-wrap gap-x-2 gap-y-0.5 text-xs text-gray-400">
-                    {post.published_at && <span>{formatDate(post.published_at)}</span>}
-                    {estimateReadTime(desc) && (
-                      <><span>·</span><span>{estimateReadTime(desc)}</span></>
+                    {post.published_at && <span>{formatDate(post.published_at, urlLang)}</span>}
+                    {estimateReadMins(desc) && (
+                      <><span>·</span><span>{t('blog.minRead', { mins: estimateReadMins(desc) })}</span></>
                     )}
                     {post.view_count != null && (
                       <><span>·</span><span>👁 {post.view_count}</span></>

@@ -1207,9 +1207,18 @@
       "heading": "Une hypothèse de travail, pas un produit fini.",
       "body": "Le système de rôles de Cèrcol utilise des centroïdes théoriques dérivés de la recherche publiée sur l'AB5C. Les attributions de rôles sont illustratives — elles n'ont pas encore été validées empiriquement par rapport à des résultats d'équipes réels. La validation est planifiée en trois étapes.",
       "milestones": {
-        "n300": { "label": "N ≥ 300", "desc": "Confirmer la cohérence interne des attributions de rôles et comparer la convergence self vs. Témoin." },
-        "n1000": { "label": "N ≥ 1 000", "desc": "Tester si la diversité des rôles prédit la performance de l'équipe dans différents domaines." },
-        "preprint": { "label": "Préimpression", "desc": "Publier les résultats sur PsyArXiv pour une révision ouverte par les pairs avant toute soumission à une revue." }
+        "n300": {
+          "label": "N ≥ 300",
+          "desc": "Confirmer la cohérence interne des attributions de rôles et comparer la convergence self vs. Témoin."
+        },
+        "n1000": {
+          "label": "N ≥ 1 000",
+          "desc": "Tester si la diversité des rôles prédit la performance de l'équipe dans différents domaines."
+        },
+        "preprint": {
+          "label": "Préimpression",
+          "desc": "Publier les résultats sur PsyArXiv pour une révision ouverte par les pairs avant toute soumission à une revue."
+        }
       },
       "note": "Tant que des données de validation n'existent pas, traitez les résultats de rôles comme un point de départ pour la réflexion, et non comme un outil diagnostique. L'algorithme de notation et toutes les hypothèses sont entièrement documentés dans le dépôt open source."
     }
@@ -1398,5 +1407,14 @@
       "body": "120 questions et un Témoin — le résultat le plus précis.",
       "cta": "Commencer Pleine Lune Cèrcol"
     }
-  }
+  },
+  "blog.label": "Blog",
+  "blog.heading": "Science de la personnalité et évaluation d'équipes",
+  "blog.subtitle": "Articles fondés sur la recherche sur la personnalité, les équipes et la mesure ouverte. Écrits pour être citables, honnêtes et utiles.",
+  "blog.error": "Impossible de charger les articles. Veuillez réessayer plus tard.",
+  "blog.empty": "Aucun article publié pour l'instant.",
+  "blog.emptySubtext": "Revenez bientôt.",
+  "blog.minRead": "{{mins}} min de lecture",
+  "blog.articleError": "Impossible de charger l'article. Veuillez réessayer plus tard.",
+  "blog.readMore": "Lire →"
 }

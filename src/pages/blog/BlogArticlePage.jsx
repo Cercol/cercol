@@ -99,18 +99,23 @@ const CONTENTS_LABEL = {
   da: 'Indhold',
 }
 
-function formatDate(iso) {
+function formatDate(iso, lang) {
   if (!iso) return ''
   const d = new Date(iso)
-  return d.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })
+  const locale = lang === 'ca' ? 'ca-ES'
+    : lang === 'es' ? 'es-ES'
+    : lang === 'fr' ? 'fr-FR'
+    : lang === 'de' ? 'de-DE'
+    : lang === 'da' ? 'da-DK'
+    : 'en-GB'
+  return d.toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' })
 }
 
 /** Estimate reading time from a markdown string (~200 words/min). */
-function readingTime(text) {
+function readingTimeMins(text) {
   if (!text) return null
   const wordCount = text.trim().split(/\s+/).length
-  const mins = Math.max(1, Math.ceil(wordCount / 200))
-  return `${mins} min read`
+  return Math.max(1, Math.ceil(wordCount / 200))
 }
 
 /** Parse ## and ### headings from markdown content for ToC. */
@@ -145,7 +150,7 @@ function localise(field, lang) {
 export default function BlogArticlePage() {
   const { slug }   = useParams()
   const navigate   = useNavigate()
-  const { i18n }   = useTranslation()
+  const { t, i18n }   = useTranslation()
   const lang       = i18n.language?.slice(0, 2) || 'en'
   const { pathname } = useLocation()
   const BLOG_LANG_PREFIXES = ['ca', 'es', 'fr', 'de', 'da']
@@ -324,7 +329,7 @@ export default function BlogArticlePage() {
   if (error) {
     return (
       <main className="py-12 text-center">
-        <p className="text-sm text-red-500">Could not load article. Please try again later.</p>
+        <p className="text-sm text-red-500">{t('blog.articleError')}</p>
       </main>
     )
   }
@@ -340,7 +345,7 @@ export default function BlogArticlePage() {
     ? rawHtml
     : rawHtml.replace(/href="\/blog\//g, `href="/${urlLang}/blog/`)
   const headings    = extractHeadings(rawContent)
-  const estTime     = readingTime(rawContent)
+  const estTimeMins = readingTimeMins(rawContent)
 
   return (
     <main className="py-8">
@@ -395,8 +400,8 @@ export default function BlogArticlePage() {
         <p className="text-sm text-gray-400 flex flex-wrap gap-x-2 gap-y-1 items-center">
           {post.author && <span>{post.author}</span>}
           {post.author && post.published_at && <span>·</span>}
-          {post.published_at && <span>{formatDate(post.published_at)}</span>}
-          {estTime && <><span>·</span><span>{estTime}</span></>}
+          {post.published_at && <span>{formatDate(post.published_at, urlLang)}</span>}
+          {estTimeMins && <><span>·</span><span>{t('blog.minRead', { mins: estTimeMins })}</span></>}
           {post.view_count != null && <><span>·</span><span>👁 {post.view_count}</span></>}
         </p>
       </header>
@@ -544,7 +549,7 @@ export default function BlogArticlePage() {
                   className="mt-2 inline-block text-xs font-medium hover:underline"
                   style={{ color: 'var(--mm-color-blue)' }}
                 >
-                  Read →
+                  {t('blog.readMore')}
                 </span>
               </Link>
               )

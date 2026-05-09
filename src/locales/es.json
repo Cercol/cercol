@@ -1207,9 +1207,18 @@
       "heading": "Una hipótesis de trabajo, no un producto terminado.",
       "body": "El sistema de roles de Cèrcol utiliza centroides teóricos derivados de la investigación publicada sobre el AB5C. Las asignaciones de roles son ilustrativas — aún no se han validado empíricamente contra resultados reales de equipos. La validación está planificada en tres etapas.",
       "milestones": {
-        "n300": { "label": "N ≥ 300", "desc": "Confirmar la consistencia interna de las asignaciones de roles y comparar la convergencia self vs. Testigo." },
-        "n1000": { "label": "N ≥ 1 000", "desc": "Comprobar si la diversidad de roles predice el rendimiento del equipo en distintos dominios." },
-        "preprint": { "label": "Preprint", "desc": "Publicar los resultados en PsyArXiv para revisión abierta por pares antes de cualquier envío a revistas." }
+        "n300": {
+          "label": "N ≥ 300",
+          "desc": "Confirmar la consistencia interna de las asignaciones de roles y comparar la convergencia self vs. Testigo."
+        },
+        "n1000": {
+          "label": "N ≥ 1 000",
+          "desc": "Comprobar si la diversidad de roles predice el rendimiento del equipo en distintos dominios."
+        },
+        "preprint": {
+          "label": "Preprint",
+          "desc": "Publicar los resultados en PsyArXiv para revisión abierta por pares antes de cualquier envío a revistas."
+        }
       },
       "note": "Hasta que no existan datos de validación, trata los resultados de roles como un punto de partida para la reflexión, no como una herramienta diagnóstica. El algoritmo de puntuación y todos los supuestos están completamente documentados en el repositorio de código abierto."
     }
@@ -1398,5 +1407,14 @@
       "body": "120 preguntas y un Testigo — el resultado más preciso.",
       "cta": "Comenzar Luna Llena Cèrcol"
     }
-  }
+  },
+  "blog.label": "Blog",
+  "blog.heading": "Ciencia de la personalidad y evaluación de equipos",
+  "blog.subtitle": "Artículos basados en investigación sobre personalidad, equipos y medición abierta. Escritos para ser citables, honestos y útiles.",
+  "blog.error": "No se han podido cargar los artículos. Inténtalo de nuevo más tarde.",
+  "blog.empty": "Aún no hay artículos publicados.",
+  "blog.emptySubtext": "Vuelve pronto.",
+  "blog.minRead": "{{mins}} min de lectura",
+  "blog.articleError": "No se ha podido cargar el artículo. Inténtalo de nuevo más tarde.",
+  "blog.readMore": "Leer →"
 }

@@ -1206,9 +1206,18 @@
       "heading": "Una hipòtesi de treball, no un producte acabat.",
       "body": "El sistema de rols de Cèrcol utilitza centroides teòrics derivats de la recerca publicada sobre l'AB5C. Les assignacions de rols són il·lustratives — encara no s'han validat empíricament contra resultats reals d'equips. La validació està planificada en tres etapes.",
       "milestones": {
-        "n300": { "label": "N ≥ 300", "desc": "Confirmar la consistència interna de les assignacions de rols i comparar la convergència self vs. Testimoni." },
-        "n1000": { "label": "N ≥ 1 000", "desc": "Comprovar si la diversitat de rols prediu el rendiment de l'equip en diferents dominis." },
-        "preprint": { "label": "Preprint", "desc": "Publicar els resultats a PsyArXiv per a revisió oberta per parells abans de qualsevol enviament a revistes." }
+        "n300": {
+          "label": "N ≥ 300",
+          "desc": "Confirmar la consistència interna de les assignacions de rols i comparar la convergència self vs. Testimoni."
+        },
+        "n1000": {
+          "label": "N ≥ 1 000",
+          "desc": "Comprovar si la diversitat de rols prediu el rendiment de l'equip en diferents dominis."
+        },
+        "preprint": {
+          "label": "Preprint",
+          "desc": "Publicar els resultats a PsyArXiv per a revisió oberta per parells abans de qualsevol enviament a revistes."
+        }
       },
       "note": "Fins que no existeixin dades de validació, tracta els resultats de rols com un punt de partida per a la reflexió, no com una eina diagnòstica. L'algoritme de puntuació i tots els supòsits estan completament documentats al repositori de codi obert."
     }
@@ -1397,5 +1406,14 @@
       "body": "120 preguntes i un Testimoni — el resultat més precís.",
       "cta": "Comença la Lluna Plena Cèrcol"
     }
-  }
+  },
+  "blog.label": "Blog",
+  "blog.heading": "Ciència de la personalitat i avaluació d'equips",
+  "blog.subtitle": "Articles basats en recerca sobre personalitat, equips i mesura oberta. Escrits per ser citables, honestos i útils.",
+  "blog.error": "No s'han pogut carregar els articles. Torna-ho a intentar més tard.",
+  "blog.empty": "Encara no hi ha articles publicats.",
+  "blog.emptySubtext": "Torna aviat.",
+  "blog.minRead": "{{mins}} min de lectura",
+  "blog.articleError": "No s'ha pogut carregar l'article. Torna-ho a intentar més tard.",
+  "blog.readMore": "Llegir →"
 }

@@ -1207,9 +1207,18 @@
       "heading": "En arbejdshypotese, ikke et færdigt produkt.",
       "body": "Cèrcols rollesystem bruger teoretiske centroider afledt af publiceret AB5C-forskning. Rolletildelinger er illustrative — de er endnu ikke empirisk valideret mod reelle teamresultater. Validering er planlagt i tre faser.",
       "milestones": {
-        "n300": { "label": "N ≥ 300", "desc": "Bekræft intern konsistens af rolletildelinger og sammenlign selv vs. Vidne-konvergens." },
-        "n1000": { "label": "N ≥ 1 000", "desc": "Test om rollediversitet forudsiger teampræstation på tværs af domæner." },
-        "preprint": { "label": "Preprint", "desc": "Offentliggør fund på PsyArXiv til åben fagfællebedømmelse før enhver tidsskriftindsendelse." }
+        "n300": {
+          "label": "N ≥ 300",
+          "desc": "Bekræft intern konsistens af rolletildelinger og sammenlign selv vs. Vidne-konvergens."
+        },
+        "n1000": {
+          "label": "N ≥ 1 000",
+          "desc": "Test om rollediversitet forudsiger teampræstation på tværs af domæner."
+        },
+        "preprint": {
+          "label": "Preprint",
+          "desc": "Offentliggør fund på PsyArXiv til åben fagfællebedømmelse før enhver tidsskriftindsendelse."
+        }
       },
       "note": "Indtil der eksisterer valideringsdata, bør rolleresultater behandles som et udgangspunkt for refleksion, ikke et diagnostisk værktøj. Scoringsalgoritmen og alle antagelser er fuldt dokumenteret i open source-repositoriet."
     }
@@ -1398,5 +1407,14 @@
       "body": "120 spørgsmål og et Vidne — det mest præcise resultat.",
       "cta": "Begynd Fuldmåne Cèrcol"
     }
-  }
+  },
+  "blog.label": "Blog",
+  "blog.heading": "Personlighedsvidenskab og teamvurdering",
+  "blog.subtitle": "Forskningsbaserede artikler om personlighed, teams og åben måling. Skrevet til at være citerbare, ærlige og nyttige.",
+  "blog.error": "Kunne ikke indlæse artikler. Prøv igen senere.",
+  "blog.empty": "Ingen artikler publiceret endnu.",
+  "blog.emptySubtext": "Kom tilbage snart.",
+  "blog.minRead": "{{mins}} min læsning",
+  "blog.articleError": "Kunne ikke indlæse artiklen. Prøv igen senere.",
+  "blog.readMore": "Læs →"
 }

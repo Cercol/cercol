@@ -1207,9 +1207,18 @@
       "heading": "Eine Arbeitshypothese, kein fertiges Produkt.",
       "body": "Das Rollensystem von Cèrcol verwendet theoretische Zentroide, die aus veröffentlichter AB5C-Forschung abgeleitet wurden. Rollenzuweisungen sind illustrativ — sie wurden noch nicht empirisch gegen reale Teamergebnisse validiert. Die Validierung ist in drei Phasen geplant.",
       "milestones": {
-        "n300": { "label": "N ≥ 300", "desc": "Interne Konsistenz der Rollenzuweisungen bestätigen und Selbst- vs. Zeuge-Konvergenz vergleichen." },
-        "n1000": { "label": "N ≥ 1 000", "desc": "Testen, ob Rollenvielfalt die Teamleistung in verschiedenen Bereichen vorhersagt." },
-        "preprint": { "label": "Preprint", "desc": "Ergebnisse auf PsyArXiv für offene Peer-Review veröffentlichen, bevor eine Zeitschrift eingereicht wird." }
+        "n300": {
+          "label": "N ≥ 300",
+          "desc": "Interne Konsistenz der Rollenzuweisungen bestätigen und Selbst- vs. Zeuge-Konvergenz vergleichen."
+        },
+        "n1000": {
+          "label": "N ≥ 1 000",
+          "desc": "Testen, ob Rollenvielfalt die Teamleistung in verschiedenen Bereichen vorhersagt."
+        },
+        "preprint": {
+          "label": "Preprint",
+          "desc": "Ergebnisse auf PsyArXiv für offene Peer-Review veröffentlichen, bevor eine Zeitschrift eingereicht wird."
+        }
       },
       "note": "Solange keine Validierungsdaten vorliegen, sollten Rollenergebnisse als Ausgangspunkt für Reflexion behandelt werden, nicht als diagnostisches Instrument. Der Bewertungsalgorithmus und alle Annahmen sind vollständig im Open-Source-Repository dokumentiert."
     }
@@ -1398,5 +1407,14 @@
       "body": "120 Fragen plus ein Zeuge — das präziseste Ergebnis.",
       "cta": "Vollmond Cèrcol beginnen"
     }
-  }
+  },
+  "blog.label": "Blog",
+  "blog.heading": "Persönlichkeitswissenschaft und Teambewertung",
+  "blog.subtitle": "Forschungsbasierte Artikel über Persönlichkeit, Teams und offene Messung. Geschrieben, um zitierbar, ehrlich und nützlich zu sein.",
+  "blog.error": "Artikel konnten nicht geladen werden. Bitte versuche es später erneut.",
+  "blog.empty": "Noch keine Artikel veröffentlicht.",
+  "blog.emptySubtext": "Schau bald wieder vorbei.",
+  "blog.minRead": "{{mins}} Min. Lesezeit",
+  "blog.articleError": "Artikel konnte nicht geladen werden. Bitte versuche es später erneut.",
+  "blog.readMore": "Lesen →"
 }
