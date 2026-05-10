@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { computeWitnessScores, detectDivergence, spearmanRho, spearmanLabel, computeRankComparison } from '../witness-scoring'
-import { NORM_MEAN, NORM_SD } from '../role-scoring'
+import { computeWitnessScores, getRelevantRoles, compareRoleViews } from '../witness-scoring'
 
 // ── Minimal round builders ────────────────────────────────────────────────────
 // Only fields used by computeWitnessScores: id, factor, valence
@@ -95,153 +94,131 @@ describe('computeWitnessScores', () => {
   })
 })
 
-// ── detectDivergence ──────────────────────────────────────────────────────────
+// ── getRelevantRoles ──────────────────────────────────────────────────────────
 
-const NEUTRAL = { presence: 3, bond: 3, discipline: 3, depth: 3, vision: 3 }
-
-describe('detectDivergence', () => {
-  it('returns empty array when self and witness scores are identical', () => {
-    expect(detectDivergence(NEUTRAL, NEUTRAL)).toHaveLength(0)
+describe('getRelevantRoles', () => {
+  it('returns only top role when dominant ratio >= 1.5', () => {
+    const probs = { R01: 0.60, R02: 0.20, R03: 0.10, R04: 0.05, R05: 0.03,
+                    R06: 0.01, R07: 0.01, R08: 0.00, R09: 0.00, R10: 0.00,
+                    R11: 0.00, R12: 0.00 }
+    // R01 / R02 = 3.0 >= 1.5 → dominant
+    const result = getRelevantRoles(probs)
+    expect(result).toHaveLength(1)
+    expect(result[0].role).toBe('R01')
   })
 
-  it('detects presence divergence when scores are maximally different', () => {
-    const self    = { ...NEUTRAL, presence: 1 }
-    const witness = { ...NEUTRAL, presence: 5 }
-    const result  = detectDivergence(self, witness)
-    expect(result.length).toBeGreaterThan(0)
-    expect(result[0].domain).toBe('presence')
+  it('includes multiple roles when no dominant', () => {
+    const probs = { R01: 0.30, R02: 0.25, R03: 0.20, R04: 0.15, R05: 0.10,
+                    R06: 0.00, R07: 0.00, R08: 0.00, R09: 0.00, R10: 0.00,
+                    R11: 0.00, R12: 0.00 }
+    // R01/R02 = 1.2 < 1.5 → no dominant; threshold = max(0.10, 0.30*0.6) = 0.18
+    // R01(0.30), R02(0.25), R03(0.20) pass; R04(0.15) < 0.18, fails
+    const result = getRelevantRoles(probs)
+    expect(result.length).toBeGreaterThanOrEqual(2)
+    const roles = result.map(r => r.role)
+    expect(roles).toContain('R01')
+    expect(roles).toContain('R02')
   })
 
-  it('computes diff as |selfZ - witnessZ| using imported NORM constants', () => {
-    const selfScore    = 1
-    const witnessScore = 5
-    const self    = { ...NEUTRAL, presence: selfScore }
-    const witness = { ...NEUTRAL, presence: witnessScore }
-    const [d] = detectDivergence(self, witness)
-
-    const expectedSelfZ    = (selfScore    - NORM_MEAN.E) / NORM_SD.E
-    const expectedWitnessZ = (witnessScore - NORM_MEAN.E) / NORM_SD.E
-    const expectedDiff     = Math.abs(expectedSelfZ - expectedWitnessZ)
-
-    expect(d.selfZ).toBeCloseTo(expectedSelfZ, 10)
-    expect(d.witnessZ).toBeCloseTo(expectedWitnessZ, 10)
-    expect(d.diff).toBeCloseTo(expectedDiff, 10)
+  it('caps at maxRoles (5 by default)', () => {
+    const probs = { R01: 0.20, R02: 0.19, R03: 0.18, R04: 0.17, R05: 0.16,
+                    R06: 0.10, R07: 0.00, R08: 0.00, R09: 0.00, R10: 0.00,
+                    R11: 0.00, R12: 0.00 }
+    // All 6 above 10%, but cap = 5
+    const result = getRelevantRoles(probs)
+    expect(result.length).toBeLessThanOrEqual(5)
   })
 
-  it('includes selfScore and witnessScore in result entries', () => {
-    const self    = { ...NEUTRAL, presence: 1 }
-    const witness = { ...NEUTRAL, presence: 5 }
-    const [d] = detectDivergence(self, witness)
-    expect(d.selfScore).toBe(1)
-    expect(d.witnessScore).toBe(5)
+  it('returns empty array for empty probabilities', () => {
+    expect(getRelevantRoles({})).toHaveLength(0)
   })
 
-  it('sorts results by diff descending', () => {
-    // presence diff >> bond diff (both above default threshold)
-    const self    = { presence: 1, bond: 2, discipline: 3, depth: 3, vision: 3 }
-    const witness = { presence: 5, bond: 5, discipline: 3, depth: 3, vision: 3 }
-    const result  = detectDivergence(self, witness)
+  it('always returns at least one role if probabilities are non-empty', () => {
+    const probs = { R01: 0.08, R02: 0.05, R03: 0.04, R04: 0.03, R05: 0.02,
+                    R06: 0.01, R07: 0.01, R08: 0.01, R09: 0.01, R10: 0.01,
+                    R11: 0.01, R12: 0.01 }
+    // top=R01(0.08), second=R02(0.05) → ratio 1.6 >= 1.5 → dominant
+    const result = getRelevantRoles(probs)
+    expect(result.length).toBeGreaterThanOrEqual(1)
+  })
+
+  it('sorted by probability descending', () => {
+    const probs = { R01: 0.30, R02: 0.25, R03: 0.20, R04: 0.15, R05: 0.10,
+                    R06: 0.00, R07: 0.00, R08: 0.00, R09: 0.00, R10: 0.00,
+                    R11: 0.00, R12: 0.00 }
+    const result = getRelevantRoles(probs)
     for (let i = 1; i < result.length; i++) {
-      expect(result[i - 1].diff).toBeGreaterThanOrEqual(result[i].diff)
+      expect(result[i - 1].probability).toBeGreaterThanOrEqual(result[i].probability)
     }
   })
-
-  it('respects custom threshold — higher threshold excludes borderline domains', () => {
-    const self    = { ...NEUTRAL, presence: 1 }
-    const witness = { ...NEUTRAL, presence: 5 }
-    // diff ≈ 4 / NORM_SD.E ≈ 5.6 → included even at threshold 5
-    expect(detectDivergence(self, witness, 5)).toHaveLength(1)
-    // At threshold 100 nothing passes
-    expect(detectDivergence(self, witness, 100)).toHaveLength(0)
-  })
-
-  it('respects custom threshold — threshold 0 catches any non-zero difference', () => {
-    const self    = { ...NEUTRAL, presence: 1 }
-    const result  = detectDivergence(self, NEUTRAL, 0)
-    // presence diff is clearly > 0
-    const domains = result.map(r => r.domain)
-    expect(domains).toContain('presence')
-  })
-
-  it('uses NORM_MEAN.A for bond domain', () => {
-    const selfScore    = 1
-    const witnessScore = 5
-    const self    = { ...NEUTRAL, bond: selfScore }
-    const witness = { ...NEUTRAL, bond: witnessScore }
-    const [d] = detectDivergence(self, witness)
-    const expectedSelfZ = (selfScore - NORM_MEAN.A) / NORM_SD.A
-    expect(d.selfZ).toBeCloseTo(expectedSelfZ, 10)
-  })
 })
 
-// ── spearmanRho ───────────────────────────────────────────────────────────────
+// ── compareRoleViews ──────────────────────────────────────────────────────────
 
-describe('spearmanRho', () => {
-  it('returns 1 for identical rankings', () => {
-    const s = { presence: 5, bond: 4, vision: 3, discipline: 2, depth: 1 }
-    expect(spearmanRho(s, s)).toBeCloseTo(1, 5)
+// Helper to build a minimal computeRole()-shaped result
+function makeRoleResult(probs) {
+  const entries = Object.entries(probs).sort(([, a], [, b]) => b - a)
+  return { role: entries[0][0], arc: [], probabilities: probs }
+}
+
+const FLAT_PROBS = { R01: 0.30, R02: 0.25, R03: 0.20, R04: 0.05, R05: 0.04,
+                     R06: 0.04, R07: 0.03, R08: 0.03, R09: 0.02, R10: 0.02,
+                     R11: 0.01, R12: 0.01 }
+
+describe('compareRoleViews', () => {
+  it('returns null when witnessResult is null', () => {
+    expect(compareRoleViews(makeRoleResult(FLAT_PROBS), null)).toBeNull()
   })
 
-  it('returns -1 for fully reversed rankings', () => {
-    const s = { presence: 5, bond: 4, vision: 3, discipline: 2, depth: 1 }
-    const w = { presence: 1, bond: 2, vision: 3, discipline: 4, depth: 5 }
-    expect(spearmanRho(s, w)).toBeCloseTo(-1, 5)
+  it('returns selfRelevant and witnessRelevant arrays', () => {
+    const self    = makeRoleResult({ R01: 0.50, R02: 0.20, R03: 0.10, R04: 0.08, R05: 0.07,
+                                     R06: 0.02, R07: 0.01, R08: 0.01, R09: 0.01, R10: 0.00,
+                                     R11: 0.00, R12: 0.00 })
+    const witness = makeRoleResult({ R03: 0.50, R04: 0.20, R05: 0.10, R06: 0.08, R07: 0.07,
+                                     R01: 0.02, R02: 0.01, R08: 0.01, R09: 0.01, R10: 0.00,
+                                     R11: 0.00, R12: 0.00 })
+    const result = compareRoleViews(self, witness)
+    expect(Array.isArray(result.selfRelevant)).toBe(true)
+    expect(Array.isArray(result.witnessRelevant)).toBe(true)
   })
 
-  it('returns a value close to 0 for weakly correlated rankings', () => {
-    // s ranks [1,2,3,4,5], w ranks [2,5,4,1,3] → ρ = -0.2
-    const s = { presence: 5, bond: 4, vision: 3, discipline: 2, depth: 1 }
-    const w = { presence: 4, bond: 1, vision: 2, discipline: 5, depth: 3 }
-    expect(Math.abs(spearmanRho(s, w))).toBeLessThan(0.5)
+  it('shared set contains roles appearing in both views', () => {
+    // R01 dominant in both
+    const selfProbs    = { R01: 0.70, R02: 0.15, R03: 0.05, R04: 0.04, R05: 0.03,
+                           R06: 0.01, R07: 0.01, R08: 0.00, R09: 0.00, R10: 0.00,
+                           R11: 0.00, R12: 0.00 }
+    const witnessProbs = { R01: 0.70, R02: 0.10, R03: 0.05, R04: 0.04, R05: 0.03,
+                           R06: 0.04, R07: 0.01, R08: 0.01, R09: 0.00, R10: 0.00,
+                           R11: 0.00, R12: 0.00 }
+    const result = compareRoleViews(makeRoleResult(selfProbs), makeRoleResult(witnessProbs))
+    expect(result.shared.has('R01')).toBe(true)
   })
 
-  it('handles tied scores with averaged ranks', () => {
-    const s = { presence: 4, bond: 4, vision: 3, discipline: 2, depth: 1 }
-    const w = { presence: 4, bond: 4, vision: 3, discipline: 2, depth: 1 }
-    expect(spearmanRho(s, w)).toBeCloseTo(1, 5)
+  it('surprises have correct type labels', () => {
+    // Self = R01, Witness = R02 (no overlap)
+    const selfProbs    = { R01: 0.80, R02: 0.10, R03: 0.05, R04: 0.02, R05: 0.01,
+                           R06: 0.01, R07: 0.00, R08: 0.00, R09: 0.00, R10: 0.00,
+                           R11: 0.00, R12: 0.00 }
+    const witnessProbs = { R02: 0.80, R01: 0.10, R03: 0.05, R04: 0.02, R05: 0.01,
+                           R06: 0.01, R07: 0.00, R08: 0.00, R09: 0.00, R10: 0.00,
+                           R11: 0.00, R12: 0.00 }
+    const result = compareRoleViews(makeRoleResult(selfProbs), makeRoleResult(witnessProbs))
+    const witnessOnly = result.surprises.filter(s => s.type === 'witnessOnly')
+    const selfOnly    = result.surprises.filter(s => s.type === 'selfOnly')
+    // R02 dominant for witness, not for self → witnessOnly
+    expect(witnessOnly.some(s => s.role === 'R02')).toBe(true)
+    // R01 dominant for self, not for witness → selfOnly
+    expect(selfOnly.some(s => s.role === 'R01')).toBe(true)
   })
 
-  it('returns 0 when either input is null', () => {
-    expect(spearmanRho(null, { presence: 1, bond: 2, vision: 3, discipline: 4, depth: 5 })).toBe(0)
-    expect(spearmanRho({ presence: 1, bond: 2, vision: 3, discipline: 4, depth: 5 }, null)).toBe(0)
-  })
-})
-
-// ── spearmanLabel ─────────────────────────────────────────────────────────────
-
-describe('spearmanLabel', () => {
-  it('returns strong for ρ ≥ 0.5', () => {
-    expect(spearmanLabel(0.5)).toBe('strong')
-    expect(spearmanLabel(0.9)).toBe('strong')
-    expect(spearmanLabel(1.0)).toBe('strong')
-  })
-
-  it('returns moderate for 0 ≤ ρ < 0.5', () => {
-    expect(spearmanLabel(0.0)).toBe('moderate')
-    expect(spearmanLabel(0.49)).toBe('moderate')
-  })
-
-  it('returns divergent for ρ < 0', () => {
-    expect(spearmanLabel(-0.01)).toBe('divergent')
-    expect(spearmanLabel(-1.0)).toBe('divergent')
-  })
-})
-
-// ── computeRankComparison ─────────────────────────────────────────────────────
-
-describe('computeRankComparison', () => {
-  it('returns 5 entries sorted by selfRank ascending', () => {
-    const s = { presence: 5, bond: 4, vision: 3, discipline: 2, depth: 1 }
-    const w = { presence: 1, bond: 2, vision: 3, discipline: 4, depth: 5 }
-    const result = computeRankComparison(s, w)
-    expect(result).toHaveLength(5)
-    expect(result[0].domain).toBe('presence')   // highest self (rank 1)
-    expect(result[4].domain).toBe('depth')       // lowest self (rank 5)
-    expect(result[0].selfRank).toBe(1)
-    expect(result[0].witnessRank).toBe(5)
-  })
-
-  it('returns empty array on null input', () => {
-    expect(computeRankComparison(null, {})).toEqual([])
+  it('surprises sorted by probability descending', () => {
+    const result = compareRoleViews(makeRoleResult(FLAT_PROBS), makeRoleResult({
+      R05: 0.35, R06: 0.30, R07: 0.20, R01: 0.05, R02: 0.04,
+      R03: 0.02, R04: 0.01, R08: 0.01, R09: 0.01, R10: 0.00,
+      R11: 0.00, R12: 0.00,
+    }))
+    for (let i = 1; i < result.surprises.length; i++) {
+      expect(result.surprises[i - 1].probability).toBeGreaterThanOrEqual(result.surprises[i].probability)
+    }
   })
 })

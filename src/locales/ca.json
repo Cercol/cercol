@@ -1058,54 +1058,24 @@
     "combinedLabel": "Combinat",
     "combinedRoleSection": "El teu rol",
     "roleSection": "El teu rol · Testimonis",
-    "divergenceHeading": "Punts cecs",
-    "divergenceNote": "Dimensions on l'autoinforme i els testimonis difereixen significativament.",
-    "divergenceDirection": {
-      "higher": "Els testimonis puntuen {{domain}} més alt que tu.",
-      "lower": "Els testimonis puntuen {{domain}} més baix que tu."
-    },
-    "noDivergence": "Alineació forta. La teua autopercepció coincideix àmpliament amb com et veuen els altres.",
     "setupCta": "Convidar testimonis",
     "disclaimer": "Els resultats dels testimonis reflecteixen la perspectiva de les persones que han completat l'instrument. La divergència no és un defecte — és informació.",
     "definitiveLabel": "Testimoni inclòs",
     "definitiveNote": "El senyal del Testimoni redueix la incertesa en l'assignació de rol. Aquest és el teu resultat més complet.",
-    "convergenceSection": "Alineació de rol",
-    "convergenceNote": "Comparació de com tu i els teus witnesses ordeneu les dimensions, ordenat pel teu auto-informe.",
-    "blindSpotsTitle": "Punts cecs",
-    "blindSpotsNote": "Dimensions on el teu auto-informe i les puntuacions del Witness apunten en direccions notablement diferents.",
     "domainsSection": "Les cinc dimensions",
     "witnessSessionsSection": "Testimonis",
     "statusDone": "Completat",
     "statusWaiting": "Pendent",
-    "blindSpots": {
-      "presence": {
-        "selfHigher": "Et veus com algú més energitzant i visible del que et perceben els altres. No és un defecte — pot significar que el teu impacte és més intern del que t'adones.",
-        "witnessHigher": "Els altres t'experimenten com algú més present i energitzant del que et reconèixes. Potser estàs infravaluant l'efecte que tens a la sala."
-      },
-      "bond": {
-        "selfHigher": "Et veus com algú més càlid i cooperatiu del que els altres noten. Pot significar que la cura és real però no sempre arriba — la bretxa entre intenció i impacte.",
-        "witnessHigher": "Els altres t'experimenten com algú més flexible i cooperatiu del que tu et veus. Potser ets una força cohesiva a l'equip més important del que creus."
-      },
-      "vision": {
-        "selfHigher": "Et veus com algú més exploratori i orientat a les idees del que els altres observen. La teua originalitat pot ser menys visible als altres del que es nota des de dins.",
-        "witnessHigher": "Els altres veuen més creativitat i amplitud en tu del que reclames. Potser estàs infravalorant la teua capacitat de pensar en noves directions."
-      },
-      "discipline": {
-        "selfHigher": "Et veus com algú més estructurat i fiable del que els altres observen. Pot valer la pena examinar on el seguiment és visible i on no ho és.",
-        "witnessHigher": "Els altres t'experimenten com algú més organitzat i de confiança del que te sents internament. L'estructura que crees pot ser més real del que sembla."
-      },
-      "depth": {
-        "selfHigher": "Portes més intensitat emocional de la que els altres veuen. Pot ser que la gestiones bé — o pot significar que la teua experiència interior no arriba completament a l'exterior.",
-        "witnessHigher": "Els altres perceben més sensibilitat emocional en tu de la que informes. Pot ser que estàs infravalorant quant el teu humor i les teues reaccions les llegeix la gent al teu voltant."
-      }
-    },
     "witnessRoleDisclaimer": "El rol del Witness és un senyal, no un veredicte. Diferents observadors poden percebre la mateixa persona de manera diferent.",
-    "convergenceStrong": "Acord fort",
-    "convergenceModerate": "Acord moderat",
-    "convergenceDivergent": "Perspectives divergents",
-    "rankColumnHeader": "Dimensió",
-    "rankSelf": "El teu rang",
-    "rankWitness": "Rang del Witness"
+    "roleViewSection": "Com et veieu tu i els teus witnesses",
+    "selfViewLabel": "Et veus com",
+    "witnessViewLabel": "Els witnesses et veuen com",
+    "matchLabel": "També vist per l'altra part",
+    "surprisesSection": "Sorpreses",
+    "surprisesNote": "Rols que apareixen en una part però no en l'altra.",
+    "witnessOnlyNote": "Els witnesses veuen aquest rol; tu no.",
+    "selfOnlyNote": "Tu veus aquest rol; els witnesses no.",
+    "definedBy": "Definit per"
   },
   "about": {
     "title": "Sobre",

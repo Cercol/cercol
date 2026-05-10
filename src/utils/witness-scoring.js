@@ -21,7 +21,82 @@
  */
 
 import { WITNESS_ADJECTIVES, ADJECTIVES_BY_FACTOR, FACTOR_TO_DOMAIN, FACTORS } from '../data/witness-adjectives'
-import { computeRole, NORM_MEAN, NORM_SD, ARC_PROBABILITY_THRESHOLD } from './role-scoring'
+import { computeRole, ARC_PROBABILITY_THRESHOLD } from './role-scoring'
+
+// ── Role → top-5 adjective IDs (pre-baked from centroid z-scores × valence) ──
+// fit(adj, R) = z_R[factor] * sign(valence); top 5 per role sorted by fit desc
+export const ROLE_TOP_ADJECTIVES = {
+  R01: ['E+01', 'E+04', 'A+01', 'A+06', 'N-02'],
+  R02: ['E+01', 'E+03', 'A-01', 'A-04', 'C+01'],
+  R03: ['E-01', 'E-02', 'A+01', 'A+02', 'N-01'],
+  R04: ['E-01', 'A-01', 'C+01', 'C+07', 'N-02'],
+  R05: ['E+01', 'E+04', 'O+01', 'O+03', 'N-01'],
+  R06: ['E+01', 'E+03', 'C+01', 'C+05', 'O-06'],
+  R07: ['E-01', 'E-06', 'O+01', 'O+02', 'C-02'],
+  R08: ['C+01', 'C+02', 'C+03', 'C+04', 'N-01'],
+  R09: ['A+01', 'A+06', 'O+01', 'O+03', 'C+01'],
+  R10: ['A+01', 'A+02', 'N-01', 'N-02', 'O-04'],
+  R11: ['A-01', 'O+01', 'O+03', 'C-02', 'N+02'],
+  R12: ['A-04', 'A-01', 'C+01', 'C+07', 'C+05'],
+}
+
+// ── Role relevance thresholds ─────────────────────────────────────────────────
+const DOMINANT_RATIO = 1.5   // top/second ratio → single dominant role
+const MIN_ABSOLUTE   = 0.10  // floor: never include roles below 10%
+const RELATIVE_RATIO = 0.60  // relative floor: top * 0.6
+const MAX_RELEVANT   = 5     // cap at 5 roles
+
+/**
+ * getRelevantRoles — extract relevant roles from a probability map.
+ *
+ * If top/second ≥ 1.5, returns only the top role (dominant).
+ * Otherwise, includes all roles above max(10%, top × 60%), capped at 5.
+ *
+ * @param {Object} probabilities - {R01: 0.12, ...} from computeRole()
+ * @param {Object} options - override thresholds
+ * @returns {Array<{role, probability}>} sorted by probability desc
+ */
+export function getRelevantRoles(probabilities, options = {}) {
+  const {
+    dominantRatio = DOMINANT_RATIO,
+    minAbsolute   = MIN_ABSOLUTE,
+    relativeRatio = RELATIVE_RATIO,
+    maxRoles      = MAX_RELEVANT,
+  } = options
+  const sorted = Object.entries(probabilities)
+    .sort(([, a], [, b]) => b - a)
+    .map(([role, probability]) => ({ role, probability }))
+  if (sorted.length === 0) return []
+  const top    = sorted[0]
+  const second = sorted[1]
+  if (second && top.probability / second.probability >= dominantRatio) return [top]
+  const threshold = Math.max(minAbsolute, top.probability * relativeRatio)
+  const relevant  = sorted.filter(r => r.probability >= threshold)
+  if (relevant.length === 0) return [top]
+  return relevant.slice(0, maxRoles)
+}
+
+/**
+ * compareRoleViews — compare relevant roles seen by self vs witnesses.
+ *
+ * @param {Object} selfResult    - computeRole() return value
+ * @param {Object} witnessResult - computeRole() return value, or null
+ * @returns {Object|null} { selfRelevant, witnessRelevant, shared: Set, surprises }
+ *   surprises: [{role, probability, type: 'witnessOnly'|'selfOnly'}]
+ */
+export function compareRoleViews(selfResult, witnessResult) {
+  if (!witnessResult) return null
+  const selfRelevant    = getRelevantRoles(selfResult.probabilities)
+  const witnessRelevant = getRelevantRoles(witnessResult.probabilities)
+  const selfSet         = new Set(selfRelevant.map(r => r.role))
+  const witnessSet      = new Set(witnessRelevant.map(r => r.role))
+  const shared          = new Set([...selfSet].filter(r => witnessSet.has(r)))
+  const surprises       = [
+    ...witnessRelevant.filter(r => !selfSet.has(r.role)).map(r => ({ ...r, type: 'witnessOnly' })),
+    ...selfRelevant.filter(r => !witnessSet.has(r.role)).map(r => ({ ...r, type: 'selfOnly' })),
+  ].sort((a, b) => b.probability - a.probability)
+  return { selfRelevant, witnessRelevant, shared, surprises }
+}
 
 // ── Fisher-Yates shuffle ───────────────────────────────────────────────────
 function shuffle(arr) {
@@ -141,135 +216,6 @@ export function computeInterimRole(rounds) {
   if (answered.length === 0) return null
   const scores = computeWitnessScores(answered)
   return computeRole(scores)
-}
-
-/**
- * detectDivergence — compare self-report z-scores with witness z-scores.
- * Returns domains where the absolute difference > threshold.
- *
- * @param {Object} selfDomains - {presence, bond, discipline, depth, vision} on 1–5
- * @param {Object} witnessDomains - averaged witness scores, same shape
- * @param {number} threshold - z-score difference threshold (default 0.8)
- * @returns {Array} of { domain, selfScore, witnessScore, diff } sorted by |diff| desc
- */
-
-// NORM_MEAN and NORM_SD are imported from role-scoring.js (single source of truth)
-const DOMAIN_TO_FACTOR = { presence: 'E', bond: 'A', discipline: 'C', depth: 'N', vision: 'O' }
-
-export function detectDivergence(selfDomains, witnessDomains, threshold = 0.8) {
-  const results = []
-  for (const [domain, factor] of Object.entries(DOMAIN_TO_FACTOR)) {
-    const selfScore    = selfDomains[domain] ?? 3
-    const witnessScore = witnessDomains[domain] ?? 3
-    const mean         = NORM_MEAN[factor]
-    const sd           = NORM_SD[factor]
-    const selfZ        = (selfScore - mean) / sd
-    const witnessZ     = (witnessScore - mean) / sd
-    const diff         = Math.abs(selfZ - witnessZ)
-    if (diff > threshold) {
-      results.push({ domain, selfScore, witnessScore, selfZ, witnessZ, diff })
-    }
-  }
-  return results.sort((a, b) => b.diff - a.diff)
-}
-
-// ── Shared internal rank helper ───────────────────────────────────────────────
-/**
- * Assign 1-based ranks to an array of values (descending).
- * Tied values receive averaged ranks.
- * @param {number[]} vals
- * @returns {number[]} ranks in same index order as vals
- */
-function rankOf(vals) {
-  const indexed = vals.map((v, i) => ({ v, i }))
-  indexed.sort((a, b) => b.v - a.v)
-  const ranks = new Array(vals.length)
-  let i = 0
-  while (i < indexed.length) {
-    let j = i
-    while (j + 1 < indexed.length && indexed[j + 1].v === indexed[i].v) j++
-    const avgRank = (i + j) / 2 + 1 // 1-based
-    for (let k = i; k <= j; k++) ranks[indexed[k].i] = avgRank
-    i = j + 1
-  }
-  return ranks
-}
-
-/**
- * Compute Spearman rank correlation between self and witness scores
- * across the five dimensions.
- *
- * Tied scores receive averaged ranks. Returns 0 if either input is
- * missing.
- *
- * @param {object} selfDomains    {presence, bond, vision, discipline, depth}
- * @param {object} witnessDomains same shape
- * @returns {number} Spearman ρ in [-1, 1]
- */
-export function spearmanRho(selfDomains, witnessDomains) {
-  if (!selfDomains || !witnessDomains) return 0
-  const dims = ['presence', 'bond', 'vision', 'discipline', 'depth']
-  const selfVals = dims.map(d => selfDomains[d] ?? 0)
-  const witVals  = dims.map(d => witnessDomains[d] ?? 0)
-  const selfRanks = rankOf(selfVals)
-  const witRanks  = rankOf(witVals)
-
-  // Pearson on the ranks = Spearman ρ
-  const n = dims.length
-  const meanSelf = selfRanks.reduce((a, b) => a + b, 0) / n
-  const meanWit  = witRanks.reduce((a, b) => a + b, 0) / n
-  let num = 0, denomSelf = 0, denomWit = 0
-  for (let k = 0; k < n; k++) {
-    const ds = selfRanks[k] - meanSelf
-    const dw = witRanks[k] - meanWit
-    num       += ds * dw
-    denomSelf += ds * ds
-    denomWit  += dw * dw
-  }
-  if (denomSelf === 0 || denomWit === 0) return 0
-  return num / Math.sqrt(denomSelf * denomWit)
-}
-
-/**
- * Map Spearman ρ to one of three qualitative i18n label keys.
- *
- * Thresholds chosen conservatively for N=5 dimensions where tied
- * ranks at the neutral 3.0 centre are common.
- *
- * @param {number} rho Spearman ρ
- * @returns {'strong'|'moderate'|'divergent'}
- */
-export function spearmanLabel(rho) {
-  if (rho >= 0.5) return 'strong'
-  if (rho >= 0.0) return 'moderate'
-  return 'divergent'
-}
-
-/**
- * Compute self and witness ranks side by side for visualization.
- *
- * @param {object} selfDomains    {presence, bond, vision, discipline, depth}
- * @param {object} witnessDomains same shape
- * @returns {Array<{domain, selfRank, witnessRank, selfScore, witnessScore}>}
- *   sorted by selfRank ascending (best self-dimension first)
- */
-export function computeRankComparison(selfDomains, witnessDomains) {
-  if (!selfDomains || !witnessDomains) return []
-  const dims = ['presence', 'bond', 'vision', 'discipline', 'depth']
-  const selfVals = dims.map(d => selfDomains[d] ?? 0)
-  const witVals  = dims.map(d => witnessDomains[d] ?? 0)
-  const selfRanks = rankOf(selfVals)
-  const witRanks  = rankOf(witVals)
-
-  const out = dims.map((d, k) => ({
-    domain:        d,
-    selfRank:      selfRanks[k],
-    witnessRank:   witRanks[k],
-    selfScore:     selfVals[k],
-    witnessScore:  witVals[k],
-  }))
-  out.sort((a, b) => a.selfRank - b.selfRank)
-  return out
 }
 
 /**

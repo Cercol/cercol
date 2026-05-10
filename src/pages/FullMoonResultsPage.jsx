@@ -11,7 +11,7 @@
  *
  * Render order:
  *   role card → radar + domain rows + probability bars → facet accordion →
- *   convergence meter (≥2 witnesses) → blind spots (≥2 witnesses) →
+ *   role comparison view (≥2 witnesses) → surprises panel (≥2 witnesses) →
  *   witness session list + invite CTA → actions → disclaimer
  */
 import { useEffect, useRef, useState } from 'react'
@@ -23,14 +23,14 @@ import { encodeScores, decodeScores, CLIPBOARD_FEEDBACK_MS } from '../utils/shar
 import { fmScoreToPercent, fmScoreLabel } from '../utils/full-moon-scoring'
 import { logResult } from '../utils/logger'
 import { computeRole } from '../utils/role-scoring'
-import { averageWitnessScores, detectDivergence, spearmanRho, computeRankComparison, computeCombinedRole } from '../utils/witness-scoring'
+import { averageWitnessScores, computeCombinedRole, compareRoleViews } from '../utils/witness-scoring'
 import { getMyWitnessSessions, getLatestFullMoonResult } from '../lib/api'
-import { FullMoonIcon, ShareIcon, DimensionIcon, BlindSpotsIcon } from '../components/MoonIcons'
+import { FullMoonIcon, ShareIcon } from '../components/MoonIcons'
 import { useAuth } from '../context/AuthContext'
-import { colors, DOMAIN_ICON_CLASSES } from '../design/tokens'
+import { colors } from '../design/tokens'
 import RoleProbabilityBars from '../components/RoleProbabilityBars'
 import { Card, Button, Badge, SectionLabel } from '../components/ui'
-import { DimensionRow, FacetAccordion, ConvergenceMeter, ReportPageHeader, RoleCard, RadarDataCard } from '../components/report'
+import { DimensionRow, FacetAccordion, ReportPageHeader, RoleCard, RadarDataCard, RoleComparisonView, SurprisesPanel } from '../components/report'
 
 const MIN_WITNESSES_FOR_REPORT = 2
 
@@ -148,15 +148,10 @@ export default function FullMoonResultsPage() {
   // Combined role: self × 2/3 + witness × 1/3 (falls back to selfRole when no witnesses)
   const roleResult = computeCombinedRole(selfRole, witnessRole)
 
-  const divergence = hasEnoughWitnesses
-    ? detectDivergence(domains, witnessScores)
-    : []
-  const rho = hasEnoughWitnesses
-    ? spearmanRho(domains, witnessScores)
+  // Role comparison view: relevant archetypes seen by self vs witnesses
+  const roleComparison = hasEnoughWitnesses
+    ? compareRoleViews(selfRole, witnessRole)
     : null
-  const rankComparison = hasEnoughWitnesses
-    ? computeRankComparison(domains, witnessScores)
-    : []
 
   const showWitnessSection = !isSharedLink && (fromTest || user != null)
 
@@ -279,57 +274,26 @@ export default function FullMoonResultsPage() {
           </section>
         )}
 
-        {/* ── Section 4: Convergence meter (≥2 witnesses) ── */}
-        {hasEnoughWitnesses && rho !== null && (
+        {/* ── Section 4: Role comparison view (≥2 witnesses) ── */}
+        {hasEnoughWitnesses && roleComparison && (
           <section>
             <SectionLabel color="gray" className="mb-4">
-              {t('witnessResults.convergenceSection')}
+              {t('witnessResults.roleViewSection')}
             </SectionLabel>
-            <ConvergenceMeter rho={rho} comparison={rankComparison} t={t} />
+            <RoleComparisonView roleComparison={roleComparison} t={t} />
           </section>
         )}
 
-        {/* ── Section 5: Blind spots (≥2 witnesses) ── */}
-        {hasEnoughWitnesses && (
+        {/* ── Section 5: Surprises panel (≥2 witnesses, non-empty surprises) ── */}
+        {hasEnoughWitnesses && roleComparison && roleComparison.surprises.length > 0 && (
           <section>
-            <SectionLabel color="gray" className="mb-1 flex items-center gap-1.5">
-              <BlindSpotsIcon size={16} />{t('witnessResults.blindSpotsTitle')}
+            <SectionLabel color="gray" className="mb-1">
+              {t('witnessResults.surprisesSection')}
             </SectionLabel>
             <p className="text-xs mb-4" style={{ color: colors.textMuted }}>
-              {t('witnessResults.blindSpotsNote')}
+              {t('witnessResults.surprisesNote')}
             </p>
-            {divergence.length === 0 ? (
-              <Card className="px-5 py-4">
-                <p className="text-sm" style={{ color: colors.textMuted }}>
-                  {t('witnessResults.noDivergence')}
-                </p>
-              </Card>
-            ) : (
-              <Card className="px-5 py-4">
-                <ul className="flex flex-col gap-2.5">
-                  {divergence.map(({ domain, selfScore, witnessScore }) => {
-                    const direction  = witnessScore > selfScore ? 'witnessHigher' : 'selfHigher'
-                    const desc       = t(`witnessResults.blindSpots.${domain}.${direction}`)
-                    const domainName = t(`fmDomains.${domain}.name`)
-                    return (
-                      <li key={domain} className="text-sm leading-relaxed flex items-start gap-2">
-                        <DimensionIcon
-                          domain={domain}
-                          size={14}
-                          className={`mt-0.5 shrink-0 ${DOMAIN_ICON_CLASSES[domain]}`}
-                        />
-                        <span style={{ color: colors.textMuted }}>
-                          <span className="font-semibold" style={{ color: colors.textPrimary }}>
-                            {domainName}:
-                          </span>{' '}
-                          {desc}
-                        </span>
-                      </li>
-                    )
-                  })}
-                </ul>
-              </Card>
-            )}
+            <SurprisesPanel surprises={roleComparison.surprises} t={t} />
           </section>
         )}
 
