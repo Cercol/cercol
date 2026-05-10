@@ -1287,7 +1287,7 @@
     },
     "q6": {
       "q": "Kann ich die Auswertungen wiederholen?",
-      "a": "Ja. Die kostenlosen Instrumente haben kein Limit. Jede Einreichung ist unabhängig — das Wiederholen überschreibt keine früheren Ergebnisse in deinem Konto. Viele finden es nützlich, Erstes Viertel sechs Monate oder ein Jahr später zu wiederholen, um zu sehen, was sich verändert hat."
+      "a": "Ja. Jedes Instrument speichert dein aktuellstes Ergebnis. Wenn du es wiederholst, wird das vorherige Ergebnis dauerhaft aus deinem Konto entfernt — du wirst vor dem Löschen um Bestätigung gebeten. Eine Wiederholung kann nützlich sein, um zu sehen, wie du dich über Monate oder Jahre verändert hast."
     },
     "q7": {
       "q": "Basiert Cèrcol auf dem Big Five (OCEAN)?",
@@ -1299,7 +1299,7 @@
     },
     "q9": {
       "q": "Kann ich Cèrcol verwenden, um mein gesamtes Team zu bewerten?",
-      "a": "Das letzte Viertel Cèrcol — ein Teambericht, der die Rollenverteilung und das Gleichgewicht der Gruppe zeigt — ist in Entwicklung. Für jetzt können Sie jedes Teammitglied einladen, den Vollmond unabhängig zu absolvieren und die Zeuge/Zeugin zu verwenden, um externe Perspektiven zu erhalten. Wenn der Teambericht verfügbar ist, werden alle vorhandenen Vollmond-Ergebnisse automatisch integriert."
+      "a": "Ja. Erstelle eine Gruppe in deinem Konto und lade Teammitglieder per E-Mail ein. Sobald alle Vollmond Cèrcol abgeschlossen haben, steht der Teambericht des Letzten Viertels Cèrcol zur Verfügung: Er zeigt Rollenverteilung, Dimensionsbalance in der Gruppe, gemeinsame blinde Flecken und eine Team-Narration. Jedes Mitglied benötigt ein Vollmond-Ergebnis; Zeuge/Zeugin-Ergebnisse vertiefen die individuellen Profile im Bericht."
     },
     "q10": {
       "q": "In welchen Sprachen ist Cèrcol verfügbar?",

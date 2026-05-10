@@ -1286,7 +1286,7 @@
     },
     "q6": {
       "q": "Puc repetir les avaluacions?",
-      "a": "Sí. Els instruments gratuïts no tenen límit. Cada enviament és independent — repetir-ne un no sobreescriu els resultats anteriors del teu compte. Moltes persones troben útil repetir el Quart Creixent sis mesos o un any més tard per veure el que ha canviat."
+      "a": "Sí. Cada instrument guarda el teu resultat més recent. Si el tornes a fer, el resultat anterior s'eliminarà permanentment del teu compte — se't demanarà confirmació abans que això passe. Tornar-lo a fer pot ser útil per veure com has canviat al llarg dels mesos o anys."
     },
     "q7": {
       "q": "Cèrcol es basa en el Big Five (OCEAN)?",
@@ -1298,7 +1298,7 @@
     },
     "q9": {
       "q": "Puc usar Cèrcol per avaluar tot l'equip?",
-      "a": "El Quart Minvant Cèrcol — un informe d'equip que mostra la distribució de rols i l'equilibri del grup — està en desenvolupament. De moment, pots convidar cada membre de l'equip a completar la Lluna Plena independentment i usar el Testimoni per obtenir perspectives externes de cadascun. Quan l'informe d'equip s'active, tots els resultats de Lluna Plena existents s'hi integraran automàticament."
+      "a": "Sí. Crea un grup des del teu compte i convida els companys per correu electrònic. Quan tothom haja completat la Lluna Plena Cèrcol, l'informe d'equip del Quart Minvant Cèrcol és disponible: mostra la distribució de rols, l'equilibri de dimensions al grup, els punts cecs compartits i una narrativa d'equip. Cada membre necessita un resultat de Lluna Plena; els resultats del Testimoni aporten profunditat als perfils individuals dins l'informe."
     },
     "q10": {
       "q": "En quins idiomes està disponible Cèrcol?",

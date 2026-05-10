@@ -1287,7 +1287,7 @@
     },
     "q6": {
       "q": "Can I retake the assessments?",
-      "a": "Yes. The free instruments have no limit. Each submission is independent — retaking does not overwrite previous results in your account. People often find it useful to retake First Quarter six months or a year later to see what has changed."
+      "a": "Yes. Each instrument stores your most recent result. If you retake, your previous result will be permanently removed from your account — you will be asked to confirm before this happens. Retaking can be useful to track how you have changed over months or years."
     },
     "q7": {
       "q": "Is Cèrcol based on the Big Five (OCEAN)?",
@@ -1299,7 +1299,7 @@
     },
     "q9": {
       "q": "Can I use Cèrcol to assess my whole team?",
-      "a": "The Last Quarter Cèrcol — a team-level report showing role distribution and balance across your group — is in development. For now, you can invite each team member to complete Full Moon Cèrcol independently and use Witness to gather peer perspectives on each person. When the team report launches, all existing Full Moon results will feed into it automatically."
+      "a": "Yes. Create a group from your account and invite teammates by email. Once everyone has completed Full Moon Cèrcol, the Last Quarter Cèrcol team report is available: it shows role distribution, dimension balance across the group, shared blind spots, and a team narrative. Each member needs a Full Moon result; Witness results add depth to the individual profiles within the report."
     },
     "q10": {
       "q": "What languages is Cèrcol available in?",

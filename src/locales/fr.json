@@ -1287,7 +1287,7 @@
     },
     "q6": {
       "q": "Puis-je reprendre les évaluations ?",
-      "a": "Oui. Les instruments gratuits n'ont pas de limite. Chaque soumission est indépendante — reprendre ne remplace pas les résultats précédents dans votre compte. Les gens trouvent souvent utile de reprendre Premier Quartier six mois ou un an plus tard pour voir ce qui a changé."
+      "a": "Oui. Chaque instrument conserve votre résultat le plus récent. Si vous recommencez, votre résultat précédent sera supprimé définitivement de votre compte — une confirmation vous sera demandée avant que cela se produise. Recommencer peut être utile pour voir comment vous avez évolué au fil des mois ou des années."
     },
     "q7": {
       "q": "Cèrcol est-il basé sur le Big Five (OCEAN) ?",
@@ -1299,7 +1299,7 @@
     },
     "q9": {
       "q": "Puis-je utiliser Cèrcol pour évaluer toute mon équipe ?",
-      "a": "Le Cèrcol de Dernier Quartier — un rapport d'équipe montrant la distribution des rôles et l'équilibre du groupe — est en cours de développement. Pour l'instant, vous pouvez inviter chaque membre de l'équipe à compléter la Pleine Lune indépendamment et utiliser le·la Témoin pour obtenir des perspectives externes. Lorsque le rapport d'équipe sera disponible, tous les résultats de Pleine Lune existants s'y intégreront automatiquement."
+      "a": "Oui. Créez un groupe depuis votre compte et invitez des collègues par e-mail. Une fois que tout le monde a complété Full Moon Cèrcol, le rapport d'équipe du Dernier Quartier Cèrcol est disponible : il montre la distribution des rôles, l'équilibre des dimensions dans le groupe, les angles morts partagés et une narrative d'équipe. Chaque membre a besoin d'un résultat de Pleine Lune ; les résultats des Témoins ajoutent de la profondeur aux profils individuels dans le rapport."
     },
     "q10": {
       "q": "Dans quelles langues Cèrcol est-il disponible ?",
