@@ -134,7 +134,7 @@ async def list_posts(request: Request):
     async with request.app.state.pool.acquire() as conn:
         rows = await conn.fetch(
             """
-            SELECT slug, title, description, cover_url, author, published_at, view_count,
+            SELECT slug, status, title, description, cover_url, author, published_at, view_count,
                    category, complexity
             FROM blog_posts
             WHERE status = 'published'
