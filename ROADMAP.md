@@ -1238,6 +1238,13 @@ Every blog article now has at least one inline visual element embedded in the ma
 - `src/locales/{en,ca,es,fr,de,da}.json`: `blog.cat.*` translation keys added for all 7 categories in all 6 languages.
 - `api/blog.py`: `category` and `complexity` fields included in both list and detail API responses.
 
+### Phase 15.5.12 — My Results redesign ✅ COMPLETE
+- `src/pages/MyResultsPage.jsx`: three instrument sections (New Moon · First Quarter · Full Moon), each showing only the most recent result. Older result count shown if >1 exists. Delete button opens confirmation modal; on confirm calls anonymise endpoint. Full Moon section still navigates to detailed report.
+- `api/main.py`: `DELETE /me/results/{id}` — sets `user_id = NULL`, retaining scores for population averages. Returns 404 if not found or wrong owner.
+- `src/lib/api.js`: `anonymiseResult(id)` function added.
+- `src/components/ui/Button.jsx`: `danger` variant added (red fill, for destructive actions).
+- `src/locales/{en,ca,es,fr,de,da}.json`: delete confirmation strings added in all 6 languages.
+
 ### Phase 15.5.11 — Header nav macro-sections ✅ COMPLETE
 - `src/components/Layout.jsx`: 6 flat nav links regrouped into 4 items — Instruments · Roles (direct) + Learn ▾ (Science, Blog) + Company ▾ (About, FAQ). Desktop: click dropdown with white panel. Mobile: collapsible sections with chevron. Group button highlights when any child route is active.
 - `src/locales/{en,ca,es,fr,de,da}.json`: `nav.menuLearn` + `nav.menuCompany` added in all 6 languages.
