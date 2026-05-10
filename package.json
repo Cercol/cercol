@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "test": "vitest run",
     "prerender": "node scripts/prerender.mjs",
-    "build:full": "vite build && node scripts/prerender.mjs",
+    "build:full": "node scripts/generate-sitemap.mjs && vite build && node scripts/prerender.mjs",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "deploy:full": "npm run build:full && gh-pages -d dist"

@@ -33,3 +33,10 @@ __pycache__/
 .env
 .env.local
 .env.*.local
+
+# RStudio / R session artifacts
+.Rhistory
+.Rapp.history
+.RData
+.Ruserdata
+*.Rproj.user/
