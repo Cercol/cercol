@@ -215,7 +215,14 @@ export default function ProfilePage() {
     <main className="py-12">
       <div className="max-w-lg">
 
-        <SectionLabel color="gray" className="mb-1">{t('profile.eyebrow')}</SectionLabel>
+        <div className="flex items-center gap-3 mb-1">
+          <SectionLabel color="gray">{t('profile.eyebrow')}</SectionLabel>
+          {profile?.is_beta && (
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">
+              {t('beta.badge')}
+            </span>
+          )}
+        </div>
         <h1 className="text-2xl font-bold text-gray-900 mb-1">{t('profile.title')}</h1>
         <p className="text-sm text-gray-500 mb-8">{t('profile.subtitle')}</p>
 

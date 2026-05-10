@@ -19,6 +19,7 @@ import { useTranslation } from 'react-i18next'
 import AccountButton from './AccountButton'
 import LanguageToggle from './LanguageToggle'
 import CercolLogo from './CercolLogo'
+import BetaBanner from './BetaBanner'
 import { colors } from '../design/tokens'
 import { HamburgerIcon, CloseIcon } from './MoonIcons'
 import { useAuth } from '../context/AuthContext'
@@ -179,6 +180,9 @@ export default function Layout({ children }) {
 
         </div>
       </header>
+
+      {/* ── Beta launch banner ── */}
+      <BetaBanner userIsPremium={!!profile?.premium} />
 
       {/* ── Mobile dropdown nav ── */}
       {menuOpen && (

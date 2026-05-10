@@ -135,6 +135,16 @@ async function publicFetch(path, options = {}) {
   return res.json()
 }
 
+// ── Beta promotion ────────────────────────────────────────────────────────────
+
+/**
+ * getBetaStatus — public endpoint, no auth required.
+ * @returns {Promise<{remaining: number, total: number, active: boolean}>}
+ */
+export async function getBetaStatus() {
+  return publicFetch('/beta')
+}
+
 // ── Password management ───────────────────────────────────────────────────────
 
 /**

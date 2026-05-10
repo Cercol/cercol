@@ -1,4 +1,9 @@
 {
+  "beta": {
+    "banner": "Llançament beta — queden {{remaining}} llicències gratuïtes de Lluna Plena. Ajuda'ns a detectar errors.",
+    "cta": "Reclama el teu accés gratuït",
+    "badge": "Beta tester"
+  },
   "nav": {
     "brand": "Cèrcol",
     "about": "Sobre",

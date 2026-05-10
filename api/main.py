@@ -283,15 +283,21 @@ def get_optional_user(
 # DB helpers
 # ---------------------------------------------------------------------------
 
+BETA_TOTAL = 500
+
+
 async def ensure_profile(conn: asyncpg.Connection, user_id: str, email: str | None = None) -> None:
-    """Create/update profile row and claim any pending email-based group invitations."""
+    """Create/update profile row, claim beta premium if slots remain, link pending invitations."""
     if email:
         await conn.execute(
             """
-            INSERT INTO profiles (id, email) VALUES ($1, $2)
+            INSERT INTO profiles (id, email, premium, is_beta)
+            SELECT $1, $2,
+                (SELECT COUNT(*) < $3 FROM profiles WHERE is_beta = TRUE),
+                (SELECT COUNT(*) < $3 FROM profiles WHERE is_beta = TRUE)
             ON CONFLICT (id) DO UPDATE SET email = EXCLUDED.email
             """,
-            user_id, email.lower(),
+            user_id, email.lower(), BETA_TOTAL,
         )
         # Link pending invitations sent to this email before the user registered
         await conn.execute(
@@ -303,8 +309,14 @@ async def ensure_profile(conn: asyncpg.Connection, user_id: str, email: str | No
         )
     else:
         await conn.execute(
-            "INSERT INTO profiles (id) VALUES ($1) ON CONFLICT (id) DO NOTHING",
-            user_id,
+            """
+            INSERT INTO profiles (id, premium, is_beta)
+            SELECT $1,
+                (SELECT COUNT(*) < $2 FROM profiles WHERE is_beta = TRUE),
+                (SELECT COUNT(*) < $2 FROM profiles WHERE is_beta = TRUE)
+            ON CONFLICT (id) DO NOTHING
+            """,
+            user_id, BETA_TOTAL,
         )
 
 
@@ -381,6 +393,16 @@ async def me(user: dict = Depends(get_current_user)):
     return {"user_id": user["sub"], "email": user.get("email")}
 
 
+@app.get("/beta")
+async def get_beta_status():
+    """Public endpoint — returns remaining beta slots for the launch banner."""
+    async with _pool.acquire() as conn:
+        used = await conn.fetchval("SELECT COUNT(*) FROM profiles WHERE is_beta = TRUE")
+    used = int(used)
+    remaining = max(0, BETA_TOTAL - used)
+    return {"remaining": remaining, "total": BETA_TOTAL, "active": remaining > 0}
+
+
 @app.get("/me/profile")
 async def get_profile(user: dict = Depends(get_current_user)):
     """Return the authenticated user's full profile, including premium flag and has_password."""
@@ -389,7 +411,7 @@ async def get_profile(user: dict = Depends(get_current_user)):
         await ensure_profile(conn, user_id, user.get("email"))
         row = await conn.fetchrow(
             """
-            SELECT p.id, p.premium, p.is_admin, p.first_name, p.last_name,
+            SELECT p.id, p.premium, p.is_admin, p.is_beta, p.first_name, p.last_name,
                    p.country, p.native_language, p.onboarding_seen,
                    (au.password_hash IS NOT NULL) AS has_password
             FROM profiles p

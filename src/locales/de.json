@@ -1,4 +1,9 @@
 {
+  "beta": {
+    "banner": "Beta-Launch — noch {{remaining}} kostenlose Vollmond-Lizenzen verfügbar. Hilf uns, Fehler zu finden.",
+    "cta": "Kostenlosen Zugang sichern",
+    "badge": "Beta-Tester"
+  },
   "nav": {
     "brand": "Cèrcol",
     "about": "Über uns",
