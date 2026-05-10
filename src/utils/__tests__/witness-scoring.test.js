@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { computeWitnessScores, detectDivergence } from '../witness-scoring'
+import { computeWitnessScores, detectDivergence, spearmanRho, spearmanLabel, computeRankComparison } from '../witness-scoring'
 import { NORM_MEAN, NORM_SD } from '../role-scoring'
 
 // ── Minimal round builders ────────────────────────────────────────────────────
@@ -171,5 +171,77 @@ describe('detectDivergence', () => {
     const [d] = detectDivergence(self, witness)
     const expectedSelfZ = (selfScore - NORM_MEAN.A) / NORM_SD.A
     expect(d.selfZ).toBeCloseTo(expectedSelfZ, 10)
+  })
+})
+
+// ── spearmanRho ───────────────────────────────────────────────────────────────
+
+describe('spearmanRho', () => {
+  it('returns 1 for identical rankings', () => {
+    const s = { presence: 5, bond: 4, vision: 3, discipline: 2, depth: 1 }
+    expect(spearmanRho(s, s)).toBeCloseTo(1, 5)
+  })
+
+  it('returns -1 for fully reversed rankings', () => {
+    const s = { presence: 5, bond: 4, vision: 3, discipline: 2, depth: 1 }
+    const w = { presence: 1, bond: 2, vision: 3, discipline: 4, depth: 5 }
+    expect(spearmanRho(s, w)).toBeCloseTo(-1, 5)
+  })
+
+  it('returns a value close to 0 for weakly correlated rankings', () => {
+    // s ranks [1,2,3,4,5], w ranks [2,5,4,1,3] → ρ = -0.2
+    const s = { presence: 5, bond: 4, vision: 3, discipline: 2, depth: 1 }
+    const w = { presence: 4, bond: 1, vision: 2, discipline: 5, depth: 3 }
+    expect(Math.abs(spearmanRho(s, w))).toBeLessThan(0.5)
+  })
+
+  it('handles tied scores with averaged ranks', () => {
+    const s = { presence: 4, bond: 4, vision: 3, discipline: 2, depth: 1 }
+    const w = { presence: 4, bond: 4, vision: 3, discipline: 2, depth: 1 }
+    expect(spearmanRho(s, w)).toBeCloseTo(1, 5)
+  })
+
+  it('returns 0 when either input is null', () => {
+    expect(spearmanRho(null, { presence: 1, bond: 2, vision: 3, discipline: 4, depth: 5 })).toBe(0)
+    expect(spearmanRho({ presence: 1, bond: 2, vision: 3, discipline: 4, depth: 5 }, null)).toBe(0)
+  })
+})
+
+// ── spearmanLabel ─────────────────────────────────────────────────────────────
+
+describe('spearmanLabel', () => {
+  it('returns strong for ρ ≥ 0.5', () => {
+    expect(spearmanLabel(0.5)).toBe('strong')
+    expect(spearmanLabel(0.9)).toBe('strong')
+    expect(spearmanLabel(1.0)).toBe('strong')
+  })
+
+  it('returns moderate for 0 ≤ ρ < 0.5', () => {
+    expect(spearmanLabel(0.0)).toBe('moderate')
+    expect(spearmanLabel(0.49)).toBe('moderate')
+  })
+
+  it('returns divergent for ρ < 0', () => {
+    expect(spearmanLabel(-0.01)).toBe('divergent')
+    expect(spearmanLabel(-1.0)).toBe('divergent')
+  })
+})
+
+// ── computeRankComparison ─────────────────────────────────────────────────────
+
+describe('computeRankComparison', () => {
+  it('returns 5 entries sorted by selfRank ascending', () => {
+    const s = { presence: 5, bond: 4, vision: 3, discipline: 2, depth: 1 }
+    const w = { presence: 1, bond: 2, vision: 3, discipline: 4, depth: 5 }
+    const result = computeRankComparison(s, w)
+    expect(result).toHaveLength(5)
+    expect(result[0].domain).toBe('presence')   // highest self (rank 1)
+    expect(result[4].domain).toBe('depth')       // lowest self (rank 5)
+    expect(result[0].selfRank).toBe(1)
+    expect(result[0].witnessRank).toBe(5)
+  })
+
+  it('returns empty array on null input', () => {
+    expect(computeRankComparison(null, {})).toEqual([])
   })
 })

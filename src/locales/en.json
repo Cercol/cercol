@@ -1071,12 +1071,9 @@
     "definitiveLabel": "Witness included",
     "definitiveNote": "The Witness signal reduces uncertainty in the role assignment. This is your most complete result.",
     "convergenceSection": "Role alignment",
-    "convergenceHigh": "Your Witness sees you much as you see yourself.",
-    "convergenceMod": "Your Witness sees a similar picture, with some notable differences.",
-    "convergenceLow": "Your Witness sees you quite differently from how you see yourself.",
-    "convergenceNote": "Overlap between your self-report role set (primary + arc) and your Witness role set.",
+    "convergenceNote": "Comparison of how you and your witnesses rank your dimensions, ordered by your self-report.",
     "blindSpotsTitle": "Blind spots",
-    "blindSpotsNote": "Dimensions where self-report and Witness scores differ by more than one standard deviation.",
+    "blindSpotsNote": "Dimensions where your self-report and Witness scores point in noticeably different directions.",
     "domainsSection": "The five dimensions",
     "witnessSessionsSection": "Witnesses",
     "statusDone": "Done",
@@ -1102,7 +1099,14 @@
         "selfHigher": "You carry more emotional intensity than others see. You may be managing it well — or it may mean your inner experience does not fully reach the outside.",
         "witnessHigher": "Others sense more emotional sensitivity in you than you report. You may be underestimating how much your mood and reactions are read by people around you."
       }
-    }
+    },
+    "witnessRoleDisclaimer": "The witness role is a signal, not a verdict. Different observers may perceive the same person differently.",
+    "convergenceStrong": "Strong agreement",
+    "convergenceModerate": "Moderate agreement",
+    "convergenceDivergent": "Divergent perspectives",
+    "rankColumnHeader": "Dimension",
+    "rankSelf": "Your rank",
+    "rankWitness": "Witness rank"
   },
   "about": {
     "title": "About",

@@ -173,26 +173,103 @@ export function detectDivergence(selfDomains, witnessDomains, threshold = 0.8) {
   return results.sort((a, b) => b.diff - a.diff)
 }
 
+// ── Shared internal rank helper ───────────────────────────────────────────────
 /**
- * computeConvergence — measure overlap between self and witness role sets.
- *
- * Overlap = |intersection| / |union| of role sets (Jaccard similarity).
- * Each role set is { primary role } ∪ { arc roles }.
- *
- * @param {Object} selfResult    - { role, arc } from computeRole()
- * @param {Object} witnessResult - { role, arc } from computeRole()
- * @returns {number} 0–1 overlap ratio
+ * Assign 1-based ranks to an array of values (descending).
+ * Tied values receive averaged ranks.
+ * @param {number[]} vals
+ * @returns {number[]} ranks in same index order as vals
  */
-export function computeConvergence(selfResult, witnessResult) {
-  const selfSet    = new Set([selfResult.role, ...selfResult.arc])
-  const witnessSet = new Set([witnessResult.role, ...witnessResult.arc])
-  const union      = new Set([...selfSet, ...witnessSet])
-  if (union.size === 0) return 0
-  let intersection = 0
-  for (const r of union) {
-    if (selfSet.has(r) && witnessSet.has(r)) intersection++
+function rankOf(vals) {
+  const indexed = vals.map((v, i) => ({ v, i }))
+  indexed.sort((a, b) => b.v - a.v)
+  const ranks = new Array(vals.length)
+  let i = 0
+  while (i < indexed.length) {
+    let j = i
+    while (j + 1 < indexed.length && indexed[j + 1].v === indexed[i].v) j++
+    const avgRank = (i + j) / 2 + 1 // 1-based
+    for (let k = i; k <= j; k++) ranks[indexed[k].i] = avgRank
+    i = j + 1
   }
-  return intersection / union.size
+  return ranks
+}
+
+/**
+ * Compute Spearman rank correlation between self and witness scores
+ * across the five dimensions.
+ *
+ * Tied scores receive averaged ranks. Returns 0 if either input is
+ * missing.
+ *
+ * @param {object} selfDomains    {presence, bond, vision, discipline, depth}
+ * @param {object} witnessDomains same shape
+ * @returns {number} Spearman ρ in [-1, 1]
+ */
+export function spearmanRho(selfDomains, witnessDomains) {
+  if (!selfDomains || !witnessDomains) return 0
+  const dims = ['presence', 'bond', 'vision', 'discipline', 'depth']
+  const selfVals = dims.map(d => selfDomains[d] ?? 0)
+  const witVals  = dims.map(d => witnessDomains[d] ?? 0)
+  const selfRanks = rankOf(selfVals)
+  const witRanks  = rankOf(witVals)
+
+  // Pearson on the ranks = Spearman ρ
+  const n = dims.length
+  const meanSelf = selfRanks.reduce((a, b) => a + b, 0) / n
+  const meanWit  = witRanks.reduce((a, b) => a + b, 0) / n
+  let num = 0, denomSelf = 0, denomWit = 0
+  for (let k = 0; k < n; k++) {
+    const ds = selfRanks[k] - meanSelf
+    const dw = witRanks[k] - meanWit
+    num       += ds * dw
+    denomSelf += ds * ds
+    denomWit  += dw * dw
+  }
+  if (denomSelf === 0 || denomWit === 0) return 0
+  return num / Math.sqrt(denomSelf * denomWit)
+}
+
+/**
+ * Map Spearman ρ to one of three qualitative i18n label keys.
+ *
+ * Thresholds chosen conservatively for N=5 dimensions where tied
+ * ranks at the neutral 3.0 centre are common.
+ *
+ * @param {number} rho Spearman ρ
+ * @returns {'strong'|'moderate'|'divergent'}
+ */
+export function spearmanLabel(rho) {
+  if (rho >= 0.5) return 'strong'
+  if (rho >= 0.0) return 'moderate'
+  return 'divergent'
+}
+
+/**
+ * Compute self and witness ranks side by side for visualization.
+ *
+ * @param {object} selfDomains    {presence, bond, vision, discipline, depth}
+ * @param {object} witnessDomains same shape
+ * @returns {Array<{domain, selfRank, witnessRank, selfScore, witnessScore}>}
+ *   sorted by selfRank ascending (best self-dimension first)
+ */
+export function computeRankComparison(selfDomains, witnessDomains) {
+  if (!selfDomains || !witnessDomains) return []
+  const dims = ['presence', 'bond', 'vision', 'discipline', 'depth']
+  const selfVals = dims.map(d => selfDomains[d] ?? 0)
+  const witVals  = dims.map(d => witnessDomains[d] ?? 0)
+  const selfRanks = rankOf(selfVals)
+  const witRanks  = rankOf(witVals)
+
+  const out = dims.map((d, k) => ({
+    domain:        d,
+    selfRank:      selfRanks[k],
+    witnessRank:   witRanks[k],
+    selfScore:     selfVals[k],
+    witnessScore:  witVals[k],
+  }))
+  out.sort((a, b) => a.selfRank - b.selfRank)
+  return out
 }
 
 /**
