@@ -1416,5 +1416,12 @@
   "blog.emptySubtext": "Kom tilbage snart.",
   "blog.minRead": "{{mins}} min læsning",
   "blog.articleError": "Kunne ikke indlæse artiklen. Prøv igen senere.",
-  "blog.readMore": "Læs →"
+  "blog.readMore": "Læs →",
+  "blog.cat.all": "Alle",
+  "blog.cat.dimensions": "Dimensioner",
+  "blog.cat.science": "Videnskab",
+  "blog.cat.teams": "Teams",
+  "blog.cat.leadership": "Ledelse",
+  "blog.cat.work": "Arbejde",
+  "blog.cat.guides": "Guider"
 }

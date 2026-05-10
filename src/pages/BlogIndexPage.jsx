@@ -30,6 +30,8 @@ function estimateReadMins(text) {
   return Math.max(3, Math.ceil((words * 10) / 200))
 }
 
+const CATEGORIES = ['all', 'dimensions', 'science', 'teams', 'leadership', 'work', 'guides']
+
 export default function BlogIndexPage() {
   const { t, i18n } = useTranslation()
   const lang = i18n.language?.slice(0, 2) || 'en'
@@ -41,9 +43,10 @@ export default function BlogIndexPage() {
     if (urlLang !== i18n.language.slice(0, 2)) i18n.changeLanguage(urlLang)
   }, [urlLang])
 
-  const [posts,   setPosts]   = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error,   setError]   = useState(null)
+  const [posts,       setPosts]       = useState([])
+  const [loading,     setLoading]     = useState(true)
+  const [error,       setError]       = useState(null)
+  const [activeCategory, setActiveCategory] = useState('all')
 
   useEffect(() => {
     const prev = document.title
@@ -80,6 +83,10 @@ export default function BlogIndexPage() {
     return field[urlLang] || field.en || ''
   }
 
+  const visiblePosts = activeCategory === 'all'
+    ? posts
+    : posts.filter(p => p.category === activeCategory)
+
   return (
     <main className="py-12">
 
@@ -93,9 +100,29 @@ export default function BlogIndexPage() {
       >
         {t('blog.heading')}
       </h1>
-      <p className="text-sm text-gray-600 leading-relaxed mb-10 max-w-xl">
+      <p className="text-sm text-gray-600 leading-relaxed mb-6 max-w-xl">
         {t('blog.subtitle')}
       </p>
+
+      {/* Category filter pills */}
+      {!loading && !error && posts.length > 0 && (
+        <div className="flex flex-wrap gap-2 mb-8">
+          {CATEGORIES.map(cat => (
+            <button
+              key={cat}
+              type="button"
+              onClick={() => setActiveCategory(cat)}
+              className={`text-xs font-medium px-3 py-1.5 rounded-full border transition-colors ${
+                activeCategory === cat
+                  ? 'bg-[var(--mm-color-blue)] text-white border-[var(--mm-color-blue)]'
+                  : 'bg-white text-gray-500 border-gray-200 hover:border-[var(--mm-color-blue)] hover:text-[var(--mm-color-blue)]'
+              }`}
+            >
+              {t(`blog.cat.${cat}`)}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* Loading state */}
       {loading && (
@@ -134,7 +161,7 @@ export default function BlogIndexPage() {
       {/* Post grid */}
       {!loading && !error && posts.length > 0 && (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {posts.map(post => {
+          {visiblePosts.map(post => {
             const desc = localise(post.description)
             const href = urlLang === 'en' ? `/blog/${post.slug}` : `/${urlLang}/blog/${post.slug}`
             return (
@@ -177,13 +204,15 @@ export default function BlogIndexPage() {
                   )}
 
                   {/* Meta footer */}
-                  <div className="mt-auto flex flex-wrap gap-x-2 gap-y-0.5 text-xs text-gray-400">
+                  <div className="mt-auto flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-gray-400">
+                    {post.category && post.category !== 'general' && (
+                      <span className="px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 font-medium">
+                        {t(`blog.cat.${post.category}`, post.category)}
+                      </span>
+                    )}
                     {post.published_at && <span>{formatDate(post.published_at, urlLang)}</span>}
                     {estimateReadMins(desc) && (
                       <><span>·</span><span>{t('blog.minRead', { mins: estimateReadMins(desc) })}</span></>
-                    )}
-                    {post.view_count != null && (
-                      <><span>·</span><span>👁 {post.view_count}</span></>
                     )}
                   </div>
                 </div>

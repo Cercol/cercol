@@ -1415,5 +1415,12 @@
   "blog.emptySubtext": "Torna aviat.",
   "blog.minRead": "{{mins}} min de lectura",
   "blog.articleError": "No s'ha pogut carregar l'article. Torna-ho a intentar més tard.",
-  "blog.readMore": "Llegir →"
+  "blog.readMore": "Llegir →",
+  "blog.cat.all": "Tots",
+  "blog.cat.dimensions": "Dimensions",
+  "blog.cat.science": "Ciència",
+  "blog.cat.teams": "Equips",
+  "blog.cat.leadership": "Lideratge",
+  "blog.cat.work": "Treball",
+  "blog.cat.guides": "Guies"
 }
