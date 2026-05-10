@@ -47,14 +47,16 @@ async function fetchBlogSlugs() {
   }
 }
 
-async function buildRoutes(slugs) {
+async function buildRoutes(_slugs) {
+  // Prerender only static pages + blog index pages (one per language).
+  // Individual blog articles are excluded: 104 articles × 6 languages = 624
+  // extra Chrome runs that balloon CI build time from ~1 min to 10+ min.
+  // Article SEO is handled dynamically via BlogArticlePage meta injection
+  // (title, description, Open Graph, JSON-LD) which Google and LLMs support.
   const routes = STATIC_ROUTES.map(route => ({ route, lang: 'en' }))
   for (const lang of BLOG_LANGS) {
     const prefix = lang === 'en' ? '' : `/${lang}`
     routes.push({ route: `${prefix}/blog`, lang })
-    for (const slug of slugs) {
-      routes.push({ route: `${prefix}/blog/${slug}`, lang })
-    }
   }
   return routes
 }

@@ -1430,5 +1430,9 @@
   "blog.cat.teams": "Équipes",
   "blog.cat.leadership": "Leadership",
   "blog.cat.work": "Travail",
-  "blog.cat.guides": "Guides"
+  "blog.cat.guides": "Guides",
+  "blog.level.all": "Tous les niveaux",
+  "blog.level.beginner": "Introductif",
+  "blog.level.intermediate": "Intermédiaire",
+  "blog.level.expert": "Approfondi"
 }
