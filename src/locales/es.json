@@ -1416,5 +1416,12 @@
   "blog.emptySubtext": "Vuelve pronto.",
   "blog.minRead": "{{mins}} min de lectura",
   "blog.articleError": "No se ha podido cargar el artículo. Inténtalo de nuevo más tarde.",
-  "blog.readMore": "Leer →"
+  "blog.readMore": "Leer →",
+  "blog.cat.all": "Todos",
+  "blog.cat.dimensions": "Dimensiones",
+  "blog.cat.science": "Ciencia",
+  "blog.cat.teams": "Equipos",
+  "blog.cat.leadership": "Liderazgo",
+  "blog.cat.work": "Trabajo",
+  "blog.cat.guides": "Guías"
 }

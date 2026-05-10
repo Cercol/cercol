@@ -1416,5 +1416,12 @@
   "blog.emptySubtext": "Schau bald wieder vorbei.",
   "blog.minRead": "{{mins}} Min. Lesezeit",
   "blog.articleError": "Artikel konnte nicht geladen werden. Bitte versuche es später erneut.",
-  "blog.readMore": "Lesen →"
+  "blog.readMore": "Lesen →",
+  "blog.cat.all": "Alle",
+  "blog.cat.dimensions": "Dimensionen",
+  "blog.cat.science": "Wissenschaft",
+  "blog.cat.teams": "Teams",
+  "blog.cat.leadership": "Führung",
+  "blog.cat.work": "Arbeit",
+  "blog.cat.guides": "Anleitungen"
 }

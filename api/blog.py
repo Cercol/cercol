@@ -76,6 +76,8 @@ def _row_to_post(row) -> dict:
         "createdAt":   row["created_at"].isoformat() if row["created_at"] else None,
         "updatedAt":   row["updated_at"].isoformat() if row["updated_at"] else None,
         "viewCount":   row["view_count"],
+        "category":    row["category"],
+        "complexity":  row["complexity"],
     }
 
 
@@ -89,6 +91,8 @@ def _row_to_list_item(row) -> dict:
         "author":      row["author"],
         "publishedAt": row["published_at"].isoformat() if row["published_at"] else None,
         "viewCount":   row["view_count"],
+        "category":    row["category"],
+        "complexity":  row["complexity"],
     }
 
 
@@ -129,7 +133,8 @@ async def list_posts(request: Request):
     async with request.app.state.pool.acquire() as conn:
         rows = await conn.fetch(
             """
-            SELECT slug, title, description, cover_url, author, published_at, view_count
+            SELECT slug, title, description, cover_url, author, published_at, view_count,
+                   category, complexity
             FROM blog_posts
             WHERE status = 'published'
             ORDER BY published_at DESC
@@ -145,7 +150,8 @@ async def get_post(slug: str, request: Request):
         row = await conn.fetchrow(
             """
             SELECT slug, status, title, description, content, cover_url,
-                   author, published_at, created_at, updated_at, view_count
+                   author, published_at, created_at, updated_at, view_count,
+                   category, complexity
             FROM blog_posts
             WHERE slug = $1
             """,
