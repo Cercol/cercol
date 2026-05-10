@@ -1045,11 +1045,11 @@ async def get_group_report_data(
             SELECT
                 gm.user_id,
                 p.first_name, p.last_name,
-                r.presence, r.bond, r.discipline, r.depth, r.vision
+                r.presence, r.bond, r.discipline, r.depth, r.vision, r.language
             FROM group_members gm
             LEFT JOIN profiles p ON p.id = gm.user_id
             LEFT JOIN LATERAL (
-                SELECT presence, bond, discipline, depth, vision
+                SELECT presence, bond, discipline, depth, vision, language
                 FROM results
                 WHERE user_id = gm.user_id AND instrument = 'fullMoon'
                 ORDER BY created_at DESC
