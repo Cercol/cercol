@@ -1,0 +1,20 @@
+# Cèrcol — daily auth token cleanup
+# Removes expired magic_tokens, expired refresh_tokens, and stale oauth_states.
+#
+# Install (one-time, as root on the production server):
+#   sudo cp /home/cercol/api/api/deploy/cron/cercol-purge-tokens /etc/cron.d/
+#   sudo chmod 644 /etc/cron.d/cercol-purge-tokens
+#
+# Verify after install:
+#   ls -la /etc/cron.d/cercol-purge-tokens
+#   sudo run-parts --test /etc/cron.daily/   # syntax check via cron's own validator
+#   journalctl -t CRON --since "5 minutes ago" | grep cercol   # after first 04:00 UTC trigger
+#
+# Manual one-shot run (to test the SQL):
+#   sudo -u postgres psql -d cercol -c "DELETE FROM magic_tokens WHERE expires_at < NOW(); DELETE FROM refresh_tokens WHERE expires_at < NOW(); DELETE FROM oauth_states WHERE created_at < NOW() - INTERVAL '1 hour';"
+
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# Daily at 04:00 UTC, run as postgres (peer auth to local PostgreSQL).
+0 4 * * * postgres psql -d cercol -c "DELETE FROM magic_tokens WHERE expires_at < NOW(); DELETE FROM refresh_tokens WHERE expires_at < NOW(); DELETE FROM oauth_states WHERE created_at < NOW() - INTERVAL '1 hour';"
