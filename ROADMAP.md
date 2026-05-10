@@ -1238,6 +1238,10 @@ Every blog article now has at least one inline visual element embedded in the ma
 - `src/locales/{en,ca,es,fr,de,da}.json`: `blog.cat.*` translation keys added for all 7 categories in all 6 languages.
 - `api/blog.py`: `category` and `complexity` fields included in both list and detail API responses.
 
+### Phase 15.5.9 — FAQ categorisation ✅ COMPLETE
+- `src/pages/FaqPage.jsx`: 12 questions grouped into 4 thematic sections (Data & Privacy, Science & Methodology, The Instruments, For Teams). `FaqSection` component with uppercase tracking heading. `SectionLabel` header added for visual consistency with BlogIndexPage.
+- `src/locales/{en,ca,es,fr,de,da}.json`: `faq.label` and `faq.cat.{data,science,instruments,teams}` added in all 6 languages.
+
 ### Phase 15.5.8 — Blog multilingual article translations ✅ COMPLETE
 - Full translations of `self-other-agreement-big-five-where-gaps-are-biggest` in all 5 non-English languages (CA, ES, FR, DE, DA) written to `blog_posts.content / title / description` JSONB fields via scp + psql pipeline.
 - Content lengths: EN 18,291 · CA 19,179 · ES 19,636 · FR 18,327 · DE 18,061 · DA 16,815 chars.
