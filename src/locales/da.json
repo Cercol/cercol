@@ -1430,5 +1430,9 @@
   "blog.cat.teams": "Teams",
   "blog.cat.leadership": "Ledelse",
   "blog.cat.work": "Arbejde",
-  "blog.cat.guides": "Guider"
+  "blog.cat.guides": "Guider",
+  "blog.level.all": "Alle niveauer",
+  "blog.level.beginner": "Introduktion",
+  "blog.level.intermediate": "Mellemniveau",
+  "blog.level.expert": "Dybdegående"
 }

@@ -1429,5 +1429,9 @@
   "blog.cat.teams": "Equips",
   "blog.cat.leadership": "Lideratge",
   "blog.cat.work": "Treball",
-  "blog.cat.guides": "Guies"
+  "blog.cat.guides": "Guies",
+  "blog.level.all": "Tots els nivells",
+  "blog.level.beginner": "Introductori",
+  "blog.level.intermediate": "Intermedi",
+  "blog.level.expert": "Avançat"
 }
