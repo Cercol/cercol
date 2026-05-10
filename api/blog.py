@@ -73,6 +73,9 @@ async def _require_admin(
 
 def _row_to_post(row) -> dict:
     """Convert an asyncpg Row from blog_posts into a camelCase dict."""
+    # Subscript access for required columns; .get() with canonical defaults
+    # for category/complexity so that a transient schema mismatch degrades
+    # gracefully instead of raising KeyError.
     return {
         "slug":        row["slug"],
         "status":      row["status"],
@@ -85,8 +88,8 @@ def _row_to_post(row) -> dict:
         "createdAt":   row["created_at"].isoformat() if row["created_at"] else None,
         "updatedAt":   row["updated_at"].isoformat() if row["updated_at"] else None,
         "viewCount":   row["view_count"],
-        "category":    row["category"],
-        "complexity":  row["complexity"],
+        "category":    row.get("category", "general"),
+        "complexity":  row.get("complexity", "intermediate"),
     }
 
 
@@ -101,8 +104,8 @@ def _row_to_list_item(row) -> dict:
         "author":      row["author"],
         "publishedAt": row["published_at"].isoformat() if row["published_at"] else None,
         "viewCount":   row["view_count"],
-        "category":    row["category"],
-        "complexity":  row["complexity"],
+        "category":    row.get("category", "general"),
+        "complexity":  row.get("complexity", "intermediate"),
     }
 
 
@@ -206,7 +209,8 @@ async def create_post(
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
             RETURNING
                 slug, status, title, description, content, cover_url,
-                author, published_at, created_at, updated_at, view_count
+                author, published_at, created_at, updated_at, view_count,
+                category, complexity
             """,
             body.slug,
             body.status,
@@ -257,7 +261,8 @@ async def update_post(
             WHERE slug = $1
             RETURNING
                 slug, status, title, description, content, cover_url,
-                author, published_at, created_at, updated_at, view_count
+                author, published_at, created_at, updated_at, view_count,
+                category, complexity
             """,
             slug, *vals,
         )
@@ -293,7 +298,8 @@ async def patch_post_status(
             WHERE slug = $1
             RETURNING
                 slug, status, title, description, content, cover_url,
-                author, published_at, created_at, updated_at, view_count
+                author, published_at, created_at, updated_at, view_count,
+                category, complexity
             """,
             slug, body.status, published_at_val,
         )
