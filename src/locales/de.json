@@ -22,6 +22,17 @@
       "cta": "Neumond Cèrcol beginnen"
     },
     "startCta": "Auswertung starten",
+    "retake": "Wiederholen",
+    "deleteResult": "Ergebnis löschen",
+    "olderResults": "{{count}} älteres Ergebnis gespeichert",
+    "olderResults_plural": "{{count}} ältere Ergebnisse gespeichert",
+    "confirmDelete": {
+      "title": "Dieses Ergebnis löschen?",
+      "body": "Dein Ergebnis wird dauerhaft von deinem Konto getrennt und du kannst es nicht mehr einsehen. Die anonymisierten Daten werden weiterhin für Bevölkerungsdurchschnitte verwendet. Diese Aktion kann nicht rückgängig gemacht werden.",
+      "confirm": "Ja, löschen",
+      "cancel": "Abbrechen"
+    },
+    "deleteError": "Das Ergebnis konnte nicht gelöscht werden. Versuche es erneut.",
     "contributionsHeading": "Beiträge als Zeuge/Zeugin",
     "contributionsEmpty": "Du hast noch keine Zeugensitzungen abgeschlossen.",
     "contributionItem": "{{name}} beschrieben"

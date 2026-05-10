@@ -22,6 +22,17 @@
       "cta": "Commencer Nouvelle Lune Cèrcol"
     },
     "startCta": "Commencer une évaluation",
+    "retake": "Recommencer",
+    "deleteResult": "Supprimer le résultat",
+    "olderResults": "{{count}} ancien résultat enregistré",
+    "olderResults_plural": "{{count}} anciens résultats enregistrés",
+    "confirmDelete": {
+      "title": "Supprimer ce résultat ?",
+      "body": "Votre résultat sera définitivement dissocié de votre compte et vous ne pourrez plus le consulter. Les données anonymisées seront utilisées pour les moyennes de population. Cette action est irréversible.",
+      "confirm": "Oui, supprimer",
+      "cancel": "Annuler"
+    },
+    "deleteError": "Impossible de supprimer le résultat. Réessayez.",
     "contributionsHeading": "Contributions en tant que témoin",
     "contributionsEmpty": "Vous n'avez pas encore complété de session témoin.",
     "contributionItem": "Vous avez décrit {{name}}"

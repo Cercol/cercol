@@ -21,6 +21,17 @@
       "cta": "Comença Lluna Nova Cèrcol"
     },
     "startCta": "Comença una avaluació",
+    "retake": "Repetir",
+    "deleteResult": "Esborrar resultat",
+    "olderResults": "{{count}} resultat anterior guardat",
+    "olderResults_plural": "{{count}} resultats anteriors guardats",
+    "confirmDelete": {
+      "title": "Esborrar aquest resultat?",
+      "body": "El teu resultat quedarà desvinculat permanentment del teu compte i ja no el podràs veure. Les dades anonimitzades s'usaran per a les mitjanes poblacionals. Aquesta acció no es pot desfer.",
+      "confirm": "Sí, esborra",
+      "cancel": "Cancel·la"
+    },
+    "deleteError": "No s'ha pogut esborrar el resultat. Torna-ho a intentar.",
     "contributionsHeading": "Participació com a testimoni",
     "contributionsEmpty": "Encara no has completat cap sessió de testimoni.",
     "contributionItem": "Has descrit {{name}}"
