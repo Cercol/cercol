@@ -6,7 +6,9 @@
     "roles": "Rols",
     "science": "Ciència",
     "blog": "Blog",
-    "faq": "Preguntes"
+    "faq": "Preguntes",
+    "menuLearn": "Aprendre",
+    "menuCompany": "Empresa"
   },
   "myResults": {
     "link": "Els meus resultats",
