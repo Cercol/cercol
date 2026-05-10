@@ -1,4 +1,9 @@
 {
+  "beta": {
+    "banner": "Beta-lancering — {{remaining}} gratis Fuldmåne-licenser tilbage. Hjælp os med at finde fejl.",
+    "cta": "Få gratis adgang",
+    "badge": "Beta-tester"
+  },
   "nav": {
     "brand": "Cèrcol",
     "about": "Om",

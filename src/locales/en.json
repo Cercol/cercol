@@ -1,4 +1,9 @@
 {
+  "beta": {
+    "banner": "Beta launch — {{remaining}} free Full Moon licences remaining. Help us find bugs.",
+    "cta": "Claim free access",
+    "badge": "Beta tester"
+  },
   "nav": {
     "brand": "Cèrcol",
     "about": "About",
