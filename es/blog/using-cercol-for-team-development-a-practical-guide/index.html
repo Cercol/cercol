@@ -1,0 +1,326 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary meta -->
+    <title>Usar Cèrcol para el desarrollo de equipos: una guía práctica paso a paso · Cèrcol</title>
+    <meta name="description" content="Cèrcol maps your team's personality using the Big Five (OCEAN/IPIP). Free personality assessment with Witness peer review. Science-grounded, open source. 6 languages.">
+    <meta name="keywords" content="team personality assessment, Big Five, OCEAN, IPIP, personality test free, peer assessment, team roles, AB5C, blind spot, team balance">
+    <meta name="author" content="Cèrcol">
+    
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Cèrcol">
+    <meta property="og:title" content="Cèrcol — Team Personality Assessment · Big Five · Free">
+    <meta property="og:description" content="Cèrcol maps your team's personality using the Big Five (OCEAN/IPIP). Free personality assessment with Witness peer review. Science-grounded, open source.">
+    <meta property="og:url" content="https://cercol.team/">
+    <meta property="og:image" content="https://cercol.team/email-logo.png">
+    <meta property="og:locale" content="en_GB">
+    <meta property="og:locale:alternate" content="ca_ES">
+    <meta property="og:locale:alternate" content="es_ES">
+    <meta property="og:locale:alternate" content="fr_FR">
+    <meta property="og:locale:alternate" content="de_DE">
+    <meta property="og:locale:alternate" content="da_DK">
+
+    <!-- Twitter / X card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Cèrcol — Team Personality Assessment · Big Five · Free">
+    <meta name="twitter:description" content="Free Big Five personality assessment with Witness peer review. 12 science-derived team roles. Open source.">
+    <meta name="twitter:image" content="https://cercol.team/email-logo.png">
+
+    <!-- hreflang — all public pages are language-switched via ?lang= param -->
+    
+    
+    
+    
+    
+    
+    
+
+    <!-- JSON-LD: WebApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Cèrcol",
+      "url": "https://cercol.team",
+      "description": "Open-source team personality assessment platform based on the Big Five (OCEAN/IPIP). Includes Witness forced-choice peer assessment and 12 science-derived team roles (AB5C circumplex).",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "inLanguage": ["en", "ca", "es", "fr", "de", "da"],
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "New Moon Cèrcol",
+          "price": "0",
+          "priceCurrency": "EUR",
+          "description": "10-item Big Five snapshot. Always free."
+        },
+        {
+          "@type": "Offer",
+          "name": "First Quarter Cèrcol",
+          "price": "0",
+          "priceCurrency": "EUR",
+          "description": "60-item IPIP-NEO-60. Five dimensions, 30 facets. Always free."
+        },
+        {
+          "@type": "Offer",
+          "name": "Full Moon Cèrcol",
+          "description": "120-item IPIP-NEO-120 + Witness peer assessment + ICAR cognitive ability. One-time payment."
+        }
+      ],
+      "featureList": [
+        "Big Five personality assessment via IPIP public-domain item pool",
+        "Witness peer assessment with forced-choice adjective selection (eliminates social desirability bias)",
+        "12 team roles derived from AB5C circumplex (Hofstee et al. 1992)",
+        "Blind spot detection: self vs peer divergence > 0.8 SD flagged per dimension",
+        "Team balance report",
+        "6 languages: English, Catalan, Spanish, French, German, Danish",
+        "Scoring pipeline fully client-side and open source"
+      ],
+      "sameAs": "https://github.com/cercol/cercol"
+    }
+    </script>
+
+    <!-- JSON-LD: Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Cèrcol",
+      "url": "https://cercol.team",
+      "logo": "https://cercol.team/email-logo.png",
+      "email": "hello@cercol.team",
+      "sameAs": ["https://github.com/cercol/cercol"],
+      "description": "Open-source platform for science-grounded team personality assessment based on Big Five (OCEAN) and IPIP."
+    }
+    </script>
+
+    <!-- JSON-LD: FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is Cèrcol based on the Big Five?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Cèrcol measures personality using the OCEAN model (Big Five) via the IPIP public-domain item pool (Goldberg et al. 2006). The 12 team roles are derived from the AB5C circumplex (Hofstee et al. 1992) and team composition research (Bell 2007; Neuman & Wright 1999)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What makes Cèrcol different from Belbin or DISC?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Cèrcol's roles are grounded in the Big Five (OCEAN) personality model using the IPIP public-domain item pool. The scoring pipeline is fully open source and auditable. Witness Cèrcol uses forced-choice adjective selection — not Likert scales — to eliminate social desirability bias in peer assessment. Unlike Belbin or DISC, all items are public domain and the entire methodology is published and citable."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the personality assessment free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The New Moon Cèrcol (10 items, Big Five snapshot) and First Quarter Cèrcol (60 items, IPIP-NEO-60, 30 facets) are always free — no account required. The Full Moon Cèrcol (120 items, IPIP-NEO-120, Witness peer assessment, cognitive ability measure) requires a one-time payment."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is Witness Cèrcol?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Witness Cèrcol is a peer personality assessment where someone who knows you well rates you using a forced-choice adjective selection method — picking the best-fit and worst-fit adjective per round from a set covering all five OCEAN dimensions. Forced choice eliminates the social desirability bias that affects standard Likert-scale peer ratings. Dimensions where your self-rating and peer ratings diverge by more than 0.8 standard deviations are flagged as potential blind spots."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How are the 12 team roles derived?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The 12 roles are derived from the AB5C circumplex (Hofstee, De Raad & Goldberg 1992), covering all six intersections of the three team balance dimensions (Presence/Extraversion × Bond/Agreeableness × Vision/Openness) at both poles. The selection of these three dimensions as requiring team-level balance is grounded in Bell (2007) and Neuman & Wright (1999). Discipline (Conscientiousness) and Depth (Neuroticism) modulate role expression but do not define team balance."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is my data private?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No account is required for any instrument. During assessment, no personal data is collected — only anonymous scores are logged. Data is stored on our own servers (Hetzner Online GmbH). No third-party analytics. No data is shared with or sold to third parties."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Cèrcol based on the Big Five (OCEAN)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Cèrcol measures personality using the OCEAN model (Big Five) via the IPIP — the International Personality Item Pool, a public-domain collection validated in thousands of published studies. The five dimensions are Presence (Extraversion), Bond (Agreeableness), Vision (Openness), Discipline (Conscientiousness), and Depth (Neuroticism). Because the IPIP is public domain there are no licence restrictions: the full item pool and scoring logic are open and citable."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is Cèrcol different from Belbin, DISC, or StrengthsFinder?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Three things set Cèrcol apart. First, the items come from the Big Five (OCEAN), the most replicated personality model in academic research — not a proprietary framework. Second, the full item pool (IPIP) and scoring pipeline are public domain and auditable; there is no black box. Third, the Witness peer assessment uses forced-choice adjective selection instead of Likert scales, which eliminates the social desirability bias that affects most 360-feedback tools. Belbin and DISC use closed, proprietary methodologies."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are blind spots in team personality assessment?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A blind spot is a personality dimension where how you see yourself and how others see you diverge significantly — more than 0.8 standard deviations apart. Cèrcol's Witness peer assessment detects blind spots by comparing your self-report with forced-choice adjective ratings from people who know you. Blind spots are neither good nor bad: they show where your self-perception and others' experience of you don't match, which is often more actionable than the score itself."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <script>
+      (function() {
+        // Companion to public/404.html SPA redirect workaround.
+        // 404.html encodes the original path+search into the ?p= param.
+        // URLSearchParams.get() already percent-decodes the value,
+        // so we restore the URL directly — no extra decodeURIComponent.
+        // The hash is kept separate so URL fragments survive intact.
+        const p = new URLSearchParams(window.location.search).get('p')
+        if (p) {
+          window.history.replaceState(null, null, p + window.location.hash)
+        }
+      })()
+    </script>
+    <script type="module" crossorigin="" src="/assets/index-tH50OH_y.js"></script>
+    <link rel="modulepreload" crossorigin="" href="/assets/rolldown-runtime-Dw2cE7zH.js">
+    <link rel="modulepreload" crossorigin="" href="/assets/vendor-BvHE3aWj.js">
+    <link rel="modulepreload" crossorigin="" href="/assets/vendor-router-ak0hPEbV.js">
+    <link rel="modulepreload" crossorigin="" href="/assets/vendor-i18n-COfOLrwj.js">
+    <link rel="modulepreload" crossorigin="" href="/assets/vendor-react-D72UYd-F.js">
+    <link rel="modulepreload" crossorigin="" href="/assets/api-Bh4XSei4.js">
+    <link rel="stylesheet" crossorigin="" href="/assets/vendor-ByZQCE1g.css">
+    <link rel="stylesheet" crossorigin="" href="/assets/index-Ca4Lpv-i.css">
+  <link rel="modulepreload" as="script" crossorigin="" href="/assets/BlogArticlePage-Cj2aPllZ.js"><meta name="description" content="Los perfiles de Cèrcol, la evaluación de pares Testigo y el mapa de equipo permiten un ciclo de desarrollo completo. Sigue estos pasos desde el autoconocimiento hasta acuerdos concretos de equipo." data-blog="1"><meta content="Usar Cèrcol para el desarrollo de equipos: una guía práctica paso a paso" data-blog="1"><meta content="Los perfiles de Cèrcol, la evaluación de pares Testigo y el mapa de equipo permiten un ciclo de desarrollo completo. Sigue estos pasos desde el autoconocimiento hasta acuerdos concretos de equipo." data-blog="1"><meta content="https://cercol.team/es/blog/using-cercol-for-team-development-a-practical-guide" data-blog="1"><meta content="article" data-blog="1"><meta content="Cèrcol" data-blog="1"><script type="application/ld+json" data-blog="1">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Usar Cèrcol para el desarrollo de equipos: una guía práctica paso a paso","description":"Los perfiles de Cèrcol, la evaluación de pares Testigo y el mapa de equipo permiten un ciclo de desarrollo completo. Sigue estos pasos desde el autoconocimiento hasta acuerdos concretos de equipo.","url":"https://cercol.team/es/blog/using-cercol-for-team-development-a-practical-guide","author":{"@type":"Person","name":"Miquel Matoses"},"publisher":{"@type":"Organization","name":"Cèrcol","url":"https://cercol.team"},"inLanguage":"es"}</script><link rel="alternate" hreflang="en" href="https://cercol.team/blog/using-cercol-for-team-development-a-practical-guide"><link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/using-cercol-for-team-development-a-practical-guide"><link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/using-cercol-for-team-development-a-practical-guide"><link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/using-cercol-for-team-development-a-practical-guide"><link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/using-cercol-for-team-development-a-practical-guide"><link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/using-cercol-for-team-development-a-practical-guide"><link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/using-cercol-for-team-development-a-practical-guide"><link rel="canonical" href="https://cercol.team/es/blog/using-cercol-for-team-development-a-practical-guide"></head>
+  <body>
+    <div id="root"><header style="background-color: rgb(0, 71, 186);"><div class="h-16 flex items-center gap-6 px-6 lg:px-12"><a class="shrink-0" href="/" data-discover="true" style="color: rgb(255, 255, 255);"><svg viewBox="0 0 1122.52 470.92" xmlns="http://www.w3.org/2000/svg" class="h-7 w-auto" aria-label="Cèrcol" role="img"><path transform="matrix(0.13333333,0,0,-0.13333333,0,470.92)" d="m 3969.73,2230.29 c -93.36,-159.94 -143.58,-333.14 -53.28,-385.84 90.29,-52.7 208.72,63.02 302.08,222.96 104.65,179.29 131.96,339.92 53.28,385.85 -78.68,45.92 -197.43,-43.68 -302.08,-222.97" style="fill: currentcolor; fill-rule: nonzero; stroke: none;"></path><path transform="matrix(0.13333333,0,0,-0.13333333,0,470.92)" d="m 1212.64,2357.4 c -180.39,-41.94 -340.788,-124.34 -317.113,-226.18 23.676,-101.83 189.123,-108.48 369.503,-66.54 202.21,47.01 337.74,137.44 317.12,226.17 -20.64,88.74 -167.31,113.55 -369.51,66.55" style="fill: currentcolor; fill-rule: nonzero; stroke: none;"></path><path transform="matrix(0.13333333,0,0,-0.13333333,0,470.92)" d="m 5418.53,2357.4 c -180.39,-41.94 -340.79,-124.34 -317.11,-226.18 23.67,-101.83 189.12,-108.48 369.5,-66.54 202.21,47.01 337.74,137.44 317.12,226.17 -20.64,88.74 -167.31,113.55 -369.51,66.55" style="fill: currentcolor; fill-rule: nonzero; stroke: none;"></path><path transform="matrix(0.13333333,0,0,-0.13333333,0,470.92)" d="m 2193.43,1922.67 c 0,208.28 11.85,456.79 149.1,456.79 101.78,0 123.09,-111.22 123.09,-274.54 v -139.63 l -272.19,-52.09 z m 648.52,-369.23 c -71.01,-56.8 -203.57,-104.14 -328.99,-104.14 -170.43,0 -305.34,115.97 -319.53,418.93 h 631.95 v 134.91 c 0,298.24 -177.51,452.07 -471,452.07 -220.2,0 -400.26,-126.29 -499.25,-312.28 -53.16,-99.88 -83,-216.93 -83,-340.97 0,-7.44 0.22,-14.78 0.4,-22.14 8.24,-338.94 205.86,-586.14 548.72,-586.14 300.59,0 442.6,201.18 530.18,352.66 l -9.48,7.1" style="fill: currentcolor; fill-rule: nonzero; stroke: none;"></path><path transform="matrix(0.13333333,0,0,-0.13333333,0,470.92)" d="m 3697.19,1541.6 v 913.61 h -9.48 c -168.05,-42.59 -366.87,-87.57 -572.79,-106.5 v -9.48 c 130.19,-61.52 153.84,-113.61 153.84,-321.89 V 1541.6 c 0,-170.41 -14.18,-246.14 -130.15,-312.42 v -9.47 h 726.62 v 9.47 c -151.49,71 -168.04,142.01 -168.04,312.42" style="fill: currentcolor; fill-rule: nonzero; stroke: none;"></path><path transform="matrix(0.13333333,0,0,-0.13333333,0,470.92)" d="m 6595.9,1272.21 c -165.69,0 -189.36,265.08 -189.36,558.57 0,328.99 44.98,558.58 189.36,558.58 144.37,0 189.35,-229.59 189.35,-558.58 0,-293.49 -23.67,-558.57 -189.35,-558.57 z m 0,1190.52 c -207.75,0 -393.82,-85.75 -510.89,-236.5 -80.33,-103.44 -128.16,-237.48 -128.16,-395.45 0,-38.12 3.13,-75.07 8.85,-110.82 49.35,-308.2 303.58,-521.14 630.2,-521.14 364.48,0 639.05,265.1 639.05,631.96 0,388.15 -288.76,631.95 -639.05,631.95" style="fill: currentcolor; fill-rule: nonzero; stroke: none;"></path><path transform="matrix(0.13333333,0,0,-0.13333333,0,470.92)" d="m 8059.75,1541.6 v 1382.26 h -9.46 c -168.05,-42.62 -376.33,-87.58 -582.25,-106.52 v -9.47 c 130.19,-61.54 153.84,-113.6 153.84,-321.89 V 1541.6 c 0,-170.41 -14.18,-246.14 -130.17,-312.42 v -9.47 h 698.23 v 9.47 c -115.98,66.28 -130.19,142.01 -130.19,312.42" style="fill: currentcolor; fill-rule: nonzero; stroke: none;"></path><path transform="matrix(0.13333333,0,0,-0.13333333,0,470.92)" d="m 1415.87,1553.44 -6.6,3.55 c -63.84,-27.17 -133.98,-42.39 -207.75,-42.39 -293.391,0 -531.231,263.79 -531.231,557.19 0,139.21 53.613,265.85 141.234,360.58 2.754,4.45 5.711,8.77 8.582,13.15 l -10.449,7.52 -2.914,1.56 c -34.043,-3.3 -68.262,-9.31 -102.371,-18.56 -328.73,-89.1 -522.976,-453.75 -433.883,-782.47 89.106,-328.71 427.805,-522.96 756.522,-433.86 180.45,48.92 319.51,173.44 394.23,329.87 l -5.37,3.86" style="fill: currentcolor; fill-rule: nonzero; stroke: none;"></path><path transform="matrix(0.13333333,0,0,-0.13333333,0,470.92)" d="m 5600.71,1553.44 -1.82,0.98 c -62.26,-25.63 -130.42,-39.82 -201.92,-39.82 -293.4,0 -531.24,263.79 -531.24,557.19 0,139.21 53.61,265.85 141.24,360.58 3.19,5.16 6.6,10.18 9.95,15.24 l -7.54,5.43 -3.52,1.89 c -35.25,-3.21 -70.71,-9.31 -106.06,-18.89 -328.72,-89.1 -522.96,-453.75 -433.86,-782.47 89.1,-328.71 427.8,-522.96 756.52,-433.86 178.26,48.32 316.17,170.42 391.51,324.19 l -13.26,9.54" style="fill: currentcolor; fill-rule: nonzero; stroke: none;"></path><path transform="matrix(0.13333333,0,0,-0.13333333,0,470.92)" d="m 2264.79,2975.04 c -38.87,-97.06 -217.56,-72.84 -389.49,-4 -192.72,77.17 -298.8,181.46 -264.93,266.04 33.86,84.57 196.76,81.16 389.48,3.99 171.93,-68.84 303.79,-168.98 264.94,-266.03" style="fill: currentcolor; fill-rule: nonzero; stroke: none;"></path><path transform="matrix(0.13333333,0,0,-0.13333333,0,470.92)" d="m 4310.4,312.941 c -38.87,-97.062 -217.56,-72.839 -389.49,-4 -192.72,77.168 -298.8,181.457 -264.94,266.039 33.87,84.571 196.77,81.161 389.49,3.989 171.93,-68.84 303.79,-168.981 264.94,-266.028" style="fill: currentcolor; fill-rule: nonzero; stroke: none;"></path></svg></a><nav class="hidden md:flex flex-1 items-center gap-1 overflow-x-auto min-w-0" aria-label="Main navigation" style="scrollbar-width: none;"><a class="shrink-0 text-xs font-medium px-2.5 py-1.5 rounded transition-colors whitespace-nowrap text-white/70 hover:text-white hover:bg-white/10" href="/about" data-discover="true">Acerca de</a><a class="shrink-0 text-xs font-medium px-2.5 py-1.5 rounded transition-colors whitespace-nowrap text-white/70 hover:text-white hover:bg-white/10" href="/instruments" data-discover="true">Instrumentos</a><a class="shrink-0 text-xs font-medium px-2.5 py-1.5 rounded transition-colors whitespace-nowrap text-white/70 hover:text-white hover:bg-white/10" href="/roles" data-discover="true">Roles</a><a class="shrink-0 text-xs font-medium px-2.5 py-1.5 rounded transition-colors whitespace-nowrap text-white/70 hover:text-white hover:bg-white/10" href="/science" data-discover="true">Ciencia</a><a aria-current="page" class="shrink-0 text-xs font-medium px-2.5 py-1.5 rounded transition-colors whitespace-nowrap text-white bg-white/20" href="/es/blog" data-discover="true">Blog</a><a class="shrink-0 text-xs font-medium px-2.5 py-1.5 rounded transition-colors whitespace-nowrap text-white/70 hover:text-white hover:bg-white/10" href="/faq" data-discover="true">FAQ</a></nav><div class="flex items-center gap-3 shrink-0 ml-auto md:ml-0"><button aria-label="Iniciar sesión" class="p-1.5 rounded transition-colors hover:bg-white/10" style="color: rgba(255, 255, 255, 0.7);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class=""><circle cx="12" cy="8.5" r="3.2" stroke-width="1.7"></circle><path stroke-width="1.7" d="M4.5 20.5 C5 16 8.2 13.5 12 13.5 C15.8 13.5 19 16 19.5 20.5"></path></svg></button><div class="relative"><button aria-label="Select language" aria-expanded="false" class="flex items-center gap-1 p-1.5 rounded transition-colors hover:bg-white/10" style="color: rgba(255, 255, 255, 0.7);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class=""><circle cx="12" cy="12" r="9" stroke-width="1.7"></circle><path stroke-width="1.3" d="M3 12 C6 11 18 11 21 12"></path><path stroke-width="1.3" d="M12 3 C9.5 6.5 9.5 17.5 12 21 C14.5 17.5 14.5 6.5 12 3 Z"></path></svg><span class="text-xs font-semibold tracking-wide leading-none">ES</span></button></div><button type="button" aria-label="Open menu" aria-expanded="false" class="md:hidden flex flex-col justify-center gap-1.5 p-1" style="color: rgb(255, 255, 255);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class=""><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button></div></div></header><div class="bg-white min-h-[calc(100vh-4rem)]"><div class="max-w-4xl mx-auto px-4 sm:px-8"><main class="py-8"><div class="mb-6 max-w-3xl"><a class="text-sm font-medium hover:underline" href="/es/blog" data-discover="true" style="color: var(--mm-color-blue);">← Volver al blog</a></div><div class="relative w-full rounded-2xl overflow-hidden mb-8 max-w-3xl" style="height: clamp(180px, 28vw, 280px);"><img alt="" class="absolute inset-0 w-full h-full object-cover" src="https://images.unsplash.com/photo-1540539335-f9b8b823a108?ixid=M3w5NDcwMjR8MHwxfHNlYXJjaHwxfHx0ZWFtJTIwZGV2ZWxvcG1lbnQlMjBndWlkZSUyMHByYWN0aWNlfGVufDB8MHx8fDE3NzgzNjQxMjh8MA&amp;ixlib=rb-4.1.0?w=1200&amp;auto=format&amp;fit=crop&amp;q=80"><div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div></div><header class="mb-8 max-w-3xl"><h1 class="text-3xl font-bold text-gray-900 mb-3 leading-tight" style="font-family: var(--mm-font-display);">Usar Cèrcol para el desarrollo de equipos: una guía práctica paso a paso</h1><p class="text-base text-gray-500 mb-3 leading-relaxed">Los perfiles de Cèrcol, la evaluación de pares Testigo y el mapa de equipo permiten un ciclo de desarrollo completo. Sigue estos pasos desde el autoconocimiento hasta acuerdos concretos de equipo.</p><p class="text-sm text-gray-400 flex flex-wrap gap-x-2 gap-y-1 items-center"><span>Miquel Matoses</span><span>·</span><span>14 min de lectura</span></p></header><div class="flex gap-10 items-start max-w-5xl"><div class="min-w-0 flex-1"><div class="lg:hidden mb-6"><button type="button" class="w-full flex justify-between items-center px-4 py-3 rounded-xl border text-sm font-medium text-gray-700 bg-gray-50 hover:bg-gray-100 transition-colors"><span>Contenido</span><span class="text-gray-400">▸</span></button></div><article class="prose-article"><h1 id="usar-crcol-para-el-desarrollo-de-equipos-una-gua-prctica-paso-a-paso">Usar Cèrcol para el desarrollo de equipos: una guía práctica paso a paso</h1>
+<p>Los perfiles de personalidad por sí solos no desarrollan equipos. Lo que desarrolla los equipos es la conversación estructurada que los buenos perfiles hacen posible — el tipo de conversación en la que las personas pueden hablar honestamente sobre cómo trabajan, qué les resulta difícil y qué necesita el equipo para funcionar mejor.</p>
+<p>Cèrcol está diseñado para apoyar exactamente esa conversación. Ofrece a los equipos tres instrumentos: perfiles de personalidad individuales (New Moon), evaluaciones de pares de colegas (Testigo) y un mapa de composición del equipo que visualiza el perfil colectivo. Usados juntos, en secuencia, estas tres herramientas permiten un ciclo completo de desarrollo de equipo — desde la autoconciencia individual, pasando por la validación externa, hasta la comprensión compartida y los acuerdos concretos de equipo.</p>
+<p>Esta guía recorre ese ciclo paso a paso, con notas sobre facilitación, desafíos habituales y cómo convertir los datos en cambios duraderos. Aprende más en <a href="https://cercol.team">cercol.team</a>.</p>
+<figure>
+<svg class="diagram" viewBox="0 0 560 80" xmlns="http://www.w3.org/2000/svg">
+  <!-- Step boxes -->
+  <!-- 1: Take tests (blue) -->
+  <rect x="4" y="20" width="92" height="40" rx="8" fill="#0047ba"></rect>
+  <text x="50" y="36" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="white">1. Hacer</text>
+  <text x="50" y="50" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="white">los tests</text>  <!-- Arrow -->
+  <polygon points="100,38 112,40 100,42" fill="#555"></polygon>
+  <line x1="96" y1="40" x2="113" y2="40" stroke="#555" stroke-width="2"></line>  <!-- 2: Share results (green) -->
+  <rect x="114" y="20" width="92" height="40" rx="8" fill="#427c42"></rect>
+  <text x="160" y="36" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="white">2. Compartir</text>
+  <text x="160" y="50" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="white">resultados</text>  <!-- Arrow -->
+  <polygon points="210,38 222,40 210,42" fill="#555"></polygon>
+  <line x1="206" y1="40" x2="223" y2="40" stroke="#555" stroke-width="2"></line>  <!-- 3: Identify gaps (yellow) -->
+  <rect x="224" y="20" width="92" height="40" rx="8" fill="#f1c22f"></rect>
+  <text x="270" y="36" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="#333">3. Identificar</text>
+  <text x="270" y="50" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="#333">brechas</text>  <!-- Arrow -->
+  <polygon points="320,38 332,40 320,42" fill="#555"></polygon>
+  <line x1="316" y1="40" x2="333" y2="40" stroke="#555" stroke-width="2"></line>  <!-- 4: Map to roles (red) -->
+  <rect x="334" y="20" width="92" height="40" rx="8" fill="#cf3339"></rect>
+  <text x="380" y="36" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="white">4. Asignar</text>
+  <text x="380" y="50" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="white">roles</text>  <!-- Arrow -->
+  <polygon points="430,38 442,40 430,42" fill="#555"></polygon>
+  <line x1="426" y1="40" x2="443" y2="40" stroke="#555" stroke-width="2"></line>  <!-- 5: Track growth (dark blue) -->
+  <rect x="444" y="20" width="112" height="40" rx="8" fill="#003080"></rect>
+  <text x="500" y="36" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="white">5. Seguir el</text>
+  <text x="500" y="50" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="white">crecimiento</text>
+</svg>
+<figcaption>El flujo de trabajo de desarrollo de equipo de Cèrcol — cinco etapas desde la evaluación individual hasta el progreso medible.</figcaption>
+</figure><hr>
+<h2 id="paso-1-perfiles-individuales-todos-completan-new-moon">Paso 1: Perfiles individuales — Todos completan New Moon</h2>
+<p>El punto de partida de cualquier proceso de desarrollo de equipo con Cèrcol es que todos los miembros del equipo completen la evaluación de personalidad New Moon. New Moon utiliza ítems <a href="https://ipip.ori.org">IPIP</a> validados extraídos del marco Big Five / OCEAN, midiendo cinco dimensiones que Cèrcol etiqueta con nombres fundamentados y accesibles: Presencia (Extraversión), Bond (Amabilidad), Visión (Apertura), Disciplina (Responsabilidad) y Profundidad (Neuroticismo).</p>
+<p>Varios aspectos son importantes en esta etapa.</p>
+<p><strong>Encuadre.</strong> Cómo se presenta la evaluación determina cómo los miembros del equipo se implican con ella. El encuadre debería dejar tres cosas claras: que no es una evaluación del rendimiento ni una herramienta de valoración, que no hay perfiles buenos ni malos, y que el propósito es apoyar un mejor funcionamiento del equipo — no etiquetar ni clasificar a las personas. Sin este encuadre, algunos miembros del equipo — particularmente aquellos con experiencias negativas previas con herramientas psicométricas — pueden abordar la evaluación de manera defensiva.</p>
+<p><strong>Tiempo.</strong> Reserva suficiente tiempo para que los miembros del equipo completen New Moon sin prisas. Los ítems son relativamente breves, pero una respuesta reflexiva produce resultados más precisos que una rápida. Reserva al menos treinta minutos en un contexto con pocas distracciones.</p>
+<p><strong>Revisión inicial.</strong> Antes de que el equipo se reúna, cada persona debería tener tiempo para leer su propio perfil en privado. El primer contacto con un perfil de personalidad suele ser afectivamente significativo — las personas se sorprenden genuinamente, a veces se emocionan, ocasionalmente se desestabilizan. El tiempo de lectura privada permite que esas reacciones se asienten antes de la conversación grupal.</p>
+<p>Para orientación sobre lo que significan las cinco dimensiones y cómo leer el informe resultante, consulta <a href="/es/blog/how-to-read-a-big-five-personality-report">cómo leer un informe de personalidad Big Five</a>.</p>
+<hr>
+<h2 id="paso-2-evaluacin-de-pares-testigo-aade-la-visin-externa">Paso 2: Evaluación de pares Testigo — Añade la visión externa</h2>
+<p>El instrumento Testigo es una de las características más distintivas de Cèrcol. Después de completar su propio perfil, cada miembro del equipo invita a dos a cinco colegas a completar una evaluación Testigo — puntuando la personalidad del individuo en las mismas dimensiones Big Five, pero desde la perspectiva del observador.</p>
+<p>El resultado es una brecha de perfil: la diferencia entre cómo una persona se ve a sí misma y cómo la viven los demás. Esta brecha es, en sí misma, uno de los datos de desarrollo más útiles disponibles. La investigación sobre el acuerdo auto-observador en la evaluación de personalidad encuentra consistentemente que las dos visiones son significativamente diferentes, y que las puntuaciones de los observadores suelen predecir los resultados de rendimiento con más precisión que los autoinformes (Oh et al., 2011, doi:10.1037/a0021322).</p>
+<p><strong>Qué revela la brecha.</strong> Una persona que se puntúa alta en Presencia (Extraversión) pero que los Testigos puntúan sistemáticamente más baja puede estar expresando energía y entusiasmo internamente que no es plenamente visible para los colegas. Una persona que se puntúa baja en Bond (Amabilidad) pero que los Testigos puntúan alta puede ser más cálida y colaboradora en la práctica de lo que su autoinforme sugiere. Cada patrón tiene implicaciones de desarrollo diferentes.</p>
+<p>La investigación sobre dónde estos brechas tienden a ser mayores es inequívoca: Profundidad (Neuroticismo) muestra el menor acuerdo auto-otro, mientras que Presencia (Extraversión) muestra el mayor. Consulta <a href="/es/blog/self-other-agreement-big-five-where-gaps-are-biggest">el acuerdo auto-otro por dimensión Big Five: dónde son las brechas más grandes</a> para el desglose completo y sus implicaciones prácticas.</p>
+<p><strong>Nota de facilitación.</strong> El paso Testigo requiere seguridad psicológica para funcionar bien. Si los miembros del equipo no se sienten seguros siendo honestos en sus evaluaciones — si temen que las puntuaciones altas o bajas se puedan usar en su contra o contra la persona que evalúan — la calidad de los datos será deficiente. Establecer normas de seguridad antes de lanzar Testigo es importante: lo que ocurre en el proceso se queda en el proceso; las evaluaciones no se comparten entre individuos; el propósito es el desarrollo, no la evaluación.</p>
+<p><strong>A quién invitar.</strong> Los Testigos deberían incluir personas que hayan trabajado con el individuo lo suficientemente cerca como para tener datos de comportamiento genuinos — no una impresión general. Los contextos de trabajo recientes son más informativos que los históricos. La diversidad de contexto de trabajo en el grupo de Testigos aumenta la calidad de los datos. Sobre cuántos Testigos invitar, <a href="/es/blog/how-many-peer-assessors-do-you-need-reliable-personality-data">¿cuántos evaluadores de pares necesitas para datos de personalidad fiables?</a> proporciona la justificación psicométrica: tres Testigos es el mínimo; cinco a siete es el objetivo práctico.</p>
+<p>Lectura relacionada: <a href="/es/blog/what-the-cercol-witness-instrument-measures">Qué mide el instrumento Testigo de Cèrcol</a>.</p>
+<hr>
+<h2 id="paso-3-mapa-de-equipo-visualiza-la-composicin-de-personalidad-colectiva">Paso 3: Mapa de equipo — Visualiza la composición de personalidad colectiva</h2>
+<p>Una vez que todos los perfiles individuales y las evaluaciones Testigo están completos, Cèrcol genera un mapa de equipo: una representación visual de la composición de personalidad colectiva del equipo en las cinco dimensiones.</p>
+<p>El mapa de equipo responde preguntas que los perfiles individuales no pueden. ¿Dónde se agrupa el equipo? ¿Hay dimensiones en las que el equipo es uniformemente alto o bajo — homogéneo de maneras que crean puntos ciegos predecibles? ¿Hay valores atípicos — individuos cuyo perfil diverge significativamente de la media del equipo — que pueden experimentar la cultura dominante del equipo como incómoda o ajena?</p>
+<p><strong>Leer el mapa de equipo: ¿dónde están las brechas?</strong></p>
+<p>Un mapa de equipo con alta varianza no es inherentemente mejor o peor que uno con baja varianza. Pero las diferentes composiciones conllevan riesgos distintos.</p>
+<p>Un equipo con Bond universalmente alto y Disciplina baja puede ser relacionalmente cálido pero tener dificultades para cumplir compromisos y pedirse cuentas mutuamente. Un equipo con Disciplina universalmente alta y Bond bajo puede ser productivo pero perder personas por el agotamiento y la fricción relacional. Un equipo con alta varianza en Profundidad (Neuroticismo) puede experimentar desalineación en la respuesta al estrés durante períodos de mucha presión — algunos miembros encontrando calma cuando otros experimentan ansiedad.</p>
+<p>El mapa de equipo es más útil cuando se lee como un conjunto de preguntas en lugar de un conjunto de respuestas: dada esta composición, ¿a qué deberíamos prestar atención? ¿Contra qué deberíamos diseñar deliberadamente?</p>
+<p>Entender cuáles de los <a href="/es/blog/the-12-cercol-team-roles-explained">12 roles de equipo de Cèrcol</a> están sobre- o infrarrepresentados en tu mapa da a estas preguntas un vocabulario práctico.</p>
+<hr>
+<h2 id="cmo-facilitar-la-discusin-de-personalidad-del-equipo">Cómo facilitar la discusión de personalidad del equipo</h2>
+<p>La discusión del equipo — llevar los perfiles individuales, las brechas Testigo y el mapa de equipo a la conversación — es el corazón del proceso. También es donde se requiere la habilidad de facilitación más significativa.</p>
+<p><strong>Dos principios de facilitación son fundamentales.</strong></p>
+<p>Primero, el encuadre de desarrollo: el propósito de la discusión no es explicar o defender la personalidad, sino comprenderla y diseñar en torno a ella. Cada observación sobre un perfil o un patrón debería orientarse hacia "¿qué hacemos con esto?" en lugar de "¿es un problema?"</p>
+<p>Segundo, establecer normas antes de la revelación: antes de que nadie comparta su perfil, el grupo debería acordar las normas de discusión. Las normas útiles habituales incluyen: asumimos buenas intenciones; hablamos por nosotros mismos en lugar de atribuir motivación a los demás; lo que se comparte aquí se queda en la sala.</p>
+<p><strong>Preguntas de discusión útiles:</strong></p>
+<ul>
+<li>"Mirando tu propio perfil, ¿qué te parece preciso? ¿Qué te ha sorprendido?"</li>
+<li>"Mirando la brecha entre tu autopuntuación y las puntuaciones de tu Testigo, ¿cómo se explica?"</li>
+<li>"Mirando el mapa de equipo, ¿qué notas? ¿Dónde ves riesgo?"</li>
+<li>"Si diseñaras la forma de trabajar de este equipo desde cero, dada esta composición, ¿qué harías diferente?"</li>
+</ul>
+<p>Estas preguntas mueven la conversación de los datos a las implicaciones y al diseño — la trayectoria que convierte la perspectiva de personalidad en cambio práctico.</p>
+<hr>
+<h2 id="usar-la-brecha-autotestigo-como-punto-de-partida-del-coaching">Usar la brecha Auto–Testigo como punto de partida del coaching</h2>
+<p>La brecha de perfil — la diferencia entre la autopuntuación y la puntuación del Testigo — merece atención particular en cualquier proceso de desarrollo de equipo que incluya conversaciones de desarrollo individual o coaching.</p>
+<p>Una brecha significativa en cualquier dimensión no es evidencia de autoengaño o deshonestidad. Es evidencia de visibilidad parcial: la persona y sus colegas están muestreando aspectos diferentes del comportamiento, o la experiencia interior de la persona difiere de la expresión que es visible para los demás.</p>
+<p>Una pregunta de coaching útil para brechas significativas: "¿Qué haría falta para que tus colegas vieran X de la manera que tú lo experimentas — o para que tú te vieras más como ellos lo hacen?" Esta pregunta abre la conversación de desarrollo sin patologizar la brecha.</p>
+<p>Patrones de brecha habituales y sus implicaciones de desarrollo:</p>
+<ul>
+<li><strong>Auto &gt; Testigo en Presencia:</strong> la energía puede ser interna en lugar de expresada; aumentar la comunicación visible puede cerrar la brecha</li>
+<li><strong>Auto &lt; Testigo en Bond:</strong> la calidez puede expresarse más conductualmente que verbalmente; nombrar el cuidado explícitamente puede ayudar</li>
+<li><strong>Auto &gt; Testigo en Visión:</strong> el pensamiento creativo puede no ser visible en las reuniones; encontrar canales más estructurados para compartir el pensamiento puede ayudar</li>
+<li><strong>Auto &lt; Testigo en Disciplina:</strong> puede ser más organizado y fiable de lo que la autoevaluación sugiere; la confianza en la propia capacidad puede ser un área de desarrollo</li>
+</ul>
+<p>Para una base de evidencia más amplia sobre el uso de datos Big Five en contextos de coaching, consulta <a href="/es/blog/personality-coaching-using-big-five-as-development-tool">coaching de personalidad: usar el Big Five como herramienta de desarrollo</a>.</p>
+<hr>
+<h2 id="disear-acuerdos-de-trabajo-de-equipo-a-partir-de-las-perspectivas-de-personalidad">Diseñar acuerdos de trabajo de equipo a partir de las perspectivas de personalidad</h2>
+<p>El resultado del proceso de desarrollo del equipo debería ser tangible: un pequeño conjunto de normas de trabajo acordadas que reflejan lo que el equipo ha aprendido sobre sí mismo. La perspectiva de personalidad sin cambio de comportamiento es interesante pero no útil.</p>
+<p>Los acuerdos de equipo deberían ser específicos, observables y revisables. Los acuerdos vagos ("seremos más abiertos entre nosotros") son peores que útiles. Los acuerdos específicos funcionan mejor: "Expresaremos el desacuerdo explícitamente en las reuniones de decisión en lugar de resolverlo en conversaciones paralelas. Usaremos una agenda estructurada para todas las reuniones relevantes para decisiones. Haremos una retro mensual centrada en la dinámica del equipo, no solo en el progreso del proyecto."</p>
+<p>Los mejores acuerdos de equipo están basados directamente en el mapa de equipo. Un equipo que nota que es homogéneamente alto en Bond podría acordar: "Asignaremos un rol rotativo de revisor crítico para decisiones significativas, para garantizar que alguien esté explícitamente encargado de encontrar debilidades." Un equipo que nota alta varianza en Profundidad (Neuroticismo) podría acordar: "Durante los períodos de mucha presión, seremos explícitos sobre los niveles de estrés en lugar de gestionarlos privadamente."</p>
+<p>Lectura relacionada: <a href="/es/blog/how-to-run-a-team-personality-workshop">Cómo hacer un taller de personalidad de equipo</a> · <a href="/es/blog/the-12-cercol-team-roles-explained">Los 12 roles de equipo de Cèrcol explicados</a>.</p>
+<hr>
+<h2 id="por-qu-un-seguimiento-de-seis-meses-cierra-el-ciclo-de-desarrollo">Por qué un seguimiento de seis meses cierra el ciclo de desarrollo</h2>
+<p>La personalidad es relativamente estable a lo largo del tiempo — pero los equipos no lo son. La composición del equipo cambia, los contextos de proyecto cambian, las relaciones se desarrollan. Un ciclo de desarrollo de equipo con Cèrcol debería incluir un seguimiento planificado a los seis meses: una revisita más corta del mapa de equipo y los acuerdos de equipo, una verificación de si los acuerdos se han mantenido, y una recalibración de qué dimensiones necesitan ahora más atención.</p>
+<p>Las evaluaciones Testigo pueden volver a ejecutarse a los seis meses para ver si la brecha entre el auto y el observador ha cambiado en las dimensiones que el equipo identificó como prioridades de desarrollo. Esto crea una señal de desarrollo genuina: cambio medible en cómo los demás experimentan a una persona, basado en el mismo marco validado usado en la evaluación original.</p>
+<hr>
+<h2 id="resumen-cada-fase-de-desarrollo-herramienta-y-resultado-clave">Resumen: cada fase de desarrollo, herramienta y resultado clave</h2>
+<div class="table-wrapper"><table><thead><tr><th>Fase de desarrollo del equipo</th><th>Herramienta de Cèrcol</th><th>Qué aprendes</th></tr></thead><tbody><tr><td>Autoconciencia individual</td><td>Perfil New Moon</td><td>Puntuaciones de rasgos en las cinco dimensiones Big Five; línea de base propia</td></tr><tr><td>Validación externa</td><td>Evaluación de pares Testigo</td><td>Brecha de perfil: auto vs cómo los demás te experimentan</td></tr><tr><td>Composición colectiva</td><td>Mapa de equipo</td><td>Fortalezas del equipo, puntos ciegos y patrones de diversidad</td></tr><tr><td>Coaching de desarrollo</td><td>Análisis de brecha de perfil</td><td>Dimensiones específicas para el trabajo de desarrollo individual</td></tr><tr><td>Diseño de normas de equipo</td><td>Mapa de equipo + discusión</td><td>Acuerdos de trabajo basados en evidencias fundamentados en la composición real</td></tr><tr><td>Revisión del progreso</td><td>Nuevo Testigo a los seis meses</td><td>Cambio observable en la percepción externa en dimensiones de desarrollo</td></tr></tbody></table></div><hr>
+<blockquote>
+<p>"No puedes cambiar lo que no puedes ver. Y la mayoría de los equipos nunca se han mirado a sí mismos como un sistema." — Una perspectiva habitual de la facilitación de desarrollo de equipo</p>
+</blockquote>
+<p>Cèrcol hace posible esa mirada. El perfil, el Testigo y el mapa de equipo juntos dan a los equipos un espejo fundamentado en la evidencia, la ciencia validada y la percepción honesta de los pares. Lo que los equipos hacen con lo que ven es el trabajo real — y empieza haciendo los datos visibles.</p>
+<hr>
+<p><em>Lectura adicional: <a href="/es/blog/how-to-run-a-team-personality-workshop">Cómo hacer un taller de personalidad de equipo</a> · <a href="/es/blog/the-12-cercol-team-roles-explained">Los 12 roles de equipo de Cèrcol explicados</a> · <a href="/es/blog/what-the-cercol-witness-instrument-measures">Qué mide el instrumento Testigo de Cèrcol</a></em></p>
+<h2 id="empieza-tu-ciclo-de-desarrollo-de-equipo-hoy-gratis">Empieza tu ciclo de desarrollo de equipo hoy — gratis</h2>
+<p>Todo lo descrito en esta guía está disponible ahora en <a href="https://cercol.team">cercol.team</a> sin coste. Haz el perfil New Moon tú mismo en menos de diez minutos, invita a colegas a completar una evaluación Testigo, y el mapa de tu equipo empieza a tomar forma. El ciclo de desarrollo completo — perfiles individuales, Testigo de pares, mapa de equipo, discusión facilitada — no cuesta nada. Empieza con tu propio perfil en <a href="https://cercol.team">cercol.team</a>, y luego trae a tu equipo.</p>
+<h2 id="lectura-adicional">Lectura adicional</h2>
+<ul>
+<li><a href="/es/blog/what-the-cercol-witness-instrument-measures">Qué mide el instrumento Testigo de Cèrcol</a></li>
+<li><a href="/es/blog/the-12-cercol-team-roles-explained">Los 12 roles de equipo de Cèrcol explicados</a></li>
+<li><a href="/es/blog/how-to-run-a-team-personality-workshop">Cómo hacer un taller de personalidad de equipo</a></li>
+<li><a href="/es/blog/how-to-read-a-big-five-personality-report">Cómo leer un informe de personalidad Big Five</a></li>
+<li><a href="/es/blog/how-to-use-personality-data-without-labelling-people">Cómo usar datos de personalidad sin etiquetar a las personas</a></li>
+<li><a href="/es/blog/building-a-team-from-scratch-what-personality-data-can-and-cant-tell-you">Construir un equipo desde cero: consideraciones de personalidad</a></li>
+</ul>
+</article></div><aside class="hidden lg:block w-56 flex-shrink-0 sticky top-6 self-start"><nav class="rounded-xl border p-4" style="border-color: var(--mm-color-gray-200);"><p class="text-xs font-semibold uppercase tracking-widest mb-3" style="color: var(--mm-color-blue);">Contenido</p><ul class="space-y-1.5"><li style="padding-left: 0px;"><a href="#paso-1-perfiles-individuales-todos-completan-new-moon" class="text-xs leading-snug block py-0.5 text-gray-600 hover:text-[var(--mm-color-blue)] hover:underline transition-colors">Paso 1: Perfiles individuales — Todos completan New Moon</a></li><li style="padding-left: 0px;"><a href="#paso-2-evaluacin-de-pares-testigo-aade-la-visin-externa" class="text-xs leading-snug block py-0.5 text-gray-600 hover:text-[var(--mm-color-blue)] hover:underline transition-colors">Paso 2: Evaluación de pares Testigo — Añade la visión externa</a></li><li style="padding-left: 0px;"><a href="#paso-3-mapa-de-equipo-visualiza-la-composicin-de-personalidad-colectiva" class="text-xs leading-snug block py-0.5 text-gray-600 hover:text-[var(--mm-color-blue)] hover:underline transition-colors">Paso 3: Mapa de equipo — Visualiza la composición de personalidad colectiva</a></li><li style="padding-left: 0px;"><a href="#cmo-facilitar-la-discusin-de-personalidad-del-equipo" class="text-xs leading-snug block py-0.5 text-gray-600 hover:text-[var(--mm-color-blue)] hover:underline transition-colors">Cómo facilitar la discusión de personalidad del equipo</a></li><li style="padding-left: 0px;"><a href="#usar-la-brecha-autotestigo-como-punto-de-partida-del-coaching" class="text-xs leading-snug block py-0.5 text-gray-600 hover:text-[var(--mm-color-blue)] hover:underline transition-colors">Usar la brecha Auto–Testigo como punto de partida del coaching</a></li><li style="padding-left: 0px;"><a href="#disear-acuerdos-de-trabajo-de-equipo-a-partir-de-las-perspectivas-de-personalidad" class="text-xs leading-snug block py-0.5 text-gray-600 hover:text-[var(--mm-color-blue)] hover:underline transition-colors">Diseñar acuerdos de trabajo de equipo a partir de las perspectivas de personalidad</a></li><li style="padding-left: 0px;"><a href="#por-qu-un-seguimiento-de-seis-meses-cierra-el-ciclo-de-desarrollo" class="text-xs leading-snug block py-0.5 text-gray-600 hover:text-[var(--mm-color-blue)] hover:underline transition-colors">Por qué un seguimiento de seis meses cierra el ciclo de desarrollo</a></li><li style="padding-left: 0px;"><a href="#resumen-cada-fase-de-desarrollo-herramienta-y-resultado-clave" class="text-xs leading-snug block py-0.5 text-gray-600 hover:text-[var(--mm-color-blue)] hover:underline transition-colors">Resumen: cada fase de desarrollo, herramienta y resultado clave</a></li><li style="padding-left: 0px;"><a href="#empieza-tu-ciclo-de-desarrollo-de-equipo-hoy-gratis" class="text-xs leading-snug block py-0.5 text-gray-600 hover:text-[var(--mm-color-blue)] hover:underline transition-colors">Empieza tu ciclo de desarrollo de equipo hoy — gratis</a></li><li style="padding-left: 0px;"><a href="#lectura-adicional" class="text-xs leading-snug block py-0.5 text-gray-600 hover:text-[var(--mm-color-blue)] hover:underline transition-colors">Lectura adicional</a></li></ul></nav></aside></div><section class="mt-16 pt-10 border-t max-w-3xl"><h2 class="text-xl font-bold text-gray-900 mb-6" style="font-family: var(--mm-font-display);">Artículos relacionados</h2><div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"><a class="group block rounded-xl border p-4 hover:shadow-md transition-shadow bg-white" href="/es/blog/personality-coaching-using-big-five-as-development-tool" data-discover="true"><h3 class="text-sm font-semibold text-gray-900 mb-1 group-hover:underline leading-snug" style="font-family: var(--mm-font-display);">Usar la personalidad Big Five como herramienta de coaching y desarrollo</h3><p class="text-xs text-gray-500 leading-relaxed line-clamp-2">Los datos de personalidad Big Five son más poderosos como herramienta de coaching que como filtro de selección. Usa la conciencia de los rasgos y la brecha yo–Testigo para impulsar un crecimiento dirigido.</p><span class="mt-2 inline-block text-xs font-medium hover:underline" style="color: var(--mm-color-blue);">Leer →</span></a><a class="group block rounded-xl border p-4 hover:shadow-md transition-shadow bg-white" href="/es/blog/how-to-use-personality-data-without-labelling-people" data-discover="true"><h3 class="text-sm font-semibold text-gray-900 mb-1 group-hover:underline leading-snug" style="font-family: var(--mm-font-display);">Cómo usar los datos de personalidad sin etiquetar a las personas</h3><p class="text-xs text-gray-500 leading-relaxed line-clamp-2">Las etiquetas de personalidad congelan a las personas en tipos y descartan lo que contienen las puntuaciones continuas. Usa los datos del Big Five como punto de partida para una conversación de desarrollo — no como un veredicto.</p><span class="mt-2 inline-block text-xs font-medium hover:underline" style="color: var(--mm-color-blue);">Leer →</span></a><a class="group block rounded-xl border p-4 hover:shadow-md transition-shadow bg-white" href="/es/blog/how-to-read-a-big-five-personality-report" data-discover="true"><h3 class="text-sm font-semibold text-gray-900 mb-1 group-hover:underline leading-snug" style="font-family: var(--mm-font-display);">Cómo leer un informe de personalidad Big Five: una guía práctica</h3><p class="text-xs text-gray-500 leading-relaxed line-clamp-2">Los informes Big Five revelan mucho más que cinco barras. La forma del perfil, las puntuaciones de facetas y el significado de los percentiles generan conocimiento real — y la mayoría de lectores se los pierden todos.</p><span class="mt-2 inline-block text-xs font-medium hover:underline" style="color: var(--mm-color-blue);">Leer →</span></a></div></section></main><div class="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-2"><button class="flex items-center gap-1.5 px-3 py-2 rounded border bg-white text-xs font-medium shadow-sm hover:shadow-md transition-all" style="color: rgb(102, 102, 102); border-color: rgb(212, 212, 212);"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class=""><path d="m5 8 6 6"></path><path d="m4 14 6-6 2-3"></path><path d="M2 5h12"></path><path d="M7 2h1"></path><path d="m22 22-5-10-5 10"></path><path d="M14 18h6"></path></svg>Sugerir traducción</button></div><div role="status" aria-live="polite" class="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-between gap-4 px-4 py-3 sm:px-6" style="background-color: rgb(17, 17, 17);"><p class="text-xs text-white/70 leading-relaxed">Cèrcol usa solo cookies funcionales — sin analíticas, sin rastreadores publicitarios. <a href="/privacy" class="underline text-white/90 hover:text-white transition-colors">Política de privacidad</a></p><button class="shrink-0 text-xs font-semibold text-white px-3 py-1.5 rounded border border-white/30 hover:bg-white/10 transition-colors" aria-label="Cerrar aviso de cookies">Aceptar</button></div></div></div></div>
+  
+
+</body></html>
