@@ -1287,7 +1287,7 @@
     },
     "q6": {
       "q": "¿Puedo volver a hacer las evaluaciones?",
-      "a": "Sí. Los instrumentos gratuitos no tienen límite. Cada envío es independiente — repetir la prueba no sobreescribe los resultados anteriores en tu cuenta. Muchas personas encuentran útil repetir First Quarter seis meses o un año después para ver qué ha cambiado."
+      "a": "Sí. Cada instrumento guarda tu resultado más reciente. Si repites la prueba, el resultado anterior se eliminará permanentemente de tu cuenta — se te pedirá confirmación antes de que esto ocurra. Repetirla puede ser útil para ver cómo has cambiado a lo largo de meses o años."
     },
     "q7": {
       "q": "¿Cèrcol está basado en el Big Five (OCEAN)?",
@@ -1299,7 +1299,7 @@
     },
     "q9": {
       "q": "¿Puedo usar Cèrcol para evaluar a todo el equipo?",
-      "a": "El Cèrcol de Cuarto Menguante — un informe de equipo que muestra la distribución de roles y el equilibrio del grupo — está en desarrollo. Por ahora, puedes invitar a cada miembro del equipo a completar Full Moon de forma independiente y usar el Testigo para obtener perspectivas externas de cada persona. Cuando el informe de equipo esté disponible, todos los resultados de Full Moon existentes se integrarán automáticamente."
+      "a": "Sí. Crea un grupo desde tu cuenta e invita a compañeros por correo electrónico. Cuando todos hayan completado Full Moon Cèrcol, el informe de equipo del Cuarto Menguante Cèrcol estará disponible: muestra la distribución de roles, el equilibrio de dimensiones en el grupo, los puntos ciegos compartidos y una narrativa de equipo. Cada miembro necesita un resultado de Full Moon; los resultados del Testigo añaden profundidad a los perfiles individuales dentro del informe."
     },
     "q10": {
       "q": "¿En qué idiomas está disponible Cèrcol?",

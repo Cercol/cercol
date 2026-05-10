@@ -1287,7 +1287,7 @@
     },
     "q6": {
       "q": "Kan jeg gentage vurderingerne?",
-      "a": "Ja. De gratis instrumenter har ingen grænse. Hvert indsend er uafhængigt — gentagelse overskriver ikke tidligere resultater i din konto. Folk finder det ofte nyttigt at gentage Første Kvartal seks måneder eller et år senere for at se, hvad der har ændret sig."
+      "a": "Ja. Hvert instrument gemmer dit seneste resultat. Hvis du gentager, fjernes det tidligere resultat permanent fra din konto — du vil blive bedt om at bekræfte, inden det sker. At gentage kan være nyttigt for at se, hvordan du har ændret dig over måneder eller år."
     },
     "q7": {
       "q": "Er Cèrcol baseret på Big Five (OCEAN)?",
@@ -1299,7 +1299,7 @@
     },
     "q9": {
       "q": "Kan jeg bruge Cèrcol til at vurdere hele mit team?",
-      "a": "Sidste Kvartal Cèrcol — en teamrapport, der viser rollefordeling og balance i gruppen — er under udvikling. Foreløbig kan du invitere hvert teammedlem til at gennemføre Fuldmåne uafhængigt og bruge Vidnet til at indhente eksterne perspektiver på hver person. Når teamrapporten lanceres, vil alle eksisterende Fuldmåne-resultater automatisk blive integreret."
+      "a": "Ja. Opret en gruppe fra din konto og inviter kollegaer via e-mail. Når alle har gennemført Fuldmåne Cèrcol, er Sidste Kvartal Cèrcol-teamrapporten tilgængelig: den viser rollefordeling, dimensionsbalance i gruppen, delte blinde vinkler og en teamfortælling. Hvert medlem har brug for et Fuldmåne-resultat; Vidne-resultater giver dybde til de individuelle profiler i rapporten."
     },
     "q10": {
       "q": "Hvilke sprog er Cèrcol tilgængeligt på?",
