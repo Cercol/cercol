@@ -85,6 +85,7 @@ def _row_to_list_item(row) -> dict:
     """Lighter projection for the list endpoint."""
     return {
         "slug":        row["slug"],
+        "status":      row["status"],
         "title":       row["title"],
         "description": row["description"],
         "coverUrl":    row["cover_url"],
