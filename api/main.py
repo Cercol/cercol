@@ -20,7 +20,7 @@ import secrets
 import time
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
-from typing import List, Optional
+from typing import Any, Dict, List, Literal, Optional
 
 import asyncpg
 import stripe
@@ -29,7 +29,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import JWTError, jwt
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, model_validator
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 
@@ -347,11 +347,12 @@ class CreateSessionsBody(BaseModel):
 
 
 class DomainScores(BaseModel):
-    presence:   float
-    bond:       float
-    discipline: float
-    depth:      float
-    vision:     float
+    # Witness submissions are always 1-5 (forced-choice averaged scale).
+    presence:   float = Field(..., ge=1, le=5)
+    bond:       float = Field(..., ge=1, le=5)
+    discipline: float = Field(..., ge=1, le=5)
+    depth:      float = Field(..., ge=1, le=5)
+    vision:     float = Field(..., ge=1, le=5)
 
 
 class CompleteSessionBody(BaseModel):
@@ -364,14 +365,35 @@ class CreateGroupBody(BaseModel):
 
 
 class LogResultBody(BaseModel):
-    instrument: str
-    language:   Optional[str] = None
-    presence:   Optional[float] = None
-    bond:       Optional[float] = None
-    discipline: Optional[float] = None
-    depth:      Optional[float] = None
-    vision:     Optional[float] = None
-    facets:     Optional[dict] = None
+    # Restrict to known instruments. Unknown values must be rejected
+    # because they would silently contaminate the results table and
+    # _recompute_norms.
+    instrument: Literal["newMoon", "firstQuarter", "fullMoon"]
+    # Optional language tag for Tier 1 norms. Restrict to supported
+    # locales to prevent typos polluting the empirical model.
+    language: Optional[Literal["en", "ca", "es", "fr", "de", "da"]] = None
+    # Scores: outer bounds [1, 7] cover both TIPI (newMoon, 1-7) and
+    # IPIP-NEO (firstQuarter / fullMoon, 1-5). The instrument-specific
+    # tighter bound is enforced by the model validator below.
+    presence:   Optional[float] = Field(None, ge=1, le=7)
+    bond:       Optional[float] = Field(None, ge=1, le=7)
+    discipline: Optional[float] = Field(None, ge=1, le=7)
+    depth:      Optional[float] = Field(None, ge=1, le=7)
+    vision:     Optional[float] = Field(None, ge=1, le=7)
+    facets:     Optional[Dict[str, Any]] = None
+
+    @model_validator(mode="after")
+    def _enforce_instrument_range(self):
+        # newMoon uses TIPI 1-7; firstQuarter and fullMoon use IPIP-NEO 1-5.
+        max_value = 7 if self.instrument == "newMoon" else 5
+        for field_name in ("presence", "bond", "discipline", "depth", "vision"):
+            value = getattr(self, field_name)
+            if value is not None and value > max_value:
+                raise ValueError(
+                    f"{field_name}={value} exceeds max {max_value} "
+                    f"for instrument={self.instrument}"
+                )
+        return self
 
 
 class UpdateProfileBody(BaseModel):
