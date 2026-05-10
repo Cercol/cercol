@@ -1071,12 +1071,9 @@
     "definitiveLabel": "Zeuge einbezogen",
     "definitiveNote": "Das Zeugensignal reduziert die Unsicherheit bei der Rollenzuweisung. Dies ist dein vollständigstes Ergebnis.",
     "convergenceSection": "Rollenausrichtung",
-    "convergenceHigh": "Deine Zeuge/Zeugin sieht dich sehr ähnlich wie du dich selbst.",
-    "convergenceMod": "Deine Zeuge/Zeugin sieht ein ähnliches Bild, mit einigen bemerkenswerten Unterschieden.",
-    "convergenceLow": "Deine Zeuge/Zeugin sieht dich ganz anders, als du dich selbst siehst.",
-    "convergenceNote": "Überschneidung zwischen deinem Selbstbericht-Rollenset (primär + Bogen) und deinem Zeugen-Rollenset.",
+    "convergenceNote": "Vergleich, wie du und deine Zeugen deine Dimensionen einordnen, geordnet nach deinem Selbstbericht.",
     "blindSpotsTitle": "Blinde Flecken",
-    "blindSpotsNote": "Dimensionen, in denen Selbstbericht- und Zeugenwerte um mehr als eine Standardabweichung abweichen.",
+    "blindSpotsNote": "Dimensionen, in denen dein Selbstbericht und die Zeugenwertungen in merklich unterschiedliche Richtungen zeigen.",
     "domainsSection": "Die fünf Dimensionen",
     "witnessSessionsSection": "Zeugen",
     "statusDone": "Abgeschlossen",
@@ -1102,7 +1099,14 @@
         "selfHigher": "Du trägst mehr emotionale Intensität, als andere sehen. Du verwaltest es vielleicht gut — oder es könnte bedeuten, dass deine innere Erfahrung nicht vollständig nach außen dringt.",
         "witnessHigher": "Andere spüren mehr emotionale Sensibilität in dir, als du berichtest. Möglicherweise unterschätzt du, wie sehr deine Stimmung und Reaktionen von den Menschen um dich herum gelesen werden."
       }
-    }
+    },
+    "witnessRoleDisclaimer": "Die Zeugenrolle ist ein Signal, kein Urteil. Verschiedene Beobachter können dieselbe Person unterschiedlich wahrnehmen.",
+    "convergenceStrong": "Starke Übereinstimmung",
+    "convergenceModerate": "Mäßige Übereinstimmung",
+    "convergenceDivergent": "Abweichende Perspektiven",
+    "rankColumnHeader": "Dimension",
+    "rankSelf": "Dein Rang",
+    "rankWitness": "Rang der Zeuge/Zeugin"
   },
   "about": {
     "title": "Über uns",

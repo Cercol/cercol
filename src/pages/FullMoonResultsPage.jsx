@@ -23,7 +23,7 @@ import { encodeScores, decodeScores, CLIPBOARD_FEEDBACK_MS } from '../utils/shar
 import { fmScoreToPercent, fmScoreLabel } from '../utils/full-moon-scoring'
 import { logResult } from '../utils/logger'
 import { computeRole } from '../utils/role-scoring'
-import { averageWitnessScores, detectDivergence, computeConvergence, computeCombinedRole } from '../utils/witness-scoring'
+import { averageWitnessScores, detectDivergence, spearmanRho, computeRankComparison, computeCombinedRole } from '../utils/witness-scoring'
 import { getMyWitnessSessions, getLatestFullMoonResult } from '../lib/api'
 import { FullMoonIcon, ShareIcon, DimensionIcon, BlindSpotsIcon } from '../components/MoonIcons'
 import { useAuth } from '../context/AuthContext'
@@ -151,9 +151,12 @@ export default function FullMoonResultsPage() {
   const divergence = hasEnoughWitnesses
     ? detectDivergence(domains, witnessScores)
     : []
-  const convergence = (hasEnoughWitnesses && witnessRole)
-    ? computeConvergence(selfRole, witnessRole)
+  const rho = hasEnoughWitnesses
+    ? spearmanRho(domains, witnessScores)
     : null
+  const rankComparison = hasEnoughWitnesses
+    ? computeRankComparison(domains, witnessScores)
+    : []
 
   const showWitnessSection = !isSharedLink && (fromTest || user != null)
 
@@ -195,6 +198,11 @@ export default function FullMoonResultsPage() {
             }
             badgeNote={hasEnoughWitnesses ? t('witnessResults.definitiveNote') : undefined}
           />
+          {hasAnyWitness && (
+            <p className="text-xs mt-3" style={{ color: colors.textMuted }}>
+              {t('witnessResults.witnessRoleDisclaimer')}
+            </p>
+          )}
         </section>
 
         {/* ── Section 2: Radar (col 1) + Domain rows (col 2) + Prob bars (col 3) ── */}
@@ -272,12 +280,12 @@ export default function FullMoonResultsPage() {
         )}
 
         {/* ── Section 4: Convergence meter (≥2 witnesses) ── */}
-        {hasEnoughWitnesses && convergence !== null && (
+        {hasEnoughWitnesses && rho !== null && (
           <section>
             <SectionLabel color="gray" className="mb-4">
               {t('witnessResults.convergenceSection')}
             </SectionLabel>
-            <ConvergenceMeter ratio={convergence} t={t} />
+            <ConvergenceMeter rho={rho} comparison={rankComparison} t={t} />
           </section>
         )}
 
