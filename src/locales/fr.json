@@ -1226,6 +1226,13 @@
   "faq": {
     "title": "FAQ",
     "heading": "Questions",
+    "label": "FAQ",
+    "cat": {
+      "data": "Données et confidentialité",
+      "science": "Science et méthodologie",
+      "instruments": "Les instruments",
+      "teams": "Pour les équipes"
+    },
     "q1": {
       "q": "Mes données sont-elles privées ?",
       "a": "Les instruments gratuits enregistrent des scores anonymes sans information personnelle — pas de nom, pas d'e-mail, pas d'adresse IP. Si vous créez un compte, votre e-mail est stocké sur nos propres serveurs et vos résultats sont liés à votre compte. Vous pouvez supprimer votre compte à tout moment. Aucune donnée n'est vendue ni partagée avec des tiers."

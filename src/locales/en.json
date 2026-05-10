@@ -1226,6 +1226,13 @@
   "faq": {
     "title": "FAQ",
     "heading": "Questions",
+    "label": "FAQ",
+    "cat": {
+      "data": "Data & Privacy",
+      "science": "Science & Methodology",
+      "instruments": "The Instruments",
+      "teams": "For Teams"
+    },
     "q1": {
       "q": "Is my data private?",
       "a": "The free instruments log anonymous scores with no personal information — no name, no email, no IP address. If you create an account, your email is stored on our own servers and your results are linked to your account. You can delete your account at any time. No data is sold or shared with third parties."
