@@ -1226,6 +1226,13 @@
   "faq": {
     "title": "FAQ",
     "heading": "Fragen",
+    "label": "FAQ",
+    "cat": {
+      "data": "Daten & Datenschutz",
+      "science": "Wissenschaft & Methodik",
+      "instruments": "Die Instrumente",
+      "teams": "Für Teams"
+    },
     "q1": {
       "q": "Sind meine Daten privat?",
       "a": "Die kostenlosen Instrumente speichern anonyme Ergebnisse ohne persönliche Informationen — kein Name, keine E-Mail, keine IP-Adresse. Wenn du ein Konto erstellst, wird deine E-Mail auf unseren eigenen Servern gespeichert und deine Ergebnisse werden mit deinem Konto verknüpft. Du kannst dein Konto jederzeit löschen. Keine Daten werden an Dritte verkauft oder weitergegeben."

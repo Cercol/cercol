@@ -1225,6 +1225,13 @@
   "faq": {
     "title": "Preguntes freqüents",
     "heading": "Preguntes",
+    "label": "FAQ",
+    "cat": {
+      "data": "Dades i privacitat",
+      "science": "Ciència i metodologia",
+      "instruments": "Els instruments",
+      "teams": "Per a equips"
+    },
     "q1": {
       "q": "Les meues dades són privades?",
       "a": "Els instruments gratuïts registren puntuacions anònimes sense informació personal — sense nom, sense correu, sense adreça IP. Si crees un compte, el teu correu s'emmagatzema als nostres propis servidors i els teus resultats es vinculen al teu compte. Pots eliminar el compte en qualsevol moment. Cap dada es ven ni es comparteix amb tercers."

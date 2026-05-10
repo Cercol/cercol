@@ -1226,6 +1226,13 @@
   "faq": {
     "title": "FAQ",
     "heading": "Spørgsmål",
+    "label": "FAQ",
+    "cat": {
+      "data": "Data & privatliv",
+      "science": "Videnskab & metode",
+      "instruments": "Instrumenterne",
+      "teams": "Til teams"
+    },
     "q1": {
       "q": "Er mine data private?",
       "a": "De gratis instrumenter logger anonyme scorer uden personlige oplysninger — intet navn, ingen e-mail, ingen IP-adresse. Hvis du opretter en konto, gemmes din e-mail på vores egne servere, og dine resultater knyttes til din konto. Du kan slette din konto til enhver tid. Ingen data sælges eller deles med tredjeparter."

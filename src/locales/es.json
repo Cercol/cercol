@@ -1226,6 +1226,13 @@
   "faq": {
     "title": "FAQ",
     "heading": "Preguntas",
+    "label": "FAQ",
+    "cat": {
+      "data": "Datos y privacidad",
+      "science": "Ciencia y metodología",
+      "instruments": "Los instrumentos",
+      "teams": "Para equipos"
+    },
     "q1": {
       "q": "¿Son privados mis datos?",
       "a": "Los instrumentos gratuitos registran puntuaciones anónimas sin información personal — sin nombre, sin correo electrónico, sin dirección IP. Si creas una cuenta, tu correo electrónico se almacena en nuestros propios servidores y tus resultados quedan vinculados a tu cuenta. Puedes eliminar tu cuenta en cualquier momento. No se venden ni se comparten datos con terceros."
