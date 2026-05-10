@@ -1070,12 +1070,9 @@
     "definitiveLabel": "Testimoni inclòs",
     "definitiveNote": "El senyal del Testimoni redueix la incertesa en l'assignació de rol. Aquest és el teu resultat més complet.",
     "convergenceSection": "Alineació de rol",
-    "convergenceHigh": "El teu Testimoni et veu molt semblant a com tu et veus.",
-    "convergenceMod": "El teu Testimoni veu una imatge semblant, amb algunes diferències notables.",
-    "convergenceLow": "El teu Testimoni et veu de manera força diferent a com tu et veus.",
-    "convergenceNote": "Solapament entre el teu conjunt de rols de l'autoinforme (principal + arc) i el del Testimoni.",
+    "convergenceNote": "Comparació de com tu i els teus witnesses ordeneu les dimensions, ordenat pel teu auto-informe.",
     "blindSpotsTitle": "Punts cecs",
-    "blindSpotsNote": "Dimensions on l'autoinforme i el Testimoni difereixen en més d'una desviació estàndard.",
+    "blindSpotsNote": "Dimensions on el teu auto-informe i les puntuacions del Witness apunten en direccions notablement diferents.",
     "domainsSection": "Les cinc dimensions",
     "witnessSessionsSection": "Testimonis",
     "statusDone": "Completat",
@@ -1101,7 +1098,14 @@
         "selfHigher": "Portes més intensitat emocional de la que els altres veuen. Pot ser que la gestiones bé — o pot significar que la teua experiència interior no arriba completament a l'exterior.",
         "witnessHigher": "Els altres perceben més sensibilitat emocional en tu de la que informes. Pot ser que estàs infravalorant quant el teu humor i les teues reaccions les llegeix la gent al teu voltant."
       }
-    }
+    },
+    "witnessRoleDisclaimer": "El rol del Witness és un senyal, no un veredicte. Diferents observadors poden percebre la mateixa persona de manera diferent.",
+    "convergenceStrong": "Acord fort",
+    "convergenceModerate": "Acord moderat",
+    "convergenceDivergent": "Perspectives divergents",
+    "rankColumnHeader": "Dimensió",
+    "rankSelf": "El teu rang",
+    "rankWitness": "Rang del Witness"
   },
   "about": {
     "title": "Sobre",

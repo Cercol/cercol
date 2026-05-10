@@ -1071,12 +1071,9 @@
     "definitiveLabel": "Témoin inclus",
     "definitiveNote": "Le signal du témoin réduit l'incertitude dans l'attribution du rôle. C'est votre résultat le plus complet.",
     "convergenceSection": "Alignement de rôle",
-    "convergenceHigh": "Votre témoin vous voit à peu près comme vous vous voyez.",
-    "convergenceMod": "Votre témoin voit une image similaire, avec quelques différences notables.",
-    "convergenceLow": "Votre témoin vous voit assez différemment de la façon dont vous vous voyez.",
-    "convergenceNote": "Chevauchement entre votre ensemble de rôles d'auto-évaluation (primaire + arc) et votre ensemble de rôles de témoin.",
+    "convergenceNote": "Comparaison de la façon dont vous et vos témoins classez vos dimensions, triée par votre auto-évaluation.",
     "blindSpotsTitle": "Angles morts",
-    "blindSpotsNote": "Dimensions où les scores d'auto-évaluation et de témoins diffèrent de plus d'un écart-type.",
+    "blindSpotsNote": "Dimensions où votre auto-évaluation et les scores de votre témoin pointent dans des directions nettement différentes.",
     "domainsSection": "Les cinq dimensions",
     "witnessSessionsSection": "Témoins",
     "statusDone": "Terminé",
@@ -1102,7 +1099,14 @@
         "selfHigher": "Vous portez plus d'intensité émotionnelle que les autres ne le voient. Vous la gérez peut-être bien — ou cela peut signifier que votre expérience intérieure n'atteint pas entièrement l'extérieur.",
         "witnessHigher": "Les autres perçoivent plus de sensibilité émotionnelle en vous que vous ne le rapportez. Vous sous-estimez peut-être à quel point votre humeur et vos réactions sont lues par les personnes autour de vous."
       }
-    }
+    },
+    "witnessRoleDisclaimer": "Le rôle du témoin est un signal, pas un verdict. Différents observateurs peuvent percevoir la même personne différemment.",
+    "convergenceStrong": "Accord fort",
+    "convergenceModerate": "Accord modéré",
+    "convergenceDivergent": "Perspectives divergentes",
+    "rankColumnHeader": "Dimension",
+    "rankSelf": "Votre rang",
+    "rankWitness": "Rang du témoin"
   },
   "about": {
     "title": "À propos",

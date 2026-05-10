@@ -1071,12 +1071,9 @@
     "definitiveLabel": "Vidne inkluderet",
     "definitiveNote": "Vidne-signalet reducerer usikkerheden i rolletildelingen. Dette er dit mest komplette resultat.",
     "convergenceSection": "Rolleoverstemmelsse",
-    "convergenceHigh": "Dit vidne ser dig meget som du ser dig selv.",
-    "convergenceMod": "Dit vidne ser et lignende billede med nogle bemærkelsesværdige forskelle.",
-    "convergenceLow": "Dit vidne ser dig ganske anderledes, end du ser dig selv.",
-    "convergenceNote": "Overlap mellem dit selvrapport-rollesæt (primær + bue) og dit vidne-rollesæt.",
+    "convergenceNote": "Sammenligning af, hvordan du og dine vidner rangerer dine dimensioner, sorteret efter din selvrapport.",
     "blindSpotsTitle": "Blinde pletter",
-    "blindSpotsNote": "Dimensioner, hvor selvrapport og vidne-scorer afviger med mere end én standardafvigelse.",
+    "blindSpotsNote": "Dimensioner, hvor din selvrapport og vidne-scorer peger i mærkbart forskellige retninger.",
     "domainsSection": "De fem dimensioner",
     "witnessSessionsSection": "Vidner",
     "statusDone": "Udført",
@@ -1102,7 +1099,14 @@
         "selfHigher": "Du bærer mere følelsesmæssig intensitet, end andre ser. Du styrer det måske godt — eller det kan betyde, at din indre oplevelse ikke fuldt ud når udadtil.",
         "witnessHigher": "Andre mærker mere følelsesmæssig sensitivitet i dig, end du rapporterer. Du undervurderer måske, hvor meget dit humør og dine reaktioner læses af menneskene omkring dig."
       }
-    }
+    },
+    "witnessRoleDisclaimer": "Vidnets rolle er et signal, ikke en dom. Forskellige observatører kan opfatte den samme person forskelligt.",
+    "convergenceStrong": "Stærk enighed",
+    "convergenceModerate": "Moderat enighed",
+    "convergenceDivergent": "Afvigende perspektiver",
+    "rankColumnHeader": "Dimension",
+    "rankSelf": "Din rang",
+    "rankWitness": "Vidnets rang"
   },
   "about": {
     "title": "Om",

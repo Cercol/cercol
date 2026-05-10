@@ -1071,12 +1071,9 @@
     "definitiveLabel": "Testigo incluido",
     "definitiveNote": "La señal del testigo reduce la incertidumbre en la asignación del rol. Este es tu resultado más completo.",
     "convergenceSection": "Alineación de rol",
-    "convergenceHigh": "Tu testigo te ve de manera muy similar a como te ves tú.",
-    "convergenceMod": "Tu testigo ve una imagen similar, con algunas diferencias notables.",
-    "convergenceLow": "Tu testigo te ve de manera bastante diferente a como te ves tú.",
-    "convergenceNote": "Solapamiento entre tu conjunto de roles de autoinforme (primario + arco) y tu conjunto de roles de testigo.",
+    "convergenceNote": "Comparación de cómo tú y tus testigos ordenáis vuestras dimensiones, ordenado por tu autoinforme.",
     "blindSpotsTitle": "Puntos ciegos",
-    "blindSpotsNote": "Dimensiones donde las puntuaciones de autoinforme y de testigos difieren en más de una desviación estándar.",
+    "blindSpotsNote": "Dimensiones donde tu autoinforme y las puntuaciones del testigo apuntan en direcciones notablemente diferentes.",
     "domainsSection": "Las cinco dimensiones",
     "witnessSessionsSection": "Testigos",
     "statusDone": "Completado",
@@ -1102,7 +1099,14 @@
         "selfHigher": "Cargas más intensidad emocional de la que los demás ven. Puede que la estés gestionando bien — o puede que tu experiencia interior no llegue del todo al exterior.",
         "witnessHigher": "Los demás perciben más sensibilidad emocional en ti de lo que tú informas. Puede que estés subestimando cuánto tu estado de ánimo y tus reacciones son leídos por las personas a tu alrededor."
       }
-    }
+    },
+    "witnessRoleDisclaimer": "El rol del testigo es una señal, no un veredicto. Diferentes observadores pueden percibir a la misma persona de manera diferente.",
+    "convergenceStrong": "Acuerdo fuerte",
+    "convergenceModerate": "Acuerdo moderado",
+    "convergenceDivergent": "Perspectivas divergentes",
+    "rankColumnHeader": "Dimensión",
+    "rankSelf": "Tu rango",
+    "rankWitness": "Rango del testigo"
   },
   "about": {
     "title": "Acerca de",

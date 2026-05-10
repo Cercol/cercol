@@ -1,46 +1,84 @@
 /**
- * ConvergenceMeter — visual convergence indicator between self and Witness scores.
+ * ConvergenceMeter — Spearman rank-correlation display between self and Witness scores.
  * Used in FullMoonResultsPage when ≥2 Witnesses have responded.
  *
  * Props:
- *   ratio — number 0–1 (from computeConvergence)
- *   t     — i18n translation function
+ *   rho        — Spearman ρ number in [-1, 1] (from spearmanRho)
+ *   comparison — array of {domain, selfRank, witnessRank} (from computeRankComparison)
+ *   t          — i18n translation function
  */
+import { spearmanLabel } from '../../utils/witness-scoring'
 import { colors } from '../../design/tokens'
 
-export default function ConvergenceMeter({ ratio, t }) {
-  const pct = Math.round(ratio * 100)
+// Map domain key → i18n label key for the domains section
+const DOMAIN_LABEL_KEY = {
+  presence:   'domains.extraversion.label',
+  bond:       'domains.agreeableness.label',
+  vision:     'domains.openMindedness.label',
+  discipline: 'domains.conscientiousness.label',
+  depth:      'domains.negativeEmotionality.label',
+}
 
-  let label, barColor, bg, textColor
-  if (ratio >= 0.6) {
-    label     = t('witnessResults.convergenceHigh')
-    barColor  = 'bg-emerald-500'
-    bg        = 'bg-emerald-50'
-    textColor = 'text-emerald-700'
-  } else if (ratio >= 0.3) {
-    label     = t('witnessResults.convergenceMod')
-    barColor  = 'bg-amber-400'
-    bg        = 'bg-amber-50'
-    textColor = 'text-amber-700'
+export default function ConvergenceMeter({ rho, comparison = [], t }) {
+  const level = spearmanLabel(rho ?? 0)
+
+  let label, bg, textColor, borderColor
+  if (level === 'strong') {
+    label       = t('witnessResults.convergenceStrong')
+    bg          = 'bg-emerald-50'
+    textColor   = 'text-emerald-700'
+    borderColor = 'border-emerald-200'
+  } else if (level === 'moderate') {
+    label       = t('witnessResults.convergenceModerate')
+    bg          = 'bg-amber-50'
+    textColor   = 'text-amber-700'
+    borderColor = 'border-amber-200'
   } else {
-    label     = t('witnessResults.convergenceLow')
-    barColor  = 'bg-red-400'
-    bg        = 'bg-red-50'
-    textColor = 'text-red-600'
+    label       = t('witnessResults.convergenceDivergent')
+    bg          = 'bg-red-50'
+    textColor   = 'text-red-600'
+    borderColor = 'border-red-200'
   }
 
   return (
-    <div className={`rounded border border-gray-200 px-6 py-5 ${bg}`}>
-      <p className={`text-sm font-semibold mb-3 ${textColor}`}>{label}</p>
-      <div className="w-full h-2.5 bg-white rounded-full overflow-hidden mb-2">
-        <div
-          className={`h-full rounded-full transition-all duration-700 ${barColor}`}
-          style={{ width: `${pct}%` }}
-        />
-      </div>
-      <p className="text-xs" style={{ color: colors.textMuted }}>
+    <div className={`rounded border ${borderColor} px-6 py-5 ${bg}`}>
+      <p className={`text-sm font-semibold mb-1 ${textColor}`}>{label}</p>
+      <p className="text-xs mb-4" style={{ color: colors.textMuted }}>
         {t('witnessResults.convergenceNote')}
       </p>
+
+      {comparison.length > 0 && (
+        <table className="w-full text-xs border-collapse">
+          <thead>
+            <tr className="border-b border-gray-200">
+              <th className="text-left py-1 font-medium" style={{ color: colors.textMuted }}>
+                {t('witnessResults.rankColumnHeader')}
+              </th>
+              <th className="text-center py-1 font-medium w-24" style={{ color: colors.textMuted }}>
+                {t('witnessResults.rankSelf')}
+              </th>
+              <th className="text-center py-1 font-medium w-28" style={{ color: colors.textMuted }}>
+                {t('witnessResults.rankWitness')}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {comparison.map(({ domain, selfRank, witnessRank }) => (
+              <tr key={domain} className="border-b border-gray-100 last:border-0">
+                <td className="py-1.5" style={{ color: colors.textBase }}>
+                  {t(DOMAIN_LABEL_KEY[domain])}
+                </td>
+                <td className="text-center py-1.5" style={{ color: colors.textBase }}>
+                  {Math.round(selfRank)}
+                </td>
+                <td className="text-center py-1.5" style={{ color: colors.textBase }}>
+                  {Math.round(witnessRank)}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   )
 }
