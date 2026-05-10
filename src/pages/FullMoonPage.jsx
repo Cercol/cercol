@@ -23,7 +23,7 @@ import { useScaleLabels } from '../hooks/useScaleLabels'
 import { useInstrumentKeyboard } from '../hooks/useInstrumentKeyboard'
 import { useFeedbackContext } from '../context/FeedbackContext'
 import { useAuth } from '../context/AuthContext'
-import { createCheckoutSession, getMyProfile, getMyResults } from '../lib/api'
+import { createCheckoutSession, getMyProfile, getMyResults, anonymiseResult } from '../lib/api'
 import QuestionCard from '../components/QuestionCard'
 import ProgressBar from '../components/ProgressBar'
 import { Card, Button, SectionLabel } from '../components/ui'
@@ -64,6 +64,12 @@ export default function FullMoonPage() {
   const [pollTimedOut,    setPollTimedOut]     = useState(false)
   const pollTimerRef = useRef(null)
 
+  // ── Redo state (for 'completed' screen) ────────────────────────
+  const [existingResultId,  setExistingResultId]  = useState(null)
+  const [redoConfirming,    setRedoConfirming]    = useState(false)
+  const [redoLoading,       setRedoLoading]       = useState(false)
+  const [redoError,         setRedoError]         = useState(false)
+
   useEffect(() => {
     if (authLoading) return
     if (!user) {
@@ -82,8 +88,13 @@ export default function FullMoonPage() {
         // Check if the user already has a Full Moon result
         const results = await getMyResults().catch(() => [])
         if (cancelled) return
-        const hasFullMoon = results.some(r => r.instrument === 'fullMoon')
-        setGateState(hasFullMoon ? 'completed' : 'ready')
+        const fullMoonResult = results.find(r => r.instrument === 'fullMoon')
+        if (fullMoonResult) {
+          setExistingResultId(fullMoonResult.id)
+          setGateState('completed')
+        } else {
+          setGateState('ready')
+        }
         return
       }
 
@@ -109,6 +120,22 @@ export default function FullMoonPage() {
       clearTimeout(pollTimerRef.current)
     }
   }, [user, authLoading]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  async function handleRedo() {
+    if (!existingResultId) return
+    setRedoLoading(true)
+    setRedoError(false)
+    try {
+      await anonymiseResult(existingResultId)
+      setRedoConfirming(false)
+      setExistingResultId(null)
+      setGateState('ready')
+    } catch {
+      setRedoError(true)
+    } finally {
+      setRedoLoading(false)
+    }
+  }
 
   async function handleUnlock() {
     setCheckoutLoading(true)
@@ -252,11 +279,44 @@ export default function FullMoonPage() {
             <p className="text-sm text-gray-500 leading-relaxed mb-6">
               {t('fm.alreadyCompleted.body')}
             </p>
-            <Button variant="primary" onClick={() => navigate('/full-moon/results')} className="w-full">
-              {t('fm.alreadyCompleted.cta')}
-            </Button>
+            <div className="flex flex-col gap-3">
+              <Button variant="primary" onClick={() => navigate('/full-moon/results')} className="w-full">
+                {t('fm.alreadyCompleted.cta')}
+              </Button>
+              <Button
+                variant="secondary"
+                className="w-full"
+                onClick={() => { setRedoConfirming(true); setRedoError(false) }}
+              >
+                {t('fm.alreadyCompleted.redo')}
+              </Button>
+            </div>
+            {redoError && (
+              <p className="mt-3 text-xs text-red-500">{t('myResults.deleteError')}</p>
+            )}
           </Card>
         </div>
+
+        {redoConfirming && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40">
+            <div className="bg-white rounded-2xl shadow-xl max-w-sm w-full p-6">
+              <h2 className="text-base font-bold text-gray-900 mb-3">
+                {t('myResults.redoConfirm.title')}
+              </h2>
+              <p className="text-sm text-gray-600 leading-relaxed mb-6">
+                {t('myResults.redoConfirm.body')}
+              </p>
+              <div className="flex gap-3 justify-end">
+                <Button variant="secondary" size="sm" onClick={() => setRedoConfirming(false)} disabled={redoLoading}>
+                  {t('myResults.redoConfirm.cancel')}
+                </Button>
+                <Button variant="danger" size="sm" onClick={handleRedo} disabled={redoLoading}>
+                  {redoLoading ? '…' : t('myResults.redoConfirm.confirm')}
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
       </main>
     )
   }

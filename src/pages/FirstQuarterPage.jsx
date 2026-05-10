@@ -3,7 +3,12 @@
  * grouped into 5 blocks of 12, one per domain.
  * Block order: depth, presence, vision, bond, discipline
  *
- * States:
+ * Gate (pre-test, logged-in users only):
+ *   'checking'  — fetching existing results
+ *   'completed' — user already has a firstQuarter result → offer View / Redo
+ *   'ready'     — no existing result, show test normally
+ *
+ * Test states:
  *   answering  — showing a question within a block
  *   transition — brief screen between blocks
  */
@@ -16,11 +21,37 @@ import { useInstrumentKeyboard } from '../hooks/useInstrumentKeyboard'
 import { INSTRUMENT_DOMAIN_ORDER } from '../data/domains'
 import { computeFQScores } from '../utils/first-quarter-scoring'
 import { useFeedbackContext } from '../context/FeedbackContext'
+import { useAuth } from '../context/AuthContext'
+import { getMyResults, anonymiseResult } from '../lib/api'
 import QuestionCard from '../components/QuestionCard'
 import ProgressBar from '../components/ProgressBar'
-import { Button, SectionLabel } from '../components/ui'
+import { Button, Card, SectionLabel } from '../components/ui'
 import { colors, DOMAIN_BG_CLASSES, DOMAIN_ICON_CLASSES } from '../design/tokens'
 import { FirstQuarterIcon, ArrowLeftIcon, ArrowRightIcon, DimensionIcon } from '../components/MoonIcons'
+
+/** Redo confirmation modal — warns user their previous result will be anonymised */
+function RedoConfirmModal({ t, onConfirm, onCancel, loading }) {
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40">
+      <div className="bg-white rounded-2xl shadow-xl max-w-sm w-full p-6">
+        <h2 className="text-base font-bold text-gray-900 mb-3">
+          {t('myResults.redoConfirm.title')}
+        </h2>
+        <p className="text-sm text-gray-600 leading-relaxed mb-6">
+          {t('myResults.redoConfirm.body')}
+        </p>
+        <div className="flex gap-3 justify-end">
+          <Button variant="secondary" size="sm" onClick={onCancel} disabled={loading}>
+            {t('myResults.redoConfirm.cancel')}
+          </Button>
+          <Button variant="danger" size="sm" onClick={onConfirm} disabled={loading}>
+            {loading ? '…' : t('myResults.redoConfirm.confirm')}
+          </Button>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 const DOMAIN_ORDER = INSTRUMENT_DOMAIN_ORDER
 
@@ -38,7 +69,49 @@ export default function FirstQuarterPage() {
   const navigate = useNavigate()
   const { t } = useTranslation()
   const { setItemContext } = useFeedbackContext()
+  const { user, loading: authLoading } = useAuth()
 
+  // ── Gate state ─────────────────────────────────────────────────
+  const [gateState,       setGateState]       = useState('checking')
+  const [existingResult,  setExistingResult]  = useState(null)
+  const [redoConfirming,  setRedoConfirming]  = useState(false)
+  const [redoLoading,     setRedoLoading]     = useState(false)
+  const [redoError,       setRedoError]       = useState(false)
+
+  useEffect(() => {
+    if (authLoading) return
+    if (!user) { setGateState('ready'); return }
+
+    getMyResults()
+      .then(results => {
+        const existing = results.find(r => r.instrument === 'firstQuarter')
+        if (existing) {
+          setExistingResult(existing)
+          setGateState('completed')
+        } else {
+          setGateState('ready')
+        }
+      })
+      .catch(() => setGateState('ready'))
+  }, [user, authLoading]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  async function handleRedo() {
+    if (!existingResult) return
+    setRedoLoading(true)
+    setRedoError(false)
+    try {
+      await anonymiseResult(existingResult.id)
+      setRedoConfirming(false)
+      setExistingResult(null)
+      setGateState('ready')
+    } catch {
+      setRedoError(true)
+    } finally {
+      setRedoLoading(false)
+    }
+  }
+
+  // ── Test state ─────────────────────────────────────────────────
   const [showIntro, setShowIntro] = useState(true)
   const [blockIdx, setBlockIdx] = useState(0)
   const [itemInBlockIdx, setItemInBlockIdx] = useState(0)
@@ -59,13 +132,14 @@ export default function FirstQuarterPage() {
 
   // Publish current item to FeedbackContext
   useEffect(() => {
+    if (gateState !== 'ready') return
     if (showTransition) {
       setItemContext({ itemId: null, itemText: null })
     } else {
       setItemContext({ itemId: item.id, itemText: item.text.en })
     }
     return () => setItemContext({ itemId: null, itemText: null })
-  }, [item?.id, showTransition]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [item?.id, showTransition, gateState]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const scaleLabels = useScaleLabels('scale', FQ_SCALE_LABELS)
 
@@ -125,12 +199,76 @@ export default function FirstQuarterPage() {
     scalePoints:         SCALE_POINTS,
     showIntroRef,
     showTransitionRef,
+    enabled:             gateState === 'ready',
     onNumber:            (n) => setAnswers((prev) => ({ ...prev, [item.id]: n })),
     onNextRef:           handleNextRef,
     onBackRef:           handleBackRef,
     onDismissIntro:      () => setShowIntro(false),
     onContinueBlockRef:  handleContinueToNextBlockRef,
   })
+
+  // ── Gate screens ───────────────────────────────────────────────
+  if (gateState === 'checking') {
+    return <main className="min-h-[calc(100vh-4rem)]" />
+  }
+
+  if (gateState === 'completed') {
+    return (
+      <main className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)]">
+        <div className="w-full max-w-md">
+          <Card className="shadow-sm p-8 text-center">
+            <FirstQuarterIcon size={36} className="mb-4 mx-auto" style={{ color: colors.green }} />
+            <h1 className="text-xl font-bold text-gray-900 mb-3">
+              {t('fq.alreadyCompleted.heading')}
+            </h1>
+            <p className="text-sm text-gray-500 leading-relaxed mb-6">
+              {t('fq.alreadyCompleted.body')}
+            </p>
+            <div className="flex flex-col gap-3">
+              <Button
+                variant="primary"
+                className="w-full"
+                onClick={() => navigate('/first-quarter/results', {
+                  state: {
+                    domains: {
+                      presence:   existingResult.presence,
+                      bond:       existingResult.bond,
+                      discipline: existingResult.discipline,
+                      depth:      existingResult.depth,
+                      vision:     existingResult.vision,
+                    },
+                    facets:   existingResult.facets ?? null,
+                    fromTest: false,
+                  }
+                })}
+              >
+                {t('fq.alreadyCompleted.cta')}
+              </Button>
+              <Button
+                variant="secondary"
+                className="w-full"
+                onClick={() => { setRedoConfirming(true); setRedoError(false) }}
+              >
+                {t('fq.alreadyCompleted.redo')}
+              </Button>
+            </div>
+            {redoError && (
+              <p className="mt-3 text-xs text-red-500">{t('myResults.deleteError')}</p>
+            )}
+          </Card>
+        </div>
+
+        {redoConfirming && (
+          <RedoConfirmModal
+            t={t}
+            onConfirm={handleRedo}
+            onCancel={() => setRedoConfirming(false)}
+            loading={redoLoading}
+          />
+        )}
+      </main>
+    )
+  }
 
   // ── Intro screen ───────────────────────────────────────────────
   if (showIntro) {

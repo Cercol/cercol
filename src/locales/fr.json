@@ -33,6 +33,12 @@
       "cancel": "Annuler"
     },
     "deleteError": "Impossible de supprimer le résultat. Réessayez.",
+    "redoConfirm": {
+      "title": "Refaire cet instrument ?",
+      "body": "Vos résultats précédents ne seront plus disponibles. Cette action est irréversible.",
+      "confirm": "Oui, refaire",
+      "cancel": "Annuler"
+    },
     "contributionsHeading": "Contributions en tant que témoin",
     "contributionsEmpty": "Vous n'avez pas encore complété de session témoin.",
     "contributionItem": "Vous avez décrit {{name}}"
@@ -327,6 +333,12 @@
       "scale": "1–7 · Pas du tout d'accord → Tout à fait d'accord",
       "guidance": "Suivez votre première intuition. Il n'y a pas de bonnes réponses.",
       "cta": "Commencer"
+    },
+    "alreadyCompleted": {
+      "heading": "Vous avez déjà complété Cèrcol de Nouvelle Lune",
+      "body": "Vous avez un résultat existant pour cet instrument.",
+      "cta": "Voir mes résultats",
+      "redo": "Refaire"
     }
   },
   "newMoonResults": {
@@ -364,6 +376,12 @@
       "scale": "1–5 · Pas du tout d'accord → Tout à fait d'accord",
       "guidance": "Pas de bonnes réponses. Allez avec ce qui est vrai pour vous maintenant.",
       "cta": "Commencer"
+    },
+    "alreadyCompleted": {
+      "heading": "Vous avez déjà complété Cèrcol de Premier Quartier",
+      "body": "Vous avez un résultat existant pour cet instrument.",
+      "cta": "Voir mes résultats",
+      "redo": "Refaire"
     }
   },
   "fqResults": {
@@ -435,7 +453,8 @@
     "alreadyCompleted": {
       "heading": "Vous avez déjà complété Full Moon Cèrcol",
       "body": "La personnalité ne change pas significativement sur de courtes périodes. Votre résultat existant reste précis — le reprendre donnerait des scores très similaires.",
-      "cta": "Voir votre rapport"
+      "cta": "Voir votre rapport",
+      "redo": "Refaire"
     }
   },
   "fmResults": {

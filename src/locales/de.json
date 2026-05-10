@@ -33,6 +33,12 @@
       "cancel": "Abbrechen"
     },
     "deleteError": "Das Ergebnis konnte nicht gelöscht werden. Versuche es erneut.",
+    "redoConfirm": {
+      "title": "Dieses Instrument wiederholen?",
+      "body": "Deine vorherigen Ergebnisse werden nicht mehr verfügbar sein. Diese Aktion kann nicht rückgängig gemacht werden.",
+      "confirm": "Ja, wiederholen",
+      "cancel": "Abbrechen"
+    },
     "contributionsHeading": "Beiträge als Zeuge/Zeugin",
     "contributionsEmpty": "Du hast noch keine Zeugensitzungen abgeschlossen.",
     "contributionItem": "{{name}} beschrieben"
@@ -327,6 +333,12 @@
       "scale": "1–7 · Stimme überhaupt nicht zu → Stimme vollständig zu",
       "guidance": "Folge deinem ersten Instinkt. Es gibt keine richtigen Antworten.",
       "cta": "Beginnen"
+    },
+    "alreadyCompleted": {
+      "heading": "Du hast Cèrcol des Neumondes bereits abgeschlossen",
+      "body": "Du hast ein vorhandenes Ergebnis für dieses Instrument.",
+      "cta": "Ergebnisse ansehen",
+      "redo": "Wiederholen"
     }
   },
   "newMoonResults": {
@@ -364,6 +376,12 @@
       "scale": "1–5 · Stimme überhaupt nicht zu → Stimme vollständig zu",
       "guidance": "Keine richtigen Antworten. Geh mit dem, was jetzt für dich wahr ist.",
       "cta": "Beginnen"
+    },
+    "alreadyCompleted": {
+      "heading": "Du hast Cèrcol des Ersten Viertels bereits abgeschlossen",
+      "body": "Du hast ein vorhandenes Ergebnis für dieses Instrument.",
+      "cta": "Ergebnisse ansehen",
+      "redo": "Wiederholen"
     }
   },
   "fqResults": {
@@ -435,7 +453,8 @@
     "alreadyCompleted": {
       "heading": "Du hast Full Moon Cèrcol bereits abgeschlossen",
       "body": "Die Persönlichkeit verändert sich in kurzen Zeiträumen nicht wesentlich. Dein vorhandenes Ergebnis bleibt präzise — eine Wiederholung würde sehr ähnliche Werte ergeben.",
-      "cta": "Bericht anzeigen"
+      "cta": "Bericht anzeigen",
+      "redo": "Wiederholen"
     }
   },
   "fmResults": {

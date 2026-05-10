@@ -2,6 +2,11 @@
  * NewMoonPage — New Moon Cèrcol: 10-item quick assessment.
  * Uses the TIPI instrument, Likert 1-7 scale.
  * On completion, navigates to /new-moon/results.
+ *
+ * Gate (pre-test, logged-in users only):
+ *   'checking'  — fetching existing results
+ *   'completed' — user already has a newMoon result → offer View / Redo
+ *   'ready'     — no existing result, show test normally
  */
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -11,6 +16,8 @@ import { useScaleLabels } from '../hooks/useScaleLabels'
 import { useInstrumentKeyboard } from '../hooks/useInstrumentKeyboard'
 import { computeRadarScores } from '../utils/new-moon-scoring'
 import { useFeedbackContext } from '../context/FeedbackContext'
+import { useAuth } from '../context/AuthContext'
+import { getMyResults, anonymiseResult } from '../lib/api'
 import QuestionCard from '../components/QuestionCard'
 import ProgressBar from '../components/ProgressBar'
 import { Button, Card, SectionLabel } from '../components/ui'
@@ -19,10 +26,77 @@ import { NewMoonIcon, ArrowLeftIcon, ArrowRightIcon } from '../components/MoonIc
 
 const SCALE_POINTS = 7
 
+/** Redo confirmation modal — warns user their previous result will be anonymised */
+function RedoConfirmModal({ t, onConfirm, onCancel, loading }) {
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40">
+      <div className="bg-white rounded-2xl shadow-xl max-w-sm w-full p-6">
+        <h2 className="text-base font-bold text-gray-900 mb-3">
+          {t('myResults.redoConfirm.title')}
+        </h2>
+        <p className="text-sm text-gray-600 leading-relaxed mb-6">
+          {t('myResults.redoConfirm.body')}
+        </p>
+        <div className="flex gap-3 justify-end">
+          <Button variant="secondary" size="sm" onClick={onCancel} disabled={loading}>
+            {t('myResults.redoConfirm.cancel')}
+          </Button>
+          <Button variant="danger" size="sm" onClick={onConfirm} disabled={loading}>
+            {loading ? '…' : t('myResults.redoConfirm.confirm')}
+          </Button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function NewMoonPage() {
   const navigate = useNavigate()
   const { t } = useTranslation()
   const { setItemContext } = useFeedbackContext()
+  const { user, loading: authLoading } = useAuth()
+
+  // ── Gate state ─────────────────────────────────────────────────
+  const [gateState,       setGateState]       = useState('checking')
+  const [existingResult,  setExistingResult]  = useState(null)
+  const [redoConfirming,  setRedoConfirming]  = useState(false)
+  const [redoLoading,     setRedoLoading]     = useState(false)
+  const [redoError,       setRedoError]       = useState(false)
+
+  useEffect(() => {
+    if (authLoading) return
+    if (!user) { setGateState('ready'); return }
+
+    getMyResults()
+      .then(results => {
+        const existing = results.find(r => r.instrument === 'newMoon')
+        if (existing) {
+          setExistingResult(existing)
+          setGateState('completed')
+        } else {
+          setGateState('ready')
+        }
+      })
+      .catch(() => setGateState('ready'))
+  }, [user, authLoading]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  async function handleRedo() {
+    if (!existingResult) return
+    setRedoLoading(true)
+    setRedoError(false)
+    try {
+      await anonymiseResult(existingResult.id)
+      setRedoConfirming(false)
+      setExistingResult(null)
+      setGateState('ready')
+    } catch {
+      setRedoError(true)
+    } finally {
+      setRedoLoading(false)
+    }
+  }
+
+  // ── Test state ─────────────────────────────────────────────────
   const [showIntro, setShowIntro] = useState(true)
   const [answers, setAnswers] = useState({})
   const [current, setCurrent] = useState(0)
@@ -33,9 +107,10 @@ export default function NewMoonPage() {
 
   // Publish current item to FeedbackContext so FeedbackButton can include it
   useEffect(() => {
+    if (gateState !== 'ready') return
     setItemContext({ itemId: item.id, itemText: item.text.en })
     return () => setItemContext({ itemId: null, itemText: null })
-  }, [item.id]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [item.id, gateState]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Translate scale labels using i18n (scale7 namespace), fall back to English
   const scaleLabels = useScaleLabels('scale7', SCALE_LABELS)
@@ -68,14 +143,77 @@ export default function NewMoonPage() {
   showIntroRef.current = showIntro
 
   useInstrumentKeyboard({
-    itemId:        item.id,
-    scalePoints:   SCALE_POINTS,
+    itemId:         item.id,
+    scalePoints:    SCALE_POINTS,
     showIntroRef,
-    onNumber:      (n) => setAnswers((prev) => ({ ...prev, [item.id]: n })),
-    onNextRef:     handleNextRef,
-    onBackRef:     handleBackRef,
+    enabled:        gateState === 'ready',
+    onNumber:       (n) => setAnswers((prev) => ({ ...prev, [item.id]: n })),
+    onNextRef:      handleNextRef,
+    onBackRef:      handleBackRef,
     onDismissIntro: () => setShowIntro(false),
   })
+
+  // ── Gate screens ───────────────────────────────────────────────
+  if (gateState === 'checking') {
+    return <main className="min-h-[calc(100vh-4rem)]" />
+  }
+
+  if (gateState === 'completed') {
+    return (
+      <main className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)]">
+        <div className="w-full max-w-md">
+          <Card className="shadow-sm p-8 text-center">
+            <NewMoonIcon size={36} className="mb-4 mx-auto" style={{ color: colors.red }} />
+            <h1 className="text-xl font-bold text-gray-900 mb-3">
+              {t('newMoon.alreadyCompleted.heading')}
+            </h1>
+            <p className="text-sm text-gray-500 leading-relaxed mb-6">
+              {t('newMoon.alreadyCompleted.body')}
+            </p>
+            <div className="flex flex-col gap-3">
+              <Button
+                variant="primary"
+                className="w-full"
+                onClick={() => navigate('/new-moon/results', {
+                  state: {
+                    scores: {
+                      presence:   existingResult.presence,
+                      bond:       existingResult.bond,
+                      discipline: existingResult.discipline,
+                      depth:      existingResult.depth,
+                      vision:     existingResult.vision,
+                    },
+                    fromTest: false,
+                  }
+                })}
+              >
+                {t('newMoon.alreadyCompleted.cta')}
+              </Button>
+              <Button
+                variant="secondary"
+                className="w-full"
+                onClick={() => { setRedoConfirming(true); setRedoError(false) }}
+              >
+                {t('newMoon.alreadyCompleted.redo')}
+              </Button>
+            </div>
+            {redoError && (
+              <p className="mt-3 text-xs text-red-500">{t('myResults.deleteError')}</p>
+            )}
+          </Card>
+        </div>
+
+        {redoConfirming && (
+          <RedoConfirmModal
+            t={t}
+            onConfirm={handleRedo}
+            onCancel={() => setRedoConfirming(false)}
+            loading={redoLoading}
+          />
+        )}
+      </main>
+    )
+  }
 
   // ── Intro screen ───────────────────────────────────────────────
   if (showIntro) {

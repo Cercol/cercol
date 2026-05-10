@@ -129,8 +129,7 @@ export default function Layout({ children }) {
 
           {/* Nav — desktop only */}
           <nav
-            className="hidden md:flex flex-1 items-center gap-1 overflow-x-auto min-w-0"
-            style={{ scrollbarWidth: 'none' }}
+            className="hidden md:flex flex-1 items-center gap-1"
             aria-label="Main navigation"
           >
             {/* Direct links */}
