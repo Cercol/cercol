@@ -1233,6 +1233,16 @@ Every blog article now has at least one inline visual element embedded in the ma
   - How-to/workshop: SVG workflow flows, agenda timelines, callout frameworks
   - All other articles: contextually matched stat-grid or callout box
 
+### Phase 15.5.7 — Blog category filter UI ✅ COMPLETE
+- `src/pages/BlogIndexPage.jsx`: pill filter buttons for 7 categories (All, Dimensions, Science, Teams, Leadership, Work, Guides). Client-side filter using `posts.filter(p => p.category === activeCategory)`. Active pill styled in brand blue; inactive in gray with blue hover. Only shown when posts are loaded.
+- `src/locales/{en,ca,es,fr,de,da}.json`: `blog.cat.*` translation keys added for all 7 categories in all 6 languages.
+- `api/blog.py`: `category` and `complexity` fields included in both list and detail API responses.
+
+### Phase 15.5.8 — Blog multilingual article translations ✅ COMPLETE
+- Full translations of `self-other-agreement-big-five-where-gaps-are-biggest` in all 5 non-English languages (CA, ES, FR, DE, DA) written to `blog_posts.content / title / description` JSONB fields via scp + psql pipeline.
+- Content lengths: EN 18,291 · CA 19,179 · ES 19,636 · FR 18,327 · DE 18,061 · DA 16,815 chars.
+- All Cèrcol terminology applied per language (Testimoni/Testigo/Témoin/Zeuge/Vidne, Presència/Presencia/Présence/Präsenz/Tilstedeværelse, etc.).
+
 ---
 
 ## Phase 15 — Stripe paywall
