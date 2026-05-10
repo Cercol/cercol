@@ -36,12 +36,12 @@ export const WITNESS_ADJECTIVES = [
   { id: 'E-02', en: 'quiet',         ca: 'callat',        factor: 'E', valence: -1, tip: { en: 'Prefers listening over speaking.', ca: 'Prefereix escoltar a parlar.' } },
   { id: 'E-03', en: 'withdrawn',     ca: 'retraït',       factor: 'E', valence: -1, tip: { en: 'Tends to pull back from social situations.', ca: 'Tendeix a retirar-se de les situacions socials.' } },
   { id: 'E-04', en: 'shy',           ca: 'tímid',         factor: 'E', valence: -1, tip: { en: 'Feels uneasy in unfamiliar social settings.', ca: 'Se sent incòmode en entorns socials desconeguts.' } },
-  { id: 'E-05', en: 'reflective',    ca: 'reflexiu',      factor: 'E', valence: -1, tip: { en: 'Prefers to think before acting or speaking.', ca: 'Prefereix pensar abans d\'actuar o parlar.' } },
+  { id: 'E-05', en: 'introverted',   ca: 'introvertit',   factor: 'E', valence: -1, tip: { en: 'Prefers solitude and inner focus over social interaction.', ca: 'Prefereix la solitud i la reflexió interna a la interacció social.' } },
   { id: 'E-06', en: 'solitary',      ca: 'solitari',      factor: 'E', valence: -1, tip: { en: 'Prefers spending time alone.', ca: 'Prefereix passar temps sol.' } },
   { id: 'E-07', en: 'private',       ca: 'discret',       factor: 'E', valence: -1, tip: { en: 'Does not share personal information easily.', ca: 'No comparteix informació personal fàcilment.' } },
   { id: 'E-08', en: 'subdued',       ca: 'contingut',     factor: 'E', valence: -1, tip: { en: 'Low-key and restrained in manner.', ca: 'Discret i contingut en la manera de ser.' } },
   { id: 'E-09', en: 'reticent',      ca: 'reticent',      factor: 'E', valence: -1, tip: { en: 'Reluctant to share views or feelings openly.', ca: 'Poc disposat a compartir opinions o sentiments obertament.' } },
-  { id: 'E-10', en: 'contemplative', ca: 'contemplatiu',  factor: 'E', valence: -1, tip: { en: 'Spends time in quiet thought and reflection.', ca: 'Dedica temps al pensament tranquil i a la reflexió.' } },
+  { id: 'E-10', en: 'taciturn',      ca: 'poc parlador',  factor: 'E', valence: -1, tip: { en: 'Speaks very little and rarely volunteers thoughts or opinions.', ca: 'Parla molt poc i rarament comparteix opinions o pensaments.' } },
 
   // ── A / Bond — positive (high agreeableness) ──────────────────────────────
   { id: 'A+01', en: 'warm',          ca: 'càlid',         factor: 'A', valence: +1, tip: { en: 'Shows genuine care and friendliness toward others.', ca: 'Mostra cura genuïna i simpatia cap als altres.' } },
@@ -57,15 +57,15 @@ export const WITNESS_ADJECTIVES = [
 
   // ── A / Bond — negative (low agreeableness) ───────────────────────────────
   { id: 'A-01', en: 'critical',      ca: 'crític',        factor: 'A', valence: -1, tip: { en: 'Points out faults and shortcomings readily.', ca: 'Assenyala defectes i mancances fàcilment.' } },
-  { id: 'A-02', en: 'competitive',   ca: 'competitiu',    factor: 'A', valence: -1, tip: { en: 'Driven to outperform and win against others.', ca: 'Motivat a superar i guanyar als altres.' } },
+  { id: 'A-02', en: 'harsh',         ca: 'dur',           factor: 'A', valence: -1, tip: { en: 'Treats others with severity, even when it is not warranted.', ca: 'Tracta els altres amb duresa, fins i tot quan no és necessari.' } },
   { id: 'A-03', en: 'stubborn',      ca: 'tossut',        factor: 'A', valence: -1, tip: { en: 'Holds firmly to positions despite opposition.', ca: 'Manté fermament les seves posicions malgrat l\'oposició.' } },
   { id: 'A-04', en: 'demanding',     ca: 'exigent',       factor: 'A', valence: -1, tip: { en: 'Expects high standards from others.', ca: 'Exigeix alts estàndards dels altres.' } },
   { id: 'A-05', en: 'argumentative', ca: 'argumentatiu',  factor: 'A', valence: -1, tip: { en: 'Enjoys debate and tends toward disagreement.', ca: 'Gaudeix del debat i tendeix al desacord.' } },
   { id: 'A-06', en: 'skeptical',     ca: 'escèptic',      factor: 'A', valence: -1, tip: { en: 'Questions motives and does not take things at face value.', ca: 'Qüestiona les motivacions i no es fia fàcilment de les aparences.' } },
-  { id: 'A-07', en: 'blunt',         ca: 'directe',       factor: 'A', valence: -1, tip: { en: 'Speaks directly without softening the message.', ca: 'Parla directament sense suavitzar el missatge.' } },
+  { id: 'A-07', en: 'blunt',         ca: 'brusc',         factor: 'A', valence: -1, tip: { en: 'Speaks directly without softening the message.', ca: 'Respon amb brusquedat i sense suavitzar les paraules.' } },
   { id: 'A-08', en: 'detached',      ca: 'distanciat',    factor: 'A', valence: -1, tip: { en: 'Keeps emotional distance in relationships.', ca: 'Manté distància emocional en les relacions.' } },
-  { id: 'A-09', en: 'independent',   ca: 'independent',   factor: 'A', valence: -1, tip: { en: 'Prefers to act alone rather than relying on others.', ca: 'Prefereix actuar sol que dependre dels altres.' } },
-  { id: 'A-10', en: 'challenging',   ca: 'desafiant',     factor: 'A', valence: -1, tip: { en: 'Pushes others and questions assumptions.', ca: 'Exigeix als altres i qüestiona les assumpcions.' } },
+  { id: 'A-09', en: 'cold',          ca: 'fred',          factor: 'A', valence: -1, tip: { en: 'Shows little warmth or emotional connection toward others.', ca: 'Mostra poca calidesa o connexió emocional cap als altres.' } },
+  { id: 'A-10', en: 'callous',       ca: 'insensible',    factor: 'A', valence: -1, tip: { en: 'Shows indifference to the feelings or suffering of others.', ca: 'Mostra indiferència davant els sentiments o el patiment dels altres.' } },
 
   // ── C / Discipline — positive (high conscientiousness) ────────────────────
   { id: 'C+01', en: 'organized',     ca: 'organitzat',    factor: 'C', valence: +1, tip: { en: 'Keeps things structured and in order.', ca: 'Manté les coses estructurades i en ordre.' } },
@@ -84,22 +84,22 @@ export const WITNESS_ADJECTIVES = [
   { id: 'C-02', en: 'scattered',     ca: 'dispersat',     factor: 'C', valence: -1, tip: { en: 'Has difficulty maintaining focus or order.', ca: 'Té dificultats per mantenir el focus o l\'ordre.' } },
   { id: 'C-03', en: 'careless',      ca: 'descurat',      factor: 'C', valence: -1, tip: { en: 'Pays little attention to quality or detail.', ca: 'Para poca atenció a la qualitat o als detalls.' } },
   { id: 'C-04', en: 'disorganized',  ca: 'desorganitzat', factor: 'C', valence: -1, tip: { en: 'Struggles to keep things in a clear structure.', ca: 'Li costa mantenir les coses en una estructura clara.' } },
-  { id: 'C-05', en: 'spontaneous',   ca: 'espontani',     factor: 'C', valence: -1, tip: { en: 'Prefers to act on instinct rather than plans.', ca: 'Prefereix actuar per instint que seguir plans.' } },
+  { id: 'C-05', en: 'procrastinating', ca: 'procrastinador', factor: 'C', valence: -1, tip: { en: 'Puts off tasks and leaves commitments unfinished.', ca: 'Deixa les tasques per a més tard i no acaba el que comença.' } },
   { id: 'C-06', en: 'flexible',      ca: 'flexible',      factor: 'C', valence: -1, tip: { en: 'Adjusts easily and avoids rigid routines.', ca: 'S\'adapta fàcilment i evita les rutines rígides.' } },
   { id: 'C-07', en: 'casual',        ca: 'casual',        factor: 'C', valence: -1, tip: { en: 'Relaxed and easygoing about tasks and commitments.', ca: 'Relaxat i despreocupat amb les tasques i compromisos.' } },
-  { id: 'C-08', en: 'carefree',      ca: 'despreocupat',  factor: 'C', valence: -1, tip: { en: 'Unworried about order or outcomes.', ca: 'Despreocupat per l\'ordre o els resultats.' } },
+  { id: 'C-08', en: 'forgetful',     ca: 'oblidadís',     factor: 'C', valence: -1, tip: { en: 'Frequently forgets commitments, deadlines, or details.', ca: 'Oblida sovint compromisos, terminis o detalls importants.' } },
   { id: 'C-09', en: 'informal',      ca: 'informal',      factor: 'C', valence: -1, tip: { en: 'Relaxed and unstructured in approach.', ca: 'Relaxat i sense estructura en l\'enfocament.' } },
-  { id: 'C-10', en: 'adaptable',     ca: 'adaptable',     factor: 'C', valence: -1, tip: { en: 'Comfortable changing course or shifting priorities.', ca: 'Còmode canviant de rumb o de prioritats.' } },
+  { id: 'C-10', en: 'unreliable',    ca: 'poc fiable',    factor: 'C', valence: -1, tip: { en: 'Fails to follow through on promises or responsibilities.', ca: 'No compleix el que promet ni s\'encarrega de les seves responsabilitats.' } },
 
   // ── N / Depth — positive (high neuroticism) ───────────────────────────────
   { id: 'N+01', en: 'anxious',       ca: 'ansiós',        factor: 'N', valence: +1, tip: { en: 'Prone to worry and nervous tension.', ca: 'Propens a la preocupació i la tensió nerviosa.' } },
-  { id: 'N+02', en: 'sensitive',     ca: 'sensible',      factor: 'N', valence: +1, tip: { en: 'Deeply affected by emotional experiences and feedback.', ca: 'Profundament afectat per les experiències emocionals i el retorn dels altres.' } },
+  { id: 'N+02', en: 'irritable',     ca: 'irritable',     factor: 'N', valence: +1, tip: { en: 'Becomes annoyed or short-tempered with little provocation.', ca: 'S\'irrita o es posa de mal humor amb poca provocació.' } },
   { id: 'N+03', en: 'worried',       ca: 'preocupat',     factor: 'N', valence: +1, tip: { en: 'Tends to anticipate problems and feel concerned.', ca: 'Tendeix a anticipar problemes i a sentir-se preocupat.' } },
   { id: 'N+04', en: 'reactive',      ca: 'reactiu',       factor: 'N', valence: +1, tip: { en: 'Responds strongly to stressful or frustrating situations.', ca: 'Respon amb intensitat a situacions d\'estrès o frustració.' } },
   { id: 'N+05', en: 'emotional',     ca: 'emocional',     factor: 'N', valence: +1, tip: { en: 'Experiences and expresses emotions intensely.', ca: 'Experimenta i expressa les emocions amb intensitat.' } },
   { id: 'N+06', en: 'tense',         ca: 'tens',          factor: 'N', valence: +1, tip: { en: 'Often feels wound up or under pressure.', ca: 'Sovint se sent tens o sota pressió.' } },
-  { id: 'N+07', en: 'vigilant',      ca: 'vigilant',      factor: 'N', valence: +1, tip: { en: 'Alert to potential threats or problems.', ca: 'Alert davant possibles amenaces o problemes.' } },
-  { id: 'N+08', en: 'intense',       ca: 'intens',        factor: 'N', valence: +1, tip: { en: 'Experiences everything with great depth and feeling.', ca: 'Experimenta tot amb gran profunditat i intensitat.' } },
+  { id: 'N+07', en: 'moody',         ca: 'variable d\'humor', factor: 'N', valence: +1, tip: { en: 'Mood shifts frequently without an obvious external cause.', ca: 'L\'humor li canvia sovint sense una causa externa evident.' } },
+  { id: 'N+08', en: 'volatile',      ca: 'volàtil',       factor: 'N', valence: +1, tip: { en: 'Has sudden and unpredictable emotional outbursts.', ca: 'Té reaccions emocionals sobtades i difícils de predir.' } },
   { id: 'N+09', en: 'restless',      ca: 'inquiet',       factor: 'N', valence: +1, tip: { en: 'Finds it hard to settle and seeks change.', ca: 'Li costa establir-se i busca el canvi.' } },
   { id: 'N+10', en: 'troubled',      ca: 'pertorbat',     factor: 'N', valence: +1, tip: { en: 'Easily unsettled by difficulties or uncertainty.', ca: 'Fàcilment pertorbat per les dificultats o la incertesa.' } },
 
@@ -128,11 +128,11 @@ export const WITNESS_ADJECTIVES = [
   { id: 'O+10', en: 'unconventional', ca: 'heterodox',     factor: 'O', valence: +1, tip: { en: 'Challenges norms and follows an unusual path.', ca: 'Desafia les normes i segueix un camí poc convencional.' } },
 
   // ── O / Vision — negative (low openness) ──────────────────────────────────
-  { id: 'O-01', en: 'practical',      ca: 'pràctic',       factor: 'O', valence: -1, tip: { en: 'Focuses on what works in the real world.', ca: 'Se centra en allò que funciona al món real.' } },
+  { id: 'O-01', en: 'unimaginative',  ca: 'sense imaginació', factor: 'O', valence: -1, tip: { en: 'Struggles to generate new ideas or think outside established patterns.', ca: 'Li costa generar idees noves o pensar fora dels patrons establerts.' } },
   { id: 'O-02', en: 'conventional',   ca: 'convencional',  factor: 'O', valence: -1, tip: { en: 'Follows established methods and traditions.', ca: 'Segueix mètodes i tradicions establerts.' } },
-  { id: 'O-03', en: 'realistic',      ca: 'realista',      factor: 'O', valence: -1, tip: { en: 'Grounded in facts and avoids idealism.', ca: 'Arrelat als fets i evita l\'idealisme.' } },
+  { id: 'O-03', en: 'narrow-minded',  ca: 'estret de mires', factor: 'O', valence: -1, tip: { en: 'Dismisses other viewpoints and is resistant to new perspectives.', ca: 'Rebutja els punts de vista aliens i és poc receptiu a noves perspectives.' } },
   { id: 'O-04', en: 'traditional',    ca: 'tradicional',   factor: 'O', valence: -1, tip: { en: 'Values time-tested approaches and customs.', ca: 'Valora els enfocaments i costums provats pel temps.' } },
-  { id: 'O-05', en: 'pragmatic',      ca: 'pragmàtic',     factor: 'O', valence: -1, tip: { en: 'Driven by results rather than theory.', ca: 'Motivat pels resultats més que per la teoria.' } },
+  { id: 'O-05', en: 'dogmatic',       ca: 'dogmàtic',      factor: 'O', valence: -1, tip: { en: 'Holds rigidly to fixed beliefs and does not reconsider them.', ca: 'S\'aferra rígidament a les seves creences i no les reconsiderarà.' } },
   { id: 'O-06', en: 'straightforward',ca: 'directe',       factor: 'O', valence: -1, tip: { en: 'Prefers direct, uncomplicated approaches.', ca: 'Prefereix enfocaments directes i senzills.' } },
   { id: 'O-07', en: 'concrete',       ca: 'concret',       factor: 'O', valence: -1, tip: { en: 'Thinks in terms of specific facts and tangible outcomes.', ca: 'Pensa en termes de fets específics i resultats tangibles.' } },
   { id: 'O-08', en: 'conservative',   ca: 'conservador',   factor: 'O', valence: -1, tip: { en: 'Cautious about change, prefers proven ways.', ca: 'Prudent amb el canvi, prefereix les maneres provades.' } },
