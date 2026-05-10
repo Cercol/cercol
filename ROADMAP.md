@@ -1238,6 +1238,10 @@ Every blog article now has at least one inline visual element embedded in the ma
 - `src/locales/{en,ca,es,fr,de,da}.json`: `blog.cat.*` translation keys added for all 7 categories in all 6 languages.
 - `api/blog.py`: `category` and `complexity` fields included in both list and detail API responses.
 
+### Phase 15.5.11 — Header nav macro-sections ✅ COMPLETE
+- `src/components/Layout.jsx`: 6 flat nav links regrouped into 4 items — Instruments · Roles (direct) + Learn ▾ (Science, Blog) + Company ▾ (About, FAQ). Desktop: click dropdown with white panel. Mobile: collapsible sections with chevron. Group button highlights when any child route is active.
+- `src/locales/{en,ca,es,fr,de,da}.json`: `nav.menuLearn` + `nav.menuCompany` added in all 6 languages.
+
 ### Phase 15.5.10 — Blog redesign: complexity filter + prerender fix ✅ COMPLETE
 - `src/pages/BlogIndexPage.jsx`: second filter row with 4 complexity pills (All levels, Introductory, Intermediate, In-depth). `ComplexityDots` component: 1/2/3 coloured dots (green/blue/red). Combined category + level filtering. Complexity badge on card meta footer for beginner/expert. Empty-filter state message added.
 - `src/locales/{en,ca,es,fr,de,da}.json`: `blog.level.{all,beginner,intermediate,expert}` added in all 6 languages.
