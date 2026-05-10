@@ -1,10 +1,11 @@
 /**
  * Button — shared button primitive.
  *
- * variant: primary | secondary | ghost
+ * variant: primary | secondary | ghost | danger
  *   primary   — blue fill, white text, hover opacity
  *   secondary — white bg, blue border + text, hover fills blue
  *   ghost     — no bg/border, blue text, hover underline
+ *   danger    — red fill, white text, hover opacity (destructive actions)
  *
  * size: sm | md | lg
  *
@@ -30,6 +31,7 @@ export default function Button({
     primary:   'bg-[var(--mm-color-blue)] text-white hover:opacity-90 disabled:opacity-50',
     secondary: 'bg-white border border-[var(--mm-color-blue)] text-[var(--mm-color-blue)] hover:bg-[var(--mm-color-blue)] hover:text-white disabled:opacity-50',
     ghost:     'text-[var(--mm-color-blue)] hover:underline disabled:opacity-50',
+    danger:    'bg-[var(--mm-color-red)] text-white hover:opacity-90 disabled:opacity-50',
   }
 
   return (

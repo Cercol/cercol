@@ -298,6 +298,16 @@ export async function getMyResults() {
 }
 
 /**
+ * anonymiseResult — permanently unlinks a result from the user's account.
+ * The row is retained in the database for population-level averages.
+ * @param {string} resultId
+ * @returns {Promise<{ok: boolean}>}
+ */
+export async function anonymiseResult(resultId) {
+  return authFetch(`/me/results/${resultId}`, { method: 'DELETE' })
+}
+
+/**
  * getMyProfile — returns the authenticated user's profile (including premium flag).
  * Creates the profile row if it does not exist yet.
  * @returns {Promise<{id, premium, first_name, last_name, country, native_language}>}

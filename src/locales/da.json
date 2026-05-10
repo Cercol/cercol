@@ -22,6 +22,17 @@
       "cta": "Begynd Nymåne Cèrcol"
     },
     "startCta": "Start en vurdering",
+    "retake": "Tag igen",
+    "deleteResult": "Slet resultat",
+    "olderResults": "{{count}} ældre resultat gemt",
+    "olderResults_plural": "{{count}} ældre resultater gemt",
+    "confirmDelete": {
+      "title": "Slet dette resultat?",
+      "body": "Dit resultat vil blive permanent fjernet fra din konto, og du vil ikke længere kunne se det. De anonymiserede data vil stadig blive brugt til befolkningsgennemsnit. Denne handling kan ikke fortrydes.",
+      "confirm": "Ja, slet",
+      "cancel": "Annuller"
+    },
+    "deleteError": "Resultatet kunne ikke slettes. Prøv igen.",
     "contributionsHeading": "Vidnebidrag",
     "contributionsEmpty": "Du har endnu ikke gennemført nogen vidnesessioner.",
     "contributionItem": "Beskrev {{name}}"

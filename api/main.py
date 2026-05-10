@@ -489,6 +489,33 @@ async def get_my_results(user: dict = Depends(get_current_user)):
 
 
 # ---------------------------------------------------------------------------
+# Routes — result anonymisation (user-initiated delete)
+# ---------------------------------------------------------------------------
+
+@app.delete("/me/results/{result_id}")
+async def anonymise_result(result_id: str, user: dict = Depends(get_current_user)):
+    """
+    Anonymise a result owned by the authenticated user.
+    Sets user_id = NULL so the row is permanently unlinked from the account.
+    The scores are retained for population-level averages.
+    Returns 404 if the result does not exist or belongs to another user.
+    """
+    user_id = user["sub"]
+    async with _pool.acquire() as conn:
+        result = await conn.fetchrow(
+            "SELECT id FROM results WHERE id = $1 AND user_id = $2",
+            result_id, user_id,
+        )
+        if not result:
+            raise HTTPException(status_code=404, detail="Result not found")
+        await conn.execute(
+            "UPDATE results SET user_id = NULL WHERE id = $1",
+            result_id,
+        )
+    return {"ok": True}
+
+
+# ---------------------------------------------------------------------------
 # Routes — result logging
 # ---------------------------------------------------------------------------
 

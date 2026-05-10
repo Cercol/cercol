@@ -22,6 +22,17 @@
       "cta": "Comenzar Luna Nueva Cèrcol"
     },
     "startCta": "Comenzar una evaluación",
+    "retake": "Repetir",
+    "deleteResult": "Eliminar resultado",
+    "olderResults": "{{count}} resultado anterior guardado",
+    "olderResults_plural": "{{count}} resultados anteriores guardados",
+    "confirmDelete": {
+      "title": "¿Eliminar este resultado?",
+      "body": "Tu resultado quedará desvinculado permanentemente de tu cuenta y ya no podrás verlo. Los datos anonimizados se usarán para los promedios poblacionales. Esta acción no se puede deshacer.",
+      "confirm": "Sí, eliminar",
+      "cancel": "Cancelar"
+    },
+    "deleteError": "No se pudo eliminar el resultado. Inténtalo de nuevo.",
     "contributionsHeading": "Participación como testigo",
     "contributionsEmpty": "Todavía no has completado ninguna sesión de testigo.",
     "contributionItem": "Describiste a {{name}}"

@@ -22,6 +22,17 @@
       "cta": "Start New Moon Cèrcol"
     },
     "startCta": "Start an assessment",
+    "retake": "Retake",
+    "deleteResult": "Delete result",
+    "olderResults": "{{count}} older result saved",
+    "olderResults_plural": "{{count}} older results saved",
+    "confirmDelete": {
+      "title": "Delete this result?",
+      "body": "Your result will be permanently unlinked from your account and you will no longer be able to see it. The anonymised data will still be used for population averages. This cannot be undone.",
+      "confirm": "Yes, delete",
+      "cancel": "Cancel"
+    },
+    "deleteError": "Could not delete the result. Try again.",
     "contributionsHeading": "Witness contributions",
     "contributionsEmpty": "You haven't completed any witness sessions yet.",
     "contributionItem": "Described {{name}}"
