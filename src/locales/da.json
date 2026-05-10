@@ -33,6 +33,12 @@
       "cancel": "Annuller"
     },
     "deleteError": "Resultatet kunne ikke slettes. Prøv igen.",
+    "redoConfirm": {
+      "title": "Gentag dette instrument?",
+      "body": "Dine tidligere resultater vil ikke længere være tilgængelige. Denne handling kan ikke fortrydes.",
+      "confirm": "Ja, gentag",
+      "cancel": "Annuller"
+    },
     "contributionsHeading": "Vidnebidrag",
     "contributionsEmpty": "Du har endnu ikke gennemført nogen vidnesessioner.",
     "contributionItem": "Beskrev {{name}}"
@@ -327,6 +333,12 @@
       "scale": "1–7 · Meget uenig → Meget enig",
       "guidance": "Gå med din første indskydelse. Der er ingen rigtige svar.",
       "cta": "Begynd"
+    },
+    "alreadyCompleted": {
+      "heading": "Du har allerede gennemført Nymåne Cèrcol",
+      "body": "Du har et eksisterende resultat for dette instrument.",
+      "cta": "Se mine resultater",
+      "redo": "Gentag"
     }
   },
   "newMoonResults": {
@@ -364,6 +376,12 @@
       "scale": "1–5 · Meget uenig → Meget enig",
       "guidance": "Ingen rigtige svar. Gå med det, der er sandt for dig lige nu.",
       "cta": "Begynd"
+    },
+    "alreadyCompleted": {
+      "heading": "Du har allerede gennemført Første Kvartal Cèrcol",
+      "body": "Du har et eksisterende resultat for dette instrument.",
+      "cta": "Se mine resultater",
+      "redo": "Gentag"
     }
   },
   "fqResults": {
@@ -435,7 +453,8 @@
     "alreadyCompleted": {
       "heading": "Du har allerede gennemført Full Moon Cèrcol",
       "body": "Personlighed ændrer sig ikke markant over korte perioder. Dit eksisterende resultat er stadig præcist — en ny udfyldning ville give meget lignende scorer.",
-      "cta": "Se din rapport"
+      "cta": "Se din rapport",
+      "redo": "Gentag"
     }
   },
   "fmResults": {

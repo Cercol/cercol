@@ -33,6 +33,12 @@
       "cancel": "Cancelar"
     },
     "deleteError": "No se pudo eliminar el resultado. Inténtalo de nuevo.",
+    "redoConfirm": {
+      "title": "¿Repetir este instrumento?",
+      "body": "Los resultados anteriores dejarán de estar disponibles. Esta acción no se puede deshacer.",
+      "confirm": "Sí, repetir",
+      "cancel": "Cancelar"
+    },
     "contributionsHeading": "Participación como testigo",
     "contributionsEmpty": "Todavía no has completado ninguna sesión de testigo.",
     "contributionItem": "Describiste a {{name}}"
@@ -327,6 +333,12 @@
       "scale": "1–7 · Totalmente en desacuerdo → Totalmente de acuerdo",
       "guidance": "Ve con tu primer instinto. No hay respuestas correctas.",
       "cta": "Comenzar"
+    },
+    "alreadyCompleted": {
+      "heading": "Ya has completado el Cèrcol de Luna Nueva",
+      "body": "Tienes un resultado anterior para este instrumento.",
+      "cta": "Ver mis resultados",
+      "redo": "Repetir"
     }
   },
   "newMoonResults": {
@@ -362,8 +374,14 @@
       "heading": "Cèrcol de Cuarto Creciente",
       "meta": "60 preguntas · ~10 min",
       "scale": "1–5 · Totalmente en desacuerdo → Totalmente de acuerdo",
-      "guidance": "No hay respuestas correctas. Ve con lo que sea verdad para ti ahora mismo.",
+      "guidance": "No hay respuestas correctes. Ve con lo que sea verdad para ti ahora mismo.",
       "cta": "Comenzar"
+    },
+    "alreadyCompleted": {
+      "heading": "Ya has completado el Cèrcol de Cuarto Creciente",
+      "body": "Tienes un resultado anterior para este instrumento.",
+      "cta": "Ver mis resultados",
+      "redo": "Repetir"
     }
   },
   "fqResults": {
@@ -435,7 +453,8 @@
     "alreadyCompleted": {
       "heading": "Ya has completado Full Moon Cèrcol",
       "body": "La personalidad no cambia significativamente en periodos cortos. Tu resultado sigue siendo preciso — repetirlo daría puntuaciones muy similares.",
-      "cta": "Ver tu informe"
+      "cta": "Ver tu informe",
+      "redo": "Repetir"
     }
   },
   "fmResults": {

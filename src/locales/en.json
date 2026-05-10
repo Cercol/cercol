@@ -34,6 +34,12 @@
     },
     "deleteError": "Could not delete the result. Try again.",
     "contributionsHeading": "Witness contributions",
+    "redoConfirm": {
+      "title": "Redo this assessment?",
+      "body": "Your previous results will no longer be available. This action cannot be undone.",
+      "confirm": "Yes, redo",
+      "cancel": "Cancel"
+    },
     "contributionsEmpty": "You haven't completed any witness sessions yet.",
     "contributionItem": "Described {{name}}"
   },
@@ -327,6 +333,12 @@
       "scale": "1–7 · Disagree strongly → Agree strongly",
       "guidance": "Go with your first instinct. There are no right answers.",
       "cta": "Begin"
+    },
+    "alreadyCompleted": {
+      "heading": "You've already completed New Moon Cèrcol",
+      "body": "You have an existing result for this instrument.",
+      "cta": "View your results",
+      "redo": "Redo"
     }
   },
   "newMoonResults": {
@@ -364,6 +376,12 @@
       "scale": "1–5 · Disagree strongly → Agree strongly",
       "guidance": "No right answers. Go with what's true for you right now.",
       "cta": "Begin"
+    },
+    "alreadyCompleted": {
+      "heading": "You've already completed First Quarter Cèrcol",
+      "body": "You have an existing result for this instrument.",
+      "cta": "View your results",
+      "redo": "Redo"
     }
   },
   "fqResults": {
@@ -435,7 +453,8 @@
     "alreadyCompleted": {
       "heading": "You've already completed Full Moon Cèrcol",
       "body": "Personality doesn't change significantly over short periods. Your existing result remains accurate — retaking would produce very similar scores.",
-      "cta": "View your report"
+      "cta": "View your report",
+      "redo": "Redo"
     }
   },
   "fmResults": {

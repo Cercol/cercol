@@ -32,6 +32,12 @@
       "cancel": "Cancel·la"
     },
     "deleteError": "No s'ha pogut esborrar el resultat. Torna-ho a intentar.",
+    "redoConfirm": {
+      "title": "Tornar a fer aquest instrument?",
+      "body": "Els resultats anteriors deixaran d'estar disponibles. Aquesta acció no es pot desfer.",
+      "confirm": "Sí, tornar a fer",
+      "cancel": "Cancel·lar"
+    },
     "contributionsHeading": "Participació com a testimoni",
     "contributionsEmpty": "Encara no has completat cap sessió de testimoni.",
     "contributionItem": "Has descrit {{name}}"
@@ -326,6 +332,12 @@
       "scale": "1–7 · Totalment en desacord → Totalment d'acord",
       "guidance": "Ves amb el primer instint. No hi ha respostes correctes.",
       "cta": "Comença"
+    },
+    "alreadyCompleted": {
+      "heading": "Ja has completat el Cèrcol de Lluna Nova",
+      "body": "Tens un resultat anterior per a aquest instrument.",
+      "cta": "Veure els resultats",
+      "redo": "Tornar a fer"
     }
   },
   "newMoonResults": {
@@ -363,6 +375,12 @@
       "scale": "1–5 · Totalment en desacord → Totalment d'acord",
       "guidance": "No hi ha respostes correctes. Tria el que és cert per a tu ara mateix.",
       "cta": "Comença"
+    },
+    "alreadyCompleted": {
+      "heading": "Ja has completat el Cèrcol de Quart Creixent",
+      "body": "Tens un resultat anterior per a aquest instrument.",
+      "cta": "Veure els resultats",
+      "redo": "Tornar a fer"
     }
   },
   "fqResults": {
@@ -434,7 +452,8 @@
     "alreadyCompleted": {
       "heading": "Ja has completat el Cèrcol de Lluna Plena",
       "body": "La personalitat no canvia significativament en períodes curts. El teu resultat continua sent precís — tornar-lo a fer donaria puntuacions molt similars.",
-      "cta": "Veure el teu informe"
+      "cta": "Veure el teu informe",
+      "redo": "Tornar a fer"
     }
   },
   "fmResults": {
