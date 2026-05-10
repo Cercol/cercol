@@ -7,7 +7,9 @@
     "science": "Ciencia",
     "blog": "Blog",
     "faq": "FAQ",
-    "admin": "Admin"
+    "admin": "Admin",
+    "menuLearn": "Aprender",
+    "menuCompany": "Empresa"
   },
   "myResults": {
     "link": "Mis resultados",
