@@ -42,6 +42,15 @@ from limiter import limiter
 # ---------------------------------------------------------------------------
 
 _JWT_SECRET    = os.environ.get("JWT_SECRET", "")
+# Fail fast at import time if JWT_SECRET is missing or too short.
+# python-jose accepts an empty key for HS256 without raising, which
+# would allow attackers to forge tokens by signing with "" if this
+# check were absent. 32 bytes is the minimum for HMAC-SHA256.
+if not _JWT_SECRET or len(_JWT_SECRET) < 32:
+    raise RuntimeError(
+        "JWT_SECRET environment variable must be set with at least "
+        f"32 bytes. Current length: {len(_JWT_SECRET)}"
+    )
 _JWT_ALGORITHM = "HS256"
 _JWT_AUDIENCE  = "authenticated"
 _ACCESS_TTL    = timedelta(hours=1)
