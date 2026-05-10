@@ -1059,54 +1059,24 @@
     "combinedLabel": "Combiné",
     "combinedRoleSection": "Votre rôle",
     "roleSection": "Votre rôle · Témoins",
-    "divergenceHeading": "Angles morts",
-    "divergenceNote": "Dimensions où votre auto-évaluation et les rapports des témoins diffèrent significativement.",
-    "divergenceDirection": {
-      "higher": "Les témoins évaluent {{domain}} plus haut que vous.",
-      "lower": "Les témoins évaluent {{domain}} plus bas que vous."
-    },
-    "noDivergence": "Forte alignement. Votre auto-perception correspond étroitement à la façon dont les autres vous voient.",
     "setupCta": "Inviter des témoins",
     "disclaimer": "Les résultats des témoins reflètent la perspective des personnes qui ont complété l'instrument. La divergence n'est pas un défaut — c'est de l'information.",
     "definitiveLabel": "Témoin inclus",
     "definitiveNote": "Le signal du témoin réduit l'incertitude dans l'attribution du rôle. C'est votre résultat le plus complet.",
-    "convergenceSection": "Alignement de rôle",
-    "convergenceNote": "Comparaison de la façon dont vous et vos témoins classez vos dimensions, triée par votre auto-évaluation.",
-    "blindSpotsTitle": "Angles morts",
-    "blindSpotsNote": "Dimensions où votre auto-évaluation et les scores de votre témoin pointent dans des directions nettement différentes.",
     "domainsSection": "Les cinq dimensions",
     "witnessSessionsSection": "Témoins",
     "statusDone": "Terminé",
     "statusWaiting": "En attente",
-    "blindSpots": {
-      "presence": {
-        "selfHigher": "Vous vous voyez comme plus énergisant·e et visible que les autres ne vous perçoivent. Ce n'est pas un défaut — cela peut signifier que votre impact est plus interne que vous ne le réalisez.",
-        "witnessHigher": "Les autres vous vivent comme plus présent·e et énergisant·e que vous ne vous le reconnaissez. Vous sous-estimez peut-être l'effet que vous avez dans la pièce."
-      },
-      "bond": {
-        "selfHigher": "Vous vous voyez comme plus chaleureux·se et coopératif·ve que les autres ne le remarquent. Cela peut signifier que le soin est réel mais n'atterrit pas toujours — l'écart entre l'intention et l'impact.",
-        "witnessHigher": "Les autres vous vivent comme plus accommodant·e et coopératif·ve que vous ne vous voyez. Vous êtes peut-être plus une force cohésive dans l'équipe que vous ne le réalisez."
-      },
-      "vision": {
-        "selfHigher": "Vous vous voyez comme plus explorateur·trice et guidé·e par les idées que les autres ne l'observent. Votre originalité peut être moins visible pour les autres qu'elle ne le semble de l'intérieur.",
-        "witnessHigher": "Les autres voient plus de créativité et d'étendue en vous que vous ne le revendiquez. Vous sous-estimez peut-être votre capacité à penser dans de nouvelles directions."
-      },
-      "discipline": {
-        "selfHigher": "Vous vous voyez comme plus structuré·e et fiable que les autres ne l'observent. Il peut valoir la peine d'examiner où le suivi est visible et où il ne l'est pas.",
-        "witnessHigher": "Les autres vous vivent comme plus organisé·e et fiable que vous ne le ressentez intérieurement. La structure que vous créez peut être plus réelle qu'elle ne le semble."
-      },
-      "depth": {
-        "selfHigher": "Vous portez plus d'intensité émotionnelle que les autres ne le voient. Vous la gérez peut-être bien — ou cela peut signifier que votre expérience intérieure n'atteint pas entièrement l'extérieur.",
-        "witnessHigher": "Les autres perçoivent plus de sensibilité émotionnelle en vous que vous ne le rapportez. Vous sous-estimez peut-être à quel point votre humeur et vos réactions sont lues par les personnes autour de vous."
-      }
-    },
     "witnessRoleDisclaimer": "Le rôle du témoin est un signal, pas un verdict. Différents observateurs peuvent percevoir la même personne différemment.",
-    "convergenceStrong": "Accord fort",
-    "convergenceModerate": "Accord modéré",
-    "convergenceDivergent": "Perspectives divergentes",
-    "rankColumnHeader": "Dimension",
-    "rankSelf": "Votre rang",
-    "rankWitness": "Rang du témoin"
+    "roleViewSection": "Comment vous vous voyez, vous et vos témoins",
+    "selfViewLabel": "Vous vous voyez comme",
+    "witnessViewLabel": "Les témoins vous voient comme",
+    "matchLabel": "Également vu par l'autre côté",
+    "surprisesSection": "Surprises",
+    "surprisesNote": "Rôles qui apparaissent d'un côté mais pas de l'autre.",
+    "witnessOnlyNote": "Les témoins voient ce rôle ; vous non.",
+    "selfOnlyNote": "Vous voyez ce rôle ; les témoins non.",
+    "definedBy": "Défini par"
   },
   "about": {
     "title": "À propos",

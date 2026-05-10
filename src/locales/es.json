@@ -1059,54 +1059,24 @@
     "combinedLabel": "Combinado",
     "combinedRoleSection": "Tu rol",
     "roleSection": "Tu rol · Testigos",
-    "divergenceHeading": "Puntos ciegos",
-    "divergenceNote": "Dimensiones donde tu autoinforme y los informes de los testigos difieren significativamente.",
-    "divergenceDirection": {
-      "higher": "Los testigos puntúan {{domain}} más alto que tú.",
-      "lower": "Los testigos puntúan {{domain}} más bajo que tú."
-    },
-    "noDivergence": "Fuerte alineación. Tu autopercepción coincide estrechamente con cómo te ven los demás.",
     "setupCta": "Invitar testigos",
     "disclaimer": "Los resultados de los testigos reflejan la perspectiva de las personas que completaron el instrumento. La divergencia no es un defecto — es información.",
     "definitiveLabel": "Testigo incluido",
     "definitiveNote": "La señal del testigo reduce la incertidumbre en la asignación del rol. Este es tu resultado más completo.",
-    "convergenceSection": "Alineación de rol",
-    "convergenceNote": "Comparación de cómo tú y tus testigos ordenáis vuestras dimensiones, ordenado por tu autoinforme.",
-    "blindSpotsTitle": "Puntos ciegos",
-    "blindSpotsNote": "Dimensiones donde tu autoinforme y las puntuaciones del testigo apuntan en direcciones notablemente diferentes.",
     "domainsSection": "Las cinco dimensiones",
     "witnessSessionsSection": "Testigos",
     "statusDone": "Completado",
     "statusWaiting": "Pendiente",
-    "blindSpots": {
-      "presence": {
-        "selfHigher": "Te ves a ti mismo/a como más energizante y visible de lo que te perciben los demás. No es un defecto — puede significar que tu impacto es más interno de lo que crees.",
-        "witnessHigher": "Los demás te experimentan como más presente y energizante de lo que tú te reconoces. Puede que estés subestimando el efecto que tienes en la sala."
-      },
-      "bond": {
-        "selfHigher": "Te ves a ti mismo/a como más cálido/a y cooperativo/a de lo que los demás notan. Puede que el cuidado sea real pero no siempre aterrice — la brecha entre intención e impacto.",
-        "witnessHigher": "Los demás te experimentan como más flexible y cooperativo/a de lo que tú te ves. Puede que seas más una fuerza cohesiva en el equipo de lo que crees."
-      },
-      "vision": {
-        "selfHigher": "Te ves a ti mismo/a como más exploratorio/a e impulsado/a por ideas de lo que los demás observan. Tu originalidad puede ser menos visible para los demás de lo que se siente desde dentro.",
-        "witnessHigher": "Los demás ven más creatividad y amplitud en ti de lo que tú reconoces. Puede que estés subestimando tu capacidad de pensar en nuevas direcciones."
-      },
-      "discipline": {
-        "selfHigher": "Te ves a ti mismo/a como más estructurado/a y fiable de lo que los demás observan. Puede valer la pena examinar dónde el seguimiento es visible y dónde no.",
-        "witnessHigher": "Los demás te experimentan como más organizado/a y de confianza de lo que tú sientes interiormente. La estructura que creas puede ser más real de lo que parece."
-      },
-      "depth": {
-        "selfHigher": "Cargas más intensidad emocional de la que los demás ven. Puede que la estés gestionando bien — o puede que tu experiencia interior no llegue del todo al exterior.",
-        "witnessHigher": "Los demás perciben más sensibilidad emocional en ti de lo que tú informas. Puede que estés subestimando cuánto tu estado de ánimo y tus reacciones son leídos por las personas a tu alrededor."
-      }
-    },
     "witnessRoleDisclaimer": "El rol del testigo es una señal, no un veredicto. Diferentes observadores pueden percibir a la misma persona de manera diferente.",
-    "convergenceStrong": "Acuerdo fuerte",
-    "convergenceModerate": "Acuerdo moderado",
-    "convergenceDivergent": "Perspectivas divergentes",
-    "rankColumnHeader": "Dimensión",
-    "rankSelf": "Tu rango",
-    "rankWitness": "Rango del testigo"
+    "roleViewSection": "Cómo te veis tú y tus testigos",
+    "selfViewLabel": "Te ves como",
+    "witnessViewLabel": "Los testigos te ven como",
+    "matchLabel": "También visto por el otro lado",
+    "surprisesSection": "Sorpresas",
+    "surprisesNote": "Roles que aparecen en un lado pero no en el otro.",
+    "witnessOnlyNote": "Los testigos ven este rol; tú no.",
+    "selfOnlyNote": "Tú ves este rol; los testigos no.",
+    "definedBy": "Definido por"
   },
   "about": {
     "title": "Acerca de",
