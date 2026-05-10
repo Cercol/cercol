@@ -1,6 +1,7 @@
 export { default as DimensionRow } from './DimensionRow'
 export { default as FacetAccordion } from './FacetAccordion'
-export { default as ConvergenceMeter } from './ConvergenceMeter'
 export { default as ReportPageHeader } from './ReportPageHeader'
 export { default as RoleCard } from './RoleCard'
 export { default as RadarDataCard } from './RadarDataCard'
+export { RoleComparisonView } from './RoleComparisonView'
+export { SurprisesPanel } from './SurprisesPanel'

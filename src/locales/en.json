@@ -1059,54 +1059,24 @@
     "combinedLabel": "Combined",
     "combinedRoleSection": "Your role",
     "roleSection": "Your role · Witness",
-    "divergenceHeading": "Blind spots",
-    "divergenceNote": "Dimensions where your self-report and witness reports differ significantly.",
-    "divergenceDirection": {
-      "higher": "Witnesses rate {{domain}} higher than you do.",
-      "lower": "Witnesses rate {{domain}} lower than you do."
-    },
-    "noDivergence": "Strong alignment. Your self-perception closely matches how others see you.",
     "setupCta": "Invite witnesses",
     "disclaimer": "Witness results reflect the perspective of the people who completed the instrument. Divergence is not a flaw — it is information.",
     "definitiveLabel": "Witness included",
     "definitiveNote": "The Witness signal reduces uncertainty in the role assignment. This is your most complete result.",
-    "convergenceSection": "Role alignment",
-    "convergenceNote": "Comparison of how you and your witnesses rank your dimensions, ordered by your self-report.",
-    "blindSpotsTitle": "Blind spots",
-    "blindSpotsNote": "Dimensions where your self-report and Witness scores point in noticeably different directions.",
     "domainsSection": "The five dimensions",
     "witnessSessionsSection": "Witnesses",
     "statusDone": "Done",
     "statusWaiting": "Waiting",
-    "blindSpots": {
-      "presence": {
-        "selfHigher": "You see yourself as more energising and visible than others perceive you. This is not a flaw — it may mean your impact is more internal than you realise.",
-        "witnessHigher": "Others experience you as more present and energising than you give yourself credit for. You may be underestimating the effect you have in the room."
-      },
-      "bond": {
-        "selfHigher": "You see yourself as warmer and more cooperative than others notice. It may mean the care is real but not always landing — the gap between intention and impact.",
-        "witnessHigher": "Others experience you as more accommodating and cooperative than you see yourself. You may be more of a cohesive force in the team than you realise."
-      },
-      "vision": {
-        "selfHigher": "You see yourself as more exploratory and idea-driven than others observe. Your originality may be less visible to others than it feels from inside.",
-        "witnessHigher": "Others see more creativity and range in you than you claim. You may be underselling your ability to think in new directions."
-      },
-      "discipline": {
-        "selfHigher": "You see yourself as more structured and reliable than others observe. It may be worth examining where follow-through is visible and where it is not.",
-        "witnessHigher": "Others experience you as more organised and dependable than you feel internally. The structure you create may be more real than it feels."
-      },
-      "depth": {
-        "selfHigher": "You carry more emotional intensity than others see. You may be managing it well — or it may mean your inner experience does not fully reach the outside.",
-        "witnessHigher": "Others sense more emotional sensitivity in you than you report. You may be underestimating how much your mood and reactions are read by people around you."
-      }
-    },
     "witnessRoleDisclaimer": "The witness role is a signal, not a verdict. Different observers may perceive the same person differently.",
-    "convergenceStrong": "Strong agreement",
-    "convergenceModerate": "Moderate agreement",
-    "convergenceDivergent": "Divergent perspectives",
-    "rankColumnHeader": "Dimension",
-    "rankSelf": "Your rank",
-    "rankWitness": "Witness rank"
+    "roleViewSection": "How you and your witnesses see you",
+    "selfViewLabel": "You see yourself as",
+    "witnessViewLabel": "Witnesses see you as",
+    "matchLabel": "Also seen by the other side",
+    "surprisesSection": "Surprises",
+    "surprisesNote": "Roles that appear on one side but not the other.",
+    "witnessOnlyNote": "Witnesses see this role; you don't.",
+    "selfOnlyNote": "You see this role; witnesses don't.",
+    "definedBy": "Defined by"
   },
   "about": {
     "title": "About",

@@ -1059,54 +1059,24 @@
     "combinedLabel": "Kombiniert",
     "combinedRoleSection": "Deine Rolle",
     "roleSection": "Deine Rolle · Zeugen",
-    "divergenceHeading": "Blinde Flecken",
-    "divergenceNote": "Dimensionen, in denen dein Selbstbericht und die Zeugenberichte erheblich abweichen.",
-    "divergenceDirection": {
-      "higher": "Zeugen bewerten {{domain}} höher als du.",
-      "lower": "Zeugen bewerten {{domain}} niedriger als du."
-    },
-    "noDivergence": "Starke Übereinstimmung. Deine Selbstwahrnehmung stimmt eng mit dem überein, wie andere dich sehen.",
     "setupCta": "Zeugen einladen",
     "disclaimer": "Zeugen-Ergebnisse spiegeln die Perspektive der Personen wider, die das Instrument abgeschlossen haben. Divergenz ist kein Fehler — sie ist Information.",
     "definitiveLabel": "Zeuge einbezogen",
     "definitiveNote": "Das Zeugensignal reduziert die Unsicherheit bei der Rollenzuweisung. Dies ist dein vollständigstes Ergebnis.",
-    "convergenceSection": "Rollenausrichtung",
-    "convergenceNote": "Vergleich, wie du und deine Zeugen deine Dimensionen einordnen, geordnet nach deinem Selbstbericht.",
-    "blindSpotsTitle": "Blinde Flecken",
-    "blindSpotsNote": "Dimensionen, in denen dein Selbstbericht und die Zeugenwertungen in merklich unterschiedliche Richtungen zeigen.",
     "domainsSection": "Die fünf Dimensionen",
     "witnessSessionsSection": "Zeugen",
     "statusDone": "Abgeschlossen",
     "statusWaiting": "Ausstehend",
-    "blindSpots": {
-      "presence": {
-        "selfHigher": "Du siehst dich als energetisierender und sichtbarer, als andere dich wahrnehmen. Das ist kein Fehler — es könnte bedeuten, dass deine Wirkung innerlicher ist, als du erkennst.",
-        "witnessHigher": "Andere erleben dich als präsenter und energetisierender, als du dir selbst zuschreibst. Möglicherweise unterschätzt du den Effekt, den du im Raum hast."
-      },
-      "bond": {
-        "selfHigher": "Du siehst dich als wärmer und kooperativer, als andere es bemerken. Es könnte bedeuten, dass die Fürsorge echt ist, aber nicht immer ankommt — die Lücke zwischen Absicht und Wirkung.",
-        "witnessHigher": "Andere erleben dich als entgegenkommender und kooperativer, als du dich selbst siehst. Möglicherweise bist du eine größere Kohäsionskraft im Team, als du erkennst."
-      },
-      "vision": {
-        "selfHigher": "Du siehst dich als explorativer und ideenangetriebener, als andere es beobachten. Deine Originalität mag für andere weniger sichtbar sein, als sie sich von innen anfühlt.",
-        "witnessHigher": "Andere sehen mehr Kreativität und Reichweite in dir, als du beanspruchst. Möglicherweise unterschätzt du deine Fähigkeit, in neue Richtungen zu denken."
-      },
-      "discipline": {
-        "selfHigher": "Du siehst dich als strukturierter und zuverlässiger, als andere es beobachten. Es könnte sich lohnen zu untersuchen, wo Konsequenz sichtbar ist und wo nicht.",
-        "witnessHigher": "Andere erleben dich als organisierter und verlässlicher, als du dich innerlich fühlst. Die Struktur, die du schaffst, könnte realer sein, als sie sich anfühlt."
-      },
-      "depth": {
-        "selfHigher": "Du trägst mehr emotionale Intensität, als andere sehen. Du verwaltest es vielleicht gut — oder es könnte bedeuten, dass deine innere Erfahrung nicht vollständig nach außen dringt.",
-        "witnessHigher": "Andere spüren mehr emotionale Sensibilität in dir, als du berichtest. Möglicherweise unterschätzt du, wie sehr deine Stimmung und Reaktionen von den Menschen um dich herum gelesen werden."
-      }
-    },
     "witnessRoleDisclaimer": "Die Zeugenrolle ist ein Signal, kein Urteil. Verschiedene Beobachter können dieselbe Person unterschiedlich wahrnehmen.",
-    "convergenceStrong": "Starke Übereinstimmung",
-    "convergenceModerate": "Mäßige Übereinstimmung",
-    "convergenceDivergent": "Abweichende Perspektiven",
-    "rankColumnHeader": "Dimension",
-    "rankSelf": "Dein Rang",
-    "rankWitness": "Rang der Zeuge/Zeugin"
+    "roleViewSection": "Wie du und deine Zeugen dich sehen",
+    "selfViewLabel": "Du siehst dich als",
+    "witnessViewLabel": "Zeugen sehen dich als",
+    "matchLabel": "Auch von der anderen Seite gesehen",
+    "surprisesSection": "Überraschungen",
+    "surprisesNote": "Rollen, die auf einer Seite erscheinen, aber nicht auf der anderen.",
+    "witnessOnlyNote": "Zeugen sehen diese Rolle; du nicht.",
+    "selfOnlyNote": "Du siehst diese Rolle; Zeugen nicht.",
+    "definedBy": "Definiert durch"
   },
   "about": {
     "title": "Über uns",

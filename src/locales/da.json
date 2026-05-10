@@ -1059,54 +1059,24 @@
     "combinedLabel": "Kombineret",
     "combinedRoleSection": "Din rolle",
     "roleSection": "Din rolle · Vidne",
-    "divergenceHeading": "Blinde pletter",
-    "divergenceNote": "Dimensioner, hvor din selvrapport og vidne-rapporter afviger betydeligt.",
-    "divergenceDirection": {
-      "higher": "Vidner vurderer {{domain}} højere end du gør.",
-      "lower": "Vidner vurderer {{domain}} lavere end du gør."
-    },
-    "noDivergence": "Stærk overensstemmelse. Din selvopfattelse stemmer godt overens med, hvordan andre ser dig.",
     "setupCta": "Inviter vidner",
     "disclaimer": "Vidne-resultater afspejler perspektivet hos de personer, der gennemførte instrumentet. Divergens er ikke en fejl — det er information.",
     "definitiveLabel": "Vidne inkluderet",
     "definitiveNote": "Vidne-signalet reducerer usikkerheden i rolletildelingen. Dette er dit mest komplette resultat.",
-    "convergenceSection": "Rolleoverstemmelsse",
-    "convergenceNote": "Sammenligning af, hvordan du og dine vidner rangerer dine dimensioner, sorteret efter din selvrapport.",
-    "blindSpotsTitle": "Blinde pletter",
-    "blindSpotsNote": "Dimensioner, hvor din selvrapport og vidne-scorer peger i mærkbart forskellige retninger.",
     "domainsSection": "De fem dimensioner",
     "witnessSessionsSection": "Vidner",
     "statusDone": "Udført",
     "statusWaiting": "Afventer",
-    "blindSpots": {
-      "presence": {
-        "selfHigher": "Du ser dig selv som mere energigivende og synlig, end andre opfatter dig. Det er ikke en fejl — det kan betyde, at din påvirkning er mere intern, end du er klar over.",
-        "witnessHigher": "Andre oplever dig som mere til stede og energigivende, end du giver dig selv kredit for. Du undervurderer måske den effekt, du har i rummet."
-      },
-      "bond": {
-        "selfHigher": "Du ser dig selv som varmere og mere samarbejdende, end andre bemærker. Det kan betyde, at omsorgen er reel, men ikke altid lander — kløften mellem hensigt og påvirkning.",
-        "witnessHigher": "Andre oplever dig som mere imødekommende og samarbejdende, end du ser dig selv. Du er måske mere af en sammenhængende kraft i teamet, end du er klar over."
-      },
-      "vision": {
-        "selfHigher": "Du ser dig selv som mere udforskende og idédrevet, end andre observerer. Din originalitet er måske mindre synlig for andre, end den føles indefra.",
-        "witnessHigher": "Andre ser mere kreativitet og rækkevidde i dig, end du hævder. Du undervurderer måske din evne til at tænke i nye retninger."
-      },
-      "discipline": {
-        "selfHigher": "Du ser dig selv som mere struktureret og pålidelig, end andre observerer. Det kan være værd at undersøge, hvor gennemførelse er synlig, og hvor den ikke er.",
-        "witnessHigher": "Andre oplever dig som mere organiseret og pålidelig, end du føler dig indeni. Den struktur, du skaber, er måske mere reel, end den føles."
-      },
-      "depth": {
-        "selfHigher": "Du bærer mere følelsesmæssig intensitet, end andre ser. Du styrer det måske godt — eller det kan betyde, at din indre oplevelse ikke fuldt ud når udadtil.",
-        "witnessHigher": "Andre mærker mere følelsesmæssig sensitivitet i dig, end du rapporterer. Du undervurderer måske, hvor meget dit humør og dine reaktioner læses af menneskene omkring dig."
-      }
-    },
     "witnessRoleDisclaimer": "Vidnets rolle er et signal, ikke en dom. Forskellige observatører kan opfatte den samme person forskelligt.",
-    "convergenceStrong": "Stærk enighed",
-    "convergenceModerate": "Moderat enighed",
-    "convergenceDivergent": "Afvigende perspektiver",
-    "rankColumnHeader": "Dimension",
-    "rankSelf": "Din rang",
-    "rankWitness": "Vidnets rang"
+    "roleViewSection": "Hvordan du og dine vidner ser dig",
+    "selfViewLabel": "Du ser dig selv som",
+    "witnessViewLabel": "Vidner ser dig som",
+    "matchLabel": "Også set fra den anden side",
+    "surprisesSection": "Overraskelser",
+    "surprisesNote": "Roller, der optræder på den ene side, men ikke den anden.",
+    "witnessOnlyNote": "Vidner ser denne rolle; du gør ikke.",
+    "selfOnlyNote": "Du ser denne rolle; vidner gør ikke.",
+    "definedBy": "Defineret af"
   },
   "about": {
     "title": "Om",
