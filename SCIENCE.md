@@ -237,13 +237,179 @@ total. Witness picks one best fit and one worst fit per round.
 **Domain score:** score[F] = clamp(3 + (sum_votes[F] / N_rounds) × 2, 1, 5)
 Centred at 3 (neutral), range [1, 5], compatible with self-report scale.
 
-**Round polarity:** fixed 20-round sequence, 14 positive and 6 negative rounds
-(70/30 split). Positive and negative poles never mixed within a round.
+**Round polarity:** fixed 20-round sequence, 15 positive and 5 negative
+rounds (75/25 split). Positive and negative poles never mixed within a round.
 N factor is inverted: N− is the positive pole, N+ is the negative pole.
+The 100 adjectives in the corpus are distributed as 20 per factor with a
+10:10 valence split, so each adjective appears in exactly one round across
+the 20-round sequence.
 
-**Divergence detection:** |self_z − witness_z| > 0.8 per domain → flagged
-as blind spot. Threshold is configurable; 0.8 is the default (approximately
-1 SD difference).
+**Adjective corpus design.**
+
+The 100 adjectives are organised as 20 per OCEAN factor with a
+10:10 valence split (10 high-pole markers, 10 low-pole markers).
+Each entry has schema {id, en, ca, factor, valence, tip{en, ca}},
+where the id follows the pattern {factor}{sign}{nn} (e.g. `E+01`,
+`N-05`).
+
+Markers are descriptive behavioural adjectives, not moral
+evaluations. The corpus underwent a design audit aimed at three
+sources of measurement noise:
+
+1. *Social desirability imbalance.* The original corpus contained
+   several low-pole adjectives that read as socially positive
+   (e.g. *spontaneous*, *flexible*, *carefree* on C−; *practical*,
+   *realistic*, *pragmatic* on O−), and several high-pole
+   adjectives on N that carried positive connotations (e.g.
+   *sensitive*, *vigilant*, *intense*). These were replaced by
+   less ambiguous markers that load on the same pole without
+   eliciting favourable interpretation regardless of the witness's
+   prior view of the target.
+
+2. *Translation collisions.* Two English entries mapping to the
+   same Catalan word (`directe` was the target of both `blunt` and
+   `straightforward`) were resolved by retranslating one entry to
+   avoid the collision.
+
+3. *Cross-loadings.* The AB5C circumplex predicts that some
+   behavioural markers load on more than one factor (e.g.
+   *assertive* on both E+ and A−). The corpus accepts these
+   cross-loadings silently: each adjective is assigned to its
+   primary factor in the schema, with secondary loadings absorbed
+   as measurement noise. Future versions may extend the schema to
+   represent secondary loadings explicitly.
+
+The redesigned corpus is the source of truth for both the witness
+instrument rounds (via `buildRounds`) and the role-defining
+adjective mapping `ROLE_TOP_ADJECTIVES` used in the Full Moon
+report.
+
+**Known systematic bias.**
+
+The witness domain score formula
+
+    score[F] = clamp(3 + (sum_votes[F] / N_rounds) × 2, 1, 5)
+
+produces a distribution centred at 3.0 across all five factors,
+regardless of the underlying personality the witness is reporting
+on. The IPIP-NEO normative means (used as self-report z-score
+priors) are not centred at 3.0: E=3.3, A=3.9, O=3.7, C=3.7,
+N=2.8 (see Normative priors).
+
+Direct comparison of witness scores to self z-scores derived from
+IPIP-NEO priors therefore introduces a systematic offset per
+dimension. With balanced witness voting, the implied
+witness-minus-self z-difference is approximately:
+
+| Dimension       | Offset (witness − self z) |
+|-----------------|---------------------------|
+| Bond (A)        | −1.55                     |
+| Vision (O)      | −1.17                     |
+| Discipline (C)  | −1.13                     |
+| Presence (E)    | −0.42                     |
+| Depth (N)       | +0.28                     |
+
+These offsets are an artefact of the comparison, not a property of
+the witness's perception. For this reason, the Full Moon report
+does not display witness-vs-self comparisons as absolute z-score
+differences. Comparisons are expressed structurally — as relative
+rankings of archetypes — which do not depend on the comparability
+of the two scales.
+
+Witness-specific normative statistics (NORM_MEAN, NORM_SD per
+dimension, derived from empirical witness data) will replace the
+IPIP-NEO priors for witness-scoring purposes at N≥200 (see
+Validation plan).
+
+---
+
+## Full Moon report methodology
+
+The Full Moon report is the final user-facing artefact of the
+Cèrcol pipeline. It synthesises self-report and witness data
+into a comparison of perceived archetypes.
+
+### Why archetypes, not dimensions
+
+The OCEAN dimensions are the internal mathematics of role
+assignment, not the product surface. Users do not identify with a
+score on Presence or Discipline; they identify with an archetype
+(animal). The Full Moon report therefore compares the *relevant
+archetypes* on each side (self and witness), not the dimension
+rankings that produce those archetypes.
+
+Comparing dimensions directly is also structurally unsound, given
+the known systematic bias of witness scoring against IPIP-NEO
+priors (see "Known systematic bias"). Comparing archetypes
+sidesteps this problem because the archetype assignment is
+determined by *which centroid each profile is closest to*, a
+purely relative geometric question that does not depend on
+matched normative scales.
+
+### Relevance threshold
+
+For each side (self, witness), the report displays only the
+archetypes that *genuinely represent* the profile, determined by
+a ratio-based threshold:
+
+- If the top role's probability divided by the second role's
+  probability is ≥ 1.5, only the top role is displayed (the
+  profile is dominated by a single archetype).
+- Otherwise, the report displays all archetypes whose probability
+  exceeds max(0.10, top × 0.60), capped at 5.
+
+The threshold is ratio-based rather than absolute because the
+distribution of probabilities produced by softmax-over-Euclidean-
+distance depends on the geometry of the 12 centroids in 5D
+z-space. Absolute thresholds (e.g. "show all roles above 15%")
+risk being either always or never met depending on calibration.
+Ratio-based thresholds adapt to the shape of each individual
+probability distribution.
+
+The threshold parameters (1.5, 0.10, 0.60, 5) are working
+defaults. Empirical calibration of these parameters against user
+feedback and outcome data is part of the validation plan.
+
+### Surprises
+
+A "surprise" is an archetype that appears in one side's relevant
+set but not the other's. The report displays surprises with their
+direction (witness-only or self-only) and a brief characterisation:
+the 5 adjectives from the witness corpus that most strongly
+define that archetype.
+
+The role-to-adjective mapping `ROLE_TOP_ADJECTIVES` is derived
+from the role centroids and the witness corpus, as follows. For
+each role R with centroid C_R = (z_E, z_A, z_O, z_C, z_N) and
+each adjective A with factor F and valence V:
+
+    fit(A, R) = z_R[F] × sign(V)
+
+The fit score is positive when the adjective's pole matches the
+sign of R's z-score on that adjective's factor. The top 5
+adjectives for R are the 5 with the highest fit scores. Ties are
+broken by id order, with semantic distinctiveness used as a
+secondary criterion (e.g. preferring `creative` over `inventive`
+when both have identical fit scores).
+
+### Limitations
+
+- The relevance threshold is heuristic. It has not been
+  calibrated against empirical user data. A user whose
+  probability distribution is unusual (very flat or very peaked)
+  may receive a number of displayed archetypes that does not match
+  their intuitive sense of self.
+- The role-to-adjective mapping treats all adjectives within a
+  factor group as having identical fit. In reality, AB5C
+  cross-loadings mean some adjectives are more facet-specific
+  than others. The mapping does not currently exploit this
+  finer-grained structure.
+- The comparison is qualitative (set-based and rank-based), not
+  quantitative. Statements like "you are 30% more similar to your
+  witnesses than the average user" cannot be derived from the
+  current Full Moon report. Such statements would require
+  population-level percentiles, which become available only at
+  empirical calibration milestones (see Validation plan).
 
 ---
 
@@ -253,6 +419,12 @@ as blind spot. Threshold is configurable; 0.8 is the default (approximately
   proportion of profiles
 - N≥200: update normalisation priors (NORM_MEAN, NORM_SD) with sample
   statistics
+- N≥200: derive witness-specific NORM_MEAN and NORM_SD per
+  dimension from accumulated witness session data. Replace the
+  IPIP-NEO priors as the comparison basis for witness scoring.
+  Until this calibration is in place, witness/self comparisons
+  remain structural (rank-based or set-based), not quantitative
+  (z-score based).
 - N≥300: run k-means (k=12) in 5D space; compare empirical vs theoretical
   centroids; adjust if divergence is systematic
 - N≥300: regression g ~ assigned_role; if g has significant predictive power
@@ -290,8 +462,8 @@ here for transparency. Human review by a translator with psychometric context is
 before any item text enters the source files.
 
 **Ongoing correction:** The translation feedback system allows Catalan-speaking users to
-suggest corrections. Feedback is stored in Supabase with `language: 'ca'` and reviewed
-by maintainers.
+suggest corrections. Feedback is stored in the PostgreSQL backend with `language: 'ca'`
+and reviewed by maintainers before any item text is updated in the source files.
 
 ### Spanish (ES) test items
 
@@ -319,8 +491,8 @@ of public-domain items, documented as such.
 
 **Ongoing correction:** The translation feedback system (visible on all instrument pages)
 allows Spanish-speaking users to suggest corrections to individual items. Feedback is
-stored in Supabase with the `language` field set to `'es'` and reviewed by maintainers
-before any item text is updated in the source files.
+stored in the PostgreSQL backend with the `language` field set to `'es'` and reviewed by
+maintainers before any item text is updated in the source files.
 
 ### French (FR) test items
 
@@ -343,7 +515,9 @@ the same item-level approach.
 This is not a formally validated translation — it is a principled open-source translation
 of public-domain items, documented as such.
 
-**Ongoing correction:** Feedback stored in Supabase with `language` field set to `'fr'`.
+**Ongoing correction:** Feedback is stored in the PostgreSQL backend with the `language`
+field set to `'fr'` and reviewed by maintainers before any item text is updated in the
+source files.
 
 ### German (DE) test items
 
@@ -364,7 +538,9 @@ NEO-PI-R). Cèrcol's translation follows the same item-level direct translation 
 This is not a formally validated translation — it is a principled open-source translation
 of public-domain items, documented as such.
 
-**Ongoing correction:** Feedback stored in Supabase with `language` field set to `'de'`.
+**Ongoing correction:** Feedback is stored in the PostgreSQL backend with the `language`
+field set to `'de'` and reviewed by maintainers before any item text is updated in the
+source files.
 
 ### Danish (DA) test items
 
@@ -390,7 +566,9 @@ applies: "View myself as predominantly liberal politically."
 This is not a formally validated translation — it is a principled open-source translation
 of public-domain items, following the Vedel et al. methodology, documented as such.
 
-**Ongoing correction:** Feedback stored in Supabase with `language` field set to `'da'`.
+**Ongoing correction:** Feedback is stored in the PostgreSQL backend with the `language`
+field set to `'da'` and reviewed by maintainers before any item text is updated in the
+source files.
 
 ---
 
