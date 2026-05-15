@@ -1,4 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@400;500;700&display=swap');
+/* Self-hosted fonts (replaces the Google Fonts @import).
+ * The @fontsource packages bundle WOFF2 with font-display: swap
+ * already configured. This eliminates the ~750 ms render-blocking
+ * request to fonts.googleapis.com on mobile. */
+@import "@fontsource/playfair-display/400.css";
+@import "@fontsource/playfair-display/700.css";
+@import "@fontsource/roboto/400.css";
+@import "@fontsource/roboto/500.css";
+@import "@fontsource/roboto/700.css";
 @import "tailwindcss";
 
 body {
