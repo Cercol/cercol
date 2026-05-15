@@ -93,10 +93,14 @@ function generateWallpaper() {
  * InstrumentCard — white card with colored left border.
  * On hover: fills with accentColor; text inverts (white, or black on yellow).
  */
-function InstrumentCard({ icon, name, description, meta, accentColor, darkHover = false, paymentLabel, onClick }) {
+function InstrumentCard({ icon, name, description, meta, accentColor, titleColor, darkHover = false, paymentLabel, onClick }) {
   const [hovered, setHovered] = useState(false)
 
   const textColor = hovered ? (darkHover ? colors.black : colors.white) : colors.black
+  // titleColor: the h2 title uses accentColor by default, but some accent colors
+  // (e.g. yellow #f1c22f) fail WCAG AA contrast on white (1.65:1). Pass a
+  // darker variant as titleColor when the default accentColor is inaccessible.
+  const defaultTitleColor = titleColor ?? accentColor
 
   return (
     <button
@@ -118,7 +122,7 @@ function InstrumentCard({ icon, name, description, meta, accentColor, darkHover 
 
       <h2
         className="text-2xl font-bold mb-2"
-        style={{ color: hovered ? textColor : accentColor, transition: 'color 200ms' }}
+        style={{ color: hovered ? textColor : defaultTitleColor, transition: 'color 200ms' }}
       >
         {name}
       </h2>
@@ -196,6 +200,7 @@ export default function HomePage() {
             description={t('home.fullMoon.description')}
             meta={t('home.fullMoon.meta')}
             accentColor={colors.yellow}
+            titleColor="#8a6100"  // WCAG AA accessibility: yellow #f1c22f on white is 1.65:1; #8a6100 is 5.12:1
             darkHover
             paymentLabel={t('home.fullMoon.paid')}
             onClick={() => navigate('/full-moon')}
