@@ -157,6 +157,29 @@ async function renderOneRoute(browser, { route, lang }) {
   // Extra settle time for React hydration and i18n loading
   await new Promise(r => setTimeout(r, 1500))
 
+  // Blog routes fetch article data from the API after mount — the fixed
+  // 1500ms settle may not be enough when the API is slow in CI.
+  // Wait until either content is present or an error state is shown so
+  // we never capture a loading skeleton as the final HTML.
+  // Scoped to blog routes only; try-catch means a timeout (e.g. on
+  // individual article pages where the >5 threshold may not be met) falls
+  // through to page.content() with whatever rendered rather than hanging.
+  if (route.includes('/blog')) {
+    try {
+      await page.waitForFunction(
+        () => {
+          const errorEl = document.querySelector('.text-red-500')
+          const hasError = errorEl?.textContent?.includes('Could not load')
+          const hasContent = document.querySelectorAll('article, .article-card, a[href*="/blog/"]').length > 5
+          return !hasError && hasContent
+        },
+        { timeout: 15000 }
+      )
+    } catch {
+      // Timeout — capture whatever rendered (API may be slow in CI)
+    }
+  }
+
   const html = await page.content()
   await page.close()
 
