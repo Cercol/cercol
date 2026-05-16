@@ -21,7 +21,13 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        # Use `npm install` instead of `npm ci` because package-lock.json
+        # is regenerated on macOS (the primary dev platform) and lacks the
+        # optional linux-x64 native binaries (@esbuild/linux-x64-gnu,
+        # @rollup/rollup-linux-x64-gnu, @tailwindcss/oxide-linux-x64-gnu,
+        # etc.) that `npm ci` strictly requires on this Ubuntu runner.
+        # `npm install` resolves missing optional platform deps without failing.
+        run: npm install
 
       - name: Build
         run: npm run build
@@ -56,7 +62,9 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        # Use `npm install` instead of `npm ci` — see Build & lint job above
+        # for the full rationale (macOS lockfile / linux-x64 optional deps).
+        run: npm install
 
       - name: Run tests
         run: npm test -- --run
