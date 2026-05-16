@@ -82,28 +82,17 @@ async function main() {
   parts.push('', '  <!-- Blog index -->')
   parts.push(urlEntry('/blog', { priority: '0.8', changefreq: 'weekly', lastmod: TODAY }))
 
-  // ── Blog post URLs disabled 2026-05-16 ──────────────────────────────────────
-  // Blog post pages (/blog/<slug>) are SPA-only routes. GitHub Pages has no
-  // pre-rendered static file for them and returns HTTP 404 on direct access.
-  // The 404.html JS redirect handles browser navigation correctly, but
-  // Googlebot sees the 404 status and deindexes these URLs, causing a flood
-  // of "Not found (404)" errors in Google Search Console.
-  //
-  // The proper long-term fix is to extend scripts/prerender.mjs to generate
-  // a static dist/blog/<slug>/index.html for each post so GitHub Pages serves
-  // them with HTTP 200. Until that pre-rendering work is done, per-slug URLs
-  // are excluded from the sitemap to stop the GSC errors.
-  //
-  // To re-enable once pre-rendering is live, uncomment the block below and
-  // verify that `curl -s -o /dev/null -w "%{http_code}" https://cercol.team/blog/<slug>`
-  // returns 200 (not 301 or 404) before deploying.
-  //
-  // if (slugs.length > 0) {
-  //   parts.push('', '  <!-- Blog articles -->')
-  //   for (const slug of slugs) {
-  //     parts.push(urlEntry(`/blog/${slug}`, { priority: '0.7', changefreq: 'monthly', lastmod: TODAY }))
-  //   }
-  // }
+  // ── Blog post URLs re-enabled 2026-05-16 ────────────────────────────────────
+  // scripts/prerender.mjs now generates a static dist/blog/<slug>/index.html
+  // (and dist/<lang>/blog/<slug>/index.html for non-English) for every slug,
+  // so GitHub Pages serves HTTP 200 instead of the SPA 404 redirect.
+  // All language variants are included with hreflang alternates.
+  if (slugs.length > 0) {
+    parts.push('', '  <!-- Blog articles -->')
+    for (const slug of slugs) {
+      parts.push(urlEntry(`/blog/${slug}`, { priority: '0.7', changefreq: 'monthly', lastmod: TODAY }))
+    }
+  }
 
   parts.push('', '</urlset>', '')
 

@@ -20,6 +20,12 @@
  *
  * The 404.html SPA redirect remains untouched — it handles routes that are
  * NOT prerendered (instrument pages, auth, account pages).
+ *
+ * Concurrency:
+ * - Static routes + blog index pages run sequentially (13 routes, fast).
+ * - Blog article routes (104 slugs × 6 languages = 624 routes) run through
+ *   a pool of CONCURRENCY=4 parallel Chrome pages to keep CI build time
+ *   under ~4 minutes instead of 50+ minutes for sequential execution.
  */
 
 import puppeteer from 'puppeteer-core'
@@ -31,6 +37,10 @@ import { fileURLToPath } from 'url'
 const __dirname = fileURLToPath(new URL('.', import.meta.url))
 const DIST_DIR   = resolve(__dirname, '../dist')
 const BASE_URL   = 'http://localhost:4173'
+
+// Parallel Chrome pages for blog article rendering.
+// 4 tabs share one browser instance — low memory, fast enough.
+const CONCURRENCY = 4
 
 // Static routes to prerender — auth-gated routes are excluded.
 const STATIC_ROUTES = ['/', '/about', '/instruments', '/roles', '/science', '/faq', '/privacy']
@@ -47,18 +57,25 @@ async function fetchBlogSlugs() {
   }
 }
 
-async function buildRoutes(_slugs) {
-  // Prerender only static pages + blog index pages (one per language).
-  // Individual blog articles are excluded: 104 articles × 6 languages = 624
-  // extra Chrome runs that balloon CI build time from ~1 min to 10+ min.
-  // Article SEO is handled dynamically via BlogArticlePage meta injection
-  // (title, description, Open Graph, JSON-LD) which Google and LLMs support.
-  const routes = STATIC_ROUTES.map(route => ({ route, lang: 'en' }))
+async function buildRoutes(slugs) {
+  // Phase 1: static pages + blog index (one per language) — 13 routes total.
+  const staticRoutes = STATIC_ROUTES.map(route => ({ route, lang: 'en' }))
   for (const lang of BLOG_LANGS) {
     const prefix = lang === 'en' ? '' : `/${lang}`
-    routes.push({ route: `${prefix}/blog`, lang })
+    staticRoutes.push({ route: `${prefix}/blog`, lang })
   }
-  return routes
+
+  // Phase 2: individual blog articles × 6 languages — 104 × 6 = 624 routes.
+  // These run through the concurrency pool (CONCURRENCY=4) to keep CI fast.
+  const articleRoutes = []
+  for (const slug of slugs) {
+    for (const lang of BLOG_LANGS) {
+      const prefix = lang === 'en' ? '' : `/${lang}`
+      articleRoutes.push({ route: `${prefix}/blog/${slug}`, lang })
+    }
+  }
+
+  return { staticRoutes, articleRoutes }
 }
 
 // Chrome executable: environment variable takes priority (for CI/CD).
@@ -118,6 +135,65 @@ function startServer() {
 }
 
 // ---------------------------------------------------------------------------
+// Render a single route — shared by sequential and concurrent workers
+// ---------------------------------------------------------------------------
+
+async function renderOneRoute(browser, { route, lang }) {
+  const url = `${BASE_URL}${route}`
+  const page = await browser.newPage()
+
+  // Suppress JS errors from the page (i18n fetch errors in static context are expected)
+  page.on('pageerror', () => {})
+  page.on('requestfailed', () => {})
+
+  // For non-English pages, set localStorage so i18n initialises correctly
+  if (lang !== 'en') {
+    await page.goto(`${BASE_URL}/`, { waitUntil: 'domcontentloaded', timeout: 10000 })
+    await page.evaluate((l) => localStorage.setItem('cercol-lang', l), lang)
+  }
+
+  await page.goto(url, { waitUntil: 'networkidle0', timeout: 30000 })
+
+  // Extra settle time for React hydration and i18n loading
+  await new Promise(r => setTimeout(r, 1500))
+
+  const html = await page.content()
+  await page.close()
+
+  // Write to dist/<route>/index.html  (root → dist/index.html)
+  if (route === '/') {
+    writeFileSync(join(DIST_DIR, 'index.html'), html, 'utf8')
+  } else {
+    const dir = join(DIST_DIR, route.slice(1))
+    mkdirSync(dir, { recursive: true })
+    writeFileSync(join(dir, 'index.html'), html, 'utf8')
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Concurrency pool — processes a queue of routes with N parallel workers
+// ---------------------------------------------------------------------------
+
+async function renderWithPool(browser, routes, concurrency) {
+  const queue = [...routes]
+  let completed = 0
+  const total = queue.length
+
+  async function worker() {
+    while (queue.length > 0) {
+      const item = queue.shift()
+      if (!item) break
+      console.log(`[prerender]   → ${item.route} (${item.lang}) [${++completed}/${total}]`)
+      await renderOneRoute(browser, item)
+    }
+  }
+
+  // Launch N workers that all drain the same queue
+  const workers = Array.from({ length: Math.min(concurrency, routes.length) }, () => worker())
+  await Promise.all(workers)
+}
+
+// ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
 
@@ -137,47 +213,27 @@ async function main() {
   })
 
   const slugs = await fetchBlogSlugs()
-  const allRoutes = await buildRoutes(slugs)
-  console.log(`[prerender] prerendering ${allRoutes.length} routes…`)
+  const { staticRoutes, articleRoutes } = await buildRoutes(slugs)
+  const total = staticRoutes.length + articleRoutes.length
+  console.log(`[prerender] prerendering ${total} routes (${staticRoutes.length} static + ${articleRoutes.length} articles)…`)
 
-  for (const { route, lang } of allRoutes) {
-    const url = `${BASE_URL}${route}`
-    console.log(`[prerender]   → ${route} (${lang})`)
+  // Phase 1: static + blog index — sequential, short list
+  console.log(`[prerender] phase 1: static routes (sequential)`)
+  for (const item of staticRoutes) {
+    console.log(`[prerender]   → ${item.route} (${item.lang})`)
+    await renderOneRoute(browser, item)
+  }
 
-    const page = await browser.newPage()
-
-    // Suppress JS errors from the page (i18n fetch errors in static context are expected)
-    page.on('pageerror', () => {})
-    page.on('requestfailed', () => {})
-
-    // For non-English pages, set localStorage so i18n initialises correctly
-    if (lang !== 'en') {
-      await page.goto(`${BASE_URL}/`, { waitUntil: 'domcontentloaded', timeout: 10000 })
-      await page.evaluate((l) => localStorage.setItem('cercol-lang', l), lang)
-    }
-
-    await page.goto(url, { waitUntil: 'networkidle0', timeout: 30000 })
-
-    // Extra settle time for React hydration and i18n loading
-    await new Promise(r => setTimeout(r, 1500))
-
-    const html = await page.content()
-    await page.close()
-
-    // Write to dist/<route>/index.html  (root → dist/index.html)
-    if (route === '/') {
-      writeFileSync(join(DIST_DIR, 'index.html'), html, 'utf8')
-    } else {
-      const dir = join(DIST_DIR, route.slice(1))
-      mkdirSync(dir, { recursive: true })
-      writeFileSync(join(dir, 'index.html'), html, 'utf8')
-    }
+  // Phase 2: blog articles — concurrent pool
+  if (articleRoutes.length > 0) {
+    console.log(`[prerender] phase 2: blog articles (concurrency=${CONCURRENCY})`)
+    await renderWithPool(browser, articleRoutes, CONCURRENCY)
   }
 
   await browser.close()
   server.close()
 
-  console.log(`[prerender] done — ${allRoutes.length} routes prerendered ✓`)
+  console.log(`[prerender] done — ${total} routes prerendered ✓`)
 }
 
 main().catch((err) => {
