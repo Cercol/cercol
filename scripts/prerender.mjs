@@ -4,22 +4,36 @@
  * Generates static HTML for public SEO-relevant routes.
  * Runs after `vite build`, before `gh-pages -d dist`.
  *
- * Usage (called automatically by `npm run build:prerender`):
+ * Usage (called automatically by `npm run build:full`):
  *   node scripts/prerender.mjs
  *
  * What it does:
- * 1. Launches a local HTTP server serving ./dist
- * 2. Opens each public route in headless Chrome via puppeteer-core
- * 3. Waits for React to render (react-i18next loads, fonts settle)
- * 4. Saves the fully-rendered HTML to dist/<route>/index.html
+ * 1. Fetches the article list and beta status from the live API ONCE
+ * 2. Launches a local HTTP server serving ./dist
+ * 3. Opens each public route in headless Chrome via puppeteer-core
+ * 4. Waits for React to render (react-i18next loads, fonts settle)
+ * 5. Injects window.__BLOG_ARTICLES__ and window.__BETA__ into <head>
+ * 6. Saves the fully-rendered HTML to dist/<route>/index.html
  *
  * Why this matters for SEO:
  * - Google indexes the static HTML directly — no JS execution lag
  * - LLMs and Perplexity can scrape content without running JavaScript
  * - First Contentful Paint improves because browsers get real HTML instantly
  *
- * The 404.html SPA redirect remains untouched — it handles routes that are
- * NOT prerendered (instrument pages, auth, account pages).
+ * Why the window globals are injected:
+ * - BlogIndexPage reads window.__BLOG_ARTICLES__ on first render, eliminating
+ *   the API call at hydration time. Root cause of "Soft 404" in Google Search
+ *   Console: during the PR #20 CI build the concurrent pool caused the API to
+ *   time out on the blog index page, and Puppeteer captured the error fallback
+ *   HTML. With window.__BLOG_ARTICLES__ pre-injected, BlogIndexPage never hits
+ *   the API during prerender — it renders from the global synchronously.
+ * - BetaBanner reads window.__BETA__ on first render, eliminating the 1300ms
+ *   LCP delay caused by useState(null) unmounting the pre-rendered banner on
+ *   hydration and re-mounting it after the /beta API round-trip.
+ *
+ * CRITICAL: fetchBlogArticles() throws on failure (does NOT fall back silently)
+ * so the build fails loudly rather than shipping blog index HTML with the error
+ * fallback "Could not load articles" baked into it.
  *
  * Concurrency:
  * - Static routes + blog index pages run sequentially (13 routes, fast).
@@ -46,18 +60,55 @@ const CONCURRENCY = 4
 const STATIC_ROUTES = ['/', '/about', '/instruments', '/roles', '/science', '/faq', '/privacy']
 const BLOG_LANGS = ['en', 'ca', 'es', 'fr', 'de', 'da']
 
-async function fetchBlogSlugs() {
+// ---------------------------------------------------------------------------
+// API fetchers — called ONCE before any rendering
+// ---------------------------------------------------------------------------
+
+/**
+ * Fetch the full article list from the API.
+ * THROWS on failure — an empty list would cause BlogIndexPage to render the
+ * "Could not load articles" error fallback and bake it into the pre-rendered
+ * HTML, which Google Search Console treats as a Soft 404.
+ */
+async function fetchBlogArticles() {
+  const res = await globalThis.fetch('https://api.cercol.team/blog', {
+    signal: AbortSignal.timeout(15000),
+  })
+  if (!res.ok) {
+    throw new Error(`/blog returned HTTP ${res.status}`)
+  }
+  const articles = await res.json()
+  if (!Array.isArray(articles) || articles.length === 0) {
+    throw new Error('/blog returned an empty article list')
+  }
+  console.log(`[prerender] fetched ${articles.length} articles for window.__BLOG_ARTICLES__`)
+  return articles
+}
+
+/**
+ * Fetch the beta-launch status. Falls back silently — the banner is
+ * best-effort and a failure here must not block the build.
+ */
+async function fetchBetaStatus() {
   try {
-    const res = await globalThis.fetch('https://api.cercol.team/blog')
-    const posts = await res.json()
-    return Array.isArray(posts) ? posts.map(p => p.slug) : []
-  } catch (e) {
-    console.warn('[prerender] could not fetch blog slugs:', e.message)
-    return []
+    const res = await globalThis.fetch('https://api.cercol.team/beta', {
+      signal: AbortSignal.timeout(10000),
+    })
+    if (!res.ok) throw new Error(`/beta returned HTTP ${res.status}`)
+    const data = await res.json()
+    console.log(`[prerender] fetched beta status: remaining=${data.remaining}/${data.total}`)
+    return data
+  } catch (err) {
+    console.warn(`[prerender] could not fetch beta status (${err.message}), using default`)
+    return { remaining: 500, total: 500, active: true }
   }
 }
 
-async function buildRoutes(slugs) {
+// ---------------------------------------------------------------------------
+// Route plan
+// ---------------------------------------------------------------------------
+
+function buildRoutes(slugs) {
   // Phase 1: static pages + blog index (one per language) — 13 routes total.
   const staticRoutes = STATIC_ROUTES.map(route => ({ route, lang: 'en' }))
   for (const lang of BLOG_LANGS) {
@@ -138,7 +189,7 @@ function startServer() {
 // Render a single route — shared by sequential and concurrent workers
 // ---------------------------------------------------------------------------
 
-async function renderOneRoute(browser, { route, lang }) {
+async function renderOneRoute(browser, { route, lang }, { articles, betaStatus }) {
   const url = `${BASE_URL}${route}`
   const page = await browser.newPage()
 
@@ -157,13 +208,11 @@ async function renderOneRoute(browser, { route, lang }) {
   // Extra settle time for React hydration and i18n loading
   await new Promise(r => setTimeout(r, 1500))
 
-  // Blog routes fetch article data from the API after mount — the fixed
-  // 1500ms settle may not be enough when the API is slow in CI.
-  // Wait until either content is present or an error state is shown so
-  // we never capture a loading skeleton as the final HTML.
-  // Scoped to blog routes only; try-catch means a timeout (e.g. on
-  // individual article pages where the >5 threshold may not be met) falls
-  // through to page.content() with whatever rendered rather than hanging.
+  // Blog routes: guard against slow API responses / loading states.
+  // With window.__BLOG_ARTICLES__ now injected, the blog INDEX page no longer
+  // hits the API during render — it reads from the global synchronously.
+  // The guard remains for individual article pages where the body is still
+  // fetched from the API, and as a belt-and-suspenders safety net.
   if (route.includes('/blog')) {
     try {
       await page.waitForFunction(
@@ -183,13 +232,20 @@ async function renderOneRoute(browser, { route, lang }) {
   const html = await page.content()
   await page.close()
 
+  // Inject window globals into <head> so React reads them synchronously
+  // on first render, avoiding API calls and hydration flicker:
+  //   window.__BLOG_ARTICLES__ — full article list for BlogIndexPage
+  //   window.__BETA__          — beta launch status for BetaBanner
+  const injection = `<script>window.__BETA__=${JSON.stringify(betaStatus)};window.__BLOG_ARTICLES__=${JSON.stringify(articles)};</script>`
+  const htmlWithGlobals = html.replace('</head>', `${injection}\n</head>`)
+
   // Write to dist/<route>/index.html  (root → dist/index.html)
   if (route === '/') {
-    writeFileSync(join(DIST_DIR, 'index.html'), html, 'utf8')
+    writeFileSync(join(DIST_DIR, 'index.html'), htmlWithGlobals, 'utf8')
   } else {
     const dir = join(DIST_DIR, route.slice(1))
     mkdirSync(dir, { recursive: true })
-    writeFileSync(join(dir, 'index.html'), html, 'utf8')
+    writeFileSync(join(dir, 'index.html'), htmlWithGlobals, 'utf8')
   }
 }
 
@@ -197,7 +253,7 @@ async function renderOneRoute(browser, { route, lang }) {
 // Concurrency pool — processes a queue of routes with N parallel workers
 // ---------------------------------------------------------------------------
 
-async function renderWithPool(browser, routes, concurrency) {
+async function renderWithPool(browser, routes, concurrency, globals) {
   const queue = [...routes]
   let completed = 0
   const total = queue.length
@@ -207,7 +263,7 @@ async function renderWithPool(browser, routes, concurrency) {
       const item = queue.shift()
       if (!item) break
       console.log(`[prerender]   → ${item.route} (${item.lang}) [${++completed}/${total}]`)
-      await renderOneRoute(browser, item)
+      await renderOneRoute(browser, item, globals)
     }
   }
 
@@ -221,6 +277,16 @@ async function renderWithPool(browser, routes, concurrency) {
 // ---------------------------------------------------------------------------
 
 async function main() {
+  // Fetch API data ONCE before rendering any routes.
+  // fetchBlogArticles() throws on failure — a build with an empty or erroring
+  // article list would bake the error fallback into the blog index HTML.
+  const [articles, betaStatus] = await Promise.all([
+    fetchBlogArticles(),
+    fetchBetaStatus(),
+  ])
+  const globals = { articles, betaStatus }
+  const slugs = articles.map(a => a.slug)
+
   const server = await startServer()
 
   const browser = await puppeteer.launch({
@@ -235,8 +301,7 @@ async function main() {
     ],
   })
 
-  const slugs = await fetchBlogSlugs()
-  const { staticRoutes, articleRoutes } = await buildRoutes(slugs)
+  const { staticRoutes, articleRoutes } = buildRoutes(slugs)
   const total = staticRoutes.length + articleRoutes.length
   console.log(`[prerender] prerendering ${total} routes (${staticRoutes.length} static + ${articleRoutes.length} articles)…`)
 
@@ -244,13 +309,13 @@ async function main() {
   console.log(`[prerender] phase 1: static routes (sequential)`)
   for (const item of staticRoutes) {
     console.log(`[prerender]   → ${item.route} (${item.lang})`)
-    await renderOneRoute(browser, item)
+    await renderOneRoute(browser, item, globals)
   }
 
   // Phase 2: blog articles — concurrent pool
   if (articleRoutes.length > 0) {
     console.log(`[prerender] phase 2: blog articles (concurrency=${CONCURRENCY})`)
-    await renderWithPool(browser, articleRoutes, CONCURRENCY)
+    await renderWithPool(browser, articleRoutes, CONCURRENCY, globals)
   }
 
   await browser.close()
