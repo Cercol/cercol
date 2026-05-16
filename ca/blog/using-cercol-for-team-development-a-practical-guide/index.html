@@ -1,0 +1,327 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://api.cercol.team" crossorigin="">
+
+    <!-- Primary meta -->
+    <title>Usar Cèrcol per al desenvolupament d'equips: una guia pràctica pas a pas · Cèrcol</title>
+    <meta name="description" content="Cèrcol maps your team's personality using the Big Five (OCEAN/IPIP). Free personality assessment with Witness peer review. Science-grounded, open source. 6 languages.">
+    <meta name="keywords" content="team personality assessment, Big Five, OCEAN, IPIP, personality test free, peer assessment, team roles, AB5C, blind spot, team balance">
+    <meta name="author" content="Cèrcol">
+    
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Cèrcol">
+    <meta property="og:title" content="Cèrcol — Team Personality Assessment · Big Five · Free">
+    <meta property="og:description" content="Cèrcol maps your team's personality using the Big Five (OCEAN/IPIP). Free personality assessment with Witness peer review. Science-grounded, open source.">
+    <meta property="og:url" content="https://cercol.team/">
+    <meta property="og:image" content="https://cercol.team/email-logo.png">
+    <meta property="og:locale" content="en_GB">
+    <meta property="og:locale:alternate" content="ca_ES">
+    <meta property="og:locale:alternate" content="es_ES">
+    <meta property="og:locale:alternate" content="fr_FR">
+    <meta property="og:locale:alternate" content="de_DE">
+    <meta property="og:locale:alternate" content="da_DK">
+
+    <!-- Twitter / X card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Cèrcol — Team Personality Assessment · Big Five · Free">
+    <meta name="twitter:description" content="Free Big Five personality assessment with Witness peer review. 12 science-derived team roles. Open source.">
+    <meta name="twitter:image" content="https://cercol.team/email-logo.png">
+
+    <!-- hreflang — all public pages are language-switched via ?lang= param -->
+    
+    
+    
+    
+    
+    
+    
+
+    <!-- JSON-LD: WebApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Cèrcol",
+      "url": "https://cercol.team",
+      "description": "Open-source team personality assessment platform based on the Big Five (OCEAN/IPIP). Includes Witness forced-choice peer assessment and 12 science-derived team roles (AB5C circumplex).",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "inLanguage": ["en", "ca", "es", "fr", "de", "da"],
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "New Moon Cèrcol",
+          "price": "0",
+          "priceCurrency": "EUR",
+          "description": "10-item Big Five snapshot. Always free."
+        },
+        {
+          "@type": "Offer",
+          "name": "First Quarter Cèrcol",
+          "price": "0",
+          "priceCurrency": "EUR",
+          "description": "60-item IPIP-NEO-60. Five dimensions, 30 facets. Always free."
+        },
+        {
+          "@type": "Offer",
+          "name": "Full Moon Cèrcol",
+          "description": "120-item IPIP-NEO-120 + Witness peer assessment + ICAR cognitive ability. One-time payment."
+        }
+      ],
+      "featureList": [
+        "Big Five personality assessment via IPIP public-domain item pool",
+        "Witness peer assessment with forced-choice adjective selection (eliminates social desirability bias)",
+        "12 team roles derived from AB5C circumplex (Hofstee et al. 1992)",
+        "Blind spot detection: self vs peer divergence > 0.8 SD flagged per dimension",
+        "Team balance report",
+        "6 languages: English, Catalan, Spanish, French, German, Danish",
+        "Scoring pipeline fully client-side and open source"
+      ],
+      "sameAs": "https://github.com/cercol/cercol"
+    }
+    </script>
+
+    <!-- JSON-LD: Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Cèrcol",
+      "url": "https://cercol.team",
+      "logo": "https://cercol.team/email-logo.png",
+      "email": "hello@cercol.team",
+      "sameAs": ["https://github.com/cercol/cercol"],
+      "description": "Open-source platform for science-grounded team personality assessment based on Big Five (OCEAN) and IPIP."
+    }
+    </script>
+
+    <!-- JSON-LD: FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is Cèrcol based on the Big Five?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Cèrcol measures personality using the OCEAN model (Big Five) via the IPIP public-domain item pool (Goldberg et al. 2006). The 12 team roles are derived from the AB5C circumplex (Hofstee et al. 1992) and team composition research (Bell 2007; Neuman & Wright 1999)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What makes Cèrcol different from Belbin or DISC?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Cèrcol's roles are grounded in the Big Five (OCEAN) personality model using the IPIP public-domain item pool. The scoring pipeline is fully open source and auditable. Witness Cèrcol uses forced-choice adjective selection — not Likert scales — to eliminate social desirability bias in peer assessment. Unlike Belbin or DISC, all items are public domain and the entire methodology is published and citable."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the personality assessment free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The New Moon Cèrcol (10 items, Big Five snapshot) and First Quarter Cèrcol (60 items, IPIP-NEO-60, 30 facets) are always free — no account required. The Full Moon Cèrcol (120 items, IPIP-NEO-120, Witness peer assessment, cognitive ability measure) requires a one-time payment."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is Witness Cèrcol?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Witness Cèrcol is a peer personality assessment where someone who knows you well rates you using a forced-choice adjective selection method — picking the best-fit and worst-fit adjective per round from a set covering all five OCEAN dimensions. Forced choice eliminates the social desirability bias that affects standard Likert-scale peer ratings. Dimensions where your self-rating and peer ratings diverge by more than 0.8 standard deviations are flagged as potential blind spots."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How are the 12 team roles derived?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The 12 roles are derived from the AB5C circumplex (Hofstee, De Raad & Goldberg 1992), covering all six intersections of the three team balance dimensions (Presence/Extraversion × Bond/Agreeableness × Vision/Openness) at both poles. The selection of these three dimensions as requiring team-level balance is grounded in Bell (2007) and Neuman & Wright (1999). Discipline (Conscientiousness) and Depth (Neuroticism) modulate role expression but do not define team balance."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is my data private?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No account is required for any instrument. During assessment, no personal data is collected — only anonymous scores are logged. Data is stored on our own servers (Hetzner Online GmbH). No third-party analytics. No data is shared with or sold to third parties."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Cèrcol based on the Big Five (OCEAN)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Cèrcol measures personality using the OCEAN model (Big Five) via the IPIP — the International Personality Item Pool, a public-domain collection validated in thousands of published studies. The five dimensions are Presence (Extraversion), Bond (Agreeableness), Vision (Openness), Discipline (Conscientiousness), and Depth (Neuroticism). Because the IPIP is public domain there are no licence restrictions: the full item pool and scoring logic are open and citable."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is Cèrcol different from Belbin, DISC, or StrengthsFinder?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Three things set Cèrcol apart. First, the items come from the Big Five (OCEAN), the most replicated personality model in academic research — not a proprietary framework. Second, the full item pool (IPIP) and scoring pipeline are public domain and auditable; there is no black box. Third, the Witness peer assessment uses forced-choice adjective selection instead of Likert scales, which eliminates the social desirability bias that affects most 360-feedback tools. Belbin and DISC use closed, proprietary methodologies."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are blind spots in team personality assessment?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A blind spot is a personality dimension where how you see yourself and how others see you diverge significantly — more than 0.8 standard deviations apart. Cèrcol's Witness peer assessment detects blind spots by comparing your self-report with forced-choice adjective ratings from people who know you. Blind spots are neither good nor bad: they show where your self-perception and others' experience of you don't match, which is often more actionable than the score itself."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <script>
+      (function() {
+        // Companion to public/404.html SPA redirect workaround.
+        // 404.html encodes the original path+search into the ?p= param.
+        // URLSearchParams.get() already percent-decodes the value,
+        // so we restore the URL directly — no extra decodeURIComponent.
+        // The hash is kept separate so URL fragments survive intact.
+        const p = new URLSearchParams(window.location.search).get('p')
+        if (p) {
+          window.history.replaceState(null, null, p + window.location.hash)
+        }
+      })()
+    </script>
+    <script type="module" crossorigin="" src="/assets/index-DHA_zwTL.js"></script>
+    <link rel="modulepreload" crossorigin="" href="/assets/rolldown-runtime-Dw2cE7zH.js">
+    <link rel="modulepreload" crossorigin="" href="/assets/vendor-BsklAe1V.js">
+    <link rel="modulepreload" crossorigin="" href="/assets/vendor-router-C4B3KMkI.js">
+    <link rel="modulepreload" crossorigin="" href="/assets/vendor-i18n-tZwj3PTN.js">
+    <link rel="modulepreload" crossorigin="" href="/assets/vendor-react-Svb3j4t8.js">
+    <link rel="modulepreload" crossorigin="" href="/assets/api-BRBVQMj1.js">
+    <link rel="stylesheet" crossorigin="" href="/assets/vendor-DOzuTqaE.css">
+    <link rel="stylesheet" crossorigin="" href="/assets/index-Clzjp2vb.css">
+  <link rel="modulepreload" as="script" crossorigin="" href="/assets/BlogArticlePage-D8qsMg7B.js"><meta name="description" content="Els perfils de Cèrcol, l'avaluació de parells Testimoni i el mapa d'equip permeten un cicle de desenvolupament complet. Segueix aquests passos des de l'autoconeixement fins a acords concrets d'equip." data-blog="1"><meta content="Usar Cèrcol per al desenvolupament d'equips: una guia pràctica pas a pas" data-blog="1"><meta content="Els perfils de Cèrcol, l'avaluació de parells Testimoni i el mapa d'equip permeten un cicle de desenvolupament complet. Segueix aquests passos des de l'autoconeixement fins a acords concrets d'equip." data-blog="1"><meta content="https://cercol.team/ca/blog/using-cercol-for-team-development-a-practical-guide" data-blog="1"><meta content="article" data-blog="1"><meta content="Cèrcol" data-blog="1"><script type="application/ld+json" data-blog="1">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Usar Cèrcol per al desenvolupament d'equips: una guia pràctica pas a pas","description":"Els perfils de Cèrcol, l'avaluació de parells Testimoni i el mapa d'equip permeten un cicle de desenvolupament complet. Segueix aquests passos des de l'autoconeixement fins a acords concrets d'equip.","url":"https://cercol.team/ca/blog/using-cercol-for-team-development-a-practical-guide","author":{"@type":"Person","name":"Miquel Matoses"},"publisher":{"@type":"Organization","name":"Cèrcol","url":"https://cercol.team"},"inLanguage":"ca"}</script><link rel="alternate" hreflang="en" href="https://cercol.team/blog/using-cercol-for-team-development-a-practical-guide"><link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/using-cercol-for-team-development-a-practical-guide"><link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/using-cercol-for-team-development-a-practical-guide"><link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/using-cercol-for-team-development-a-practical-guide"><link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/using-cercol-for-team-development-a-practical-guide"><link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/using-cercol-for-team-development-a-practical-guide"><link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/using-cercol-for-team-development-a-practical-guide"><link rel="canonical" href="https://cercol.team/ca/blog/using-cercol-for-team-development-a-practical-guide"></head>
+  <body>
+    <div id="root"><header style="background-color: rgb(0, 71, 186);"><div class="h-16 flex items-center gap-6 px-6 lg:px-12"><a class="shrink-0" href="/" data-discover="true" style="color: rgb(255, 255, 255);"><svg viewBox="0 0 1122.52 470.92" xmlns="http://www.w3.org/2000/svg" class="h-7 w-auto" aria-label="Cèrcol" role="img"><path transform="matrix(0.13333333,0,0,-0.13333333,0,470.92)" d="m 3969.73,2230.29 c -93.36,-159.94 -143.58,-333.14 -53.28,-385.84 90.29,-52.7 208.72,63.02 302.08,222.96 104.65,179.29 131.96,339.92 53.28,385.85 -78.68,45.92 -197.43,-43.68 -302.08,-222.97" style="fill: currentcolor; fill-rule: nonzero; stroke: none;"></path><path transform="matrix(0.13333333,0,0,-0.13333333,0,470.92)" d="m 1212.64,2357.4 c -180.39,-41.94 -340.788,-124.34 -317.113,-226.18 23.676,-101.83 189.123,-108.48 369.503,-66.54 202.21,47.01 337.74,137.44 317.12,226.17 -20.64,88.74 -167.31,113.55 -369.51,66.55" style="fill: currentcolor; fill-rule: nonzero; stroke: none;"></path><path transform="matrix(0.13333333,0,0,-0.13333333,0,470.92)" d="m 5418.53,2357.4 c -180.39,-41.94 -340.79,-124.34 -317.11,-226.18 23.67,-101.83 189.12,-108.48 369.5,-66.54 202.21,47.01 337.74,137.44 317.12,226.17 -20.64,88.74 -167.31,113.55 -369.51,66.55" style="fill: currentcolor; fill-rule: nonzero; stroke: none;"></path><path transform="matrix(0.13333333,0,0,-0.13333333,0,470.92)" d="m 2193.43,1922.67 c 0,208.28 11.85,456.79 149.1,456.79 101.78,0 123.09,-111.22 123.09,-274.54 v -139.63 l -272.19,-52.09 z m 648.52,-369.23 c -71.01,-56.8 -203.57,-104.14 -328.99,-104.14 -170.43,0 -305.34,115.97 -319.53,418.93 h 631.95 v 134.91 c 0,298.24 -177.51,452.07 -471,452.07 -220.2,0 -400.26,-126.29 -499.25,-312.28 -53.16,-99.88 -83,-216.93 -83,-340.97 0,-7.44 0.22,-14.78 0.4,-22.14 8.24,-338.94 205.86,-586.14 548.72,-586.14 300.59,0 442.6,201.18 530.18,352.66 l -9.48,7.1" style="fill: currentcolor; fill-rule: nonzero; stroke: none;"></path><path transform="matrix(0.13333333,0,0,-0.13333333,0,470.92)" d="m 3697.19,1541.6 v 913.61 h -9.48 c -168.05,-42.59 -366.87,-87.57 -572.79,-106.5 v -9.48 c 130.19,-61.52 153.84,-113.61 153.84,-321.89 V 1541.6 c 0,-170.41 -14.18,-246.14 -130.15,-312.42 v -9.47 h 726.62 v 9.47 c -151.49,71 -168.04,142.01 -168.04,312.42" style="fill: currentcolor; fill-rule: nonzero; stroke: none;"></path><path transform="matrix(0.13333333,0,0,-0.13333333,0,470.92)" d="m 6595.9,1272.21 c -165.69,0 -189.36,265.08 -189.36,558.57 0,328.99 44.98,558.58 189.36,558.58 144.37,0 189.35,-229.59 189.35,-558.58 0,-293.49 -23.67,-558.57 -189.35,-558.57 z m 0,1190.52 c -207.75,0 -393.82,-85.75 -510.89,-236.5 -80.33,-103.44 -128.16,-237.48 -128.16,-395.45 0,-38.12 3.13,-75.07 8.85,-110.82 49.35,-308.2 303.58,-521.14 630.2,-521.14 364.48,0 639.05,265.1 639.05,631.96 0,388.15 -288.76,631.95 -639.05,631.95" style="fill: currentcolor; fill-rule: nonzero; stroke: none;"></path><path transform="matrix(0.13333333,0,0,-0.13333333,0,470.92)" d="m 8059.75,1541.6 v 1382.26 h -9.46 c -168.05,-42.62 -376.33,-87.58 -582.25,-106.52 v -9.47 c 130.19,-61.54 153.84,-113.6 153.84,-321.89 V 1541.6 c 0,-170.41 -14.18,-246.14 -130.17,-312.42 v -9.47 h 698.23 v 9.47 c -115.98,66.28 -130.19,142.01 -130.19,312.42" style="fill: currentcolor; fill-rule: nonzero; stroke: none;"></path><path transform="matrix(0.13333333,0,0,-0.13333333,0,470.92)" d="m 1415.87,1553.44 -6.6,3.55 c -63.84,-27.17 -133.98,-42.39 -207.75,-42.39 -293.391,0 -531.231,263.79 -531.231,557.19 0,139.21 53.613,265.85 141.234,360.58 2.754,4.45 5.711,8.77 8.582,13.15 l -10.449,7.52 -2.914,1.56 c -34.043,-3.3 -68.262,-9.31 -102.371,-18.56 -328.73,-89.1 -522.976,-453.75 -433.883,-782.47 89.106,-328.71 427.805,-522.96 756.522,-433.86 180.45,48.92 319.51,173.44 394.23,329.87 l -5.37,3.86" style="fill: currentcolor; fill-rule: nonzero; stroke: none;"></path><path transform="matrix(0.13333333,0,0,-0.13333333,0,470.92)" d="m 5600.71,1553.44 -1.82,0.98 c -62.26,-25.63 -130.42,-39.82 -201.92,-39.82 -293.4,0 -531.24,263.79 -531.24,557.19 0,139.21 53.61,265.85 141.24,360.58 3.19,5.16 6.6,10.18 9.95,15.24 l -7.54,5.43 -3.52,1.89 c -35.25,-3.21 -70.71,-9.31 -106.06,-18.89 -328.72,-89.1 -522.96,-453.75 -433.86,-782.47 89.1,-328.71 427.8,-522.96 756.52,-433.86 178.26,48.32 316.17,170.42 391.51,324.19 l -13.26,9.54" style="fill: currentcolor; fill-rule: nonzero; stroke: none;"></path><path transform="matrix(0.13333333,0,0,-0.13333333,0,470.92)" d="m 2264.79,2975.04 c -38.87,-97.06 -217.56,-72.84 -389.49,-4 -192.72,77.17 -298.8,181.46 -264.93,266.04 33.86,84.57 196.76,81.16 389.48,3.99 171.93,-68.84 303.79,-168.98 264.94,-266.03" style="fill: currentcolor; fill-rule: nonzero; stroke: none;"></path><path transform="matrix(0.13333333,0,0,-0.13333333,0,470.92)" d="m 4310.4,312.941 c -38.87,-97.062 -217.56,-72.839 -389.49,-4 -192.72,77.168 -298.8,181.457 -264.94,266.039 33.87,84.571 196.77,81.161 389.49,3.989 171.93,-68.84 303.79,-168.981 264.94,-266.028" style="fill: currentcolor; fill-rule: nonzero; stroke: none;"></path></svg></a><nav class="hidden md:flex flex-1 items-center gap-1" aria-label="Main navigation"><a class="shrink-0 text-xs font-medium px-2.5 py-1.5 rounded transition-colors whitespace-nowrap text-white/70 hover:text-white hover:bg-white/10" href="/instruments" data-discover="true">Instruments</a><a class="shrink-0 text-xs font-medium px-2.5 py-1.5 rounded transition-colors whitespace-nowrap text-white/70 hover:text-white hover:bg-white/10" href="/roles" data-discover="true">Rols</a><div class="relative"><button type="button" class="shrink-0 flex items-center gap-1 text-xs font-medium px-2.5 py-1.5 rounded transition-colors whitespace-nowrap text-white bg-white/20">Aprendre<svg class="w-3 h-3 transition-transform duration-150 " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button></div><div class="relative"><button type="button" class="shrink-0 flex items-center gap-1 text-xs font-medium px-2.5 py-1.5 rounded transition-colors whitespace-nowrap text-white/70 hover:text-white hover:bg-white/10">Empresa<svg class="w-3 h-3 transition-transform duration-150 " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button></div></nav><div class="flex items-center gap-3 shrink-0 ml-auto md:ml-0"><button aria-label="Iniciar sessió" class="p-1.5 rounded transition-colors hover:bg-white/10" style="color: rgba(255, 255, 255, 0.7);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class=""><circle cx="12" cy="8.5" r="3.2" stroke-width="1.7"></circle><path stroke-width="1.7" d="M4.5 20.5 C5 16 8.2 13.5 12 13.5 C15.8 13.5 19 16 19.5 20.5"></path></svg></button><div class="relative"><button aria-label="Select language" aria-expanded="false" class="flex items-center gap-1 p-1.5 rounded transition-colors hover:bg-white/10" style="color: rgba(255, 255, 255, 0.7);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class=""><circle cx="12" cy="12" r="9" stroke-width="1.7"></circle><path stroke-width="1.3" d="M3 12 C6 11 18 11 21 12"></path><path stroke-width="1.3" d="M12 3 C9.5 6.5 9.5 17.5 12 21 C14.5 17.5 14.5 6.5 12 3 Z"></path></svg><span class="text-xs font-semibold tracking-wide leading-none">CA</span></button></div><button type="button" aria-label="Open menu" aria-expanded="false" class="md:hidden flex flex-col justify-center gap-1.5 p-1" style="color: rgb(255, 255, 255);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class=""><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button></div></div></header><div style="background-color: rgb(241, 194, 47);"><div class="max-w-5xl mx-auto px-4 sm:px-8 py-2.5 flex items-center justify-between gap-4 flex-wrap"><div class="flex items-center gap-3 flex-wrap"><span class="text-sm font-semibold text-gray-900">Llançament beta — queden 500 llicències gratuïtes de Lluna Plena. Ajuda'ns a detectar errors.</span><div class="hidden sm:flex items-center gap-1.5"><div class="w-20 h-1.5 bg-black/20 rounded-full overflow-hidden"><div class="h-full bg-black/50 rounded-full transition-all" style="width: 0%;"></div></div><span class="text-xs text-gray-700 font-medium">0/500</span></div></div><a class="shrink-0 text-xs font-bold text-gray-900 underline hover:no-underline" href="/auth" data-discover="true">Reclama el teu accés gratuït</a></div></div><div class="bg-white min-h-[calc(100vh-4rem)]"><div class="max-w-4xl mx-auto px-4 sm:px-8"><main class="py-8"><div class="mb-6 max-w-3xl"><a class="text-sm font-medium hover:underline" href="/ca/blog" data-discover="true" style="color: var(--mm-color-blue);">← Tornar al blog</a></div><div class="relative w-full rounded-2xl overflow-hidden mb-8 max-w-3xl" style="height: clamp(180px, 28vw, 280px);"><img alt="" class="absolute inset-0 w-full h-full object-cover" src="https://images.unsplash.com/photo-1540539335-f9b8b823a108?ixid=M3w5NDcwMjR8MHwxfHNlYXJjaHwxfHx0ZWFtJTIwZGV2ZWxvcG1lbnQlMjBndWlkZSUyMHByYWN0aWNlfGVufDB8MHx8fDE3NzgzNjQxMjh8MA&amp;ixlib=rb-4.1.0?w=1200&amp;auto=format&amp;fit=crop&amp;q=80"><div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div></div><header class="mb-8 max-w-3xl"><h1 class="text-3xl font-bold text-gray-900 mb-3 leading-tight" style="font-family: var(--mm-font-display);">Usar Cèrcol per al desenvolupament d'equips: una guia pràctica pas a pas</h1><p class="text-base text-gray-500 mb-3 leading-relaxed">Els perfils de Cèrcol, l'avaluació de parells Testimoni i el mapa d'equip permeten un cicle de desenvolupament complet. Segueix aquests passos des de l'autoconeixement fins a acords concrets d'equip.</p><p class="text-sm text-gray-400 flex flex-wrap gap-x-2 gap-y-1 items-center"><span>Miquel Matoses</span><span>·</span><span>14 min de lectura</span></p></header><div class="flex gap-10 items-start max-w-5xl"><div class="min-w-0 flex-1"><div class="lg:hidden mb-6"><button type="button" class="w-full flex justify-between items-center px-4 py-3 rounded-xl border text-sm font-medium text-gray-700 bg-gray-50 hover:bg-gray-100 transition-colors"><span>Contingut</span><span class="text-gray-400">▸</span></button></div><article class="prose-article"><h1 id="usar-crcol-per-al-desenvolupament-d39equips-una-guia-prctica-pas-a-pas">Usar Cèrcol per al desenvolupament d'equips: una guia pràctica pas a pas</h1>
+<p>Els perfils de personalitat per si sols no desenvolupen equips. El que desenvolupa els equips és la conversa estructurada que els bons perfils fan possible — el tipus de conversa en què les persones poden parlar honestament sobre com treballen, què els resulta difícil i què necessita l'equip per funcionar millor.</p>
+<p>Cèrcol està dissenyat per donar suport exactament a aquesta conversa. Ofereix als equips tres instruments: perfils de personalitat individuals (New Moon), avaluacions de parells de col·legues (Testimoni) i un mapa de composició de l'equip que visualitza el perfil col·lectiu. Usats conjuntament, en seqüència, aquestes tres eines permeten un cicle complet de desenvolupament d'equip — des de l'autoconsciència individual, passant per la validació externa, fins a la comprensió compartida i els acords concrets d'equip.</p>
+<p>Aquesta guia recorre aquest cicle pas a pas, amb notes sobre facilitació, reptes habituals i com convertir les dades en canvis duradors. Aprèn-ne més a <a href="https://cercol.team">cercol.team</a>.</p>
+<figure>
+<svg class="diagram" viewBox="0 0 560 80" xmlns="http://www.w3.org/2000/svg">
+  <!-- Step boxes -->
+  <!-- 1: Take tests (blue) -->
+  <rect x="4" y="20" width="92" height="40" rx="8" fill="#0047ba"></rect>
+  <text x="50" y="36" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="white">1. Fer</text>
+  <text x="50" y="50" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="white">els tests</text>  <!-- Arrow -->
+  <polygon points="100,38 112,40 100,42" fill="#555"></polygon>
+  <line x1="96" y1="40" x2="113" y2="40" stroke="#555" stroke-width="2"></line>  <!-- 2: Share results (green) -->
+  <rect x="114" y="20" width="92" height="40" rx="8" fill="#427c42"></rect>
+  <text x="160" y="36" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="white">2. Compartir</text>
+  <text x="160" y="50" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="white">resultats</text>  <!-- Arrow -->
+  <polygon points="210,38 222,40 210,42" fill="#555"></polygon>
+  <line x1="206" y1="40" x2="223" y2="40" stroke="#555" stroke-width="2"></line>  <!-- 3: Identify gaps (yellow) -->
+  <rect x="224" y="20" width="92" height="40" rx="8" fill="#f1c22f"></rect>
+  <text x="270" y="36" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="#333">3. Identificar</text>
+  <text x="270" y="50" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="#333">buits</text>  <!-- Arrow -->
+  <polygon points="320,38 332,40 320,42" fill="#555"></polygon>
+  <line x1="316" y1="40" x2="333" y2="40" stroke="#555" stroke-width="2"></line>  <!-- 4: Map to roles (red) -->
+  <rect x="334" y="20" width="92" height="40" rx="8" fill="#cf3339"></rect>
+  <text x="380" y="36" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="white">4. Assignar</text>
+  <text x="380" y="50" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="white">rols</text>  <!-- Arrow -->
+  <polygon points="430,38 442,40 430,42" fill="#555"></polygon>
+  <line x1="426" y1="40" x2="443" y2="40" stroke="#555" stroke-width="2"></line>  <!-- 5: Track growth (dark blue) -->
+  <rect x="444" y="20" width="112" height="40" rx="8" fill="#003080"></rect>
+  <text x="500" y="36" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="white">5. Seguir el</text>
+  <text x="500" y="50" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="white">creixement</text>
+</svg>
+<figcaption>El flux de treball de desenvolupament d'equip de Cèrcol — cinc etapes des de l'avaluació individual fins al progrés mesurable.</figcaption>
+</figure><hr>
+<h2 id="pas-1-perfils-individuals-tothom-completa-new-moon">Pas 1: Perfils individuals — Tothom completa New Moon</h2>
+<p>El punt de partida de qualsevol procés de desenvolupament d'equip amb Cèrcol és que tots els membres de l'equip completin l'avaluació de personalitat New Moon. New Moon utilitza ítems <a href="https://ipip.ori.org">IPIP</a> validats extrets del marc Big Five / OCEAN, mesurant cinc dimensions que Cèrcol etiqueta amb noms fonamentats i accessibles: Presència (Extraversió), Bond (Amabilitat), Visió (Obertura), Disciplina (Conscienciositat) i Profunditat (Neuroticisme).</p>
+<p>Diversos aspectes són importants en aquesta etapa.</p>
+<p><strong>Emmarcament.</strong> Com es presenta l'avaluació determina com els membres de l'equip s'hi impliquen. L'emmarcament hauria de deixar tres coses clares: que no és una avaluació del rendiment ni una eina d'avaluació, que no hi ha perfils bons ni dolents, i que l'objectiu és donar suport a un millor funcionament de l'equip — no etiquetar ni classificar les persones. Sense aquest emmarcament, alguns membres de l'equip — especialment aquells amb experiències negatives prèvies amb eines psicomètriques — poden abordar l'avaluació de manera defensiva.</p>
+<p><strong>Temps.</strong> Reserva prou temps perquè els membres de l'equip completin New Moon sense presses. Els ítems són relativament breus, però una resposta reflexiva produeix resultats més precisos que una de ràpida. Reserva almenys trenta minuts en un context amb poques distraccions.</p>
+<p><strong>Revisió inicial.</strong> Abans que l'equip es reuneixi, cada persona hauria de tenir temps per llegir el seu propi perfil en privat. El primer contacte amb un perfil de personalitat sovint és afectivament significatiu — les persones es sorprenen genuïnament, de vegades s'emocionen, ocasionalment es desestabilitzen. El temps de lectura privada permet que aquestes reaccions es calmin abans de la conversa de grup.</p>
+<p>Per obtenir orientació sobre el que signifiquen les cinc dimensions i com llegir l'informe resultant, consulta <a href="/ca/blog/how-to-read-a-big-five-personality-report">com llegir un informe de personalitat Big Five</a>.</p>
+<hr>
+<h2 id="pas-2-avaluaci-de-parells-testimoni-afegeix-la-visi-externa">Pas 2: Avaluació de parells Testimoni — Afegeix la visió externa</h2>
+<p>L'instrument Testimoni és una de les característiques més distintives de Cèrcol. Després de completar el seu propi perfil, cada membre de l'equip convida de dos a cinc col·legues a completar una avaluació Testimoni — puntuant la personalitat de la persona en les mateixes dimensions Big Five, però des de la perspectiva de l'observador.</p>
+<p>El resultat és un buit de perfil: la diferència entre com una persona es veu a si mateixa i com la viuen els altres. Aquest buit és, en si mateix, una de les dades de desenvolupament més útils disponibles. La recerca sobre l'acord auto-observador en l'avaluació de la personalitat troba de manera consistent que les dues visions són significativament diferents, i que les puntuacions dels observadors sovint prediuen els resultats de rendiment amb més precisió que els autoinfomes (Oh et al., 2011, doi:10.1037/a0021322).</p>
+<p><strong>Què revela el buit.</strong> Una persona que es puntua alta en Presència (Extraversió) però que els Testimonis puntuen sistemàticament més baixa pot estar expressant energia i entusiasme internament que no és plenament visible per als col·legues. Una persona que es puntua baixa en Bond (Amabilitat) però que els Testimonis puntuen alta pot ser més càlida i col·laboradora a la pràctica del que el seu autoinforme suggereix. Cada patró té implicacions de desenvolupament diferents.</p>
+<p>La recerca sobre on aquests buits tendeixen a ser més grans és inequívoca: Profunditat (Neuroticisme) mostra l'acord auto-altre més baix, mentre que Presència (Extraversió) mostra el més alt. Consulta <a href="/ca/blog/self-other-agreement-big-five-where-gaps-are-biggest">l'acord auto-altre per dimensió Big Five: on són els buits més grans</a> per a la descripció completa i les seves implicacions pràctiques.</p>
+<p><strong>Nota de facilitació.</strong> El pas Testimoni requereix seguretat psicològica per funcionar bé. Si els membres de l'equip no se senten segurs sent honestos en les seves avaluacions — si temen que les puntuacions altes o baixes es puguin usar en contra seu o de la persona que avaluen — la qualitat de les dades serà deficient. Establir normes de seguretat abans de llançar Testimoni és important: el que passa en el procés es queda en el procés; les avaluacions no es comparteixen entre individus; el propòsit és el desenvolupament, no l'avaluació.</p>
+<p><strong>A qui convidar.</strong> Els Testimonis haurien d'incloure persones que hagin treballat amb l'individu prou estretament per tenir dades de comportament genuïnes — no una impressió general. Els contextos de treball recents són més informatius que els històrics. La diversitat de context de treball en el grup de Testimonis augmenta la qualitat de les dades. Sobre quants Testimonis convidar, <a href="/ca/blog/how-many-peer-assessors-do-you-need-reliable-personality-data">quants avaluadors de parells necessites per a dades de personalitat fiables?</a> proporciona la justificació psicometrica: tres Testimonis és el mínim; cinc a set és l'objectiu pràctic.</p>
+<p>Lectura relacionada: <a href="/ca/blog/what-the-cercol-witness-instrument-measures">Què mesura l'instrument Testimoni de Cèrcol</a>.</p>
+<hr>
+<h2 id="pas-3-mapa-d39equip-visualitza-la-composici-de-personalitat-collectiva">Pas 3: Mapa d'equip — Visualitza la composició de personalitat col·lectiva</h2>
+<p>Un cop tots els perfils individuals i les avaluacions Testimoni estan completes, Cèrcol genera un mapa d'equip: una representació visual de la composició de personalitat col·lectiva de l'equip a les cinc dimensions.</p>
+<p>El mapa d'equip respon preguntes que els perfils individuals no poden. On s'agrupa l'equip? Hi ha dimensions en les quals l'equip és uniformement alt o baix — homogeni de maneres que creen punts cecs predictibles? Hi ha valors atípics — individus el perfil dels quals divergeix significativament de la mitjana de l'equip — que poden experimentar la cultura dominant de l'equip com incòmoda o aliena?</p>
+<p><strong>Llegir el mapa d'equip: on són els buits?</strong></p>
+<p>Un mapa d'equip amb alta variança no és inherentment millor o pitjor que un amb baixa variança. Però les diferents composicions comporten riscos diferents.</p>
+<p>Un equip amb Bond universalment alt i Disciplina baixa pot ser relacionalment càlid però tenir dificultats per complir compromisos i demanar-se comptes mútuament. Un equip amb Disciplina universalment alta i Bond baix pot ser productiu però perdre persones per l'esgotament i la fricció relacional. Un equip amb alta variança en Profunditat (Neuroticisme) pot experimentar desalineació en la resposta a l'estrès durant períodes de molta pressió — alguns membres trobant calma quan altres experimenten ansietat.</p>
+<p>El mapa d'equip és més útil quan es llegeix com un conjunt de preguntes que com un conjunt de respostes: donada aquesta composició, a què hauríem de prestar atenció? Contra què hauríem de dissenyar deliberadament?</p>
+<p>Entendre quins dels <a href="/ca/blog/the-12-cercol-team-roles-explained">12 rols d'equip de Cèrcol</a> estan sobre- o infrarepresentats al mapa dona a aquestes preguntes un vocabulari pràctic.</p>
+<hr>
+<h2 id="com-facilitar-la-discussi-de-personalitat-de-l39equip">Com facilitar la discussió de personalitat de l'equip</h2>
+<p>La discussió de l'equip — portar els perfils individuals, els buits Testimoni i el mapa d'equip a la conversa — és el cor del procés. També és on es requereix la habilitat de facilitació més significativa.</p>
+<p><strong>Dos principis de facilitació són fonamentals.</strong></p>
+<p>Primer, l'emmarcament de desenvolupament: el propòsit de la discussió no és explicar o defensar la personalitat, sinó comprendre-la i dissenyar al voltant d'ella. Cada observació sobre un perfil o un patró hauria d'orientar-se cap a "què fem amb això?" en lloc de "és un problema?"</p>
+<p>Segon, establir normes abans de la revelació: abans que ningú comparteixi el seu perfil, el grup hauria d'acordar les normes de discussió. Les normes útils habituals inclouen: assumim bones intencions; parlem per nosaltres mateixos en lloc d'atribuir motivació als altres; el que es comparteix aquí es queda a la sala.</p>
+<p><strong>Preguntes de discussió útils:</strong></p>
+<ul>
+<li>"Mirant el teu propi perfil, què et sembla precís? Què t'ha sorprès?"</li>
+<li>"Mirant el buit entre la teva autopuntuació i les puntuacions del teu Testimoni, com s'explica?"</li>
+<li>"Mirant el mapa d'equip, que notes? On veus risc?"</li>
+<li>"Si dissenyessis la manera de treballar d'aquest equip des de zero, donada aquesta composició, què faries diferent?"</li>
+</ul>
+<p>Aquestes preguntes mouen la conversa de les dades a les implicacions i al disseny — la trajectòria que converteix la perspectiva de personalitat en canvi pràctic.</p>
+<hr>
+<h2 id="usar-el-buit-autotestimoni-com-a-punt-de-partida-del-coaching">Usar el buit Auto–Testimoni com a punt de partida del coaching</h2>
+<p>El buit de perfil — la diferència entre la autopuntuació i la puntuació del Testimoni — mereix atenció particular en qualsevol procés de desenvolupament d'equip que inclogui converses de desenvolupament individual o coaching.</p>
+<p>Un buit significatiu en qualsevol dimensió no és evidència d'autoengany o deshonestedat. És evidència de visibilitat parcial: la persona i els seus col·legues estan mostrant aspectes diferents del comportament, o l'experiència interior de la persona difereix de l'expressió que és visible per als altres.</p>
+<p>Una pregunta de coaching útil per a buits significatius: "Què caldria perquè els teus col·legues veiessin X de la manera que tu l'experimentes — o perquè tu et vegessis més com ells ho fan?" Aquesta pregunta obre la conversa de desenvolupament sense patologitzar el buit.</p>
+<p>Patrons de buit habituals i les seves implicacions de desenvolupament:</p>
+<ul>
+<li><strong>Autop &gt; Testimoni en Presència:</strong> l'energia pot ser interna en lloc d'expressada; augmentar la comunicació visible pot tancar el buit</li>
+<li><strong>Autop &lt; Testimoni en Bond:</strong> la calidesa pot expressar-se més comportamentalment que verbalment; nombrar explícitament la cura pot ajudar</li>
+<li><strong>Autop &gt; Testimoni en Visió:</strong> el pensament creatiu pot no ser visible a les reunions; trobar canals més estructurats per compartir el pensament pot ajudar</li>
+<li><strong>Autop &lt; Testimoni en Disciplina:</strong> pot ser més organitzat i fiable del que l'autoavaluació suggereix; la confiança en la pròpia capacitat pot ser una àrea de desenvolupament</li>
+</ul>
+<p>Per a una base d'evidència més àmplia sobre l'ús de dades Big Five en contextos de coaching, consulta <a href="/ca/blog/personality-coaching-using-big-five-as-development-tool">coaching de personalitat: usar el Big Five com a eina de desenvolupament</a>.</p>
+<hr>
+<h2 id="dissenyar-acords-de-treball-d39equip-a-partir-de-les-perspectives-de-personalitat">Dissenyar acords de treball d'equip a partir de les perspectives de personalitat</h2>
+<p>El resultat del procés de desenvolupament de l'equip hauria de ser tangible: un petit conjunt de normes de treball acordades que reflecteixen el que l'equip ha après sobre si mateix. La perspectiva de personalitat sense canvi de comportament és interessant però no útil.</p>
+<p>Els acords d'equip haurien de ser específics, observables i revisables. Els acords vagues ("serem més oberts entre nosaltres") són pitjors que útils. Els acords específics funcionen millor: "Expressarem el desacord explícitament a les reunions de decisió en lloc de resoldre'l en converses laterals. Usarem una agenda estructurada per a totes les reunions rellevants per a decisions. Farem una retro mensual centrada en la dinàmica de l'equip, no només en el progrés del projecte."</p>
+<p>Els millors acords d'equip estan basats directament en el mapa d'equip. Un equip que nota que és homogèniament alt en Bond podria acordar: "Assignarem un rol rotatiu de revisor crític per a decisions significatives, per garantir que algú estigui explícitament encarregat de trobar punts febles." Un equip que nota alta variança en Profunditat (Neuroticisme) podria acordar: "Durant els períodes de molta pressió, serem explícits sobre els nivells d'estrès en lloc de gestionar-los privadament."</p>
+<p>Lectura relacionada: <a href="/ca/blog/how-to-run-a-team-personality-workshop">Com fer un taller de personalitat d'equip</a> · <a href="/ca/blog/the-12-cercol-team-roles-explained">Els 12 rols d'equip de Cèrcol explicats</a>.</p>
+<hr>
+<h2 id="per-qu-un-seguiment-de-sis-mesos-tanca-el-cicle-de-desenvolupament">Per què un seguiment de sis mesos tanca el cicle de desenvolupament</h2>
+<p>La personalitat és relativament estable al llarg del temps — però els equips no ho són. La composició de l'equip canvia, els contextos de projecte canvien, les relacions es desenvolupen. Un cicle de desenvolupament d'equip amb Cèrcol hauria d'incloure un seguiment planificat als sis mesos: una revisita més curta del mapa d'equip i els acords d'equip, una verificació de si els acords s'han mantingut, i una recalibració de quines dimensions necessiten ara més atenció.</p>
+<p>Les avaluacions Testimoni es poden tornar a executar als sis mesos per veure si el buit entre l'auto i l'observador ha canviat en les dimensions que l'equip va identificar com a prioritats de desenvolupament. Això crea un senyal de desenvolupament genuí: canvi mesurable en com els altres experimenten una persona, basat en el mateix marc validat usat en l'avaluació original.</p>
+<hr>
+<h2 id="resum-cada-fase-de-desenvolupament-eina-i-resultat-clau">Resum: cada fase de desenvolupament, eina i resultat clau</h2>
+<div class="table-wrapper"><table><thead><tr><th>Fase de desenvolupament de l'equip</th><th>Eina de Cèrcol</th><th>Què aprens</th></tr></thead><tbody><tr><td>Autoconsciència individual</td><td>Perfil New Moon</td><td>Puntuacions de trets a les cinc dimensions Big Five; línia de base pròpia</td></tr><tr><td>Validació externa</td><td>Avaluació de parells Testimoni</td><td>Buit de perfil: auto vs com els altres t'experimenten</td></tr><tr><td>Composició col·lectiva</td><td>Mapa d'equip</td><td>Fortaleses de l'equip, punts cecs i patrons de diversitat</td></tr><tr><td>Coaching de desenvolupament</td><td>Anàlisi del buit de perfil</td><td>Dimensions específiques per al treball de desenvolupament individual</td></tr><tr><td>Disseny de normes d'equip</td><td>Mapa d'equip + discussió</td><td>Acords de treball basats en evidències fonamentats en la composició real</td></tr><tr><td>Revisió del progrés</td><td>Nou Testimoni als sis mesos</td><td>Canvi observable en la percepció externa en dimensions de desenvolupament</td></tr></tbody></table></div><hr>
+<blockquote>
+<p>"No pots canviar el que no pots veure. I la majoria d'equips mai s'han mirat a si mateixos com un sistema." — Una perspectiva habitual de la facilitació de desenvolupament d'equip</p>
+</blockquote>
+<p>Cèrcol fa possible aquesta mirada. El perfil, el Testimoni i el mapa d'equip junts donen als equips un mirall fonamentat en l'evidència, la ciència validada i la percepció honesta dels parells. El que els equips fan amb el que veuen és el treball real — i comença fent les dades visibles.</p>
+<hr>
+<p><em>Lectura addicional: <a href="/ca/blog/how-to-run-a-team-personality-workshop">Com fer un taller de personalitat d'equip</a> · <a href="/ca/blog/the-12-cercol-team-roles-explained">Els 12 rols d'equip de Cèrcol explicats</a> · <a href="/ca/blog/what-the-cercol-witness-instrument-measures">Què mesura l'instrument Testimoni de Cèrcol</a></em></p>
+<h2 id="comena-el-teu-cicle-de-desenvolupament-d39equip-avui-gratutament">Comença el teu cicle de desenvolupament d'equip avui — gratuïtament</h2>
+<p>Tot el que es descriu en aquesta guia està disponible ara a <a href="https://cercol.team">cercol.team</a> sense cost. Fes el perfil New Moon tu mateix en menys de deu minuts, convida col·legues a completar una avaluació Testimoni, i el mapa del teu equip comença a prendre forma. El cicle de desenvolupament complet — perfils individuals, Testimoni de parells, mapa d'equip, discussió facilitada — no costa res. Comença amb el teu propi perfil a <a href="https://cercol.team">cercol.team</a>, i després porta el teu equip.</p>
+<h2 id="lectura-addicional">Lectura addicional</h2>
+<ul>
+<li><a href="/ca/blog/what-the-cercol-witness-instrument-measures">Què mesura l'instrument Testimoni de Cèrcol</a></li>
+<li><a href="/ca/blog/the-12-cercol-team-roles-explained">Els 12 rols d'equip de Cèrcol explicats</a></li>
+<li><a href="/ca/blog/how-to-run-a-team-personality-workshop">Com fer un taller de personalitat d'equip</a></li>
+<li><a href="/ca/blog/how-to-read-a-big-five-personality-report">Com llegir un informe de personalitat Big Five</a></li>
+<li><a href="/ca/blog/how-to-use-personality-data-without-labelling-people">Com usar dades de personalitat sense etiquetar les persones</a></li>
+<li><a href="/ca/blog/building-a-team-from-scratch-what-personality-data-can-and-cant-tell-you">Construir un equip des de zero: consideracions de personalitat</a></li>
+</ul>
+</article></div><aside class="hidden lg:block w-56 flex-shrink-0 sticky top-6 self-start"><nav class="rounded-xl border p-4" style="border-color: var(--mm-color-gray-200);"><p class="text-xs font-semibold uppercase tracking-widest mb-3" style="color: var(--mm-color-blue);">Contingut</p><ul class="space-y-1.5"><li style="padding-left: 0px;"><a href="#pas-1-perfils-individuals-tothom-completa-new-moon" class="text-xs leading-snug block py-0.5 text-gray-600 hover:text-[var(--mm-color-blue)] hover:underline transition-colors">Pas 1: Perfils individuals — Tothom completa New Moon</a></li><li style="padding-left: 0px;"><a href="#pas-2-avaluaci-de-parells-testimoni-afegeix-la-visi-externa" class="text-xs leading-snug block py-0.5 text-gray-600 hover:text-[var(--mm-color-blue)] hover:underline transition-colors">Pas 2: Avaluació de parells Testimoni — Afegeix la visió externa</a></li><li style="padding-left: 0px;"><a href="#pas-3-mapa-dequip-visualitza-la-composici-de-personalitat-collectiva" class="text-xs leading-snug block py-0.5 text-gray-600 hover:text-[var(--mm-color-blue)] hover:underline transition-colors">Pas 3: Mapa d'equip — Visualitza la composició de personalitat col·lectiva</a></li><li style="padding-left: 0px;"><a href="#com-facilitar-la-discussi-de-personalitat-de-lequip" class="text-xs leading-snug block py-0.5 text-gray-600 hover:text-[var(--mm-color-blue)] hover:underline transition-colors">Com facilitar la discussió de personalitat de l'equip</a></li><li style="padding-left: 0px;"><a href="#usar-el-buit-autotestimoni-com-a-punt-de-partida-del-coaching" class="text-xs leading-snug block py-0.5 text-gray-600 hover:text-[var(--mm-color-blue)] hover:underline transition-colors">Usar el buit Auto–Testimoni com a punt de partida del coaching</a></li><li style="padding-left: 0px;"><a href="#dissenyar-acords-de-treball-dequip-a-partir-de-les-perspectives-de-personalitat" class="text-xs leading-snug block py-0.5 text-gray-600 hover:text-[var(--mm-color-blue)] hover:underline transition-colors">Dissenyar acords de treball d'equip a partir de les perspectives de personalitat</a></li><li style="padding-left: 0px;"><a href="#per-qu-un-seguiment-de-sis-mesos-tanca-el-cicle-de-desenvolupament" class="text-xs leading-snug block py-0.5 text-gray-600 hover:text-[var(--mm-color-blue)] hover:underline transition-colors">Per què un seguiment de sis mesos tanca el cicle de desenvolupament</a></li><li style="padding-left: 0px;"><a href="#resum-cada-fase-de-desenvolupament-eina-i-resultat-clau" class="text-xs leading-snug block py-0.5 text-gray-600 hover:text-[var(--mm-color-blue)] hover:underline transition-colors">Resum: cada fase de desenvolupament, eina i resultat clau</a></li><li style="padding-left: 0px;"><a href="#comena-el-teu-cicle-de-desenvolupament-dequip-avui-gratutament" class="text-xs leading-snug block py-0.5 text-gray-600 hover:text-[var(--mm-color-blue)] hover:underline transition-colors">Comença el teu cicle de desenvolupament d'equip avui — gratuïtament</a></li><li style="padding-left: 0px;"><a href="#lectura-addicional" class="text-xs leading-snug block py-0.5 text-gray-600 hover:text-[var(--mm-color-blue)] hover:underline transition-colors">Lectura addicional</a></li></ul></nav></aside></div><section class="mt-16 pt-10 border-t max-w-3xl"><h2 class="text-xl font-bold text-gray-900 mb-6" style="font-family: var(--mm-font-display);">Articles relacionats</h2><div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"><a class="group block rounded-xl border p-4 hover:shadow-md transition-shadow bg-white" href="/ca/blog/personality-coaching-using-big-five-as-development-tool" data-discover="true"><h3 class="text-sm font-semibold text-gray-900 mb-1 group-hover:underline leading-snug" style="font-family: var(--mm-font-display);">Usar la personalitat Big Five com a eina de coaching i desenvolupament</h3><p class="text-xs text-gray-500 leading-relaxed line-clamp-2">Les dades de personalitat Big Five són més poderoses com a eina de coaching que com a filtre de selecció. Utilitza la consciència dels trets i la bretxa jo–Testimoni per impulsar un creixement dirigit.</p><span class="mt-2 inline-block text-xs font-medium hover:underline" style="color: var(--mm-color-blue);">Llegir →</span></a><a class="group block rounded-xl border p-4 hover:shadow-md transition-shadow bg-white" href="/ca/blog/how-to-use-personality-data-without-labelling-people" data-discover="true"><h3 class="text-sm font-semibold text-gray-900 mb-1 group-hover:underline leading-snug" style="font-family: var(--mm-font-display);">Com usar les dades de personalitat sense etiquetar les persones</h3><p class="text-xs text-gray-500 leading-relaxed line-clamp-2">Les etiquetes de personalitat congelen les persones en tipus i descarten el que contenen les puntuacions contínues. Useu les dades del Big Five com a punt de partida per a una conversa de desenvolupament — no com un veredicte.</p><span class="mt-2 inline-block text-xs font-medium hover:underline" style="color: var(--mm-color-blue);">Llegir →</span></a><a class="group block rounded-xl border p-4 hover:shadow-md transition-shadow bg-white" href="/ca/blog/what-the-cercol-witness-instrument-measures" data-discover="true"><h3 class="text-sm font-semibold text-gray-900 mb-1 group-hover:underline leading-snug" style="font-family: var(--mm-font-display);">Què mesura l'instrument Testimoni de Cèrcol — i com es diferencia de l'autoinforme</h3><p class="text-xs text-gray-500 leading-relaxed line-clamp-2">L'avaluació entre iguals Testimoni de Cèrcol utilitza parells de resposta forçada per revelar com et perceben els col·legues — capturant punts cecs que l'autoinforme no pot assolir.</p><span class="mt-2 inline-block text-xs font-medium hover:underline" style="color: var(--mm-color-blue);">Llegir →</span></a></div></section></main><div class="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-2"><button class="flex items-center gap-1.5 px-3 py-2 rounded border bg-white text-xs font-medium shadow-sm hover:shadow-md transition-all" style="color: rgb(102, 102, 102); border-color: rgb(212, 212, 212);"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class=""><path d="m5 8 6 6"></path><path d="m4 14 6-6 2-3"></path><path d="M2 5h12"></path><path d="M7 2h1"></path><path d="m22 22-5-10-5 10"></path><path d="M14 18h6"></path></svg>Suggerir traducció</button></div><div role="status" aria-live="polite" class="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-between gap-4 px-4 py-3 sm:px-6" style="background-color: rgb(17, 17, 17);"><p class="text-xs text-white/70 leading-relaxed">Cèrcol utilitza únicament galetes funcionals — sense analítiques, sense rastreig publicitari. <a href="/privacy" class="underline text-white/90 hover:text-white transition-colors">Política de privacitat</a></p><button class="shrink-0 text-xs font-semibold text-white px-3 py-1.5 rounded border border-white/30 hover:bg-white/10 transition-colors" aria-label="Tanca l'avís de galetes">D'acord</button></div></div></div></div>
+  
+
+</body></html>
