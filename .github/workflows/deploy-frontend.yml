@@ -12,6 +12,7 @@ on:
       - 'package.json'
       - 'package-lock.json'
       - '.env.production'
+      - 'scripts/**'        # Build scripts (prerender, sitemap) affect output
 
 permissions:
   contents: write

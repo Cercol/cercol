@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { SectionLabel } from '../components/ui'
 import { getBlogPosts } from '../lib/api'
+import { normalizeUnsplashUrl } from '../utils/unsplash'
 
 function formatDate(iso, lang) {
   if (!iso) return ''
@@ -69,9 +70,22 @@ export default function BlogIndexPage() {
     if (urlLang !== i18n.language.slice(0, 2)) i18n.changeLanguage(urlLang)
   }, [urlLang])
 
-  const [posts,           setPosts]           = useState([])
-  const [loading,         setLoading]         = useState(true)
-  const [error,           setError]           = useState(null)
+  // Read articles from window.__BLOG_ARTICLES__ injected by prerender.mjs.
+  // This eliminates the API dependency during pre-rendering so Puppeteer
+  // never captures the error-fallback HTML (Soft 404 in Search Console).
+  // The useEffect below still refreshes from the API so live visitors
+  // always get up-to-date content.
+  const [posts,           setPosts]           = useState(() => {
+    if (typeof window !== 'undefined' && Array.isArray(window.__BLOG_ARTICLES__)) {
+      return window.__BLOG_ARTICLES__
+    }
+    return []
+  })
+  const [loading,         setLoading]         = useState(() => {
+    // Skip the loading skeleton if we already have pre-rendered data
+    return typeof window === 'undefined' || !Array.isArray(window.__BLOG_ARTICLES__)
+  })
+  const [error,           setError]           = useState(false)
   const [activeCategory,  setActiveCategory]  = useState('all')
   const [activeLevel,     setActiveLevel]     = useState('all')
 
@@ -93,12 +107,23 @@ export default function BlogIndexPage() {
   }, [])
 
   useEffect(() => {
-    setLoading(true)
-    setError(null)
+    // Always refresh from the API — the pre-rendered window global may be
+    // stale if new articles were published since the last deploy.
+    // Only show the error fallback if we have no articles from any source.
     getBlogPosts()
-      .then(data => setPosts(Array.isArray(data) ? data : []))
-      .catch(err => setError(err.message))
-      .finally(() => setLoading(false))
+      .then(data => {
+        setPosts(Array.isArray(data) ? data : [])
+        setLoading(false)
+        setError(false)
+      })
+      .catch(() => {
+        setLoading(false)
+        // Don't clobber pre-rendered articles with an error state
+        setPosts(prev => {
+          if (prev.length === 0) setError(true)
+          return prev
+        })
+      })
   }, [])
 
   /** Resolve localised field (title or description), falling back to English. */
@@ -114,7 +139,7 @@ export default function BlogIndexPage() {
     return catOk && levelOk
   })
 
-  const hasFilters = posts.length > 0 && !loading && !error
+  const hasFilters = posts.length > 0 && !loading
 
   return (
     <main className="py-12">
@@ -204,8 +229,8 @@ export default function BlogIndexPage() {
         </div>
       )}
 
-      {/* Error state */}
-      {!loading && error && (
+      {/* Error state — only shown when we have NO articles from any source */}
+      {!loading && error && posts.length === 0 && (
         <p className="text-sm text-red-500 py-8 text-center">
           {t('blog.error')}
         </p>
@@ -220,14 +245,14 @@ export default function BlogIndexPage() {
       )}
 
       {/* No results for active filters */}
-      {!loading && !error && posts.length > 0 && visiblePosts.length === 0 && (
+      {!loading && posts.length > 0 && visiblePosts.length === 0 && (
         <div className="py-16 text-center rounded-2xl border border-dashed border-gray-200">
           <p className="text-sm text-gray-400">No articles match the selected filters.</p>
         </div>
       )}
 
       {/* Post grid */}
-      {!loading && !error && visiblePosts.length > 0 && (
+      {!loading && visiblePosts.length > 0 && (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {visiblePosts.map(post => {
             const desc = localise(post.description)
@@ -242,9 +267,13 @@ export default function BlogIndexPage() {
                 <div className="relative h-40 overflow-hidden">
                   {post.coverUrl ? (
                     <img
-                      src={post.coverUrl}
+                      src={normalizeUnsplashUrl(post.coverUrl, { w: 400 })}
                       alt=""
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      width="400"
+                      height="160"
+                      loading="lazy"
+                      decoding="async"
                     />
                   ) : (
                     <div
