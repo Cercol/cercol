@@ -34,6 +34,18 @@ export default defineConfig({
           if (id.includes('node_modules/i18next') || id.includes('node_modules/react-i18next')) {
             return 'vendor-i18n'
           }
+          // recharts + its d3/utility dependencies — large (~140 KiB gz total),
+          // only used by lazy-loaded report/role pages, never on the critical path.
+          if (
+            id.includes('node_modules/recharts/') ||
+            id.includes('node_modules/d3-') ||
+            id.includes('node_modules/internmap/') ||
+            id.includes('node_modules/decimal.js-light/') ||
+            id.includes('node_modules/victory-vendor/') ||
+            id.includes('node_modules/eventemitter3/')
+          ) {
+            return 'vendor-recharts'
+          }
           // All other node_modules go into a single vendor chunk.
           if (id.includes('node_modules/')) {
             return 'vendor'
