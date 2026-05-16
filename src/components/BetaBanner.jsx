@@ -15,7 +15,16 @@ import { colors } from '../design/tokens'
 
 export default function BetaBanner({ userIsPremium }) {
   const { t } = useTranslation()
-  const [beta, setBeta] = useState(null)
+
+  // Read from window.__BETA__ injected by prerender.mjs into every pre-rendered
+  // HTML. This eliminates the hydration flash: the pre-rendered banner is
+  // visible in the raw HTML, and React mounts with the same data so it doesn't
+  // unmount and re-mount after the API round-trip (~1300ms LCP delay removed).
+  // The useEffect below still refreshes from the API in the background.
+  const [beta, setBeta] = useState(() => {
+    if (typeof window !== 'undefined' && window.__BETA__) return window.__BETA__
+    return null
+  })
 
   useEffect(() => {
     getBetaStatus()

@@ -9,6 +9,7 @@ import { useParams, useNavigate, Link, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { marked } from 'marked'
 import { getBlogPost, getBlogPosts, trackBlogView } from '../../lib/api'
+import { normalizeUnsplashUrl } from '../../utils/unsplash'
 
 // Configure marked with custom renderers once at module load time
 marked.use({
@@ -369,9 +370,13 @@ export default function BlogArticlePage() {
         {post.coverUrl ? (
           <>
             <img
-              src={post.coverUrl}
+              src={normalizeUnsplashUrl(post.coverUrl, { w: 760 })}
               alt=""
               className="absolute inset-0 w-full h-full object-cover"
+              width="760"
+              height="428"
+              fetchpriority="high"
+              loading="eager"
             />
             {/* Gradient overlay for readability */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
