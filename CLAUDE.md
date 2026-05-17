@@ -172,3 +172,38 @@ Full SEO and LLM visibility strategy: SEO.md
 - SEO and LLM visibility strategy: SEO.md
 
 Read these files when the task requires it. CLAUDE.md is always read first.
+
+## Patterns and pitfalls
+
+Hard-won lessons from the 16–17 May 2026 SEO + performance sprint. Read before prescribing performance fixes on this stack.
+
+### Performance investigation
+
+- When diagnosing LCP, read the LCP breakdown first (Time to First Byte / Resource load delay / Resource load duration / Element render delay). The names matter: a high "Element render delay" usually means render-blocking critical path resources (CSS, fonts), NOT React hydration flicker. Confusing the two leads to fixing the wrong thing.
+- With React hydration on a SPA, LCP has a structural floor of roughly 2–3 s regardless of how much you pre-render. Lighthouse re-marks the LCP when main-thread tasks settle, and React's hydration is a long task. Performance scores in the 75–85 range for a pre-rendered SPA on GitHub Pages are normal, not a bug.
+- When Search Console reports "Soft 404" or "Discovered: not indexed", use Search Console's live URL inspection as the source of truth. `curl -L` can disagree because of cache, followed redirects, or false-positive greps.
+
+### Pre-rendering this stack
+
+- Vite + Puppeteer + GitHub Pages: critical CSS extraction MUST run after Puppeteer captures each route's full DOM (post-prerender, Node API). A Vite plugin only sees the empty SPA shell — the critical CSS block it produces is empty or wrong.
+- When applying beasties to a fleet of HTMLs that share one external CSS file, always set `pruneSource: false`. The shared file must remain complete; pruning it would corrupt any HTML that wasn't processed first.
+- To eliminate the API dependency at first paint for pre-rendered routes, inject the data as a window global from the prerender script and have the component initialize state from `window.__VAR__` in `useState(() => ...)`. The pattern generalises beyond BetaBanner; any "fetch on mount" on a public pre-rendered route is a candidate.
+- The prerender server's SPA fallback MUST receive a frozen snapshot of the original Vite-built `dist/index.html`. If it reads the file from disk on every request, the file gets mutated by the first route processed and subsequent routes accumulate duplicate injections (e.g. 8 font preloads instead of 4).
+- Font preloads need explicit `crossorigin` even for same-origin fonts (browser spec); without it the preloaded font is discarded and re-fetched when CSS references it.
+- When using `@fontsource`, content-hashed woff2 filenames change every build. Extract them dynamically from the built CSS file (`dist/assets/index-*.css`) rather than hardcoding them.
+
+### Deploy pipeline
+
+- `.github/workflows/deploy-frontend.yml` must include `scripts/**` in its `on.push.paths` filter. Otherwise changes to `scripts/prerender.mjs` or `scripts/generate-sitemap.mjs` land on `main` without ever being deployed.
+- Use `npm install` (not `npm ci`) on CI workers. macOS-generated lockfiles omit linux-x64 optional native binaries (`@esbuild`, `@rollup`, `@tailwindcss/oxide`, `lightningcss`). `npm ci` on Ubuntu fails on the missing platform-specific entries.
+- Merge pattern: `gh pr checks $PR --watch && gh pr merge $PR --squash --delete-branch`. The `&&` ensures the merge only runs if checks passed; without it, `gh pr checks --watch` exits 0 on completion regardless of pass/fail and the merge happens anyway.
+
+### Workflow ordering
+
+For a "pre-rendered SPA performs poorly" investigation, the audit order that maximises signal-to-effort:
+1. **Pre-render audit**: what does Googlebot actually receive for each route type? If a route serves the empty SPA shell or an error fallback, fix that first — nothing else matters until the HTML is correct.
+2. **Critical path audit**: what is render-blocking at first paint (CSS, fonts, JS)?
+3. **LCP element audit**: which element does Lighthouse pick, and what is its render breakdown?
+4. **Bundle audit**: where is the dead weight in the eager chunks?
+
+Doing them in a different order tends to produce fixes that don't move the metric.

@@ -37,6 +37,10 @@ __pycache__/
 .env.local
 .env.*.local
 
+# Build analysis and one-off audit scripts
+dist/stats.html
+scripts/probe-*.mjs
+
 # RStudio / R session artifacts
 .Rhistory
 .Rapp.history
