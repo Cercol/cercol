@@ -12,15 +12,23 @@
  * 2. Launches a local HTTP server serving ./dist
  * 3. Opens each public route in headless Chrome via puppeteer-core
  * 4. Waits for React to render (react-i18next loads, fonts settle)
- * 5. Injects window.__BLOG_ARTICLES__ and window.__BETA__ into <head>
- * 6. Saves the fully-rendered HTML to dist/<route>/index.html
+ * 5. Injects font preload <link> tags + window globals into <head>
+ * 6. Inlines above-the-fold CSS via Beasties (critical CSS)
+ * 7. Saves the fully-rendered HTML to dist/<route>/index.html
  *
  * Why this matters for SEO:
  * - Google indexes the static HTML directly — no JS execution lag
  * - LLMs and Perplexity can scrape content without running JavaScript
  * - First Contentful Paint improves because browsers get real HTML instantly
  *
- * Why the window globals are injected:
+ * Why font preloads are injected:
+ * - Vite emits content-hashed filenames (e.g. playfair-display-latin-400-*.woff2)
+ *   that change on every build. We extract them at runtime from the built CSS file
+ *   so preload hints always reference the correct hash without hardcoding filenames.
+ * - Preloading Playfair Display 400 and Roboto 400/500/700 eliminates flash of
+ *   invisible text (FOIT) for the primary typefaces used above the fold.
+ *
+ * Why window globals are injected:
  * - BlogIndexPage reads window.__BLOG_ARTICLES__ on first render, eliminating
  *   the API call at hydration time. Root cause of "Soft 404" in Google Search
  *   Console: during the PR #20 CI build the concurrent pool caused the API to
@@ -30,6 +38,16 @@
  * - BetaBanner reads window.__BETA__ on first render, eliminating the 1300ms
  *   LCP delay caused by useState(null) unmounting the pre-rendered banner on
  *   hydration and re-mounting it after the /beta API round-trip.
+ *
+ * Why Beasties for Critical CSS:
+ * - Approach A (Vite plugin transformIndexHtml) is wrong: it sees the empty
+ *   <div id="root"></div> SPA shell with no rendered content, so no CSS is
+ *   above-the-fold and the inlined critical block is empty or wrong.
+ * - Approach B (post-Puppeteer Node.js): after page.content() returns the
+ *   fully-rendered DOM, Beasties sees the actual components and correctly
+ *   inlines the styles needed for exactly this page's above-the-fold content.
+ * - pruneSource: false is critical — 637 HTML files share one content-hashed
+ *   CSS file. Pruning would corrupt the shared asset for subsequent routes.
  *
  * CRITICAL: fetchBlogArticles() throws on failure (does NOT fall back silently)
  * so the build fails loudly rather than shipping blog index HTML with the error
@@ -43,8 +61,9 @@
  */
 
 import puppeteer from 'puppeteer-core'
+import Beasties from 'beasties'
 import { createServer } from 'http'
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs'
+import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from 'fs'
 import { join, resolve } from 'path'
 import { fileURLToPath } from 'url'
 
@@ -105,6 +124,85 @@ async function fetchBetaStatus() {
 }
 
 // ---------------------------------------------------------------------------
+// Critical font URL extraction
+// ---------------------------------------------------------------------------
+
+/**
+ * Extract the content-hashed woff2 URLs for the four critical typefaces from
+ * the built CSS bundle. Vite hashes filenames on every build so we cannot
+ * hardcode them — we read them from the CSS at runtime instead.
+ *
+ * Target fonts (all used above the fold):
+ *   - Playfair Display 400 (display headings)
+ *   - Roboto 400, 500, 700 (body + UI)
+ *
+ * @param {string} distDir  Absolute path to the dist/ directory.
+ * @returns {string[]}  Array of public-path font URLs (e.g. '/assets/playfair-display-latin-400-abc123.woff2')
+ */
+function extractCriticalFontUrls(distDir) {
+  const assetsDir = join(distDir, 'assets')
+  let cssFile
+
+  try {
+    const files = readdirSync(assetsDir)
+    // The main CSS bundle is always named index-<hash>.css
+    cssFile = files.find(f => /^index-[A-Za-z0-9_-]+\.css$/.test(f))
+  } catch {
+    console.warn('[prerender] could not read dist/assets — skipping font preloads')
+    return []
+  }
+
+  if (!cssFile) {
+    console.warn('[prerender] no index-*.css found in dist/assets — skipping font preloads')
+    return []
+  }
+
+  let css
+  try {
+    css = readFileSync(join(assetsDir, cssFile), 'utf8')
+  } catch {
+    console.warn('[prerender] could not read CSS bundle — skipping font preloads')
+    return []
+  }
+
+  // Patterns match the font-face url() declarations Vite emits for each face.
+  // The filenames follow the pattern: <family>-<subset>-<weight>-normal-<hash>.woff2
+  const patterns = [
+    /playfair-display-latin-400-normal-[A-Za-z0-9_-]+\.woff2/,
+    /roboto-latin-400-normal-[A-Za-z0-9_-]+\.woff2/,
+    /roboto-latin-500-normal-[A-Za-z0-9_-]+\.woff2/,
+    /roboto-latin-700-normal-[A-Za-z0-9_-]+\.woff2/,
+  ]
+
+  const urls = []
+  for (const pattern of patterns) {
+    const match = css.match(pattern)
+    if (match) {
+      urls.push(`/assets/${match[0]}`)
+    } else {
+      console.warn(`[prerender] font not found in CSS: ${pattern.source}`)
+    }
+  }
+
+  console.log(`[prerender] found ${urls.length} critical font URLs`)
+  return urls
+}
+
+/**
+ * Build the <link rel="preload"> tags for the given font URLs.
+ * crossorigin is required by spec even for same-origin fonts (CORS headers
+ * are set for font requests regardless of origin).
+ *
+ * @param {string[]} urls  Public-path font URLs from extractCriticalFontUrls()
+ * @returns {string}  HTML string of <link> tags (empty string if urls is empty)
+ */
+function buildFontPreloadTags(urls) {
+  return urls
+    .map(href => `  <link rel="preload" as="font" type="font/woff2" crossorigin href="${href}">`)
+    .join('\n')
+}
+
+// ---------------------------------------------------------------------------
 // Route plan
 // ---------------------------------------------------------------------------
 
@@ -150,31 +248,36 @@ function getMime(path) {
   return 'text/html'
 }
 
-function startServer() {
+function startServer(originalIndexHtml) {
+  // originalIndexHtml is the raw Vite-built index.html content captured before
+  // any route is processed. We always serve THIS as the SPA shell fallback so
+  // that Puppeteer never loads a progressively-modified index.html (one that
+  // already has font preloads injected), which would cause duplicate preload
+  // tags on every route other than '/'.
+  const originalIndexBuffer = Buffer.from(originalIndexHtml, 'utf8')
+
   const server = createServer((req, res) => {
     let filePath = join(DIST_DIR, req.url.split('?')[0])
 
-    // If requesting a directory, serve index.html from it (or root index.html)
+    // If requesting a directory, serve index.html from it (or the original
+    // root index.html — never the on-disk root which may be already modified)
     if (!filePath.includes('.')) {
       const dirIndex = join(filePath, 'index.html')
-      filePath = existsSync(dirIndex) ? dirIndex : join(DIST_DIR, 'index.html')
+      filePath = existsSync(dirIndex) ? dirIndex : null
     }
 
-    try {
-      const content = readFileSync(filePath)
-      res.writeHead(200, { 'Content-Type': getMime(filePath) })
-      res.end(content)
-    } catch {
-      // Fall back to index.html for SPA routing
+    if (filePath) {
       try {
-        const content = readFileSync(join(DIST_DIR, 'index.html'))
-        res.writeHead(200, { 'Content-Type': 'text/html' })
+        const content = readFileSync(filePath)
+        res.writeHead(200, { 'Content-Type': getMime(filePath) })
         res.end(content)
-      } catch {
-        res.writeHead(404)
-        res.end('Not found')
-      }
+        return
+      } catch { /* fall through to SPA shell */ }
     }
+
+    // SPA shell fallback: always use the original Vite-built index.html
+    res.writeHead(200, { 'Content-Type': 'text/html' })
+    res.end(originalIndexBuffer)
   })
 
   return new Promise((resolve) => {
@@ -189,7 +292,7 @@ function startServer() {
 // Render a single route — shared by sequential and concurrent workers
 // ---------------------------------------------------------------------------
 
-async function renderOneRoute(browser, { route, lang }, { articles, betaStatus }) {
+async function renderOneRoute(browser, { route, lang }, { articles, betaStatus, beasties, fontPreloadTags }) {
   const url = `${BASE_URL}${route}`
   const page = await browser.newPage()
 
@@ -232,20 +335,40 @@ async function renderOneRoute(browser, { route, lang }, { articles, betaStatus }
   const html = await page.content()
   await page.close()
 
-  // Inject window globals into <head> so React reads them synchronously
-  // on first render, avoiding API calls and hydration flicker:
+  // --- Step 1: inject font preloads + window globals into <head> -----------
+  //
+  // Font preloads go BEFORE the Beasties pass so Beasties sees them and
+  // preserves them in the final <head> (it does not strip existing preloads).
+  //
+  // window globals let React read API data synchronously on first render:
   //   window.__BLOG_ARTICLES__ — full article list for BlogIndexPage
   //   window.__BETA__          — beta launch status for BetaBanner
-  const injection = `<script>window.__BETA__=${JSON.stringify(betaStatus)};window.__BLOG_ARTICLES__=${JSON.stringify(articles)};</script>`
-  const htmlWithGlobals = html.replace('</head>', `${injection}\n</head>`)
+  const globalsScript = `<script>window.__BETA__=${JSON.stringify(betaStatus)};window.__BLOG_ARTICLES__=${JSON.stringify(articles)};</script>`
+  const headInjections = `${fontPreloadTags}\n  ${globalsScript}`
+  const htmlWithInjections = html.replace('</head>', `${headInjections}\n</head>`)
 
-  // Write to dist/<route>/index.html  (root → dist/index.html)
+  // --- Step 2: inline critical CSS via Beasties ----------------------------
+  //
+  // Beasties walks the rendered DOM (which is now fully React-hydrated HTML)
+  // and inlines only the CSS rules that apply to above-the-fold elements.
+  // The full stylesheet <link> is kept (pruneSource: false) so below-the-fold
+  // styles load normally. All 637 routes share the same content-hashed CSS
+  // file — pruning would corrupt the shared cached asset for other routes.
+  let finalHtml
+  try {
+    finalHtml = await beasties.process(htmlWithInjections)
+  } catch (err) {
+    console.warn(`[prerender] beasties failed for ${route} (${err.message}) — using un-inlined HTML`)
+    finalHtml = htmlWithInjections
+  }
+
+  // --- Step 3: write to dist -----------------------------------------------
   if (route === '/') {
-    writeFileSync(join(DIST_DIR, 'index.html'), htmlWithGlobals, 'utf8')
+    writeFileSync(join(DIST_DIR, 'index.html'), finalHtml, 'utf8')
   } else {
     const dir = join(DIST_DIR, route.slice(1))
     mkdirSync(dir, { recursive: true })
-    writeFileSync(join(dir, 'index.html'), htmlWithGlobals, 'utf8')
+    writeFileSync(join(dir, 'index.html'), finalHtml, 'utf8')
   }
 }
 
@@ -284,10 +407,33 @@ async function main() {
     fetchBlogArticles(),
     fetchBetaStatus(),
   ])
-  const globals = { articles, betaStatus }
   const slugs = articles.map(a => a.slug)
 
-  const server = await startServer()
+  // Extract content-hashed font URLs from the built CSS bundle.
+  // Must run after `vite build` has emitted dist/assets/index-*.css.
+  const fontUrls = extractCriticalFontUrls(DIST_DIR)
+  const fontPreloadTags = buildFontPreloadTags(fontUrls)
+
+  // Instantiate Beasties once — it reads the CSS bundle from dist/assets
+  // and inlines above-the-fold rules into each rendered HTML string.
+  // pruneSource: false is critical: all 637 HTML files share one CSS file;
+  // pruning would remove used rules from the shared asset after the first route.
+  const beasties = new Beasties({
+    path: DIST_DIR,
+    publicPath: '/',
+    preload: 'swap',
+    pruneSource: false,
+    inlineThreshold: 0,
+    logLevel: 'warn',
+  })
+
+  const globals = { articles, betaStatus, beasties, fontPreloadTags }
+
+  // Snapshot the Vite-built index.html BEFORE any route overwrites it.
+  // The server uses this frozen copy as the SPA shell so Puppeteer always
+  // gets the clean original, avoiding duplicate head-injection across routes.
+  const originalIndexHtml = readFileSync(join(DIST_DIR, 'index.html'), 'utf8')
+  const server = await startServer(originalIndexHtml)
 
   const browser = await puppeteer.launch({
     executablePath: CHROME,
