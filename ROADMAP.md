@@ -94,12 +94,29 @@
 | 13.26 | Complete email suite: cercol.team apex domain on Resend, Stalwart relay, hello@cercol.team identity. | |
 | 14 | Onboarding: OnboardingModal (once per new user), InstrumentNudge CTA, progressive MyResults empty states. | |
 | 14.5 | Self-hosted auth migration: Supabase Auth replaced with FastAPI + HS256 JWT + Resend magic links + Google OAuth. | |
-| 15.5.1–15.5.12 | SEO and LLM visibility (10 of 12 complete): README, meta/OG/JSON-LD, sitemap, llms.txt, code splitting, prerendering, 104 blog articles, visual enrichment, blog filters, FAQ categorisation, header nav, My Results redesign. | See pending phases for 15.5.2 and 15.5.5 |
-| 17 | Hygiene cleanup (2026-05-16): deleted obsolete Supabase scripts, rewrote .env.example, audited stale references. | |
+| 15.5.1–15.5.12 | SEO and LLM visibility: README, meta/OG/JSON-LD, sitemap, llms.txt, code splitting, prerendering, 104 blog articles, visual enrichment, blog filters, FAQ categorisation, header nav, My Results redesign. | 15.5.2 and 15.5.5 still pending |
+| 17 | Hygiene cleanup (2026-05-16): deleted obsolete Supabase artifacts, rewrote .env.example, audited stale references. | |
+| 17.1 | Performance + SEO sprint (2026-05-16/17). 8 PRs + mm-design v0.2.0 + Caddy fix. (1) Restored API after 30-day silent Caddy outage. (2) Self-hosted Playfair Display + Roboto via mm-design v0.2.0 (no Google Fonts CDN). (3) Pre-rendered 624 multilingual blog article routes (104 slugs × 6 languages) via Puppeteer pool. (4) Eliminated blog index Soft 404 via window.__BLOG_ARTICLES__ injection. (5) BetaBanner 1300ms LCP flash fixed via window.__BETA__ injection. (6) Normalized 91 malformed double-? Unsplash URLs (cover images: 722 KiB → 43 KiB). (7) Inlined above-the-fold CSS via Beasties (Node API, post-Puppeteer per-route). (8) Preloaded 4 critical woff2 fonts (Playfair 400, Roboto 400/500/700) with content-hash extraction at build time. (9) Recharts vendor chunk split. (10) npm install CI fix. (11) Deploy path filter fix (scripts/ trigger). Baseline → after: Landing Performance 71→77, FCP 4.1s→3.5s; Blog LCP 9.1s→6.3s, Performance 66→68. A11y/BP/SEO all 100. | PRs #14–22; 131c986 direct push |
 
 ---
 
 ## Pending phases
+
+### Cloudflare Pages migration
+
+**Why:** GitHub Pages serves all assets with `cache-control: max-age=600` (10 min) and does not support Brotli or HTTP/3. These are the two remaining gaps to push Performance from ~77 to 85+. Cloudflare Pages offers: long-lived caching for content-hashed assets (`max-age=31536000`), Brotli compression, HTTP/3, global CDN edge, free tier.
+
+**Scope:** DNS migration (CNAME → Cloudflare Pages), update `VITE_API_URL` check, verify prerender + `gh-pages` action or switch to Cloudflare Pages deploy action. Estimated 2–4h. Low risk if prepared on a staging subdomain first.
+
+---
+
+### PageSpeed retest (2–4 weeks from 2026-05-17)
+
+Google needs to re-crawl the 98 blog slugs that were "Discovered: not indexed" due to pre-render errors baked into the HTML. After Google re-crawls, Search Console should show 0 in the "Discovered: not indexed" bucket. Rerun PageSpeed mobile on:
+- https://cercol.team (baseline: Performance 77, LCP 3.5s)
+- https://cercol.team/blog/<slug> (baseline: Performance 68, LCP 6.3s)
+
+---
 
 ### Phase 13.23 — k-means centroid update
 
