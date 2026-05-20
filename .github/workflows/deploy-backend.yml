@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - 'api/**'
+      - '.github/workflows/deploy-backend.yml'
 
 jobs:
   deploy:
@@ -21,5 +22,34 @@ jobs:
             set -e
             cd /home/cercol/api
             git pull origin main
+
+            # Install the Caddy snippet under /etc/caddy/conf.d/. Idempotent:
+            # only copy + validate + reload when the source has actually
+            # changed. On validate failure, roll back the snippet so Caddy
+            # keeps serving the previous configuration.
+            mkdir -p /etc/caddy/conf.d
+            if ! cmp -s api/deploy/caddy/cercol-api.caddy /etc/caddy/conf.d/cercol-api.caddy 2>/dev/null; then
+                install -m 0644 api/deploy/caddy/cercol-api.caddy /etc/caddy/conf.d/cercol-api.caddy
+                if ! caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile; then
+                    echo "Caddy validation failed, rolling back snippet" >&2
+                    rm -f /etc/caddy/conf.d/cercol-api.caddy
+                    exit 1
+                fi
+                systemctl reload caddy
+            fi
+
             systemctl restart cercol-api
             systemctl is-active cercol-api
+
+            # External smoke test. Probes the public URL through Caddy, so
+            # it catches the failure mode where the snippet was installed
+            # but topquaranta's Caddyfile no longer imports conf.d.
+            for i in 1 2 3 4 5; do
+                if curl -fsS -o /dev/null https://api.cercol.team/blog; then
+                    echo "External smoke test passed"
+                    exit 0
+                fi
+                sleep 2
+            done
+            echo "External smoke test failed: https://api.cercol.team/blog unreachable" >&2
+            exit 1
