@@ -60,8 +60,8 @@ export default function FaqPage() {
   const { t } = useTranslation()
 
   usePageMeta({
-    title: 'FAQ — Cèrcol personality assessment, science and privacy',
-    description: 'Answers about Cèrcol: data privacy, the Big Five (OCEAN/IPIP) science behind it, the New Moon / First Quarter / Full Moon instruments, and team use cases.',
+    title: t('seo.faq.title'),
+    description: t('seo.faq.description'),
     path: '/faq/',
   })
 

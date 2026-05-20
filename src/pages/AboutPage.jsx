@@ -41,8 +41,8 @@ export default function AboutPage() {
   const { t } = useTranslation()
 
   usePageMeta({
-    title: 'About Cèrcol — Big Five team personality assessment, open source',
-    description: 'What Cèrcol is, why it exists, and how the Big Five (OCEAN/IPIP) dimensions are used to map team personality. Open source, science-grounded, free.',
+    title: t('seo.about.title'),
+    description: t('seo.about.description'),
     path: '/about/',
   })
 
