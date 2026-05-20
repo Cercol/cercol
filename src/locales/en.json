@@ -1445,5 +1445,31 @@
   "blog.level.all": "All levels",
   "blog.level.beginner": "Introductory",
   "blog.level.intermediate": "Intermediate",
-  "blog.level.expert": "In-depth"
+  "blog.level.expert": "In-depth",
+  "seo": {
+    "about": {
+      "title": "About Cèrcol: open-source Big Five team assessment",
+      "description": "Discover Cèrcol, the open-source Big Five (OCEAN/IPIP) personality test for teams. Free, science-grounded and built on peer-reviewed research."
+    },
+    "science": {
+      "title": "The science behind Cèrcol: Big Five, IPIP, AB5C facets",
+      "description": "Explore the peer-reviewed psychometric research behind Cèrcol: the Big Five (OCEAN) model, IPIP public-domain items, and the AB5C facet circumplex."
+    },
+    "faq": {
+      "title": "Cèrcol FAQ: about the test, privacy and peer Witness",
+      "description": "Answers about Cèrcol: how the Big Five (OCEAN/IPIP) test works, what we do with your data, peer Witness assessment, and using results in your team."
+    },
+    "instruments": {
+      "title": "Cèrcol's four lunar instruments: New, First, Full, Last",
+      "description": "Four free Big Five (OCEAN/IPIP) instruments: New Moon (10 items), First Quarter (60), Full Moon (120 plus Witness peer review), Last Quarter for teams."
+    },
+    "roles": {
+      "title": "The 12 Cèrcol team roles based on Big Five facets",
+      "description": "Twelve science-derived team roles built on the AB5C circumplex of the Big Five (OCEAN/IPIP). Each role with strengths, OCEAN profile, and open limits."
+    },
+    "privacy": {
+      "title": "Cèrcol privacy: data, deletion rights and EU GDPR",
+      "description": "How Cèrcol handles your data: what we store, what we never share, your GDPR rights, and how to delete your account. Plain language, no boilerplate."
+    }
+  }
 }

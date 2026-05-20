@@ -1445,5 +1445,31 @@
   "blog.level.all": "Alle Niveaus",
   "blog.level.beginner": "Einführend",
   "blog.level.intermediate": "Fortgeschritten",
-  "blog.level.expert": "Vertiefend"
+  "blog.level.expert": "Vertiefend",
+  "seo": {
+    "about": {
+      "title": "Über Cèrcol: Open-Source-Big-Five-Teambewertung",
+      "description": "Lerne Cèrcol kennen, den Open-Source-Big-Five-Persönlichkeitstest (OCEAN/IPIP) für Teams. Kostenlos, wissenschaftlich und peer-review-basiert."
+    },
+    "science": {
+      "title": "Die Wissenschaft hinter Cèrcol: Big Five, IPIP, AB5C",
+      "description": "Erforsche die peer-reviewte psychometrische Forschung hinter Cèrcol: Big Five (OCEAN), IPIP-Public-Domain-Items und das AB5C-Facetten-Circumplex."
+    },
+    "faq": {
+      "title": "Cèrcol FAQ: Test, Datenschutz und Peer-Zeuge",
+      "description": "Antworten zu Cèrcol: wie der Big-Five-Test (OCEAN/IPIP) funktioniert, was mit deinen Daten passiert, die Zeugen-Peer-Bewertung und der Team-Einsatz."
+    },
+    "instruments": {
+      "title": "Cèrcols vier Mondinstrumente für Teamprofile",
+      "description": "Vier kostenlose Big-Five-Instrumente (OCEAN/IPIP): Neumond (10), Erstes Viertel (60), Vollmond (120 und Zeuge) und Letztes Viertel für Teams."
+    },
+    "roles": {
+      "title": "Die 12 Cèrcol-Teamrollen aus Big-Five-Facetten",
+      "description": "Zwölf wissenschaftlich abgeleitete Teamrollen aus dem AB5C-Circumplex der Big Five (OCEAN/IPIP). Jede Rolle mit Stärken, OCEAN-Profil und Grenzen."
+    },
+    "privacy": {
+      "title": "Datenschutz bei Cèrcol: Daten, Löschung und DSGVO",
+      "description": "Wie Cèrcol mit deinen Daten umgeht: was wir speichern, was wir nie teilen, deine DSGVO-Rechte und wie du dein Konto löschst. Klare Sprache, keine Floskeln."
+    }
+  }
 }
