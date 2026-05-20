@@ -80,8 +80,8 @@ export default function SciencePage() {
   const { t } = useTranslation()
 
   usePageMeta({
-    title: 'The science behind Cèrcol — Big Five, IPIP, AB5C circumplex',
-    description: 'Cèrcol is built on peer-reviewed psychometric research: the Big Five (OCEAN) factor model, IPIP public-domain items, the AB5C circumplex, and IPIP-NEO inventories.',
+    title: t('seo.science.title'),
+    description: t('seo.science.description'),
     path: '/science/',
   })
 

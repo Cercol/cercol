@@ -33,8 +33,8 @@ export default function PrivacyPage() {
   const { t } = useTranslation()
 
   usePageMeta({
-    title: 'Privacy — Cèrcol personality assessment',
-    description: 'How Cèrcol handles your data: what we store, what we never share, how to delete your account. Plain language, no legal boilerplate.',
+    title: t('seo.privacy.title'),
+    description: t('seo.privacy.description'),
     path: '/privacy/',
   })
   const p = (key) => t(`privacy.${key}`)

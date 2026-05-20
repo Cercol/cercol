@@ -1445,5 +1445,31 @@
   "blog.level.all": "Alle niveauer",
   "blog.level.beginner": "Introduktion",
   "blog.level.intermediate": "Mellemniveau",
-  "blog.level.expert": "Dybdegående"
+  "blog.level.expert": "Dybdegående",
+  "seo": {
+    "about": {
+      "title": "Om Cèrcol: open source Big Five-teamvurdering",
+      "description": "Mød Cèrcol, den open source Big Five (OCEAN/IPIP) personlighedstest for teams. Gratis, videnskabeligt funderet og baseret på peer-reviewed forskning."
+    },
+    "science": {
+      "title": "Videnskaben bag Cèrcol: Big Five, IPIP og AB5C",
+      "description": "Udforsk den peer-reviewede psykometriske forskning bag Cèrcol: Big Five (OCEAN)-modellen, IPIP public domain-items og AB5C-facet-circumplex."
+    },
+    "faq": {
+      "title": "Cèrcol FAQ: testen, privatliv og peer-Vidne",
+      "description": "Svar om Cèrcol: hvordan Big Five (OCEAN/IPIP)-testen virker, hvad vi gør med dine data, peer Vidne-vurderingen og brug af resultater i teamet."
+    },
+    "instruments": {
+      "title": "Cèrcols fire måneinstrumenter til teams",
+      "description": "Fire gratis Big Five (OCEAN/IPIP)-instrumenter: Nymåne (10), Første Kvarter (60), Fuldmåne (120 og Vidne) og Sidste Kvarter til teamarbejde."
+    },
+    "roles": {
+      "title": "Cèrcols 12 teamroller bygget på Big Five-facetter",
+      "description": "Tolv videnskabeligt udledte teamroller fra AB5C-circumplex af Big Five (OCEAN/IPIP). Hver rolle med styrker, OCEAN-profil og åbne begrænsninger."
+    },
+    "privacy": {
+      "title": "Cèrcol privatliv: data, sletteret og GDPR",
+      "description": "Sådan håndterer Cèrcol dine data: hvad vi gemmer, hvad vi aldrig deler, dine GDPR-rettigheder og hvordan du sletter din konto. Klart sprog, ingen jura."
+    }
+  }
 }

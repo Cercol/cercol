@@ -58,8 +58,8 @@ export default function InstrumentsPage() {
   const { t } = useTranslation()
 
   usePageMeta({
-    title: 'Instruments — Cèrcol Big Five and IPIP-NEO personality tests',
-    description: 'Three free Big Five (OCEAN/IPIP) instruments: New Moon (10 items), First Quarter (IPIP-NEO-60), and Full Moon (IPIP-NEO-120 plus Witness peer assessment).',
+    title: t('seo.instruments.title'),
+    description: t('seo.instruments.description'),
     path: '/instruments/',
   })
 

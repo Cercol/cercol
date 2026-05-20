@@ -79,8 +79,8 @@ export default function RolesPage() {
   const { t } = useTranslation()
 
   usePageMeta({
-    title: 'Twelve team roles — Cèrcol AB5C role taxonomy (beta)',
-    description: 'Twelve science-derived team roles built on the AB5C circumplex of the Big Five (OCEAN/IPIP). Each role with its OCEAN profile, strengths, and open limitations.',
+    title: t('seo.roles.title'),
+    description: t('seo.roles.description'),
     path: '/roles/',
   })
 

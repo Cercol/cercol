@@ -1444,5 +1444,31 @@
   "blog.level.all": "Tots els nivells",
   "blog.level.beginner": "Introductori",
   "blog.level.intermediate": "Intermedi",
-  "blog.level.expert": "Avançat"
+  "blog.level.expert": "Avançat",
+  "seo": {
+    "about": {
+      "title": "Cèrcol: avaluació d'equips Big Five de codi obert",
+      "description": "Descobreix Cèrcol, el test de personalitat Big Five (OCEAN/IPIP) de codi obert per a equips. Gratuït, científic i basat en recerca revisada per parells."
+    },
+    "science": {
+      "title": "La ciència de Cèrcol: Big Five, IPIP i facetes AB5C",
+      "description": "Explora la recerca psicomètrica revisada darrere de Cèrcol: el model Big Five (OCEAN), els ítems IPIP de domini públic i el circumplex AB5C de facetes."
+    },
+    "faq": {
+      "title": "FAQ de Cèrcol: el test, la privadesa i el Testimoni",
+      "description": "Respostes sobre Cèrcol: com funciona el test Big Five (OCEAN/IPIP), què fem amb les teves dades, l'avaluació entre parells Testimoni i l'ús en equip."
+    },
+    "instruments": {
+      "title": "Els quatre instruments lunars de Cèrcol per a equips",
+      "description": "Quatre instruments Big Five (OCEAN/IPIP) gratuïts: Lluna Nova (10 ítems), Quart Creixent (60), Lluna Plena (120 i Testimoni) i Quart Minvant per a equips."
+    },
+    "roles": {
+      "title": "Els 12 rols d'equip Cèrcol segons les facetes Big Five",
+      "description": "Dotze rols d'equip derivats científicament del circumplex AB5C del Big Five (OCEAN/IPIP). Cada rol amb fortaleses, perfil OCEAN i límits oberts."
+    },
+    "privacy": {
+      "title": "Privadesa de Cèrcol: dades, drets de supressió i RGPD",
+      "description": "Com Cèrcol gestiona les teves dades: què emmagatzemem, què no compartim mai, els teus drets RGPD i com esborrar el compte. Llenguatge clar, sense lletra petita."
+    }
+  }
 }
