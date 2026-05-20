@@ -27,28 +27,40 @@ const STATIC_PAGES = [
   { path: '/privacy',   priority: '0.4', changefreq: 'yearly' },
 ]
 
+// Trailing slash required: GitHub Pages serves <path>/index.html and
+// 301-redirects any URL without a trailing slash. Sitemap entries pointing
+// at the redirected URL show up as "Discovered: not indexed" in Search
+// Console, so every <loc> and every hreflang href must end with `/`.
+function withTrailingSlash(path) {
+  if (!path) return '/'
+  return path.endsWith('/') ? path : `${path}/`
+}
+
 function langUrl(path, lang) {
-  if (lang === 'en') return `${BASE}${path}`
-  // Blog paths use subdirectory, static pages use ?lang= query (SPA, no subdirectory routing)
-  if (path.startsWith('/blog')) return `${BASE}/${lang}${path}`
-  return `${BASE}${path}?lang=${lang}`
+  const p = withTrailingSlash(path)
+  if (lang === 'en') return `${BASE}${p}`
+  // Blog paths use a subdirectory, static pages use ?lang= query (SPA, no subdirectory routing).
+  if (p.startsWith('/blog')) return `${BASE}/${lang}${p}`
+  return `${BASE}${p}?lang=${lang}`
 }
 
 function hreflangAlts(path) {
+  const p = withTrailingSlash(path)
   return LANGS.map(l =>
-    `    <xhtml:link rel="alternate" hreflang="${l}" href="${langUrl(path, l)}"/>`
+    `    <xhtml:link rel="alternate" hreflang="${l}" href="${langUrl(p, l)}"/>`
   ).join('\n') +
-  `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${BASE}${path}"/>`
+  `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${BASE}${p}"/>`
 }
 
 function urlEntry(path, { priority, changefreq, lastmod }) {
-  const loc = `${BASE}${path}`
+  const p = withTrailingSlash(path)
+  const loc = `${BASE}${p}`
   const lm = lastmod ? `\n    <lastmod>${lastmod}</lastmod>` : ''
   return `  <url>
     <loc>${loc}</loc>${lm}
     <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>
-${hreflangAlts(path)}
+${hreflangAlts(p)}
   </url>`
 }
 

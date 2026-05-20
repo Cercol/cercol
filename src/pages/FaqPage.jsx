@@ -6,6 +6,7 @@
  */
 import { useTranslation } from 'react-i18next'
 import { SectionLabel } from '../components/ui'
+import { usePageMeta } from '../hooks/usePageMeta'
 
 const SECTIONS = [
   { labelKey: 'faq.cat.data',        keys: ['q1', 'q10'] },
@@ -57,6 +58,12 @@ function FaqSection({ label, children }) {
 
 export default function FaqPage() {
   const { t } = useTranslation()
+
+  usePageMeta({
+    title: 'FAQ — Cèrcol personality assessment, science and privacy',
+    description: 'Answers about Cèrcol: data privacy, the Big Five (OCEAN/IPIP) science behind it, the New Moon / First Quarter / Full Moon instruments, and team use cases.',
+    path: '/faq/',
+  })
 
   return (
     <main className="py-12">
