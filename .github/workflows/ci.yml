@@ -91,3 +91,18 @@ jobs:
           cd api
           python -m pytest tests/ -v
         continue-on-error: false
+
+      - name: Validate Caddy snippet
+        # The snippet is imported by topquaranta's main Caddyfile via
+        # `import /etc/caddy/conf.d/*.caddy`. A standalone snippet is not
+        # a complete Caddyfile, so wrap it in a one-line import wrapper
+        # and validate that. Fails CI on any syntax error before deploy.
+        # Caddy resolves `import` paths relative to the Caddyfile's
+        # directory (not the workdir), so the wrapper uses the absolute
+        # path that the snippet is mounted at inside the container.
+        run: |
+          echo "import /work/api/deploy/caddy/cercol-api.caddy" > /tmp/wrapper.caddy
+          docker run --rm \
+            -v "$PWD:/work:ro" \
+            -v "/tmp/wrapper.caddy:/etc/caddy/Caddyfile:ro" \
+            caddy:2 caddy validate --adapter caddyfile --config /etc/caddy/Caddyfile
