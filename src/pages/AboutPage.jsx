@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Card, SectionLabel } from '../components/ui'
 import { DimensionIcon, ArrowRightIcon } from '../components/MoonIcons'
+import { usePageMeta } from '../hooks/usePageMeta'
 
 function ExploreCard({ label, desc, to, accent }) {
   return (
@@ -38,6 +39,12 @@ function DimensionCard({ name, desc, accent, domainKey }) {
 
 export default function AboutPage() {
   const { t } = useTranslation()
+
+  usePageMeta({
+    title: 'About Cèrcol — Big Five team personality assessment, open source',
+    description: 'What Cèrcol is, why it exists, and how the Big Five (OCEAN/IPIP) dimensions are used to map team personality. Open source, science-grounded, free.',
+    path: '/about/',
+  })
 
   const dimensions = [
     { key: 'presence',    accent: 'text-amber-500' },

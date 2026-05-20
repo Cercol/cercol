@@ -4,6 +4,7 @@
  */
 import { useTranslation } from 'react-i18next'
 import { SectionLabel } from '../components/ui'
+import { usePageMeta } from '../hooks/usePageMeta'
 
 function Section({ label, children }) {
   return (
@@ -30,6 +31,12 @@ function UL({ items }) {
 
 export default function PrivacyPage() {
   const { t } = useTranslation()
+
+  usePageMeta({
+    title: 'Privacy — Cèrcol personality assessment',
+    description: 'How Cèrcol handles your data: what we store, what we never share, how to delete your account. Plain language, no legal boilerplate.',
+    path: '/privacy/',
+  })
   const p = (key) => t(`privacy.${key}`)
 
   return (

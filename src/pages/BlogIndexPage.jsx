@@ -100,11 +100,40 @@ export default function BlogIndexPage() {
         'Research-grounded articles on personality science, the Big Five (OCEAN), IPIP, team composition, and peer assessment — by the team behind Cèrcol.'
       )
     }
+
+    // Trailing slash required: GitHub Pages 301-redirects /blog → /blog/.
+    const BASE = 'https://cercol.team'
+    const canonicalUrl = urlLang === 'en' ? `${BASE}/blog/` : `${BASE}/${urlLang}/blog/`
+
+    // Remove inherited / stale canonical and hreflang tags before adding our own.
+    document
+      .querySelectorAll('link[rel="canonical"], link[rel="alternate"][hreflang]')
+      .forEach(el => el.remove())
+
+    const added = []
+    const makeLink = (rel, attrs) => {
+      const link = document.createElement('link')
+      link.rel = rel
+      Object.entries(attrs).forEach(([k, v]) => link.setAttribute(k, v))
+      link.dataset.blogIndex = '1'
+      document.head.appendChild(link)
+      added.push(link)
+    }
+
+    makeLink('canonical', { href: canonicalUrl })
+    const LANGS = ['en', 'ca', 'es', 'fr', 'de', 'da']
+    LANGS.forEach(l => {
+      const href = l === 'en' ? `${BASE}/blog/` : `${BASE}/${l}/blog/`
+      makeLink('alternate', { hreflang: l, href })
+    })
+    makeLink('alternate', { hreflang: 'x-default', href: `${BASE}/blog/` })
+
     return () => {
       document.title = prev
       if (metaDesc) metaDesc.setAttribute('content', prevDesc)
+      added.forEach(el => el.remove())
     }
-  }, [])
+  }, [urlLang])
 
   useEffect(() => {
     // Always refresh from the API — the pre-rendered window global may be
