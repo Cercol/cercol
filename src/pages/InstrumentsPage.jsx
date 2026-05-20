@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Card, Badge, SectionLabel } from '../components/ui'
 import { NewMoonIcon, FirstQuarterIcon, FullMoonIcon, ArrowRightIcon } from '../components/MoonIcons'
+import { usePageMeta } from '../hooks/usePageMeta'
 
 /**
  * StaticItem — read-only sample question with greyed-out scale.
@@ -55,6 +56,12 @@ function WitnessSection({ data }) {
 
 export default function InstrumentsPage() {
   const { t } = useTranslation()
+
+  usePageMeta({
+    title: 'Instruments — Cèrcol Big Five and IPIP-NEO personality tests',
+    description: 'Three free Big Five (OCEAN/IPIP) instruments: New Moon (10 items), First Quarter (IPIP-NEO-60), and Full Moon (IPIP-NEO-120 plus Witness peer assessment).',
+    path: '/instruments/',
+  })
 
   const p2 = t('instruments.fullMoon.part2', { returnObjects: true })
 

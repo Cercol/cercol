@@ -6,6 +6,7 @@
 import { useTranslation } from 'react-i18next'
 import { Card, SectionLabel } from '../components/ui'
 import { RoleIcon, ArrowRightIcon } from '../components/MoonIcons'
+import { usePageMeta } from '../hooks/usePageMeta'
 
 const ROLES = [
   { key: 'R01', accent: 'text-emerald-600', bg: 'bg-emerald-50' }, // Dolphin  P+ B+
@@ -76,6 +77,12 @@ function InfoBox({ heading, body, accent = 'text-gray-900' }) {
 
 export default function RolesPage() {
   const { t } = useTranslation()
+
+  usePageMeta({
+    title: 'Twelve team roles — Cèrcol AB5C role taxonomy (beta)',
+    description: 'Twelve science-derived team roles built on the AB5C circumplex of the Big Five (OCEAN/IPIP). Each role with its OCEAN profile, strengths, and open limitations.',
+    path: '/roles/',
+  })
 
   return (
     <main className="py-12">

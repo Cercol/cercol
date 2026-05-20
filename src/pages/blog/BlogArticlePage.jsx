@@ -223,7 +223,9 @@ export default function BlogArticlePage() {
     document.title = `${title} · Cèrcol`
 
     const BASE = 'https://cercol.team'
-    const canonicalUrl = urlLang === 'en' ? `${BASE}/blog/${slug}` : `${BASE}/${urlLang}/blog/${slug}`
+    // Trailing slash required: GitHub Pages 301-redirects path → path/, so a
+    // canonical without slash would point at a redirected URL.
+    const canonicalUrl = urlLang === 'en' ? `${BASE}/blog/${slug}/` : `${BASE}/${urlLang}/blog/${slug}/`
     const addedEls = []
 
     // Remove stale tags first
@@ -288,14 +290,14 @@ export default function BlogArticlePage() {
       const el = document.createElement('link')
       el.rel = 'alternate'
       el.hreflang = l
-      el.href = l === 'en' ? `${BASE}/blog/${slug}` : `${BASE}/${l}/blog/${slug}`
+      el.href = l === 'en' ? `${BASE}/blog/${slug}/` : `${BASE}/${l}/blog/${slug}/`
       document.head.appendChild(el)
       addedEls.push(el)
     })
     const xd = document.createElement('link')
     xd.rel = 'alternate'
     xd.hreflang = 'x-default'
-    xd.href = `${BASE}/blog/${slug}`
+    xd.href = `${BASE}/blog/${slug}/`
     document.head.appendChild(xd)
     addedEls.push(xd)
     const canon = document.createElement('link')
