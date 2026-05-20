@@ -14,6 +14,7 @@ All scoring algorithms and item sources are documented and citable.
 - React + Vite (frontend — GitHub Pages, cercol.team)
 - Tailwind CSS
 - FastAPI + uvicorn (backend — Hetzner VPS 188.245.60.20, api.cercol.team, systemd + Caddy) [Phase 4+]
+  - Caddy is shared with the topquaranta project on the same VPS. The `api.cercol.team` site block lives at `/etc/caddy/conf.d/cercol-api.caddy`, with its source of truth in this repo at `api/deploy/caddy/cercol-api.caddy`. Topquaranta's main `/etc/caddy/Caddyfile` imports the whole `conf.d/` directory so each project owns its own Caddy snippet.
 - PostgreSQL 14 (Hetzner — all data, auth tables included since Phase 15)
 - Auth: self-hosted (api/auth.py) — magic link (Resend), password (bcrypt direct, no passlib), Google OAuth (direct)
   - JWT: HS256 / JWT_SECRET env var (replaces Supabase ES256/JWKS)
@@ -29,7 +30,7 @@ Push to `main` → GitHub Action (`deploy-frontend.yml`) → `npm run build` →
 VITE_API_URL is set in `.env.production` (committed, non-secret — it's just the public API URL).
 
 ### Backend (api/**)
-Push to `main` → GitHub Action (`deploy-backend.yml`) → SSH to Hetzner → `git pull origin main` → `systemctl restart cercol-api`
+Push to `main` → GitHub Action (`deploy-backend.yml`) → SSH to Hetzner → `git pull origin main` → install `api/deploy/caddy/cercol-api.caddy` into `/etc/caddy/conf.d/` (only when changed) → `caddy validate` (rollback on failure) → `systemctl reload caddy` → `systemctl restart cercol-api` → external smoke test against `https://api.cercol.team/blog`.
 
 Both actions trigger automatically when their respective paths change.
 CI (`ci.yml`) runs on every push and PR: build, bundle sanity, frontend tests, backend tests.
