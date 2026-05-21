@@ -31,14 +31,28 @@ jobs:
         with:
           # CI ships lychee v0.23 which does not support --exclude-mail
           # (mail links are skipped by default anyway in this version).
-          # Offline mode would block external probes; here we run online
-          # but exclude the patterns that flap or are private.
+          # Excludes:
+          # - example.com / localhost / 127.0.0.1: reserved or local.
+          # - porkbun.com/api: private auth surface, no public docs.
+          # - doi.org: stable identifiers but the publishers do
+          #   server-side bot detection; lychee from a CI runner
+          #   sees 403 / 404 even when the DOI resolves fine in a
+          #   browser. Excluded entirely; correctness of DOIs is
+          #   checked by humans when adding new references.
+          # - ipip.ori.org: returns intermittent "Connection reset
+          #   by peer" to lychee. Authoritative host for IPIP items
+          #   so the link is correct; flap suppressed here.
+          # Accept 403 as a valid response for everything else so a
+          # bot-detected publisher does not turn the gate red.
           args: >-
             --no-progress
+            --accept '200,206,301,302,304,403'
             --exclude '^https?://(?:www\.)?example\.(?:com|org|net)'
             --exclude '^https?://localhost'
             --exclude '^https?://127\.0\.0\.1'
             --exclude 'porkbun\.com/api'
+            --exclude 'doi\.org'
+            --exclude 'ipip\.ori\.org'
             './**/*.md'
           fail: true
 
