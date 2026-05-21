@@ -13,9 +13,10 @@ Caddy access logs into a single store with dashboards and a custom
 MCP server. The store needs to be queryable, cheap at low volume,
 and Google-native (GSC Bulk Export only exports to BigQuery).
 
-`docs/EXPLORATION-2026-05-21.md` confirmed there is no existing
-GCP project linked to Cèrcol; the only Google integration in the
+The 2026-05-21 exploration confirmed there is no existing GCP
+project linked to Cèrcol; the only Google integration in the
 codebase is sign-in OAuth against Miquel's personal Google account.
+(Archived reference: `docs/archive/audits/2026-Q2/EXPLORATION-2026-05-21.md`.)
 
 ## Decision
 

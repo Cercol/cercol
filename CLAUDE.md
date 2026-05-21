@@ -114,43 +114,13 @@ When adding a new language to Cèrcol:
 6. Add the new language code and label to the `LANGS` array in `src/components/LanguageToggle.jsx`.
 
 ## File structure
-src/
-  components/    # UI components (AdminRoute.jsx, CercolLogo.jsx, Layout.jsx, …)
-    ui/          # Reusable primitives: Button, Card, Badge, SectionLabel
-    report/      # Report-specific components: DimensionRow, FacetAccordion, …
-  pages/         # Route-level components (includes AdminDashboardPage.jsx)
-  context/       # React context providers (AuthContext.jsx, FeedbackContext.jsx)
-  hooks/         # Custom React hooks (useInstrumentKeyboard.js, useScaleLabels.js)
-  lib/           # Shared service clients (tokens.js, api.js)
-  design/        # tokens.js and global styles
-  data/          # test items, scoring keys (always cite source)
-  utils/         # scoring logic, logger.js, translationFeedback.js
-    __tests__/   # Vitest unit tests for all scoring utilities
-  locales/       # i18n translation files (en.json, ca.json, …) — 889 keys × 6 languages
-  assets/        # static assets: icons/animals/, illustrations/
 
-api/             # FastAPI backend (Python) — auto-deployed to Hetzner via GitHub Actions
-  main.py        # FastAPI app (routes, auth middleware, async DB helpers)
-  auth.py        # Auth routes: magic link, password (bcrypt direct), Google OAuth, JWT
-  scoring.py     # Pure Python scoring — mirrors src/utils/role-scoring.js (no external deps)
-  emails.py      # Transactional email via Resend SDK (6 languages, per-recipient)
-  requirements.txt  # Python deps — changing this does NOT auto-install on server (do manually)
-  tests/         # pytest test suite (13 scoring tests)
-  # Railway deployment was removed during the Hetzner migration; see
-  # docs/decisions/0002-railway-to-hetzner-systemd.md (Accepted).
-
-.github/workflows/
-  ci.yml              # Build + lint + tests (all pushes and PRs)
-  deploy-frontend.yml # Auto-deploy frontend to GitHub Pages on push to main
-  deploy-backend.yml  # Auto-deploy backend to Hetzner on push to main
-
-docs/            # One-off reference documents (not living project docs)
-  email-signature.html   # Spark HTML email signature for hello@cercol.team
-  CLAUDE_EXCELLENCE.md   # Full codebase audit (April 2026) — 32 issues, 31 resolved
-
-scripts/         # Utility scripts for seeding/clearing test data
-sql/             # Standalone SQL seeds (facet tables)
-db/              # PostgreSQL migrations (001–012; was supabase/ before Phase 14.5)
+- `src/` - React SPA. `components/` plus `components/ui/` and `components/report/`; `pages/` (route-level, includes `AdminDashboardPage.jsx`); `context/`, `hooks/`, `lib/`, `design/`, `data/`, `utils/` (with `__tests__/`), `locales/` (six languages), `assets/`.
+- `api/` - FastAPI backend. Flat layout, six Python files. See `docs/architecture/backend.md` for the layout rationale and `docs/architecture/auth.md` for the auth surface.
+- `.github/workflows/` - `ci.yml`, `ci-docs.yml`, `deploy-frontend.yml`, `deploy-backend.yml`.
+- `docs/` - living docs (`policies/`, `architecture/`, `decisions/`, `post-mortems/`, `ops/`) plus `archive/` for decayed content.
+- `scripts/` - sitemap, prerender, deploy-api, docs-coherence and spec-path validators, blog article updaters.
+- `sql/`, `db/migrations/` - PostgreSQL seeds and migrations (001 through 015).
 
 ## SEO conventions
 

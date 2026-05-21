@@ -44,3 +44,27 @@ Archiving is always done via a regular PR, never by hand on `main`.
 Branch name: `chore/docs-decay-YYYY-Qx`. See
 `docs/policies/docs-maintenance.md` for the decay rules and
 quarterly sweep cadence.
+
+## First sweep: 2026-Q2
+
+Phase 17.5 FASE H, 2026-05-21. Light sweep:
+
+- `audits/full-moon-page-state-2026-05-10.md` -> `audits/2026-Q2/`.
+- `audits/full-moon-redesign-2026-05-10.md` -> `audits/2026-Q2/`.
+- `audits/witness-adjective-audit-2026-05-10.md` -> `audits/2026-Q2/`.
+  All three were one-off audits whose findings landed in the
+  Phase 13.18 to 13.22 batch.
+- `docs/CLAUDE_EXCELLENCE.md` (477 LOC) -> `audits/2026-Q2/`.
+  Findings absorbed in the Phase 13.19 batch (32 issues, 31 resolved).
+- `docs/AUDIT-2026-05.md` -> `audits/2026-Q2/`. Structural audit
+  superseded by FASE A drift cleanup.
+- `docs/AUDIT-CLOSE-2026-05-20.md` -> `audits/2026-Q2/`. Single FAIL
+  (H1 missing) closed in FASE A.2 of this sprint.
+- `docs/EXPLORATION-2026-05-21.md` -> `audits/2026-Q2/`. Exploration
+  whose findings drove the design of this sprint and ADRs 0005 to
+  0009.
+
+CLAUDE.md and ROADMAP.md kept in place. ROADMAP rows for phases
+older than 3 months are below the 3-month threshold but still
+referenced actively by ongoing work; revisit on next sweep
+(2026-Q3).

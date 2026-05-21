@@ -30,7 +30,8 @@
   title and description for the six top-level pages.
 - **2026-05-20** - Phase 17.4 PR #25 merged, fixing the recurring
   Caddy outage.
-- **2026-05-20** - Close-out audit `docs/AUDIT-CLOSE-2026-05-20.md`
+- **2026-05-20** - Close-out audit
+  `docs/archive/audits/2026-Q2/AUDIT-CLOSE-2026-05-20.md`
   ran `curl` against twelve representative URLs and counted `<h1>`
   in each. Two had zero (home and `/science/`), three had two
   (specific blog articles). Filed as the single FAIL of the
