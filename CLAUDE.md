@@ -179,6 +179,12 @@ Full SEO and LLM visibility strategy: SEO.md
 - Scientific foundation and scoring: SCIENCE.md
 - Product vocabulary, instruments and copy: PRODUCT.md
 - SEO and LLM visibility strategy: SEO.md
+- Backend architecture: docs/architecture/backend.md
+- Auth architecture: docs/architecture/auth.md
+- Operations runbook: docs/ops/runbook.md
+- Code conventions and patterns: docs/policies/conventions.md
+- Architecture decisions: docs/decisions/
+- Post-mortems: docs/post-mortems/
 
 Read these files when the task requires it. CLAUDE.md is always read first.
 

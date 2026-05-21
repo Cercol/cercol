@@ -4,6 +4,8 @@ Blog API router for Cèrcol.
 Provides public read endpoints and admin write endpoints for blog_posts.
 Uses the same DB pool (app.state.pool via Request), auth, and JSON patterns
 as main.py.
+
+# Spec: docs/architecture/backend.md
 """
 
 from datetime import datetime, timezone
