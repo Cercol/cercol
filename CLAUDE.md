@@ -14,12 +14,12 @@ All scoring algorithms and item sources are documented and citable.
 - React + Vite (frontend — GitHub Pages, cercol.team)
 - Tailwind CSS
 - FastAPI + uvicorn (backend — Hetzner VPS 188.245.60.20, api.cercol.team, systemd + Caddy) [Phase 4+]
-  - Caddy is shared with the topquaranta project on the same VPS. The `api.cercol.team` site block lives at `/etc/caddy/conf.d/cercol-api.caddy`, with its source of truth in this repo at `api/deploy/caddy/cercol-api.caddy`. Topquaranta's main `/etc/caddy/Caddyfile` imports the whole `conf.d/` directory so each project owns its own Caddy snippet.
+  - Caddy is shared with the topquaranta project on the same VPS. The `api.cercol.team` site block lives at `/etc/caddy/conf.d/cercol-api.caddy`, with its source of truth in this repo at `api/deploy/caddy/cercol-api.caddy`. Topquaranta's main `/etc/caddy/Caddyfile` imports the whole `conf.d/` directory so each project owns its own Caddy snippet. See `docs/decisions/0004-caddy-multi-tenant-conf-d.md` (Accepted).
 - PostgreSQL 14 (Hetzner — all data, auth tables included since Phase 15)
 - Auth: self-hosted (api/auth.py) — magic link (Resend), password (bcrypt direct, no passlib), Google OAuth (direct)
-  - JWT: HS256 / JWT_SECRET env var (replaces Supabase ES256/JWKS)
+  - JWT: HS256 / JWT_SECRET env var (replaces Supabase ES256/JWKS). See `docs/decisions/0003-jwt-hs256-self-hosted.md` (Accepted).
   - Tokens: access token in JS module variable, refresh token in localStorage `cercol_rt`
-- Supabase: NO LONGER USED (migrated fully to Hetzner in Phase 15)
+- Supabase: NO LONGER USED. See `docs/decisions/0001-no-supabase-asyncpg-direct.md` (Accepted).
 - All scoring happens client-side in JavaScript
 
 ## Deployment pipeline
@@ -52,6 +52,13 @@ Typography: Playfair Display (headings/display) + Roboto (body/UI).
 README badges must use mm-design palette: `cf3339`, `0047ba`, `f1c22f`, `427c42`, `111111`.
 
 ## Code conventions
+
+General code conventions (English comments, no em dashes, snippets
+only in PR descriptions, `# Spec:` markers) live in
+`docs/policies/conventions.md`. The bullets below are the
+Cèrcol-specific product conventions that stay here because they are
+tied to the instrument vocabulary and assets.
+
 - Comments and docstrings always in English
 - Component names in PascalCase
 - User-facing text in six languages: English, Catalan/Valencian, Spanish, French, German, Danish (via react-i18next)
@@ -107,42 +114,13 @@ When adding a new language to Cèrcol:
 6. Add the new language code and label to the `LANGS` array in `src/components/LanguageToggle.jsx`.
 
 ## File structure
-src/
-  components/    # UI components (AdminRoute.jsx, CercolLogo.jsx, Layout.jsx, …)
-    ui/          # Reusable primitives: Button, Card, Badge, SectionLabel
-    report/      # Report-specific components: DimensionRow, FacetAccordion, …
-  pages/         # Route-level components (includes AdminDashboardPage.jsx)
-  context/       # React context providers (AuthContext.jsx, FeedbackContext.jsx)
-  hooks/         # Custom React hooks (useInstrumentKeyboard.js, useScaleLabels.js)
-  lib/           # Shared service clients (tokens.js, api.js)
-  design/        # tokens.js and global styles
-  data/          # test items, scoring keys (always cite source)
-  utils/         # scoring logic, logger.js, translationFeedback.js
-    __tests__/   # Vitest unit tests for all scoring utilities
-  locales/       # i18n translation files (en.json, ca.json, …) — 889 keys × 6 languages
-  assets/        # static assets: icons/animals/, illustrations/
 
-api/             # FastAPI backend (Python) — auto-deployed to Hetzner via GitHub Actions
-  main.py        # FastAPI app (routes, auth middleware, async DB helpers)
-  auth.py        # Auth routes: magic link, password (bcrypt direct), Google OAuth, JWT
-  scoring.py     # Pure Python scoring — mirrors src/utils/role-scoring.js (no external deps)
-  emails.py      # Transactional email via Resend SDK (6 languages, per-recipient)
-  requirements.txt  # Python deps — changing this does NOT auto-install on server (do manually)
-  tests/         # pytest test suite (13 scoring tests)
-  railway.toml   # Legacy Railway deployment config — NOT the active deployment (Hetzner is)
-
-.github/workflows/
-  ci.yml              # Build + lint + tests (all pushes and PRs)
-  deploy-frontend.yml # Auto-deploy frontend to GitHub Pages on push to main
-  deploy-backend.yml  # Auto-deploy backend to Hetzner on push to main
-
-docs/            # One-off reference documents (not living project docs)
-  email-signature.html   # Spark HTML email signature for hello@cercol.team
-  CLAUDE_EXCELLENCE.md   # Full codebase audit (April 2026) — 32 issues, 31 resolved
-
-scripts/         # Utility scripts for seeding/clearing test data
-sql/             # Standalone SQL seeds (facet tables)
-db/              # PostgreSQL migrations (001–012; was supabase/ before Phase 14.5)
+- `src/` - React SPA. `components/` plus `components/ui/` and `components/report/`; `pages/` (route-level, includes `AdminDashboardPage.jsx`); `context/`, `hooks/`, `lib/`, `design/`, `data/`, `utils/` (with `__tests__/`), `locales/` (six languages), `assets/`.
+- `api/` - FastAPI backend. Flat layout, six Python files. See `docs/architecture/backend.md` for the layout rationale and `docs/architecture/auth.md` for the auth surface.
+- `.github/workflows/` - `ci.yml`, `ci-docs.yml`, `deploy-frontend.yml`, `deploy-backend.yml`.
+- `docs/` - living docs (`policies/`, `architecture/`, `decisions/`, `post-mortems/`, `ops/`) plus `archive/` for decayed content.
+- `scripts/` - sitemap, prerender, deploy-api, docs-coherence and spec-path validators, blog article updaters.
+- `sql/`, `db/migrations/` - PostgreSQL seeds and migrations (001 through 015).
 
 ## SEO conventions
 
@@ -171,40 +149,16 @@ Full SEO and LLM visibility strategy: SEO.md
 - Scientific foundation and scoring: SCIENCE.md
 - Product vocabulary, instruments and copy: PRODUCT.md
 - SEO and LLM visibility strategy: SEO.md
+- Backend architecture: docs/architecture/backend.md
+- Auth architecture: docs/architecture/auth.md
+- Operations runbook: docs/ops/runbook.md
+- Code conventions and patterns: docs/policies/conventions.md
+- Architecture decisions: docs/decisions/
+- Post-mortems: docs/post-mortems/
 
 Read these files when the task requires it. CLAUDE.md is always read first.
 
 ## Patterns and pitfalls
 
-Hard-won lessons from the 16–17 May 2026 SEO + performance sprint. Read before prescribing performance fixes on this stack.
-
-### Performance investigation
-
-- When diagnosing LCP, read the LCP breakdown first (Time to First Byte / Resource load delay / Resource load duration / Element render delay). The names matter: a high "Element render delay" usually means render-blocking critical path resources (CSS, fonts), NOT React hydration flicker. Confusing the two leads to fixing the wrong thing.
-- With React hydration on a SPA, LCP has a structural floor of roughly 2–3 s regardless of how much you pre-render. Lighthouse re-marks the LCP when main-thread tasks settle, and React's hydration is a long task. Performance scores in the 75–85 range for a pre-rendered SPA on GitHub Pages are normal, not a bug.
-- When Search Console reports "Soft 404" or "Discovered: not indexed", use Search Console's live URL inspection as the source of truth. `curl -L` can disagree because of cache, followed redirects, or false-positive greps.
-
-### Pre-rendering this stack
-
-- Vite + Puppeteer + GitHub Pages: critical CSS extraction MUST run after Puppeteer captures each route's full DOM (post-prerender, Node API). A Vite plugin only sees the empty SPA shell — the critical CSS block it produces is empty or wrong.
-- When applying beasties to a fleet of HTMLs that share one external CSS file, always set `pruneSource: false`. The shared file must remain complete; pruning it would corrupt any HTML that wasn't processed first.
-- To eliminate the API dependency at first paint for pre-rendered routes, inject the data as a window global from the prerender script and have the component initialize state from `window.__VAR__` in `useState(() => ...)`. The pattern generalises beyond BetaBanner; any "fetch on mount" on a public pre-rendered route is a candidate.
-- The prerender server's SPA fallback MUST receive a frozen snapshot of the original Vite-built `dist/index.html`. If it reads the file from disk on every request, the file gets mutated by the first route processed and subsequent routes accumulate duplicate injections (e.g. 8 font preloads instead of 4).
-- Font preloads need explicit `crossorigin` even for same-origin fonts (browser spec); without it the preloaded font is discarded and re-fetched when CSS references it.
-- When using `@fontsource`, content-hashed woff2 filenames change every build. Extract them dynamically from the built CSS file (`dist/assets/index-*.css`) rather than hardcoding them.
-
-### Deploy pipeline
-
-- `.github/workflows/deploy-frontend.yml` must include `scripts/**` in its `on.push.paths` filter. Otherwise changes to `scripts/prerender.mjs` or `scripts/generate-sitemap.mjs` land on `main` without ever being deployed.
-- Use `npm install` (not `npm ci`) on CI workers. macOS-generated lockfiles omit linux-x64 optional native binaries (`@esbuild`, `@rollup`, `@tailwindcss/oxide`, `lightningcss`). `npm ci` on Ubuntu fails on the missing platform-specific entries.
-- Merge pattern: `gh pr checks $PR --watch && gh pr merge $PR --squash --delete-branch`. The `&&` ensures the merge only runs if checks passed; without it, `gh pr checks --watch` exits 0 on completion regardless of pass/fail and the merge happens anyway.
-
-### Workflow ordering
-
-For a "pre-rendered SPA performs poorly" investigation, the audit order that maximises signal-to-effort:
-1. **Pre-render audit**: what does Googlebot actually receive for each route type? If a route serves the empty SPA shell or an error fallback, fix that first — nothing else matters until the HTML is correct.
-2. **Critical path audit**: what is render-blocking at first paint (CSS, fonts, JS)?
-3. **LCP element audit**: which element does Lighthouse pick, and what is its render breakdown?
-4. **Bundle audit**: where is the dead weight in the eager chunks?
-
-Doing them in a different order tends to produce fixes that don't move the metric.
+Migrated to `docs/policies/conventions.md` (appendix). Read that
+before prescribing performance fixes or SEO changes on this stack.

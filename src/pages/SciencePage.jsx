@@ -87,6 +87,10 @@ export default function SciencePage() {
 
   return (
     <main className="py-12">
+        {/* Visually hidden but in DOM: gives crawlers and screen readers a
+            single H1 without disturbing the eyebrow-Section design used
+            for the visible headings on this page. */}
+        <h1 className="sr-only">{t('science.h1')}</h1>
 
         {/* ── Open instruments ──────────────────────────────────── */}
         <Section

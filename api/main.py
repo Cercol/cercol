@@ -1,5 +1,8 @@
 """
-Cèrcol API — FastAPI backend.
+Cèrcol API - FastAPI backend.
+
+# Spec: docs/architecture/backend.md
+
 
 Phase 4.1:  health check + CORS.
 Phase 4.2:  Supabase JWT auth via JWKS (ES256 / P-256 asymmetric).

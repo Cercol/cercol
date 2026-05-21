@@ -1,5 +1,8 @@
 """
-Cèrcol custom auth module — replaces Supabase Auth (GoTrue).
+Cèrcol custom auth module - replaces Supabase Auth (GoTrue).
+
+# Spec: docs/architecture/auth.md
+
 
 Endpoints
 ---------

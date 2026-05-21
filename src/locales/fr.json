@@ -322,7 +322,8 @@
       "description": "Le profil de rôles de votre équipe — équilibre, récit et angles morts partagés."
     },
     "footnote": "Code source ouvert · ",
-    "viewOnGitHub": "Voir sur GitHub"
+    "viewOnGitHub": "Voir sur GitHub",
+    "h1": "Cèrcol : évaluation open source de la personnalité d'équipe"
   },
   "newMoon": {
     "subtitle": "Cèrcol de Nouvelle Lune",
@@ -1232,7 +1233,8 @@
         }
       },
       "note": "Tant que des données de validation n'existent pas, traitez les résultats de rôles comme un point de départ pour la réflexion, et non comme un outil diagnostique. L'algorithme de notation et toutes les hypothèses sont entièrement documentés dans le dépôt open source."
-    }
+    },
+    "h1": "La science derrière Cèrcol"
   },
   "faq": {
     "title": "FAQ",

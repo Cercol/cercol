@@ -174,12 +174,49 @@ Full roadmap: [ROADMAP.md](./ROADMAP.md)
 
 ---
 
+## Development
+
+- Backend architecture: [docs/architecture/backend.md](docs/architecture/backend.md)
+- Auth architecture: [docs/architecture/auth.md](docs/architecture/auth.md)
+- Operations runbook: [docs/ops/runbook.md](docs/ops/runbook.md)
+- Code conventions: [docs/policies/conventions.md](docs/policies/conventions.md)
+- Sprint process: [docs/policies/sprint-process.md](docs/policies/sprint-process.md)
+- Architecture decisions (ADRs): [docs/decisions/](docs/decisions/)
+- Post-mortems: [docs/post-mortems/](docs/post-mortems/)
+
+Local setup:
+
+```
+git clone https://github.com/cercol/cercol.git
+cd cercol
+npm install
+npm run dev               # frontend on http://localhost:5173
+
+cd api
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env      # fill in values
+uvicorn main:app --reload --port 8090
+```
+
+Run tests:
+
+```
+npm test -- --run          # vitest
+cd api && python -m pytest -v   # pytest
+```
+
+---
+
 ## Contributing
 
 Contributions are welcome: bug reports, translation fixes, accessibility
 improvements, new language support. Open an issue before opening a pull request.
 
 [GitHub Issues](https://github.com/cercol/cercol/issues)
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the PR workflow and
+the checklist that PRs are reviewed against.
 
 ---
 

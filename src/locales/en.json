@@ -322,7 +322,8 @@
       "description": "Your team's role profile — balance, narrative, and shared blind spots."
     },
     "footnote": "Open source · ",
-    "viewOnGitHub": "View on GitHub"
+    "viewOnGitHub": "View on GitHub",
+    "h1": "Cèrcol: open-source team personality assessment"
   },
   "newMoon": {
     "subtitle": "New Moon Cèrcol",
@@ -1232,7 +1233,8 @@
         }
       },
       "note": "Until validation data exist, treat role results as a starting point for reflection, not a diagnostic tool. The scoring algorithm and all assumptions are fully documented in the open-source repository."
-    }
+    },
+    "h1": "The science behind Cèrcol"
   },
   "faq": {
     "title": "FAQ",

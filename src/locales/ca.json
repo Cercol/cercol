@@ -321,7 +321,8 @@
       "description": "El perfil de rols del teu equip — equilibri, narrativa i punts cecs compartits."
     },
     "footnote": "Codi obert · ",
-    "viewOnGitHub": "Veure a GitHub"
+    "viewOnGitHub": "Veure a GitHub",
+    "h1": "Cèrcol: avaluació de personalitat d'equips de codi obert"
   },
   "newMoon": {
     "subtitle": "Cèrcol de Lluna Nova",
@@ -1231,7 +1232,8 @@
         }
       },
       "note": "Fins que no existeixin dades de validació, tracta els resultats de rols com un punt de partida per a la reflexió, no com una eina diagnòstica. L'algoritme de puntuació i tots els supòsits estan completament documentats al repositori de codi obert."
-    }
+    },
+    "h1": "La ciència darrere de Cèrcol"
   },
   "faq": {
     "title": "Preguntes freqüents",
