@@ -29,9 +29,12 @@ jobs:
       - name: Lychee link check
         uses: lycheeverse/lychee-action@v2
         with:
+          # CI ships lychee v0.23 which does not support --exclude-mail
+          # (mail links are skipped by default anyway in this version).
+          # Offline mode would block external probes; here we run online
+          # but exclude the patterns that flap or are private.
           args: >-
             --no-progress
-            --exclude-mail
             --exclude '^https?://(?:www\.)?example\.(?:com|org|net)'
             --exclude '^https?://localhost'
             --exclude '^https?://127\.0\.0\.1'
