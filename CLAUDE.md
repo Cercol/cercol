@@ -14,12 +14,12 @@ All scoring algorithms and item sources are documented and citable.
 - React + Vite (frontend — GitHub Pages, cercol.team)
 - Tailwind CSS
 - FastAPI + uvicorn (backend — Hetzner VPS 188.245.60.20, api.cercol.team, systemd + Caddy) [Phase 4+]
-  - Caddy is shared with the topquaranta project on the same VPS. The `api.cercol.team` site block lives at `/etc/caddy/conf.d/cercol-api.caddy`, with its source of truth in this repo at `api/deploy/caddy/cercol-api.caddy`. Topquaranta's main `/etc/caddy/Caddyfile` imports the whole `conf.d/` directory so each project owns its own Caddy snippet.
+  - Caddy is shared with the topquaranta project on the same VPS. The `api.cercol.team` site block lives at `/etc/caddy/conf.d/cercol-api.caddy`, with its source of truth in this repo at `api/deploy/caddy/cercol-api.caddy`. Topquaranta's main `/etc/caddy/Caddyfile` imports the whole `conf.d/` directory so each project owns its own Caddy snippet. See `docs/decisions/0004-caddy-multi-tenant-conf-d.md` (Accepted).
 - PostgreSQL 14 (Hetzner — all data, auth tables included since Phase 15)
 - Auth: self-hosted (api/auth.py) — magic link (Resend), password (bcrypt direct, no passlib), Google OAuth (direct)
-  - JWT: HS256 / JWT_SECRET env var (replaces Supabase ES256/JWKS)
+  - JWT: HS256 / JWT_SECRET env var (replaces Supabase ES256/JWKS). See `docs/decisions/0003-jwt-hs256-self-hosted.md` (Accepted).
   - Tokens: access token in JS module variable, refresh token in localStorage `cercol_rt`
-- Supabase: NO LONGER USED (migrated fully to Hetzner in Phase 15)
+- Supabase: NO LONGER USED. See `docs/decisions/0001-no-supabase-asyncpg-direct.md` (Accepted).
 - All scoring happens client-side in JavaScript
 
 ## Deployment pipeline
