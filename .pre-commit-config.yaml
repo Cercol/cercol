@@ -1,0 +1,26 @@
+# Pre-commit hooks for Cèrcol.
+# Install: pip install pre-commit && pre-commit install
+# Run manually: pre-commit run --all-files
+#
+# Spec: docs/policies/conventions.md
+
+repos:
+  - repo: local
+    hooks:
+      - id: spec-paths
+        name: Validate `# Spec:` markers in *.py
+        entry: python3 scripts/check_spec_paths.py
+        language: system
+        pass_filenames: false
+        files: \.py$
+
+      - id: ruff
+        name: ruff (warnings only at this stage)
+        entry: ruff check
+        language: system
+        types: [python]
+        # Do not block commits on lint warnings while the baseline of
+        # nine pre-existing errors is being worked off. CI escalates
+        # this to a blocker once the baseline is zero.
+        verbose: true
+        require_serial: false
