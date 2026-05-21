@@ -37,10 +37,8 @@ without a prevention link is a regret, not a control.
 
 ## Index
 
-Filled at the end of FASE D.
-
-| Date | Title | Severity |
-|---|---|---|
-| 2026-04-XX | Caddy 30-day silent outage | High |
-| 2026-05-17 | Caddy outage recurrence | High |
-| 2026-05-20 | H1 tag missing regression | Medium |
+| Date | Title | Severity | Prevention |
+|---|---|---|---|
+| 2026-04-16 | [Caddy 30-day silent outage](2026-04-16-caddy-30day-silent-outage.md) | high | ADR 0004 + smoke test in deploy-backend.yml |
+| 2026-05-17 | [Caddy outage recurrence](2026-05-17-caddy-outage-recurrence.md) | high | ADR 0004 + `api/tests/test_infra.py` |
+| 2026-05-20 | [H1 tag missing regression](2026-05-20-h1-tag-missing-regression.md) | medium | `api/tests/test_seo.py` + SEO HTML structure rules in `docs/policies/conventions.md` |
