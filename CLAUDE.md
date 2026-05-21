@@ -129,7 +129,8 @@ api/             # FastAPI backend (Python) — auto-deployed to Hetzner via Git
   emails.py      # Transactional email via Resend SDK (6 languages, per-recipient)
   requirements.txt  # Python deps — changing this does NOT auto-install on server (do manually)
   tests/         # pytest test suite (13 scoring tests)
-  railway.toml   # Legacy Railway deployment config — NOT the active deployment (Hetzner is)
+  # Railway deployment was removed during the Hetzner migration; see
+  # docs/decisions/0002-railway-to-hetzner-systemd.md (Accepted).
 
 .github/workflows/
   ci.yml              # Build + lint + tests (all pushes and PRs)

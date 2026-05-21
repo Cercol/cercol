@@ -343,7 +343,13 @@ export default function BlogArticlePage() {
   const description = localise(post.description, urlLang)
   const rawContent  = post.content ? (post.content[urlLang] || post.content.en || '') : ''
   const showNotice  = urlLang !== 'en' && rawContent === (post.content?.en || '') && !post.content?.[urlLang]
-  const rawHtml     = rawContent ? marked.parse(rawContent) : ''
+  // Strip a leading `# Title` from the markdown body. The article title is
+  // already rendered as the single <h1> in the header below; without this,
+  // articles whose markdown opens with `# ...` ship two <h1> tags, which
+  // Bing flags as a structural issue. Only the FIRST heading is stripped
+  // and only if it sits at the very top (after optional whitespace).
+  const bodyContent = rawContent.replace(/^\s*#\s+[^\n]+\n+/, '')
+  const rawHtml     = bodyContent ? marked.parse(bodyContent) : ''
   const htmlContent = urlLang === 'en'
     ? rawHtml
     : rawHtml.replace(/href="\/blog\//g, `href="/${urlLang}/blog/`)
