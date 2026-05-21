@@ -166,6 +166,10 @@ export default function HomePage() {
       className="min-h-[calc(100vh-4rem)] flex flex-col relative overflow-hidden"
       style={{ backgroundColor: colors.blue }}
     >
+      {/* Visually hidden but in DOM: gives crawlers and screen readers a
+          single H1 without disturbing the icon-grid landing design. */}
+      <h1 className="sr-only">{t('home.h1')}</h1>
+
       {/* Decorative animal icons — randomised on each load, behind cards */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         {wallpaper.map(({ id, role, style }) => (

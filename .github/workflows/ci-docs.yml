@@ -1,0 +1,114 @@
+name: CI docs
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  markdownlint:
+    name: Markdown lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DavidAnson/markdownlint-cli2-action@v17
+        with:
+          globs: |
+            **/*.md
+            !node_modules/**
+            !dist/**
+            !.venv/**
+            !api/.venv/**
+
+  link-check:
+    name: Link check (lychee)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lychee link check
+        uses: lycheeverse/lychee-action@v2
+        with:
+          # CI ships lychee v0.23 which does not support --exclude-mail
+          # (mail links are skipped by default anyway in this version).
+          # Excludes:
+          # - example.com / localhost / 127.0.0.1: reserved or local.
+          # - porkbun.com/api: private auth surface, no public docs.
+          # - doi.org: stable identifiers but the publishers do
+          #   server-side bot detection; lychee from a CI runner
+          #   sees 403 / 404 even when the DOI resolves fine in a
+          #   browser. Excluded entirely; correctness of DOIs is
+          #   checked by humans when adding new references.
+          # - ipip.ori.org: returns intermittent "Connection reset
+          #   by peer" to lychee. Authoritative host for IPIP items
+          #   so the link is correct; flap suppressed here.
+          # Accept 403 as a valid response for everything else so a
+          # bot-detected publisher does not turn the gate red.
+          args: >-
+            --no-progress
+            --accept '200,206,301,302,304,403'
+            --exclude '^https?://(?:www\.)?example\.(?:com|org|net)'
+            --exclude '^https?://localhost'
+            --exclude '^https?://127\.0\.0\.1'
+            --exclude 'porkbun\.com/api'
+            --exclude 'doi\.org'
+            --exclude 'ipip\.ori\.org'
+            './**/*.md'
+          fail: true
+
+  spec-paths:
+    name: Validate Spec markers
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run spec validator
+        run: python3 scripts/check_spec_paths.py
+
+  docs-coherence:
+    name: Docs vs code coherence (soft)
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Collect changed files
+        id: changed
+        run: |
+          base=${{ github.event.pull_request.base.sha }}
+          head=${{ github.event.pull_request.head.sha }}
+          git diff --name-only "$base" "$head" > /tmp/changed.txt
+          echo "files<<EOF" >> $GITHUB_OUTPUT
+          cat /tmp/changed.txt >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+      - name: Run coherence check
+        id: check
+        env:
+          CHANGED_FILES: ${{ steps.changed.outputs.files }}
+        run: |
+          python3 scripts/check_docs_coherence.py | tee /tmp/coherence.txt
+          if grep -q "^docs-coherence warnings:" /tmp/coherence.txt; then
+            echo "needs_label=true" >> $GITHUB_OUTPUT
+          else
+            echo "needs_label=false" >> $GITHUB_OUTPUT
+          fi
+      - name: Label PR when warnings emitted
+        if: steps.check.outputs.needs_label == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              labels: ['needs-docs-review'],
+            });

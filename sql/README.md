@@ -1,1 +1,1 @@
-Manual SQL scripts — run once in the Supabase SQL editor (not managed by `supabase/migrations/`).
+Manual SQL scripts. Run once in the PostgreSQL database (psql or any client). Used for ad-hoc admin tasks not managed by migrations in `db/migrations/`.

@@ -322,7 +322,8 @@
       "description": "Dit teams rollerprofil — balance, fortælling og fælles blinde vinkler."
     },
     "footnote": "Open source · ",
-    "viewOnGitHub": "Se på GitHub"
+    "viewOnGitHub": "Se på GitHub",
+    "h1": "Cèrcol: open source-personlighedsvurdering for teams"
   },
   "newMoon": {
     "subtitle": "Nymåne Cèrcol",
@@ -1232,7 +1233,8 @@
         }
       },
       "note": "Indtil der eksisterer valideringsdata, bør rolleresultater behandles som et udgangspunkt for refleksion, ikke et diagnostisk værktøj. Scoringsalgoritmen og alle antagelser er fuldt dokumenteret i open source-repositoriet."
-    }
+    },
+    "h1": "Videnskaben bag Cèrcol"
   },
   "faq": {
     "title": "FAQ",

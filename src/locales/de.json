@@ -322,7 +322,8 @@
       "description": "Das Rollenprofil Ihres Teams — Balance, Narrativ und gemeinsame blinde Flecken."
     },
     "footnote": "Open Source · ",
-    "viewOnGitHub": "Auf GitHub ansehen"
+    "viewOnGitHub": "Auf GitHub ansehen",
+    "h1": "Cèrcol: Open-Source-Persönlichkeitsbewertung für Teams"
   },
   "newMoon": {
     "subtitle": "Cèrcol des Neumondes",
@@ -1232,7 +1233,8 @@
         }
       },
       "note": "Solange keine Validierungsdaten vorliegen, sollten Rollenergebnisse als Ausgangspunkt für Reflexion behandelt werden, nicht als diagnostisches Instrument. Der Bewertungsalgorithmus und alle Annahmen sind vollständig im Open-Source-Repository dokumentiert."
-    }
+    },
+    "h1": "Die Wissenschaft hinter Cèrcol"
   },
   "faq": {
     "title": "FAQ",

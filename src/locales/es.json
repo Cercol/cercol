@@ -322,7 +322,8 @@
       "description": "El perfil de roles de tu equipo — equilibrio, narrativa y puntos ciegos compartidos."
     },
     "footnote": "Código abierto · ",
-    "viewOnGitHub": "Ver en GitHub"
+    "viewOnGitHub": "Ver en GitHub",
+    "h1": "Cèrcol: evaluación de personalidad de equipos de código abierto"
   },
   "newMoon": {
     "subtitle": "Cèrcol de Luna Nueva",
@@ -1232,7 +1233,8 @@
         }
       },
       "note": "Hasta que no existan datos de validación, trata los resultados de roles como un punto de partida para la reflexión, no como una herramienta diagnóstica. El algoritmo de puntuación y todos los supuestos están completamente documentados en el repositorio de código abierto."
-    }
+    },
+    "h1": "La ciencia detrás de Cèrcol"
   },
   "faq": {
     "title": "FAQ",
