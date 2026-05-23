@@ -119,6 +119,21 @@ function readingTimeMins(text) {
   return Math.max(1, Math.ceil(wordCount / 200))
 }
 
+/**
+ * Read window.__ARTICLE__ if its slug matches the requested one.
+ * Exposed for unit testing (see __tests__/getPrerenderedArticle.test.js).
+ *
+ * Returns the article object or null. Tolerates SSR (no window),
+ * absent global, and slug mismatch (client-side navigation between
+ * two prerendered articles).
+ */
+export function getPrerenderedArticle(slug, win = typeof window !== 'undefined' ? window : undefined) {
+  if (!win) return null
+  const a = win.__ARTICLE__
+  if (a && a.slug === slug) return a
+  return null
+}
+
 /** Parse ## and ### headings from markdown content for ToC. */
 function extractHeadings(markdown) {
   if (!markdown) return []
@@ -157,8 +172,19 @@ export default function BlogArticlePage() {
   const BLOG_LANG_PREFIXES = ['ca', 'es', 'fr', 'de', 'da']
   const urlLang = BLOG_LANG_PREFIXES.find(l => pathname.startsWith(`/${l}/`)) || 'en'
 
-  const [post,         setPost]         = useState(null)
-  const [loading,      setLoading]      = useState(true)
+  // Read the article from window.__ARTICLE__ injected by prerender.mjs
+  // when the slug matches. This eliminates the API dependency at first
+  // paint for prerendered routes, which was the root cause of soft 404s
+  // in Search Console: a flaky API call during Googlebot's render
+  // surfaced "Could not load article" and that fallback got indexed.
+  //
+  // The slug-match guard handles the case where the user navigates
+  // client-side from one article to another: the previous article's
+  // global is stale, so we ignore it and fall through to the fetch.
+  const initialPost = getPrerenderedArticle(slug)
+
+  const [post,         setPost]         = useState(initialPost)
+  const [loading,      setLoading]      = useState(initialPost === null)
   const [error,        setError]        = useState(null)
   const [relatedPosts, setRelatedPosts] = useState([])
   const [tocOpen,      setTocOpen]      = useState(false)
@@ -171,8 +197,20 @@ export default function BlogArticlePage() {
     }
   }, [urlLang])
 
-  // Fetch the main article
+  // Refresh the article from the API. Skipped when window.__ARTICLE__
+  // already provided the content for this slug (direct landing on a
+  // prerendered route), so the page never depends on a successful
+  // fetch to show its body. A late fetch failure is silent: we keep
+  // whatever content is already on screen rather than blanking it
+  // out with an error.
   useEffect(() => {
+    // Direct landing on a prerendered route: the global already
+    // matched the slug. Skip the fetch entirely.
+    if (typeof window !== 'undefined' && window.__ARTICLE__?.slug === slug) {
+      // Still record the view for analytics.
+      trackBlogView(slug).catch(() => {})
+      return
+    }
     setLoading(true)
     setError(null)
     getBlogPost(slug)
@@ -183,9 +221,16 @@ export default function BlogArticlePage() {
       .catch(err => {
         if (err.message?.includes('404')) {
           navigate('/blog', { replace: true })
-        } else {
-          setError(err.message)
+          return
         }
+        // Only surface the error if we have no content to show.
+        // If `post` is already populated (e.g. from prior render),
+        // the user keeps reading; the failed refresh is invisible.
+        setPost(prev => {
+          if (prev) return prev
+          setError(err.message)
+          return null
+        })
       })
       .finally(() => setLoading(false))
   }, [slug, navigate])
