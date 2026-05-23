@@ -180,13 +180,15 @@ class TestStateAndIteration:
         shutil.copy(FIXTURE, log_path)
         state_path = tmp_path / "state.json"
 
-        list(crawl_log_parser.iter_new_lines(log_path, state_path))
-        # Simulate rotation: remove and recreate the file (new inode).
-        log_path.unlink()
-        shutil.copy(FIXTURE, log_path)
+        # Force the rotation path deterministically by writing a state
+        # file that claims a previous-run inode that cannot match the
+        # current file (unlink + immediate recreate can reuse the
+        # same inode on ext4, so this is portable).
+        crawl_log_parser.write_state(state_path, offset=10**12, inode=10**18)
 
         lines = list(crawl_log_parser.iter_new_lines(log_path, state_path))
-        # New inode triggers full re-read.
+        # Mismatch between saved (offset, inode) and current file
+        # forces a full re-read from byte 0.
         assert len(lines) == 6
 
 
