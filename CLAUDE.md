@@ -91,6 +91,15 @@ GitHub Actions will auto-deploy whatever changed (frontend, backend, or both).
 Do NOT run `npm run deploy` manually — the Action does it.
 This applies to every phase, without exception.
 
+After every `gh pr merge`, run `git checkout main && git pull` (or
+`git fetch origin main` followed by branching off `origin/main`) before
+starting any next branch. The squash-merge collapses your local
+feature commits into a single new commit on `main`; without the sync,
+the working tree of the next branch can be missing files that already
+live on the remote `main` (this caused real "where did
+public/og-image.png go?" confusion in Phase 17.6.x). Treat the sync as
+non-optional.
+
 ## i18n
 User-facing strings live in src/locales/{lang}.json (react-i18next).
 One file per language, key-value format.
