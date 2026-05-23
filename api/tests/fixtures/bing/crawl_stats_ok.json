@@ -1,0 +1,16 @@
+{
+    "d": [
+        {
+            "Date": "/Date(1716163200000)/",
+            "CrawledPages": 312,
+            "CrawlErrors": 2,
+            "Blocked": 5
+        },
+        {
+            "Date": "/Date(1716249600000)/",
+            "CrawledPages": 298,
+            "CrawlErrors": 0,
+            "Blocked": 5
+        }
+    ]
+}
