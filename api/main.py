@@ -29,7 +29,7 @@ import asyncpg
 import stripe
 from fastapi import Depends, FastAPI, HTTPException, Query, Request, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import JWTError, jwt
 from pydantic import BaseModel, Field, model_validator
@@ -207,6 +207,30 @@ app = FastAPI(
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
+
+# Global 500 handler that preserves CORS headers.
+# Starlette's CORSMiddleware adds CORS headers on responses produced
+# by the inner app, but when an unhandled exception bubbles up past
+# the router the ServerErrorMiddleware emits a bare "Internal Server
+# Error" without going through the CORS layer. The frontend then
+# sees "Failed to fetch" instead of the actual HTTP 500. This handler
+# turns any uncaught exception into a normal JSONResponse, which the
+# CORS middleware does decorate.
+async def _unhandled_exception_handler(request: Request, exc: Exception) -> JSONResponse:
+    import logging
+    logging.getLogger("cercol.api").exception("Unhandled exception in %s", request.url.path)
+    origin = request.headers.get("origin", "")
+    headers: dict[str, str] = {}
+    if origin in ALLOWED_ORIGINS:
+        headers["Access-Control-Allow-Origin"] = origin
+        headers["Access-Control-Allow-Credentials"] = "true"
+        headers["Vary"] = "Origin"
+    return JSONResponse(
+        status_code=500,
+        content={"detail": "Internal Server Error"},
+        headers=headers,
+    )
+
 # HTTPS-only in production; localhost allowed for development
 ALLOWED_ORIGINS = [
     "https://cercol.team",
@@ -221,6 +245,13 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Register the unhandled-exception handler AFTER CORS middleware so its
+# response goes through the CORS layer on the way out. Register it for
+# the base `Exception` class so it catches everything else that does
+# not already have a specific handler (HTTPException is handled by
+# FastAPI itself with the right CORS behaviour already).
+app.add_exception_handler(Exception, _unhandled_exception_handler)
 
 # Auth routes (magic link, password, Google OAuth, refresh, signout)
 app.include_router(auth_module.router)

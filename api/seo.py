@@ -26,7 +26,8 @@ import time
 from collections.abc import Awaitable, Callable
 from typing import Any
 
-from fastapi import APIRouter, Depends, HTTPException, Query, Request
+from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 log = logging.getLogger("cercol.seo")
 
@@ -49,18 +50,47 @@ _bq_lock = asyncio.Lock()
 # api/deps.py and remove these duplicates from main.py, blog.py, seo.py.
 # ---------------------------------------------------------------------------
 
-async def _require_admin(request: Request) -> dict:
-    # Import here to avoid the import-time circular dependency on
-    # api/main.py.
-    from main import get_current_user, _pool
+_bearer = HTTPBearer(auto_error=False)
 
-    user = await get_current_user(request)
-    user_id = user["sub"]
+
+async def _require_admin(
+    credentials: HTTPAuthorizationCredentials | None = Depends(_bearer),
+) -> dict:
+    """Validate JWT bearer token and require is_admin = true.
+
+    Declared as a regular FastAPI dependency so FastAPI itself solves
+    `credentials` via the HTTPBearer scheme. An earlier version called
+    `get_current_user(request)` directly, which fails with
+    `AttributeError: 'Request' object has no attribute 'credentials'`
+    because that function expects the HTTPAuthorizationCredentials
+    object, not the raw Request.
+    """
+    if credentials is None:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+
+    # Lazy imports to dodge the circular dependency on api/main.py.
+    from main import _JWT_SECRET, _JWT_ALGORITHM, _JWT_AUDIENCE, _pool
+    from jose import jwt, JWTError
+
+    try:
+        payload = jwt.decode(
+            credentials.credentials,
+            _JWT_SECRET,
+            algorithms=[_JWT_ALGORITHM],
+            audience=_JWT_AUDIENCE,
+        )
+    except JWTError:
+        raise HTTPException(status_code=401, detail="Invalid token")
+
+    user_id = payload.get("sub")
+    if not user_id:
+        raise HTTPException(status_code=401, detail="Invalid token")
+
     async with _pool.acquire() as conn:
         row = await conn.fetchrow("SELECT is_admin FROM profiles WHERE id = $1", user_id)
     if not row or not row["is_admin"]:
         raise HTTPException(status_code=403, detail="Forbidden")
-    return user
+    return payload
 
 
 # ---------------------------------------------------------------------------

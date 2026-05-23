@@ -274,6 +274,51 @@ def test_lifecycle_returns_per_day_rows(monkeypatch):
 # Cache
 # ---------------------------------------------------------------------------
 
+def test_require_admin_returns_401_without_credentials():
+    """Regression: an earlier version of _require_admin called
+    get_current_user(request) which raised AttributeError, surfacing
+    as a 500 (FastAPI propagated the bare exception). The new
+    implementation declares credentials as a FastAPI dependency, so
+    when credentials are absent it raises HTTPException(401) cleanly.
+    """
+    async def call():
+        return await seo._require_admin(credentials=None)
+
+    import pytest as _pt
+    with _pt.raises(Exception) as exc_info:
+        _run(call())
+    # FastAPI HTTPException with 401.
+    assert getattr(exc_info.value, "status_code", None) == 401
+
+
+def test_notfound_from_bigquery_returns_data_pending(monkeypatch):
+    """When a BigQuery query raises (e.g. table not yet created by GSC
+    bulk export), `_query` must return [] and the endpoint must respond
+    with a normal data_pending payload, NOT propagate a 500.
+    """
+    class RaisingBQ:
+        def __init__(self):
+            self.calls = 0
+        def query(self, sql, job_config=None):
+            self.calls += 1
+            raise RuntimeError("404 Not found: Table cercol.searchconsole.searchdata_url_impression")
+    bq = RaisingBQ()
+    async def _get_fake():
+        return bq
+    monkeypatch.setattr(seo, "_get_bq", _get_fake)
+
+    async def call():
+        return await seo.health(_={})
+
+    out = _run(call())
+    # Endpoint completed normally.
+    assert isinstance(out, dict)
+    # data_pending flag is set because all queries returned [].
+    assert out.get("data_pending") is True
+    # The BigQuery client was actually invoked (sanity).
+    assert bq.calls >= 1
+
+
 def test_cache_short_circuits_second_call(monkeypatch):
     bq = _install_fake_bq(monkeypatch, [
         ("bing_query_stats", [{"impressions": 1, "clicks": 0}]),
