@@ -23,7 +23,7 @@ from jobs import crawl_log_parser  # noqa: E402
 from jobs._config import JobConfig  # noqa: E402
 
 
-FIXTURE = Path(__file__).parent / "fixtures" / "crawl" / "sample_access.log"
+FIXTURE = Path(__file__).parent / "fixtures" / "crawl" / "sample_access.jsonl"
 
 
 def _make_cfg() -> JobConfig:
