@@ -105,6 +105,64 @@ async function fetchBlogArticles() {
 }
 
 /**
+ * Fetch the full content of every article in parallel and build a
+ * Map<slug, article>. Used by renderOneRoute to inject
+ * window.__ARTICLE__ for each per-article render, so BlogArticlePage
+ * does not need to re-fetch from the API after hydration. The
+ * re-fetch was the soft-404 source: a slow / flapping API during
+ * Googlebot's render would surface "Could not load article" and
+ * Google would index that fallback as the page content.
+ *
+ * THROWS on failure for the same reason fetchBlogArticles does:
+ * baking the error fallback into 624 prerendered HTMLs is much
+ * worse than failing the build.
+ */
+async function fetchAllArticleContent(slugs) {
+  const concurrency = 8
+  const queue = [...slugs]
+  const out = new Map()
+  let inflight = 0
+  let failures = 0
+
+  async function worker() {
+    while (queue.length > 0) {
+      const slug = queue.shift()
+      if (!slug) break
+      inflight++
+      try {
+        const res = await globalThis.fetch(
+          `https://api.cercol.team/blog/${encodeURIComponent(slug)}`,
+          { signal: AbortSignal.timeout(15000) },
+        )
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`)
+        }
+        const article = await res.json()
+        out.set(slug, article)
+      } catch (err) {
+        failures++
+        console.warn(`[prerender]   ! article fetch failed for ${slug}: ${err.message}`)
+      } finally {
+        inflight--
+      }
+    }
+  }
+
+  const workers = Array.from(
+    { length: Math.min(concurrency, slugs.length) },
+    () => worker(),
+  )
+  await Promise.all(workers)
+
+  console.log(`[prerender] fetched ${out.size}/${slugs.length} articles for window.__ARTICLE__`)
+  if (failures > 0 && out.size < slugs.length / 2) {
+    throw new Error(`Article content fetch failed for too many slugs (${failures})`)
+  }
+  return out
+}
+
+
+/**
  * Fetch the beta-launch status. Falls back silently — the banner is
  * best-effort and a failure here must not block the build.
  */
@@ -292,7 +350,7 @@ function startServer(originalIndexHtml) {
 // Render a single route — shared by sequential and concurrent workers
 // ---------------------------------------------------------------------------
 
-async function renderOneRoute(browser, { route, lang }, { articles, betaStatus, beasties, fontPreloadTags }) {
+async function renderOneRoute(browser, { route, lang }, { articles, articlesBySlug, betaStatus, beasties, fontPreloadTags }) {
   const url = `${BASE_URL}${route}`
   const page = await browser.newPage()
 
@@ -341,9 +399,29 @@ async function renderOneRoute(browser, { route, lang }, { articles, betaStatus, 
   // preserves them in the final <head> (it does not strip existing preloads).
   //
   // window globals let React read API data synchronously on first render:
-  //   window.__BLOG_ARTICLES__ — full article list for BlogIndexPage
-  //   window.__BETA__          — beta launch status for BetaBanner
-  const globalsScript = `<script>window.__BETA__=${JSON.stringify(betaStatus)};window.__BLOG_ARTICLES__=${JSON.stringify(articles)};</script>`
+  //   window.__BLOG_ARTICLES__ - full article list for BlogIndexPage
+  //   window.__BETA__          - beta launch status for BetaBanner
+  //   window.__ARTICLE__       - the full article (with content) for
+  //                              BlogArticlePage on this exact route, so
+  //                              the component does not need to re-fetch
+  //                              after hydration. Only emitted on
+  //                              /blog/<slug> and /<lang>/blog/<slug>
+  //                              routes; other routes do not carry a
+  //                              per-route article payload.
+  let articleScript = ''
+  const blogMatch = route.match(/^\/(?:([a-z]{2})\/)?blog\/([^/]+)\/?$/)
+  if (blogMatch) {
+    const slug = blogMatch[2]
+    // The blog INDEX (`/blog`, `/<lang>/blog`) is excluded because the
+    // regex requires a slug segment after `/blog/`.
+    const article = articlesBySlug ? articlesBySlug.get(slug) : undefined
+    if (article) {
+      articleScript = `window.__ARTICLE__=${JSON.stringify(article)};`
+    } else {
+      console.warn(`[prerender]   ! no __ARTICLE__ available for slug ${slug} on ${route}`)
+    }
+  }
+  const globalsScript = `<script>window.__BETA__=${JSON.stringify(betaStatus)};window.__BLOG_ARTICLES__=${JSON.stringify(articles)};${articleScript}</script>`
   const headInjections = `${fontPreloadTags}\n  ${globalsScript}`
   const htmlWithInjections = html.replace('</head>', `${headInjections}\n</head>`)
 
@@ -409,6 +487,11 @@ async function main() {
   ])
   const slugs = articles.map(a => a.slug)
 
+  // Pull the full content for each article so each per-article render
+  // can inject window.__ARTICLE__ and BlogArticlePage does not need to
+  // re-fetch after hydration. Phase 17.6.x soft-404 root cause.
+  const articlesBySlug = await fetchAllArticleContent(slugs)
+
   // Extract content-hashed font URLs from the built CSS bundle.
   // Must run after `vite build` has emitted dist/assets/index-*.css.
   const fontUrls = extractCriticalFontUrls(DIST_DIR)
@@ -427,7 +510,7 @@ async function main() {
     logLevel: 'warn',
   })
 
-  const globals = { articles, betaStatus, beasties, fontPreloadTags }
+  const globals = { articles, articlesBySlug, betaStatus, beasties, fontPreloadTags }
 
   // Snapshot the Vite-built index.html BEFORE any route overwrites it.
   // The server uses this frozen copy as the SPA shell so Puppeteer always
