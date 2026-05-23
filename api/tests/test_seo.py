@@ -41,6 +41,8 @@ SAMPLED_ROUTES = [
 # regex; the prerendered HTML always emits a closing tag if it emits an
 # opening one, so counting opens is enough to detect duplicates.
 H1_OPEN = re.compile(r"<h1[\s>]", re.IGNORECASE)
+META_DESC = re.compile(r'<meta\b[^>]*\bname="description"', re.IGNORECASE)
+LINK_CANON = re.compile(r'<link\b[^>]*\brel="canonical"', re.IGNORECASE)
 
 
 def _html_path(route: str) -> Path:
@@ -70,5 +72,36 @@ def test_route_has_exactly_one_h1(route: str) -> None:
     count = len(H1_OPEN.findall(html))
     assert count == 1, (
         f"route /{route or ''}/ has {count} <h1> tags in prerendered HTML; "
+        f"SEO requires exactly one. File: {path}"
+    )
+
+
+@pytest.mark.skipif(not _has_prerendered(), reason="dist/ not prerendered; run `npm run build:full` first")
+@pytest.mark.parametrize("route", SAMPLED_ROUTES)
+def test_route_has_exactly_one_meta_description(route: str) -> None:
+    """A page shipping two <meta name="description"> tags lets Google
+    pick the wrong one. Regression source:
+    docs/post-mortems/2026-05-23-duplicate-meta-description.md (TBD).
+    """
+    path = _html_path(route)
+    html = path.read_text(encoding="utf-8")
+    count = len(META_DESC.findall(html))
+    assert count == 1, (
+        f"route /{route or ''}/ has {count} <meta name=\"description\"> tags; "
+        f"SEO requires exactly one. File: {path}"
+    )
+
+
+@pytest.mark.skipif(not _has_prerendered(), reason="dist/ not prerendered; run `npm run build:full` first")
+@pytest.mark.parametrize("route", SAMPLED_ROUTES)
+def test_route_has_exactly_one_canonical(route: str) -> None:
+    """Two canonicals are worse than none; Google may treat them as a
+    conflicting signal and ignore the one we actually want.
+    """
+    path = _html_path(route)
+    html = path.read_text(encoding="utf-8")
+    count = len(LINK_CANON.findall(html))
+    assert count == 1, (
+        f"route /{route or ''}/ has {count} <link rel=\"canonical\"> tags; "
         f"SEO requires exactly one. File: {path}"
     )
