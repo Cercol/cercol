@@ -8,7 +8,7 @@ Group=cercol
 WorkingDirectory=/home/cercol/api/api
 EnvironmentFile=/home/cercol/.env
 Environment=PYTHONPATH=/home/cercol/api/api
-ExecStart=/home/cercol/api/api/.venv/bin/python -m mcp.server
+ExecStart=/home/cercol/api/api/.venv/bin/python -m seo_mcp.server
 Restart=always
 RestartSec=5
 

@@ -15,7 +15,7 @@ Tools (read-only):
 Run as:
     cd /home/cercol/api/api
     set -a && . /home/cercol/.env && set +a
-    /home/cercol/api/api/.venv/bin/python -m mcp.server
+    /home/cercol/api/api/.venv/bin/python -m seo_mcp.server
 
 Authentication: bearer header `Authorization: Bearer <MCP_API_KEY>`.
 """

@@ -1,5 +1,5 @@
 """
-Tests for api/mcp/server.py SQL safety and tool functions.
+Tests for api/seo_mcp/server.py SQL safety and tool functions.
 
 # Spec: docs/architecture/seo-pipeline.md
 
@@ -17,7 +17,7 @@ import pytest
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
-from mcp import server  # noqa: E402
+from seo_mcp import server  # noqa: E402
 
 
 # ---------------------------------------------------------------------------
