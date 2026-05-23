@@ -1,0 +1,45 @@
+{
+    "captchaResult": "CAPTCHA_NOT_NEEDED",
+    "kind": "pagespeedonline#result",
+    "id": "https://cercol.team/",
+    "loadingExperience": {
+        "metrics": {
+            "FIRST_INPUT_DELAY_MS": {
+                "percentile": 18,
+                "category": "FAST"
+            },
+            "INTERACTION_TO_NEXT_PAINT": {
+                "percentile": 120,
+                "category": "FAST"
+            },
+            "LARGEST_CONTENTFUL_PAINT_MS": {
+                "percentile": 2400,
+                "category": "FAST"
+            }
+        }
+    },
+    "lighthouseResult": {
+        "audits": {
+            "largest-contentful-paint": {
+                "numericValue": 2350.0,
+                "displayValue": "2.4 s"
+            },
+            "first-contentful-paint": {
+                "numericValue": 1450.0,
+                "displayValue": "1.5 s"
+            },
+            "cumulative-layout-shift": {
+                "numericValue": 0.03
+            },
+            "server-response-time": {
+                "numericValue": 220.0
+            }
+        },
+        "categories": {
+            "performance":    { "score": 0.82 },
+            "accessibility":  { "score": 0.97 },
+            "seo":            { "score": 1.0 },
+            "best-practices": { "score": 0.92 }
+        }
+    }
+}
