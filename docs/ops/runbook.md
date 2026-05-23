@@ -114,6 +114,68 @@ services that ask for a TXT record:
 
 The Porkbun API docs are at https://porkbun.com/api/json/v3/documentation .
 
+## SEO ingest jobs
+
+Three cron jobs ingest external SEO signals into BigQuery (see
+`docs/architecture/seo-pipeline.md` for the full architecture and
+ADRs 0005 to 0007 for the decisions). The Phase 17.6.1a PR shipped
+the code; Phase 17.6.1b deploys it. Until 17.6.1b, the crons are
+NOT installed on the server.
+
+### One-time server setup (Phase 17.6.1b)
+
+```bash
+# 1. Service account key (download from GCP console first; never
+#    commit). Mode 0400, owner cercol:cercol.
+sudo mkdir -p /home/cercol/.secrets
+sudo install -m 0400 -o cercol -g cercol /path/to/cercol-sa.json /home/cercol/.secrets/cercol-sa.json
+
+# 2. Add SEO env vars to /home/cercol/.env (BING_WMT_API_KEY,
+#    PAGESPEED_API_KEY, GOOGLE_APPLICATION_CREDENTIALS).
+sudo -u cercol nano /home/cercol/.env
+
+# 3. State directory for the crawl parser.
+sudo mkdir -p /home/cercol/.state && sudo chown cercol:cercol /home/cercol/.state
+
+# 4. Allow the cercol user to read Caddy access logs (owned caddy:adm 0640).
+sudo usermod -aG adm cercol
+# cercol must log out and back in for the group to apply.
+
+# 5. Apply BigQuery DDL once.
+sudo -u cercol /home/cercol/api/api/.venv/bin/python \
+    /home/cercol/api/scripts/apply_bigquery_ddl.py --apply
+
+# 6. Install the cron files (see api/deploy/cron/README.md for the
+#    full block).
+```
+
+### Token identity (provisional)
+
+The service account `cercol-seo-ingest@cercol.iam.gserviceaccount.com`
+is owned by Miquel's personal Google account because creating a
+Workspace account on `hello@cercol.team` is currently blocked at
+Gmail's phone-verification step. This is conscious technical debt.
+TODO: migrate the GCP project ownership from the personal account
+to a Workspace tenant rooted at `hello@cercol.team` once the phone
+block is resolved. Tracked as Phase 17.7 in `ROADMAP.md`.
+
+### Verifying a fresh deploy
+
+```bash
+# After installing the crons, force one run of each:
+sudo -u cercol /home/cercol/api/api/.venv/bin/python -m jobs.crawl_log_parser
+sudo -u cercol /home/cercol/api/api/.venv/bin/python -m jobs.bing_ingest
+sudo -u cercol /home/cercol/api/api/.venv/bin/python -m jobs.pagespeed_ingest
+
+# Check the BigQuery tables (from anywhere with bq cli + creds):
+bq query --nouse_legacy_sql \
+    'SELECT COUNT(*) FROM `cercol.cercol_seo.crawl_logs` WHERE ts_date = CURRENT_DATE()'
+bq query --nouse_legacy_sql \
+    'SELECT COUNT(*) FROM `cercol.cercol_seo.bing_query_stats`'
+bq query --nouse_legacy_sql \
+    'SELECT COUNT(*) FROM `cercol.cercol_seo.pagespeed_runs` WHERE run_date = CURRENT_DATE()'
+```
+
 ## Caddy logs and observability
 
 - Caddy logs to `/var/log/caddy/cercol_api_access.log` (rotated by

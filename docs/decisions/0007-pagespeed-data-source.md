@@ -2,8 +2,8 @@
 
 - **Number**: 0007
 - **Title**: PageSpeed data source for Core Web Vitals
-- **Status**: Proposed
-- **Date**: 2026-05-21
+- **Status**: Accepted
+- **Date**: 2026-05-22
 
 ## Context
 
