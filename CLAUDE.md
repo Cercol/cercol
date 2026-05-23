@@ -91,14 +91,26 @@ GitHub Actions will auto-deploy whatever changed (frontend, backend, or both).
 Do NOT run `npm run deploy` manually — the Action does it.
 This applies to every phase, without exception.
 
-After every `gh pr merge`, run `git checkout main && git pull` (or
-`git fetch origin main` followed by branching off `origin/main`) before
-starting any next branch. The squash-merge collapses your local
-feature commits into a single new commit on `main`; without the sync,
-the working tree of the next branch can be missing files that already
-live on the remote `main` (this caused real "where did
-public/og-image.png go?" confusion in Phase 17.6.x). Treat the sync as
-non-optional.
+Work always from the single canonical clone at
+`/Users/miquelmatoses/Claude/cercol`. Do NOT create `git worktree`
+checkouts of feature branches; they fragment the working tree across
+directories and make the squash-merge sync invisible to the operator
+who is staring at the canonical clone. The user looks at this path
+and expects files merged on `main` to appear here. When a sub-agent
+or sprint operates inside a worktree the operator does not see, every
+file added on `main` is "missing" from their point of view; this
+caused real "where did public/og-image.png go?" confusion in Phase
+17.6.x.
+
+After every `gh pr merge`, in the canonical clone, run:
+
+```
+git checkout main && git pull
+```
+
+Treat the sync as non-optional. Feature branches live on this same
+clone; switch back to `main` and create the next branch from there
+once a PR merges.
 
 ## i18n
 User-facing strings live in src/locales/{lang}.json (react-i18next).
