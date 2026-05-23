@@ -111,7 +111,12 @@ def parse_log_line(line: str) -> CrawlRow | None:
         rec = json.loads(line)
     except json.JSONDecodeError:
         return None
-    if rec.get("logger") != "http.log.access":
+    # Caddy emits the access log under the logger
+    # "http.log.access" or "http.log.access.<sublogger>" (where the
+    # sublogger is e.g. "log0" when the site has multiple log outputs
+    # defined). Match the prefix to cover both.
+    logger_name = rec.get("logger", "")
+    if not (logger_name == "http.log.access" or logger_name.startswith("http.log.access.")):
         return None
 
     req = rec.get("request", {}) or {}

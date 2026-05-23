@@ -113,7 +113,12 @@ class TestFetch:
         payload = _load("query_stats_ok.json")
 
         def handler(request: httpx.Request) -> httpx.Response:
+            # Lock the call shape: GET with siteUrl + apikey in the query
+            # string. Bing returned 405 in production when we used POST.
+            assert request.method == "GET"
             assert "GetQueryStats" in str(request.url)
+            assert "siteUrl=" in str(request.url)
+            assert "apikey=" in str(request.url)
             return httpx.Response(200, json=payload)
 
         with self._mock(handler) as http:

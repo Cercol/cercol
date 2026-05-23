@@ -62,8 +62,18 @@ class BingCrawlRow:
     blocked: int
 
 
-def _bing_url(method: str, api_key: str) -> str:
-    return f"{BING_API_BASE}/{method}?apikey={api_key}"
+def _bing_url(method: str, api_key: str, site_url: str) -> str:
+    """Build the full Bing WMT URL.
+
+    Bing's REST surface uses GET with both `siteUrl` and `apikey` as
+    query parameters; POST returns 405 Method Not Allowed.
+    """
+    from urllib.parse import quote
+    return (
+        f"{BING_API_BASE}/{method}"
+        f"?siteUrl={quote(site_url, safe='')}"
+        f"&apikey={quote(api_key, safe='')}"
+    )
 
 
 def _retryable(status: int) -> bool:
@@ -84,9 +94,8 @@ def _fetch(
     last_exc: Exception | None = None
     for attempt in range(1, MAX_RETRIES + 1):
         try:
-            resp = client.post(
-                _bing_url(method, api_key),
-                json={"siteUrl": site_url},
+            resp = client.get(
+                _bing_url(method, api_key, site_url),
                 timeout=DEFAULT_TIMEOUT_S,
             )
             if resp.status_code == 200:

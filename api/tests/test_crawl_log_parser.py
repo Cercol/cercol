@@ -117,6 +117,24 @@ class TestParseLine:
         })
         assert crawl_log_parser.parse_log_line(line) is None
 
+    def test_accepts_sublogger_variants(self):
+        """Caddy emits e.g. http.log.access.log0 when a site has multiple
+        log outputs. Production hit this exact case for cercol_api_access.
+        """
+        for logger in ("http.log.access", "http.log.access.log0", "http.log.access.log1"):
+            line = json.dumps({
+                "ts": 1748044800.0,
+                "logger": logger,
+                "request": {
+                    "host": "api.cercol.team", "method": "GET", "uri": "/blog",
+                    "headers": {"User-Agent": ["Googlebot/2.1"]},
+                },
+                "status": 200,
+            })
+            row = crawl_log_parser.parse_log_line(line)
+            assert row is not None, f"logger={logger!r} should be accepted"
+            assert row.bot_name == "googlebot"
+
     def test_drops_malformed_json(self):
         assert crawl_log_parser.parse_log_line("not json") is None
 
