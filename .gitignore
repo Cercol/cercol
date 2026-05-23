@@ -37,6 +37,29 @@ __pycache__/
 .env.local
 .env.*.local
 
+# Local secrets dir (developer machine; never committed)
+.secrets/
+
+# Service account keys for cloud providers. Pattern-matched so renames
+# or downloads from cloud consoles never land in git accidentally.
+# Tracked .json files (locales, package.json, etc.) are explicitly
+# whitelisted below this block.
+*-service-account*.json
+cercol-*.json
+gcp-*.json
+service-account-*.json
+
+# Allow the .json files that are legitimately tracked in this repo.
+# These overrides protect against the broad `cercol-*.json` and
+# similar patterns above.
+!package.json
+!package-lock.json
+!.markdownlint.json
+!src/locales/*.json
+!tests/role-oracle.json
+!.claude/launch.json
+!api/tests/fixtures/**/*.json
+
 # Build analysis and one-off audit scripts
 dist/stats.html
 scripts/probe-*.mjs

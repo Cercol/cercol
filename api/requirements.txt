@@ -7,3 +7,8 @@ asyncpg==0.30.0
 resend==2.10.0
 bcrypt==5.0.0
 httpx==0.28.1
+
+# SEO ingest jobs (Phase 17.6.1a). Used by api/jobs/* scripts invoked
+# from cron, not by the FastAPI process. Pinned for reproducibility.
+google-cloud-bigquery==3.27.0
+google-auth==2.36.0
