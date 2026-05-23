@@ -40,6 +40,9 @@ __pycache__/
 # Local secrets dir (developer machine; never committed)
 .secrets/
 
+# Cached font files downloaded by scripts/generate_og_image.py.
+scripts/.og_fonts/
+
 # Service account keys for cloud providers. Pattern-matched so renames
 # or downloads from cloud consoles never land in git accidentally.
 # Tracked .json files (locales, package.json, etc.) are explicitly

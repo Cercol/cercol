@@ -223,41 +223,67 @@ export default function BlogArticlePage() {
     document.title = `${title} · Cèrcol`
 
     const BASE = 'https://cercol.team'
-    // Trailing slash required: GitHub Pages 301-redirects path → path/, so a
+    // Trailing slash required: GitHub Pages 301-redirects path -> path/, so a
     // canonical without slash would point at a redirected URL.
     const canonicalUrl = urlLang === 'en' ? `${BASE}/blog/${slug}/` : `${BASE}/${urlLang}/blog/${slug}/`
     const addedEls = []
 
-    // Remove stale tags first
+    // Remove inherited canonical + hreflang from the shell so we can
+    // replace them per route. Old data-blog markers from a prior
+    // article are also cleared.
     document.querySelectorAll('link[rel="alternate"][hreflang], link[rel="canonical"]').forEach(el => el.remove())
-    document.querySelectorAll('meta[name="description"][data-blog], meta[property^="og:"][data-blog], script[type="application/ld+json"][data-blog]').forEach(el => el.remove())
+    document.querySelectorAll('script[type="application/ld+json"][data-blog]').forEach(el => el.remove())
 
-    // Meta description
-    if (description) {
-      const metaDesc = document.createElement('meta')
-      metaDesc.name = 'description'
-      metaDesc.content = description
-      metaDesc.dataset.blog = '1'
-      document.head.appendChild(metaDesc)
-      addedEls.push(metaDesc)
+    // Mutate (do not duplicate) the meta description. The shell's
+    // index.html ships exactly one <meta name="description"> with the
+    // generic site description; we override its content for this
+    // article and restore on unmount. This is symmetric with how
+    // src/hooks/usePageMeta.js handles the top-level pages and
+    // eliminates the "two descriptions per blog page" bug that the
+    // earlier appendChild-based code introduced.
+    const metaDesc = document.querySelector('meta[name="description"]')
+    const prevDesc = metaDesc?.getAttribute('content') ?? null
+    if (description && metaDesc) {
+      metaDesc.setAttribute('content', description)
     }
 
-    // Open Graph tags
-    const ogTags = [
-      ['property', 'og:title', title],
-      ['property', 'og:description', description],
-      ['property', 'og:url', canonicalUrl],
-      ['property', 'og:type', 'article'],
-      ['property', 'og:site_name', 'Cèrcol'],
+    // Open Graph tags. Earlier code did `meta[attr] = key` which sets a
+    // JS property that does not exist on HTMLMetaElement for the
+    // 'property' attribute; the elements were shipped without
+    // property="og:..." so crawlers saw only the shell's generic OG
+    // tags. The fix: mutate the existing OG meta tags via
+    // setAttribute, mirroring the description path.
+    const ogPairs = [
+      ['og:title', title],
+      ['og:description', description],
+      ['og:url', canonicalUrl],
+      ['og:type', 'article'],
+      ['og:site_name', 'Cèrcol'],
     ]
-    ogTags.forEach(([attr, key, val]) => {
-      if (!val) return
-      const meta = document.createElement('meta')
-      meta[attr] = key
-      meta.content = val
-      meta.dataset.blog = '1'
-      document.head.appendChild(meta)
-      addedEls.push(meta)
+    const ogPrev = []  // [{el, attr, prevValue}]
+    ogPairs.forEach(([property, value]) => {
+      if (!value) return
+      const sel = `meta[property="${property}"]`
+      const el = document.querySelector(sel)
+      if (el) {
+        ogPrev.push({ el, prev: el.getAttribute('content') })
+        el.setAttribute('content', value)
+      }
+    })
+
+    // Twitter card mirrors OG. Mutate the title and description.
+    const twPairs = [
+      ['twitter:title', title],
+      ['twitter:description', description],
+    ]
+    const twPrev = []
+    twPairs.forEach(([name, value]) => {
+      if (!value) return
+      const el = document.querySelector(`meta[name="${name}"]`)
+      if (el) {
+        twPrev.push({ el, prev: el.getAttribute('content') })
+        el.setAttribute('content', value)
+      }
     })
 
     // JSON-LD BlogPosting
@@ -308,6 +334,11 @@ export default function BlogArticlePage() {
 
     return () => {
       document.title = prevTitle
+      // Restore mutated tags so unrelated routes that re-mount under
+      // the SPA do not inherit blog-specific copy.
+      if (metaDesc && prevDesc !== null) metaDesc.setAttribute('content', prevDesc)
+      ogPrev.forEach(({ el, prev }) => prev !== null && el.setAttribute('content', prev))
+      twPrev.forEach(({ el, prev }) => prev !== null && el.setAttribute('content', prev))
       addedEls.forEach(el => el.remove())
     }
   }, [post, urlLang, slug])

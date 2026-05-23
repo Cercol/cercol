@@ -29,7 +29,7 @@ import asyncpg
 import stripe
 from fastapi import Depends, FastAPI, HTTPException, Query, Request, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse, StreamingResponse
+from fastapi.responses import JSONResponse, PlainTextResponse, StreamingResponse
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import JWTError, jwt
 from pydantic import BaseModel, Field, model_validator
@@ -259,6 +259,18 @@ app.include_router(auth_module.router)
 # Blog routes
 app.include_router(blog_module.router)
 app.include_router(seo_module.router)
+
+
+# api.cercol.team serves the JSON API only, not crawlable content.
+# Without a robots.txt Googlebot keeps probing for one and gets 404,
+# wasting crawl budget on a hostname that has nothing to index.
+_ROBOTS_TXT = "User-agent: *\nDisallow: /\n"
+
+
+@app.get("/robots.txt", include_in_schema=False)
+async def robots_txt() -> PlainTextResponse:
+    """Tell crawlers to leave the API alone."""
+    return PlainTextResponse(_ROBOTS_TXT, media_type="text/plain")
 
 # ---------------------------------------------------------------------------
 # Config
