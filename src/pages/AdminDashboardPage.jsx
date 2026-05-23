@@ -24,7 +24,15 @@ import {
   createBlogPost,
   updateBlogPost,
   patchBlogPostStatus,
+  getSeoSources,
+  getSeoHealth,
+  getSeoQueries,
+  getSeoAnomalies,
 } from '../lib/api'
+import {
+  ResponsiveContainer, LineChart, Line, BarChart, Bar,
+  XAxis, YAxis, Tooltip, CartesianGrid,
+} from 'recharts'
 
 // ---------------------------------------------------------------------------
 // Shared helpers
@@ -651,36 +659,213 @@ const LLM_ENGINES = [
   { name: 'Perplexity',url: q => `https://www.perplexity.ai/?q=${encodeURIComponent(q)}` },
 ]
 
-const SEO_CHECKLIST = [
-  { done: true,  item: 'Meta tags (title + description) per public route' },
-  { done: true,  item: 'Open Graph tags (og:title, og:description, og:image)' },
-  { done: true,  item: 'hreflang for all 6 languages on all public pages' },
-  { done: true,  item: 'JSON-LD: WebApplication + Organization + FAQPage (9 Q&As)' },
-  { done: true,  item: 'sitemap.xml — 8 routes × 6 languages with hreflang alternates' },
-  { done: true,  item: 'robots.txt — allows all, blocks /admin' },
-  { done: true,  item: 'llms.txt — LLM-friendly content index (Jeremy Howard protocol)' },
-  { done: true,  item: 'GitHub README rewritten with academic names + DOI references' },
-  { done: true,  item: 'GitHub repo topics: 10 SEO topics (big-five, ipip, ab5c…)' },
-  { done: true,  item: 'React.lazy() code splitting — bundle 1.37 MB → per-page 1–33 kB' },
-  { done: true,  item: 'Prerendering: 7 public routes → static HTML (puppeteer-core)' },
-  { done: true,  item: 'Google Search Console verified + sitemap submitted' },
-  { done: true,  item: 'Bing Webmaster Tools verified + sitemap submitted' },
-  { done: true,  item: 'FAQ expanded: 12 questions across 6 languages' },
-  { done: true,  item: '/science page enrichment — DOI links, validation plan section, 9 references' },
-  { done: true,  item: 'Blog: "Big Five vs DISC vs Belbin: a scientist\'s comparison"' },
-  { done: true,  item: 'Blog: "How to build a balanced team using personality science"' },
-  { done: true,  item: 'Blog: "Blind spots in teams: when self-perception diverges"' },
-  { done: true,  item: 'Blog: "What is the IPIP and why does it matter?"' },
-  { done: false, item: 'og:image 1200×630 branded image per route' },
-  { done: false, item: 'Outreach: ipip.ori.org (Eugene Johnson) — list Cèrcol as implementation' },
-  { done: false, item: 'Outreach: Anders Vedel (Vedel et al. 2018 DA validation)' },
-  { done: false, item: 'Outreach: Thiry & Piolti (FR adaptation)' },
-  { done: false, item: 'Product Hunt launch' },
-  { done: false, item: 'Hacker News "Show HN"' },
-]
+// ---------------------------------------------------------------------------
+// SEO tab utilities
+// ---------------------------------------------------------------------------
+
+function formatNum(n) {
+  if (n === null || n === undefined) return '-'
+  if (n >= 1_000_000) return (n / 1_000_000).toFixed(1) + 'M'
+  if (n >= 1_000)     return (n / 1_000).toFixed(1) + 'K'
+  return String(n)
+}
+
+function formatPct(n, digits = 2) {
+  if (n === null || n === undefined) return '-'
+  return (n * 100).toFixed(digits) + '%'
+}
+
+function SeoStatCard({ label, value, sub }) {
+  return (
+    <div className="bg-white rounded-xl border border-gray-100 shadow-sm px-4 py-3">
+      <p className="text-[10px] uppercase tracking-widest text-gray-400 mb-1">{label}</p>
+      <p className="text-xl font-bold text-gray-900">{value}</p>
+      {sub && <p className="text-xs text-gray-400 mt-1">{sub}</p>}
+    </div>
+  )
+}
+
+function DataPendingBanner({ message }) {
+  return (
+    <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 text-sm text-amber-800">
+      <p className="font-semibold mb-0.5">Data pending</p>
+      <p className="text-xs text-amber-700">{message}</p>
+    </div>
+  )
+}
+
+function SourcesGrid({ sources, gsc }) {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+      {sources.map(s => (
+        <div key={s.name} className="bg-white rounded-xl border border-gray-100 shadow-sm px-3 py-2">
+          <p className="text-xs text-gray-400 mb-0.5">{s.name}</p>
+          <p className="text-sm font-bold text-gray-900">{formatNum(s.row_count)} rows</p>
+          <p className="text-[10px] text-gray-400 mt-0.5">
+            {s.last_update ? `last ${s.last_update}` : 'no data yet'}
+          </p>
+        </div>
+      ))}
+      <div className="bg-white rounded-xl border border-gray-100 shadow-sm px-3 py-2">
+        <p className="text-xs text-gray-400 mb-0.5">gsc bulk export</p>
+        <p className="text-sm font-bold text-gray-900">
+          {gsc?.bulk_export_ready ? `${gsc.tables_present.length} tables` : 'pending'}
+        </p>
+        <p className="text-[10px] text-gray-400 mt-0.5">
+          {gsc?.bulk_export_ready ? 'ready' : '~48h after GSC config'}
+        </p>
+      </div>
+    </div>
+  )
+}
+
+function HealthSection({ health }) {
+  if (!health) return null
+  const bing = health.bing_28d || {}
+  const gsc = health.gsc_28d || { available: false }
+  return (
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+      <SeoStatCard
+        label="GSC 28d impressions"
+        value={gsc.available ? formatNum(gsc.impressions) : '-'}
+        sub={gsc.available ? `${formatNum(gsc.clicks)} clicks` : 'export pending'}
+      />
+      <SeoStatCard
+        label="Bing 28d impressions"
+        value={formatNum(bing.impressions)}
+        sub={`${formatNum(bing.clicks)} clicks`}
+      />
+      <SeoStatCard
+        label="PSI URLs (latest)"
+        value={formatNum((health.pagespeed_latest_mobile || []).length)}
+        sub="mobile snapshots"
+      />
+      <SeoStatCard
+        label="Bot hits 7d"
+        value={formatNum((health.crawl_7d_by_bot || []).reduce((a, b) => a + b.hits, 0))}
+        sub={`${(health.crawl_7d_by_bot || []).length} distinct bots`}
+      />
+    </div>
+  )
+}
+
+function CrawlByBotChart({ data }) {
+  if (!data || !data.length) return null
+  return (
+    <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+      <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">
+        Crawler hits last 7 days
+      </p>
+      <ResponsiveContainer width="100%" height={200}>
+        <BarChart data={data}>
+          <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+          <XAxis dataKey="bot" tick={{ fontSize: 11 }} />
+          <YAxis tick={{ fontSize: 11 }} />
+          <Tooltip />
+          <Bar dataKey="hits" fill="var(--mm-color-blue)" />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  )
+}
+
+function QuickWinsTable({ queries }) {
+  if (!queries || !queries.length) return null
+  // Quick wins: avg_position between 8 and 20, sorted by impressions.
+  const wins = queries
+    .filter(q => q.avg_position != null && q.avg_position >= 8 && q.avg_position <= 20)
+    .sort((a, b) => b.impressions - a.impressions)
+    .slice(0, 15)
+  if (!wins.length) return (
+    <p className="text-xs text-gray-400">
+      No queries currently sit in the 8 to 20 SERP position range.
+    </p>
+  )
+  return (
+    <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-x-auto">
+      <table className="w-full text-sm">
+        <thead className="text-[10px] uppercase tracking-widest text-gray-400 border-b border-gray-100">
+          <tr>
+            <th className="text-left px-3 py-2">Query</th>
+            <th className="text-right px-3 py-2">Impr.</th>
+            <th className="text-right px-3 py-2">Clicks</th>
+            <th className="text-right px-3 py-2">CTR</th>
+            <th className="text-right px-3 py-2">Pos.</th>
+          </tr>
+        </thead>
+        <tbody>
+          {wins.map(q => (
+            <tr key={q.query} className="border-b border-gray-50 last:border-0">
+              <td className="px-3 py-2 text-gray-700 truncate max-w-[260px]">{q.query}</td>
+              <td className="px-3 py-2 text-right text-gray-600">{formatNum(q.impressions)}</td>
+              <td className="px-3 py-2 text-right text-gray-600">{formatNum(q.clicks)}</td>
+              <td className="px-3 py-2 text-right text-gray-600">{formatPct(q.ctr)}</td>
+              <td className="px-3 py-2 text-right text-gray-600">{q.avg_position?.toFixed(1)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
+function AnomaliesList({ anomalies }) {
+  if (!anomalies || !anomalies.length) return (
+    <p className="text-xs text-gray-400">No pages crossed the 30 percent threshold this week.</p>
+  )
+  return (
+    <div className="space-y-1.5">
+      {anomalies.slice(0, 15).map(a => {
+        const up = a.change_pct > 0
+        return (
+          <div
+            key={a.url}
+            className="bg-white rounded-xl border border-gray-100 shadow-sm px-3 py-2 flex items-center gap-3"
+          >
+            <span className={`text-xs font-bold w-14 text-right ${up ? 'text-emerald-600' : 'text-red-500'}`}>
+              {up ? '+' : ''}{a.change_pct.toFixed(0)}%
+            </span>
+            <span className="text-sm text-gray-700 truncate flex-1">{a.url}</span>
+            <span className="text-xs text-gray-400 shrink-0">
+              {formatNum(a.prior_impressions)} -&gt; {formatNum(a.recent_impressions)}
+            </span>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
 
 function SeoTab() {
+  const [sources, setSources] = useState(null)
+  const [health, setHealth] = useState(null)
+  const [queries, setQueries] = useState(null)
+  const [anomalies, setAnomalies] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
   const [copiedQuery, setCopiedQuery] = useState(null)
+
+  useEffect(() => {
+    let alive = true
+    setLoading(true)
+    Promise.all([
+      getSeoSources().catch(e => ({ _err: e })),
+      getSeoHealth().catch(e => ({ _err: e })),
+      getSeoQueries({ periodDays: 28, minImpressions: 10, limit: 100 }).catch(e => ({ _err: e })),
+      getSeoAnomalies({ thresholdPct: 30 }).catch(e => ({ _err: e })),
+    ]).then(([s, h, q, a]) => {
+      if (!alive) return
+      if (s?._err || h?._err || q?._err || a?._err) {
+        setError(s?._err || h?._err || q?._err || a?._err)
+      }
+      setSources(s?._err ? null : s)
+      setHealth(h?._err ? null : h)
+      setQueries(q?._err ? null : q)
+      setAnomalies(a?._err ? null : a)
+      setLoading(false)
+    })
+    return () => { alive = false }
+  }, [])
 
   function copyQuery(q) {
     navigator.clipboard.writeText(q).then(() => {
@@ -689,16 +874,59 @@ function SeoTab() {
     })
   }
 
-  const done    = SEO_CHECKLIST.filter(i => i.done).length
-  const total   = SEO_CHECKLIST.length
-  const pct     = Math.round(done / total * 100)
+  if (loading) return <p className="text-sm text-gray-400">Loading SEO data ...</p>
+  if (error) return <p className="text-sm text-red-500">SEO data unavailable: {String(error.message || error)}</p>
+
+  const dataPending = (health && health.data_pending) || (queries && queries.data_pending)
 
   return (
     <div className="space-y-8">
 
-      {/* Quick links */}
+      {dataPending && (
+        <DataPendingBanner message="The GSC bulk export needs about 48 hours to populate after configuration. Until then, dashboards fall back to Bing data, which has limited coverage for low-traffic sites." />
+      )}
+
+      {/* Sources status */}
       <section>
-        <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">Quick access</h2>
+        <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">Source status</h2>
+        {sources ? <SourcesGrid sources={sources.sources} gsc={sources.gsc} /> : null}
+      </section>
+
+      {/* Health KPIs */}
+      <section>
+        <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">28-day overview</h2>
+        <HealthSection health={health} />
+      </section>
+
+      {/* Crawler hits */}
+      {health?.crawl_7d_by_bot?.length > 0 && (
+        <section>
+          <CrawlByBotChart data={health.crawl_7d_by_bot} />
+        </section>
+      )}
+
+      {/* Quick wins */}
+      <section>
+        <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">
+          Quick wins (queries position 8 to 20)
+        </h2>
+        <p className="text-xs text-gray-400 mb-3">
+          Source: {queries?.source || 'pending'}. These already get impressions; improving rank pays off fast.
+        </p>
+        <QuickWinsTable queries={queries?.queries || []} />
+      </section>
+
+      {/* Anomalies */}
+      <section>
+        <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">
+          Anomalies (7d vs prior 7d)
+        </h2>
+        <AnomaliesList anomalies={anomalies?.anomalies || []} />
+      </section>
+
+      {/* External tools (auxiliary footer) */}
+      <section className="pt-6 border-t border-gray-100">
+        <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">External tools</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
           {SEO_LINKS.map(({ label, url, emoji }) => (
             <a
@@ -716,13 +944,13 @@ function SeoTab() {
         </div>
       </section>
 
-      {/* LLM visibility checker */}
+      {/* LLM visibility checker (auxiliary) */}
       <section>
         <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-1">
           LLM visibility check
         </h2>
         <p className="text-xs text-gray-400 mb-3">
-          Test monthly. Cèrcol should appear in answers within 6–12 months.
+          Run the search manually in each engine. Cèrcol should appear within 6 to 12 months.
         </p>
         <div className="space-y-2">
           {LLM_QUERIES.map(q => (
@@ -748,40 +976,6 @@ function SeoTab() {
                   {copiedQuery === q ? '✓ copied' : 'copy'}
                 </button>
               </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Implementation checklist */}
-      <section>
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-400">
-            Implementation checklist
-          </h2>
-          <span className="text-xs text-gray-400">{done}/{total} done ({pct}%)</span>
-        </div>
-
-        {/* Progress bar */}
-        <div className="h-1.5 bg-gray-100 rounded-full mb-4 overflow-hidden">
-          <div
-            className="h-full bg-[var(--mm-color-blue)] rounded-full transition-all"
-            style={{ width: `${pct}%` }}
-          />
-        </div>
-
-        <div className="space-y-1.5">
-          {SEO_CHECKLIST.map(({ done: isDone, item }) => (
-            <div
-              key={item}
-              className={`flex items-start gap-2.5 px-3 py-2 rounded-lg text-sm ${
-                isDone ? 'text-gray-500' : 'text-gray-700 bg-white border border-gray-100 shadow-sm'
-              }`}
-            >
-              <span className={`mt-0.5 shrink-0 text-base ${isDone ? 'text-green-500' : 'text-gray-300'}`}>
-                {isDone ? '✓' : '○'}
-              </span>
-              <span className={isDone ? 'line-through decoration-gray-300' : ''}>{item}</span>
             </div>
           ))}
         </div>

@@ -431,6 +431,45 @@ export async function refreshAdminNorms() {
   return authFetch('/admin/norms/refresh', { method: 'POST' })
 }
 
+// ---------------------------------------------------------------------------
+// SEO observability API (Phase 17.6.2). Admin-only, BigQuery-backed.
+// ---------------------------------------------------------------------------
+
+/** getSeoSources — row counts + last update per ingest table. */
+export async function getSeoSources() {
+  return authFetch('/admin/seo/sources')
+}
+
+/** getSeoHealth — high-level snapshot KPIs across all sources. */
+export async function getSeoHealth() {
+  return authFetch('/admin/seo/health')
+}
+
+/** getSeoQueries — top queries by impressions, GSC preferred. */
+export async function getSeoQueries({ periodDays = 28, minImpressions = 0, limit = 50 } = {}) {
+  const q = new URLSearchParams({
+    period_days: periodDays, min_impressions: minImpressions, limit,
+  })
+  return authFetch(`/admin/seo/queries?${q}`)
+}
+
+/** getSeoPages — top pages by impressions. */
+export async function getSeoPages({ periodDays = 28, limit = 100 } = {}) {
+  const q = new URLSearchParams({ period_days: periodDays, limit })
+  return authFetch(`/admin/seo/pages?${q}`)
+}
+
+/** getSeoAnomalies — pages with >threshold_pct change in 7d vs prior 7d. */
+export async function getSeoAnomalies({ thresholdPct = 30 } = {}) {
+  const q = new URLSearchParams({ threshold_pct: thresholdPct })
+  return authFetch(`/admin/seo/anomalies?${q}`)
+}
+
+/** getSeoPageLifecycle — per-day impressions/clicks for a specific URL. */
+export async function getSeoPageLifecycle(slug) {
+  return authFetch(`/admin/seo/page/${encodeURIComponent(slug)}/lifecycle`)
+}
+
 /**
  * getAdminUsers — paginated user list.
  * @param {{ offset?: number, limit?: number, search?: string }} params
