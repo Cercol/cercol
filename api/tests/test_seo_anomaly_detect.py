@@ -12,8 +12,6 @@ import os
 import sys
 from typing import Any
 
-import pytest
-
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from jobs import seo_anomaly_detect  # noqa: E402

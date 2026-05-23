@@ -60,5 +60,5 @@ Filled at the end of FASE E.
 | 0005 | GCP project, BigQuery dataset | Accepted |
 | 0006 | Cron pattern for SEO ingest | Accepted |
 | 0007 | PageSpeed data source | Accepted |
-| 0008 | MCP server location and auth | Proposed |
-| 0009 | SEO admin UI rewrite | Proposed |
+| 0008 | MCP server location and auth | Accepted |
+| 0009 | SEO admin UI rewrite | Accepted |
