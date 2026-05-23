@@ -159,6 +159,75 @@ TODO: migrate the GCP project ownership from the personal account
 to a Workspace tenant rooted at `hello@cercol.team` once the phone
 block is resolved. Tracked as Phase 17.7 in `ROADMAP.md`.
 
+### Anomaly detector
+
+Cron: `/etc/cron.d/cercol-seo-anomaly` runs daily at 05:00 UTC.
+Reads from `cercol_seo` plus `searchconsole`, writes to
+`cercol_seo.seo_anomalies` (table auto-created on first run).
+Default threshold: 30 percent change in 7-day-vs-prior-7-day
+window.
+
+Force a one-shot run for diagnostics:
+
+```bash
+sudo -u cercol bash -c "set -a && . /home/cercol/.env && set +a && \
+    /home/cercol/api/api/.venv/bin/python -m jobs.seo_anomaly_detect"
+```
+
+### Closed-loop copy_changes
+
+Track a title/description/h1 change manually after merging a PR
+that touched user-facing meta:
+
+```bash
+sudo -u cercol bash -c "set -a && . /home/cercol/.env && set +a && \
+    /home/cercol/api/api/.venv/bin/python \
+      /home/cercol/api/scripts/register_copy_change.py \
+      --route /science/ --field title \
+      --before 'old' --after 'new' \
+      --commit \$(cd /home/cercol/api && git rev-parse HEAD)"
+```
+
+`api/jobs/seo_copy_impact.py` walks the rows whose 14-day window
+has passed and writes the CTR delta back. Not yet scheduled by
+cron; run manually until the cron file is installed in a future
+phase.
+
+### MCP server (cercol-mcp)
+
+Standalone systemd unit binding to `127.0.0.1:8091`. Operator
+reaches it from their Claude Code or Claude Desktop client via
+SSH tunnel; no public subdomain (ADR 0008).
+
+Install the unit and start it (one-time on the server):
+
+```bash
+sudo install -m 0644 /home/cercol/api/api/deploy/systemd/cercol-mcp.service \
+    /etc/systemd/system/cercol-mcp.service
+sudo systemctl daemon-reload
+sudo systemctl enable --now cercol-mcp
+sudo systemctl status cercol-mcp
+```
+
+Add `MCP_API_KEY=<long-random-string>` to `/home/cercol/.env`
+before starting. The service refuses to start without it.
+
+Connect from your laptop:
+
+```bash
+# In one terminal, open the tunnel.
+ssh -N -L 8091:127.0.0.1:8091 root@188.245.60.20
+
+# In your Claude Code or Claude Desktop config, add an MCP server:
+#   command: http
+#   url:     http://127.0.0.1:8091
+#   headers: { "Authorization": "Bearer <MCP_API_KEY>" }
+```
+
+Once connected the six SEO tools are available to the model. SQL
+runs against BigQuery in read-only mode; the server rejects any
+non-SELECT before reaching BigQuery.
+
 ### Verifying a fresh deploy
 
 ```bash

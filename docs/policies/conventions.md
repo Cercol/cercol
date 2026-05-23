@@ -82,6 +82,35 @@ a real user account, never a developer's own account.
 Today no such tests exist; this rule defines the convention for when
 they are introduced.
 
+### Real contract check on every new external integration
+
+When a PR introduces code that talks to a NEW external service
+(third-party REST/GraphQL/SDK call that the codebase has never
+issued before), the PR must include at least one piece of evidence
+that the code matches the on-wire shape of the real service. Pure
+mocks are insufficient; mocks codify the author's assumption about
+the API and a green CI run only proves the code is consistent with
+that assumption.
+
+Acceptable forms of evidence:
+
+- A one-shot manual `curl` against the documented endpoint with
+  the output (or a redacted summary) captured in the PR
+  description.
+- A VCR-style recorded cassette played back in the test (only
+  acceptable when the cassette was created against the real
+  endpoint, not hand-written).
+- A `tests/contract/` test that hits the real endpoint with a
+  read-only call, guarded by a skip-when-no-creds marker so CI
+  passes without secrets but the test runs locally before merge.
+
+Lesson source:
+`docs/post-mortems/2026-05-23-mock-divergence-bing-caddy.md`. Two
+Phase 17.6.1a jobs shipped with mocks that codified the wrong API
+shape (Bing POST vs GET; Caddy exact-match logger name) and only
+failed in production. The fix (PR #28) added regression tests that
+assert the real on-wire shape.
+
 ## Frontend principles
 
 ### Prefer HTML and CSS over JavaScript
