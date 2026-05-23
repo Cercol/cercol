@@ -2,65 +2,86 @@
 
 - **Number**: 0005
 - **Title**: GCP project and BigQuery dataset for SEO observability
-- **Status**: Proposed
-- **Date**: 2026-05-21
+- **Status**: Accepted
+- **Date**: 2026-05-22
 
 ## Context
 
-Phase 17.6 (SEO observability) ingests Google Search Console Bulk
-Export, Bing Webmaster Tools API, PageSpeed Insights, and parsed
-Caddy access logs into a single store with dashboards and a custom
-MCP server. The store needs to be queryable, cheap at low volume,
-and Google-native (GSC Bulk Export only exports to BigQuery).
+Phase 17.6.1a builds the code for SEO observability (GSC Bulk Export,
+Bing API, PageSpeed, Caddy log parsing). The pipeline needs a single
+store. GSC Bulk Export only writes to BigQuery, so the store has to
+be BigQuery.
 
-The 2026-05-21 exploration confirmed there is no existing GCP
+The 2026-05-21 exploration confirmed there was no existing GCP
 project linked to Cèrcol; the only Google integration in the
-codebase is sign-in OAuth against Miquel's personal Google account.
+codebase was sign-in OAuth against Miquel's personal Google account.
 (Archived reference: `docs/archive/audits/2026-Q2/EXPLORATION-2026-05-21.md`.)
 
 ## Decision
 
-Create a new GCP project `cercol-team-observability`. Billing
-owner: Miquel personal (the `hello@cercol.team` Google Workspace
-account does not yet exist; see `docs/policies/identities.md`).
-BigQuery dataset `cercol_seo` in EU region.
+Use the GCP project `cercol` (project number 607121997818) for all
+SEO observability data.
 
-A dedicated service account
-`cercol-seo-ingest@cercol-team-observability.iam.gserviceaccount.com`
-holds the keys for ingest jobs, scoped to write into
-`cercol_seo` and nothing else.
+Two BigQuery datasets, both EU region:
 
-When `hello@cercol.team` is migrated to Workspace (backlog Phase
-17.7), the billing owner moves and the project gets transferred;
-service account stays unchanged.
+- `searchconsole` - GSC Bulk Export destination. Tables and schema
+  owned by Google; we read only.
+- `cercol_seo` - everything written by our ingest jobs. Five tables,
+  DDL under `api/data/bigquery_ddl/`, applied by
+  `scripts/apply_bigquery_ddl.py --apply`.
+
+Service account: `cercol-seo-ingest@cercol.iam.gserviceaccount.com`,
+scoped to read `searchconsole` and read+write `cercol_seo`. Key file
+stored on the Hetzner server at `/home/cercol/.secrets/cercol-sa.json`.
+
+Budget alert: 30 DKK per month. BigQuery storage at this volume is
+expected to cost about 0.50 to 2.00 EUR per month; the cap protects
+against a runaway dashboard query.
 
 ## Alternatives considered
 
-- **Reuse an existing GCP project from another personal/work
-  account**. Rejected: mixing identities across projects violates
-  the rule in `docs/policies/identities.md`.
-- **Use BigQuery free-tier from a separate Google account**.
-  Rejected: same identity-mixing argument, and the free tier has
-  10 GB storage per month which is below the expected volume after
-  one year of GSC export.
+- **Reuse an existing GCP project from another personal account**.
+  Rejected: mixing identities across projects violates the rule in
+  `docs/policies/identities.md`.
+- **BigQuery free tier on a separate Google account**. Rejected:
+  same identity-mixing argument, and the free tier (10 GB storage,
+  1 TB query) is below the expected volume after one year of GSC
+  bulk export plus history.
 - **Self-host the warehouse (DuckDB on the VPS, ClickHouse)**.
   Rejected: GSC Bulk Export only writes to BigQuery; self-hosting
-  would require building a custom export pipeline.
+  would require building a separate export pipeline that does not
+  exist as a Google product.
 
 ## Consequences
 
-- Expected cost: 0.50 to 2 EUR per month for BigQuery storage at
-  current site volume. Bulk Export is free. PSI API is free.
-- One more identity surface to maintain (the service account key).
-  Logged in the runbook.
-- Migration cost later: transferring the project to the Workspace
-  tenant is one-click in GCP console but needs to be done at the
-  right moment (after billing reaches a stable state on the
-  Workspace account).
+Operational:
+
+- Expected cost: 0.50 to 2.00 EUR per month for storage at current
+  volume. Bulk Export is free of charge. PSI API is free within
+  25000 queries per day.
+- One more secret to manage (the service-account key file). Logged
+  in the runbook.
+- BigQuery is regional (EU). All queries from the Hetzner VPS
+  traverse the open internet to GCP EU endpoints; latency is fine
+  for batch ingest jobs but not suitable for synchronous request
+  paths.
+
+Identity debt:
+
+- Billing owner is currently Miquel's personal Gmail account
+  (`miquelmatoses@gmail.com`) because creating a Google Workspace
+  account on `hello@cercol.team` is blocked at Gmail's phone
+  verification step. This is conscious debt. Migration tracked
+  as Phase 17.7 in the roadmap. The runbook captures which tokens
+  rotate when the move happens; this ADR remains Accepted across
+  that migration (the decision to use the `cercol` project does
+  not change, only ownership of the account that holds it).
 
 ## Related
 
-- Phase 17.6 plan (not yet written).
+- Phase 17.6.1a code: api/jobs/, api/data/bigquery_ddl/.
 - ADR 0006 (cron pattern for the ingest jobs).
-- ADR 0007 (PageSpeed data source).
+- ADR 0007 (PSI plus CrUX).
 - `docs/policies/identities.md` Rule 1.
+- `docs/architecture/seo-pipeline.md`.
+- Phase 17.7 in ROADMAP: identity migration to `hello@cercol.team`.

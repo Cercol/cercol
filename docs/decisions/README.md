@@ -57,8 +57,8 @@ Filled at the end of FASE E.
 | 0002 | Railway to Hetzner systemd | Accepted |
 | 0003 | JWT HS256 self hosted | Accepted |
 | 0004 | Caddy multi tenant conf.d | Accepted |
-| 0005 | GCP project, BigQuery dataset | Proposed |
-| 0006 | Cron pattern for SEO ingest | Proposed |
-| 0007 | PageSpeed data source | Proposed |
+| 0005 | GCP project, BigQuery dataset | Accepted |
+| 0006 | Cron pattern for SEO ingest | Accepted |
+| 0007 | PageSpeed data source | Accepted |
 | 0008 | MCP server location and auth | Proposed |
 | 0009 | SEO admin UI rewrite | Proposed |
