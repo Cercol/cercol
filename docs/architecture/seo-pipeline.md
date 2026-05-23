@@ -153,3 +153,86 @@ runbook:
 Phase 17.6.2 onwards: ingest the remaining sources (GSC Crawl
 Stats, CrUX BigQuery export), build the admin dashboards (ADR
 0009), expose the MCP server (ADR 0008).
+
+## Phase 17.6.2 to 17.6.6 (delivered in one ultra-sprint, 2026-05-23)
+
+Adds the read surfaces on top of the ETL foundation that
+17.6.1a/b shipped.
+
+### Admin SEO API (api/seo.py)
+
+Six read-only endpoints under `/admin/seo/*` behind the admin gate
+(see `_require_admin` in api/seo.py, an explicit local duplicate
+following the same pattern as api/blog.py; TODO Phase 17.8
+extracts the dependency to api/deps.py):
+
+- `GET /admin/seo/sources` — row counts and last-update per
+  ingest table plus GSC bulk-export readiness.
+- `GET /admin/seo/health` — 28-day KPIs across all sources.
+- `GET /admin/seo/queries` — top queries, prefers GSC and falls
+  back to Bing.
+- `GET /admin/seo/pages` — top pages, same preference order.
+- `GET /admin/seo/anomalies` — pages with > threshold_pct change
+  in 7 days vs prior 7 days.
+- `GET /admin/seo/page/{slug}/lifecycle` — per-day history for
+  one URL.
+
+Process-local cache with configurable TTL
+(`SEO_CACHE_TTL_S`, default 3600). All endpoints return their
+normal shape with a `data_pending: true` flag when the underlying
+tables are empty; no 500 responses on pending data.
+
+### Admin dashboard (src/pages/AdminDashboardPage.jsx)
+
+Rewrites the SEO tab (previously a hardcoded checklist). New
+sections, top to bottom: data-pending banner, source status grid,
+28-day overview (4 StatCards), 7-day crawler bar chart, quick-wins
+table (queries at SERP position 8 to 20), anomalies list,
+auxiliary external-tools and LLM-visibility sections at the
+bottom. Uses Recharts, already in package.json.
+
+### Daily anomaly detector (api/jobs/seo_anomaly_detect.py)
+
+Cron `cercol-seo-anomaly` runs at 05:00 UTC. Compares the last
+7 days vs prior 7 days for:
+
+- GSC impressions per URL.
+- Lighthouse mobile performance score per URL (compares the two
+  most recent runs).
+
+Threshold defaults to 30 percent. Writes one row per anomaly into
+the auto-created `cercol_seo.seo_anomalies` table. The daily
+cron-mail log carries a summary. Weekly digest email was
+intentionally deferred to a later phase (ROADMAP 17.6.3+).
+
+### MCP server (api/mcp/server.py + systemd unit)
+
+Separate process under cercol-mcp.service, bound to
+`127.0.0.1:8091`. Operator reaches it via SSH tunnel; no public
+subdomain (ADR 0008). Six tools: `seo_query`, `seo_page_lifecycle`,
+`seo_anomalies`, `seo_quick_wins`, `seo_compare_periods`,
+`seo_sources_status`.
+
+SQL safety on the `seo_query` tool: a token-boundary regex blocks
+all DML and DDL (INSERT/UPDATE/DELETE/DROP/ALTER/CREATE/etc.) and
+constrains every query to address `cercol.cercol_seo` or
+`cercol.searchconsole`. Multi-statement and CALL also blocked.
+Twenty unit tests cover the safety surface plus the per-tool
+behaviour.
+
+Auth: dedicated `MCP_API_KEY` env var, bearer header.
+
+### Closed-loop copy tracking
+
+`cercol_seo.copy_changes` (DDL 06) tracks title/description/h1
+changes with a scheduled_measure_ts for the 14-day evaluation.
+
+- `scripts/register_copy_change.py`: manual CLI invoked on the
+  server after merging a copy-change PR.
+- `api/jobs/seo_copy_impact.py`: weekly job that walks
+  `WHERE measured = FALSE AND scheduled_measure_ts <= NOW()`,
+  computes 14d-after vs 14d-before CTR for each row from GSC,
+  and writes the result back. Skips rows for which GSC has no
+  data in either window.
+- Cron file not installed in this sprint; install procedure in
+  the runbook for the future "go live" of closed-loop.

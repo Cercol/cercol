@@ -1,5 +1,5 @@
 fastapi==0.115.12
-uvicorn[standard]==0.34.2
+uvicorn[standard]==0.35.0
 python-jose[cryptography]==3.3.0
 stripe==12.1.0
 slowapi==0.1.9
@@ -11,4 +11,8 @@ httpx==0.28.1
 # SEO ingest jobs (Phase 17.6.1a). Used by api/jobs/* scripts invoked
 # from cron, not by the FastAPI process. Pinned for reproducibility.
 google-cloud-bigquery==3.27.0
-google-auth==2.36.0
+google-auth==2.53.0
+
+# MCP server (Phase 17.6.5). Standalone uvicorn unit cercol-mcp;
+# not loaded by the main cercol-api FastAPI process.
+fastmcp==2.13.1

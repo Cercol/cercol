@@ -2,8 +2,8 @@
 
 - **Number**: 0009
 - **Title**: SEO admin UI rewrite (replace hardcoded tab with live dashboards)
-- **Status**: Proposed
-- **Date**: 2026-05-21
+- **Status**: Accepted
+- **Date**: 2026-05-23
 
 ## Context
 

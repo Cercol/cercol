@@ -44,6 +44,7 @@ from scoring import (
 from emails import send_witness_assigned, send_witness_completed, send_group_invitation
 import auth as auth_module
 import blog as blog_module
+import seo as seo_module
 
 
 # ---------------------------------------------------------------------------
@@ -226,6 +227,7 @@ app.include_router(auth_module.router)
 
 # Blog routes
 app.include_router(blog_module.router)
+app.include_router(seo_module.router)
 
 # ---------------------------------------------------------------------------
 # Config

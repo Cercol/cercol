@@ -1,0 +1,16 @@
+[Unit]
+Description=Cercol MCP server (SEO observability tools)
+After=network.target
+
+[Service]
+User=cercol
+Group=cercol
+WorkingDirectory=/home/cercol/api/api
+EnvironmentFile=/home/cercol/.env
+Environment=PYTHONPATH=/home/cercol/api/api
+ExecStart=/home/cercol/api/api/.venv/bin/python -m mcp.server
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

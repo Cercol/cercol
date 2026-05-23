@@ -1,0 +1,22 @@
+# Cercol - daily SEO anomaly detector.
+# Compares last 7 days vs prior 7 days for GSC impressions and PSI
+# mobile performance. Writes rows to cercol_seo.seo_anomalies for
+# anything over the threshold (default 30 percent).
+#
+# Install (one-time, as root on the production server):
+#   sudo cp /home/cercol/api/api/deploy/cron/cercol-seo-anomaly /etc/cron.d/
+#   sudo chmod 644 /etc/cron.d/cercol-seo-anomaly
+#
+# Manual one-shot run (debug):
+#   sudo -u cercol /home/cercol/api/api/.venv/bin/python \
+#       -m jobs.seo_anomaly_detect
+#
+# Secrets required in /home/cercol/.env:
+#   GOOGLE_APPLICATION_CREDENTIALS=/home/cercol/.secrets/cercol-seo-ingest.json
+
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# Daily at 05:00 UTC, one hour after the weekly ingest crons so on
+# Sundays both sets land in chronological order.
+0 5 * * * cercol cd /home/cercol/api/api && set -a && . /home/cercol/.env && set +a && /home/cercol/api/api/.venv/bin/python -m jobs.seo_anomaly_detect
