@@ -1,0 +1,27 @@
+# Cercol - weekly PageSpeed Insights ingest into BigQuery.
+# Runs PSI v5 (mobile + desktop) for the top-N URLs and writes to
+# cercol.cercol_seo.pagespeed_runs (Phase 17.6.1a, ADR 0007).
+#
+# Install (one-time, as root on the production server):
+#   sudo cp /home/cercol/api/api/deploy/cron/cercol-pagespeed-ingest /etc/cron.d/
+#   sudo chmod 644 /etc/cron.d/cercol-pagespeed-ingest
+#
+# Verify after install:
+#   ls -la /etc/cron.d/cercol-pagespeed-ingest
+#   journalctl -t CRON --since "5 minutes ago" | grep pagespeed-ingest
+#
+# Manual one-shot run (debug):
+#   sudo -u cercol /home/cercol/api/api/.venv/bin/python \
+#       -m jobs.pagespeed_ingest
+#
+# Secrets required in /home/cercol/.env:
+#   PAGESPEED_API_KEY
+#   GOOGLE_APPLICATION_CREDENTIALS=/home/cercol/.secrets/cercol-sa.json
+
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# Sunday 04:00 UTC, one hour after the Bing ingest. Weekly cadence
+# matches PSI volatility and stays well below the 25000-queries-per-day
+# quota (we run about 20 URLs * 2 devices = 40 calls per tick).
+0 4 * * 0 cercol cd /home/cercol/api/api && set -a && . /home/cercol/.env && set +a && /home/cercol/api/api/.venv/bin/python -m jobs.pagespeed_ingest

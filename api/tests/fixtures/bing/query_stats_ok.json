@@ -1,0 +1,20 @@
+{
+    "d": [
+        {
+            "__type": "QueryStats:#Microsoft.Bing.Webmaster.Api",
+            "Date": "/Date(1716163200000)/",
+            "Query": "EXAMPLE cercol big five team",
+            "Impressions": 142,
+            "Clicks": 3,
+            "AvgImpressionPosition": 8.4
+        },
+        {
+            "__type": "QueryStats:#Microsoft.Bing.Webmaster.Api",
+            "Date": "/Date(1716163200000)/",
+            "Query": "EXAMPLE personality test free",
+            "Impressions": 87,
+            "Clicks": 1,
+            "AvgImpressionPosition": 12.1
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "d": [
+        {
+            "Date": "/Date(1716163200000)/",
+            "Page": "https://cercol.team/about/",
+            "Impressions": 64,
+            "Clicks": 2,
+            "AvgImpressionPosition": 6.0
+        },
+        {
+            "Date": "/Date(1716163200000)/",
+            "Page": "https://cercol.team/science/",
+            "Impressions": 48,
+            "Clicks": 0,
+            "AvgImpressionPosition": null
+        }
+    ]
+}

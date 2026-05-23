@@ -1,0 +1,30 @@
+# Cercol - weekly Bing Webmaster Tools ingest into BigQuery.
+# Pulls GetQueryStats, GetPageStats, GetCrawlStats for cercol.team
+# and writes to cercol.cercol_seo.bing_* (Phase 17.6.1a).
+#
+# Install (one-time, as root on the production server):
+#   sudo cp /home/cercol/api/api/deploy/cron/cercol-bing-ingest /etc/cron.d/
+#   sudo chmod 644 /etc/cron.d/cercol-bing-ingest
+#
+# Verify after install:
+#   ls -la /etc/cron.d/cercol-bing-ingest
+#   journalctl -t CRON --since "5 minutes ago" | grep bing-ingest
+#
+# Manual one-shot run (debug):
+#   sudo -u cercol /home/cercol/api/api/.venv/bin/python \
+#       -m jobs.bing_ingest
+#
+# Secrets required in /home/cercol/.env:
+#   BING_WMT_API_KEY
+#   GOOGLE_APPLICATION_CREDENTIALS=/home/cercol/.secrets/cercol-sa.json
+#   BIGQUERY_PROJECT=cercol (default)
+#   BIGQUERY_DATASET_SEO=cercol_seo (default)
+
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# Sunday 03:00 UTC. The job is weekly because Bing WMT updates the
+# series once per day with about a 2-day lag; running once per week
+# is sufficient resolution for the dashboards and stays comfortably
+# under the API quota.
+0 3 * * 0 cercol cd /home/cercol/api/api && set -a && . /home/cercol/.env && set +a && /home/cercol/api/api/.venv/bin/python -m jobs.bing_ingest

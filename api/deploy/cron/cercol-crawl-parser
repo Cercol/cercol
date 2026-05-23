@@ -1,0 +1,38 @@
+# Cercol - daily Caddy access-log parser for crawler hits.
+# Reads /var/log/caddy/cercol_api_access.log incrementally and
+# writes crawler hits to cercol.cercol_seo.crawl_logs.
+#
+# Install (one-time, as root on the production server):
+#   sudo cp /home/cercol/api/api/deploy/cron/cercol-crawl-parser /etc/cron.d/
+#   sudo chmod 644 /etc/cron.d/cercol-crawl-parser
+#   sudo mkdir -p /home/cercol/.state && sudo chown cercol:cercol /home/cercol/.state
+#
+# The parser keeps its position in /home/cercol/.state/crawl_parser_offset
+# so re-runs and Caddy log rotation are safe (see module docstring).
+#
+# Required filesystem permissions: the cercol user must be able to
+# READ /var/log/caddy/cercol_api_access.log. On the current server
+# the file is owned by caddy:adm, mode 0640; add cercol to adm:
+#   sudo usermod -aG adm cercol
+# (one-time, requires re-login of the cercol user; documented in
+# docs/ops/runbook.md "SEO ingest jobs").
+#
+# Verify after install:
+#   ls -la /etc/cron.d/cercol-crawl-parser
+#   journalctl -t CRON --since "5 minutes ago" | grep crawl-parser
+#   cat /home/cercol/.state/crawl_parser_offset
+#
+# Manual one-shot run (debug):
+#   sudo -u cercol /home/cercol/api/api/.venv/bin/python \
+#       -m jobs.crawl_log_parser
+#
+# Secrets required in /home/cercol/.env:
+#   GOOGLE_APPLICATION_CREDENTIALS=/home/cercol/.secrets/cercol-sa.json
+
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# Daily at 02:00 UTC. Daily cadence keeps the BigQuery write batches
+# small enough to stay under the streaming insert quota and gives us
+# next-morning dashboards.
+0 2 * * * cercol cd /home/cercol/api/api && set -a && . /home/cercol/.env && set +a && /home/cercol/api/api/.venv/bin/python -m jobs.crawl_log_parser
