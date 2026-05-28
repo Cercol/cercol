@@ -9,6 +9,7 @@ critical computational paths in the backend.
 import math
 import sys
 import os
+from decimal import Decimal
 
 import pytest
 
@@ -62,6 +63,26 @@ class TestScoresToZscores:
         scores = {d: _NORM[d]["mean"] for d in _NORM}
         z = _scores_to_zscores(scores)
         assert set(z.keys()) == set(_NORM.keys())
+
+    def test_decimal_scores_do_not_crash(self):
+        """Regression: GET /admin/results read NUMERIC columns from Postgres,
+        which asyncpg returns as decimal.Decimal. Mixing Decimal with the
+        float mean/sd raised TypeError and returned 500. Scores arriving as
+        Decimal must be handled identically to float scores.
+        """
+        scores = {d: Decimal(str(_NORM[d]["mean"])) for d in _NORM}
+        z = _scores_to_zscores(scores)
+        for domain in _NORM:
+            assert isinstance(z[domain], float)
+            assert z[domain] == pytest.approx(0.0, abs=1e-9), domain
+
+    def test_decimal_one_sd_above_mean_gives_plus_one(self):
+        """A Decimal one SD above the mean must still produce a +1 z-score."""
+        for domain in _NORM:
+            scores = {d: Decimal(str(_NORM[d]["mean"])) for d in _NORM}
+            scores[domain] = Decimal(str(_NORM[domain]["mean"] + _NORM[domain]["sd"]))
+            z = _scores_to_zscores(scores)
+            assert z[domain] == pytest.approx(1.0, abs=1e-9), domain
 
 
 # ---------------------------------------------------------------------------

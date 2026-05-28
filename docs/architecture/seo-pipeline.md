@@ -58,7 +58,7 @@ See `docs/data/seo-schema.md` for column-level details.
 
 Service account: `cercol-seo-ingest@cercol.iam.gserviceaccount.com`,
 key file stored on the server at
-`/home/cercol/.secrets/cercol-sa.json`, never in this repo. The
+`/home/cercol/.secrets/cercol-seo-ingest.json`, never in this repo. The
 .gitignore patterns added in FASE A block accidental commit.
 
 Project ownership is currently on Miquel's personal Gmail account
@@ -141,7 +141,7 @@ calls.
 Phase 17.6.1b: server-side deploy. Steps documented in the
 runbook:
 
-1. Place the SA key at `/home/cercol/.secrets/cercol-sa.json`,
+1. Place the SA key at `/home/cercol/.secrets/cercol-seo-ingest.json`,
    mode 0400, owner `cercol:cercol`.
 2. Add the SEO env vars to `/home/cercol/.env`.
 3. Run `scripts/apply_bigquery_ddl.py --apply` once to create

@@ -120,8 +120,15 @@ def _scores_to_zscores(scores: dict, norm: dict | None = None) -> dict:
     Only domains present in both scores and norm are included in the output.
     """
     effective = norm if norm is not None else _NORM
+    # Cast each raw score to float before the arithmetic. Scores reach this
+    # function from two sources: the JSON request body (already float) and
+    # Postgres NUMERIC columns read by the admin endpoints (asyncpg returns
+    # decimal.Decimal). Mixing Decimal with the float mean/sd raised
+    # "unsupported operand type(s) for -: 'decimal.Decimal' and 'float'" and
+    # crashed GET /admin/results with a 500. Float precision is more than
+    # enough for psychometric z-scores.
     return {
-        domain: (scores[domain] - effective[domain]["mean"]) / effective[domain]["sd"]
+        domain: (float(scores[domain]) - effective[domain]["mean"]) / effective[domain]["sd"]
         for domain in effective
         if domain in scores and scores[domain] is not None
     }

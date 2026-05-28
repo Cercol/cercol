@@ -20,6 +20,8 @@
  * @param {object}   opts
  * @param {string}   opts.title         document.title to set (required)
  * @param {string=}  opts.description   meta[name=description] content
+ * @param {string=}  opts.ogTitle       og:title / twitter:title content (defaults to title)
+ * @param {string=}  opts.ogDescription og:description / twitter:description content (defaults to description)
  * @param {string}   opts.path          route path with trailing slash, e.g. "/about/"
  */
 import { useEffect } from 'react'
@@ -32,7 +34,7 @@ function withTrailingSlash(path) {
   return path.endsWith('/') ? path : `${path}/`
 }
 
-export function usePageMeta({ title, description, path }) {
+export function usePageMeta({ title, description, ogTitle, ogDescription, path }) {
   useEffect(() => {
     const cleanPath = withTrailingSlash(path)
     const canonicalUrl = `${BASE}${cleanPath}`
@@ -45,6 +47,33 @@ export function usePageMeta({ title, description, path }) {
     const metaDesc = document.querySelector('meta[name="description"]')
     const prevDesc = metaDesc?.getAttribute('content') ?? null
     if (description && metaDesc) metaDesc.setAttribute('content', description)
+
+    // Open Graph + Twitter. The shell's index.html ships exactly one of
+    // each of these meta tags with the generic home copy. Without this
+    // block top-level pages kept the home's og:title/og:description, so
+    // social shares and crawlers saw "Cercol - Team Personality
+    // Assessment" for every page. Mutate the existing tags via
+    // setAttribute (never appendChild) so the count stays at one, exactly
+    // as BlogArticlePage does for articles. og:* use property=, twitter:*
+    // use name=. Restored on unmount so SPA navigation does not leak copy.
+    const ogTitleValue = ogTitle || title
+    const ogDescValue = ogDescription || description
+    const ogPairs = [
+      ['meta[property="og:title"]', ogTitleValue],
+      ['meta[property="og:description"]', ogDescValue],
+      ['meta[property="og:url"]', canonicalUrl],
+      ['meta[name="twitter:title"]', ogTitleValue],
+      ['meta[name="twitter:description"]', ogDescValue],
+    ]
+    const socialPrev = []  // [{el, prev}]
+    ogPairs.forEach(([selector, value]) => {
+      if (!value) return
+      const el = document.querySelector(selector)
+      if (el) {
+        socialPrev.push({ el, prev: el.getAttribute('content') })
+        el.setAttribute('content', value)
+      }
+    })
 
     // Wipe stale canonical + hreflang from the shell or a prior route
     document
@@ -81,9 +110,10 @@ export function usePageMeta({ title, description, path }) {
     return () => {
       document.title = prevTitle
       if (metaDesc && prevDesc !== null) metaDesc.setAttribute('content', prevDesc)
+      socialPrev.forEach(({ el, prev }) => prev !== null && el.setAttribute('content', prev))
       added.forEach(el => el.remove())
     }
-  }, [title, description, path])
+  }, [title, description, ogTitle, ogDescription, path])
 }
 
 export default usePageMeta
