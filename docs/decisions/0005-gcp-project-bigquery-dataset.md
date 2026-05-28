@@ -32,7 +32,7 @@ Two BigQuery datasets, both EU region:
 
 Service account: `cercol-seo-ingest@cercol.iam.gserviceaccount.com`,
 scoped to read `searchconsole` and read+write `cercol_seo`. Key file
-stored on the Hetzner server at `/home/cercol/.secrets/cercol-sa.json`.
+stored on the Hetzner server at `/home/cercol/.secrets/cercol-seo-ingest.json`.
 
 Budget alert: 30 DKK per month. BigQuery storage at this volume is
 expected to cost about 0.50 to 2.00 EUR per month; the cap protects

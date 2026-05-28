@@ -16,7 +16,7 @@
 #
 # Secrets required in /home/cercol/.env:
 #   PAGESPEED_API_KEY
-#   GOOGLE_APPLICATION_CREDENTIALS=/home/cercol/.secrets/cercol-sa.json
+#   GOOGLE_APPLICATION_CREDENTIALS=/home/cercol/.secrets/cercol-seo-ingest.json
 
 SHELL=/bin/bash
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin

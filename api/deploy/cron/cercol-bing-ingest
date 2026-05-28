@@ -16,7 +16,7 @@
 #
 # Secrets required in /home/cercol/.env:
 #   BING_WMT_API_KEY
-#   GOOGLE_APPLICATION_CREDENTIALS=/home/cercol/.secrets/cercol-sa.json
+#   GOOGLE_APPLICATION_CREDENTIALS=/home/cercol/.secrets/cercol-seo-ingest.json
 #   BIGQUERY_PROJECT=cercol (default)
 #   BIGQUERY_DATASET_SEO=cercol_seo (default)
 

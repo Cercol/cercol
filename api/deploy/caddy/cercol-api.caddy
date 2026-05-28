@@ -1,4 +1,21 @@
 api.cercol.team {
-    encode zstd gzip
-    reverse_proxy 127.0.0.1:8090
+	encode zstd gzip
+
+	# Access log in Caddy's JSON format, consumed by
+	# api/jobs/crawl_log_parser.py. This block was dropped when the
+	# snippet was migrated into conf.d on 2026-05-20, which silently froze
+	# /var/log/caddy/cercol_api_access.log (last write 2026-05-11) and
+	# broke the crawl_logs ingest pipeline. The parser matches the logger
+	# name "http.log.access" / "http.log.access.<sublogger>", so the
+	# default JSON file output is what it needs. Caddy's native roller
+	# rotates by size and keeps a bounded history.
+	log {
+		output file /var/log/caddy/cercol_api_access.log {
+			roll_size 10MiB
+			roll_keep 5
+		}
+		format json
+	}
+
+	reverse_proxy 127.0.0.1:8090
 }

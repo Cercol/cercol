@@ -32,9 +32,9 @@ SAMPLED_ROUTES = [
     "about",
     "science",
     "blog",
-    "blog/what-is-agreeableness-the-cooperative-dimension",
-    "ca/blog/big-five-personality-across-cultures-what-research-shows",
-    "da/blog/personality-and-happiness-what-big-five-predicts",
+    "blog/critiques-of-big-five-what-critics-say",
+    "ca/blog/personality-and-negotiation-who-wins-and-why",
+    "da/blog/personality-science-replication-crisis",
 ]
 
 # Match opening <h1 ...> case-insensitively. Closing tag not required by the
@@ -43,6 +43,10 @@ SAMPLED_ROUTES = [
 H1_OPEN = re.compile(r"<h1[\s>]", re.IGNORECASE)
 META_DESC = re.compile(r'<meta\b[^>]*\bname="description"', re.IGNORECASE)
 LINK_CANON = re.compile(r'<link\b[^>]*\brel="canonical"', re.IGNORECASE)
+# Whole <meta property="og:title" ...> tag, in either attribute order.
+OG_TITLE_TAG = re.compile(r'<meta\b[^>]*\bproperty="og:title"[^>]*>', re.IGNORECASE)
+# content="..." inside a tag we already isolated.
+CONTENT_ATTR = re.compile(r'\bcontent="([^"]*)"', re.IGNORECASE)
 
 
 def _html_path(route: str) -> Path:
@@ -50,6 +54,16 @@ def _html_path(route: str) -> Path:
     if route == "":
         return DIST / "index.html"
     return DIST / route / "index.html"
+
+
+def _og_title(route: str) -> str:
+    """Return the og:title content for a prerendered route."""
+    html = _html_path(route).read_text(encoding="utf-8")
+    tag = OG_TITLE_TAG.search(html)
+    assert tag, f"route /{route or ''}/ has no <meta property=\"og:title\">"
+    m = CONTENT_ATTR.search(tag.group(0))
+    assert m, f"route /{route or ''}/ og:title tag has no content attribute"
+    return m.group(1)
 
 
 def _has_prerendered() -> bool:
@@ -104,4 +118,40 @@ def test_route_has_exactly_one_canonical(route: str) -> None:
     assert count == 1, (
         f"route /{route or ''}/ has {count} <link rel=\"canonical\"> tags; "
         f"SEO requires exactly one. File: {path}"
+    )
+
+
+@pytest.mark.skipif(not _has_prerendered(), reason="dist/ not prerendered; run `npm run build:full` first")
+@pytest.mark.parametrize("route", SAMPLED_ROUTES)
+def test_route_has_exactly_one_og_title(route: str) -> None:
+    """Each page must ship exactly one <meta property="og:title"> with a
+    non-empty content. The earlier bug shipped the tag (from the shell)
+    but usePageMeta never mutated it for top-level pages, so the count
+    was right but the content was the generic home title; this guard
+    pairs with the distinctness check below.
+    """
+    path = _html_path(route)
+    html = path.read_text(encoding="utf-8")
+    count = len(OG_TITLE_TAG.findall(html))
+    assert count == 1, (
+        f"route /{route or ''}/ has {count} <meta property=\"og:title\"> tags; "
+        f"SEO requires exactly one. File: {path}"
+    )
+    assert _og_title(route).strip(), (
+        f"route /{route or ''}/ has an empty og:title content. File: {path}"
+    )
+
+
+@pytest.mark.skipif(not _has_prerendered(), reason="dist/ not prerendered; run `npm run build:full` first")
+@pytest.mark.parametrize("route", ["about", "science"])
+def test_top_level_og_title_differs_from_home(route: str) -> None:
+    """Regression guard for the audit finding: /about/ and /science/ kept
+    the home's generic og:title because usePageMeta did not mutate og:*.
+    A top-level page sharing the home og:title means the fix regressed.
+    """
+    home_og = _og_title("")
+    page_og = _og_title(route)
+    assert page_og != home_og, (
+        f"route /{route}/ has the same og:title as the home (\"{home_og}\"); "
+        f"usePageMeta must set a page-specific og:title."
     )
