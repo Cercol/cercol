@@ -358,6 +358,16 @@ async function renderOneRoute(browser, { route, lang }, { articles, articlesBySl
   page.on('pageerror', () => {})
   page.on('requestfailed', () => {})
 
+  // Expose the article list to React DURING the render (not only to the
+  // hydrated client via the post-capture <script> below). BlogArticlePage's
+  // language-aware internal-link rewrite reads window.__BLOG_ARTICLES__ to
+  // decide whether a target has the active locale; without this the
+  // prerendered (crawler-visible) HTML keeps English link URLs on localized
+  // pages. evaluateOnNewDocument runs before every navigation on this page.
+  await page.evaluateOnNewDocument((arts) => {
+    window.__BLOG_ARTICLES__ = arts
+  }, articles)
+
   // For non-English pages, set localStorage so i18n initialises correctly
   if (lang !== 'en') {
     await page.goto(`${BASE_URL}/`, { waitUntil: 'domcontentloaded', timeout: 10000 })
