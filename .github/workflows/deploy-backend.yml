@@ -44,12 +44,20 @@ jobs:
             # External smoke test. Probes the public URL through Caddy, so
             # it catches the failure mode where the snippet was installed
             # but topquaranta's Caddyfile no longer imports conf.d.
-            for i in 1 2 3 4 5; do
+            #
+            # The window is generous on purpose. After `systemctl restart`
+            # uvicorn has to boot two workers, and the VPS is shared with
+            # topquaranta under sustained high load: a 2026-05-28 deploy saw
+            # the app take ~31s to serve its first 200 while the old 10s
+            # window (5 x 2s) had already given up and failed the job, even
+            # though the deploy itself was healthy. 20 x 3s = up to 60s
+            # tolerates that cold start without masking a real outage.
+            for i in $(seq 1 20); do
                 if curl -fsS -o /dev/null https://api.cercol.team/blog; then
-                    echo "External smoke test passed"
+                    echo "External smoke test passed on attempt $i"
                     exit 0
                 fi
-                sleep 2
+                sleep 3
             done
-            echo "External smoke test failed: https://api.cercol.team/blog unreachable" >&2
+            echo "External smoke test failed: https://api.cercol.team/blog unreachable after 60s" >&2
             exit 1

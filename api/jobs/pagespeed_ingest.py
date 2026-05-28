@@ -41,7 +41,12 @@ MAX_RETRIES = 3
 RETRY_BASE_DELAY_S = 2.0
 
 # Seed list used before the GSC bulk export has enough data to rank by
-# impressions. Order is editorial, not algorithmic.
+# impressions. Order is editorial, not algorithmic. The first entries are
+# stable section pages; the trailing two are sample blog articles so the
+# fallback also measures an article-type page. Those article slugs can rot
+# if blog content is renamed or removed; if a measurement starts returning
+# 404-shaped results, verify the slug still resolves and swap it for a live
+# one. (The two previous slugs went stale and were replaced 2026-05-28.)
 SEED_URLS: tuple[str, ...] = (
     "https://cercol.team/",
     "https://cercol.team/science/",
@@ -50,8 +55,8 @@ SEED_URLS: tuple[str, ...] = (
     "https://cercol.team/about/",
     "https://cercol.team/faq/",
     "https://cercol.team/blog/",
-    "https://cercol.team/blog/what-is-agreeableness-the-cooperative-dimension/",
-    "https://cercol.team/blog/how-to-build-a-balanced-team/",
+    "https://cercol.team/blog/critiques-of-big-five-what-critics-say/",
+    "https://cercol.team/blog/personality-science-evidence-based-hr-why-it-matters/",
 )
 
 DEVICES: tuple[str, ...] = ("mobile", "desktop")
