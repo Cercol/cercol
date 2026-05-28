@@ -11,7 +11,9 @@ as main.py.
 from datetime import datetime, timezone
 from typing import Optional
 
+import asyncpg
 from fastapi import APIRouter, Depends, HTTPException, Request, status
+from fastapi.responses import RedirectResponse
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import JWTError, jwt
 from pydantic import BaseModel
@@ -108,7 +110,27 @@ def _row_to_list_item(row) -> dict:
         "viewCount":   row["view_count"],
         "category":    row.get("category", "general"),
         "complexity":  row.get("complexity", "intermediate"),
+        # Languages with non-empty content. Feeds window.__BLOG_ARTICLES__
+        # so BlogArticlePage can rewrite internal links to a localized URL
+        # only when the target actually has that locale (else EN fallback).
+        "languages":   list(row["languages"]) if row.get("languages") is not None else [],
     }
+
+
+async def _lookup_redirect(conn, slug: str) -> str | None:
+    """Return the successor slug for a dead slug, or None.
+
+    Defensive: if the blog_slug_redirects table has not been migrated yet
+    (the deploy may install new code before the SQL is applied), treat it
+    as "no redirect" so /blog/<slug> degrades to a normal 404 instead of
+    a 500.
+    """
+    try:
+        return await conn.fetchval(
+            "SELECT slug_new FROM blog_slug_redirects WHERE slug_old = $1", slug
+        )
+    except asyncpg.exceptions.UndefinedTableError:
+        return None
 
 
 # ---------------------------------------------------------------------------
@@ -149,7 +171,11 @@ async def list_posts(request: Request):
         rows = await conn.fetch(
             """
             SELECT slug, status, title, description, cover_url, author, published_at, view_count,
-                   category, complexity
+                   category, complexity,
+                   ARRAY(
+                       SELECT k FROM jsonb_object_keys(content) AS k
+                       WHERE coalesce(length(trim(content ->> k)), 0) > 0
+                   ) AS languages
             FROM blog_posts
             WHERE status = 'published'
             ORDER BY published_at DESC
@@ -160,7 +186,14 @@ async def list_posts(request: Request):
 
 @router.get("/blog/{slug}")
 async def get_post(slug: str, request: Request):
-    """Return a single post by slug. 404 if not found."""
+    """Return a single post by slug.
+
+    If the slug is unknown, consult blog_slug_redirects: a hit returns a
+    308 Permanent Redirect to /blog/<slug_new>, otherwise 404. Only one
+    hop is ever followed, and the target must resolve to a live post, so a
+    redirect chain or an A->B->A cycle can never loop or land on a 404
+    page: a redirect whose target does not exist is reported as 404.
+    """
     async with request.app.state.pool.acquire() as conn:
         row = await conn.fetchrow(
             """
@@ -172,9 +205,21 @@ async def get_post(slug: str, request: Request):
             """,
             slug,
         )
-    if not row:
-        raise HTTPException(status_code=404, detail="Post not found")
-    return _row_to_post(row)
+        if row:
+            return _row_to_post(row)
+
+        new_slug = await _lookup_redirect(conn, slug)
+        if new_slug:
+            # Single hop only: the successor must itself be a live post.
+            # This rejects chains (B is only a redirect, not an article)
+            # and cycles (A->B->A never resolves to a real post).
+            target_exists = await conn.fetchval(
+                "SELECT 1 FROM blog_posts WHERE slug = $1", new_slug
+            )
+            if target_exists:
+                return RedirectResponse(url=f"/blog/{new_slug}", status_code=308)
+
+    raise HTTPException(status_code=404, detail="Post not found")
 
 
 @router.post("/blog/{slug}/view")

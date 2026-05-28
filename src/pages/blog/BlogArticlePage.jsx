@@ -134,6 +134,39 @@ export function getPrerenderedArticle(slug, win = typeof window !== 'undefined' 
   return null
 }
 
+/**
+ * Rewrite internal /blog/<slug> links in rendered HTML to the active
+ * locale, but ONLY when the target article actually has content in that
+ * locale. Otherwise the English URL is kept so the reader lands on real
+ * content (English fallback) instead of a localized URL that renders the
+ * English body under a misleading path.
+ *
+ * `articles` is window.__BLOG_ARTICLES__ (each entry carries a
+ * `languages` array from the API list endpoint). English needs no
+ * rewrite because the body already emits /blog/<slug>. External links and
+ * non-article internal links (/science, /blog) are left untouched.
+ *
+ * Exported for unit testing (see __tests__/localizeBlogLinks.test.js).
+ */
+export function localizeBlogLinks(html, lang, articles) {
+  if (!html || lang === 'en') return html
+  const langsBySlug = new Map()
+  if (Array.isArray(articles)) {
+    for (const a of articles) {
+      if (a && a.slug) {
+        langsBySlug.set(a.slug, Array.isArray(a.languages) ? a.languages : [])
+      }
+    }
+  }
+  return html.replace(/href="\/blog\/([a-z0-9-]+)(\/?)"/g, (match, slug, trailing) => {
+    const langs = langsBySlug.get(slug)
+    if (langs && langs.includes(lang)) {
+      return `href="/${lang}/blog/${slug}${trailing}"`
+    }
+    return match
+  })
+}
+
 /** Parse ## and ### headings from markdown content for ToC. */
 function extractHeadings(markdown) {
   if (!markdown) return []
@@ -426,9 +459,12 @@ export default function BlogArticlePage() {
   // and only if it sits at the very top (after optional whitespace).
   const bodyContent = rawContent.replace(/^\s*#\s+[^\n]+\n+/, '')
   const rawHtml     = bodyContent ? marked.parse(bodyContent) : ''
-  const htmlContent = urlLang === 'en'
-    ? rawHtml
-    : rawHtml.replace(/href="\/blog\//g, `href="/${urlLang}/blog/`)
+  // Language-aware internal-link rewrite. Replaces the previous blind
+  // prefix (which sent every link to /<lang>/blog/<slug> even when the
+  // target had no version in that language). window.__BLOG_ARTICLES__ is
+  // injected by prerender.mjs and persists across SPA navigation.
+  const articlesGlobal = typeof window !== 'undefined' ? window.__BLOG_ARTICLES__ : undefined
+  const htmlContent = localizeBlogLinks(rawHtml, urlLang, articlesGlobal)
   const headings    = extractHeadings(rawContent)
   const estTimeMins = readingTimeMins(rawContent)
 

@@ -1,0 +1,29 @@
+# Cercol - weekly external-link health check for blog articles.
+# Probes every external link in published articles and writes a snapshot
+# to cercol.cercol_seo.external_links_status (Phase 17.10). Emails a
+# digest when links break that were not broken last week.
+#
+# Install (one-time, as root on the production server):
+#   sudo cp /home/cercol/api/api/deploy/cron/cercol-external-links-check /etc/cron.d/
+#   sudo chmod 644 /etc/cron.d/cercol-external-links-check
+#
+# Verify after install:
+#   ls -la /etc/cron.d/cercol-external-links-check
+#   journalctl -t CRON --since "5 minutes ago" | grep external-links-check
+#
+# Manual one-shot run (debug):
+#   sudo -u cercol /home/cercol/api/api/.venv/bin/python \
+#       -m jobs.external_links_check
+#
+# Secrets required in /home/cercol/.env:
+#   GOOGLE_APPLICATION_CREDENTIALS=/home/cercol/.secrets/cercol-seo-ingest.json
+#   RESEND_API_KEY            (for the digest email)
+#   LINKS_ALERT_EMAIL         (recipient; if unset, digest is logged not sent)
+
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# Sunday 05:30 UTC, after the other weekly SEO jobs. Weekly cadence is
+# enough for link rot and keeps the probe volume (a few hundred external
+# URLs) polite to the third-party hosts.
+30 5 * * 0 cercol cd /home/cercol/api/api && set -a && . /home/cercol/.env && set +a && /home/cercol/api/api/.venv/bin/python -m jobs.external_links_check

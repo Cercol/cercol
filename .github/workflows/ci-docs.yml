@@ -20,6 +20,7 @@ jobs:
             !dist/**
             !.venv/**
             !api/.venv/**
+            !docs/seo/links-audit-*.md
 
   link-check:
     name: Link check (lychee)
@@ -44,6 +45,12 @@ jobs:
           #   so the link is correct; flap suppressed here.
           # Accept 403 as a valid response for everything else so a
           # bot-detected publisher does not turn the gate red.
+          #
+          # docs/seo/links-audit-*.md is a GENERATED report whose whole
+          # job is to list broken links found by scripts/audit_blog_links.py.
+          # Link-checking it would always fail by design, so it is
+          # excluded (both a glob and the literal current file, so the
+          # exclusion holds whichever path-matching the pinned lychee uses).
           args: >-
             --no-progress
             --accept '200,206,301,302,304,403'
@@ -53,6 +60,8 @@ jobs:
             --exclude 'porkbun\.com/api'
             --exclude 'doi\.org'
             --exclude 'ipip\.ori\.org'
+            --exclude-path 'docs/seo/links-audit-*.md'
+            --exclude-path 'docs/seo/links-audit-20260528.md'
             './**/*.md'
           fail: true
 
