@@ -91,3 +91,24 @@ parser is stateful so each line is written at most once.
 LIMITATION: this table covers only `api.cercol.team`. The
 frontend `cercol.team` is on GitHub Pages, no origin logs. See
 the limitations section of `docs/architecture/seo-pipeline.md`.
+
+## external_links_status
+
+Weekly snapshot of external links found in published blog article
+bodies, with their last probed HTTP status. Phase 17.10.
+
+| Column | Type | Notes |
+|---|---|---|
+| ts | TIMESTAMP | When this probe ran. |
+| ts_date | DATE | Date(ts) for partitioning. |
+| article_slug | STRING | Slug of the article containing the link. Cluster key. |
+| lang | STRING | Language version the link appears in. |
+| url | STRING | The external URL probed. |
+| status_code | INT64 | HTTP status from HEAD/GET; NULL on connection failure. |
+| broken | BOOL | True only for hard failures (404 / DNS), not flaky 403/5xx/timeout. Cluster key. |
+
+Written by `api/jobs/external_links_check.py`. Append-only; each run
+appends a fresh snapshot so "newly broken since last week" diffs are
+derivable. Internal links are not here: they are guarded at build time
+by `api/tests/test_internal_links_integrity.py` and resolved at request
+time by the `blog_slug_redirects` Postgres table.
