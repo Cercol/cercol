@@ -159,6 +159,18 @@ TODO: migrate the GCP project ownership from the personal account
 to a Workspace tenant rooted at `hello@cercol.team` once the phone
 block is resolved. Tracked as Phase 17.7 in `ROADMAP.md`.
 
+### External links check (Phase 17.10)
+
+Cron: `/etc/cron.d/cercol-external-links-check` runs Sunday 05:30 UTC.
+Probes external links in published blog articles and appends a snapshot
+to `cercol_seo.external_links_status` (DDL
+`api/data/bigquery_ddl/07_external_links_status.sql`, applied by
+`apply_bigquery_ddl.py`). When links break that were healthy last week
+it emails a digest. Add `LINKS_ALERT_EMAIL=<recipient>` to
+`/home/cercol/.env` (alongside the existing `RESEND_API_KEY`); if unset
+the digest is logged, not sent, and the job still succeeds. Manual run:
+`sudo -u cercol /home/cercol/api/api/.venv/bin/python -m jobs.external_links_check`.
+
 ### Anomaly detector
 
 Cron: `/etc/cron.d/cercol-seo-anomaly` runs daily at 05:00 UTC.
@@ -306,11 +318,31 @@ socket:
 sudo -u cercol psql cercol
 ```
 
-Migrations are applied by hand:
+Migrations are applied by hand (peer auth as the `postgres` superuser
+is the reliable path; the `cercol` role may prompt for a password):
 
 ```
-sudo -u cercol psql cercol -f db/migrations/<NNN>-<name>.sql
+cd /home/cercol/api && sudo -u postgres psql cercol -f db/migrations/<NNN>-<name>.sql
 ```
 
 Backups are the operator's responsibility (`pg_dump`). Frequency
 and offsite copy procedure: TODO document.
+
+### Blog slug redirects (Phase 17.10)
+
+`db/migrations/016_blog_slug_redirects.sql` creates the
+`blog_slug_redirects` table (`slug_old` -> `slug_new`) and seeds the
+redirects found by `scripts/audit_blog_links.py`. The migration is
+idempotent (`CREATE TABLE IF NOT EXISTS` + `INSERT ... ON CONFLICT DO
+NOTHING`), so re-running it is safe. `GET /blog/<slug>` answers `308`
+to `/blog/<slug_new>` for a dead slug that has a row here; the backend
+degrades to a normal `404` if the table is missing, so applying the
+migration after the code deploy is safe. To add a redirect later:
+
+```
+INSERT INTO blog_slug_redirects (slug_old, slug_new, reason)
+VALUES ('<old>', '<new>', '<why>') ON CONFLICT (slug_old) DO NOTHING;
+```
+
+Re-run `python scripts/audit_blog_links.py` from the repo to refresh
+`docs/seo/links-audit-<date>.md` and find new breakage.
