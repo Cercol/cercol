@@ -128,7 +128,7 @@ NOT installed on the server.
 # 1. Service account key (download from GCP console first; never
 #    commit). Mode 0400, owner cercol:cercol.
 sudo mkdir -p /home/cercol/.secrets
-sudo install -m 0400 -o cercol -g cercol /path/to/cercol-sa.json /home/cercol/.secrets/cercol-sa.json
+sudo install -m 0400 -o cercol -g cercol /path/to/cercol-seo-ingest.json /home/cercol/.secrets/cercol-seo-ingest.json
 
 # 2. Add SEO env vars to /home/cercol/.env (BING_WMT_API_KEY,
 #    PAGESPEED_API_KEY, GOOGLE_APPLICATION_CREDENTIALS).
