@@ -24,19 +24,6 @@ import pytest
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DIST = REPO_ROOT / "dist"
 
-# Sample of prerendered routes. Mix of: home, two top-level pages that
-# previously shipped zero H1s, one blog index, two blog articles that
-# previously shipped two H1s, and one localised variant.
-SAMPLED_ROUTES = [
-    "",                                                       # home
-    "about",
-    "science",
-    "blog",
-    "blog/critiques-of-big-five-what-critics-say",
-    "ca/blog/personality-and-negotiation-who-wins-and-why",
-    "da/blog/personality-science-replication-crisis",
-]
-
 # Match opening <h1 ...> case-insensitively. Closing tag not required by the
 # regex; the prerendered HTML always emits a closing tag if it emits an
 # opening one, so counting opens is enough to detect duplicates.
@@ -75,6 +62,65 @@ def _has_prerendered() -> bool:
     of `dist/about/index.html` is the canary for that.
     """
     return DIST.is_dir() and (DIST / "about" / "index.html").is_file()
+
+
+# Languages the site prerenders. The default (English) blog lives at
+# dist/blog/, every other language at dist/<lang>/blog/.
+LANGS = ["", "ca", "da", "de", "es", "fr"]
+
+# Stable top-level routes. These change rarely, so a small hardcoded list
+# is fine, but each is included in the sample only if it actually exists
+# in dist/. A renamed or removed page degrades to a skipped sample instead
+# of a hard FileNotFoundError that breaks every parametrised case.
+TOP_LEVEL_CANDIDATES = ["", "about", "science", "instruments", "roles", "faq", "blog"]
+
+
+def _discover_routes() -> list[str]:
+    """Derive the sampled routes from the prerendered dist/ instead of
+    hardcoding blog slugs that rot when content is renamed or removed.
+
+    The selection is deterministic (alphabetical, first per category) so
+    the test is reproducible: it fails the same way for everyone. Coverage:
+    every existing top-level page plus the first blog article (alphabetical)
+    for each language that has any prerendered articles. That keeps the
+    sample multilingual without naming a single concrete slug.
+
+    Returns an empty list when dist/ is not prerendered; the skipif on each
+    test then skips cleanly (no spurious failures in backend-only CI).
+    """
+    if not _has_prerendered():
+        return []
+    routes: list[str] = []
+    for route in TOP_LEVEL_CANDIDATES:
+        if _html_path(route).is_file():
+            routes.append(route)
+    for lang in LANGS:
+        blog_dir = DIST / "blog" if lang == "" else DIST / lang / "blog"
+        if not blog_dir.is_dir():
+            continue
+        slugs = sorted(
+            p.name
+            for p in blog_dir.iterdir()
+            if p.is_dir() and (p / "index.html").is_file()
+        )
+        if slugs:
+            prefix = "blog" if lang == "" else f"{lang}/blog"
+            routes.append(f"{prefix}/{slugs[0]}")
+    return routes
+
+
+# Sampled at import time from the current prerender. Empty when dist/ is not
+# built, in which case skipif takes over.
+SAMPLED_ROUTES = _discover_routes()
+
+# Top-level pages (excluding the home and the blog index) used by the
+# og:title distinctness guard. Derived from the same stable candidate list,
+# filtered to what exists in dist/.
+TOP_LEVEL_OG_ROUTES = [
+    route
+    for route in TOP_LEVEL_CANDIDATES
+    if route not in ("", "blog") and _html_path(route).is_file()
+]
 
 
 @pytest.mark.skipif(not _has_prerendered(), reason="dist/ not prerendered; run `npm run build:full` first")
@@ -143,11 +189,12 @@ def test_route_has_exactly_one_og_title(route: str) -> None:
 
 
 @pytest.mark.skipif(not _has_prerendered(), reason="dist/ not prerendered; run `npm run build:full` first")
-@pytest.mark.parametrize("route", ["about", "science"])
+@pytest.mark.parametrize("route", TOP_LEVEL_OG_ROUTES)
 def test_top_level_og_title_differs_from_home(route: str) -> None:
-    """Regression guard for the audit finding: /about/ and /science/ kept
-    the home's generic og:title because usePageMeta did not mutate og:*.
-    A top-level page sharing the home og:title means the fix regressed.
+    """Regression guard for the audit finding: top-level pages such as
+    /about/ and /science/ kept the home's generic og:title because
+    usePageMeta did not mutate og:*. A top-level page sharing the home
+    og:title means the fix regressed.
     """
     home_og = _og_title("")
     page_og = _og_title(route)
