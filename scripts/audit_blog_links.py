@@ -122,6 +122,24 @@ def probe_external(client: httpx.Client, url: str) -> tuple[str, int | None]:
     return "flaky", last_status
 
 
+def resolves_via_redirect(client: httpx.Client, slug: str, cache: dict[str, bool]) -> bool:
+    """True if /blog/<slug> resolves to a live article, following one 308.
+
+    A slug missing from the live set is not necessarily broken: the
+    blog_slug_redirects table may 308 it to a live successor. Probe the API
+    (following redirects) and treat a final 200 as resolved.
+    """
+    if slug in cache:
+        return cache[slug]
+    try:
+        r = client.get(f"/blog/{slug}", timeout=10, follow_redirects=True)
+        resolved = r.status_code == 200
+    except httpx.HTTPError:
+        resolved = False
+    cache[slug] = resolved
+    return resolved
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--api", default=DEFAULT_API)
@@ -145,6 +163,8 @@ def main() -> int:
             languages[slug] = langs_with_content(contents[slug])
 
     internal_broken: list[dict] = []
+    internal_redirected: list[dict] = []
+    redirect_cache: dict[str, bool] = {}
     mismatches: list[dict] = []
     external_seen: dict[str, tuple[str, int | None]] = {}
     external_broken: list[dict] = []
@@ -166,9 +186,15 @@ def main() -> int:
                         continue
                     _, target_slug = target
                     if target_slug not in live_set:
-                        internal_broken.append(
-                            {"from": slug, "lang": lang, "url": url, "slug": target_slug}
-                        )
+                        # Not a live slug, but it may 308 to a live successor.
+                        if resolves_via_redirect(client, target_slug, redirect_cache):
+                            internal_redirected.append(
+                                {"from": slug, "lang": lang, "slug": target_slug}
+                            )
+                        else:
+                            internal_broken.append(
+                                {"from": slug, "lang": lang, "url": url, "slug": target_slug}
+                            )
                     elif lang not in languages.get(target_slug, []):
                         mismatches.append(
                             {"from": slug, "lang": lang, "target": target_slug,
@@ -205,6 +231,10 @@ def main() -> int:
     lines.append(f"- Articles audited: {len(live_slugs)}")
     lines.append(f"- Links checked: {total_links} ({total_internal} internal, {total_external} external)")
     lines.append(f"- Internal broken: {len(internal_broken)} ({len(dead_slugs)} distinct dead slugs)")
+    lines.append(
+        f"- Internal resolved via redirect: {len(internal_redirected)} "
+        f"({len({r['slug'] for r in internal_redirected})} distinct slugs, not broken)"
+    )
     lines.append(f"- External broken: {len(external_broken)}")
     lines.append(f"- External flaky (informational): {len(external_flaky)}")
     lines.append(f"- Multilingual mismatches: {len(mismatches)}")
@@ -220,6 +250,22 @@ def main() -> int:
             prop, conf = proposals.get(slug, (None, 0.0))
             verdict = prop if (prop and conf >= PROPOSE_THRESHOLD) else "needs human decision"
             lines.append(f"| {b['from']} | {b['lang']} | `{b['url']}` | `{slug}` | {verdict} | {conf} |")
+    else:
+        lines.append("None.")
+    lines.append("")
+
+    lines.append("## Internal links resolved via redirect")
+    lines.append("")
+    lines.append("Targets not in the live slug set that 308 to a live successor")
+    lines.append("via blog_slug_redirects. These are NOT broken.")
+    lines.append("")
+    redirected_slugs = sorted({r["slug"] for r in internal_redirected})
+    if redirected_slugs:
+        lines.append("| Dead slug | Instances |")
+        lines.append("|---|---|")
+        for ds in redirected_slugs:
+            n = sum(1 for r in internal_redirected if r["slug"] == ds)
+            lines.append(f"| `{ds}` | {n} |")
     else:
         lines.append("None.")
     lines.append("")
