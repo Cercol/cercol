@@ -1,5 +1,7 @@
 import { Component, lazy, Suspense, useState, useEffect } from 'react'
-import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom'
+import i18n from './i18n'
+import { PATH_LANGS, localeFromPath } from './utils/locale'
 import { FeedbackProvider, useFeedbackContext } from './context/FeedbackContext'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import OnboardingModal from './components/OnboardingModal'
@@ -87,11 +89,52 @@ class ErrorBoundary extends Component {
   }
 }
 
+// Top-level public pages that exist in every language as a real path
+// (prerendered per locale). Home is keyed by '/'. The instrument-taking
+// pages, witness flow, auth, account and admin are intentionally excluded:
+// they are interactive/private/per-token and are not indexable SEO targets.
+const TOP_LEVEL_PAGES = [
+  { path: '/about',       element: <AboutPage /> },
+  { path: '/instruments', element: <InstrumentsPage /> },
+  { path: '/roles',       element: <RolesPage /> },
+  { path: '/science',     element: <SciencePage /> },
+  { path: '/faq',         element: <FaqPage /> },
+  { path: '/privacy',     element: <PrivacyPage /> },
+]
+
+/**
+ * Keep i18n and <html lang> in sync with the URL. Priority: path prefix
+ * (/es/...) > ?lang= query > whatever i18n already resolved (localStorage /
+ * browser, set in i18n.js). A plain English path with no query does NOT
+ * force a change, so a returning visitor with a saved preference is not
+ * reset to English when they land on an unprefixed page.
+ */
+function useLocaleSync() {
+  const { pathname, search } = useLocation()
+  useEffect(() => {
+    const pathLang = localeFromPath(pathname)
+    const queryLang = new URLSearchParams(search).get('lang')
+    const target = pathLang !== 'en'
+      ? pathLang
+      : (PATH_LANGS.includes(queryLang) ? queryLang : null)
+    if (target && i18n.language.slice(0, 2) !== target) {
+      i18n.changeLanguage(target)
+    }
+    // Reflect the effective language on the document so the prerendered
+    // HTML ships <html lang="<locale>"> instead of always "en".
+    const effective = target || i18n.language.slice(0, 2) || 'en'
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = effective
+    }
+  }, [pathname, search])
+}
+
 function AppContent() {
   const { itemContext } = useFeedbackContext()
   const { user, profile, loading, markOnboardingSeen } = useAuth()
   const navigate = useNavigate()
   const [showOnboarding, setShowOnboarding] = useState(false)
+  useLocaleSync()
 
   // Show the onboarding modal once — on first sign-in for new users.
   useEffect(() => {
@@ -165,6 +208,16 @@ function AppContent() {
 
           {/* Legal */}
           <Route path="/privacy" element={<PrivacyPage />} />
+
+          {/* Path-based localized top-level pages: /es/, /es/about/, ... .
+              EN keeps the unprefixed routes declared above; these add the
+              five prefixed languages, reusing the same page components. */}
+          {PATH_LANGS.flatMap(lang => [
+            <Route key={`${lang}-home`} path={`/${lang}`} element={<HomePage />} />,
+            ...TOP_LEVEL_PAGES.map(p => (
+              <Route key={`${lang}-${p.path}`} path={`/${lang}${p.path}`} element={p.element} />
+            )),
+          ])}
 
           {/* Admin — guarded by AdminRoute, invisible to non-admins */}
           <Route path="/admin" element={<AdminRoute><AdminDashboardPage /></AdminRoute>} />
