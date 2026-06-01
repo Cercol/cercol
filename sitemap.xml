@@ -8,11 +8,71 @@
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/?lang=ca"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/?lang=es"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/?lang=fr"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/?lang=de"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/?lang=da"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/ca/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/es/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/fr/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/de/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/da/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/"/>
   </url>
   <url>
@@ -20,11 +80,71 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/about/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/about/?lang=ca"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/about/?lang=es"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/about/?lang=fr"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/about/?lang=de"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/about/?lang=da"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/about/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/about/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/about/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/about/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/about/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/ca/about/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/about/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/about/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/about/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/about/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/about/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/about/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/es/about/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/about/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/about/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/about/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/about/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/about/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/about/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/fr/about/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/about/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/about/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/about/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/about/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/about/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/about/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/de/about/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/about/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/about/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/about/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/about/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/about/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/about/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/da/about/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/about/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/about/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/about/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/about/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/about/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/about/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/about/"/>
   </url>
   <url>
@@ -32,11 +152,71 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/instruments/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/instruments/?lang=ca"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/instruments/?lang=es"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/instruments/?lang=fr"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/instruments/?lang=de"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/instruments/?lang=da"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/instruments/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/ca/instruments/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/instruments/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/es/instruments/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/instruments/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/fr/instruments/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/instruments/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/de/instruments/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/instruments/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/da/instruments/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/instruments/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/instruments/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/instruments/"/>
   </url>
   <url>
@@ -44,11 +224,71 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/roles/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/roles/?lang=ca"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/roles/?lang=es"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/roles/?lang=fr"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/roles/?lang=de"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/roles/?lang=da"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/roles/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/roles/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/roles/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/roles/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/roles/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/roles/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/ca/roles/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/roles/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/roles/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/roles/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/roles/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/roles/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/roles/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/roles/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/es/roles/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/roles/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/roles/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/roles/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/roles/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/roles/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/roles/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/roles/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/fr/roles/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/roles/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/roles/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/roles/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/roles/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/roles/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/roles/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/roles/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/de/roles/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/roles/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/roles/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/roles/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/roles/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/roles/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/roles/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/roles/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/da/roles/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/roles/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/roles/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/roles/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/roles/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/roles/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/roles/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/roles/"/>
   </url>
   <url>
@@ -56,11 +296,71 @@
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/science/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/science/?lang=ca"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/science/?lang=es"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/science/?lang=fr"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/science/?lang=de"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/science/?lang=da"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/science/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/science/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/science/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/science/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/science/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/science/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/ca/science/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/science/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/science/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/science/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/science/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/science/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/science/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/science/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/es/science/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/science/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/science/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/science/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/science/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/science/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/science/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/science/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/fr/science/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/science/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/science/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/science/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/science/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/science/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/science/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/science/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/de/science/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/science/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/science/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/science/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/science/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/science/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/science/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/science/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/da/science/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/science/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/science/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/science/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/science/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/science/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/science/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/science/"/>
   </url>
   <url>
@@ -68,11 +368,71 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/faq/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/faq/?lang=ca"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/faq/?lang=es"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/faq/?lang=fr"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/faq/?lang=de"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/faq/?lang=da"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/faq/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/faq/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/faq/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/faq/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/faq/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/faq/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/ca/faq/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/faq/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/faq/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/faq/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/faq/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/faq/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/faq/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/faq/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/es/faq/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/faq/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/faq/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/faq/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/faq/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/faq/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/faq/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/faq/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/fr/faq/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/faq/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/faq/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/faq/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/faq/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/faq/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/faq/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/faq/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/de/faq/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/faq/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/faq/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/faq/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/faq/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/faq/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/faq/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/faq/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/da/faq/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/faq/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/faq/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/faq/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/faq/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/faq/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/faq/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/faq/"/>
   </url>
   <url>
@@ -80,18 +440,143 @@
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/privacy/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/privacy/?lang=ca"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/privacy/?lang=es"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/privacy/?lang=fr"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/privacy/?lang=de"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/privacy/?lang=da"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/privacy/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/ca/privacy/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/privacy/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/es/privacy/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/privacy/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/fr/privacy/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/privacy/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/de/privacy/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/privacy/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/da/privacy/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/privacy/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/privacy/"/>
   </url>
 
-  <!-- Blog index -->
+  <!-- Blog index (one entry per language) -->
   <url>
     <loc>https://cercol.team/blog/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/ca/blog/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/es/blog/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/fr/blog/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/de/blog/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/da/blog/</loc>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/"/>
@@ -105,47 +590,8 @@
 
   <!-- Blog articles -->
   <url>
-    <loc>https://cercol.team/blog/using-cercol-for-team-development-a-practical-guide/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/using-cercol-for-team-development-a-practical-guide/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/using-cercol-for-team-development-a-practical-guide/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/using-cercol-for-team-development-a-practical-guide/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/using-cercol-for-team-development-a-practical-guide/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/using-cercol-for-team-development-a-practical-guide/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/using-cercol-for-team-development-a-practical-guide/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/using-cercol-for-team-development-a-practical-guide/"/>
-  </url>
-  <url>
-    <loc>https://cercol.team/blog/team-failure-modes-personality-perspective/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/team-failure-modes-personality-perspective/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/team-failure-modes-personality-perspective/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/team-failure-modes-personality-perspective/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/team-failure-modes-personality-perspective/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/team-failure-modes-personality-perspective/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/team-failure-modes-personality-perspective/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/team-failure-modes-personality-perspective/"/>
-  </url>
-  <url>
-    <loc>https://cercol.team/blog/do-generational-differences-in-personality-actually-exist/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/do-generational-differences-in-personality-actually-exist/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/do-generational-differences-in-personality-actually-exist/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/do-generational-differences-in-personality-actually-exist/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/do-generational-differences-in-personality-actually-exist/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/do-generational-differences-in-personality-actually-exist/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/do-generational-differences-in-personality-actually-exist/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/do-generational-differences-in-personality-actually-exist/"/>
-  </url>
-  <url>
     <loc>https://cercol.team/blog/anonymity-in-personality-assessment-why-it-matters/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/anonymity-in-personality-assessment-why-it-matters/"/>
@@ -157,60 +603,21 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/anonymity-in-personality-assessment-why-it-matters/"/>
   </url>
   <url>
-    <loc>https://cercol.team/blog/personality-and-communication-style-direct-vs-diplomatic/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <loc>https://cercol.team/blog/team-failure-modes-personality-perspective/</loc>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-and-communication-style-direct-vs-diplomatic/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/personality-and-communication-style-direct-vs-diplomatic/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/personality-and-communication-style-direct-vs-diplomatic/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/personality-and-communication-style-direct-vs-diplomatic/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/personality-and-communication-style-direct-vs-diplomatic/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/personality-and-communication-style-direct-vs-diplomatic/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-and-communication-style-direct-vs-diplomatic/"/>
-  </url>
-  <url>
-    <loc>https://cercol.team/blog/personality-and-leadership-styles-authoritative-coaching-democratic/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-and-leadership-styles-authoritative-coaching-democratic/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/personality-and-leadership-styles-authoritative-coaching-democratic/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/personality-and-leadership-styles-authoritative-coaching-democratic/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/personality-and-leadership-styles-authoritative-coaching-democratic/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/personality-and-leadership-styles-authoritative-coaching-democratic/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/personality-and-leadership-styles-authoritative-coaching-democratic/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-and-leadership-styles-authoritative-coaching-democratic/"/>
-  </url>
-  <url>
-    <loc>https://cercol.team/blog/sales-personality-what-traits-predict-sales-performance/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/sales-personality-what-traits-predict-sales-performance/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/sales-personality-what-traits-predict-sales-performance/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/sales-personality-what-traits-predict-sales-performance/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/sales-personality-what-traits-predict-sales-performance/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/sales-personality-what-traits-predict-sales-performance/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/sales-personality-what-traits-predict-sales-performance/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/sales-personality-what-traits-predict-sales-performance/"/>
-  </url>
-  <url>
-    <loc>https://cercol.team/blog/groupthink-personality-causes-prevention/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/groupthink-personality-causes-prevention/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/groupthink-personality-causes-prevention/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/groupthink-personality-causes-prevention/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/groupthink-personality-causes-prevention/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/groupthink-personality-causes-prevention/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/groupthink-personality-causes-prevention/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/groupthink-personality-causes-prevention/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/team-failure-modes-personality-perspective/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/team-failure-modes-personality-perspective/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/team-failure-modes-personality-perspective/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/team-failure-modes-personality-perspective/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/team-failure-modes-personality-perspective/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/team-failure-modes-personality-perspective/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/team-failure-modes-personality-perspective/"/>
   </url>
   <url>
     <loc>https://cercol.team/blog/personality-and-team-size-what-changes-as-teams-grow/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-and-team-size-what-changes-as-teams-grow/"/>
@@ -222,47 +629,21 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-and-team-size-what-changes-as-teams-grow/"/>
   </url>
   <url>
-    <loc>https://cercol.team/blog/personality-and-negotiation-who-wins-and-why/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <loc>https://cercol.team/blog/personality-and-communication-style-direct-vs-diplomatic/</loc>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-and-negotiation-who-wins-and-why/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/personality-and-negotiation-who-wins-and-why/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/personality-and-negotiation-who-wins-and-why/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/personality-and-negotiation-who-wins-and-why/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/personality-and-negotiation-who-wins-and-why/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/personality-and-negotiation-who-wins-and-why/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-and-negotiation-who-wins-and-why/"/>
-  </url>
-  <url>
-    <loc>https://cercol.team/blog/gender-and-personality-what-big-five-research-says/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/gender-and-personality-what-big-five-research-says/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/gender-and-personality-what-big-five-research-says/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/gender-and-personality-what-big-five-research-says/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/gender-and-personality-what-big-five-research-says/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/gender-and-personality-what-big-five-research-says/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/gender-and-personality-what-big-five-research-says/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/gender-and-personality-what-big-five-research-says/"/>
-  </url>
-  <url>
-    <loc>https://cercol.team/blog/founder-ceo-transition-personality-perspective/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/founder-ceo-transition-personality-perspective/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/founder-ceo-transition-personality-perspective/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/founder-ceo-transition-personality-perspective/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/founder-ceo-transition-personality-perspective/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/founder-ceo-transition-personality-perspective/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/founder-ceo-transition-personality-perspective/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/founder-ceo-transition-personality-perspective/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-and-communication-style-direct-vs-diplomatic/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/personality-and-communication-style-direct-vs-diplomatic/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/personality-and-communication-style-direct-vs-diplomatic/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/personality-and-communication-style-direct-vs-diplomatic/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/personality-and-communication-style-direct-vs-diplomatic/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/personality-and-communication-style-direct-vs-diplomatic/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-and-communication-style-direct-vs-diplomatic/"/>
   </url>
   <url>
     <loc>https://cercol.team/blog/personality-of-entrepreneurs-what-research-says/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-of-entrepreneurs-what-research-says/"/>
@@ -274,34 +655,8 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-of-entrepreneurs-what-research-says/"/>
   </url>
   <url>
-    <loc>https://cercol.team/blog/co-founder-compatibility-personality-due-diligence/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/co-founder-compatibility-personality-due-diligence/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/co-founder-compatibility-personality-due-diligence/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/co-founder-compatibility-personality-due-diligence/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/co-founder-compatibility-personality-due-diligence/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/co-founder-compatibility-personality-due-diligence/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/co-founder-compatibility-personality-due-diligence/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/co-founder-compatibility-personality-due-diligence/"/>
-  </url>
-  <url>
-    <loc>https://cercol.team/blog/conflict-resolution-styles-personality/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/conflict-resolution-styles-personality/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/conflict-resolution-styles-personality/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/conflict-resolution-styles-personality/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/conflict-resolution-styles-personality/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/conflict-resolution-styles-personality/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/conflict-resolution-styles-personality/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/conflict-resolution-styles-personality/"/>
-  </url>
-  <url>
     <loc>https://cercol.team/blog/trust-in-teams-personality-foundations/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/trust-in-teams-personality-foundations/"/>
@@ -313,8 +668,47 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/trust-in-teams-personality-foundations/"/>
   </url>
   <url>
+    <loc>https://cercol.team/blog/sales-personality-what-traits-predict-sales-performance/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/sales-personality-what-traits-predict-sales-performance/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/sales-personality-what-traits-predict-sales-performance/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/sales-personality-what-traits-predict-sales-performance/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/sales-personality-what-traits-predict-sales-performance/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/sales-personality-what-traits-predict-sales-performance/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/sales-personality-what-traits-predict-sales-performance/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/sales-personality-what-traits-predict-sales-performance/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/blog/do-generational-differences-in-personality-actually-exist/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/do-generational-differences-in-personality-actually-exist/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/do-generational-differences-in-personality-actually-exist/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/do-generational-differences-in-personality-actually-exist/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/do-generational-differences-in-personality-actually-exist/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/do-generational-differences-in-personality-actually-exist/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/do-generational-differences-in-personality-actually-exist/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/do-generational-differences-in-personality-actually-exist/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/blog/co-founder-compatibility-personality-due-diligence/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/co-founder-compatibility-personality-due-diligence/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/co-founder-compatibility-personality-due-diligence/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/co-founder-compatibility-personality-due-diligence/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/co-founder-compatibility-personality-due-diligence/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/co-founder-compatibility-personality-due-diligence/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/co-founder-compatibility-personality-due-diligence/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/co-founder-compatibility-personality-due-diligence/"/>
+  </url>
+  <url>
     <loc>https://cercol.team/blog/personality-and-social-media-what-your-posts-reveal/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-and-social-media-what-your-posts-reveal/"/>
@@ -326,47 +720,8 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-and-social-media-what-your-posts-reveal/"/>
   </url>
   <url>
-    <loc>https://cercol.team/blog/personality-assessment-technology-future/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-assessment-technology-future/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/personality-assessment-technology-future/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/personality-assessment-technology-future/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/personality-assessment-technology-future/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/personality-assessment-technology-future/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/personality-assessment-technology-future/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-assessment-technology-future/"/>
-  </url>
-  <url>
-    <loc>https://cercol.team/blog/big-five-personality-across-cultures-what-research-shows/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/big-five-personality-across-cultures-what-research-shows/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/big-five-personality-across-cultures-what-research-shows/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/big-five-personality-across-cultures-what-research-shows/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/big-five-personality-across-cultures-what-research-shows/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/big-five-personality-across-cultures-what-research-shows/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/big-five-personality-across-cultures-what-research-shows/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/big-five-personality-across-cultures-what-research-shows/"/>
-  </url>
-  <url>
-    <loc>https://cercol.team/blog/neurodiversity-and-personality-tests-what-to-know/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/neurodiversity-and-personality-tests-what-to-know/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/neurodiversity-and-personality-tests-what-to-know/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/neurodiversity-and-personality-tests-what-to-know/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/neurodiversity-and-personality-tests-what-to-know/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/neurodiversity-and-personality-tests-what-to-know/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/neurodiversity-and-personality-tests-what-to-know/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/neurodiversity-and-personality-tests-what-to-know/"/>
-  </url>
-  <url>
     <loc>https://cercol.team/blog/personality-science-evidence-based-hr-why-it-matters/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-science-evidence-based-hr-why-it-matters/"/>
@@ -378,34 +733,60 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-science-evidence-based-hr-why-it-matters/"/>
   </url>
   <url>
-    <loc>https://cercol.team/blog/personality-and-mentoring-what-makes-a-good-mentor/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <loc>https://cercol.team/blog/neurodiversity-and-personality-tests-what-to-know/</loc>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-and-mentoring-what-makes-a-good-mentor/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/personality-and-mentoring-what-makes-a-good-mentor/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/personality-and-mentoring-what-makes-a-good-mentor/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/personality-and-mentoring-what-makes-a-good-mentor/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/personality-and-mentoring-what-makes-a-good-mentor/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/personality-and-mentoring-what-makes-a-good-mentor/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-and-mentoring-what-makes-a-good-mentor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/neurodiversity-and-personality-tests-what-to-know/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/neurodiversity-and-personality-tests-what-to-know/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/neurodiversity-and-personality-tests-what-to-know/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/neurodiversity-and-personality-tests-what-to-know/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/neurodiversity-and-personality-tests-what-to-know/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/neurodiversity-and-personality-tests-what-to-know/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/neurodiversity-and-personality-tests-what-to-know/"/>
   </url>
   <url>
-    <loc>https://cercol.team/blog/critiques-of-big-five-what-critics-say/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <loc>https://cercol.team/blog/gender-and-personality-what-big-five-research-says/</loc>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/critiques-of-big-five-what-critics-say/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/critiques-of-big-five-what-critics-say/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/critiques-of-big-five-what-critics-say/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/critiques-of-big-five-what-critics-say/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/critiques-of-big-five-what-critics-say/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/critiques-of-big-five-what-critics-say/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/critiques-of-big-five-what-critics-say/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/gender-and-personality-what-big-five-research-says/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/gender-and-personality-what-big-five-research-says/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/gender-and-personality-what-big-five-research-says/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/gender-and-personality-what-big-five-research-says/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/gender-and-personality-what-big-five-research-says/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/gender-and-personality-what-big-five-research-says/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/gender-and-personality-what-big-five-research-says/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/blog/big-five-personality-across-cultures-what-research-shows/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/big-five-personality-across-cultures-what-research-shows/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/big-five-personality-across-cultures-what-research-shows/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/big-five-personality-across-cultures-what-research-shows/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/big-five-personality-across-cultures-what-research-shows/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/big-five-personality-across-cultures-what-research-shows/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/big-five-personality-across-cultures-what-research-shows/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/big-five-personality-across-cultures-what-research-shows/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/blog/personality-and-leadership-styles-authoritative-coaching-democratic/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-and-leadership-styles-authoritative-coaching-democratic/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/personality-and-leadership-styles-authoritative-coaching-democratic/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/personality-and-leadership-styles-authoritative-coaching-democratic/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/personality-and-leadership-styles-authoritative-coaching-democratic/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/personality-and-leadership-styles-authoritative-coaching-democratic/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/personality-and-leadership-styles-authoritative-coaching-democratic/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-and-leadership-styles-authoritative-coaching-democratic/"/>
   </url>
   <url>
     <loc>https://cercol.team/blog/personality-science-replication-crisis/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-science-replication-crisis/"/>
@@ -417,8 +798,99 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-science-replication-crisis/"/>
   </url>
   <url>
+    <loc>https://cercol.team/blog/groupthink-personality-causes-prevention/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/groupthink-personality-causes-prevention/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/groupthink-personality-causes-prevention/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/groupthink-personality-causes-prevention/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/groupthink-personality-causes-prevention/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/groupthink-personality-causes-prevention/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/groupthink-personality-causes-prevention/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/groupthink-personality-causes-prevention/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/blog/personality-and-negotiation-who-wins-and-why/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-and-negotiation-who-wins-and-why/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/personality-and-negotiation-who-wins-and-why/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/personality-and-negotiation-who-wins-and-why/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/personality-and-negotiation-who-wins-and-why/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/personality-and-negotiation-who-wins-and-why/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/personality-and-negotiation-who-wins-and-why/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-and-negotiation-who-wins-and-why/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/blog/founder-ceo-transition-personality-perspective/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/founder-ceo-transition-personality-perspective/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/founder-ceo-transition-personality-perspective/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/founder-ceo-transition-personality-perspective/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/founder-ceo-transition-personality-perspective/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/founder-ceo-transition-personality-perspective/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/founder-ceo-transition-personality-perspective/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/founder-ceo-transition-personality-perspective/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/blog/personality-and-mentoring-what-makes-a-good-mentor/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-and-mentoring-what-makes-a-good-mentor/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/personality-and-mentoring-what-makes-a-good-mentor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/personality-and-mentoring-what-makes-a-good-mentor/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/personality-and-mentoring-what-makes-a-good-mentor/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/personality-and-mentoring-what-makes-a-good-mentor/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/personality-and-mentoring-what-makes-a-good-mentor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-and-mentoring-what-makes-a-good-mentor/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/blog/personality-assessment-technology-future/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-assessment-technology-future/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/personality-assessment-technology-future/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/personality-assessment-technology-future/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/personality-assessment-technology-future/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/personality-assessment-technology-future/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/personality-assessment-technology-future/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-assessment-technology-future/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/blog/conflict-resolution-styles-personality/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/conflict-resolution-styles-personality/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/conflict-resolution-styles-personality/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/conflict-resolution-styles-personality/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/conflict-resolution-styles-personality/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/conflict-resolution-styles-personality/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/conflict-resolution-styles-personality/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/conflict-resolution-styles-personality/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/blog/critiques-of-big-five-what-critics-say/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/critiques-of-big-five-what-critics-say/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/critiques-of-big-five-what-critics-say/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/critiques-of-big-five-what-critics-say/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/critiques-of-big-five-what-critics-say/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/critiques-of-big-five-what-critics-say/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/critiques-of-big-five-what-critics-say/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/critiques-of-big-five-what-critics-say/"/>
+  </url>
+  <url>
     <loc>https://cercol.team/blog/personality-and-feedback-reception-why-some-people-reject-feedback/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-and-feedback-reception-why-some-people-reject-feedback/"/>
@@ -430,34 +902,21 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-and-feedback-reception-why-some-people-reject-feedback/"/>
   </url>
   <url>
-    <loc>https://cercol.team/blog/how-personality-test-scores-are-calculated/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <loc>https://cercol.team/blog/using-cercol-for-team-development-a-practical-guide/</loc>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/how-personality-test-scores-are-calculated/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/how-personality-test-scores-are-calculated/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/how-personality-test-scores-are-calculated/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/how-personality-test-scores-are-calculated/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/how-personality-test-scores-are-calculated/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/how-personality-test-scores-are-calculated/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/how-personality-test-scores-are-calculated/"/>
-  </url>
-  <url>
-    <loc>https://cercol.team/blog/what-is-a-facet-in-personality-psychology/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/what-is-a-facet-in-personality-psychology/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/what-is-a-facet-in-personality-psychology/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/what-is-a-facet-in-personality-psychology/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/what-is-a-facet-in-personality-psychology/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/what-is-a-facet-in-personality-psychology/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/what-is-a-facet-in-personality-psychology/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/what-is-a-facet-in-personality-psychology/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/using-cercol-for-team-development-a-practical-guide/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/using-cercol-for-team-development-a-practical-guide/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/using-cercol-for-team-development-a-practical-guide/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/using-cercol-for-team-development-a-practical-guide/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/using-cercol-for-team-development-a-practical-guide/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/using-cercol-for-team-development-a-practical-guide/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/using-cercol-for-team-development-a-practical-guide/"/>
   </url>
   <url>
     <loc>https://cercol.team/blog/what-is-reliability-validity-in-personality-testing/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/what-is-reliability-validity-in-personality-testing/"/>
@@ -469,8 +928,21 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/what-is-reliability-validity-in-personality-testing/"/>
   </url>
   <url>
+    <loc>https://cercol.team/blog/how-personality-test-scores-are-calculated/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/how-personality-test-scores-are-calculated/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/how-personality-test-scores-are-calculated/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/how-personality-test-scores-are-calculated/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/how-personality-test-scores-are-calculated/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/how-personality-test-scores-are-calculated/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/how-personality-test-scores-are-calculated/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/how-personality-test-scores-are-calculated/"/>
+  </url>
+  <url>
     <loc>https://cercol.team/blog/why-120-items-is-better-than-10-personality-test-length/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/why-120-items-is-better-than-10-personality-test-length/"/>
@@ -482,8 +954,21 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/why-120-items-is-better-than-10-personality-test-length/"/>
   </url>
   <url>
+    <loc>https://cercol.team/blog/what-is-a-facet-in-personality-psychology/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/what-is-a-facet-in-personality-psychology/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/what-is-a-facet-in-personality-psychology/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/what-is-a-facet-in-personality-psychology/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/what-is-a-facet-in-personality-psychology/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/what-is-a-facet-in-personality-psychology/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/what-is-a-facet-in-personality-psychology/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/what-is-a-facet-in-personality-psychology/"/>
+  </url>
+  <url>
     <loc>https://cercol.team/blog/history-of-the-big-five-from-allport-to-goldberg/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/history-of-the-big-five-from-allport-to-goldberg/"/>
@@ -496,7 +981,7 @@
   </url>
   <url>
     <loc>https://cercol.team/blog/personality-coaching-using-big-five-as-development-tool/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-coaching-using-big-five-as-development-tool/"/>
@@ -508,21 +993,8 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-coaching-using-big-five-as-development-tool/"/>
   </url>
   <url>
-    <loc>https://cercol.team/blog/personality-and-motivation-what-drives-each-big-five-profile/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-and-motivation-what-drives-each-big-five-profile/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/personality-and-motivation-what-drives-each-big-five-profile/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/personality-and-motivation-what-drives-each-big-five-profile/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/personality-and-motivation-what-drives-each-big-five-profile/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/personality-and-motivation-what-drives-each-big-five-profile/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/personality-and-motivation-what-drives-each-big-five-profile/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-and-motivation-what-drives-each-big-five-profile/"/>
-  </url>
-  <url>
     <loc>https://cercol.team/blog/personality-and-learning-styles-what-research-supports/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-and-learning-styles-what-research-supports/"/>
@@ -535,7 +1007,7 @@
   </url>
   <url>
     <loc>https://cercol.team/blog/can-personality-be-changed-coaching-therapy-evidence/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/can-personality-be-changed-coaching-therapy-evidence/"/>
@@ -548,7 +1020,7 @@
   </url>
   <url>
     <loc>https://cercol.team/blog/personality-and-career-choice-what-big-five-predicts/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-and-career-choice-what-big-five-predicts/"/>
@@ -560,60 +1032,21 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-and-career-choice-what-big-five-predicts/"/>
   </url>
   <url>
-    <loc>https://cercol.team/blog/personality-and-risk-taking-who-takes-risks-at-work/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <loc>https://cercol.team/blog/personality-and-motivation-what-drives-each-big-five-profile/</loc>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-and-risk-taking-who-takes-risks-at-work/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/personality-and-risk-taking-who-takes-risks-at-work/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/personality-and-risk-taking-who-takes-risks-at-work/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/personality-and-risk-taking-who-takes-risks-at-work/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/personality-and-risk-taking-who-takes-risks-at-work/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/personality-and-risk-taking-who-takes-risks-at-work/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-and-risk-taking-who-takes-risks-at-work/"/>
-  </url>
-  <url>
-    <loc>https://cercol.team/blog/innovation-culture-and-personality-what-companies-get-wrong/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/innovation-culture-and-personality-what-companies-get-wrong/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/innovation-culture-and-personality-what-companies-get-wrong/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/innovation-culture-and-personality-what-companies-get-wrong/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/innovation-culture-and-personality-what-companies-get-wrong/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/innovation-culture-and-personality-what-companies-get-wrong/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/innovation-culture-and-personality-what-companies-get-wrong/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/innovation-culture-and-personality-what-companies-get-wrong/"/>
-  </url>
-  <url>
-    <loc>https://cercol.team/blog/personality-and-decision-making-how-big-five-shapes-judgment/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-and-decision-making-how-big-five-shapes-judgment/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/personality-and-decision-making-how-big-five-shapes-judgment/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/personality-and-decision-making-how-big-five-shapes-judgment/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/personality-and-decision-making-how-big-five-shapes-judgment/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/personality-and-decision-making-how-big-five-shapes-judgment/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/personality-and-decision-making-how-big-five-shapes-judgment/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-and-decision-making-how-big-five-shapes-judgment/"/>
-  </url>
-  <url>
-    <loc>https://cercol.team/blog/how-to-use-personality-data-without-labelling-people/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/how-to-use-personality-data-without-labelling-people/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/how-to-use-personality-data-without-labelling-people/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/how-to-use-personality-data-without-labelling-people/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/how-to-use-personality-data-without-labelling-people/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/how-to-use-personality-data-without-labelling-people/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/how-to-use-personality-data-without-labelling-people/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/how-to-use-personality-data-without-labelling-people/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-and-motivation-what-drives-each-big-five-profile/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/personality-and-motivation-what-drives-each-big-five-profile/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/personality-and-motivation-what-drives-each-big-five-profile/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/personality-and-motivation-what-drives-each-big-five-profile/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/personality-and-motivation-what-drives-each-big-five-profile/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/personality-and-motivation-what-drives-each-big-five-profile/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-and-motivation-what-drives-each-big-five-profile/"/>
   </url>
   <url>
     <loc>https://cercol.team/blog/creativity-and-personality-what-big-five-research-shows/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/creativity-and-personality-what-big-five-research-shows/"/>
@@ -625,8 +1058,60 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/creativity-and-personality-what-big-five-research-shows/"/>
   </url>
   <url>
+    <loc>https://cercol.team/blog/how-to-use-personality-data-without-labelling-people/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/how-to-use-personality-data-without-labelling-people/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/how-to-use-personality-data-without-labelling-people/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/how-to-use-personality-data-without-labelling-people/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/how-to-use-personality-data-without-labelling-people/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/how-to-use-personality-data-without-labelling-people/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/how-to-use-personality-data-without-labelling-people/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/how-to-use-personality-data-without-labelling-people/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/blog/innovation-culture-and-personality-what-companies-get-wrong/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/innovation-culture-and-personality-what-companies-get-wrong/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/innovation-culture-and-personality-what-companies-get-wrong/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/innovation-culture-and-personality-what-companies-get-wrong/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/innovation-culture-and-personality-what-companies-get-wrong/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/innovation-culture-and-personality-what-companies-get-wrong/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/innovation-culture-and-personality-what-companies-get-wrong/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/innovation-culture-and-personality-what-companies-get-wrong/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/blog/personality-and-risk-taking-who-takes-risks-at-work/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-and-risk-taking-who-takes-risks-at-work/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/personality-and-risk-taking-who-takes-risks-at-work/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/personality-and-risk-taking-who-takes-risks-at-work/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/personality-and-risk-taking-who-takes-risks-at-work/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/personality-and-risk-taking-who-takes-risks-at-work/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/personality-and-risk-taking-who-takes-risks-at-work/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-and-risk-taking-who-takes-risks-at-work/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/blog/personality-and-decision-making-how-big-five-shapes-judgment/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-and-decision-making-how-big-five-shapes-judgment/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/personality-and-decision-making-how-big-five-shapes-judgment/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/personality-and-decision-making-how-big-five-shapes-judgment/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/personality-and-decision-making-how-big-five-shapes-judgment/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/personality-and-decision-making-how-big-five-shapes-judgment/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/personality-and-decision-making-how-big-five-shapes-judgment/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-and-decision-making-how-big-five-shapes-judgment/"/>
+  </url>
+  <url>
     <loc>https://cercol.team/blog/how-to-run-a-team-personality-workshop/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/how-to-run-a-team-personality-workshop/"/>
@@ -638,21 +1123,8 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/how-to-run-a-team-personality-workshop/"/>
   </url>
   <url>
-    <loc>https://cercol.team/blog/the-12-cercol-team-roles-explained/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/the-12-cercol-team-roles-explained/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/the-12-cercol-team-roles-explained/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/the-12-cercol-team-roles-explained/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/the-12-cercol-team-roles-explained/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/the-12-cercol-team-roles-explained/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/the-12-cercol-team-roles-explained/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/the-12-cercol-team-roles-explained/"/>
-  </url>
-  <url>
     <loc>https://cercol.team/blog/what-the-cercol-witness-instrument-measures/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/what-the-cercol-witness-instrument-measures/"/>
@@ -664,8 +1136,21 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/what-the-cercol-witness-instrument-measures/"/>
   </url>
   <url>
+    <loc>https://cercol.team/blog/the-12-cercol-team-roles-explained/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/the-12-cercol-team-roles-explained/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/the-12-cercol-team-roles-explained/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/the-12-cercol-team-roles-explained/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/the-12-cercol-team-roles-explained/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/the-12-cercol-team-roles-explained/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/the-12-cercol-team-roles-explained/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/the-12-cercol-team-roles-explained/"/>
+  </url>
+  <url>
     <loc>https://cercol.team/blog/five-personality-science-myths-that-wont-die/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/five-personality-science-myths-that-wont-die/"/>
@@ -678,7 +1163,7 @@
   </url>
   <url>
     <loc>https://cercol.team/blog/how-to-read-a-big-five-personality-report/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/how-to-read-a-big-five-personality-report/"/>
@@ -690,21 +1175,21 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/how-to-read-a-big-five-personality-report/"/>
   </url>
   <url>
-    <loc>https://cercol.team/blog/team-diversity-personality-and-performance/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <loc>https://cercol.team/blog/personality-of-successful-ceos-what-research-says/</loc>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/team-diversity-personality-and-performance/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/team-diversity-personality-and-performance/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/team-diversity-personality-and-performance/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/team-diversity-personality-and-performance/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/team-diversity-personality-and-performance/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/team-diversity-personality-and-performance/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/team-diversity-personality-and-performance/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-of-successful-ceos-what-research-says/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/personality-of-successful-ceos-what-research-says/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/personality-of-successful-ceos-what-research-says/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/personality-of-successful-ceos-what-research-says/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/personality-of-successful-ceos-what-research-says/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/personality-of-successful-ceos-what-research-says/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-of-successful-ceos-what-research-says/"/>
   </url>
   <url>
     <loc>https://cercol.team/blog/personality-testing-open-source-vs-commercial/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-testing-open-source-vs-commercial/"/>
@@ -717,7 +1202,7 @@
   </url>
   <url>
     <loc>https://cercol.team/blog/high-performing-team-structures-personality-perspective/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/high-performing-team-structures-personality-perspective/"/>
@@ -730,7 +1215,7 @@
   </url>
   <url>
     <loc>https://cercol.team/blog/do-personality-traits-change-over-a-lifetime/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/do-personality-traits-change-over-a-lifetime/"/>
@@ -742,73 +1227,21 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/do-personality-traits-change-over-a-lifetime/"/>
   </url>
   <url>
-    <loc>https://cercol.team/blog/personality-of-successful-ceos-what-research-says/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <loc>https://cercol.team/blog/team-diversity-personality-and-performance/</loc>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-of-successful-ceos-what-research-says/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/personality-of-successful-ceos-what-research-says/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/personality-of-successful-ceos-what-research-says/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/personality-of-successful-ceos-what-research-says/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/personality-of-successful-ceos-what-research-says/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/personality-of-successful-ceos-what-research-says/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-of-successful-ceos-what-research-says/"/>
-  </url>
-  <url>
-    <loc>https://cercol.team/blog/what-openness-to-experience-means-for-team-innovation/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/what-openness-to-experience-means-for-team-innovation/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/what-openness-to-experience-means-for-team-innovation/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/what-openness-to-experience-means-for-team-innovation/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/what-openness-to-experience-means-for-team-innovation/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/what-openness-to-experience-means-for-team-innovation/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/what-openness-to-experience-means-for-team-innovation/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/what-openness-to-experience-means-for-team-innovation/"/>
-  </url>
-  <url>
-    <loc>https://cercol.team/blog/agreeableness-at-work-the-hidden-cost-of-being-too-nice/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/agreeableness-at-work-the-hidden-cost-of-being-too-nice/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/agreeableness-at-work-the-hidden-cost-of-being-too-nice/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/agreeableness-at-work-the-hidden-cost-of-being-too-nice/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/agreeableness-at-work-the-hidden-cost-of-being-too-nice/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/agreeableness-at-work-the-hidden-cost-of-being-too-nice/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/agreeableness-at-work-the-hidden-cost-of-being-too-nice/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/agreeableness-at-work-the-hidden-cost-of-being-too-nice/"/>
-  </url>
-  <url>
-    <loc>https://cercol.team/blog/personality-and-burnout-who-is-most-at-risk/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-and-burnout-who-is-most-at-risk/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/personality-and-burnout-who-is-most-at-risk/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/personality-and-burnout-who-is-most-at-risk/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/personality-and-burnout-who-is-most-at-risk/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/personality-and-burnout-who-is-most-at-risk/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/personality-and-burnout-who-is-most-at-risk/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-and-burnout-who-is-most-at-risk/"/>
-  </url>
-  <url>
-    <loc>https://cercol.team/blog/conscientiousness-perfectionism-when-discipline-becomes-a-problem/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/conscientiousness-perfectionism-when-discipline-becomes-a-problem/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/conscientiousness-perfectionism-when-discipline-becomes-a-problem/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/conscientiousness-perfectionism-when-discipline-becomes-a-problem/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/conscientiousness-perfectionism-when-discipline-becomes-a-problem/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/conscientiousness-perfectionism-when-discipline-becomes-a-problem/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/conscientiousness-perfectionism-when-discipline-becomes-a-problem/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/conscientiousness-perfectionism-when-discipline-becomes-a-problem/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/team-diversity-personality-and-performance/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/team-diversity-personality-and-performance/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/team-diversity-personality-and-performance/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/team-diversity-personality-and-performance/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/team-diversity-personality-and-performance/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/team-diversity-personality-and-performance/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/team-diversity-personality-and-performance/"/>
   </url>
   <url>
     <loc>https://cercol.team/blog/neuroticism-stress-resilience-at-work/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/neuroticism-stress-resilience-at-work/"/>
@@ -820,34 +1253,73 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/neuroticism-stress-resilience-at-work/"/>
   </url>
   <url>
-    <loc>https://cercol.team/blog/how-to-design-meetings-for-all-personality-types/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <loc>https://cercol.team/blog/conscientiousness-perfectionism-when-discipline-becomes-a-problem/</loc>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/how-to-design-meetings-for-all-personality-types/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/how-to-design-meetings-for-all-personality-types/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/how-to-design-meetings-for-all-personality-types/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/how-to-design-meetings-for-all-personality-types/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/how-to-design-meetings-for-all-personality-types/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/how-to-design-meetings-for-all-personality-types/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/how-to-design-meetings-for-all-personality-types/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/conscientiousness-perfectionism-when-discipline-becomes-a-problem/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/conscientiousness-perfectionism-when-discipline-becomes-a-problem/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/conscientiousness-perfectionism-when-discipline-becomes-a-problem/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/conscientiousness-perfectionism-when-discipline-becomes-a-problem/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/conscientiousness-perfectionism-when-discipline-becomes-a-problem/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/conscientiousness-perfectionism-when-discipline-becomes-a-problem/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/conscientiousness-perfectionism-when-discipline-becomes-a-problem/"/>
   </url>
   <url>
-    <loc>https://cercol.team/blog/how-to-give-personality-informed-feedback/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <loc>https://cercol.team/blog/personality-and-burnout-who-is-most-at-risk/</loc>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/how-to-give-personality-informed-feedback/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/how-to-give-personality-informed-feedback/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/how-to-give-personality-informed-feedback/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/how-to-give-personality-informed-feedback/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/how-to-give-personality-informed-feedback/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/how-to-give-personality-informed-feedback/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/how-to-give-personality-informed-feedback/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-and-burnout-who-is-most-at-risk/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/personality-and-burnout-who-is-most-at-risk/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/personality-and-burnout-who-is-most-at-risk/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/personality-and-burnout-who-is-most-at-risk/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/personality-and-burnout-who-is-most-at-risk/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/personality-and-burnout-who-is-most-at-risk/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-and-burnout-who-is-most-at-risk/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/blog/agreeableness-at-work-the-hidden-cost-of-being-too-nice/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/agreeableness-at-work-the-hidden-cost-of-being-too-nice/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/agreeableness-at-work-the-hidden-cost-of-being-too-nice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/agreeableness-at-work-the-hidden-cost-of-being-too-nice/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/agreeableness-at-work-the-hidden-cost-of-being-too-nice/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/agreeableness-at-work-the-hidden-cost-of-being-too-nice/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/agreeableness-at-work-the-hidden-cost-of-being-too-nice/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/agreeableness-at-work-the-hidden-cost-of-being-too-nice/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/blog/what-openness-to-experience-means-for-team-innovation/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/what-openness-to-experience-means-for-team-innovation/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/what-openness-to-experience-means-for-team-innovation/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/what-openness-to-experience-means-for-team-innovation/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/what-openness-to-experience-means-for-team-innovation/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/what-openness-to-experience-means-for-team-innovation/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/what-openness-to-experience-means-for-team-innovation/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/what-openness-to-experience-means-for-team-innovation/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/blog/personality-conflict-in-teams-what-it-actually-looks-like/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-conflict-in-teams-what-it-actually-looks-like/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/personality-conflict-in-teams-what-it-actually-looks-like/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/personality-conflict-in-teams-what-it-actually-looks-like/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/personality-conflict-in-teams-what-it-actually-looks-like/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/personality-conflict-in-teams-what-it-actually-looks-like/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/personality-conflict-in-teams-what-it-actually-looks-like/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-conflict-in-teams-what-it-actually-looks-like/"/>
   </url>
   <url>
     <loc>https://cercol.team/blog/building-psychological-safety-personality-science/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/building-psychological-safety-personality-science/"/>
@@ -860,7 +1332,7 @@
   </url>
   <url>
     <loc>https://cercol.team/blog/remote-team-communication-styles-big-five/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/remote-team-communication-styles-big-five/"/>
@@ -872,21 +1344,60 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/remote-team-communication-styles-big-five/"/>
   </url>
   <url>
-    <loc>https://cercol.team/blog/personality-conflict-in-teams-what-it-actually-looks-like/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <loc>https://cercol.team/blog/how-to-design-meetings-for-all-personality-types/</loc>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-conflict-in-teams-what-it-actually-looks-like/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/personality-conflict-in-teams-what-it-actually-looks-like/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/personality-conflict-in-teams-what-it-actually-looks-like/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/personality-conflict-in-teams-what-it-actually-looks-like/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/personality-conflict-in-teams-what-it-actually-looks-like/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/personality-conflict-in-teams-what-it-actually-looks-like/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-conflict-in-teams-what-it-actually-looks-like/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/how-to-design-meetings-for-all-personality-types/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/how-to-design-meetings-for-all-personality-types/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/how-to-design-meetings-for-all-personality-types/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/how-to-design-meetings-for-all-personality-types/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/how-to-design-meetings-for-all-personality-types/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/how-to-design-meetings-for-all-personality-types/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/how-to-design-meetings-for-all-personality-types/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/blog/how-to-give-personality-informed-feedback/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/how-to-give-personality-informed-feedback/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/how-to-give-personality-informed-feedback/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/how-to-give-personality-informed-feedback/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/how-to-give-personality-informed-feedback/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/how-to-give-personality-informed-feedback/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/how-to-give-personality-informed-feedback/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/how-to-give-personality-informed-feedback/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/blog/personality-testing-in-hiring-what-is-legal-what-is-ethical/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-testing-in-hiring-what-is-legal-what-is-ethical/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/personality-testing-in-hiring-what-is-legal-what-is-ethical/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/personality-testing-in-hiring-what-is-legal-what-is-ethical/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/personality-testing-in-hiring-what-is-legal-what-is-ethical/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/personality-testing-in-hiring-what-is-legal-what-is-ethical/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/personality-testing-in-hiring-what-is-legal-what-is-ethical/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-testing-in-hiring-what-is-legal-what-is-ethical/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/blog/personality-and-job-fit-how-to-think-about-person-environment-fit/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-and-job-fit-how-to-think-about-person-environment-fit/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/personality-and-job-fit-how-to-think-about-person-environment-fit/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/personality-and-job-fit-how-to-think-about-person-environment-fit/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/personality-and-job-fit-how-to-think-about-person-environment-fit/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/personality-and-job-fit-how-to-think-about-person-environment-fit/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/personality-and-job-fit-how-to-think-about-person-environment-fit/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-and-job-fit-how-to-think-about-person-environment-fit/"/>
   </url>
   <url>
     <loc>https://cercol.team/blog/personality-science-limits-what-it-cannot-predict/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-science-limits-what-it-cannot-predict/"/>
@@ -899,7 +1410,7 @@
   </url>
   <url>
     <loc>https://cercol.team/blog/how-personality-predicts-onboarding-success/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/how-personality-predicts-onboarding-success/"/>
@@ -911,34 +1422,8 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/how-personality-predicts-onboarding-success/"/>
   </url>
   <url>
-    <loc>https://cercol.team/blog/personality-and-job-fit-how-to-think-about-person-environment-fit/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-and-job-fit-how-to-think-about-person-environment-fit/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/personality-and-job-fit-how-to-think-about-person-environment-fit/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/personality-and-job-fit-how-to-think-about-person-environment-fit/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/personality-and-job-fit-how-to-think-about-person-environment-fit/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/personality-and-job-fit-how-to-think-about-person-environment-fit/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/personality-and-job-fit-how-to-think-about-person-environment-fit/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-and-job-fit-how-to-think-about-person-environment-fit/"/>
-  </url>
-  <url>
-    <loc>https://cercol.team/blog/personality-testing-in-hiring-what-is-legal-what-is-ethical/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-testing-in-hiring-what-is-legal-what-is-ethical/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/personality-testing-in-hiring-what-is-legal-what-is-ethical/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/personality-testing-in-hiring-what-is-legal-what-is-ethical/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/personality-testing-in-hiring-what-is-legal-what-is-ethical/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/personality-testing-in-hiring-what-is-legal-what-is-ethical/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/personality-testing-in-hiring-what-is-legal-what-is-ethical/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-testing-in-hiring-what-is-legal-what-is-ethical/"/>
-  </url>
-  <url>
     <loc>https://cercol.team/blog/can-you-fake-a-personality-test/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/can-you-fake-a-personality-test/"/>
@@ -951,7 +1436,7 @@
   </url>
   <url>
     <loc>https://cercol.team/blog/low-agreeableness-in-leadership-when-directness-helps-and-when-it-harms/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/low-agreeableness-in-leadership-when-directness-helps-and-when-it-harms/"/>
@@ -964,7 +1449,7 @@
   </url>
   <url>
     <loc>https://cercol.team/blog/the-dark-triad-at-work-narcissism-machiavellianism-psychopathy/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/the-dark-triad-at-work-narcissism-machiavellianism-psychopathy/"/>
@@ -977,7 +1462,7 @@
   </url>
   <url>
     <loc>https://cercol.team/blog/what-personality-traits-do-effective-leaders-actually-have/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/what-personality-traits-do-effective-leaders-actually-have/"/>
@@ -990,7 +1475,7 @@
   </url>
   <url>
     <loc>https://cercol.team/blog/why-meetings-drain-some-people-more-than-others-neuroscience/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/why-meetings-drain-some-people-more-than-others-neuroscience/"/>
@@ -1003,7 +1488,7 @@
   </url>
   <url>
     <loc>https://cercol.team/blog/introverts-in-extrovert-workplaces-what-research-says/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/introverts-in-extrovert-workplaces-what-research-says/"/>
@@ -1015,21 +1500,8 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/introverts-in-extrovert-workplaces-what-research-says/"/>
   </url>
   <url>
-    <loc>https://cercol.team/blog/how-many-peer-assessors-do-you-need-reliable-personality-data/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/how-many-peer-assessors-do-you-need-reliable-personality-data/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/how-many-peer-assessors-do-you-need-reliable-personality-data/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/how-many-peer-assessors-do-you-need-reliable-personality-data/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/how-many-peer-assessors-do-you-need-reliable-personality-data/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/how-many-peer-assessors-do-you-need-reliable-personality-data/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/how-many-peer-assessors-do-you-need-reliable-personality-data/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/how-many-peer-assessors-do-you-need-reliable-personality-data/"/>
-  </url>
-  <url>
     <loc>https://cercol.team/blog/why-self-assessment-alone-isnt-enough-peer-personality-feedback/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/why-self-assessment-alone-isnt-enough-peer-personality-feedback/"/>
@@ -1042,7 +1514,7 @@
   </url>
   <url>
     <loc>https://cercol.team/blog/social-desirability-bias-personality-tests/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/social-desirability-bias-personality-tests/"/>
@@ -1054,21 +1526,21 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/social-desirability-bias-personality-tests/"/>
   </url>
   <url>
-    <loc>https://cercol.team/blog/self-other-agreement-big-five-where-gaps-are-biggest/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <loc>https://cercol.team/blog/how-many-peer-assessors-do-you-need-reliable-personality-data/</loc>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/self-other-agreement-big-five-where-gaps-are-biggest/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/self-other-agreement-big-five-where-gaps-are-biggest/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/self-other-agreement-big-five-where-gaps-are-biggest/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/self-other-agreement-big-five-where-gaps-are-biggest/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/self-other-agreement-big-five-where-gaps-are-biggest/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/self-other-agreement-big-five-where-gaps-are-biggest/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/self-other-agreement-big-five-where-gaps-are-biggest/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/how-many-peer-assessors-do-you-need-reliable-personality-data/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/how-many-peer-assessors-do-you-need-reliable-personality-data/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/how-many-peer-assessors-do-you-need-reliable-personality-data/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/how-many-peer-assessors-do-you-need-reliable-personality-data/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/how-many-peer-assessors-do-you-need-reliable-personality-data/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/how-many-peer-assessors-do-you-need-reliable-personality-data/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/how-many-peer-assessors-do-you-need-reliable-personality-data/"/>
   </url>
   <url>
     <loc>https://cercol.team/blog/forced-choice-personality-assessment-more-honest-data/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/forced-choice-personality-assessment-more-honest-data/"/>
@@ -1080,8 +1552,34 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/forced-choice-personality-assessment-more-honest-data/"/>
   </url>
   <url>
+    <loc>https://cercol.team/blog/self-other-agreement-big-five-where-gaps-are-biggest/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/self-other-agreement-big-five-where-gaps-are-biggest/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/self-other-agreement-big-five-where-gaps-are-biggest/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/self-other-agreement-big-five-where-gaps-are-biggest/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/self-other-agreement-big-five-where-gaps-are-biggest/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/self-other-agreement-big-five-where-gaps-are-biggest/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/self-other-agreement-big-five-where-gaps-are-biggest/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/self-other-agreement-big-five-where-gaps-are-biggest/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/blog/what-is-openness-to-experience-creativity-curiosity-and-its-limits/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/what-is-openness-to-experience-creativity-curiosity-and-its-limits/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/what-is-openness-to-experience-creativity-curiosity-and-its-limits/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/what-is-openness-to-experience-creativity-curiosity-and-its-limits/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/what-is-openness-to-experience-creativity-curiosity-and-its-limits/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/what-is-openness-to-experience-creativity-curiosity-and-its-limits/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/what-is-openness-to-experience-creativity-curiosity-and-its-limits/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/what-is-openness-to-experience-creativity-curiosity-and-its-limits/"/>
+  </url>
+  <url>
     <loc>https://cercol.team/blog/what-is-conscientiousness-the-most-consistent-predictor-of-job-performance/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/what-is-conscientiousness-the-most-consistent-predictor-of-job-performance/"/>
@@ -1094,7 +1592,7 @@
   </url>
   <url>
     <loc>https://cercol.team/blog/what-is-extraversion-beyond-the-introvert-extrovert-binary/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/what-is-extraversion-beyond-the-introvert-extrovert-binary/"/>
@@ -1107,7 +1605,7 @@
   </url>
   <url>
     <loc>https://cercol.team/blog/what-is-agreeableness-the-cooperative-dimension/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/what-is-agreeableness-the-cooperative-dimension/"/>
@@ -1119,21 +1617,8 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/what-is-agreeableness-the-cooperative-dimension/"/>
   </url>
   <url>
-    <loc>https://cercol.team/blog/what-is-openness-to-experience-creativity-curiosity-and-its-limits/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/what-is-openness-to-experience-creativity-curiosity-and-its-limits/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/what-is-openness-to-experience-creativity-curiosity-and-its-limits/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/what-is-openness-to-experience-creativity-curiosity-and-its-limits/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/what-is-openness-to-experience-creativity-curiosity-and-its-limits/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/what-is-openness-to-experience-creativity-curiosity-and-its-limits/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/what-is-openness-to-experience-creativity-curiosity-and-its-limits/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/what-is-openness-to-experience-creativity-curiosity-and-its-limits/"/>
-  </url>
-  <url>
     <loc>https://cercol.team/blog/what-is-neuroticism-understanding-emotional-depth-at-work/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/what-is-neuroticism-understanding-emotional-depth-at-work/"/>
@@ -1146,7 +1631,7 @@
   </url>
   <url>
     <loc>https://cercol.team/blog/mbti-vs-big-five-which-should-your-team-use/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/mbti-vs-big-five-which-should-your-team-use/"/>
@@ -1159,7 +1644,7 @@
   </url>
   <url>
     <loc>https://cercol.team/blog/16personalities-vs-big-five-the-viral-test-that-gets-it-half-right/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/16personalities-vs-big-five-the-viral-test-that-gets-it-half-right/"/>
@@ -1171,21 +1656,8 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/16personalities-vs-big-five-the-viral-test-that-gets-it-half-right/"/>
   </url>
   <url>
-    <loc>https://cercol.team/blog/personality-and-remote-work-who-thrives-who-struggles/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-and-remote-work-who-thrives-who-struggles/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/personality-and-remote-work-who-thrives-who-struggles/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/personality-and-remote-work-who-thrives-who-struggles/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/personality-and-remote-work-who-thrives-who-struggles/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/personality-and-remote-work-who-thrives-who-struggles/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/personality-and-remote-work-who-thrives-who-struggles/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-and-remote-work-who-thrives-who-struggles/"/>
-  </url>
-  <url>
     <loc>https://cercol.team/blog/best-free-personality-tests-for-teams-2026/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/best-free-personality-tests-for-teams-2026/"/>
@@ -1198,7 +1670,7 @@
   </url>
   <url>
     <loc>https://cercol.team/blog/disc-vs-big-five-why-four-styles-arent-enough/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/disc-vs-big-five-why-four-styles-arent-enough/"/>
@@ -1210,60 +1682,21 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/disc-vs-big-five-why-four-styles-arent-enough/"/>
   </url>
   <url>
-    <loc>https://cercol.team/blog/software-engineer-personality-what-research-shows/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <loc>https://cercol.team/blog/personality-and-remote-work-who-thrives-who-struggles/</loc>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/software-engineer-personality-what-research-shows/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/software-engineer-personality-what-research-shows/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/software-engineer-personality-what-research-shows/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/software-engineer-personality-what-research-shows/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/software-engineer-personality-what-research-shows/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/software-engineer-personality-what-research-shows/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/software-engineer-personality-what-research-shows/"/>
-  </url>
-  <url>
-    <loc>https://cercol.team/blog/personality-and-happiness-what-big-five-predicts/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-and-happiness-what-big-five-predicts/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/personality-and-happiness-what-big-five-predicts/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/personality-and-happiness-what-big-five-predicts/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/personality-and-happiness-what-big-five-predicts/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/personality-and-happiness-what-big-five-predicts/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/personality-and-happiness-what-big-five-predicts/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-and-happiness-what-big-five-predicts/"/>
-  </url>
-  <url>
-    <loc>https://cercol.team/blog/retrospectives-personality-making-them-work/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/retrospectives-personality-making-them-work/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/retrospectives-personality-making-them-work/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/retrospectives-personality-making-them-work/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/retrospectives-personality-making-them-work/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/retrospectives-personality-making-them-work/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/retrospectives-personality-making-them-work/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/retrospectives-personality-making-them-work/"/>
-  </url>
-  <url>
-    <loc>https://cercol.team/blog/introversion-energy-management-science/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/introversion-energy-management-science/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/introversion-energy-management-science/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/introversion-energy-management-science/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/introversion-energy-management-science/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/introversion-energy-management-science/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/introversion-energy-management-science/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/introversion-energy-management-science/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-and-remote-work-who-thrives-who-struggles/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/personality-and-remote-work-who-thrives-who-struggles/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/personality-and-remote-work-who-thrives-who-struggles/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/personality-and-remote-work-who-thrives-who-struggles/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/personality-and-remote-work-who-thrives-who-struggles/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/personality-and-remote-work-who-thrives-who-struggles/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-and-remote-work-who-thrives-who-struggles/"/>
   </url>
   <url>
     <loc>https://cercol.team/blog/personality-and-procrastination-what-research-says/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-and-procrastination-what-research-says/"/>
@@ -1275,8 +1708,99 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-and-procrastination-what-research-says/"/>
   </url>
   <url>
+    <loc>https://cercol.team/blog/product-manager-personality-what-works/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/product-manager-personality-what-works/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/product-manager-personality-what-works/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/product-manager-personality-what-works/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/product-manager-personality-what-works/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/product-manager-personality-what-works/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/product-manager-personality-what-works/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/product-manager-personality-what-works/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/blog/job-satisfaction-personality-what-predicts-it/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/job-satisfaction-personality-what-predicts-it/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/job-satisfaction-personality-what-predicts-it/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/job-satisfaction-personality-what-predicts-it/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/job-satisfaction-personality-what-predicts-it/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/job-satisfaction-personality-what-predicts-it/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/job-satisfaction-personality-what-predicts-it/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/job-satisfaction-personality-what-predicts-it/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/blog/personality-diversity-in-technical-teams/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-diversity-in-technical-teams/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/personality-diversity-in-technical-teams/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/personality-diversity-in-technical-teams/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/personality-diversity-in-technical-teams/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/personality-diversity-in-technical-teams/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/personality-diversity-in-technical-teams/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-diversity-in-technical-teams/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/blog/personality-and-happiness-what-big-five-predicts/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-and-happiness-what-big-five-predicts/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/personality-and-happiness-what-big-five-predicts/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/personality-and-happiness-what-big-five-predicts/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/personality-and-happiness-what-big-five-predicts/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/personality-and-happiness-what-big-five-predicts/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/personality-and-happiness-what-big-five-predicts/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-and-happiness-what-big-five-predicts/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/blog/software-engineer-personality-what-research-shows/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/software-engineer-personality-what-research-shows/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/software-engineer-personality-what-research-shows/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/software-engineer-personality-what-research-shows/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/software-engineer-personality-what-research-shows/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/software-engineer-personality-what-research-shows/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/software-engineer-personality-what-research-shows/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/software-engineer-personality-what-research-shows/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/blog/introversion-energy-management-science/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/introversion-energy-management-science/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/introversion-energy-management-science/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/introversion-energy-management-science/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/introversion-energy-management-science/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/introversion-energy-management-science/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/introversion-energy-management-science/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/introversion-energy-management-science/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/blog/retrospectives-personality-making-them-work/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/retrospectives-personality-making-them-work/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/retrospectives-personality-making-them-work/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/retrospectives-personality-making-them-work/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/retrospectives-personality-making-them-work/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/retrospectives-personality-making-them-work/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/retrospectives-personality-making-them-work/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/retrospectives-personality-making-them-work/"/>
+  </url>
+  <url>
     <loc>https://cercol.team/blog/personality-in-agile-teams-scrum-and-big-five/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-in-agile-teams-scrum-and-big-five/"/>
@@ -1289,7 +1813,7 @@
   </url>
   <url>
     <loc>https://cercol.team/blog/work-life-balance-personality-who-struggles-most/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/work-life-balance-personality-who-struggles-most/"/>
@@ -1301,86 +1825,8 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/work-life-balance-personality-who-struggles-most/"/>
   </url>
   <url>
-    <loc>https://cercol.team/blog/personality-diversity-in-technical-teams/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/personality-diversity-in-technical-teams/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/personality-diversity-in-technical-teams/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/personality-diversity-in-technical-teams/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/personality-diversity-in-technical-teams/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/personality-diversity-in-technical-teams/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/personality-diversity-in-technical-teams/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/personality-diversity-in-technical-teams/"/>
-  </url>
-  <url>
-    <loc>https://cercol.team/blog/job-satisfaction-personality-what-predicts-it/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/job-satisfaction-personality-what-predicts-it/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/job-satisfaction-personality-what-predicts-it/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/job-satisfaction-personality-what-predicts-it/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/job-satisfaction-personality-what-predicts-it/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/job-satisfaction-personality-what-predicts-it/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/job-satisfaction-personality-what-predicts-it/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/job-satisfaction-personality-what-predicts-it/"/>
-  </url>
-  <url>
-    <loc>https://cercol.team/blog/product-manager-personality-what-works/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/product-manager-personality-what-works/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/product-manager-personality-what-works/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/product-manager-personality-what-works/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/product-manager-personality-what-works/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/product-manager-personality-what-works/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/product-manager-personality-what-works/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/product-manager-personality-what-works/"/>
-  </url>
-  <url>
-    <loc>https://cercol.team/blog/building-a-team-from-scratch-what-personality-data-can-and-cant-tell-you/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/building-a-team-from-scratch-what-personality-data-can-and-cant-tell-you/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/building-a-team-from-scratch-what-personality-data-can-and-cant-tell-you/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/building-a-team-from-scratch-what-personality-data-can-and-cant-tell-you/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/building-a-team-from-scratch-what-personality-data-can-and-cant-tell-you/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/building-a-team-from-scratch-what-personality-data-can-and-cant-tell-you/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/building-a-team-from-scratch-what-personality-data-can-and-cant-tell-you/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/building-a-team-from-scratch-what-personality-data-can-and-cant-tell-you/"/>
-  </url>
-  <url>
-    <loc>https://cercol.team/blog/the-vision-discipline-tension-innovation-vs-execution/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/the-vision-discipline-tension-innovation-vs-execution/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/the-vision-discipline-tension-innovation-vs-execution/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/the-vision-discipline-tension-innovation-vs-execution/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/the-vision-discipline-tension-innovation-vs-execution/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/the-vision-discipline-tension-innovation-vs-execution/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/the-vision-discipline-tension-innovation-vs-execution/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/the-vision-discipline-tension-innovation-vs-execution/"/>
-  </url>
-  <url>
-    <loc>https://cercol.team/blog/blind-spots-in-teams/</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/blind-spots-in-teams/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/blind-spots-in-teams/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/blind-spots-in-teams/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/blind-spots-in-teams/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/blind-spots-in-teams/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/blind-spots-in-teams/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/blind-spots-in-teams/"/>
-  </url>
-  <url>
     <loc>https://cercol.team/blog/too-agreeable-why-high-bond-teams-struggle-with-honest-feedback/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/too-agreeable-why-high-bond-teams-struggle-with-honest-feedback/"/>
@@ -1392,21 +1838,21 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/too-agreeable-why-high-bond-teams-struggle-with-honest-feedback/"/>
   </url>
   <url>
-    <loc>https://cercol.team/blog/what-is-the-ipip/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <loc>https://cercol.team/blog/does-personality-composition-predict-team-performance/</loc>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/what-is-the-ipip/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/what-is-the-ipip/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/what-is-the-ipip/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/what-is-the-ipip/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/what-is-the-ipip/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/what-is-the-ipip/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/what-is-the-ipip/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/does-personality-composition-predict-team-performance/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/does-personality-composition-predict-team-performance/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/does-personality-composition-predict-team-performance/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/does-personality-composition-predict-team-performance/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/does-personality-composition-predict-team-performance/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/does-personality-composition-predict-team-performance/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/does-personality-composition-predict-team-performance/"/>
   </url>
   <url>
     <loc>https://cercol.team/blog/big-five-vs-disc-vs-belbin/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/big-five-vs-disc-vs-belbin/"/>
@@ -1418,8 +1864,47 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/big-five-vs-disc-vs-belbin/"/>
   </url>
   <url>
+    <loc>https://cercol.team/blog/what-is-the-ipip/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/what-is-the-ipip/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/what-is-the-ipip/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/what-is-the-ipip/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/what-is-the-ipip/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/what-is-the-ipip/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/what-is-the-ipip/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/what-is-the-ipip/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/blog/the-vision-discipline-tension-innovation-vs-execution/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/the-vision-discipline-tension-innovation-vs-execution/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/the-vision-discipline-tension-innovation-vs-execution/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/the-vision-discipline-tension-innovation-vs-execution/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/the-vision-discipline-tension-innovation-vs-execution/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/the-vision-discipline-tension-innovation-vs-execution/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/the-vision-discipline-tension-innovation-vs-execution/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/the-vision-discipline-tension-innovation-vs-execution/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/blog/building-a-team-from-scratch-what-personality-data-can-and-cant-tell-you/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/building-a-team-from-scratch-what-personality-data-can-and-cant-tell-you/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/building-a-team-from-scratch-what-personality-data-can-and-cant-tell-you/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/building-a-team-from-scratch-what-personality-data-can-and-cant-tell-you/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/building-a-team-from-scratch-what-personality-data-can-and-cant-tell-you/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/building-a-team-from-scratch-what-personality-data-can-and-cant-tell-you/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/building-a-team-from-scratch-what-personality-data-can-and-cant-tell-you/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/building-a-team-from-scratch-what-personality-data-can-and-cant-tell-you/"/>
+  </url>
+  <url>
     <loc>https://cercol.team/blog/should-you-hire-for-personality-fit-or-personality-diversity/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/should-you-hire-for-personality-fit-or-personality-diversity/"/>
@@ -1432,7 +1917,7 @@
   </url>
   <url>
     <loc>https://cercol.team/blog/how-to-build-a-balanced-team/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/how-to-build-a-balanced-team/"/>
@@ -1444,17 +1929,17 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/how-to-build-a-balanced-team/"/>
   </url>
   <url>
-    <loc>https://cercol.team/blog/does-personality-composition-predict-team-performance/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <loc>https://cercol.team/blog/blind-spots-in-teams/</loc>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/does-personality-composition-predict-team-performance/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/does-personality-composition-predict-team-performance/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/does-personality-composition-predict-team-performance/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/does-personality-composition-predict-team-performance/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/does-personality-composition-predict-team-performance/"/>
-    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/does-personality-composition-predict-team-performance/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/does-personality-composition-predict-team-performance/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/blog/blind-spots-in-teams/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/blog/blind-spots-in-teams/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/blog/blind-spots-in-teams/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/blog/blind-spots-in-teams/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/blog/blind-spots-in-teams/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/blog/blind-spots-in-teams/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/blog/blind-spots-in-teams/"/>
   </url>
 
 </urlset>
