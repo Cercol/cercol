@@ -265,8 +265,19 @@ function buildFontPreloadTags(urls) {
 // ---------------------------------------------------------------------------
 
 function buildRoutes(slugs) {
-  // Phase 1: static pages + blog index (one per language) — 13 routes total.
-  const staticRoutes = STATIC_ROUTES.map(route => ({ route, lang: 'en' }))
+  // Phase 1: top-level pages in every language + blog index per language.
+  // Each top-level page (home, about, instruments, roles, science, faq,
+  // privacy) is prerendered once per language as a real path: EN stays
+  // unprefixed (/about), the others get a prefix (/es/about, /es for home).
+  const prefixLangs = BLOG_LANGS.filter(l => l !== 'en')
+  const staticRoutes = []
+  for (const route of STATIC_ROUTES) {
+    staticRoutes.push({ route, lang: 'en' })
+    for (const lang of prefixLangs) {
+      const localized = route === '/' ? `/${lang}` : `/${lang}${route}`
+      staticRoutes.push({ route: localized, lang })
+    }
+  }
   for (const lang of BLOG_LANGS) {
     const prefix = lang === 'en' ? '' : `/${lang}`
     staticRoutes.push({ route: `${prefix}/blog`, lang })

@@ -25,19 +25,30 @@
  * @param {string}   opts.path          route path with trailing slash, e.g. "/about/"
  */
 import { useEffect } from 'react'
+import { ALL_LANGS, localeForCanonical, localizedPath } from '../utils/locale'
 
 const BASE = 'https://cercol.team'
-const LANGS = ['en', 'ca', 'es', 'fr', 'de', 'da']
+const LANGS = ALL_LANGS
 
 function withTrailingSlash(path) {
   if (!path) return '/'
   return path.endsWith('/') ? path : `${path}/`
 }
 
+/** Locale that owns the current URL, for canonical purposes. */
+function currentLocale() {
+  if (typeof window === 'undefined') return 'en'
+  return localeForCanonical(window.location.pathname, window.location.search)
+}
+
 export function usePageMeta({ title, description, ogTitle, ogDescription, path }) {
   useEffect(() => {
+    // `path` is the language-neutral page path (e.g. "/about/"). The
+    // canonical points to the locale-prefixed version that owns this view,
+    // so /es/about/ and /about?lang=es both canonicalise to /es/about/.
     const cleanPath = withTrailingSlash(path)
-    const canonicalUrl = `${BASE}${cleanPath}`
+    const locale = currentLocale()
+    const canonicalUrl = `${BASE}${withTrailingSlash(localizedPath(cleanPath, locale))}`
 
     // Title
     const prevTitle = document.title
@@ -90,8 +101,9 @@ export function usePageMeta({ title, description, ogTitle, ogDescription, path }
     document.head.appendChild(canon)
     added.push(canon)
 
-    // Hreflang: en + x-default point to the bare path,
-    // other languages append ?lang=<code>
+    // Hreflang: path-based per locale now that every language has a real
+    // path (/es/about/), matching how the blog articles already work. No
+    // more ?lang= alternates. x-default points to the English path.
     const makeAlt = (hreflang, href) => {
       const link = document.createElement('link')
       link.rel = 'alternate'
@@ -102,10 +114,9 @@ export function usePageMeta({ title, description, ogTitle, ogDescription, path }
       added.push(link)
     }
     LANGS.forEach(l => {
-      const href = l === 'en' ? canonicalUrl : `${canonicalUrl}?lang=${l}`
-      makeAlt(l, href)
+      makeAlt(l, `${BASE}${withTrailingSlash(localizedPath(cleanPath, l))}`)
     })
-    makeAlt('x-default', canonicalUrl)
+    makeAlt('x-default', `${BASE}${cleanPath}`)
 
     return () => {
       document.title = prevTitle

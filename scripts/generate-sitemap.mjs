@@ -38,10 +38,9 @@ function withTrailingSlash(path) {
 
 function langUrl(path, lang) {
   const p = withTrailingSlash(path)
-  if (lang === 'en') return `${BASE}${p}`
-  // Blog paths use a subdirectory, static pages use ?lang= query (SPA, no subdirectory routing).
-  if (p.startsWith('/blog')) return `${BASE}/${lang}${p}`
-  return `${BASE}${p}?lang=${lang}`
+  // Every page (top-level and blog) is now a real per-locale path; English
+  // is unprefixed. No more ?lang= in the sitemap.
+  return lang === 'en' ? `${BASE}${p}` : `${BASE}/${lang}${p}`
 }
 
 function hreflangAlts(path) {
@@ -52,12 +51,12 @@ function hreflangAlts(path) {
   `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${BASE}${p}"/>`
 }
 
-function urlEntry(path, { priority, changefreq, lastmod }) {
+function urlEntry(path, { priority, changefreq, lastmod, loc }) {
   const p = withTrailingSlash(path)
-  const loc = `${BASE}${p}`
+  const locUrl = loc || `${BASE}${p}`
   const lm = lastmod ? `\n    <lastmod>${lastmod}</lastmod>` : ''
   return `  <url>
-    <loc>${loc}</loc>${lm}
+    <loc>${locUrl}</loc>${lm}
     <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>
 ${hreflangAlts(p)}
@@ -87,18 +86,29 @@ async function main() {
     '  <!-- Static pages -->',
   ]
 
+  // One <loc> per language for every top-level page (path-based), so Google
+  // can index the national homes directly, not only as alternates of EN.
   for (const { path, priority, changefreq } of STATIC_PAGES) {
-    parts.push(urlEntry(path, { priority, changefreq }))
+    for (const lang of LANGS) {
+      parts.push(urlEntry(path, { priority, changefreq, loc: langUrl(path, lang) }))
+    }
   }
 
-  parts.push('', '  <!-- Blog index -->')
-  parts.push(urlEntry('/blog', { priority: '0.8', changefreq: 'weekly', lastmod: TODAY }))
+  parts.push('', '  <!-- Blog index (one entry per language) -->')
+  for (const lang of LANGS) {
+    parts.push(urlEntry('/blog', { priority: '0.8', changefreq: 'weekly', lastmod: TODAY, loc: langUrl('/blog', lang) }))
+  }
 
   // ── Blog post URLs re-enabled 2026-05-16 ────────────────────────────────────
   // scripts/prerender.mjs now generates a static dist/blog/<slug>/index.html
   // (and dist/<lang>/blog/<slug>/index.html for non-English) for every slug,
   // so GitHub Pages serves HTTP 200 instead of the SPA 404 redirect.
   // All language variants are included with hreflang alternates.
+  // Backlog (Phase 17.11): blog articles still emit a single <loc> (EN) with
+  // path-based hreflang alternates, not one <loc> per language. Promoting
+  // them to per-language <loc> like the top-level pages above is deferred to
+  // keep this sprint scoped; the hreflang alternates already point Google at
+  // every localized article path.
   if (slugs.length > 0) {
     parts.push('', '  <!-- Blog articles -->')
     for (const slug of slugs) {
@@ -108,8 +118,9 @@ async function main() {
 
   parts.push('', '</urlset>', '')
 
+  const total = STATIC_PAGES.length * LANGS.length + LANGS.length + slugs.length
   writeFileSync(OUT, parts.join('\n'), 'utf8')
-  console.log(`[sitemap] written to ${OUT} — ${slugs.length + STATIC_PAGES.length + 1} entries`)
+  console.log(`[sitemap] written to ${OUT} — ${total} entries`)
 }
 
 main().catch(err => {

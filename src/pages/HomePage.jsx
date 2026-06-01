@@ -15,6 +15,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { colors } from '../design/tokens'
 import { NewMoonIcon, FirstQuarterIcon, FullMoonIcon, LastQuarterIcon, RoleIcon } from '../components/MoonIcons'
+import { usePageMeta } from '../hooks/usePageMeta'
 
 const GITHUB_URL = 'https://github.com/cercol/cercol'
 const ISSUE_URL  = 'https://github.com/cercol/cercol/issues/new?title=Bug+report&labels=bug'
@@ -153,7 +154,18 @@ function InstrumentCard({ icon, name, description, meta, accentColor, titleColor
 
 export default function HomePage() {
   const navigate = useNavigate()
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const lang = i18n.language?.slice(0, 2) || 'en'
+  // Keep the SEO-rich English title/description from the index.html shell
+  // for the home (passing undefined leaves them untouched). For the
+  // localized homes, compose a title from existing translated strings (no
+  // new copy is introduced). usePageMeta localizes canonical, hreflang and
+  // <html lang> for every language regardless.
+  usePageMeta({
+    title:       lang === 'en' ? undefined : `Cèrcol — ${t('home.subtitle')}`,
+    description: lang === 'en' ? undefined : t('home.subtitle'),
+    path: '/',
+  })
   const [wallpaper, setWallpaper] = useState([])
 
   // Generate a fresh random layout on every page load
