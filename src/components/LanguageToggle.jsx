@@ -11,6 +11,14 @@ import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { GlobeIcon } from './MoonIcons'
 import { colors } from '../design/tokens'
+import { stripLocale, localizedPath } from '../utils/locale'
+
+// Language-neutral paths that exist as a real per-locale path, so switching
+// language navigates instead of only swapping copy in place. Blog paths are
+// matched separately by prefix.
+const LOCALIZABLE_PATHS = new Set([
+  '/', '/about', '/instruments', '/roles', '/science', '/faq', '/privacy',
+])
 
 const STORAGE_KEY = 'cercol-lang'
 const LANGS = [
@@ -29,13 +37,15 @@ export default function LanguageToggle() {
   const { pathname } = useLocation()
   const navigate = useNavigate()
 
-  function getBlogLangUrl(pathname, newLang) {
-    const LANGS = ['ca', 'es', 'fr', 'de', 'da']
-    const currentLang = LANGS.find(l => pathname.startsWith(`/${l}/blog`)) ||
-      (pathname === '/blog' || pathname.startsWith('/blog/') ? 'en' : null)
-    if (currentLang === null) return null // not a blog page
-    const langlessPath = currentLang === 'en' ? pathname : pathname.replace(`/${currentLang}`, '')
-    return newLang === 'en' ? langlessPath : `/${newLang}${langlessPath}`
+  // URL to navigate to when switching language, or null when the current
+  // page has no per-locale path (e.g. an instrument test or account page),
+  // in which case we only swap the in-place copy. Covers home, the
+  // top-level doc pages, and the blog (index + articles).
+  function getLocalizedUrl(currentPath, newLang) {
+    const neutral = stripLocale(currentPath)
+    const isBlog = neutral === '/blog' || neutral.startsWith('/blog/')
+    if (!LOCALIZABLE_PATHS.has(neutral) && !isBlog) return null
+    return localizedPath(neutral, newLang)
   }
 
   // Close dropdown on click outside
@@ -52,8 +62,8 @@ export default function LanguageToggle() {
     i18n.changeLanguage(code)
     localStorage.setItem(STORAGE_KEY, code)
     setOpen(false)
-    const blogUrl = getBlogLangUrl(pathname, code)
-    if (blogUrl) navigate(blogUrl)
+    const url = getLocalizedUrl(pathname, code)
+    if (url) navigate(url)
   }
 
   const activeLabel = LANGS.find(l => l.code === i18n.language)?.label ?? 'EN'

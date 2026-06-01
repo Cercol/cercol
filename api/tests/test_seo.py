@@ -94,6 +94,17 @@ def _discover_routes() -> list[str]:
     for route in TOP_LEVEL_CANDIDATES:
         if _html_path(route).is_file():
             routes.append(route)
+    # Localized top-level pages (Phase 17.11): /es, /es/about, ... . Each
+    # language's home and doc pages now exist as a real prerendered path, so
+    # the structural guards (one h1 / meta / canonical / og:title) run on
+    # them too. The blog index is covered by the per-language article below.
+    for lang in ("ca", "es", "fr", "de", "da"):
+        for cand in TOP_LEVEL_CANDIDATES:
+            if cand == "blog":
+                continue
+            route = lang if cand == "" else f"{lang}/{cand}"
+            if _html_path(route).is_file():
+                routes.append(route)
     for lang in LANGS:
         blog_dir = DIST / "blog" if lang == "" else DIST / lang / "blog"
         if not blog_dir.is_dir():
