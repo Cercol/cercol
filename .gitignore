@@ -73,3 +73,6 @@ scripts/probe-*.mjs
 .RData
 .Ruserdata
 *.Rproj.user/
+.claude.json
+CLAUDE.md
+/CLAUDE_*.md
