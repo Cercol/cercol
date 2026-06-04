@@ -62,3 +62,4 @@ Filled at the end of FASE E.
 | 0007 | PageSpeed data source | Accepted |
 | 0008 | MCP server location and auth | Accepted |
 | 0009 | SEO admin UI rewrite | Accepted |
+| 0010 | Enforce published_at invariant for published blog posts | Accepted |

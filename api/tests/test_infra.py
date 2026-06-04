@@ -158,3 +158,27 @@ def test_all_spec_markers_resolve():
             if not target.is_file():
                 failures.append(f"{py.relative_to(REPO_ROOT)} -> {match.group(1)}")
     assert not failures, f"Broken Spec markers: {failures}"
+
+
+# ---------------------------------------------------------------------------
+# Migration 018: published_at CHECK constraint (ADR 0010)
+# ---------------------------------------------------------------------------
+
+MIGRATION_018 = (
+    REPO_ROOT / "db" / "migrations" / "018_blog_published_at_check.sql"
+)
+
+
+def test_migration_018_exists():
+    assert MIGRATION_018.is_file(), f"missing migration at {MIGRATION_018}"
+
+
+def test_migration_018_has_check_expression():
+    content = MIGRATION_018.read_text(encoding="utf-8")
+    # The invariant decided in ADR 0010: a published row must carry a date.
+    assert "status <> 'published' OR published_at IS NOT NULL" in content, (
+        "018 must add the published_at CHECK expression from ADR 0010"
+    )
+    # Idempotency guard so the migration is safe to re-run.
+    assert "blog_posts_published_has_date" in content
+    assert "IF NOT EXISTS" in content

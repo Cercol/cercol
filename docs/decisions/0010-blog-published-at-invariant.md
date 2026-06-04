@@ -2,7 +2,7 @@
 
 - **Number**: 0010
 - **Title**: enforce the published_at invariant for published blog posts via a DB CHECK constraint
-- **Status**: Proposed
+- **Status**: Accepted
 - **Date**: 2026-06-04
 
 ## Context
