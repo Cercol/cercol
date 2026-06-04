@@ -118,7 +118,7 @@ function shuffle(arr) {
  * This prevents witnesses from always avoiding the negative adjective
  * when it is mixed with positive ones — a key forced-choice design constraint.
  *
- * Fixed 20-round polarity sequence (14 positive, 6 negative):
+ * Fixed 20-round polarity sequence (15 positive, 5 negative):
  *   P P N P P P N P P N P P P N P P N P P P
  *
  * Adjective IDs encode polarity: second character is '+' or '−'.
@@ -131,7 +131,7 @@ function shuffle(arr) {
 // Which id sign goes into positive-pole rounds for each factor
 const POSITIVE_POLE_SIGN = { E: '+', A: '+', C: '+', N: '-', O: '+' }
 
-// Fixed polarity pattern: 14 positive (P), 6 negative (N) across 20 rounds
+// Fixed polarity pattern: 15 positive (P), 5 negative (N) across 20 rounds
 const ROUND_POLARITY = ['P','P','N','P','P','P','N','P','P','N','P','P','P','N','P','P','N','P','P','P']
 
 /**
