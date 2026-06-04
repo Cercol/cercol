@@ -85,15 +85,15 @@ Flow:
 - Each round: 5 adjectives shown (one per OCEAN factor); assessor selects
   best fit and worst fit for the subject (forced choice — no Likert scale)
 - Forced choice eliminates social desirability bias
-- 20 rounds total, fixed 70/30 positive/negative polarity sequence
+- 20 rounds total, fixed 75/25 positive/negative polarity sequence (15 positive + 5 negative)
 - Up to 12 Witnesses per subject; scores are averaged across Witnesses
 
 Output of Full Moon + Witness:
 - Primary role (self, from IPIP-NEO-120)
 - Role consensus (from Witness, averaged across completed Witnesses)
-- Convergence score (self vs witness agreement)
-- Blind spots: dimensions where self and witness diverge significantly
-  (|self_z − witness_z| > 0.8)
+- Archetype comparison: the relevant role archetypes on each side (self and
+  Witness) are compared. Shared archetypes are shown, plus "surprises", meaning
+  an archetype relevant on one side but not on the other
 
 ### Freemium model (authoritative)
 
