@@ -14,7 +14,6 @@ import { dirname, resolve } from 'path'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const OUT = resolve(__dirname, '../public/sitemap.xml')
 const BASE = 'https://cercol.team'
-const TODAY = new Date().toISOString().slice(0, 10)
 const LANGS = ['en', 'ca', 'es', 'fr', 'de', 'da']
 
 const STATIC_PAGES = [
@@ -63,20 +62,33 @@ ${hreflangAlts(p)}
   </url>`
 }
 
-async function fetchSlugs() {
+async function fetchPosts() {
+  // Network failure degrades to [] (the URL-set invariant check downstream
+  // catches the resulting shrink, so a shrunken sitemap is never committed).
+  let posts
   try {
     const res = await fetch(`${BASE.replace('cercol.team', 'api.cercol.team')}/blog`)
-    const posts = await res.json()
-    return Array.isArray(posts) ? posts.map(p => p.slug) : []
+    posts = await res.json()
   } catch (e) {
-    console.warn('[sitemap] could not fetch slugs:', e.message)
+    console.warn('[sitemap] could not fetch posts:', e.message)
     return []
   }
+  if (!Array.isArray(posts)) return []
+  // Honest lastmod from the real publish date when present; omitted when null.
+  // No build-date stamping, no invented dates.
+  return posts.map(p => ({
+    slug: p.slug,
+    lastmod: p.publishedAt ? String(p.publishedAt).slice(0, 10) : undefined,
+  }))
 }
 
 async function main() {
-  const slugs = await fetchSlugs()
-  console.log(`[sitemap] ${slugs.length} articles fetched`)
+  const posts = await fetchPosts()
+  // Deterministic emit order: sort by slug so a no-op build yields a no-op diff.
+  // (The API returns published_at DESC with no tiebreak, which is unstable
+  // across builds for bulk-seeded same-timestamp articles.) Order is SEO-irrelevant.
+  posts.sort((a, b) => a.slug.localeCompare(b.slug))
+  console.log(`[sitemap] ${posts.length} articles fetched`)
 
   const parts = [
     `<?xml version="1.0" encoding="UTF-8"?>`,
@@ -96,7 +108,7 @@ async function main() {
 
   parts.push('', '  <!-- Blog index (one entry per language) -->')
   for (const lang of LANGS) {
-    parts.push(urlEntry('/blog', { priority: '0.8', changefreq: 'weekly', lastmod: TODAY, loc: langUrl('/blog', lang) }))
+    parts.push(urlEntry('/blog', { priority: '0.8', changefreq: 'weekly', loc: langUrl('/blog', lang) }))
   }
 
   // ── Blog post URLs re-enabled 2026-05-16 ────────────────────────────────────
@@ -109,16 +121,16 @@ async function main() {
   // them to per-language <loc> like the top-level pages above is deferred to
   // keep this sprint scoped; the hreflang alternates already point Google at
   // every localized article path.
-  if (slugs.length > 0) {
+  if (posts.length > 0) {
     parts.push('', '  <!-- Blog articles -->')
-    for (const slug of slugs) {
-      parts.push(urlEntry(`/blog/${slug}`, { priority: '0.7', changefreq: 'monthly', lastmod: TODAY }))
+    for (const { slug, lastmod } of posts) {
+      parts.push(urlEntry(`/blog/${slug}`, { priority: '0.7', changefreq: 'monthly', lastmod }))
     }
   }
 
   parts.push('', '</urlset>', '')
 
-  const total = STATIC_PAGES.length * LANGS.length + LANGS.length + slugs.length
+  const total = STATIC_PAGES.length * LANGS.length + LANGS.length + posts.length
   writeFileSync(OUT, parts.join('\n'), 'utf8')
   console.log(`[sitemap] written to ${OUT} — ${total} entries`)
 }
