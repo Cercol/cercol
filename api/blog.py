@@ -146,7 +146,7 @@ async def list_posts(request: Request):
                    ) AS languages
             FROM blog_posts
             WHERE status = 'published'
-            ORDER BY published_at DESC
+            ORDER BY published_at DESC NULLS LAST, id DESC
             """
         )
     return [_row_to_list_item(r) for r in rows]
