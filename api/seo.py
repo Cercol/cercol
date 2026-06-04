@@ -27,7 +27,8 @@ from collections.abc import Awaitable, Callable
 from typing import Any
 
 from fastapi import APIRouter, Depends, HTTPException, Query
-from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+
+from deps import require_admin
 
 log = logging.getLogger("cercol.seo")
 
@@ -44,53 +45,11 @@ _bq_lock = asyncio.Lock()
 
 
 # ---------------------------------------------------------------------------
-# Admin dependency (local duplicate of api/main.py:require_admin to avoid
-# the circular-import dance; same pattern as api/blog.py uses).
-# TODO Phase 17.8: extract require_admin and get_current_user into
-# api/deps.py and remove these duplicates from main.py, blog.py, seo.py.
+# Admin gate shared via api/deps.py (Phase 17.8, imported above). deps.py
+# imports nothing from main/blog/seo, so the circular-import workaround that
+# required this local duplicate is no longer needed. deps.require_admin keeps
+# this variant's stricter missing-sub 401 check, so the gate is not weakened.
 # ---------------------------------------------------------------------------
-
-_bearer = HTTPBearer(auto_error=False)
-
-
-async def _require_admin(
-    credentials: HTTPAuthorizationCredentials | None = Depends(_bearer),
-) -> dict:
-    """Validate JWT bearer token and require is_admin = true.
-
-    Declared as a regular FastAPI dependency so FastAPI itself solves
-    `credentials` via the HTTPBearer scheme. An earlier version called
-    `get_current_user(request)` directly, which fails with
-    `AttributeError: 'Request' object has no attribute 'credentials'`
-    because that function expects the HTTPAuthorizationCredentials
-    object, not the raw Request.
-    """
-    if credentials is None:
-        raise HTTPException(status_code=401, detail="Not authenticated")
-
-    # Lazy imports to dodge the circular dependency on api/main.py.
-    from main import _JWT_SECRET, _JWT_ALGORITHM, _JWT_AUDIENCE, _pool
-    from jose import jwt, JWTError
-
-    try:
-        payload = jwt.decode(
-            credentials.credentials,
-            _JWT_SECRET,
-            algorithms=[_JWT_ALGORITHM],
-            audience=_JWT_AUDIENCE,
-        )
-    except JWTError:
-        raise HTTPException(status_code=401, detail="Invalid token")
-
-    user_id = payload.get("sub")
-    if not user_id:
-        raise HTTPException(status_code=401, detail="Invalid token")
-
-    async with _pool.acquire() as conn:
-        row = await conn.fetchrow("SELECT is_admin FROM profiles WHERE id = $1", user_id)
-    if not row or not row["is_admin"]:
-        raise HTTPException(status_code=403, detail="Forbidden")
-    return payload
 
 
 # ---------------------------------------------------------------------------
@@ -175,7 +134,7 @@ def _run_sync(bq, sql: str, params: list | None) -> list[dict]:
 # ---------------------------------------------------------------------------
 
 @router.get("/sources")
-async def sources(_: dict = Depends(_require_admin)) -> dict:
+async def sources(_: dict = Depends(require_admin)) -> dict:
     """Status of each ingest source: row counts and most-recent timestamp."""
     async def produce() -> dict:
         p, sd, sg = _project(), _ds_seo(), _ds_gsc()
@@ -217,7 +176,7 @@ async def sources(_: dict = Depends(_require_admin)) -> dict:
 
 
 @router.get("/health")
-async def health(_: dict = Depends(_require_admin)) -> dict:
+async def health(_: dict = Depends(require_admin)) -> dict:
     """High-level snapshot. Pulls aggregate KPIs across all sources."""
     async def produce() -> dict:
         p, sd, sg = _project(), _ds_seo(), _ds_gsc()
@@ -291,7 +250,7 @@ async def queries(
     period_days: int = Query(28, ge=1, le=180),
     min_impressions: int = Query(0, ge=0),
     limit: int = Query(50, ge=1, le=500),
-    _: dict = Depends(_require_admin),
+    _: dict = Depends(require_admin),
 ) -> dict:
     """Top queries by impressions, joined Bing and (if available) GSC."""
     async def produce() -> dict:
@@ -354,7 +313,7 @@ async def queries(
 async def pages(
     period_days: int = Query(28, ge=1, le=180),
     limit: int = Query(100, ge=1, le=500),
-    _: dict = Depends(_require_admin),
+    _: dict = Depends(require_admin),
 ) -> dict:
     """Top pages by impressions across GSC + Bing."""
     async def produce() -> dict:
@@ -402,7 +361,7 @@ async def pages(
 @router.get("/anomalies")
 async def anomalies(
     threshold_pct: float = Query(30.0, ge=5, le=200),
-    _: dict = Depends(_require_admin),
+    _: dict = Depends(require_admin),
 ) -> dict:
     """Pages whose impressions changed by more than `threshold_pct` percent
     in the last 7 days vs the prior 7 days.
@@ -457,7 +416,7 @@ async def anomalies(
 
 
 @router.get("/page/{slug:path}/lifecycle")
-async def page_lifecycle(slug: str, _: dict = Depends(_require_admin)) -> dict:
+async def page_lifecycle(slug: str, _: dict = Depends(require_admin)) -> dict:
     """History of impressions/clicks/CTR per day for a single URL."""
     async def produce() -> dict:
         p = _project()

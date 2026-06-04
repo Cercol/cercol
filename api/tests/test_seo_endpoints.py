@@ -275,18 +275,19 @@ def test_lifecycle_returns_per_day_rows(monkeypatch):
 # ---------------------------------------------------------------------------
 
 def test_require_admin_returns_401_without_credentials():
-    """Regression: an earlier version of _require_admin called
-    get_current_user(request) which raised AttributeError, surfacing
-    as a 500 (FastAPI propagated the bare exception). The new
-    implementation declares credentials as a FastAPI dependency, so
-    when credentials are absent it raises HTTPException(401) cleanly.
+    """Regression: the admin gate must raise a clean 401 (not a bare
+    exception surfacing as a 500) when no bearer credentials are supplied.
+
+    The gate now lives in api/deps.py (Phase 17.8). Its credential
+    resolution (get_current_user, which require_admin depends on) declares
+    credentials as a FastAPI dependency, so when they are absent it raises
+    HTTPException(401). Asserted here against the shared module.
     """
-    async def call():
-        return await seo._require_admin(credentials=None)
+    import deps
 
     import pytest as _pt
     with _pt.raises(Exception) as exc_info:
-        _run(call())
+        deps.get_current_user(credentials=None)
     # FastAPI HTTPException with 401.
     assert getattr(exc_info.value, "status_code", None) == 401
 
