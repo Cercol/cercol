@@ -32,8 +32,9 @@ Cèrcol's peer assessment (**Witness Cèrcol**) uses **forced-choice adjective
 selection** — the assessor picks one best-fit and one worst-fit adjective per
 round from a set covering all five OCEAN factors. Forced choice eliminates social
 desirability bias that corrupts Likert-scale peer ratings. Up to 12 Witnesses per
-subject; scores are averaged. Divergence > 0.8 SD between self and peer on any
-dimension is flagged as a **blind spot**.
+subject; scores are averaged. The self and peer profiles are each mapped to
+their relevant role archetype(s), and the report compares the two archetype sets,
+surfacing any archetype one side sees but the other does not (a **surprise**).
 
 ---
 
