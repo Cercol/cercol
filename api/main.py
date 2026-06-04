@@ -42,6 +42,7 @@ from scoring import (
     DOMAINS, NORM_MIN_SAMPLE, NORM_REFRESH_DAYS, resolve_norm,
 )
 from emails import send_witness_assigned, send_witness_completed, send_group_invitation
+from deps import require_admin
 import auth as auth_module
 import blog as blog_module
 import seo as seo_module
@@ -1173,15 +1174,7 @@ async def get_group_report_data(
 # ---------------------------------------------------------------------------
 # Admin helpers
 # ---------------------------------------------------------------------------
-
-async def require_admin(user: dict = Depends(get_current_user)) -> dict:
-    """Dependency — raises 403 unless the authenticated user has is_admin = true."""
-    user_id = user["sub"]
-    async with _pool.acquire() as conn:
-        row = await conn.fetchrow("SELECT is_admin FROM profiles WHERE id = $1", user_id)
-    if not row or not row["is_admin"]:
-        raise HTTPException(status_code=403, detail="Forbidden")
-    return user
+# require_admin now lives in api/deps.py (Phase 17.8) and is imported above.
 
 
 def _csv_val(v) -> str:
