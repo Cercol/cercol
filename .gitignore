@@ -74,5 +74,4 @@ scripts/probe-*.mjs
 .Ruserdata
 *.Rproj.user/
 .claude.json
-CLAUDE.md
 /CLAUDE_*.md
