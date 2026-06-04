@@ -14,19 +14,20 @@ from typing import Optional
 import asyncpg
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from fastapi.responses import RedirectResponse
-from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from jose import JWTError, jwt
 from pydantic import BaseModel
 
 import os
 
+from deps import require_admin
+
 router = APIRouter()
 
 # ---------------------------------------------------------------------------
-# Auth — mirrors main.py exactly (HS256, same env vars)
+# Auth — admin gate shared via api/deps.py (Phase 17.8, imported above).
+# Keep only the JWT_SECRET fail-fast guard, which is independent of the gate.
 # ---------------------------------------------------------------------------
 
-_JWT_SECRET    = os.environ.get("JWT_SECRET", "")
+_JWT_SECRET = os.environ.get("JWT_SECRET", "")
 # Fail fast at import time if JWT_SECRET is missing or too short.
 # python-jose accepts an empty key for HS256 without raising, which
 # would allow attackers to forge tokens by signing with "" if this
@@ -36,39 +37,6 @@ if not _JWT_SECRET or len(_JWT_SECRET) < 32:
         "JWT_SECRET environment variable must be set with at least "
         f"32 bytes. Current length: {len(_JWT_SECRET)}"
     )
-_JWT_ALGORITHM = "HS256"
-_JWT_AUDIENCE  = "authenticated"
-
-_bearer = HTTPBearer(auto_error=False)
-
-
-def _get_current_user(
-    credentials: Optional[HTTPAuthorizationCredentials] = Depends(_bearer),
-) -> dict:
-    if credentials is None:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Not authenticated")
-    try:
-        return jwt.decode(
-            credentials.credentials,
-            _JWT_SECRET,
-            algorithms=[_JWT_ALGORITHM],
-            audience=_JWT_AUDIENCE,
-        )
-    except JWTError:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
-
-
-async def _require_admin(
-    request: Request,
-    user: dict = Depends(_get_current_user),
-) -> dict:
-    """Dependency — raises 403 unless the authenticated user has is_admin = true."""
-    user_id = user["sub"]
-    async with request.app.state.pool.acquire() as conn:
-        row = await conn.fetchrow("SELECT is_admin FROM profiles WHERE id = $1", user_id)
-    if not row or not row["is_admin"]:
-        raise HTTPException(status_code=403, detail="Forbidden")
-    return user
 
 
 # ---------------------------------------------------------------------------
@@ -241,7 +209,7 @@ async def increment_view(slug: str, request: Request):
 async def create_post(
     body: BlogPostBody,
     request: Request,
-    _: dict = Depends(_require_admin),
+    _: dict = Depends(require_admin),
 ):
     """Admin: create a new blog post."""
     published_at = None
@@ -276,7 +244,7 @@ async def update_post(
     slug: str,
     body: BlogPostUpdateBody,
     request: Request,
-    _: dict = Depends(_require_admin),
+    _: dict = Depends(require_admin),
 ):
     """Admin: update an existing post. Sets published_at if first publish."""
     async with request.app.state.pool.acquire() as conn:
@@ -321,7 +289,7 @@ async def patch_post_status(
     slug: str,
     body: BlogStatusBody,
     request: Request,
-    _: dict = Depends(_require_admin),
+    _: dict = Depends(require_admin),
 ):
     """Admin: toggle post status between 'published' and 'draft'."""
     if body.status not in ("published", "draft"):
