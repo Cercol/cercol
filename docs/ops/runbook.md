@@ -342,10 +342,12 @@ re-run. Then a `dry_run: false` run applies the rest.
 
 Emergency fallback only (if the workflow is unavailable), the manual
 path still works (peer auth as the `postgres` superuser; the `cercol`
-role may prompt for a password):
+role may prompt for a password). Feed the file via stdin (`<`), not
+`-f`: the file is piped by root, because the `postgres` user cannot
+read files under `/home/cercol/api`.
 
 ```
-cd /home/cercol/api && sudo -u postgres psql cercol -f db/migrations/<NNN>-<name>.sql
+cd /home/cercol/api && sudo -u postgres psql cercol < db/migrations/<NNN>-<name>.sql
 ```
 
 Backups are the operator's responsibility (`pg_dump`). Frequency
