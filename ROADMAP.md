@@ -32,7 +32,7 @@
 | 6.1 | Full Moon Cèrcol: IPIP-NEO-120, 120 items, 5 blocks, results page. | |
 | 6.2 | Full Moon gate (Stripe). Paywall screen. FQ → FM upgrade CTA. | |
 | 7 | Witness Cèrcol: 100-adjective AB5C corpus, 20 rounds forced choice, up to 12 witnesses, /full-moon/report. | |
-| 7.1 | Witness fixes: subject name on intro, adjective tooltips, round polarity (70/30, no pole mixing). | |
+| 7.1 | Witness fixes: subject name on intro, adjective tooltips, round polarity (70/30, no pole mixing) (later corrected to 75/25 = 15+5; see #46). | |
 | 8 | Documentation site: five routes (/about, /instruments, /roles, /science, /faq) — bilingual EN + CA. | |
 | 8.2 | Instrument intro screens before first item on all three instruments. | |
 | 8.3 | Role system: 9 roles → 12 animal roles (Dolphin–Badger). AB5C-based 5D centroids, softmax assignment, 15% arc threshold. | |
