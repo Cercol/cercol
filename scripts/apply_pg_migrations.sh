@@ -85,8 +85,14 @@ mode_list() {
 }
 
 mode_dry_run() {
-  ensure_ledger
-  local applied; applied="$(applied_set)"
+  # Read-only: never create the ledger. Only consult it if it already exists;
+  # if it does not, treat the applied set as empty (everything is pending).
+  local applied=""
+  local ledger
+  ledger="$($PSQL -v ON_ERROR_STOP=1 -tA -c "SELECT to_regclass('public.schema_migrations');")"
+  if [ -n "$ledger" ]; then
+    applied="$(applied_set)"
+  fi
   local any=0 f
   while IFS= read -r f; do
     [ -n "$f" ] || continue

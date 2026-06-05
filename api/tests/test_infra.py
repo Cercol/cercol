@@ -265,3 +265,35 @@ def test_apply_script_list_orders_numerically(tmp_path):
         "010_b.sql",
         "100_c.sql",
     ], f"--list out of order: {got}"
+
+
+def _dry_run_body() -> str:
+    content = APPLY_SCRIPT.read_text(encoding="utf-8")
+    m = re.search(r"mode_dry_run\(\)\s*\{(.*?)\n\}", content, re.DOTALL)
+    assert m, "mode_dry_run function not found"
+    return m.group(1)
+
+
+def test_dry_run_writes_nothing():
+    # The preview must be read-only: it guards on to_regclass and never creates
+    # the ledger (no ensure_ledger call inside mode_dry_run).
+    body = _dry_run_body()
+    assert "to_regclass('public.schema_migrations')" in body, (
+        "dry-run must check ledger existence with to_regclass, not create it"
+    )
+    assert "ensure_ledger" not in body, (
+        "dry-run must NOT call ensure_ledger (that would create/write the ledger)"
+    )
+
+
+def test_workflow_baseline_only_on_non_dry_run():
+    content = APPLY_WORKFLOW.read_text(encoding="utf-8")
+    # The --baseline invocation must sit inside the non-dry-run branch: it must
+    # appear AFTER the `if DRY_RUN == true` guard (i.e. in the else), so a dry run
+    # never records a baseline.
+    dry_guard = content.find('if [ "${DRY_RUN}" = "true" ]')
+    baseline_call = content.find("--baseline")
+    assert dry_guard != -1 and baseline_call != -1, "expected dry-run guard and baseline call"
+    assert baseline_call > dry_guard, (
+        "--baseline must be gated inside the non-dry-run branch (after the DRY_RUN guard)"
+    )

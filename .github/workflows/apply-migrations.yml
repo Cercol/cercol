@@ -37,16 +37,16 @@ jobs:
 
             chmod +x scripts/apply_pg_migrations.sh
 
-            # First-run adoption: record already-applied migrations without executing.
-            if [ -n "${BASELINE}" ]; then
-              echo "== baseline: recording up to and including ${BASELINE} =="
-              ./scripts/apply_pg_migrations.sh --baseline "${BASELINE}"
-            fi
-
             if [ "${DRY_RUN}" = "true" ]; then
-              echo "== dry-run: pending migrations (nothing applied) =="
+              # A dry run writes NOTHING: no baseline recording, read-only preview.
+              echo "== dry-run: pending migrations (nothing applied, nothing recorded) =="
               ./scripts/apply_pg_migrations.sh --dry-run
             else
+              # First-run adoption: record already-applied migrations without executing.
+              if [ -n "${BASELINE}" ]; then
+                echo "== baseline: recording up to and including ${BASELINE} =="
+                ./scripts/apply_pg_migrations.sh --baseline "${BASELINE}"
+              fi
               echo "== apply: applying pending migrations =="
               ./scripts/apply_pg_migrations.sh
             fi
