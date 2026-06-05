@@ -318,8 +318,31 @@ socket:
 sudo -u cercol psql cercol
 ```
 
-Migrations are applied by hand (peer auth as the `postgres` superuser
-is the reliable path; the `cercol` role may prompt for a password):
+Migrations are applied through the **Apply migrations** GitHub Actions
+workflow (`.github/workflows/apply-migrations.yml`, `workflow_dispatch`
+only — see ADR 0011). It SSHes to the host over the same channel and
+secret as the backend deploy, `git pull`s, and runs
+`scripts/apply_pg_migrations.sh`, which keeps a `schema_migrations`
+ledger, applies only pending `db/migrations/*.sql` in numeric order,
+and halts on the first failure. There is no apply-on-deploy trigger:
+merging a migration applies nothing until this workflow is run.
+
+Normal flow:
+
+1. Run the workflow with `dry_run: true` (the default) to preview the
+   pending set. Changes nothing.
+2. Run it again with `dry_run: false` to apply.
+
+First-time adoption (the ledger does not exist yet, and 001..NNN were
+already applied by hand): run once with `baseline: <highest-already-applied>`
+(e.g. `016`, confirm against prod first) to record those as applied
+*without* executing them — required because migrations 013 and 014 are
+not idempotent (bare `CREATE TABLE` / `INSERT`) and would error if
+re-run. Then a `dry_run: false` run applies the rest.
+
+Emergency fallback only (if the workflow is unavailable), the manual
+path still works (peer auth as the `postgres` superuser; the `cercol`
+role may prompt for a password):
 
 ```
 cd /home/cercol/api && sudo -u postgres psql cercol -f db/migrations/<NNN>-<name>.sql
