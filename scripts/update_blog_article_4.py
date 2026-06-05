@@ -2,7 +2,7 @@
 """Update blog post 4: What is the IPIP and why does it matter? — enriched EN + full translations."""
 import asyncio, asyncpg, json, os
 
-DATABASE_URL = os.environ.get("DATABASE_URL", "postgresql://cercol:cercol_db_2026@localhost:5432/cercol")
+DATABASE_URL = os.environ["DATABASE_URL"]  # required: must be set in the environment, no default
 
 SVG_IPIP = """\
 <figure style="text-align:center;margin:2rem 0">

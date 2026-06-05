@@ -2,7 +2,7 @@
 """Update blog post 2: How to build a balanced team using personality science — enriched EN + full translations."""
 import asyncio, asyncpg, json, os
 
-DATABASE_URL = os.environ.get("DATABASE_URL", "postgresql://cercol:cercol_db_2026@localhost:5432/cercol")
+DATABASE_URL = os.environ["DATABASE_URL"]  # required: must be set in the environment, no default
 
 SVG_TEAM = """\
 <figure style="text-align:center;margin:2rem 0">

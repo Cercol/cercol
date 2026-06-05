@@ -182,3 +182,25 @@ def test_migration_018_has_check_expression():
     # Idempotency guard so the migration is safe to re-run.
     assert "blog_posts_published_has_date" in content
     assert "IF NOT EXISTS" in content
+
+
+# ---------------------------------------------------------------------------
+# No embedded DB credentials in committed scripts
+# ---------------------------------------------------------------------------
+
+# Matches a postgres URL that carries an inline user:password@ host, i.e. a
+# committed credential. The pattern hardcodes no value of its own.
+_DB_CRED_RE = re.compile(r"postgres(?:ql)?://[^\"'\s]*:[^\"'\s]*@")
+
+
+def test_no_embedded_db_credentials_in_scripts():
+    offenders = []
+    for py in (REPO_ROOT / "scripts").rglob("*.py"):
+        if "__pycache__" in py.parts:
+            continue
+        if _DB_CRED_RE.search(py.read_text(encoding="utf-8")):
+            offenders.append(str(py.relative_to(REPO_ROOT)))
+    assert not offenders, (
+        f"embedded DB credential URL found in: {offenders}; read the DSN from the "
+        f"environment instead (os.environ['DATABASE_URL'])"
+    )
