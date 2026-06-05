@@ -1,0 +1,55 @@
+name: Apply migrations
+
+# Manual-only. Applies pending Postgres migrations through the existing root SSH
+# channel (the same mechanism and secret as Deploy backend), per ADR 0011.
+# There is NO push/deploy trigger: merging this repo applies nothing. Schema
+# changes are a deliberate, human-initiated action.
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Preview only (print pending, change nothing). Leave true unless you intend to apply.'
+        type: boolean
+        required: true
+        default: true
+      baseline:
+        description: 'Adopt the ledger: record migrations up to and including this NNN as applied WITHOUT executing them (first-run only, e.g. 016). Leave empty otherwise.'
+        type: string
+        required: false
+        default: ''
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Apply migrations on Hetzner
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: 188.245.60.20
+          username: root
+          key: ${{ secrets.HETZNER_SSH_KEY }}
+          # Pass inputs through the environment of the remote script.
+          envs: DRY_RUN,BASELINE
+          script: |
+            set -euo pipefail
+            cd /home/cercol/api
+            git pull origin main
+
+            chmod +x scripts/apply_pg_migrations.sh
+
+            # First-run adoption: record already-applied migrations without executing.
+            if [ -n "${BASELINE}" ]; then
+              echo "== baseline: recording up to and including ${BASELINE} =="
+              ./scripts/apply_pg_migrations.sh --baseline "${BASELINE}"
+            fi
+
+            if [ "${DRY_RUN}" = "true" ]; then
+              echo "== dry-run: pending migrations (nothing applied) =="
+              ./scripts/apply_pg_migrations.sh --dry-run
+            else
+              echo "== apply: applying pending migrations =="
+              ./scripts/apply_pg_migrations.sh
+            fi
+        env:
+          DRY_RUN: ${{ inputs.dry_run }}
+          BASELINE: ${{ inputs.baseline }}

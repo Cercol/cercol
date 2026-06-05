@@ -2,7 +2,7 @@
 
 - **Number**: 0011
 - **Title**: a tracked, idempotent Postgres migration-apply path through the existing pipeline
-- **Status**: Proposed
+- **Status**: Accepted
 - **Date**: 2026-06-04
 
 ## Context
@@ -54,7 +54,17 @@ This ADR decides the *mechanism and where it runs*. It does not implement it:
 the script and any workflow wiring are a follow-up, gated on this ADR being
 accepted.
 
-## Open question for sign-off
+## Resolution (at acceptance)
+
+**Trigger mode = explicit `workflow_dispatch`.** The apply path is a separate
+manually-triggered workflow (`.github/workflows/apply-migrations.yml`), not wired
+to deploy. Inputs: `dry_run` (boolean, **default true** — an accidental run
+previews rather than applies) and `baseline` (string, empty by default) for
+first-run ledger adoption. Chosen over auto-on-deploy because the host is a shared
+VPS (Cèrcol + topquaranta): keeping a human/agent in the loop for DDL is worth the
+one extra deliberate step, and merging a migration must apply nothing on its own.
+
+Original open question (kept for context):
 
 **Trigger mode.** Two options, to be chosen at acceptance:
 

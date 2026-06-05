@@ -63,4 +63,4 @@ Filled at the end of FASE E.
 | 0008 | MCP server location and auth | Accepted |
 | 0009 | SEO admin UI rewrite | Accepted |
 | 0010 | Enforce published_at invariant for published blog posts | Accepted |
-| 0011 | Tracked migration-apply path through the pipeline | Proposed |
+| 0011 | Tracked migration-apply path through the pipeline | Accepted |

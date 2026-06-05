@@ -204,3 +204,64 @@ def test_no_embedded_db_credentials_in_scripts():
         f"embedded DB credential URL found in: {offenders}; read the DSN from the "
         f"environment instead (os.environ['DATABASE_URL'])"
     )
+
+
+# ---------------------------------------------------------------------------
+# Migration-apply mechanism (ADR 0011): script + workflow
+# ---------------------------------------------------------------------------
+
+APPLY_SCRIPT = REPO_ROOT / "scripts" / "apply_pg_migrations.sh"
+APPLY_WORKFLOW = REPO_ROOT / ".github" / "workflows" / "apply-migrations.yml"
+
+
+def test_apply_script_exists_with_required_modes_and_safety():
+    assert APPLY_SCRIPT.is_file(), f"missing apply script at {APPLY_SCRIPT}"
+    content = APPLY_SCRIPT.read_text(encoding="utf-8")
+    assert "set -euo pipefail" in content, "script must use strict bash mode"
+    for mode in ("--list", "--dry-run", "--baseline"):
+        assert mode in content, f"script must support {mode}"
+    assert "schema_migrations" in content, "script must use the schema_migrations ledger"
+    # Halt-on-failure: psql aborts on the first error and set -e propagates it.
+    assert "ON_ERROR_STOP=1" in content, "script must halt on the first migration error"
+
+
+def test_apply_workflow_is_dispatch_only_with_dry_run_default_true():
+    assert APPLY_WORKFLOW.is_file(), f"missing workflow at {APPLY_WORKFLOW}"
+    content = APPLY_WORKFLOW.read_text(encoding="utf-8")
+    assert "workflow_dispatch:" in content, "workflow must be manually dispatchable"
+    # No push/deploy trigger: merging must apply nothing.
+    assert re.search(r"^\s*push\s*:", content, re.MULTILINE) is None, (
+        "apply workflow must NOT have a push trigger"
+    )
+    # dry_run defaults to true so an accidental run previews rather than applies.
+    assert re.search(r"dry_run:.*?default:\s*true", content, re.DOTALL), (
+        "dry_run input must default to true"
+    )
+    # Reuses the existing SSH secret, introduces no new one.
+    assert "secrets.HETZNER_SSH_KEY" in content
+
+
+def test_apply_script_list_orders_numerically(tmp_path):
+    import os
+    import subprocess
+
+    # Fake NNN_*.sql fixtures created out of order; --list must return them in
+    # numeric (NNN) order. --list needs no DB connection (that is why it exists).
+    for name in ("010_b.sql", "002_a.sql", "100_c.sql", "009_z.sql", "001_x.sql"):
+        (tmp_path / name).write_text("-- fixture\n", encoding="utf-8")
+
+    result = subprocess.run(
+        ["bash", str(APPLY_SCRIPT), "--list"],
+        env={**os.environ, "MIGRATIONS_DIR": str(tmp_path)},
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    got = [ln for ln in result.stdout.splitlines() if ln.strip()]
+    assert got == [
+        "001_x.sql",
+        "002_a.sql",
+        "009_z.sql",
+        "010_b.sql",
+        "100_c.sql",
+    ], f"--list out of order: {got}"
