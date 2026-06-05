@@ -129,8 +129,10 @@ mode_apply() {
       continue
     fi
     echo "APPLYING $f"
-    # ON_ERROR_STOP=1 + set -e => halt on the first failure, before recording.
-    $PSQL -v ON_ERROR_STOP=1 -q -f "$MIGRATIONS_DIR/$f"
+    # Feed the file via stdin so the invoking shell (root) opens it, not the
+    # postgres user (which cannot read files under /home/cercol/api). ON_ERROR_STOP=1
+    # + set -e => halt on the first failure, before recording.
+    $PSQL -v ON_ERROR_STOP=1 -q < "$MIGRATIONS_DIR/$f"
     record "$f"
     echo "APPLIED  $f"
     applied_any=1

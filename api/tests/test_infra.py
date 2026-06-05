@@ -297,3 +297,22 @@ def test_workflow_baseline_only_on_non_dry_run():
     assert baseline_call > dry_guard, (
         "--baseline must be gated inside the non-dry-run branch (after the DRY_RUN guard)"
     )
+
+
+def _apply_body() -> str:
+    content = APPLY_SCRIPT.read_text(encoding="utf-8")
+    m = re.search(r"mode_apply\(\)\s*\{(.*?)\n\}", content, re.DOTALL)
+    assert m, "mode_apply function not found"
+    return m.group(1)
+
+
+def test_apply_feeds_migration_via_stdin_not_dash_f():
+    # The postgres user cannot read files under /home/cercol/api, so the apply
+    # must pipe the migration via stdin (root reads the file), not psql -f <file>.
+    body = _apply_body()
+    assert re.search(r'<\s*"\$MIGRATIONS_DIR/\$f"', body), (
+        "mode_apply must feed the migration via stdin redirect (< file)"
+    )
+    assert '-f "$MIGRATIONS_DIR/$f"' not in body, (
+        "mode_apply must NOT use psql -f for the migration file (postgres cannot read it)"
+    )
