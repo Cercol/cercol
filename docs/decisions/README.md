@@ -64,3 +64,4 @@ Filled at the end of FASE E.
 | 0009 | SEO admin UI rewrite | Accepted |
 | 0010 | Enforce published_at invariant for published blog posts | Accepted |
 | 0011 | Tracked migration-apply path through the pipeline | Accepted |
+| 0012 | Enforce the premium paywall server-side (require_premium) | Proposed |
