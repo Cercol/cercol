@@ -1215,6 +1215,7 @@
       "cta": "View on GitHub"
     },
     "validation": {
+      "milestonesDetail": "Validation milestones. Cèrcol's model is a working hypothesis, refined as real data accumulates. The plan is explicit about what changes at each sample size. At N ≥ 100 we review the role distribution and flag any archetype that attracts an unusual share of profiles. At N ≥ 200 we replace the published normative priors with Cèrcol's own sample statistics, including Witness-specific norms. At N ≥ 300 we run k-means (k = 12) to compare the empirical centroids against the theoretical ones, and test whether cognitive ability predicts role assignment beyond the Big Five. None of this validates the model as a predictor of team performance, which requires external data on real team behaviour. The milestones refine the model's internal geometry, not its external claims.",
       "eyebrow": "Validation plan",
       "heading": "A working hypothesis, not a finished product.",
       "body": "Cèrcol's role system uses theoretical centroids derived from published AB5C research. Role assignments are illustrative — they have not yet been empirically validated against real team outcomes. Validation is planned in three stages.",

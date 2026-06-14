@@ -1215,6 +1215,7 @@
       "cta": "Se på GitHub"
     },
     "validation": {
+      "milestonesDetail": "Valideringsmilepæle. Cèrcols model er en arbejdshypotese, der forfines, efterhånden som rigtige data samles. Planen er eksplicit om, hvad der ændrer sig ved hver stikprøvestørrelse. Ved N ≥ 100 gennemgår vi rollefordelingen og markerer enhver arketype, der tiltrækker en usædvanlig andel af profiler. Ved N ≥ 200 erstatter vi de publicerede normative priors med Cèrcols egne stikprøvestatistikker, herunder vidnespecifikke normer. Ved N ≥ 300 kører vi k-means (k = 12) for at sammenligne de empiriske centroider med de teoretiske og tester, om kognitiv evne forudsiger rolletildeling ud over Big Five. Intet af dette validerer modellen som prædiktor for teampræstation, hvilket kræver eksterne data om reel teamadfærd. Milepælene forfiner modellens interne geometri, ikke dens eksterne påstande.",
       "eyebrow": "Valideringsplan",
       "heading": "En arbejdshypotese, ikke et færdigt produkt.",
       "body": "Cèrcols rollesystem bruger teoretiske centroider afledt af publiceret AB5C-forskning. Rolletildelinger er illustrative — de er endnu ikke empirisk valideret mod reelle teamresultater. Validering er planlagt i tre faser.",

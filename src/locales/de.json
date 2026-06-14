@@ -1215,6 +1215,7 @@
       "cta": "Auf GitHub ansehen"
     },
     "validation": {
+      "milestonesDetail": "Validierungs-Meilensteine. Das Modell von Cèrcol ist eine Arbeitshypothese, die verfeinert wird, sobald echte Daten zusammenkommen. Der Plan benennt klar, was sich bei jeder Stichprobengröße ändert. Bei N ≥ 100 prüfen wir die Rollenverteilung und markieren jeden Archetyp, der einen ungewöhnlichen Anteil an Profilen anzieht. Bei N ≥ 200 ersetzen wir die veröffentlichten normativen Priors durch Cèrcols eigene Stichprobenstatistiken, einschließlich zeugenspezifischer Normen. Bei N ≥ 300 führen wir k-means (k = 12) aus, um die empirischen Zentroide mit den theoretischen zu vergleichen, und testen, ob kognitive Fähigkeit die Rollenzuordnung über die Big Five hinaus vorhersagt. Nichts davon validiert das Modell als Prädiktor der Teamleistung, wofür externe Daten zum tatsächlichen Teamverhalten nötig sind. Die Meilensteine verfeinern die interne Geometrie des Modells, nicht seine externen Aussagen.",
       "eyebrow": "Validierungsplan",
       "heading": "Eine Arbeitshypothese, kein fertiges Produkt.",
       "body": "Das Rollensystem von Cèrcol verwendet theoretische Zentroide, die aus veröffentlichter AB5C-Forschung abgeleitet wurden. Rollenzuweisungen sind illustrativ — sie wurden noch nicht empirisch gegen reale Teamergebnisse validiert. Die Validierung ist in drei Phasen geplant.",
