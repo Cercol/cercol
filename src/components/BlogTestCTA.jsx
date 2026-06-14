@@ -17,7 +17,7 @@ const COPY = {
   en: { h: 'See yourself in five dimensions.', p: 'A free 2-minute snapshot. No account, no card.', b: 'Start the free test' },
   ca: { h: "Mira't en cinc dimensions.", p: 'Una instantània gratuïta de 2 minuts. Sense compte, sense targeta.', b: 'Comença el test gratuït' },
   es: { h: 'Mírate en cinco dimensiones.', p: 'Una instantánea gratuita de 2 minutos. Sin cuenta, sin tarjeta.', b: 'Empieza el test gratis' },
-  fr: { h: 'Voyez-vous en cinq dimensions.', p: 'Un aperçu gratuit de 2 minutes. Sans compte, sans carte.', b: 'Commencer le test gratuit' },
+  fr: { h: 'Découvrez-vous en cinq dimensions.', p: 'Un aperçu gratuit de 2 minutes. Sans compte, sans carte.', b: 'Commencer le test gratuit' },
   de: { h: 'Sieh dich in fünf Dimensionen.', p: 'Eine kostenlose 2-Minuten-Momentaufnahme. Kein Konto, keine Karte.', b: 'Kostenlosen Test starten' },
   da: { h: 'Se dig selv i fem dimensioner.', p: 'Et gratis 2-minutters øjebliksbillede. Ingen konto, intet kort.', b: 'Start den gratis test' },
 }
