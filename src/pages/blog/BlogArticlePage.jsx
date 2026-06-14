@@ -57,6 +57,22 @@ marked.use({
         .replace(/^-|-$/g, '')
       return `<h${token.depth} id="${id}">${text}</h${token.depth}>\n`
     },
+
+    // Append a trailing slash to internal blog article links so the body
+    // points at the canonical URL. GitHub Pages 301-redirects /blog/<slug>
+    // to /blog/<slug>/, and Search Console was seeing both forms because the
+    // markdown bodies linked the non-slash variant. Matches /blog/<slug> and
+    // /<lang>/blog/<slug>; anchors, external links and non-article internal
+    // links are left untouched.
+    link(token) {
+      const text = this.parser.parseInline(token.tokens)
+      const title = token.title ? ` title="${token.title}"` : ''
+      let href = token.href
+      if (/^\/(?:[a-z]{2}\/)?blog\/[a-z0-9-]+$/.test(href)) {
+        href = `${href}/`
+      }
+      return `<a href="${href}"${title}>${text}</a>`
+    },
   },
 })
 
@@ -158,12 +174,14 @@ export function localizeBlogLinks(html, lang, articles) {
       }
     }
   }
-  return html.replace(/href="\/blog\/([a-z0-9-]+)(\/?)"/g, (match, slug, trailing) => {
+  return html.replace(/href="\/blog\/([a-z0-9-]+)\/?"/g, (match, slug) => {
     const langs = langsBySlug.get(slug)
     if (langs && langs.includes(lang)) {
-      return `href="/${lang}/blog/${slug}${trailing}"`
+      return `href="/${lang}/blog/${slug}/"`
     }
-    return match
+    // Keep the English target (locale fallback) but normalize to the
+    // canonical trailing-slash form so crawlers only ever see one URL.
+    return `href="/blog/${slug}/"`
   })
 }
 
