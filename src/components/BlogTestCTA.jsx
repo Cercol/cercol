@@ -23,8 +23,17 @@ const COPY = {
   da: { h: 'Se dig selv i fem dimensioner.', p: 'Et gratis 2-minutters øjebliksbillede. Ingen konto, intet kort.', b: 'Start den gratis test' },
 }
 
-export default function BlogTestCTA({ slug, lang = 'en' }) {
+// Optional category-specific heading override (en/ca only). Any other category
+// or locale falls back to the generic COPY[lang].h. p and b stay generic.
+const CATEGORY_H = {
+  teams:      { en: "See how you shift a team's balance.", ca: "Mira com mous l'equilibri d'un equip." },
+  work:       { en: 'See how you show up at work.',         ca: 'Mira com et mostres a la feina.' },
+  leadership: { en: 'See your own leadership profile.',     ca: 'Mira el teu perfil de lideratge.' },
+}
+
+export default function BlogTestCTA({ slug, lang = 'en', category }) {
   const c = COPY[lang] || COPY.en
+  const heading = CATEGORY_H[category]?.[lang] || c.h
   // Fire the funnel cta_click event, then let navigation proceed (no
   // preventDefault). Fire-and-forget: trackEvent swallows errors.
   const handleClick = () => {
@@ -41,7 +50,7 @@ export default function BlogTestCTA({ slug, lang = 'en' }) {
         className="text-xl font-bold text-gray-900 mb-1"
         style={{ fontFamily: 'var(--mm-font-display)' }}
       >
-        {c.h}
+        {heading}
       </h2>
       <p className="text-sm text-gray-500 leading-relaxed mb-4">{c.p}</p>
       <Link

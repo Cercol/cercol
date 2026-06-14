@@ -15,9 +15,32 @@ const html = (lang) =>
     createElement(MemoryRouter, null, createElement(BlogTestCTA, { lang })),
   )
 
+const htmlWith = (props) =>
+  renderToStaticMarkup(
+    createElement(MemoryRouter, null, createElement(BlogTestCTA, props)),
+  )
+
 describe('BlogTestCTA', () => {
   it('links to the free no-account test', () => {
     expect(html('en')).toContain('href="/new-moon"')
+  })
+
+  it('overrides the heading for a matching category (teams, en)', () => {
+    const out = htmlWith({ lang: 'en', category: 'teams' })
+    // Apostrophe is HTML-escaped in static markup; match around it.
+    expect(out).toContain('See how you shift a team')
+    expect(out).toContain('balance.')
+    expect(out).not.toContain('See yourself in five dimensions.')
+  })
+
+  it('falls back to the generic heading for an unmapped category', () => {
+    const out = htmlWith({ lang: 'en', category: 'science' })
+    expect(out).toContain('See yourself in five dimensions.')
+  })
+
+  it('falls back to the generic heading for a category in an unmapped locale', () => {
+    const out = htmlWith({ lang: 'es', category: 'teams' })
+    expect(out).toContain('Mírate en cinco dimensiones.')
   })
 
   it('renders with a slug prop without breaking the link', () => {
