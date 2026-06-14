@@ -66,6 +66,7 @@ import { createServer } from 'http'
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from 'fs'
 import { join, resolve } from 'path'
 import { fileURLToPath } from 'url'
+import { normalizeUnsplashUrl } from '../src/utils/unsplash.js'
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url))
 const DIST_DIR   = resolve(__dirname, '../dist')
@@ -369,6 +370,17 @@ async function renderOneRoute(browser, { route, lang }, { articles, articlesBySl
   page.on('pageerror', () => {})
   page.on('requestfailed', () => {})
 
+  // Article routes (/blog/<slug>, /<lang>/blog/<slug>) only consume
+  // {slug, languages} from __BLOG_ARTICLES__ (localizeBlogLinks). The blog
+  // INDEX needs the full list (titles, descriptions, covers). Slimming the
+  // per-article payload removes ~150 KB of duplicated JSON from every one of
+  // the 600+ article HTMLs, which was the bulk of the prerendered document
+  // weight and the main mobile-FCP cost.
+  const blogMatch = route.match(/^\/(?:([a-z]{2})\/)?blog\/([^/]+)\/?$/)
+  const isArticleRoute = Boolean(blogMatch)
+  const slimArticles = articles.map(a => ({ slug: a.slug, languages: a.languages }))
+  const pageArticles = isArticleRoute ? slimArticles : articles
+
   // Expose the article list to React DURING the render (not only to the
   // hydrated client via the post-capture <script> below). BlogArticlePage's
   // language-aware internal-link rewrite reads window.__BLOG_ARTICLES__ to
@@ -382,7 +394,7 @@ async function renderOneRoute(browser, { route, lang }, { articles, articlesBySl
     // is set via evaluateOnNewDocument, NOT injected into the saved HTML, so
     // real users are never flagged.
     window.__PRERENDER__ = true
-  }, articles)
+  }, pageArticles)
 
   // For non-English pages, set localStorage so i18n initialises correctly
   if (lang !== 'en') {
@@ -419,13 +431,15 @@ async function renderOneRoute(browser, { route, lang }, { articles, articlesBySl
   const html = await page.content()
   await page.close()
 
-  // --- Step 1: inject font preloads + window globals into <head> -----------
+  // --- Step 1: inject head hints + window globals --------------------------
   //
-  // Font preloads go BEFORE the Beasties pass so Beasties sees them and
-  // preserves them in the final <head> (it does not strip existing preloads).
+  // Font preloads + image hints go in <head> BEFORE the Beasties pass so
+  // Beasties preserves them (it does not strip existing preloads).
   //
   // window globals let React read API data synchronously on first render:
-  //   window.__BLOG_ARTICLES__ - full article list for BlogIndexPage
+  //   window.__BLOG_ARTICLES__ - article list for BlogIndexPage / link rewrite
+  //                              (full on index routes, slim {slug,languages}
+  //                              on article routes)
   //   window.__BETA__          - beta launch status for BetaBanner
   //   window.__ARTICLE__       - the full article (with content) for
   //                              BlogArticlePage on this exact route, so
@@ -434,8 +448,14 @@ async function renderOneRoute(browser, { route, lang }, { articles, articlesBySl
   //                              /blog/<slug> and /<lang>/blog/<slug>
   //                              routes; other routes do not carry a
   //                              per-route article payload.
+  //
+  // The globals are emitted as a classic inline <script> at the END of
+  // <body> (not in <head>): classic inline scripts run during parsing,
+  // before the deferred module bundle, so React still reads the globals on
+  // first render — while keeping the large JSON out of <head> lets the
+  // above-the-fold content paint first.
   let articleScript = ''
-  const blogMatch = route.match(/^\/(?:([a-z]{2})\/)?blog\/([^/]+)\/?$/)
+  let coverPreload = ''
   if (blogMatch) {
     const slug = blogMatch[2]
     // The blog INDEX (`/blog`, `/<lang>/blog`) is excluded because the
@@ -443,13 +463,28 @@ async function renderOneRoute(browser, { route, lang }, { articles, articlesBySl
     const article = articlesBySlug ? articlesBySlug.get(slug) : undefined
     if (article) {
       articleScript = `window.__ARTICLE__=${JSON.stringify(article)};`
+      // Preload the cover image (likely LCP element) with a responsive
+      // imagesrcset matching the <img> below, so the browser fetches the
+      // right candidate immediately instead of after parsing the body.
+      const cover = article.coverUrl || article.cover_url
+      const src480 = normalizeUnsplashUrl(cover, { w: 480 })
+      const src760 = normalizeUnsplashUrl(cover, { w: 760 })
+      const src1200 = normalizeUnsplashUrl(cover, { w: 1200 })
+      if (src760) {
+        coverPreload = `<link rel="preload" as="image" imagesrcset="${src480} 480w, ${src760} 760w, ${src1200} 1200w" imagesizes="(min-width: 768px) 768px, 100vw">`
+      }
     } else {
       console.warn(`[prerender]   ! no __ARTICLE__ available for slug ${slug} on ${route}`)
     }
   }
-  const globalsScript = `<script>window.__BETA__=${JSON.stringify(betaStatus)};window.__BLOG_ARTICLES__=${JSON.stringify(articles)};${articleScript}</script>`
-  const headInjections = `${fontPreloadTags}\n  ${globalsScript}`
-  const htmlWithInjections = html.replace('</head>', `${headInjections}\n</head>`)
+  const globalsScript = `<script>window.__BETA__=${JSON.stringify(betaStatus)};window.__BLOG_ARTICLES__=${JSON.stringify(pageArticles)};${articleScript}</script>`
+  // Preconnect to the Unsplash CDN so cover-image DNS/TLS is warm by the time
+  // the preload fires. No crossorigin: the <img> is not a CORS request.
+  const preconnect = `<link rel="preconnect" href="https://images.unsplash.com">`
+  const headInjections = `${fontPreloadTags}\n  ${preconnect}${coverPreload ? `\n  ${coverPreload}` : ''}`
+  const htmlWithInjections = html
+    .replace('</head>', `${headInjections}\n</head>`)
+    .replace('</body>', `  ${globalsScript}\n</body>`)
 
   // --- Step 2: inline critical CSS via Beasties ----------------------------
   //
