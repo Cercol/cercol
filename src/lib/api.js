@@ -381,6 +381,31 @@ export async function trackBlogView(slug) {
   } catch {
     // Intentionally ignored — view tracking is best-effort
   }
+  // First-party funnel signal (real human article view). After the prerender
+  // guard so bots/prerender are excluded. Fire-and-forget.
+  trackEvent('article_view', {
+    slug,
+    path: typeof window !== 'undefined' ? (window.location?.pathname ?? null) : null,
+  })
+}
+
+/**
+ * trackEvent — fire-and-forget first-party funnel event POST to /events.
+ * Never throws — any error is silently swallowed, so it safely no-ops until
+ * the events table and endpoint are live. Skipped during the prerender pass.
+ * @param {'article_view'|'cta_click'|'test_start'} name
+ * @param {{slug?, instrument?, lang?, path?, anon_id?}} [payload]
+ */
+export async function trackEvent(name, payload = {}) {
+  if (typeof window !== 'undefined' && window.__PRERENDER__) return
+  try {
+    await publicFetch('/events', {
+      method: 'POST',
+      body: JSON.stringify({ name, ...payload }),
+    })
+  } catch {
+    // Intentionally ignored — event tracking is best-effort
+  }
 }
 
 /**

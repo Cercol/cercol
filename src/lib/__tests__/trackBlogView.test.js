@@ -36,9 +36,10 @@ describe('trackBlogView', () => {
 
     await trackBlogView('some-slug')
 
-    expect(fetchMock).toHaveBeenCalledTimes(1)
-    const [url, options] = fetchMock.mock.calls[0]
-    expect(url).toContain('/blog/some-slug/view')
-    expect(options.method).toBe('POST')
+    // trackBlogView now also fires an article_view event; assert the view
+    // endpoint specifically rather than the total call count.
+    const viewCall = fetchMock.mock.calls.find(([u]) => u.includes('/blog/some-slug/view'))
+    expect(viewCall).toBeTruthy()
+    expect(viewCall[1].method).toBe('POST')
   })
 })

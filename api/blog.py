@@ -128,6 +128,20 @@ class BlogStatusBody(BaseModel):
     status: str
 
 
+# Allowed first-party funnel event names. test_complete is intentionally
+# absent: it is derivable from results.created_at.
+_EVENT_NAMES = {"article_view", "cta_click", "test_start"}
+
+
+class EventBody(BaseModel):
+    name:       str
+    slug:       Optional[str] = None
+    instrument: Optional[str] = None
+    lang:       Optional[str] = None
+    path:       Optional[str] = None
+    anon_id:    Optional[str] = None
+
+
 # ---------------------------------------------------------------------------
 # Routes — public
 # ---------------------------------------------------------------------------
@@ -199,6 +213,34 @@ async def increment_view(slug: str, request: Request):
             slug,
         )
     return {"ok": True}
+
+
+@router.post("/events")
+async def record_event(body: EventBody, request: Request):
+    """Record one first-party funnel event. No auth (anonymous by design).
+
+    Rejects unknown event names with 400. Degrades to a no-op 200 if the
+    events table has not been migrated yet (pre-migration deploy window), so
+    the client can ship the firing code before the table is live without
+    surfacing errors. Mirrors the defensive pattern in _lookup_redirect.
+    """
+    if body.name not in _EVENT_NAMES:
+        raise HTTPException(status_code=400, detail="Unknown event name")
+
+    async with request.app.state.pool.acquire() as conn:
+        try:
+            await conn.execute(
+                """
+                INSERT INTO events (name, slug, instrument, lang, path, anon_id)
+                VALUES ($1, $2, $3, $4, $5, $6)
+                """,
+                body.name, body.slug, body.instrument, body.lang, body.path, body.anon_id,
+            )
+        except asyncpg.exceptions.UndefinedTableError:
+            # Table not migrated yet: accept and drop, so the frontend no-ops
+            # safely until db/migrations/019_events.sql is applied.
+            return {"ok": True, "stored": False}
+    return {"ok": True, "stored": True}
 
 
 # ---------------------------------------------------------------------------
