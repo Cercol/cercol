@@ -377,6 +377,11 @@ async function renderOneRoute(browser, { route, lang }, { articles, articlesBySl
   // pages. evaluateOnNewDocument runs before every navigation on this page.
   await page.evaluateOnNewDocument((arts) => {
     window.__BLOG_ARTICLES__ = arts
+    // Runtime-only flag so client code (e.g. trackBlogView) can detect the
+    // prerender pass and skip side effects like view-count increments. This
+    // is set via evaluateOnNewDocument, NOT injected into the saved HTML, so
+    // real users are never flagged.
+    window.__PRERENDER__ = true
   }, articles)
 
   // For non-English pages, set localStorage so i18n initialises correctly

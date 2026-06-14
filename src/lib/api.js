@@ -372,6 +372,10 @@ export async function getBlogPost(slug) {
  * @param {string} slug
  */
 export async function trackBlogView(slug) {
+  // Skip during the prerender pass: prerender.mjs sets window.__PRERENDER__ at
+  // runtime (never serialized into the saved HTML), so this guard suppresses
+  // the build-time view inflation while real users still count.
+  if (typeof window !== 'undefined' && window.__PRERENDER__) return
   try {
     await publicFetch(`/blog/${slug}/view`, { method: 'POST' })
   } catch {
