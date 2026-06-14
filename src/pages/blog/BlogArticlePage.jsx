@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next'
 import { marked } from 'marked'
 import { getBlogPost, getBlogPosts, trackBlogView } from '../../lib/api'
 import { normalizeUnsplashUrl } from '../../utils/unsplash'
+import BlogTestCTA from '../../components/BlogTestCTA'
 
 // Configure marked with custom renderers once at module load time
 marked.use({
@@ -662,6 +663,9 @@ export default function BlogArticlePage() {
           </aside>
         )}
       </div>
+
+      {/* Free-test CTA: bridge readers from the article to the no-account test */}
+      <BlogTestCTA lang={urlLang} />
 
       {/* Related articles */}
       {relatedPosts.length > 0 && (
