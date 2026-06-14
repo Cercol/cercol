@@ -11,6 +11,7 @@
  */
 import { Link } from 'react-router-dom'
 import { Card, SectionLabel } from './ui'
+import { trackEvent } from '../lib/api'
 
 // Localized copy. es/fr/de/da are flagged for human review in the PR.
 const COPY = {
@@ -22,8 +23,17 @@ const COPY = {
   da: { h: 'Se dig selv i fem dimensioner.', p: 'Et gratis 2-minutters øjebliksbillede. Ingen konto, intet kort.', b: 'Start den gratis test' },
 }
 
-export default function BlogTestCTA({ lang = 'en' }) {
+export default function BlogTestCTA({ slug, lang = 'en' }) {
   const c = COPY[lang] || COPY.en
+  // Fire the funnel cta_click event, then let navigation proceed (no
+  // preventDefault). Fire-and-forget: trackEvent swallows errors.
+  const handleClick = () => {
+    trackEvent('cta_click', {
+      slug,
+      lang,
+      path: typeof window !== 'undefined' ? (window.location?.pathname ?? null) : null,
+    })
+  }
   return (
     <Card accent="blue" className="p-6 mt-12 max-w-3xl">
       <SectionLabel color="blue" className="mb-2">Cèrcol</SectionLabel>
@@ -36,6 +46,7 @@ export default function BlogTestCTA({ lang = 'en' }) {
       <p className="text-sm text-gray-500 leading-relaxed mb-4">{c.p}</p>
       <Link
         to="/new-moon"
+        onClick={handleClick}
         className="font-semibold inline-flex items-center justify-center transition-colors rounded text-sm px-5 py-2.5 bg-[var(--mm-color-blue)] text-white hover:opacity-90"
       >
         {c.b}
