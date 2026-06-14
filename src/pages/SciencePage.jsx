@@ -281,6 +281,9 @@ export default function SciencePage() {
               </Card>
             ))}
           </div>
+          <p className="text-sm text-gray-600 mt-4 leading-relaxed">
+            {t('science.validation.milestonesDetail')}
+          </p>
           <p className="text-xs text-gray-400 mt-4 leading-relaxed">
             {t('science.validation.note')}
           </p>

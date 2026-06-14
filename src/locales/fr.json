@@ -1215,6 +1215,7 @@
       "cta": "Voir sur GitHub"
     },
     "validation": {
+      "milestonesDetail": "Jalons de validation. Le modèle de Cèrcol est une hypothèse de travail, affinée à mesure que des données réelles s'accumulent. Le plan précise ce qui change à chaque taille d'échantillon. À N ≥ 100, nous examinons la distribution des rôles et signalons tout archétype qui attire une part inhabituelle de profils. À N ≥ 200, nous remplaçons les a priori normatifs publiés par les statistiques de l'échantillon propre de Cèrcol, y compris des normes spécifiques au Témoin. À N ≥ 300, nous exécutons k-means (k = 12) pour comparer les centroïdes empiriques aux centroïdes théoriques, et testons si la capacité cognitive prédit l'attribution de rôle au-delà du Big Five. Rien de tout cela ne valide le modèle comme prédicteur de la performance d'équipe, ce qui exige des données externes sur le comportement réel des équipes. Les jalons affinent la géométrie interne du modèle, pas ses affirmations externes.",
       "eyebrow": "Plan de validation",
       "heading": "Une hypothèse de travail, pas un produit fini.",
       "body": "Le système de rôles de Cèrcol utilise des centroïdes théoriques dérivés de la recherche publiée sur l'AB5C. Les attributions de rôles sont illustratives — elles n'ont pas encore été validées empiriquement par rapport à des résultats d'équipes réels. La validation est planifiée en trois étapes.",
