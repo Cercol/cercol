@@ -20,6 +20,14 @@ describe('BlogTestCTA', () => {
     expect(html('en')).toContain('href="/new-moon"')
   })
 
+  it('renders with a slug prop without breaking the link', () => {
+    const out = renderToStaticMarkup(
+      createElement(MemoryRouter, null, createElement(BlogTestCTA, { slug: 'some-article', lang: 'en' })),
+    )
+    expect(out).toContain('href="/new-moon"')
+    expect(out).toContain('See yourself in five dimensions.')
+  })
+
   it('shows the English heading and button by default', () => {
     const out = html('en')
     expect(out).toContain('See yourself in five dimensions.')
