@@ -665,7 +665,7 @@ export default function BlogArticlePage() {
       </div>
 
       {/* Free-test CTA: bridge readers from the article to the no-account test */}
-      <BlogTestCTA lang={urlLang} />
+      <BlogTestCTA slug={slug} lang={urlLang} />
 
       {/* Related articles */}
       {relatedPosts.length > 0 && (
