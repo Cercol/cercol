@@ -5,6 +5,7 @@
  * academic references, and open-source statement.
  * Brand voice: grounded, accessible, no jargon (PRODUCT.md).
  */
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Card, SectionLabel } from '../components/ui'
 import { DimensionIcon, ExternalLinkIcon } from '../components/MoonIcons'
@@ -76,6 +77,32 @@ const REFERENCES = [
   },
 ]
 
+/**
+ * Build the ScholarlyArticle JSON-LD for /science. Academic instrument names
+ * (Big Five, OCEAN, IPIP, AB5C) are required here: structured data is the SEO
+ * exception to the product-vocabulary rule (CLAUDE.md / SEO.md). The citation
+ * list is derived from the on-page REFERENCES so the two never drift.
+ *
+ * Exported for unit testing (effects do not run under SSR, so the rendered
+ * output cannot be asserted directly).
+ */
+export function buildScienceJsonLd() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ScholarlyArticle',
+    headline: 'The science behind Cèrcol: Big Five (OCEAN), IPIP, and the AB5C role circumplex',
+    description:
+      'How Cèrcol grounds team personality assessment in the Big Five (OCEAN) model, the public-domain IPIP item pool, and the AB5C circumplex, with a published validation plan.',
+    url: 'https://cercol.team/science/',
+    inLanguage: 'en',
+    isAccessibleForFree: true,
+    author: { '@type': 'Person', name: 'Miquel Matoses' },
+    publisher: { '@type': 'Organization', name: 'Cèrcol', url: 'https://cercol.team' },
+    about: ['Big Five', 'OCEAN', 'IPIP', 'AB5C', 'five-factor model', 'team roles', 'personality assessment'],
+    citation: REFERENCES.map((r) => ({ '@type': 'CreativeWork', name: r.text, url: r.url })),
+  }
+}
+
 export default function SciencePage() {
   const { t } = useTranslation()
 
@@ -84,6 +111,22 @@ export default function SciencePage() {
     description: t('seo.science.description'),
     path: '/science/',
   })
+
+  // Inject scholarly structured data so search engines and LLMs can index
+  // /science as a citable, primary-source-linked page. Idempotent: any prior
+  // science JSON-LD is removed before the current one is added, and the script
+  // is cleaned up on unmount.
+  useEffect(() => {
+    document
+      .querySelectorAll('script[type="application/ld+json"][data-science]')
+      .forEach((el) => el.remove())
+    const script = document.createElement('script')
+    script.type = 'application/ld+json'
+    script.dataset.science = '1'
+    script.textContent = JSON.stringify(buildScienceJsonLd())
+    document.head.appendChild(script)
+    return () => script.remove()
+  }, [])
 
   return (
     <main className="py-12">
