@@ -491,6 +491,10 @@ export default function BlogArticlePage() {
           <>
             <img
               src={normalizeUnsplashUrl(post.coverUrl, { w: 760 })}
+              srcSet={[480, 760, 1200]
+                .map(w => `${normalizeUnsplashUrl(post.coverUrl, { w })} ${w}w`)
+                .join(', ')}
+              sizes="(min-width: 768px) 768px, 100vw"
               alt=""
               className="absolute inset-0 w-full h-full object-cover"
               width="760"
