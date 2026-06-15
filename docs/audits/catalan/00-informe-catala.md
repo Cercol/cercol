@@ -17,11 +17,12 @@ psicomètriques), assistit per cinc revisors paral·lels.
 
 ## 1. Resum executiu
 
-S'ha auditat **tot el text català abastable des del repositori**: els quatre
-instruments (290 ítems de test), les ~992 cadenes d'interfície (`ca.json`) i els
-quatre articles del blog que tenen cos català versionat al codi.
+S'ha auditat **tot el text català de Cèrcol**: els quatre instruments (290 ítems de
+test), les ~992 cadenes d'interfície (`ca.json`), els quatre articles del blog amb cos
+català versionat al codi i, finalment, **els 100 articles del blog publicats que només
+viuen a la base de dades de producció** (auditats a través de l'API `api.cercol.team`).
 
-Total d'incidències registrades: **~187**, distribuïdes així:
+Total d'incidències registrades: **~905**, distribuïdes així:
 
 | Bloc | Fitxer font | Incidències | Detall |
 |------|-------------|-------------|--------|
@@ -29,7 +30,8 @@ Total d'incidències registrades: **~187**, distribuïdes així:
 | Full Moon (test) | `src/data/full-moon.js` | ~71 | [`02-fullmoon.md`](02-fullmoon.md) |
 | Testimoni (test) | `src/data/witness-adjectives.js` | 21 | [`03-witness.md`](03-witness.md) |
 | Interfície | `src/locales/ca.json` | ~41 | [`04-ui-locales.md`](04-ui-locales.md) |
-| Blog (4 articles) | `scripts/update_blog_article_{1..4}.py` | 37 | [`05-blog.md`](05-blog.md) |
+| Blog (4 articles versionats) | `scripts/update_blog_article_{1..4}.py` | 37 | [`05-blog.md`](05-blog.md) |
+| Blog (100 articles, només BD) | `api.cercol.team` (`content.ca`) | 718 | [`08-blog-complet.md`](08-blog-complet.md) |
 
 **Dues conclusions transversals dominen sobre totes les incidències puntuals:**
 
@@ -43,11 +45,11 @@ Total d'incidències registrades: **~187**, distribuïdes així:
 2. **Hi ha errades objectives que cal corregir ja**, siga quin siga el model
    (errates, persona verbal equivocada, mots inexistents, calcs). Es llisten a la §4.
 
-> ⚠️ **Abast incomplet del blog (acció requerida).** El blog **publicat** té
-> ~26 articles, però **només 4 tenen cos català al repositori**. Els altres ~22
-> existeixen únicament a la base de dades de producció i no s'han pogut auditar
-> perquè la política de xarxa de l'entorn bloqueja `api.cercol.team` i
-> `cercol.team`. Vegeu la §6.
+> ✅ **Abast del blog: complet.** El blog **publicat** té ara 104 articles. Els 4
+> versionats al codi s'auditen a `05-blog.md`; els **100 restants**, que viuen
+> únicament a la base de dades de producció, s'han pogut llegir via `api.cercol.team`
+> (afegida a l'allowlist de xarxa de l'entorn) i s'auditen sencers a
+> [`08-blog-complet.md`](08-blog-complet.md). Vegeu la §6.
 
 ---
 
@@ -236,56 +238,35 @@ i calc «Aquest és el punt»→«Aquesta és la qüestió» (art. 4).
 
 ---
 
-## 6. Buit d'abast: el blog complet (acció requerida)
+## 6. El blog complet (✅ tancat)
 
-El blog publicat conté **~26 articles**. Només **4 tenen cos català al repositori**
-i s'han auditat:
+Aquest buit, marcat com a «acció requerida» en la versió anterior de l'informe, ja
+**està tancat**. En afegir `api.cercol.team` a l'allowlist d'eixida de xarxa de
+l'entorn (via B de les que es proposaven), s'ha pogut llegir tot el blog publicat amb
+`GET /blog` i `GET /blog/{slug}`.
 
-1. `big-five-vs-disc-vs-belbin`
-2. `how-to-build-a-balanced-team`
-3. `blind-spots-in-teams`
-4. `what-is-the-ipip`
+El blog publicat conté **104 articles**:
 
-Els **22 articles restants** es referencien per *slug* a les migracions SEO/QA
-(`020`, `022`, `023`, `024`), però aquestes migracions **només toquen anglès i
-danès**; el seu **cos català viu exclusivament a la base de dades de producció** i
-**no és al codi**. A més, l'entorn d'aquesta sessió **bloqueja l'eixida de xarxa**
-cap a `api.cercol.team` i `cercol.team`, de manera que no s'han pogut llegir ni
-auditar. Articles pendents:
+- **4 articles** amb cos català versionat al codi
+  (`scripts/update_blog_article_{1..4}.py`), auditats a [`05-blog.md`](05-blog.md):
+  `big-five-vs-disc-vs-belbin`, `how-to-build-a-balanced-team`, `blind-spots-in-teams`,
+  `what-is-the-ipip`.
+- **100 articles** publicats amb camp `ca` no buit que **només viuen a la base de
+  dades de producció**, auditats sencers (títol, descripció i cos) a
+  [`08-blog-complet.md`](08-blog-complet.md): **718 incidències** (246 ALTA, 305
+  MITJANA, 167 BAIXA).
 
-```
-big-five-personality-across-cultures-what-research-shows
-creativity-and-personality-what-big-five-research-shows
-critiques-of-big-five-what-critics-say
-do-personality-traits-change-over-a-lifetime
-does-personality-composition-predict-team-performance
-forced-choice-personality-assessment-more-honest-data
-gender-and-personality-what-big-five-research-says
-history-of-the-big-five-from-allport-to-goldberg
-how-to-read-a-big-five-personality-report
-personality-and-burnout-who-is-most-at-risk
-personality-and-career-choice-what-big-five-predicts
-personality-and-job-fit-how-to-think-about-person-environment-fit
-personality-and-motivation-what-drives-each-big-five-profile
-personality-and-procrastination-what-research-says
-personality-and-remote-work-who-thrives-who-struggles
-personality-of-successful-ceos-what-research-says
-personality-testing-in-hiring-what-is-legal-what-is-ethical
-self-other-agreement-big-five-where-gaps-are-biggest
-social-desirability-bias-personality-tests
-what-is-a-facet-in-personality-psychology
-what-is-extraversion-beyond-the-introvert-extrovert-binary
-what-is-openness-to-experience-creativity-curiosity-and-its-limits
-```
+> **Nota.** L'estimació original (~22 articles pendents sobre un blog de ~26) ha
+> quedat curta: el blog ha crescut fins als 104 articles. La conclusió de fons de
+> `08-blog-complet.md` és que aquests 100 articles només-BD presenten **artefactes de
+> traducció automàtica no revisada** (mots inexistents, anglès/castellà cru, errades
+> de codificació) molt més greus que la mostra versionada al codi.
 
-**Per tancar aquest buit, cal una d'aquestes dues vies:**
-
-- **(A) Exportar** el camp `content->>'ca'` (i `title`, `description`) d'aquests 22
-  articles de la base de dades a un fitxer del repositori, i tornar a executar el
-  revisor de blog sobre eixe fitxer. És l'opció recomanada: a més d'auditar-los,
-  posa el contingut sota control de versions.
-- **(B) Afegir** `api.cercol.team` / `cercol.team` a l'allowlist d'eixida de xarxa
-  de l'entorn perquè l'auditor puga llegir-los del lloc publicat.
+**Recomanació pendent (opció A, encara aconsellable).** Convé **exportar el camp
+`content.ca` (i `title`, `description`) d'aquests 100 articles de la base de dades a un
+fitxer del repositori**, per posar el contingut sota control de versions, aplicar-hi
+les correccions de `08-blog-complet.md` i afegir una passa de revisió humana abans de
+tornar a publicar.
 
 ---
 
