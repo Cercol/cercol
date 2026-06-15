@@ -65,6 +65,10 @@ Fonts consultades per a les propostes no trivials:
 - **IEC** — *DIEC2*, *Gramàtica de la llengua catalana* (GIEC).
 - **Optimot** (consultes lingüístiques de la Generalitat).
 - **TERMCAT** (terminologia de psicologia i d'informàtica).
+- **esADIR** (portal lingüístic de la CCMA), per a arbitrar variants lèxiques i de
+  registre quan la norma n'admet diverses.
+- **IIFV** (Institut Interuniversitari de Filologia Valenciana), convencions
+  universitàries, per a fixar la forma valenciana culta quan existeix criteri.
 - **Softcatalà** (guia d'estil, per a microcòpia d'interfície).
 - *DCVB* (Alcover-Moll), *PCCD/DSFF* (fraseologia) per a locucions.
 - Terminologia de psicometria establida en català i adaptacions del model dels
@@ -91,52 +95,67 @@ del present es pronuncia igual a tot el domini). La neutralitat assolible és la
 **la solució compartida pel màxim de parlants** i evitar els localismes col·loquials
 i les formes ambigües.
 
-### 3.2. Decisió central: la morfologia verbal
+### 3.2. Decisió central: eliminar la marca dialectal amb la 2a persona del plural
 
-És el punt on el codi actual es contradiu més (First Quarter en `-e`; Full Moon
-bimodal; `ca.json` amb subjuntius barrejats). **Cal un sol paradigma a tota la
-plataforma.** Els dos revisors de test van arribar a recomanacions oposades, i les
-reconcilie així:
+El conflicte irreductible del codi actual és la **1a persona del singular del
+present** (First Quarter en `-e`: *em preocupe*; Full Moon bimodal: *em preocupo* /
+*arribe*; `ca.json` amb subjuntius barrejats). Cap tria entre `-e` i `-o` és neutra:
+cada una marca un dialecte als ulls de l'altra meitat del domini, i a més la 1a
+persona valenciana genera **homògrafs ambigus** (*em sent*, *Sent que…*, *Treball*),
+perillosos en un test de lectura ràpida.
 
-- El revisor de Full Moon recomana **unificar en model valencià (`-e` / `-isc` /
-  `meua`)**: és el registre majoritari del codi (UI, First Quarter), coincideix amb
-  la identitat del projecte i amb el registre del responsable, i —per l'axioma
-  valencià = català— **no és una marca dialectal sinó una tria legítima de
-  l'estàndard compartit**.
-- El revisor de First Quarter recomana **model central (`-o`)** per una raó
-  psicomètrica seriosa: el valencià `em sent`, `Sent que…`, `Treball` són
-  **homògrafs ambigus** (es poden llegir com a 3a persona o com a substantiu), cosa
-  perillosa en un test de lectura ràpida. Ja ha provocat dues errades reals.
+**La solució adoptada elimina el problema d'arrel: es reformulen els ítems i les
+instruccions de la 1a persona del singular a la 2a persona del plural (tractament de
+vós).** Les desinències de 2a persona del plural —`-eu`/`-iu` i les formes
+irregulars *sou, teniu, feu, aneu, voleu, sabeu, dieu, veieu*— són **idèntiques a
+tot el domini lingüístic** (valencià, central, nord-occidental, balear): no hi ha
+divisió `-e`/`-o` ni cap homògraf de 3a persona. És el mateix recurs que la
+redacció supradialectal aplica als imperatius i a les instruccions per no marcar
+cap variant.
 
-**Arbitratge.** S'adopta el **model valencià formal** com a model únic, perquè és el
-que ja domina el conjunt del codi i el que millor encaixa amb la identitat i
-l'axioma de l'encàrrec; **però s'incorpora l'exigència de desambiguació** del
-segon revisor com a regla no negociable: **cap ítem pot dependre d'una forma verbal
-homògrafa o ambigua**. On la 1a persona valenciana és ambigua, es reescriu l'ítem
-per evitar-la (p. ex. «feel blue» → «Sovint estic abatut/da», que elimina
-l'ambigüitat de *sent* sense canviar el constructe). Així es conserven les dues
-prioritats: coherència de model **i** claredat psicomètrica.
+```
+Anglès (font)          1a pers. sing. (actual, marcat)       2a pers. pl. / vós (model)
+Worry about things.    Em preocupe / Em preocupo per…         Us preocupeu per les coses.
+Get angry easily.      M'enfade / M'enrabio amb facilitat.    Us enfadeu amb facilitat.
+Often feel blue.       Sovint em sent/em sento trist.         Sovint us sentiu abatut o abatuda.
+Am the life of party.  Soc l'ànima de la festa.               Sou l'ànima de la festa.
+Don't worry…           No em preocupe / No em preocupo.       No us preocupeu per les coses.
+```
 
-> Aquesta és **l'única decisió estratègica de l'informe que el responsable pot voler
-> validar o invertir** (model valencià vs central). La recomanació és el model
-> valencià desambiguat; si es prioritzàs que cap lector no valencià hi percebés cap
-> marca, l'alternativa coherent seria el central `-o`. Sigui quina sigui la tria, la
-> regla inamovible és **un sol model a `first-quarter.js`, `full-moon.js`,
-> `new-moon.js`, `witness-adjectives.js` i `ca.json`**.
+**Concordança de gènere.** Es manté el tractament de **vós** (verb en 2a persona
+del plural però referent únic), de manera que **l'adjectiu concorda en singular**:
+*«Sovint us sentiu abatut o abatuda»*, no *«abatuts/abatudes»*. Així es conserva el
+desdoblament binari actual (`/a`, `/da`) sense passar al plural, que seria més
+feixuc. Aquesta és la solució recomanada; l'alternativa amb *vosaltres* (plural real
+i adjectiu en plural) és viable però menys neta.
 
-### 3.3. Quadre de formes del model (valencià formal desambiguat)
+> **Acció:** convertir a 2a persona del plural **tots** els ítems amb verb finit de
+> `first-quarter.js` (60) i `full-moon.js` (120), les instruccions del flux de test i
+> les etiquetes d'escala. **No cal tocar** `new-moon.js` (parells d'adjectius, sense
+> verb finit) ni `witness-adjectives.js` (adjectius solts): no tenen el problema.
+
+### 3.2.bis. Les formes de 3a persona i impersonals (no resolubles amb vós)
+
+El recurs de la 2a persona del plural només neutralitza els verbs que es refereixen
+a qui respon. Les formes de **3a persona i impersonals** de la interfície (p. ex.
+*«perquè el teu perfil siga/sigui útil»*, subjuntius de relatiu) **continuen exigint
+una tria de variant**. Per a aquests casos s'aplica el criteri de la §3.1 (forma
+acceptada per DNV ∩ DIEC2 i compartida pel màxim de parlants) i, quan hi ha dubte,
+es consulta **esADIR** i les **convencions de l'IIFV** (vegeu §2). Cal triar-ne una i
+ser-hi coherent a tot `ca.json`.
+
+### 3.3. Quadre de formes del model
 
 | Categoria | Forma del model | S'evita |
 |-----------|-----------------|---------|
-| 1a pers. sing. present (1a conj.) | `-e`: *preocupe, pense, arribe* | `-o`: *preocupo, penso* |
-| 1a pers. sing. (verbs amb arrel ambigua) | reescriptura per evitar l'homògraf (*estic abatut* en lloc de *em sent*) | *em sent, Sent que, Treball* (ambigus) |
-| Incoatius | `-isc`/`-ix`: *preferisc, complisc, s'avergonyisc* | `-eixo`: *prefereixo* |
-| Subjuntiu *ser* | *siga, siguen* | *sigui, siguin* |
-| Possessius | *meua/meues, teua/teues, seua/seues* | *meva, teva, seva* |
+| Verb referit a qui respon (tests, instruccions) | **2a pers. pl. / vós**: *us preocupeu, sou, teniu, sentiu* (uniforme a tot el domini) | 1a pers. sing. *preocupe/preocupo* i tot homògraf (*em sent*, *Treball*) |
+| Concordança d'adjectiu amb *vós* | **singular**: *abatut/abatuda* | plural *abatuts/abatudes* |
+| Subjuntiu/3a pers. impersonal (UI) | una sola variant coherent (DNV ∩ DIEC2; arbitri esADIR/IIFV) | barreja *siga*/*sigui*, *siguen*/*siguin* |
+| Possessius (UI, 3a pers.) | una sola sèrie coherent (*seua/seues* o *seva/seves*) | barreja *teua*+*teva* al mateix fitxer |
 | Demostratiu | *aquest/aquesta* (compartit, no marcat) | barreja *este/eixe/aqueix* |
-| Neutre demostratiu | preferència per *això* (compartit); *açò* admès però amb coherència | barreja lliure *això/açò* |
-| Indefinit | *alguna cosa* (compartit i planer) | *quelcom* (cult però marcat) en text d'usuari |
-| Verb «sortir/eixir», etc. | preferir la forma compartida i no marcada en cada cas, segons DNV ∩ DIEC2 | localismes col·loquials |
+| Neutre demostratiu | *això* (compartit) amb coherència | barreja lliure *això/açò* |
+| Indefinit | *alguna cosa* (compartit i planer) | *quelcom* (marcat) en text d'usuari |
+| Lèxic amb variants (*sortir/eixir*, etc.) | forma compartida i no marcada, segons DNV ∩ DIEC2 / esADIR / IIFV | localismes col·loquials |
 
 El detall, fitxer a fitxer, de cada forma divergent detectada és a les seccions
 01, 02 i 04.
@@ -166,19 +185,23 @@ Aquestes són independents del model triat. Ordre suggerit d'execució.
 
 ### 4.1. Tests (màxima prioritat — afecten la validesa de l'instrument)
 
-| Fitxer · id | Actual | Correcció | Tipus |
+Les correccions s'expressen ja en el **model de vós** (§3.2). Les que no depenen del
+model (errates, falsos sentits, adjectius) es poden aplicar fins i tot abans de la
+conversió general.
+
+| Fitxer · id | Actual | Correcció (model vós) | Tipus |
 |---|---|---|---|
-| `first-quarter.js` · 6 | «No m'**aggrade** a mi mateix/a» | «No m'**agrade**» (+ llevar el reflexiu redundant) | errata |
-| `first-quarter.js` · 5 | «Sovint em **sent** trist/a» | «Sovint **estic abatut/da**» (desambigua + idiomàtic) | persona verbal + fidelitat |
-| `first-quarter.js` · 12 | «**Sent** que soc **incapaça**» | «**Sento/Note** que soc incapaç» (*incapaç* és invariable) | persona + concordança |
-| `first-quarter.js` · 42 | «Soc **indiferent/a**» | «Soc indiferent» (*indiferent* és invariable) | concordança |
-| `full-moon.js` · 77 | «No m'**embarbusso**» | «No me'n vaig amb embuts / Vaig al gra» | fals sentit (greu) |
-| `full-moon.js` · 22 | «soc incapaç/**incapaç**» | «soc incapaç» (sobra el desdoblament) | duplicació |
-| `full-moon.js` · 38 | «**pendre**-m'ho» | «**prendre**-m'ho» | ortografia |
-| `full-moon.js` · 118 | «**prenga**» (indicatiu) | «**prenc/prene**» | mode verbal |
+| `first-quarter.js` · 6 | «No m'**aggrade** a mi mateix/a» | «No **us agradeu a vós mateix**» (esmena l'errata + 2a pers. pl.) | errata + model |
+| `first-quarter.js` · 5 | «Sovint em **sent** trist/a» | «Sovint **us sentiu abatut o abatuda**» (idiomàtic + desambigua) | persona verbal + fidelitat |
+| `first-quarter.js` · 12 | «**Sent** que soc **incapaça**» | «**Us sentiu incapaç**» (*incapaç* és invariable) | persona + concordança |
+| `first-quarter.js` · 42 | «Soc **indiferent/a**» | «**Sou indiferent**» (*indiferent* és invariable) | concordança |
+| `full-moon.js` · 77 | «No m'**embarbusso**» | «**No us en aneu amb embuts / Aneu al gra**» | fals sentit (greu) |
+| `full-moon.js` · 22 | «soc incapaç/**incapaç**» | «**Sou incapaç**» (sobra el desdoblament) | duplicació |
+| `full-moon.js` · 38 | «**pendre**-m'ho» | «**prendre-vos-ho**» (ortografia + model) | ortografia |
+| `full-moon.js` · 118 | «**prenga**» (indicatiu) | «**preneu**» | mode verbal |
 | `full-moon.js` · 70 | «candidats/**tes**» + camp `de` en danès | desdoblament correcte + revisar el camp alemany | format + idioma |
-| `witness-adjectives.js` · A+09 | «**considerador**» | «**considerat**» | forma no normativa |
-| `witness-adjectives.js` · C-02 | «**dispersat**» | «**dispers**» | participi mal usat |
+| `witness-adjectives.js` · A+09 | «**considerador**» | «**considerat**» (adjectiu, sense canvi de model) | forma no normativa |
+| `witness-adjectives.js` · C-02 | «**dispersat**» | «**dispers**» (adjectiu, sense canvi de model) | participi mal usat |
 
 ### 4.2. Interfície (`ca.json`)
 
@@ -270,12 +293,18 @@ what-is-openness-to-experience-creativity-curiosity-and-its-limits
 
 1. **Aplicar la §4** (errades objectives) — canvi de baix risc, alt impacte; es pot
    fer immediatament i per separat.
-2. **Validar la decisió de model** de la §3.2 (valencià desambiguat vs central).
-3. **Passada d'unificació** del model triat a tots els fitxers de test i a `ca.json`,
-   amb el quadre de la §3.3 i el glossari de la §3.4 com a referència.
+2. **Conversió al model de vós** (§3.2): reformular a 2a persona del plural tots els
+   ítems amb verb finit de `first-quarter.js` (60) i `full-moon.js` (120), més les
+   instruccions del flux de test i les etiquetes d'escala de `ca.json`. La proposta
+   completa, ítem a ítem, és a [`06-conversio-fq.md`](06-conversio-fq.md) (First
+   Quarter) i [`07-conversio-fm.md`](07-conversio-fm.md) (Full Moon).
+3. **Unificació de les formes de 3a persona/impersonals** de `ca.json` (§3.2.bis i
+   §3.3): subjuntius, possessius, demostratius i lèxic amb variants, arbitrant amb
+   esADIR i IIFV i el glossari de la §3.4.
 4. **Tancar el buit del blog** (§6, via A o B) i auditar els 22 articles pendents.
-5. Opcional: afegir una regla de CI que detecte barreja de morfologia (p. ex.
-   coexistència de `-o`/`-e` o `siga`/`sigui`) per evitar regressions.
+5. Opcional: afegir una regla de CI que detecte barreja de morfologia (coexistència
+   de `-o`/`-e`, `siga`/`sigui` o 1a persona del singular als ítems de test) per
+   evitar regressions.
 
 Les seccions detallades 01–05 contenen cada incidència amb ubicació exacta, text
 anglès, text català actual, proposta i justificació.
