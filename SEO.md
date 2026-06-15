@@ -47,12 +47,14 @@ Check the box when each is done and add the date.
 
 ### Outreach (human-only, cannot be scripted)
 
-- [ ] **ipip.ori.org** — email Eugene Johnson (ipip@uoregon.edu or via the site contact)
+- [ ] **ipip.ori.org** — email John A. Johnson (j5j@psu.edu), the IPIP Consultant and author of the IPIP-NEO-60 and IPIP-NEO-120 that Cèrcol uses
   asking to add Cèrcol to the list of IPIP implementations.
   Message: "Cèrcol (https://cercol.team) is an open-source team personality assessment
   platform using the IPIP public-domain item pool. The full instrument and scoring
   pipeline are documented at https://github.com/cercol/cercol/blob/main/SCIENCE.md.
   I'd be grateful if Cèrcol could be listed as an implementation on ipip.ori.org."
+  Note: Lewis R. Goldberg, the IPIP founder, died 29 March 2026; the old webmaster
+  address lewg@ori.org is no longer the right contact.
   Done date: —
 
 - [ ] **Anders Vedel** (Danish IPIP-NEO-120 validation author, Univ. Southern Denmark)
