@@ -18,6 +18,7 @@ import { useTranslation } from 'react-i18next'
 import { FQ_ITEMS, FQ_SCALE_LABELS } from '../data/first-quarter'
 import { useScaleLabels } from '../hooks/useScaleLabels'
 import { useInstrumentKeyboard } from '../hooks/useInstrumentKeyboard'
+import { useTrackTestStart } from '../hooks/useTrackTestStart'
 import { INSTRUMENT_DOMAIN_ORDER } from '../data/domains'
 import { computeFQScores } from '../utils/first-quarter-scoring'
 import { useFeedbackContext } from '../context/FeedbackContext'
@@ -68,6 +69,7 @@ const SCALE_POINTS = 5
 export default function FirstQuarterPage() {
   const navigate = useNavigate()
   const { t } = useTranslation()
+  useTrackTestStart('firstQuarter')
   const { setItemContext } = useFeedbackContext()
   const { user, loading: authLoading } = useAuth()
 

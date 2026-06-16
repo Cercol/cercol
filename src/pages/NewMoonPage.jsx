@@ -17,7 +17,8 @@ import { useInstrumentKeyboard } from '../hooks/useInstrumentKeyboard'
 import { computeRadarScores } from '../utils/new-moon-scoring'
 import { useFeedbackContext } from '../context/FeedbackContext'
 import { useAuth } from '../context/AuthContext'
-import { getMyResults, anonymiseResult, trackEvent } from '../lib/api'
+import { getMyResults, anonymiseResult } from '../lib/api'
+import { useTrackTestStart } from '../hooks/useTrackTestStart'
 import QuestionCard from '../components/QuestionCard'
 import ProgressBar from '../components/ProgressBar'
 import { Button, Card, SectionLabel } from '../components/ui'
@@ -81,9 +82,7 @@ export default function NewMoonPage() {
   }, [user, authLoading]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // First-party funnel signal: the test page mounted. Fire-and-forget.
-  useEffect(() => {
-    trackEvent('test_start', { instrument: 'newMoon' })
-  }, [])
+  useTrackTestStart('newMoon')
 
   async function handleRedo() {
     if (!existingResult) return
