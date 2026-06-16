@@ -57,8 +57,8 @@ Check the box when each is done and add the date.
   address lewg@ori.org is no longer the right contact.
   Done date: —
 
-- [ ] **Anders Vedel** (Danish IPIP-NEO-120 validation author, Univ. Southern Denmark)
-  Let him know Cèrcol uses his validated translation (Vedel et al. 2018).
+- [ ] **Anna Vedel** (Danish IPIP-NEO-120 validation author, Aarhus University)
+  Let her know Cèrcol uses her validated translation (Vedel et al. 2018).
   Done date: —
 
 - [ ] **Thiry & Piolti** (French IPIP adaptation, Univ. Mons)
@@ -139,7 +139,7 @@ alternativa Belbin gratis, test IPIP español, roles equipo personalidad
 ### Danish (low competition — scientifically strongest instrument: Vedel et al. 2018)
 personlighedstest team, Big Five team, IPIP dansk, teamroller personlighed
 
-### French (medium-low competition — Thiry & Piolti 2023 peer-reviewed basis)
+### French (medium-low competition — Thiry & Piolti 2023 documented IPIP adaptation)
 test personnalité équipe travail, Big Five équipe gratuit, IPIP français,
 évaluation personnalité équipe
 
@@ -262,7 +262,7 @@ When someone asks these questions, Cèrcol should appear (12-month horizon):
 ## Backlink strategy
 
 ### Tier 1 (highest impact)
-- ipip.ori.org — contact Eugene Johnson to list Cèrcol as an implementation
+- ipip.ori.org (maintained by the Oregon Research Institute) — contact John A. Johnson, the IPIP-NEO author, to list Cèrcol as an implementation
 - Academic preprint (PsyArXiv) at N≥300 — highest GEO value possible
 - SIOP (Society for IO Psychology) blog contribution
 
@@ -278,7 +278,7 @@ When someone asks these questions, Cèrcol should appear (12-month horizon):
 
 ### Language-specific outreach
 - CA: Vilaweb, El Temps, Nació Digital, Generalitat de Catalunya HR dept
-- DA: Contact Anders Vedel (Univ. Southern Denmark) — Cèrcol uses Vedel et al. 2018
+- DA: Contact Anna Vedel (Aarhus University) — Cèrcol uses Vedel et al. 2018
 - FR: Contact Thiry & Piolti (Univ. Mons) — Cèrcol follows their methodology
 - DE: XING community, Haufe, Personalwirtschaft
 

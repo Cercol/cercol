@@ -507,11 +507,9 @@ no register elevation that would affect construct measurement. Gender-inclusive 
 (e.g. the mid-dot notation -·e) are used where the source item's meaning requires it.
 
 **Scientific basis:** The French adaptation of the IPIP is the adaptation by Thiry, B.,
-& Piolti, M. (2023), University of Mons, listed on ipip.ori.org as a peer-reviewed
-adaptation. This constitutes a stronger published scientific basis than the Spanish
-adaptation: the five-factor structure has been validated in French-speaking populations
-and the item-level translation methodology is documented. Cèrcol's translation follows
-the same item-level approach.
+& Piolti, M. (2023), University of Mons, a documented European-French IPIP adaptation
+listed on ipip.ori.org. The item-level translation methodology is documented, and
+Cèrcol's translation follows the same item-level approach.
 This is not a formally validated translation — it is a principled open-source translation
 of public-domain items, documented as such.
 
@@ -637,8 +635,8 @@ source files.
   in German-speaking populations.]
 
 - Thiry, B., & Piolti, M. (2023). *Adaptation française de l'IPIP* [French
-  adaptation of the IPIP]. University of Mons. Listed on ipip.ori.org as a
-  peer-reviewed French IPIP adaptation.
+  adaptation of the IPIP]. University of Mons. A documented European-French
+  IPIP adaptation listed on ipip.ori.org.
 
 - Vedel, A., Gøtzsche-Astrup, O., & Holm, P. (2018). The Danish IPIP-NEO-120:
   A free, validated five-factor measure of personality. *Nordic Psychology,
