@@ -1068,7 +1068,7 @@
     "witnessSessionsSection": "Witnesses",
     "statusDone": "Done",
     "statusWaiting": "Waiting",
-    "witnessRoleDisclaimer": "The witness role is a signal, not a verdict. Different observers may perceive the same person differently.",
+    "witnessRoleDisclaimer": "The witness role is a signal, not a verdict. Different Witnesses may perceive the same person differently.",
     "roleViewSection": "How you and your witnesses see you",
     "selfViewLabel": "You see yourself as",
     "witnessViewLabel": "Witnesses see you as",
