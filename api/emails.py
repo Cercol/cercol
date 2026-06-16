@@ -442,6 +442,8 @@ def weekly_digest_html(data: dict) -> str:
       funnel       : {page_view,article_view,test_start,cta_click,test_complete: int,
                       conversions: [(label, "x%"), ...]}
       top_articles : [(title, reads), ...]
+      cumulative   : {by_instrument_lang:[(inst,lang,n)], by_instrument:[(inst,n)], grand_total}
+      norms        : [{instrument, lang, n, threshold, empirical, drift:[(domain,mean,delta)]|None}]
       seo          : {source, impressions, clicks, top_queries:[(q,imp,clk,pos)],
                       top_pages:[(url,imp,clk)], movers:[(url,before,now,impr)], pending:bool}
       pagespeed    : [(url, score, lcp_ms), ...]
@@ -481,6 +483,34 @@ def weekly_digest_html(data: dict) -> str:
         parts.append(_section("Tests by cluster", _table(["Cluster", "Count"], rows, ["left", "right"])))
     else:
         parts.append(_section("Tests by cluster", _empty("No completed tests to cluster.")))
+
+    # Cumulative tests (all-time), by instrument x language
+    cum = data.get("cumulative") or {}
+    if cum.get("by_instrument_lang"):
+        rows = [[inst, lang, f"{n:,}"] for inst, lang, n in cum["by_instrument_lang"]]
+        body = _table(["Instrument", "Lang", "All-time"], rows, ["left", "left", "right"])
+        body += _p(f"Grand total: <strong>{cum.get('grand_total', 0):,}</strong> tests completed to date.",
+                   muted=True)
+        parts.append(_section("Cumulative tests (all-time)", body))
+    else:
+        parts.append(_section("Cumulative tests (all-time)", _empty("No tests recorded yet.")))
+
+    # Population norms: which (instrument, language) combos self-calibrate, and
+    # how their empirical means drift from the researcher priors.
+    norms = data.get("norms") or []
+    if norms:
+        rows = []
+        for nm in norms:
+            status = "&#10003; empirical" if nm["empirical"] else f"{nm['n']:,} / {nm['threshold']:,}"
+            rows.append([nm["instrument"], nm["lang"], f"{nm['n']:,}", status])
+        body = _table(["Instrument", "Lang", "N", "Norms"], rows, ["left", "left", "right", "right"])
+        for nm in (n for n in norms if n.get("drift")):
+            ds = " &middot; ".join(f"{d.capitalize()} {delta:+.2f}" for d, _mean, delta in nm["drift"])
+            body += _p(f"<strong>{nm['instrument']} &middot; {nm['lang']}</strong> mean drift vs prior: {ds}",
+                       muted=True)
+        parts.append(_section("Population norms (validity)", body))
+    else:
+        parts.append(_section("Population norms (validity)", _empty("No completed-profile data yet.")))
 
     # Funnel
     f = data.get("funnel") or {}
