@@ -281,7 +281,7 @@ Llista exhaustiva de les formes de 1a persona singular (indicatiu present, més 
 
 **Nota crítica de coherència interna FQ (id 55):** «Treball dur» — la forma valenciana de *treballar* en 1a persona és **«treballe»** (jo treballe), no «treball». «Treball» és el substantiu, no la forma verbal valenciana. Açò és, doncs, una possible **ERRADA addicional** dins del propi model valencià del fitxer:
 
-#### Incidència FQ-16 — detectada en l'inventari
+### Incidència FQ-16 — detectada en l'inventari
 
 - **Ubicació:** first-quarter.js · id 55 (facet quest)
 - **Anglès:** Work hard.

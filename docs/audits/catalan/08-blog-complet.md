@@ -683,7 +683,6 @@ incidència de tractament intern.
 | FIDELITAT/fals amic (difícils d'actuar; raonada; omples) | – | 3 | – |
 | Total incidències | **4** | **5** | **0** |
 
-
 ## "L'amabilitat a la feina: el cost ocult de ser massa agradable" (`agreeableness-at-work-the-hidden-cost-of-being-too-nice`)
 
 ### 1.1 «que casualmente s'adapten» (no apareix en aquest article; vegeu nota) — descartat
@@ -1276,7 +1275,6 @@ Aquest article NO conté l'errada «casualmente»; es retira per evitar fals pos
 | REGISTRE/COHERÈNCIA (tractament) | – | 1 | – |
 | Total incidències | **1** | **4** | **0** |
 
-
 ## "L'anonimat en l'avaluació de la personalitat: per què importa més del que creus" (`anonymity-in-personality-assessment-why-it-matters`)
 
 ### 1.1 «biaix de deseabilitat social» (descripció + cos + targetes, recurrent)
@@ -1724,7 +1722,6 @@ Aquest article NO conté l'errada «casualmente»; es retira per evitar fals pos
 | REGISTRE/COHERÈNCIA (tractament) | – | 1 | – |
 | TERMINOLOGIA (noms de facetes) | – | – | 1 |
 | Total incidències | **2** | **3** | **1** |
-
 
 ## "Les millors proves de personalitat gratuïtes per a equips el 2026 — classificades per validesa científica" (`best-free-personality-tests-for-teams-2026`)
 
@@ -2210,8 +2207,6 @@ Aquest article NO conté l'errada «casualmente»; es retira per evitar fals pos
 | Total incidències | **6** | **5** | **0** |
 
 ---
-
-
 
 ## "La personalitat Big Five a través de les cultures: el que mostra la investigació" (`big-five-personality-across-cultures-what-research-shows`)
 
@@ -2743,7 +2738,6 @@ Aquest article NO conté l'errada «casualmente»; es retira per evitar fals pos
 | REGISTRE/REDUNDÀNCIA (glossa repetida, adverbi) | – | 1 | 1 |
 | Total incidències | **2** | **2** | **2** |
 
-
 ## "Construir un equip des de zero: el que les dades de personalitat poden i no poden dir-te" (`building-a-team-from-scratch-what-personality-data-can-and-cant-tell-you`)
 
 Article amb tractament de "tu" coherent al llarg de tot el text (*et proporciona*, *Utilitza-les*, *defineix*, *el teu equip*, *Comença la teva avaluació*). Segons el model de llengua de l'auditoria (vós), tot aquest tractament és incidència de REGISTRE; el tracto com una sola incidència transversal (1.1) per no inflar el recompte, i deixo la resta d'incidències per a errades pròpies.
@@ -3133,7 +3127,7 @@ Article amb tractament de "tu" i un castellanisme ortogràfic recurrent (*arrisc
 
 ### 6.5 «l'estàs llegint» — fidelitat i tractament
 - Anglès: "[Should you hire for personality fit or diversity?] — you're reading it — but the framing of 'fit'..."
-- Català actual: «[Hauries de contractar per encaix de personalitat o diversitat?](...) — **l'estàs llegint** — però el marc de l'"encaix"...»
+- Català actual: «[Hauries de contractar per encaix de personalitat o diversitat?] — **l'estàs llegint** — però el marc de l'"encaix"...»
 - Categoria: REGISTRE (tractament) · Gravetat MITJANA
 - Proposta: amb vós: «—**l'esteu llegint**—». (La fidelitat és bona; només cal el canvi de tractament.)
 - Justificació: *you're reading it* es tradueix fidelment, però en "tu"; cal vós («l'esteu llegint») per coherència de model. S'inclou dins la incidència de tractament global (6.6), però es destaca perquè és una autoreferència molt visible.
@@ -3215,7 +3209,6 @@ Article ben treballat. Manté en anglès els noms de facetes (Warmth, Gregarious
 | REGISTRE (tractament tu/vós barrejat) | – | 1 | – |
 | FIDELITAT (xarxes ràpides) | – | – | 1 |
 | Total incidències | **1** | **1** | **2** |
-
 
 ## "Construir seguretat psicològica: el que la ciència de la personalitat afegeix a la conversa" (`building-psychological-safety-personality-science`)
 
@@ -3801,7 +3794,6 @@ Article ben treballat. Manté en anglès els noms de facetes (Warmth, Gregarious
 | TERMINOLOGIA («variància»/«variança») | – | – | 1 |
 | Total incidències | **2** | **5** | **1** |
 
-
 ## "Pot canviar la personalitat? El que diuen la investigació sobre coaching i teràpia" (`can-personality-be-changed-coaching-therapy-evidence`)
 
 ### 1.1 Concordança al títol: «El que diuen la investigació»
@@ -4298,7 +4290,7 @@ Article ben treballat. Manté en anglès els noms de facetes (Warmth, Gregarious
 - Català actual: «els parts interessades»
 - Categoria: ERRADA (concordança de gènere) · Gravetat ALTA
 - Proposta: «**les parts interessades**» (o «els **agents** interessats» / «les **parts implicades**»).
-- Justificació: «part» és femení: «les parts interessades». «els parts» és error de gènere (i discordança amb «interessades», ja femení). 
+- Justificació: «part» és femení: «les parts interessades». «els parts» és error de gènere (i discordança amb «interessades», ja femení).
 
 ### 6.10 «infracomunicar-se» / «infracomunicar» — neologisme dubtós
 - Ubicació: mateixa frase que 6.9 («pot infracomunicar-se amb...»).
@@ -4410,8 +4402,6 @@ Article ben treballat. Manté en anglès els noms de facetes (Warmth, Gregarious
 | Total incidències | **2** | **3** | **4** |
 
 ---
-
-
 
 ## "Pots falsificar un test de personalitat — i importa?" (`can-you-fake-a-personality-test`)
 
@@ -4907,7 +4897,6 @@ Article ben treballat. Manté en anglès els noms de facetes (Warmth, Gregarious
 | TERMINOLOGIA (tria/elecció forçada) | – | – | 1 |
 | Total incidències | **0** | **3** | **2** |
 
-
 ## "Compatibilitat entre cofundadors: la diligència deguda de personalitat que ningú fa" (`co-founder-compatibility-personality-due-diligence`)
 
 ### 1.1 Capitalització de titulars a l'estil anglès (tots els `##`/`###`)
@@ -5371,7 +5360,6 @@ Article ben treballat. Manté en anglès els noms de facetes (Warmth, Gregarious
 | REGISTRE («genuïnament») | – | – | 1 |
 | Total incidències | **2** | **1** | **3** |
 
-
 ## "Per què la ciència de la personalitat pertany al cor de la gestió de persones basada en l'evidència" `personality-science-evidence-based-hr-why-it-matters`
 
 ### 1. «reclamacions més fortes a un rol central» (paràgraf 3 de la introducció)
@@ -5517,7 +5505,6 @@ Article ben treballat. Manté en anglès els noms de facetes (Warmth, Gregarious
 | Total incidències | **6** | **8** | **3** |
 
 Total: **17 incidències** (+ 1 fals positiu registrat).
-
 
 ## "Estils de resolució de conflictes i personalitat: el que diu la investigació" (`conflict-resolution-styles-personality`)
 
@@ -5897,7 +5884,6 @@ Total: **17 incidències** (+ 1 fals positiu registrat).
 | REGISTRE/COHERÈNCIA (tractament) | 1 | – | 1 |
 | FIDELITAT/CALC | – | 1 | 1 |
 | Total incidències | **2** | **1** | **2** |
-
 
 ## "Quan la Conscienciositat es converteix en un problema: la trampa del perfeccionisme" (`conscientiousness-perfectionism-when-discipline-becomes-a-problem`)
 
@@ -6392,7 +6378,6 @@ Total: **17 incidències** (+ 1 fals positiu registrat).
 | FALS AMIC/FIDELITAT (calmant, lag) | 1 | 1 | – |
 | TERMINOLOGIA/COHERÈNCIA (Agradabilitat) | – | 1 | – |
 | Total incidències | **3** | **5** | **0** |
-
 
 ## "Creativitat i personalitat: el que demostra realment la investigació del Big Five" (`creativity-and-personality-what-big-five-research-shows`)
 
@@ -6903,7 +6888,6 @@ Total: **17 incidències** (+ 1 fals positiu registrat).
 
 ---
 
-
 ## "Crítiques al Big Five: el que diuen els crítics — i el que encerten" (`critiques-of-big-five-what-critics-say`)
 
 ### 1.1 «investigació factorioanàlitica» (paràgraf introductori)
@@ -7400,7 +7384,7 @@ Total: **17 incidències** (+ 1 fals positiu registrat).
 - Proposta: «va identificar que el grup de planificació de la Badia de Porcs exhibia "una il·lusió d'invulnerabilitat"...» (o «...el grup... pel fet d'exhibir...»)
 - Justificació: «com a exhibint» calca l'estructura anglesa *as exhibiting* (gerundi atributiu); en català no es diu «identificar X com a [gerundi]». Cal una completiva («que... exhibia») o un SN. Calc sintàctic.
 
-### 6.9 «el desig de harmonia» — (no apareix; «d'harmonia» és correcte amb h muda apostrofada). Fals positiu descartat.
+### 6.9 «el desig de harmonia» — (no apareix; «d'harmonia» és correcte amb h muda apostrofada). Fals positiu descartat
 
 ### 6.10 «la expectativa implícita» (secció acords de feedback)
 - Anglès: "making the implicit expectation explicit"
