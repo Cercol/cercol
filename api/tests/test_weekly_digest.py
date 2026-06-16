@@ -80,7 +80,7 @@ def test_build_funnel_guards_zero_denominators():
     assert all(rate == "—" for _, rate in f["conversions"])
 
 
-def test_build_cumulative_aggregates():
+def test_build_cumulative_pivots_by_model_and_language():
     rows = [
         {"instrument": "newMoon", "language": "en", "n": 300},
         {"instrument": "newMoon", "language": "es", "n": 120},
@@ -88,8 +88,15 @@ def test_build_cumulative_aggregates():
     ]
     cum = wd.build_cumulative(rows)
     assert cum["grand_total"] == 500
-    assert ("New Moon", "en", 300) in cum["by_instrument_lang"]
-    assert dict(cum["by_instrument"])["New Moon"] == 420
+    # languages in preferred order (en before es)
+    assert cum["languages"] == ["en", "es"]
+    # rows sorted by total desc; New Moon (420) before Full Moon (80)
+    assert [r["instrument"] for r in cum["rows"]] == ["New Moon", "Full Moon"]
+    nm = next(r for r in cum["rows"] if r["instrument"] == "New Moon")
+    assert nm["per_lang"] == {"en": 300, "es": 120}
+    assert nm["total"] == 420
+    # column totals across models
+    assert cum["col_totals"] == {"en": 380, "es": 120}
 
 
 def test_build_norms_tier_and_drift():
@@ -214,7 +221,8 @@ def test_weekly_digest_html_populated():
     assert "big five test" in html
     assert "dead.example" in html
     assert "Cumulative tests" in html
-    assert "Grand total" in html
+    assert ">Model<" in html              # pivot header
+    assert ">Total<" in html              # per-row + footer total column
     assert "empirical" in html            # the en combo crossed the threshold
     assert "40 / 200" in html             # the ca combo still on priors
     assert "mean drift vs prior" in html  # drift line for the empirical combo
