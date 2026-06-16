@@ -60,6 +60,8 @@ jobs:
             --exclude 'porkbun\.com/api'
             --exclude 'doi\.org'
             --exclude 'ipip\.ori\.org'
+            --exclude 'dlc\.iec\.cat'
+            --exclude 'gencat\.cat'
             --exclude-path 'docs/seo/links-audit-*.md'
             --exclude-path 'docs/seo/links-audit-20260528.md'
             './**/*.md'
