@@ -95,7 +95,10 @@ async def _count(conn, sql: str, ws, we) -> int:
 
 async def gather_postgres(ws, we, ps, pe) -> dict[str, Any]:
     """Collect all PostgreSQL metrics for the current and prior week."""
-    conn = await asyncpg.connect(dsn=os.environ["DATABASE_URL"], init=_init_connection)
+    # asyncpg.connect() has no `init=` kwarg (that is create_pool's); register
+    # the JSON codec on the live connection instead.
+    conn = await asyncpg.connect(dsn=os.environ["DATABASE_URL"])
+    await _init_connection(conn)
     try:
         # KPIs (current + prior for week-over-week deltas).
         signups = (
