@@ -129,8 +129,9 @@ class BlogStatusBody(BaseModel):
 
 
 # Allowed first-party funnel event names. test_complete is intentionally
-# absent: it is derivable from results.created_at.
-_EVENT_NAMES = {"article_view", "cta_click", "test_start"}
+# absent: it is derivable from results.created_at. page_view is the general
+# page-visit signal fired on every route change (db/migrations/026).
+_EVENT_NAMES = {"article_view", "cta_click", "test_start", "page_view"}
 
 
 class EventBody(BaseModel):
