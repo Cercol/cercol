@@ -52,6 +52,10 @@ _INSTRUMENT_LABELS = {
     "fullMoon": "Full Moon",
 }
 
+# Preferred column order for the per-language cumulative pivot. The six
+# supported locales first; any other value (e.g. "—" for null) is appended.
+_LANG_ORDER = ["en", "ca", "es", "fr", "de", "da"]
+
 
 # ---------------------------------------------------------------------------
 # Week boundaries (UTC)
@@ -212,20 +216,41 @@ def compute_role_counts(role_rows: list) -> list[tuple[str, int]]:
 
 
 def build_cumulative(cum_rows: list) -> dict[str, Any]:
-    """All-time test totals: by (instrument, language), by instrument, grand."""
+    """All-time tests as a pivot: one row per model (instrument), one column per
+    language, plus a per-row total and a footer column-totals row.
+
+    Returns:
+      languages    : ordered lang codes present (preferred order, extras last)
+      rows         : [{instrument, per_lang:{lang:n}, total}], sorted by total desc
+      col_totals   : {lang: n}
+      grand_total  : int
+    """
     from collections import Counter
-    by_il: list[tuple[str, str, int]] = []
-    by_instr: Counter[str] = Counter()
+    matrix: dict[str, Counter] = {}     # instrument label -> {lang: n}
+    instr_total: Counter[str] = Counter()
+    col_total: Counter[str] = Counter()
+    langs_present: set[str] = set()
     grand = 0
     for r in cum_rows:
         lbl = _INSTRUMENT_LABELS.get(r["instrument"], r["instrument"] or "unknown")
+        lang = r["language"] or "—"
         n = int(r["n"])
-        by_il.append((lbl, r["language"] or "—", n))
-        by_instr[lbl] += n
+        matrix.setdefault(lbl, Counter())[lang] += n
+        instr_total[lbl] += n
+        col_total[lang] += n
+        langs_present.add(lang)
         grand += n
+    # Preferred language order first, any extras (e.g. "—" for null) appended.
+    langs = ([l for l in _LANG_ORDER if l in langs_present]
+             + sorted(l for l in langs_present if l not in _LANG_ORDER))
+    rows = [
+        {"instrument": lbl, "per_lang": dict(matrix[lbl]), "total": tot}
+        for lbl, tot in instr_total.most_common()
+    ]
     return {
-        "by_instrument_lang": by_il,
-        "by_instrument": sorted(by_instr.items(), key=lambda kv: kv[1], reverse=True),
+        "languages": langs,
+        "rows": rows,
+        "col_totals": {l: col_total[l] for l in langs},
         "grand_total": grand,
     }
 

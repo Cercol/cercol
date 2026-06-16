@@ -442,7 +442,7 @@ def weekly_digest_html(data: dict) -> str:
       funnel       : {page_view,article_view,test_start,cta_click,test_complete: int,
                       conversions: [(label, "x%"), ...]}
       top_articles : [(title, reads), ...]
-      cumulative   : {by_instrument_lang:[(inst,lang,n)], by_instrument:[(inst,n)], grand_total}
+      cumulative   : {languages:[lang], rows:[{instrument,per_lang:{lang:n},total}], col_totals, grand_total}
       norms        : [{instrument, lang, n, threshold, empirical, drift:[(domain,mean,delta)]|None}]
       seo          : {source, impressions, clicks, top_queries:[(q,imp,clk,pos)],
                       top_pages:[(url,imp,clk)], movers:[(url,before,now,impr)], pending:bool}
@@ -484,14 +484,25 @@ def weekly_digest_html(data: dict) -> str:
     else:
         parts.append(_section("Tests by cluster", _empty("No completed tests to cluster.")))
 
-    # Cumulative tests (all-time), by instrument x language
+    # Cumulative tests (all-time): pivot of model (rows) x language (columns)
+    # with a per-row total and a footer totals row.
     cum = data.get("cumulative") or {}
-    if cum.get("by_instrument_lang"):
-        rows = [[inst, lang, f"{n:,}"] for inst, lang, n in cum["by_instrument_lang"]]
-        body = _table(["Instrument", "Lang", "All-time"], rows, ["left", "left", "right"])
-        body += _p(f"Grand total: <strong>{cum.get('grand_total', 0):,}</strong> tests completed to date.",
-                   muted=True)
-        parts.append(_section("Cumulative tests (all-time)", body))
+    if cum.get("rows"):
+        langs = cum["languages"]
+        headers = ["Model"] + langs + ["Total"]
+        aligns = ["left"] + ["right"] * (len(langs) + 1)
+        body_rows = []
+        for r in cum["rows"]:
+            cells = ([r["instrument"]]
+                     + [f"{r['per_lang'].get(l, 0):,}" for l in langs]
+                     + [f"<strong>{r['total']:,}</strong>"])
+            body_rows.append(cells)
+        body_rows.append(
+            ["<strong>Total</strong>"]
+            + [f"<strong>{cum['col_totals'].get(l, 0):,}</strong>" for l in langs]
+            + [f"<strong>{cum.get('grand_total', 0):,}</strong>"]
+        )
+        parts.append(_section("Cumulative tests (all-time)", _table(headers, body_rows, aligns)))
     else:
         parts.append(_section("Cumulative tests (all-time)", _empty("No tests recorded yet.")))
 
