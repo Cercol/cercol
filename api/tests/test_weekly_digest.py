@@ -182,6 +182,50 @@ def test_weekly_digest_html_empty_degrades():
     assert "No broken external links" in html
 
 
+# ── gather_postgres connection contract ──────────────────────────────────────
+
+class FakeConn:
+    """Minimal asyncpg connection stub for gather_postgres."""
+
+    def __init__(self):
+        self.codecs = []
+
+    async def set_type_codec(self, name, **kwargs):
+        self.codecs.append(name)
+
+    async def fetchval(self, sql, *args):
+        return 0
+
+    async def fetch(self, sql, *args):
+        return []
+
+    async def close(self):
+        pass
+
+
+def test_gather_postgres_connects_without_init_kwarg(monkeypatch):
+    """asyncpg.connect() takes no `init=` kwarg (regression): the job must
+    connect plainly and register the JSON codec on the live connection."""
+    captured = {}
+    conn = FakeConn()
+
+    async def fake_connect(*args, **kwargs):
+        captured["kwargs"] = kwargs
+        return conn
+
+    monkeypatch.setenv("DATABASE_URL", "postgresql://x")
+    monkeypatch.setattr(wd.asyncpg, "connect", fake_connect)
+
+    ws, we, ps, pe = wd.week_bounds(datetime(2026, 6, 16, tzinfo=timezone.utc))
+    import asyncio
+    out = asyncio.run(wd.gather_postgres(ws, we, ps, pe))
+
+    assert "init" not in captured["kwargs"]          # the bug we fixed
+    assert conn.codecs == ["json", "jsonb"]          # codec applied post-connect
+    assert out["kpis"]["signups"] == (0, 0)
+    assert out["instruments"] == []
+
+
 # ── run() end-to-end (send disabled) ─────────────────────────────────────────
 
 def test_run_builds_summary_without_sending(monkeypatch):
