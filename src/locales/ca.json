@@ -13,7 +13,8 @@
     "blog": "Blog",
     "faq": "Preguntes",
     "menuLearn": "Aprendre",
-    "menuCompany": "Empresa"
+    "menuCompany": "Empresa",
+    "admin": "Admin"
   },
   "myResults": {
     "link": "Els meus resultats",
