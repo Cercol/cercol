@@ -20,6 +20,7 @@ import { FM_ITEMS, FM_SCALE_LABELS } from '../data/full-moon'
 import { INSTRUMENT_DOMAIN_ORDER } from '../data/domains'
 import { computeFMScores } from '../utils/full-moon-scoring'
 import { useScaleLabels } from '../hooks/useScaleLabels'
+import { useTrackTestStart } from '../hooks/useTrackTestStart'
 import { useInstrumentKeyboard } from '../hooks/useInstrumentKeyboard'
 import { useFeedbackContext } from '../context/FeedbackContext'
 import { useAuth } from '../context/AuthContext'
@@ -47,6 +48,7 @@ const POLL_INTERVAL_MS  = 1500
 
 export default function FullMoonPage() {
   const navigate = useNavigate()
+  useTrackTestStart('fullMoon')
   const [searchParams] = useSearchParams()
   const { t } = useTranslation()
   const { setItemContext } = useFeedbackContext()
