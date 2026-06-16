@@ -39,7 +39,7 @@ from ._config import JobConfig, load_config
 
 # api/ is on sys.path when run as `python -m jobs.weekly_digest` from
 # /home/cercol/api/api, so these import directly (same trick as external_links_check).
-from scoring import DOMAINS, _compute_role, _scores_to_zscores
+from scoring import DOMAINS, NORM_MIN_SAMPLE, _NORM, _compute_role, _scores_to_zscores
 
 log = logging.getLogger("cercol.weekly_digest")
 
@@ -157,6 +157,24 @@ async def gather_postgres(ws, we, ps, pe) -> dict[str, Any]:
             ws, we,
         )
         top_articles = [((r["title"] or r["slug"]), int(r["reads"])) for r in article_rows]
+
+        # All-time tests by instrument x language (drives growth toward norm
+        # validity). Counts every result, not just complete-domain ones.
+        cum_rows = await conn.fetch(
+            "SELECT instrument, language, COUNT(*) AS n FROM results "
+            "GROUP BY instrument, language ORDER BY n DESC"
+        )
+
+        # Population norms per (instrument, language): the same aggregation
+        # main._recompute_norms runs. Used to show which combos have crossed
+        # NORM_MIN_SAMPLE (their own empirical norms) and how their means drift
+        # from the researcher priors. All-time, complete-domain rows only.
+        agg = ", ".join(f"AVG({d}) AS {d}_mean, STDDEV_SAMP({d}) AS {d}_sd" for d in DOMAINS)
+        norm_rows = await conn.fetch(
+            f"SELECT instrument, language, COUNT(*) AS n, {agg} FROM results "
+            f"WHERE {' AND '.join(f'{d} IS NOT NULL' for d in DOMAINS)} "
+            f"GROUP BY instrument, language ORDER BY instrument, language"
+        )
     finally:
         await conn.close()
 
@@ -172,6 +190,8 @@ async def gather_postgres(ws, we, ps, pe) -> dict[str, Any]:
         "funnel_raw": funnel,
         "tests_total": tests[0],
         "top_articles": top_articles,
+        "cum_rows": cum_rows,
+        "norm_rows": norm_rows,
     }
 
 
@@ -189,6 +209,54 @@ def compute_role_counts(role_rows: list) -> list[tuple[str, int]]:
         z = _scores_to_zscores(scores, norm=None)
         counts[_compute_role(z)] += 1
     return sorted(counts.items(), key=lambda kv: kv[1], reverse=True)
+
+
+def build_cumulative(cum_rows: list) -> dict[str, Any]:
+    """All-time test totals: by (instrument, language), by instrument, grand."""
+    from collections import Counter
+    by_il: list[tuple[str, str, int]] = []
+    by_instr: Counter[str] = Counter()
+    grand = 0
+    for r in cum_rows:
+        lbl = _INSTRUMENT_LABELS.get(r["instrument"], r["instrument"] or "unknown")
+        n = int(r["n"])
+        by_il.append((lbl, r["language"] or "—", n))
+        by_instr[lbl] += n
+        grand += n
+    return {
+        "by_instrument_lang": by_il,
+        "by_instrument": sorted(by_instr.items(), key=lambda kv: kv[1], reverse=True),
+        "grand_total": grand,
+    }
+
+
+def build_norms(norm_rows: list) -> list[dict[str, Any]]:
+    """Per (instrument, language) norm readiness + drift vs researcher priors.
+
+    A combo with n >= NORM_MIN_SAMPLE uses its own empirical norms; below it,
+    scoring falls back to the priors (_NORM). `drift` (empirical only) is the
+    per-domain empirical mean minus the prior mean, so the operator can watch
+    the real population pull away from the Western/US baseline.
+    """
+    out: list[dict[str, Any]] = []
+    for r in norm_rows:
+        n = int(r["n"])
+        empirical = n >= NORM_MIN_SAMPLE
+        drift = None
+        if empirical:
+            drift = [
+                (d, float(r[f"{d}_mean"]), float(r[f"{d}_mean"]) - _NORM[d]["mean"])
+                for d in DOMAINS
+            ]
+        out.append({
+            "instrument": _INSTRUMENT_LABELS.get(r["instrument"], r["instrument"] or "unknown"),
+            "lang": r["language"] or "—",
+            "n": n,
+            "threshold": NORM_MIN_SAMPLE,
+            "empirical": empirical,
+            "drift": drift,
+        })
+    return out
 
 
 def build_funnel(funnel_raw: dict[str, int], tests_total: int) -> dict[str, Any]:
@@ -335,6 +403,8 @@ def run(cfg: JobConfig, *, bq_client, send: bool = True) -> dict[str, Any]:
         "roles": compute_role_counts(pg["role_rows"]),
         "funnel": build_funnel(pg["funnel_raw"], pg["tests_total"]),
         "top_articles": pg["top_articles"],
+        "cumulative": build_cumulative(pg["cum_rows"]),
+        "norms": build_norms(pg["norm_rows"]),
         "seo": bqd["seo"],
         "pagespeed": bqd["pagespeed"],
         "broken_links": bqd["broken_links"],

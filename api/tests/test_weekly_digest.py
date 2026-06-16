@@ -80,6 +80,39 @@ def test_build_funnel_guards_zero_denominators():
     assert all(rate == "—" for _, rate in f["conversions"])
 
 
+def test_build_cumulative_aggregates():
+    rows = [
+        {"instrument": "newMoon", "language": "en", "n": 300},
+        {"instrument": "newMoon", "language": "es", "n": 120},
+        {"instrument": "fullMoon", "language": "en", "n": 80},
+    ]
+    cum = wd.build_cumulative(rows)
+    assert cum["grand_total"] == 500
+    assert ("New Moon", "en", 300) in cum["by_instrument_lang"]
+    assert dict(cum["by_instrument"])["New Moon"] == 420
+
+
+def test_build_norms_tier_and_drift():
+    from scoring import _NORM
+    rows = [
+        # below threshold -> prior, no drift
+        {"instrument": "fullMoon", "language": "ca", "n": 50,
+         **{f"{d}_mean": _NORM[d]["mean"] for d in wd.DOMAINS},
+         **{f"{d}_sd": _NORM[d]["sd"] for d in wd.DOMAINS}},
+        # above threshold -> empirical, drift vs prior computed
+        {"instrument": "newMoon", "language": "en", "n": 300,
+         **{f"{d}_mean": _NORM[d]["mean"] + 0.2 for d in wd.DOMAINS},
+         **{f"{d}_sd": _NORM[d]["sd"] for d in wd.DOMAINS}},
+    ]
+    norms = wd.build_norms(rows)
+    prior = next(n for n in norms if n["lang"] == "ca")
+    emp = next(n for n in norms if n["lang"] == "en")
+    assert prior["empirical"] is False and prior["drift"] is None
+    assert emp["empirical"] is True
+    # drift is empirical mean minus prior mean, ~+0.2 on every domain
+    assert all(abs(delta - 0.2) < 1e-9 for _d, _m, delta in emp["drift"])
+
+
 def test_build_funnel_computes_rates():
     f = wd.build_funnel(
         {"page_view": 100, "article_view": 40, "test_start": 20, "cta_click": 10},
@@ -155,6 +188,16 @@ def test_weekly_digest_html_populated():
         "funnel": wd.build_funnel(
             {"page_view": 900, "article_view": 200, "test_start": 60, "cta_click": 30}, 40),
         "top_articles": [("What is Extraversion", 120)],
+        "cumulative": wd.build_cumulative([
+            {"instrument": "newMoon", "language": "en", "n": 300},
+            {"instrument": "fullMoon", "language": "es", "n": 90},
+        ]),
+        "norms": wd.build_norms([
+            {"instrument": "newMoon", "language": "en", "n": 300,
+             **{f"{d}_mean": 3.5 for d in wd.DOMAINS}, **{f"{d}_sd": 0.6 for d in wd.DOMAINS}},
+            {"instrument": "fullMoon", "language": "ca", "n": 40,
+             **{f"{d}_mean": 3.5 for d in wd.DOMAINS}, **{f"{d}_sd": 0.6 for d in wd.DOMAINS}},
+        ]),
         "seo": {"source": "gsc", "impressions": 1000, "clicks": 50,
                 "top_queries": [("big five test", 600, 30, 4.2)],
                 "top_pages": [], "movers": [("https://cercol.team/", 9.0, 6.0, 3.0)],
@@ -170,6 +213,11 @@ def test_weekly_digest_html_populated():
     assert "What is Extraversion" in html
     assert "big five test" in html
     assert "dead.example" in html
+    assert "Cumulative tests" in html
+    assert "Grand total" in html
+    assert "empirical" in html            # the en combo crossed the threshold
+    assert "40 / 200" in html             # the ca combo still on priors
+    assert "mean drift vs prior" in html  # drift line for the empirical combo
     assert "<!DOCTYPE html>" in html      # wrapped in the shared shell
 
 
@@ -178,6 +226,8 @@ def test_weekly_digest_html_empty_degrades():
     html = emails.weekly_digest_html({"week_label": "—", "kpis": {}})
     assert "No tests completed this week." in html
     assert "No completed tests to cluster." in html
+    assert "No tests recorded yet." in html
+    assert "No completed-profile data yet." in html
     assert "Search data pending" in html
     assert "No broken external links" in html
 
@@ -238,6 +288,8 @@ def test_run_builds_summary_without_sending(monkeypatch):
             "funnel_raw": {"page_view": 50, "article_view": 10, "test_start": 7, "cta_click": 2},
             "tests_total": 7,
             "top_articles": [("slug-x", 9)],
+            "cum_rows": [{"instrument": "newMoon", "language": "en", "n": 7}],
+            "norm_rows": [],
         }
 
     monkeypatch.setattr(wd, "gather_postgres", fake_pg)
