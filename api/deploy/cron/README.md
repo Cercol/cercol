@@ -7,7 +7,11 @@ installation by an administrator on the production server.
 ## cercol-purge-tokens
 
 Daily cleanup of expired authentication tokens. Closes audit-v2
-finding V7 (no scheduler called the purge endpoint).
+finding V7 (no scheduler called the purge endpoint). Also prunes
+funnel `events` older than 120 days (Phase 17.6.7): `page_view` rows
+(one per route change) grow fast, and 120 days comfortably covers the
+weekly digest's current + prior-week windows. Re-install this file
+when updating to pick up the retention DELETE.
 
 ### Install
 
@@ -94,4 +98,35 @@ sudo chmod 644 /etc/cron.d/cercol-bing-ingest /etc/cron.d/cercol-pagespeed-inges
 ```bash
 ls -la /etc/cron.d/cercol-*
 journalctl -t CRON --since "today" | grep cercol-
+```
+
+## cercol-weekly-digest (Phase 17.6.7)
+
+Emails one branded English metrics summary of the prior Mon-Sun week
+to `DIGEST_EMAIL` (default `hello@cercol.team`): signups, tests +
+clusters, funnel + conversions, top articles, search (GSC/Bing),
+PageSpeed, broken links, and week-over-week deltas. Reads PostgreSQL
++ BigQuery; sends through `api/emails.py` (Resend). Runs as the
+`cercol` user from the project venv.
+
+### Install
+
+```bash
+sudo cp /home/cercol/api/api/deploy/cron/cercol-weekly-digest /etc/cron.d/
+sudo chmod 644 /etc/cron.d/cercol-weekly-digest
+```
+
+### Schedule
+
+`0 8 * * 1` — Mondays 08:00 UTC, after the weekend SEO jobs and past
+the ~48h GSC export lag. Prerequisite: migration 026 (`page_view`)
+applied, else the funnel's page-view stage stays empty.
+
+### Verify
+
+```bash
+ls -la /etc/cron.d/cercol-weekly-digest
+# Manual one-shot (sends a real email):
+sudo -u cercol bash -c 'cd /home/cercol/api/api && set -a && . /home/cercol/.env && set +a && /home/cercol/api/api/.venv/bin/python -m jobs.weekly_digest'
+journalctl -t CRON --since "today" | grep weekly-digest
 ```

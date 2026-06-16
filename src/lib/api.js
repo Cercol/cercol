@@ -390,10 +390,33 @@ export async function trackBlogView(slug) {
 }
 
 /**
+ * getAnonId — lazily create and return an opaque, cookie-less visitor id.
+ * Persisted in localStorage so page-views from the same browser can be
+ * counted as one unique visitor in the weekly digest. NEVER tied to an
+ * account (matches the events.anon_id contract in migration 019). Returns
+ * null in non-browser/prerender contexts or if storage is unavailable.
+ * @returns {string|null}
+ */
+export function getAnonId() {
+  if (typeof window === 'undefined' || window.__PRERENDER__) return null
+  try {
+    let id = localStorage.getItem('cercol_anon')
+    if (!id) {
+      id = crypto.randomUUID()
+      localStorage.setItem('cercol_anon', id)
+    }
+    return id
+  } catch {
+    // Storage blocked (private mode, etc.): degrade to anonymous-without-id.
+    return null
+  }
+}
+
+/**
  * trackEvent — fire-and-forget first-party funnel event POST to /events.
  * Never throws — any error is silently swallowed, so it safely no-ops until
  * the events table and endpoint are live. Skipped during the prerender pass.
- * @param {'article_view'|'cta_click'|'test_start'} name
+ * @param {'article_view'|'cta_click'|'test_start'|'page_view'} name
  * @param {{slug?, instrument?, lang?, path?, anon_id?}} [payload]
  */
 export async function trackEvent(name, payload = {}) {
