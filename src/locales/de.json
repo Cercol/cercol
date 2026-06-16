@@ -1068,7 +1068,7 @@
     "witnessSessionsSection": "Zeugen",
     "statusDone": "Abgeschlossen",
     "statusWaiting": "Ausstehend",
-    "witnessRoleDisclaimer": "Die Zeugenrolle ist ein Signal, kein Urteil. Verschiedene Beobachter können dieselbe Person unterschiedlich wahrnehmen.",
+    "witnessRoleDisclaimer": "Die Zeugenrolle ist ein Signal, kein Urteil. Verschiedene Zeuginnen und Zeugen können dieselbe Person unterschiedlich wahrnehmen.",
     "roleViewSection": "Wie du und deine Zeugen dich sehen",
     "selfViewLabel": "Du siehst dich als",
     "witnessViewLabel": "Zeugen sehen dich als",
