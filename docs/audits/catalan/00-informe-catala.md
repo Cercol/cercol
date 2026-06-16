@@ -262,11 +262,28 @@ El blog publicat conté **104 articles**:
 > traducció automàtica no revisada** (mots inexistents, anglès/castellà cru, errades
 > de codificació) molt més greus que la mostra versionada al codi.
 
-**Recomanació pendent (opció A, encara aconsellable).** Convé **exportar el camp
-`content.ca` (i `title`, `description`) d'aquests 100 articles de la base de dades a un
-fitxer del repositori**, per posar el contingut sota control de versions, aplicar-hi
-les correccions de `08-blog-complet.md` i afegir una passa de revisió humana abans de
-tornar a publicar.
+### 6.1. Remediació aplicada (✅)
+
+Les correccions ja **s'han aplicat** i posat sota control de versions, exactament com
+recomanava l'opció A. El català dels **104 articles** (els 4 versionats + els 100
+només-BD) s'ha **reescrit complet** a partir de la font anglesa: fidel al significat,
+amb totes les errades, calcs, castellanismes, falsos amics i artefactes de traducció
+automàtica corregits, terminologia unificada i estructura (Markdown, taules, enllaços,
+SVG, DOIs, referències) preservada intacta.
+
+**Decisió de registre del blog.** A diferència dels tests (que mantenen el tractament
+de **vós** per validesa de l'instrument, §3.2 — *aquesta remediació no toca cap test*),
+el blog adopta el tractament informal de **«tu»**, que és el registre natural de la
+divulgació i el que ja feien servir la majoria d'articles. La incoherència tu/vós era
+el defecte més estès de la col·lecció; ara és coherent en «tu».
+
+**Mecanisme.** Les reescriptures viatgen com a migració
+[`db/migrations/025_blog_ca_language_rewrites.sql`](../../../db/migrations/025_blog_ca_language_rewrites.sql),
+que actualitza **només** la clau `{ca}` de `title`, `description` i `content` de cada
+article (les locales `en`/`es`/`fr`/`de`/`da` queden intactes). És idempotent i
+s'aplica pel circuit habitual (`apply-migrations.yml`). Verificada sobre una instància
+local de PostgreSQL 16: 104 files actualitzades, contingut `ca` idèntic bit a bit a la
+font corregida, locales no catalanes sense canvis i re-execució sense error.
 
 ---
 
