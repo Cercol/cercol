@@ -49,6 +49,8 @@ _DARK   = "#111111"
 _GRAY   = "#6b7280"
 _LIGHT  = "#f9fafb"
 _WHITE  = "#ffffff"
+_GREEN  = "#16a34a"   # positive week-over-week delta
+_BORDER = "#e5e7eb"
 
 # ---------------------------------------------------------------------------
 # Multilingual strings
@@ -327,6 +329,234 @@ def _h1(text: str) -> str:
 def _p(text: str, muted: bool = False) -> str:
     color = _GRAY if muted else _DARK
     return f'<p style="margin:0 0 12px;font-size:15px;line-height:1.6;color:{color};">{text}</p>'
+
+
+# ---------------------------------------------------------------------------
+# Weekly digest helpers (English, internal operator email — Phase 17.6.7)
+#
+# All email-client-safe: <table> layout, inline CSS, no flexbox or web fonts.
+# The digest builder consumes a single pre-aggregated `data` dict so this
+# module stays presentation-only (no DB imports); the job api/jobs/weekly_digest
+# owns all data access. See that file for the `data` shape.
+# ---------------------------------------------------------------------------
+
+def _section(title: str, body_html: str) -> str:
+    """A titled block separated by a thin blue top rule."""
+    return (
+        f'<div style="margin-top:28px;padding-top:20px;border-top:2px solid {_BLUE};">'
+        f'<h2 style="margin:0 0 12px;font-size:17px;font-weight:700;color:{_DARK};">{title}</h2>'
+        f'{body_html}</div>'
+    )
+
+
+def _delta_span(cur: int, prev: int) -> str:
+    """A small colored week-over-week delta: ▲ green / ▼ red / – gray."""
+    d = cur - prev
+    if d > 0:
+        arrow, color = "&#9650;", _GREEN     # ▲
+    elif d < 0:
+        arrow, color = "&#9660;", _RED       # ▼
+    else:
+        arrow, color = "&#8211;", _GRAY      # –
+    pct = f" ({d / prev:+.0%})" if prev else ""
+    return (
+        f'<span style="font-size:12px;color:{color};white-space:nowrap;">'
+        f'{arrow} {d:+d}{pct}</span>'
+    )
+
+
+def _stat_card(label: str, value, delta: str = "") -> str:
+    """One KPI cell: big number, small label, optional delta line."""
+    delta_html = f'<div style="margin-top:2px;">{delta}</div>' if delta else ""
+    return (
+        f'<td style="padding:12px 8px;text-align:center;vertical-align:top;'
+        f'background:{_LIGHT};border:1px solid {_BORDER};border-radius:8px;">'
+        f'<div style="font-size:24px;font-weight:700;color:{_DARK};line-height:1.2;">{value}</div>'
+        f'<div style="font-size:12px;color:{_GRAY};margin-top:2px;">{label}</div>'
+        f'{delta_html}</td>'
+    )
+
+
+def _metric_row(cards: list[str]) -> str:
+    """Lay out stat cards in a single spaced row."""
+    cells = '<td style="width:10px;"></td>'.join(cards)
+    return (
+        '<table width="100%" cellpadding="0" cellspacing="0" '
+        f'style="margin:8px 0;"><tr>{cells}</tr></table>'
+    )
+
+
+def _table(headers: list[str], rows: list[list], aligns: list[str] | None = None) -> str:
+    """Generic email table. `rows` is a list of cell lists (already stringified)."""
+    aligns = aligns or ["left"] * len(headers)
+    head = "".join(
+        f'<th style="padding:8px 10px;text-align:{a};font-size:12px;color:{_GRAY};'
+        f'background:{_LIGHT};border-bottom:1px solid {_BORDER};font-weight:600;">{h}</th>'
+        for h, a in zip(headers, aligns)
+    )
+    body = ""
+    for r in rows:
+        tds = "".join(
+            f'<td style="padding:8px 10px;text-align:{a};font-size:13px;color:{_DARK};'
+            f'border-bottom:1px solid {_BORDER};">{c}</td>'
+            for c, a in zip(r, aligns)
+        )
+        body += f"<tr>{tds}</tr>"
+    return (
+        '<table width="100%" cellpadding="0" cellspacing="0" '
+        f'style="border-collapse:collapse;"><thead><tr>{head}</tr></thead>'
+        f'<tbody>{body}</tbody></table>'
+    )
+
+
+def _empty(note: str) -> str:
+    """Muted placeholder used when a data source is empty or unavailable."""
+    return f'<p style="margin:0;font-size:13px;color:{_GRAY};font-style:italic;">{note}</p>'
+
+
+# Map of role id -> (emoji, English name). Mirrors src/utils/role-scoring.js
+# comments and src/locales/en.json roles.*. Kept here so the digest renders a
+# literal emoji per cluster (no image asset dependency in email clients).
+_ROLE_DISPLAY = {
+    "R01": ("\U0001F42C", "Dolphin"),   "R02": ("\U0001F43A", "Wolf"),
+    "R03": ("\U0001F418", "Elephant"),  "R04": ("\U0001F989", "Owl"),
+    "R05": ("\U0001F985", "Eagle"),     "R06": ("\U0001F985", "Falcon"),
+    "R07": ("\U0001F419", "Octopus"),   "R08": ("\U0001F422", "Tortoise"),
+    "R09": ("\U0001F41D", "Bee"),       "R10": ("\U0001F43B", "Bear"),
+    "R11": ("\U0001F98A", "Fox"),       "R12": ("\U0001F9A1", "Badger"),
+}
+
+
+def _kpi(cur: int, prev: int) -> str:
+    return _delta_span(cur, prev)
+
+
+def weekly_digest_html(data: dict) -> str:
+    """Build the weekly metrics digest email body (English).
+
+    `data` keys (all optional; each section degrades gracefully):
+      week_label   : str                    e.g. "Jun 09–Jun 15, 2026"
+      kpis         : {name: (cur, prev)}     signups / tests / page_views / unique_visitors
+      instruments  : [(label, count), ...]
+      roles        : [(role_id, count), ...] sorted desc; empty -> omitted
+      funnel       : {page_view,article_view,test_start,cta_click,test_complete: int,
+                      conversions: [(label, "x%"), ...]}
+      top_articles : [(title, reads), ...]
+      seo          : {source, impressions, clicks, top_queries:[(q,imp,clk,pos)],
+                      top_pages:[(url,imp,clk)], movers:[(url,before,now,impr)], pending:bool}
+      pagespeed    : [(url, score, lcp_ms), ...]
+      broken_links : [(url, slug, lang, status), ...]
+      gsc_lag_note : bool
+    """
+    kpis = data.get("kpis", {})
+    def card(name, label):
+        cur, prev = kpis.get(name, (0, 0))
+        return _stat_card(label, f"{cur:,}", _kpi(cur, prev))
+    parts = [
+        _h1(f"Weekly digest &mdash; {data.get('week_label', '')}"),
+        _p("How cercol.team performed last week (Mon&ndash;Sun, UTC).", muted=True),
+        _metric_row([
+            card("signups", "Signups"),
+            card("tests", "Tests"),
+            card("page_views", "Page views"),
+            card("unique_visitors", "Visitors"),
+        ]),
+    ]
+
+    # Tests by instrument
+    instruments = data.get("instruments") or []
+    if instruments:
+        rows = [[lbl, f"{n:,}"] for lbl, n in instruments]
+        parts.append(_section("Tests by instrument", _table(["Instrument", "Count"], rows, ["left", "right"])))
+    else:
+        parts.append(_section("Tests by instrument", _empty("No tests completed this week.")))
+
+    # Tests by cluster (12 animal roles)
+    roles = data.get("roles") or []
+    if roles:
+        rows = []
+        for role_id, n in roles:
+            emoji, nm = _ROLE_DISPLAY.get(role_id, ("", role_id))
+            rows.append([f"{emoji} {nm}", f"{n:,}"])
+        parts.append(_section("Tests by cluster", _table(["Cluster", "Count"], rows, ["left", "right"])))
+    else:
+        parts.append(_section("Tests by cluster", _empty("No completed tests to cluster.")))
+
+    # Funnel
+    f = data.get("funnel") or {}
+    if f:
+        stages = [
+            ("Page views", f.get("page_view", 0)),
+            ("Article reads", f.get("article_view", 0)),
+            ("Test starts", f.get("test_start", 0)),
+            ("Tests completed", f.get("test_complete", 0)),
+            ("CTA clicks", f.get("cta_click", 0)),
+        ]
+        rows = [[lbl, f"{n:,}"] for lbl, n in stages]
+        conv = f.get("conversions") or []
+        conv_html = "".join(_p(f"{lbl}: <strong>{val}</strong>", muted=True) for lbl, val in conv)
+        parts.append(_section("Funnel", _table(["Stage", "Count"], rows, ["left", "right"]) + conv_html))
+    else:
+        parts.append(_section("Funnel", _empty("No funnel events this week.")))
+
+    # Top blog articles
+    arts = data.get("top_articles") or []
+    if arts:
+        rows = [[t, f"{n:,}"] for t, n in arts]
+        parts.append(_section("Top articles (reads)", _table(["Article", "Reads"], rows, ["left", "right"])))
+    else:
+        parts.append(_section("Top articles (reads)", _empty("No article reads recorded this week.")))
+
+    # Search (GSC / Bing)
+    seo = data.get("seo") or {}
+    if seo and not seo.get("pending") and (seo.get("top_queries") or seo.get("impressions")):
+        src = (seo.get("source") or "search").upper()
+        body = _metric_row([
+            _stat_card("Impressions", f"{seo.get('impressions', 0):,}"),
+            _stat_card("Clicks", f"{seo.get('clicks', 0):,}"),
+        ])
+        tq = seo.get("top_queries") or []
+        if tq:
+            rows = [[q, f"{imp:,}", f"{clk:,}", f"{pos:.1f}" if pos is not None else "&ndash;"]
+                    for q, imp, clk, pos in tq]
+            body += "<div style='margin-top:12px;'></div>" + _table(
+                ["Query", "Impr.", "Clicks", "Pos."], rows, ["left", "right", "right", "right"])
+        mv = seo.get("movers") or []
+        if mv:
+            rows = [[u, f"{before:.1f}", f"{now:.1f}", _delta_span(0, 0) if impr == 0 else
+                     f'<span style="color:{_GREEN if impr > 0 else _RED};">{impr:+.1f}</span>']
+                    for u, before, now, impr in mv]
+            body += "<div style='margin-top:12px;'></div>" + _table(
+                ["Page", "Was", "Now", "&Delta;pos"], rows, ["left", "right", "right", "right"])
+        parts.append(_section(f"Search ({src})", body))
+    else:
+        parts.append(_section("Search", _empty("Search data pending (export not yet populated).")))
+
+    # PageSpeed
+    ps = data.get("pagespeed") or []
+    if ps:
+        rows = [[u, f"{s}" if s is not None else "&ndash;",
+                 f"{int(lcp):,} ms" if lcp is not None else "&ndash;"] for u, s, lcp in ps]
+        parts.append(_section("PageSpeed (mobile, lowest scores)",
+                              _table(["URL", "Score", "LCP"], rows, ["left", "right", "right"])))
+    else:
+        parts.append(_section("PageSpeed (mobile, lowest scores)", _empty("No PageSpeed runs.")))
+
+    # Broken external links
+    bl = data.get("broken_links") or []
+    if bl:
+        rows = [[u, f"{slug} [{lang}]", str(status) if status is not None else "conn"]
+                for u, slug, lang, status in bl]
+        parts.append(_section("Broken external links",
+                              _table(["URL", "In article", "Code"], rows)))
+    else:
+        parts.append(_section("Broken external links", _empty("No broken external links. ✓")))
+
+    if data.get("gsc_lag_note"):
+        parts.append(_p("Note: search data has up to ~48h export lag, so the last "
+                        "days of the week may be partial.", muted=True))
+
+    return _base("".join(parts), lang="en")
 
 
 # ---------------------------------------------------------------------------

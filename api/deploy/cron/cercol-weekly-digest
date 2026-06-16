@@ -1,0 +1,31 @@
+# Cèrcol — weekly metrics digest email (Phase 17.6.7).
+# Emails one branded English summary of the prior Mon-Sun week to DIGEST_EMAIL
+# (default hello@cercol.team): signups, tests + clusters, funnel + conversions,
+# top articles, search (GSC/Bing), PageSpeed, broken links, week-over-week.
+# Reads PostgreSQL + BigQuery; sends via api/emails.py (Resend).
+#
+# Install (one-time, as root on the production server):
+#   sudo cp /home/cercol/api/api/deploy/cron/cercol-weekly-digest /etc/cron.d/
+#   sudo chmod 644 /etc/cron.d/cercol-weekly-digest
+#
+# Verify after install:
+#   ls -la /etc/cron.d/cercol-weekly-digest
+#   journalctl -t CRON --since "5 minutes ago" | grep weekly-digest
+#
+# Manual one-shot run (debug — sends a real email):
+#   sudo -u cercol bash -c 'cd /home/cercol/api/api && set -a && . /home/cercol/.env && set +a && /home/cercol/api/api/.venv/bin/python -m jobs.weekly_digest'
+#
+# Secrets required in /home/cercol/.env:
+#   DATABASE_URL                (PostgreSQL metrics)
+#   GOOGLE_APPLICATION_CREDENTIALS=/home/cercol/.secrets/cercol-seo-ingest.json
+#   RESEND_API_KEY              (to send the email)
+#   DIGEST_EMAIL                (recipient; defaults to hello@cercol.team)
+#
+# Prerequisite: db/migrations/026 applied (the page_view event), otherwise the
+# funnel's page-view stage stays empty until it lands.
+
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# Monday 08:00 UTC, after the weekend SEO jobs and past the ~48h GSC export lag.
+0 8 * * 1 cercol cd /home/cercol/api/api && set -a && . /home/cercol/.env && set +a && /home/cercol/api/api/.venv/bin/python -m jobs.weekly_digest

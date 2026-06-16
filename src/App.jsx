@@ -2,6 +2,7 @@ import { Component, lazy, Suspense, useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom'
 import i18n from './i18n'
 import { PATH_LANGS, localeFromPath } from './utils/locale'
+import { trackEvent, getAnonId } from './lib/api'
 import { FeedbackProvider, useFeedbackContext } from './context/FeedbackContext'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import OnboardingModal from './components/OnboardingModal'
@@ -129,12 +130,30 @@ function useLocaleSync() {
   }, [pathname, search])
 }
 
+/**
+ * Fire a first-party page_view event on every route change. This is the only
+ * general page-visit signal (there is no third-party analytics); it feeds the
+ * weekly digest funnel. trackEvent is prerender-guarded and fire-and-forget,
+ * so bots/build are excluded and it no-ops until migration 026 lands.
+ */
+function usePageViewTracking() {
+  const { pathname } = useLocation()
+  useEffect(() => {
+    trackEvent('page_view', {
+      path: pathname,
+      lang: i18n.language.slice(0, 2) || 'en',
+      anon_id: getAnonId(),
+    })
+  }, [pathname])
+}
+
 function AppContent() {
   const { itemContext } = useFeedbackContext()
   const { user, profile, loading, markOnboardingSeen } = useAuth()
   const navigate = useNavigate()
   const [showOnboarding, setShowOnboarding] = useState(false)
   useLocaleSync()
+  usePageViewTracking()
 
   // Show the onboarding modal once — on first sign-in for new users.
   useEffect(() => {
