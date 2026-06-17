@@ -284,6 +284,13 @@ function buildRoutes(slugs) {
     staticRoutes.push({ route: `${prefix}/blog`, lang })
   }
 
+  // 12 per-role share shells (/share/R01../share/R12). Unprefixed only: the
+  // per-role og:image is language-neutral and the share URL handleShare builds
+  // is unprefixed; the human landing renders in their client language.
+  for (let i = 1; i <= 12; i++) {
+    staticRoutes.push({ route: `/share/R${String(i).padStart(2, '0')}`, lang: 'en' })
+  }
+
   // Phase 2: individual blog articles × 6 languages — 104 × 6 = 624 routes.
   // These run through the concurrency pool (CONCURRENCY=4) to keep CI fast.
   const articleRoutes = []

@@ -878,6 +878,12 @@
       "low": "Vous décidez vite et vous ajustez en cours de route. Cette vitesse a un coût parfois, mais elle signifie aussi que vous bougez pendant que les autres délibèrent encore. Dans les situations qui évoluent vite, c'est important."
     }
   },
+  "share": {
+    "title": "Mon rôle Cèrcol : {{role}}",
+    "tagline": "Curieux de votre propre profil ? Découvrez vos cinq dimensions dans un test gratuit de 2 minutes, sans compte.",
+    "cta": "Faire le test gratuit",
+    "text": "Je suis un {{role}} sur Cèrcol. Découvrez vos cinq dimensions gratuitement :"
+  },
   "roles": {
     "beta_label": "Bêta · Modèle théorique",
     "arc_label": "Arc personnel",

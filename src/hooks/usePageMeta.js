@@ -41,7 +41,7 @@ function currentLocale() {
   return localeForCanonical(window.location.pathname, window.location.search)
 }
 
-export function usePageMeta({ title, description, ogTitle, ogDescription, path }) {
+export function usePageMeta({ title, description, ogTitle, ogDescription, image, path }) {
   useEffect(() => {
     // `path` is the language-neutral page path (e.g. "/about/"). The
     // canonical points to the locale-prefixed version that owns this view,
@@ -69,12 +69,19 @@ export function usePageMeta({ title, description, ogTitle, ogDescription, path }
     // use name=. Restored on unmount so SPA navigation does not leak copy.
     const ogTitleValue = ogTitle || title
     const ogDescValue = ogDescription || description
+    // Per-page og:image / twitter:image override (e.g. per-role share images).
+    // Absolute URL required by crawlers; relative paths are resolved to BASE.
+    const imageUrl = image
+      ? (image.startsWith('http') ? image : `${BASE}${image}`)
+      : null
     const ogPairs = [
       ['meta[property="og:title"]', ogTitleValue],
       ['meta[property="og:description"]', ogDescValue],
       ['meta[property="og:url"]', canonicalUrl],
+      ['meta[property="og:image"]', imageUrl],
       ['meta[name="twitter:title"]', ogTitleValue],
       ['meta[name="twitter:description"]', ogDescValue],
+      ['meta[name="twitter:image"]', imageUrl],
     ]
     const socialPrev = []  // [{el, prev}]
     ogPairs.forEach(([selector, value]) => {
@@ -124,7 +131,7 @@ export function usePageMeta({ title, description, ogTitle, ogDescription, path }
       socialPrev.forEach(({ el, prev }) => prev !== null && el.setAttribute('content', prev))
       added.forEach(el => el.remove())
     }
-  }, [title, description, ogTitle, ogDescription, path])
+  }, [title, description, ogTitle, ogDescription, image, path])
 }
 
 export default usePageMeta

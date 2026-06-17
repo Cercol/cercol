@@ -19,7 +19,8 @@ import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { FM_DOMAIN_META } from '../data/full-moon'
 import { DOMAIN_KEYS } from '../data/domains'
-import { encodeScores, decodeScores, CLIPBOARD_FEEDBACK_MS } from '../utils/share-url'
+import { decodeScores, CLIPBOARD_FEEDBACK_MS } from '../utils/share-url'
+import { shareResult } from '../utils/role-share'
 import { fmScoreToPercent, fmScoreLabel } from '../utils/full-moon-scoring'
 import { logResult } from '../utils/logger'
 import { computeRole } from '../utils/role-scoring'
@@ -124,9 +125,7 @@ export default function FullMoonResultsPage() {
   }
 
   function handleShare() {
-    const encoded = encodeScores(domains)
-    const url = `${window.location.origin}${window.location.pathname}?r=${encoded}`
-    navigator.clipboard.writeText(url).then(() => {
+    shareResult(domains, t, () => {
       setCopied(true)
       setTimeout(() => setCopied(false), CLIPBOARD_FEEDBACK_MS)
     })

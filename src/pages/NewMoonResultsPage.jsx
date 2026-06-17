@@ -9,7 +9,8 @@ import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { DOMAIN_KEYS } from '../data/domains'
-import { encodeScores, decodeScores, CLIPBOARD_FEEDBACK_MS } from '../utils/share-url'
+import { decodeScores, CLIPBOARD_FEEDBACK_MS } from '../utils/share-url'
+import { shareResult } from '../utils/role-share'
 import { radarScoreToPercent, radarScoreLabel } from '../utils/new-moon-scoring'
 import { logResult } from '../utils/logger'
 import { useAuth } from '../context/AuthContext'
@@ -57,9 +58,7 @@ export default function NewMoonResultsPage() {
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   function handleShare() {
-    const encoded = encodeScores(scores)
-    const url = `${window.location.origin}${window.location.pathname}?r=${encoded}`
-    navigator.clipboard.writeText(url).then(() => {
+    shareResult(scores, t, () => {
       setCopied(true)
       setTimeout(() => setCopied(false), CLIPBOARD_FEEDBACK_MS)
     })

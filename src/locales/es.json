@@ -878,6 +878,12 @@
       "low": "Decides rápido y vas ajustando sobre la marcha. Esa velocidad tiene un coste a veces, pero también significa que estás en movimiento mientras otros aún deliberan. En situaciones rápidas, eso importa."
     }
   },
+  "share": {
+    "title": "Mi rol Cèrcol: {{role}}",
+    "tagline": "¿Curiosidad por tu propio perfil? Mira tus cinco dimensiones en un test gratuito de 2 minutos, sin cuenta.",
+    "cta": "Haz el test gratis",
+    "text": "Soy un {{role}} en Cèrcol. Mira tus cinco dimensiones gratis:"
+  },
   "roles": {
     "beta_label": "Beta · Modelo teórico",
     "arc_label": "Arco personal",

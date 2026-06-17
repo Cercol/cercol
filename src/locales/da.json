@@ -878,6 +878,12 @@
       "low": "Du beslutter hurtigt og tilpasser undervejs. Den hastighed har en pris nogle gange, men det betyder også, at du er i bevægelse, mens andre stadig overvejer. I hurtigt bevægende situationer betyder det noget."
     }
   },
+  "share": {
+    "title": "Min Cèrcol-rolle: {{role}}",
+    "tagline": "Nysgerrig på din egen profil? Se dine fem dimensioner i en gratis 2-minutters test, uden konto.",
+    "cta": "Tag den gratis test",
+    "text": "Jeg er en {{role}} på Cèrcol. Se dine fem dimensioner gratis:"
+  },
   "roles": {
     "beta_label": "Beta · Teoretisk model",
     "arc_label": "Personlig bue",
