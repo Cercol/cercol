@@ -188,7 +188,8 @@
       "results": "Your test results — scores linked to your account when you are signed in. Anonymous scores (no account) are stored without any identifying information.",
       "profile": "Profile fields you provide voluntarily: first name, last name, country, native language. All optional except first name.",
       "payment": "Payment data — processed entirely by Stripe. Cèrcol never sees or stores your card details.",
-      "anonymous": "Anonymous usage data — if you complete an assessment without an account, only the scores are stored. No name, email, IP, or device information."
+      "anonymous": "Anonymous usage data — if you complete an assessment without an account, only the scores are stored. No name, email, IP, or device information.",
+      "attribution": "Visit source — the referring website and any campaign tags (utm) from the link you arrived through, stored with a completed test. First-party only, never shared, and never linked to your identity."
     },
     "why": {
       "heading": "Why we collect it",
