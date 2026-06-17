@@ -16,10 +16,23 @@ authenticated user.
 Premium is determined by a single `premium` boolean column on `profiles`. It is
 set in two places:
 
-- **Beta auto-grant** (`api/main.py:344-377`): on profile creation, `premium` and
-  `is_beta` are both set to `(SELECT COUNT(*) < BETA_TOTAL FROM profiles WHERE
-  is_beta = TRUE)` with `BETA_TOTAL = 500` (`api/main.py:344`). So the first ~500
-  users are silently granted premium for free.
+- **Beta auto-grant** (`api/main.py:344-377`): `premium` and `is_beta` are set to
+  `(SELECT COUNT(*) < BETA_TOTAL FROM profiles WHERE is_beta = TRUE)` with
+  `BETA_TOTAL = 500` (`api/main.py:344`). The intent: the first ~500 users get
+  premium for free.
+
+  **Correction (2026-06-17):** this grant was in fact *never firing*. The grant
+  ran only on `ensure_profile`'s fresh-INSERT branch, but the registration
+  handlers in `api/auth.py` create the `profiles` row first, so by the time
+  `ensure_profile` runs the row already exists and only the `ON CONFLICT DO
+  UPDATE SET email` branch executed — leaving every user on `premium = false`
+  and sent to the paywall. Fixed by granting on the conflict branch too (slot
+  remains AND not already premium/beta), which also retro-grants the users who
+  were defectively denied, on their next authenticated request. Note this shifts
+  the semantics from "first 500 to **register**" to "first 500 to **make an
+  authenticated request** after the fix", because `is_beta` was ~0 in production
+  (the grant had never run). The fate of the grant (Open questions 2 and 3) is
+  unchanged by the fix and still needs a decision.
 - **Stripe webhook** (`api/main.py:674,690`): on `checkout.session.completed`,
   `UPDATE profiles SET premium = true`. Checkout is created at `/checkout`
   (`api/main.py:658`) from `STRIPE_PRICE_ID` (a single line item — apparent
@@ -98,10 +111,10 @@ Open questions being answered.
   becomes real, not cosmetic.
 - The dependency reads `premium` per request (one indexed PK lookup), same cost as
   `require_admin` — negligible.
-- **Interaction with the beta grant:** because the first ~500 users were
-  auto-granted `premium = true`, enabling enforcement changes nothing for them —
-  they pass. Enforcement only starts biting once the beta window closes or the
-  grant is revoked (see Open questions).
+- **Interaction with the beta grant:** now that the grant actually fires (see the
+  2026-06-17 correction in Context), beta users hold `premium = true`, so enabling
+  enforcement changes nothing for them — they pass. Enforcement only starts biting
+  once the beta window closes or the grant is revoked (see Open questions).
 - Every gated endpoint must be tested for both the premium-pass and
   non-premium-block paths before this ships.
 
