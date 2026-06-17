@@ -87,7 +87,8 @@ role is to take the test. Never diagnose. Never say "this is who you are".
   4. **The honest turn**: a trend is a hint, not proof. The only way to actually
      know is the test.
   5. **The CTA** (below).
-- A couple of short subheadings are fine. Markdown body. No images required.
+- A couple of short subheadings are fine. Markdown body. Every article ships with
+  a cover image and deeper-reading links (see Enrichment), not as plain text.
 
 ## Anti-repetition rule (do not write the same article twice)
 
@@ -107,6 +108,36 @@ If you have written more than one article, reread the previous ones first and
 make this one structurally different. Same voice, different article. A reader
 who reads four in a row should feel four articles by one person, never one
 template filled four times.
+
+**The recurring beats must never be phrased the same way twice.** The honest turn,
+the "who is drawn / who is not" line, the team-stakes line, the disclaimer and the
+pre-CTA nudge recur in every article and are the first thing to go stale. No stock
+sentence may be reused across articles. In particular, retire these (they were
+overused once already): "a trend can point at a trait, it cannot measure one"; "that
+split is the whole point" / "the whole point"; "it is a hint, a good one" plus the
+word "hunch"; "not a horoscope" / "not a fortune cookie"; "a team without an X ... a
+team with one ...". Each article must invent its own wording for every one of these
+beats. Reread the others and reword anything that rhymes.
+
+## Enrichment (every article ships richer than plain text)
+
+Every article includes, with no schema change needed (the blog already supports
+all of it):
+
+- **A cover image.** A relevant, free-licence photo. Use Unsplash: the stored
+  value is a clean `https://images.unsplash.com/photo-...` URL (the site
+  normalises it at render via `src/utils/unsplash.js`). The Unsplash licence needs
+  no attribution, but record the photographer and photo-page URL in the draft
+  front-matter (`cover_credit`) for the reviewer. Avoid `plus.unsplash.com`
+  (Unsplash+ is paid and is not normalised). Goes in the `cover_url` field.
+- **One or two casual deeper-reading links, woven into the prose, not a list.**
+  Typically: (1) the outbound source for the trend's stat, framed casually (a
+  linked phrase, not a citation), and (2) one internal link, varied per article so
+  the set does not all point to the same place: the public sample report
+  (`/sample`), the roles page (`/roles`), or the closest Cèrcol academic article
+  (`/blog/<slug>`). Body is Markdown, so use `[text](/path)` for links and
+  `![alt](url)` if an inline image is ever wanted. Keep it light. The First Quarter
+  CTA stays the single primary action; deeper-reading links never compete with it.
 
 ## Method (every article)
 
@@ -148,8 +179,9 @@ path, with human review, never machine-only.)
 ## Output contract
 
 - Produce the article as Markdown plus a small front-matter block proposing
-  `slug`, `title`, `description` (140-160 chars), `category`, `complexity`, and
-  `author` (the byline above).
+  `slug`, `title`, `description` (140-160 chars), `category`, `complexity`,
+  `author` (the byline above), `cover_url` (the Unsplash image) and `cover_credit`
+  (photographer + photo-page URL + licence note, for the reviewer's record).
 - You are drafting only. **Never publish live.** The article goes into a DRAFT
   PR for Miquel's review of voice and accuracy before anything ships, and the
   publishing path (admin POST /blog as draft, or a content migration) is for a

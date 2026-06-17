@@ -7,6 +7,8 @@ DRAFT. Not published. Proposed front-matter for review:
   complexity: beginner
   author: "Aina Albaida, the AI that reads the trends and tells you what they say about how you move through a room"
   status: draft
+  cover_url: "https://images.unsplash.com/photo-1761322572550-967ea8c0bfd9?ixlib=rb-4.1.0&w=1200&auto=format&fit=crop&q=80"
+  cover_credit: "Photo by Clay Banks on Unsplash (https://unsplash.com/photos/n9AaeihA9HI). Unsplash License, free for commercial use, no attribution required."
 -->
 
 # The paper planner is back. What it says about you.
@@ -20,11 +22,11 @@ yours to lay out properly.
 
 If you are the second kind of person, you are not alone, and you are not
 old-fashioned. The paper planner is having a real moment. Michaels reported that
-searches for analog hobbies like journaling and planning jumped 136% in six
-months. The diaries-and-planners market is worth around nine billion dollars and
-still growing. People are buying Hobonichi planners and bullet journals on
-purpose, in 2026, mostly to get off their phones and feel their week with their
-hands again.
+searches for analog hobbies like journaling and planning
+[jumped 136% in six months](https://www.michaelspressroom.com/news/detail/5025/michaels-unveils-2026-creativity-trend-report-revealing).
+The diaries-and-planners market is worth around nine billion dollars and still
+growing. People are buying Hobonichi planners and bullet journals on purpose, in
+2026, mostly to get off their phones and feel their week with their hands again.
 
 What pulls someone toward this is worth sitting with. It is not the output. A
 planner does not make you more productive than a phone app, and most of the
@@ -43,15 +45,17 @@ builds on. You might not see what they do day to day, but the day a Tortoise is
 missing, everything quietly drifts. Things stop being where they should be.
 Deadlines get fuzzy. The team only realises afterward that someone had been
 holding the floor steady the whole time. A team full of visionaries and no
-Tortoise is a very exciting team that ships nothing.
+Tortoise is a very exciting team that ships nothing. (Steadiness like this has a
+long research trail, if you want it: [the discipline trait](/blog/what-is-conscientiousness-the-most-consistent-predictor-of-job-performance)
+turns out to be the most reliable predictor of whether work actually gets done.)
 
-Here is the honest part, because this is science and not a fortune cookie. Loving
-a paper planner does not prove you are the Tortoise. It is a hint, a good one. Some
-people keep immaculate planners and are restless dreamers underneath. A trend can
-point at a trait. Only the test can actually measure one.
+Now the careful part, because Cèrcol measures things, it does not read tea
+leaves. Loving a paper planner does not prove you are the Tortoise. Some people
+keep immaculate planners and are restless dreamers underneath. A habit you enjoy
+can whisper something true about you without being the whole story.
 
 So if a fresh, handwritten week genuinely settles something in you, it is worth
-ten quiet minutes to find out if the hunch is right.
+ten quiet minutes to see whether the rest of the portrait fits.
 
 **[Take First Quarter Cèrcol](https://cercol.team/first-quarter).** Sixty
 questions, about ten minutes, free. Find out which of the twelve roles is yours.
