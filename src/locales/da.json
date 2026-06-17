@@ -188,7 +188,8 @@
       "results": "Dine testresultater — point knyttet til din konto, når du er logget ind. Anonyme point (ingen konto) gemmes uden identificerende oplysninger.",
       "profile": "Profilfelter du frivilligt udfylder: fornavn, efternavn, land, modersmål. Alle valgfrie undtagen fornavn.",
       "payment": "Betalingsdata — behandles fuldt ud af Stripe. Cèrcol ser eller gemmer aldrig dine kortoplysninger.",
-      "anonymous": "Anonyme brugsdata — hvis du gennemfører en vurdering uden en konto, gemmes kun pointene. Intet navn, ingen e-mail, ingen IP eller enhedsoplysninger."
+      "anonymous": "Anonyme brugsdata — hvis du gennemfører en vurdering uden en konto, gemmes kun pointene. Intet navn, ingen e-mail, ingen IP eller enhedsoplysninger.",
+      "attribution": "Besøgskilde — det henvisende websted og eventuelle kampagne-tags (utm) fra linket, du kom ind via, gemt sammen med en gennemført test. Kun førstepart, aldrig delt og aldrig knyttet til din identitet."
     },
     "why": {
       "heading": "Hvorfor vi indsamler det",

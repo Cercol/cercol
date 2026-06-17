@@ -188,7 +188,8 @@
       "results": "Els teus resultats — puntuacions vinculades al teu compte quan has iniciat sessió. Les puntuacions anònimes (sense compte) s'emmagatzemen sense cap informació d'identificació.",
       "profile": "Camps de perfil que proporciones voluntàriament: nom, cognoms, país, llengua materna. Tots opcionals excepte el nom.",
       "payment": "Dades de pagament — processades íntegrament per Stripe. Cèrcol no veu ni emmagatzema mai les dades de la teua targeta.",
-      "anonymous": "Dades d'ús anònimes — si completes una avaluació sense compte, només s'emmagatzemen les puntuacions. Cap nom, correu, IP ni informació del dispositiu."
+      "anonymous": "Dades d'ús anònimes — si completes una avaluació sense compte, només s'emmagatzemen les puntuacions. Cap nom, correu, IP ni informació del dispositiu.",
+      "attribution": "Origen de la visita — el lloc web que t'ha referit i qualsevol etiqueta de campanya (utm) de l'enllaç pel qual has arribat, desat amb un test completat. Només de primera part, mai compartit i mai vinculat a la teva identitat."
     },
     "why": {
       "heading": "Per què les recopilem",
