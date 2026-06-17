@@ -27,6 +27,13 @@ function getInstrument(pathname) {
  *   itemId   {number|null} — id of item currently shown (test pages only)
  *   itemText {string|null} — English text of that item
  */
+// The translation-feedback backend is a stub: sendTranslationFeedback() always
+// returns false and the endpoint POST /translation-feedback + table (migration
+// 013) do not exist yet (see src/utils/translationFeedback.js). Hide the widget
+// until the backend lands so it never silently discards what users type. Flip
+// to true when the endpoint and table ship.
+const TRANSLATION_FEEDBACK_ENABLED = false
+
 export default function FeedbackButton({ itemId = null, itemText = null }) {
   const { t, i18n } = useTranslation()
   const { pathname } = useLocation()
@@ -81,6 +88,9 @@ export default function FeedbackButton({ itemId = null, itemText = null }) {
     setStatus('success')
     setTimeout(closePanel, 2000)
   }
+
+  // Hidden until the translation-feedback backend exists (see flag above).
+  if (!TRANSLATION_FEEDBACK_ENABLED) return null
 
   return (
     <div ref={panelRef} className="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-2">
