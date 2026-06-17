@@ -345,7 +345,17 @@ BETA_TOTAL = 500
 
 
 async def ensure_profile(conn: asyncpg.Connection, user_id: str, email: str | None = None) -> None:
-    """Create/update profile row, claim beta premium if slots remain, link pending invitations."""
+    """Create/update profile row, claim beta premium if slots remain, link pending invitations.
+
+    The beta grant must also fire on the ON CONFLICT branch, not only on a fresh
+    INSERT. Registration handlers in auth.py create the profiles row first (with
+    no premium/beta), so by the time ensure_profile runs (on /me/profile,
+    /me/results, /results) the row already exists and the INSERT branch never
+    wins. Without granting on conflict, the first ~500 beta users were silently
+    left on premium = false and sent to the paywall. The grant condition mirrors
+    the INSERT: a slot remains AND the row is not already premium or beta. We
+    never revoke an existing grant or a paid premium (OR with the current value),
+    and a paid user is never relabelled beta (the grant requires NOT premium)."""
     if email:
         await conn.execute(
             """
@@ -353,7 +363,14 @@ async def ensure_profile(conn: asyncpg.Connection, user_id: str, email: str | No
             SELECT $1, $2,
                 (SELECT COUNT(*) < $3 FROM profiles WHERE is_beta = TRUE),
                 (SELECT COUNT(*) < $3 FROM profiles WHERE is_beta = TRUE)
-            ON CONFLICT (id) DO UPDATE SET email = EXCLUDED.email
+            ON CONFLICT (id) DO UPDATE SET
+                email   = EXCLUDED.email,
+                premium = profiles.premium OR (
+                    NOT profiles.premium AND NOT profiles.is_beta
+                    AND (SELECT COUNT(*) < $3 FROM profiles WHERE is_beta = TRUE)),
+                is_beta = profiles.is_beta OR (
+                    NOT profiles.premium AND NOT profiles.is_beta
+                    AND (SELECT COUNT(*) < $3 FROM profiles WHERE is_beta = TRUE))
             """,
             user_id, email.lower(), BETA_TOTAL,
         )
@@ -372,7 +389,13 @@ async def ensure_profile(conn: asyncpg.Connection, user_id: str, email: str | No
             SELECT $1,
                 (SELECT COUNT(*) < $2 FROM profiles WHERE is_beta = TRUE),
                 (SELECT COUNT(*) < $2 FROM profiles WHERE is_beta = TRUE)
-            ON CONFLICT (id) DO NOTHING
+            ON CONFLICT (id) DO UPDATE SET
+                premium = profiles.premium OR (
+                    NOT profiles.premium AND NOT profiles.is_beta
+                    AND (SELECT COUNT(*) < $2 FROM profiles WHERE is_beta = TRUE)),
+                is_beta = profiles.is_beta OR (
+                    NOT profiles.premium AND NOT profiles.is_beta
+                    AND (SELECT COUNT(*) < $2 FROM profiles WHERE is_beta = TRUE))
             """,
             user_id, BETA_TOTAL,
         )
