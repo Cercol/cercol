@@ -461,9 +461,10 @@ methodology follows the same principled approach as the other languages and is d
 here for transparency. Human review by a translator with psychometric context is required
 before any item text enters the source files.
 
-**Ongoing correction:** The translation feedback system allows Catalan-speaking users to
-suggest corrections. Feedback is stored in the PostgreSQL backend with `language: 'ca'`
-and reviewed by maintainers before any item text is updated in the source files.
+**Ongoing correction (planned):** A translation feedback mechanism for Catalan-speaking
+users to suggest corrections is planned but not yet implemented. When it ships, suggestions
+will be stored with `language: 'ca'` and reviewed by maintainers before any item text is
+updated in the source files.
 
 ### Spanish (ES) test items
 
@@ -489,10 +490,10 @@ populations. Cèrcol's translation follows the same item-level translation metho
 This is not a formally validated translation — it is a principled open-source translation
 of public-domain items, documented as such.
 
-**Ongoing correction:** The translation feedback system (visible on all instrument pages)
-allows Spanish-speaking users to suggest corrections to individual items. Feedback is
-stored in the PostgreSQL backend with the `language` field set to `'es'` and reviewed by
-maintainers before any item text is updated in the source files.
+**Ongoing correction (planned):** A translation feedback mechanism for Spanish-speaking
+users to suggest corrections to individual items is planned but not yet implemented. When
+it ships, suggestions will be stored with the `language` field set to `'es'` and reviewed
+by maintainers before any item text is updated in the source files.
 
 ### French (FR) test items
 
@@ -513,9 +514,9 @@ Cèrcol's translation follows the same item-level approach.
 This is not a formally validated translation — it is a principled open-source translation
 of public-domain items, documented as such.
 
-**Ongoing correction:** Feedback is stored in the PostgreSQL backend with the `language`
-field set to `'fr'` and reviewed by maintainers before any item text is updated in the
-source files.
+**Ongoing correction (planned):** A translation feedback mechanism is planned but not yet
+implemented. When it ships, suggestions will be stored with the `language` field set to
+`'fr'` and reviewed by maintainers before any item text is updated in the source files.
 
 ### German (DE) test items
 
@@ -536,9 +537,9 @@ NEO-PI-R). Cèrcol's translation follows the same item-level direct translation 
 This is not a formally validated translation — it is a principled open-source translation
 of public-domain items, documented as such.
 
-**Ongoing correction:** Feedback is stored in the PostgreSQL backend with the `language`
-field set to `'de'` and reviewed by maintainers before any item text is updated in the
-source files.
+**Ongoing correction (planned):** A translation feedback mechanism is planned but not yet
+implemented. When it ships, suggestions will be stored with the `language` field set to
+`'de'` and reviewed by maintainers before any item text is updated in the source files.
 
 ### Danish (DA) test items
 
@@ -564,9 +565,9 @@ applies: "View myself as predominantly liberal politically."
 This is not a formally validated translation — it is a principled open-source translation
 of public-domain items, following the Vedel et al. methodology, documented as such.
 
-**Ongoing correction:** Feedback is stored in the PostgreSQL backend with the `language`
-field set to `'da'` and reviewed by maintainers before any item text is updated in the
-source files.
+**Ongoing correction (planned):** A translation feedback mechanism is planned but not yet
+implemented. When it ships, suggestions will be stored with the `language` field set to
+`'da'` and reviewed by maintainers before any item text is updated in the source files.
 
 ---
 
