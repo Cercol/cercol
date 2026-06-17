@@ -1025,6 +1025,13 @@
       "back": "Enrere",
       "finish": "Enviar",
       "submitting": "Guardant les teues respostes…",
+      "complete": {
+        "heading": "Fet.",
+        "body": "Les teues observacions han quedat registrades. Gràcies.",
+        "nudge": "Tens curiositat per saber com et puntuaries tu? És gratis, dura uns dos minuts i no cal compte.",
+        "cta": "Fes el test gratuït",
+        "back": "Tornar a Cèrcol"
+      },
       "done": {
         "heading": "Fet.",
         "body": "Les teues observacions han quedat registrades. Gràcies.",
