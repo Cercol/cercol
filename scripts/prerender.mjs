@@ -77,7 +77,7 @@ const BASE_URL   = 'http://localhost:4173'
 const CONCURRENCY = 4
 
 // Static routes to prerender — auth-gated routes are excluded.
-const STATIC_ROUTES = ['/', '/about', '/instruments', '/roles', '/science', '/faq', '/privacy']
+const STATIC_ROUTES = ['/', '/about', '/instruments', '/roles', '/science', '/faq', '/privacy', '/sample']
 const BLOG_LANGS = ['en', 'ca', 'es', 'fr', 'de', 'da']
 
 // ---------------------------------------------------------------------------

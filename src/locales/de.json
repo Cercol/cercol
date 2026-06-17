@@ -879,6 +879,14 @@
       "low": "Du entscheidest schnell und passt dich unterwegs an. Diese Schnelligkeit hat manchmal einen Preis, bedeutet aber auch, dass du dich bewegst, während andere noch beraten. In schnell bewegenden Situationen ist das wichtig."
     }
   },
+  "sample": {
+    "eyebrow": "Beispielbericht",
+    "title": "Ein Cèrcol-Beispielprofil",
+    "subtitle": "Dies ist ein synthetisches Beispiel, keine echte Person. Mach den Test für dein eigenes.",
+    "domainSection": "Die fünf Dimensionen",
+    "cta_note": "Dein eigenes Profil ist zwei Minuten entfernt, kostenlos und ohne Konto.",
+    "cta": "Kostenlosen Test machen"
+  },
   "share": {
     "title": "Meine Cèrcol-Rolle: {{role}}",
     "tagline": "Neugierig auf dein eigenes Profil? Sieh deine fünf Dimensionen in einem kostenlosen 2-Minuten-Test, ohne Konto.",
