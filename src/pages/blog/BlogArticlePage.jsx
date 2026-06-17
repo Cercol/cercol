@@ -484,6 +484,12 @@ export default function BlogArticlePage() {
   // injected by prerender.mjs and persists across SPA navigation.
   const articlesGlobal = typeof window !== 'undefined' ? window.__BLOG_ARTICLES__ : undefined
   const htmlContent = localizeBlogLinks(rawHtml, urlLang, articlesGlobal)
+  // Split the body at the first H2 so a slim CTA can bridge readers to the free
+  // test right after the intro (above the fold), before the end-of-article CTA.
+  // Falls back to no early CTA when the article has no H2.
+  const _h2At     = htmlContent.indexOf('<h2')
+  const introHtml = _h2At > 0 ? htmlContent.slice(0, _h2At) : ''
+  const restHtml  = _h2At > 0 ? htmlContent.slice(_h2At) : htmlContent
   const headings    = extractHeadings(rawContent)
   const estTimeMins = readingTimeMins(rawContent)
 
@@ -624,11 +630,23 @@ export default function BlogArticlePage() {
             </div>
           )}
 
-          <article
-            ref={articleRef}
-            className="prose-article"
-            dangerouslySetInnerHTML={{ __html: htmlContent }}
-          />
+          {introHtml ? (
+            <>
+              <div className="prose-article" dangerouslySetInnerHTML={{ __html: introHtml }} />
+              <BlogTestCTA slug={slug} lang={urlLang} category={post.category} compact />
+              <article
+                ref={articleRef}
+                className="prose-article"
+                dangerouslySetInnerHTML={{ __html: restHtml }}
+              />
+            </>
+          ) : (
+            <article
+              ref={articleRef}
+              className="prose-article"
+              dangerouslySetInnerHTML={{ __html: htmlContent }}
+            />
+          )}
         </div>
 
         {/* Desktop sticky ToC sidebar */}
