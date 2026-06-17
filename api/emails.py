@@ -431,6 +431,43 @@ def _kpi(cur: int, prev: int) -> str:
     return _delta_span(cur, prev)
 
 
+def _pivot_table(cum: dict) -> str:
+    """Render a {languages, rows, col_totals, grand_total} pivot: model rows x
+    language columns, per-row Total, and a footer Total row."""
+    langs = cum["languages"]
+    headers = ["Model"] + langs + ["Total"]
+    aligns = ["left"] + ["right"] * (len(langs) + 1)
+    body_rows = []
+    for r in cum["rows"]:
+        body_rows.append([r["instrument"]]
+                         + [f"{r['per_lang'].get(l, 0):,}" for l in langs]
+                         + [f"<strong>{r['total']:,}</strong>"])
+    body_rows.append(["<strong>Total</strong>"]
+                     + [f"<strong>{cum['col_totals'].get(l, 0):,}</strong>" for l in langs]
+                     + [f"<strong>{cum.get('grand_total', 0):,}</strong>"])
+    return _table(headers, body_rows, aligns)
+
+
+def _north_star(kpis: dict, weekly_pivot: dict) -> str:
+    """The one number: completed tests this week vs last, with the this-week
+    instrument x language pivot underneath and a placeholder for the source
+    split (filled once first-touch attribution lands)."""
+    cur, prev = kpis.get("tests", (0, 0))
+    block = (
+        '<div style="text-align:center;padding:12px 0 4px;">'
+        f'<div style="font-size:12px;font-weight:600;color:{_GRAY};'
+        'text-transform:uppercase;letter-spacing:0.06em;">Completed tests this week</div>'
+        f'<div style="font-size:44px;font-weight:700;color:{_BLUE};line-height:1.1;margin:4px 0;">{cur:,}</div>'
+        f'<div style="font-size:13px;color:{_GRAY};">{_delta_span(cur, prev)} &nbsp;vs last week ({prev:,})</div>'
+        '</div>'
+    )
+    block += (_pivot_table(weekly_pivot) if (weekly_pivot or {}).get("rows")
+              else _empty("No tests completed this week."))
+    block += _p('Source / channel split: <em>pending</em> &mdash; lands with first-touch attribution.',
+                muted=True)
+    return block
+
+
 def weekly_digest_html(data: dict) -> str:
     """Build the weekly metrics digest email body (English).
 
@@ -456,6 +493,7 @@ def weekly_digest_html(data: dict) -> str:
         return _stat_card(label, f"{cur:,}", _kpi(cur, prev))
     parts = [
         _h1(f"Weekly digest &mdash; {data.get('week_label', '')}"),
+        _north_star(kpis, data.get("weekly_pivot") or {}),
         _p("How cercol.team performed last week (Mon&ndash;Sun, UTC).", muted=True),
         _metric_row([
             card("signups", "Signups"),
@@ -487,24 +525,10 @@ def weekly_digest_html(data: dict) -> str:
     # Cumulative tests (all-time): pivot of model (rows) x language (columns)
     # with a per-row total and a footer totals row.
     cum = data.get("cumulative") or {}
-    if cum.get("rows"):
-        langs = cum["languages"]
-        headers = ["Model"] + langs + ["Total"]
-        aligns = ["left"] + ["right"] * (len(langs) + 1)
-        body_rows = []
-        for r in cum["rows"]:
-            cells = ([r["instrument"]]
-                     + [f"{r['per_lang'].get(l, 0):,}" for l in langs]
-                     + [f"<strong>{r['total']:,}</strong>"])
-            body_rows.append(cells)
-        body_rows.append(
-            ["<strong>Total</strong>"]
-            + [f"<strong>{cum['col_totals'].get(l, 0):,}</strong>" for l in langs]
-            + [f"<strong>{cum.get('grand_total', 0):,}</strong>"]
-        )
-        parts.append(_section("Cumulative tests (all-time)", _table(headers, body_rows, aligns)))
-    else:
-        parts.append(_section("Cumulative tests (all-time)", _empty("No tests recorded yet.")))
+    parts.append(_section(
+        "Cumulative tests (all-time)",
+        _pivot_table(cum) if cum.get("rows") else _empty("No tests recorded yet."),
+    ))
 
     # Population norms: which (instrument, language) combos self-calibrate, and
     # how their empirical means drift from the researcher priors.

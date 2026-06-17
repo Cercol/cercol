@@ -195,6 +195,10 @@ def test_weekly_digest_html_populated():
         "funnel": wd.build_funnel(
             {"page_view": 900, "article_view": 200, "test_start": 60, "cta_click": 30}, 40),
         "top_articles": [("What is Extraversion", 120)],
+        "weekly_pivot": wd.build_cumulative([
+            {"instrument": "newMoon", "language": "en", "n": 25},
+            {"instrument": "fullMoon", "language": "es", "n": 15},
+        ]),
         "cumulative": wd.build_cumulative([
             {"instrument": "newMoon", "language": "en", "n": 300},
             {"instrument": "fullMoon", "language": "es", "n": 90},
@@ -220,6 +224,8 @@ def test_weekly_digest_html_populated():
     assert "What is Extraversion" in html
     assert "big five test" in html
     assert "dead.example" in html
+    assert "Completed tests this week" in html        # north-star hero
+    assert "Source / channel split" in html           # attribution placeholder
     assert "Cumulative tests" in html
     assert ">Model<" in html              # pivot header
     assert ">Total<" in html              # per-row + footer total column
@@ -232,6 +238,7 @@ def test_weekly_digest_html_populated():
 def test_weekly_digest_html_empty_degrades():
     # A completely quiet week must render placeholders, not crash.
     html = emails.weekly_digest_html({"week_label": "—", "kpis": {}})
+    assert "Completed tests this week" in html        # hero renders even when empty
     assert "No tests completed this week." in html
     assert "No completed tests to cluster." in html
     assert "No tests recorded yet." in html
@@ -296,6 +303,7 @@ def test_run_builds_summary_without_sending(monkeypatch):
             "funnel_raw": {"page_view": 50, "article_view": 10, "test_start": 7, "cta_click": 2},
             "tests_total": 7,
             "top_articles": [("slug-x", 9)],
+            "week_il_rows": [{"instrument": "newMoon", "language": "en", "n": 7}],
             "cum_rows": [{"instrument": "newMoon", "language": "en", "n": 7}],
             "norm_rows": [],
         }

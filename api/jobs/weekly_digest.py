@@ -131,6 +131,13 @@ async def gather_postgres(ws, we, ps, pe) -> dict[str, Any]:
         instruments = [(_INSTRUMENT_LABELS.get(r["instrument"], r["instrument"] or "unknown"), int(r["n"]))
                        for r in instr_rows]
 
+        # This-week tests by instrument x language (the north-star pivot).
+        week_il_rows = await conn.fetch(
+            "SELECT instrument, language, COUNT(*) AS n FROM results "
+            "WHERE created_at >= $1 AND created_at < $2 GROUP BY instrument, language ORDER BY n DESC",
+            ws, we,
+        )
+
         # Raw domain scores for cluster computation (all five domains present).
         role_rows = await conn.fetch(
             "SELECT presence, bond, discipline, depth, vision FROM results "
@@ -190,6 +197,7 @@ async def gather_postgres(ws, we, ps, pe) -> dict[str, Any]:
             "unique_visitors": visitors,
         },
         "instruments": instruments,
+        "week_il_rows": week_il_rows,
         "role_rows": role_rows,
         "funnel_raw": funnel,
         "tests_total": tests[0],
@@ -425,6 +433,7 @@ def run(cfg: JobConfig, *, bq_client, send: bool = True) -> dict[str, Any]:
         "week_label": week_label(ws, we),
         "kpis": pg["kpis"],
         "instruments": pg["instruments"],
+        "weekly_pivot": build_cumulative(pg["week_il_rows"]),
         "roles": compute_role_counts(pg["role_rows"]),
         "funnel": build_funnel(pg["funnel_raw"], pg["tests_total"]),
         "top_articles": pg["top_articles"],
