@@ -430,6 +430,13 @@ class LogResultBody(BaseModel):
     depth:      Optional[float] = Field(None, ge=1, le=7)
     vision:     Optional[float] = Field(None, ge=1, le=7)
     facets:     Optional[Dict[str, Any]] = None
+    # First-touch channel attribution (first-party, never linked to identity).
+    # Requires migration 028; the INSERT below writes these columns.
+    anon_id:      Optional[str] = None
+    utm_source:   Optional[str] = None
+    utm_medium:   Optional[str] = None
+    utm_campaign: Optional[str] = None
+    referrer:     Optional[str] = None
 
     @model_validator(mode="after")
     def _enforce_instrument_range(self):
@@ -639,14 +646,16 @@ async def log_result(
         row = await conn.fetchrow(
             """
             INSERT INTO results
-                (instrument, language, presence, bond, discipline, depth, vision, facets, user_id)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+                (instrument, language, presence, bond, discipline, depth, vision, facets, user_id,
+                 anon_id, utm_source, utm_medium, utm_campaign, referrer)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
             RETURNING id
             """,
             body.instrument, body.language,
             body.presence, body.bond, body.discipline, body.depth, body.vision,
             body.facets,
             user_id,
+            body.anon_id, body.utm_source, body.utm_medium, body.utm_campaign, body.referrer,
         )
     return {"id": str(row["id"])}
 

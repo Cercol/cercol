@@ -8,6 +8,7 @@ import {
   getAccessToken, setAccessToken, clearAccessToken,
   getRefreshToken, setRefreshToken, clearRefreshToken,
 } from './tokens'
+import { getFirstTouch } from '../utils/attribution'
 
 const API_URL = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '')
 
@@ -291,10 +292,18 @@ export async function logResult({
 }) {
   const useAuth = getAccessToken() !== null
   const fetcher = useAuth ? authFetch : publicFetch
+  // First-touch channel attribution + opaque visitor id, so a completed test
+  // can be traced to its source. First-party, never linked to identity.
+  const ft = getFirstTouch()
   return fetcher('/results', {
     method: 'POST',
     body: JSON.stringify({
       instrument, language, presence, bond, discipline, depth, vision, facets,
+      anon_id: getAnonId(),
+      utm_source: ft.utm_source,
+      utm_medium: ft.utm_medium,
+      utm_campaign: ft.utm_campaign,
+      referrer: ft.referrer,
     }),
   })
 }

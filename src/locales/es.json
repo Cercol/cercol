@@ -188,7 +188,8 @@
       "results": "Tus resultados de las pruebas — puntuaciones vinculadas a tu cuenta cuando estás conectado/a. Las puntuaciones anónimas (sin cuenta) se almacenan sin ninguna información identificativa.",
       "profile": "Campos de perfil que proporcionas voluntariamente: nombre, apellidos, país, idioma nativo. Todos opcionales excepto el nombre.",
       "payment": "Datos de pago — procesados íntegramente por Stripe. Cèrcol nunca ve ni almacena los datos de tu tarjeta.",
-      "anonymous": "Datos de uso anónimos — si completas una evaluación sin cuenta, solo se almacenan las puntuaciones. Sin nombre, correo electrónico, IP ni información del dispositivo."
+      "anonymous": "Datos de uso anónimos — si completas una evaluación sin cuenta, solo se almacenan las puntuaciones. Sin nombre, correo electrónico, IP ni información del dispositivo.",
+      "attribution": "Origen de la visita — el sitio web que te refirió y cualquier etiqueta de campaña (utm) del enlace por el que llegaste, almacenado con un test completado. Solo de origen propio, nunca compartido y nunca vinculado a tu identidad."
     },
     "why": {
       "heading": "Por qué lo recopilamos",

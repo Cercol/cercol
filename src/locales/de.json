@@ -188,7 +188,8 @@
       "results": "Deine Testergebnisse — Punkte, die mit deinem Konto verknüpft sind, wenn du angemeldet bist. Anonyme Punkte (ohne Konto) werden ohne jegliche identifizierende Informationen gespeichert.",
       "profile": "Profilangaben, die du freiwillig machst: Vorname, Nachname, Land, Muttersprache. Alle optional außer dem Vornamen.",
       "payment": "Zahlungsdaten — vollständig von Stripe verarbeitet. Cèrcol sieht oder speichert deine Kartendaten niemals.",
-      "anonymous": "Anonyme Nutzungsdaten — wenn du eine Auswertung ohne Konto abschließt, werden nur die Punkte gespeichert. Kein Name, keine E-Mail, keine IP, keine Geräteinformationen."
+      "anonymous": "Anonyme Nutzungsdaten — wenn du eine Auswertung ohne Konto abschließt, werden nur die Punkte gespeichert. Kein Name, keine E-Mail, keine IP, keine Geräteinformationen.",
+      "attribution": "Besuchsquelle — die verweisende Website und etwaige Kampagnen-Tags (utm) aus dem Link, über den du gekommen bist, gespeichert mit einem abgeschlossenen Test. Nur Erstanbieter, niemals geteilt und niemals mit deiner Identität verknüpft."
     },
     "why": {
       "heading": "Warum wir es erheben",

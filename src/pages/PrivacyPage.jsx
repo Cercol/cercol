@@ -59,6 +59,7 @@ export default function PrivacyPage() {
             p('collected.profile'),
             p('collected.payment'),
             p('collected.anonymous'),
+            p('collected.attribution'),
           ]} />
         </Section>
 

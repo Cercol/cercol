@@ -188,7 +188,8 @@
       "results": "Vos résultats aux tests — des scores liés à votre compte lorsque vous êtes connecté·e. Les scores anonymes (sans compte) sont stockés sans aucune information d'identification.",
       "profile": "Les champs de profil que vous fournissez volontairement : prénom, nom, pays, langue maternelle. Tous optionnels sauf le prénom.",
       "payment": "Données de paiement — traitées entièrement par Stripe. Cèrcol ne voit ni ne stocke jamais les détails de votre carte.",
-      "anonymous": "Données d'utilisation anonymes — si vous complétez une évaluation sans compte, seuls les scores sont stockés. Aucun nom, e-mail, IP ou information sur l'appareil."
+      "anonymous": "Données d'utilisation anonymes — si vous complétez une évaluation sans compte, seuls les scores sont stockés. Aucun nom, e-mail, IP ou information sur l'appareil.",
+      "attribution": "Source de la visite — le site web qui vous a référé et les éventuelles étiquettes de campagne (utm) du lien par lequel vous êtes arrivé, enregistrées avec un test complété. Première partie uniquement, jamais partagé et jamais lié à votre identité."
     },
     "why": {
       "heading": "Pourquoi nous les collectons",
