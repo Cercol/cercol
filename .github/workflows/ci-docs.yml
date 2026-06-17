@@ -21,6 +21,8 @@ jobs:
             !.venv/**
             !api/.venv/**
             !docs/seo/links-audit-*.md
+            !docs/agents/**
+            !docs/blog-drafts/**
 
   link-check:
     name: Link check (lychee)
@@ -51,6 +53,13 @@ jobs:
           # Link-checking it would always fail by design, so it is
           # excluded (both a glob and the literal current file, so the
           # exclusion holds whichever path-matching the pinned lychee uses).
+          #
+          # docs/blog-drafts/ holds unpublished article drafts whose in-app
+          # CTAs are root-relative links (e.g. /first-quarter) that only
+          # resolve once served by the SPA; lychee cannot resolve them
+          # against the local filesystem. docs/agents/ holds agent specs.
+          # Both are draft/spec artifacts, not link-bearing repo docs, so
+          # they are excluded (literal paths first for the pinned lychee).
           args: >-
             --no-progress
             --accept '200,206,301,302,304,403'
@@ -64,7 +73,10 @@ jobs:
             --exclude 'gencat\.cat'
             --exclude-path 'docs/seo/links-audit-*.md'
             --exclude-path 'docs/seo/links-audit-20260528.md'
+            --exclude-path 'docs/blog-drafts/make-your-job-sound-illegal-the-owl.md'
             --exclude-path 'docs/blog-drafts/*.md'
+            --exclude-path 'docs/agents/aina-albaida.md'
+            --exclude-path 'docs/agents/*.md'
             './**/*.md'
           fail: true
 
