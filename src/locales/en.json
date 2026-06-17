@@ -879,6 +879,12 @@
       "low": "You decide fast and adjust as you go. That speed has a cost sometimes, but it also means you're moving while others are still deliberating. In fast-moving situations, that matters."
     }
   },
+  "share": {
+    "title": "My Cèrcol role: {{role}}",
+    "tagline": "Curious about your own profile? See your five dimensions in a free 2-minute test, no account.",
+    "cta": "Take the free test",
+    "text": "I'm a {{role}} on Cèrcol. See your own five dimensions free:"
+  },
   "roles": {
     "beta_label": "Beta · Theoretical model",
     "arc_label": "Personal arc",

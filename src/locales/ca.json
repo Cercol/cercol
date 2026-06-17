@@ -879,6 +879,12 @@
       "low": "Decides ràpid i t'adaptes mentre avances. Eixa velocitat té un cost de vegades, però també significa que estàs en moviment mentre els altres encara estan deliberant. En situacions de moviment ràpid, això importa."
     }
   },
+  "share": {
+    "title": "El meu rol Cèrcol: {{role}}",
+    "tagline": "Tens curiositat pel teu propi perfil? Mira les teves cinc dimensions en un test gratuït de 2 minuts, sense compte.",
+    "cta": "Fes el test gratuït",
+    "text": "Sóc un {{role}} a Cèrcol. Mira les teves cinc dimensions gratis:"
+  },
   "roles": {
     "beta_label": "Beta · Model teòric",
     "arc_label": "Arc personal",
