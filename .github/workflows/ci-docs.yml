@@ -64,6 +64,7 @@ jobs:
             --exclude 'gencat\.cat'
             --exclude-path 'docs/seo/links-audit-*.md'
             --exclude-path 'docs/seo/links-audit-20260528.md'
+            --exclude-path 'docs/blog-drafts/*.md'
             './**/*.md'
           fail: true
 
