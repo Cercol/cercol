@@ -2,7 +2,7 @@
 
 - **Number**: 0014
 - **Title**: First-party visit-source attribution on results
-- **Status**: Proposed
+- **Status**: Accepted
 - **Date**: 2026-06-17
 
 ## Context
