@@ -19,7 +19,7 @@ import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
-import { getWitnessSession, completeWitnessSession } from '../lib/api'
+import { getWitnessSession, completeWitnessSession, trackEvent } from '../lib/api'
 import { buildRounds, computeWitnessScores } from '../utils/witness-scoring'
 import { Card, Button, SectionLabel } from '../components/ui'
 import { CheckIcon, InfoCircleIcon, XIcon } from '../components/MoonIcons'
@@ -196,7 +196,37 @@ export default function WitnessPage() {
     )
   }
 
-  if (phase === 'done' || phase === 'complete') {
+  // Just finished: warmest acquisition moment. Nudge the Witness to take the
+  // free, no-account test themselves (curiosity + reciprocity), with a quiet
+  // secondary exit. Fires a cta_click so the witness -> test loop is in the funnel.
+  if (phase === 'complete') {
+    function handleTakeTest() {
+      trackEvent('cta_click', { path: '/witness/complete' })
+      navigate('/new-moon')
+    }
+    return (
+      <main className="flex items-center justify-center min-h-[calc(100vh-4rem)]">
+        <div className="text-center max-w-sm">
+          <CheckIcon size={40} className="mb-4 mx-auto" style={{ color: colors.green }} />
+          <h1 className="text-xl font-bold text-gray-900 mb-2">{t('witness.page.complete.heading')}</h1>
+          <p className="text-sm text-gray-500 mb-2">{t('witness.page.complete.body')}</p>
+          <p className="text-sm text-gray-500 mb-6">{t('witness.page.complete.nudge')}</p>
+          <Button variant="primary" onClick={handleTakeTest} className="w-full mb-3 shadow-sm">
+            {t('witness.page.complete.cta')}
+          </Button>
+          <button
+            onClick={() => navigate('/')}
+            className="text-sm text-gray-500 hover:text-gray-800 underline transition-colors"
+          >
+            {t('witness.page.complete.back')}
+          </button>
+        </div>
+      </main>
+    )
+  }
+
+  // Revisiting an already-completed link: softer, no push.
+  if (phase === 'done') {
     return (
       <main className="flex items-center justify-center min-h-[calc(100vh-4rem)]">
         <div className="text-center max-w-sm">

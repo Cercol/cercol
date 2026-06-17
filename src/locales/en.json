@@ -1025,6 +1025,13 @@
       "back": "Back",
       "finish": "Submit",
       "submitting": "Saving your responses…",
+      "complete": {
+        "heading": "Done.",
+        "body": "Your observations have been recorded. Thank you.",
+        "nudge": "Curious how you'd score yourself? It's free, takes about two minutes, and needs no account.",
+        "cta": "Take the free test",
+        "back": "Back to Cèrcol"
+      },
       "done": {
         "heading": "Done.",
         "body": "Your observations have been recorded. Thank you.",
