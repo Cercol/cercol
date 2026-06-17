@@ -73,7 +73,7 @@ jobs:
             --exclude 'gencat\.cat'
             --exclude-path 'docs/seo/links-audit-*.md'
             --exclude-path 'docs/seo/links-audit-20260528.md'
-            --exclude-path 'docs/blog-drafts/make-your-job-sound-illegal-the-owl.md'
+            --exclude-path 'docs/blog-drafts/silent-book-clubs-the-octopus.md'
             --exclude-path 'docs/blog-drafts/*.md'
             --exclude-path 'docs/agents/aina-albaida.md'
             --exclude-path 'docs/agents/*.md'
