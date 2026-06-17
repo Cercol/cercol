@@ -131,10 +131,16 @@ async def _find_or_create_user(
     conn: asyncpg.Connection,
     email: str,
     google_id: Optional[str] = None,
+    first_name: Optional[str] = None,
+    last_name: Optional[str] = None,
 ) -> dict:
     """
     Find an existing auth_user by email (or google_id), or create one.
     Always ensures a matching profiles row exists.
+
+    first_name / last_name are populated from the Google profile on sign-in.
+    They are only written when the profile field is currently empty (COALESCE),
+    so a name the user later edited is never overwritten by a subsequent login.
     Returns a dict with at least { id, email }.
     """
     email = email.lower()
@@ -174,13 +180,20 @@ async def _find_or_create_user(
     else:
         user = {"id": str(row["id"]), "email": row["email"]}
 
-    # Ensure profiles row exists and email is current
+    # Ensure profiles row exists and email is current. Seed the name from the
+    # OAuth profile, but only when not already set (COALESCE keeps an edited
+    # name; NULLIF treats an empty incoming value as "no name").
     await conn.execute(
         """
-        INSERT INTO profiles (id, email) VALUES ($1, $2)
-        ON CONFLICT (id) DO UPDATE SET email = EXCLUDED.email
+        INSERT INTO profiles (id, email, first_name, last_name) VALUES ($1, $2, $3, $4)
+        ON CONFLICT (id) DO UPDATE SET
+            email      = EXCLUDED.email,
+            first_name = COALESCE(profiles.first_name, EXCLUDED.first_name),
+            last_name  = COALESCE(profiles.last_name,  EXCLUDED.last_name)
         """,
         user["id"], email,
+        (first_name or "").strip() or None,
+        (last_name or "").strip() or None,
     )
     # Link any pending group invitations sent before registration
     await conn.execute(
@@ -535,8 +548,12 @@ async def google_callback(
                 status_code=302,
             )
 
-        google_id = userinfo.get("id")
-        email     = userinfo.get("email", "").lower()
+        google_id  = userinfo.get("id")
+        email      = userinfo.get("email", "").lower()
+        # Google's oauth2/v2/userinfo returns given_name / family_name when the
+        # 'profile' scope is granted. Persist them on first sign-in.
+        first_name = userinfo.get("given_name")
+        last_name  = userinfo.get("family_name")
 
         if not email or not google_id:
             return RedirectResponse(
@@ -544,7 +561,10 @@ async def google_callback(
                 status_code=302,
             )
 
-        user = await _find_or_create_user(conn, email, google_id=google_id)
+        user = await _find_or_create_user(
+            conn, email, google_id=google_id,
+            first_name=first_name, last_name=last_name,
+        )
         rt   = await _issue_refresh_token(conn, user["id"])
 
     access_token = _issue_access_token(user["id"], user["email"])
