@@ -879,6 +879,14 @@
       "low": "You decide fast and adjust as you go. That speed has a cost sometimes, but it also means you're moving while others are still deliberating. In fast-moving situations, that matters."
     }
   },
+  "sample": {
+    "eyebrow": "Example report",
+    "title": "A sample Cèrcol profile",
+    "subtitle": "This is a synthetic example, not a real person. Take the test to get your own.",
+    "domainSection": "The five dimensions",
+    "cta_note": "Your own profile is two minutes away, free and without an account.",
+    "cta": "Take the free test"
+  },
   "share": {
     "title": "My Cèrcol role: {{role}}",
     "tagline": "Curious about your own profile? See your five dimensions in a free 2-minute test, no account.",

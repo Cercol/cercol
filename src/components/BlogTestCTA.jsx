@@ -15,12 +15,12 @@ import { trackEvent } from '../lib/api'
 
 // Localized copy. es/fr/de/da are flagged for human review in the PR.
 const COPY = {
-  en: { h: 'See yourself in five dimensions.', p: 'A free 2-minute snapshot. No account, no card.', b: 'Start the free test' },
-  ca: { h: "Mira't en cinc dimensions.", p: 'Una instantània gratuïta de 2 minuts. Sense compte, sense targeta.', b: 'Comença el test gratuït' },
-  es: { h: 'Mírate en cinco dimensiones.', p: 'Una instantánea gratuita de 2 minutos. Sin cuenta, sin tarjeta.', b: 'Empieza el test gratis' },
-  fr: { h: 'Découvrez-vous en cinq dimensions.', p: 'Un aperçu gratuit de 2 minutes. Sans compte, sans carte.', b: 'Commencer le test gratuit' },
-  de: { h: 'Sieh dich in fünf Dimensionen.', p: 'Eine kostenlose 2-Minuten-Momentaufnahme. Kein Konto, keine Karte.', b: 'Kostenlosen Test starten' },
-  da: { h: 'Se dig selv i fem dimensioner.', p: 'Et gratis 2-minutters øjebliksbillede. Ingen konto, intet kort.', b: 'Start den gratis test' },
+  en: { h: 'See yourself in five dimensions.', p: 'A free 2-minute snapshot. No account, no card.', b: 'Start the free test', s: 'See a sample report' },
+  ca: { h: "Mira't en cinc dimensions.", p: 'Una instantània gratuïta de 2 minuts. Sense compte, sense targeta.', b: 'Comença el test gratuït', s: "Mira un informe d'exemple" },
+  es: { h: 'Mírate en cinco dimensiones.', p: 'Una instantánea gratuita de 2 minutos. Sin cuenta, sin tarjeta.', b: 'Empieza el test gratis', s: 'Ver un informe de ejemplo' },
+  fr: { h: 'Découvrez-vous en cinq dimensions.', p: 'Un aperçu gratuit de 2 minutes. Sans compte, sans carte.', b: 'Commencer le test gratuit', s: "Voir un rapport d'exemple" },
+  de: { h: 'Sieh dich in fünf Dimensionen.', p: 'Eine kostenlose 2-Minuten-Momentaufnahme. Kein Konto, keine Karte.', b: 'Kostenlosen Test starten', s: 'Beispielbericht ansehen' },
+  da: { h: 'Se dig selv i fem dimensioner.', p: 'Et gratis 2-minutters øjebliksbillede. Ingen konto, intet kort.', b: 'Start den gratis test', s: 'Se en eksempelrapport' },
 }
 
 // Optional category-specific heading override. Localized to all six languages.
@@ -73,6 +73,11 @@ export default function BlogTestCTA({ slug, lang = 'en', category, compact = fal
       >
         {c.b}
       </Link>
+      {!compact && (
+        <Link to="/sample" className="block mt-3 text-xs text-gray-500 underline hover:text-gray-700 transition-colors">
+          {c.s}
+        </Link>
+      )}
     </Card>
   )
 }
