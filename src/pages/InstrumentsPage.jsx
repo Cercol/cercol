@@ -109,13 +109,16 @@ export default function InstrumentsPage() {
               </div>
               <p className="mt-3 text-xs text-gray-400">{t('instruments.newMoon.scaleNote')}</p>
             </div>
-            <div className="border-t border-gray-100 px-6 py-4">
+            <div className="border-t border-gray-100 px-6 py-4 flex items-center justify-between gap-3">
               <Link
                 to="/new-moon"
                 className="text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors flex items-center gap-1.5"
               >
                 {t('instruments.newMoon.heading')}
                 <ArrowRightIcon size={14} />
+              </Link>
+              <Link to="/sample" className="text-xs text-gray-400 underline hover:text-gray-600 transition-colors">
+                {t('sample.eyebrow')}
               </Link>
             </div>
           </Card>

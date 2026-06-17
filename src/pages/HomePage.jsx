@@ -260,6 +260,13 @@ export default function HomePage() {
           >
             {t('home.privacy')}
           </Link>
+          {' · '}
+          <Link
+            to="/sample"
+            className="underline hover:text-white transition-colors"
+          >
+            {t('sample.eyebrow')}
+          </Link>
         </p>
       </footer>
     </main>

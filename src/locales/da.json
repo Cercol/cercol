@@ -879,6 +879,14 @@
       "low": "Du beslutter hurtigt og tilpasser undervejs. Den hastighed har en pris nogle gange, men det betyder også, at du er i bevægelse, mens andre stadig overvejer. I hurtigt bevægende situationer betyder det noget."
     }
   },
+  "sample": {
+    "eyebrow": "Eksempelrapport",
+    "title": "En Cèrcol-eksempelprofil",
+    "subtitle": "Dette er et syntetisk eksempel, ikke en rigtig person. Tag testen for at få din egen.",
+    "domainSection": "De fem dimensioner",
+    "cta_note": "Din egen profil er to minutter væk, gratis og uden konto.",
+    "cta": "Tag den gratis test"
+  },
   "share": {
     "title": "Min Cèrcol-rolle: {{role}}",
     "tagline": "Nysgerrig på din egen profil? Se dine fem dimensioner i en gratis 2-minutters test, uden konto.",
