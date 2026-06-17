@@ -42,7 +42,7 @@ or sold to third parties, and not joined to any personal record. The privacy
 policy documents this under "Visit source" in all six locales. Retention
 follows the existing anonymous-results retention.
 
-## Rejected alternative
+## Alternatives considered
 
 Third-party analytics (Google Analytics, Plausible, Mixpanel, or similar).
 Rejected: it would break the no-third-party-analytics commitment, ship visitor
@@ -58,3 +58,11 @@ identity, gives the channel signal we need without any of that.
   here and in the privacy policy.
 - Migration 028 must be applied before the matching `api/main.py` INSERT is
   live, through the sanctioned `apply-migrations.yml` path.
+
+## Related
+
+- ADR 0011 (migration apply mechanism) — the sanctioned path used to apply 028.
+- `db/migrations/028_results_attribution.sql` — the columns this decision adds.
+- The weekly digest source/channel split placeholder this enables
+  (`api/jobs/weekly_digest.py`, `api/emails.py`).
+- Privacy policy "Visit source" copy (`privacy.collected.attribution`, six locales).
