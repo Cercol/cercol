@@ -4,8 +4,9 @@
 -- traced to its source. First-party only; anon_id is the same opaque,
 -- cookie-less id as the events table and is never linked to an account.
 --
--- New data category: this captures referrer + utm. Apply only after sign-off,
--- and ensure the privacy policy copy is updated first.
+-- New data category: this captures referrer + utm. See ADR 0014
+-- (docs/decisions/0014-first-party-visit-source-attribution.md). Apply only
+-- after sign-off, and ensure the privacy policy copy is updated first.
 --
 -- Idempotent (ADD COLUMN IF NOT EXISTS). Must be applied BEFORE the matching
 -- api/main.py change is live, or the extended INSERT will fail on the missing
