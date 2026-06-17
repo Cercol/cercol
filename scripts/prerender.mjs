@@ -364,7 +364,13 @@ function startServer(originalIndexHtml) {
 
 async function renderOneRoute(browser, { route, lang }, { articles, articlesBySlug, betaStatus, beasties, fontPreloadTags }) {
   const url = `${BASE_URL}${route}`
-  const page = await browser.newPage()
+  // Isolated browser context per route. localStorage is shared per-origin
+  // across pages of the SAME context, and renderWithPool renders routes
+  // concurrently, so without isolation one route's 'cercol-lang' leaked into
+  // others — English pages inherited the last-set language (e.g. /science
+  // prerendered in Danish). An isolated context gives each route its own storage.
+  const context = await browser.createBrowserContext()
+  const page = await context.newPage()
 
   // Suppress JS errors from the page (i18n fetch errors in static context are expected)
   page.on('pageerror', () => {})
@@ -396,11 +402,13 @@ async function renderOneRoute(browser, { route, lang }, { articles, articlesBySl
     window.__PRERENDER__ = true
   }, pageArticles)
 
-  // For non-English pages, set localStorage so i18n initialises correctly
-  if (lang !== 'en') {
-    await page.goto(`${BASE_URL}/`, { waitUntil: 'domcontentloaded', timeout: 10000 })
-    await page.evaluate((l) => localStorage.setItem('cercol-lang', l), lang)
-  }
+  // Pin the i18n language for THIS route, for every language INCLUDING English.
+  // useLocaleSync does not force 'en' on unprefixed routes (to respect a saved
+  // preference), so without an explicit 'en' an English page would inherit
+  // whatever the context started with. The isolated context above makes this
+  // deterministic and race-free.
+  await page.goto(`${BASE_URL}/`, { waitUntil: 'domcontentloaded', timeout: 10000 })
+  await page.evaluate((l) => localStorage.setItem('cercol-lang', l), lang)
 
   await page.goto(url, { waitUntil: 'networkidle0', timeout: 30000 })
 
@@ -430,6 +438,7 @@ async function renderOneRoute(browser, { route, lang }, { articles, articlesBySl
 
   const html = await page.content()
   await page.close()
+  await context.close()
 
   // --- Step 1: inject head hints + window globals --------------------------
   //
