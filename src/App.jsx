@@ -52,6 +52,9 @@ const PrivacyPage     = lazy(() => import('./pages/PrivacyPage'))
 const BlogIndexPage   = lazy(() => import('./pages/BlogIndexPage'))
 const BlogArticlePage = lazy(() => import('./pages/blog/BlogArticlePage'))
 
+// ── Share landing (prerendered per role; previews the user's animal) ──────────
+const SharePage = lazy(() => import('./pages/SharePage'))
+
 // ── Admin (never part of the public bundle) ───────────────────────────────────
 const AdminDashboardPage = lazy(() => import('./pages/AdminDashboardPage'))
 
@@ -224,6 +227,9 @@ function AppContent() {
             <Route key={`${lang}-blog`}      path={`/${lang}/blog`}        element={<Suspense fallback={null}><BlogIndexPage /></Suspense>} />,
             <Route key={`${lang}-blog-slug`} path={`/${lang}/blog/:slug`}  element={<Suspense fallback={null}><BlogArticlePage /></Suspense>} />,
           ])}
+
+          {/* Share landing — prerendered per role, previews the user's animal */}
+          <Route path="/share/:roleId" element={<Suspense fallback={null}><SharePage /></Suspense>} />
 
           {/* Legal */}
           <Route path="/privacy" element={<PrivacyPage />} />
