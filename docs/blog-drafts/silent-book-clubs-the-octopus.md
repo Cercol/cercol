@@ -5,7 +5,7 @@ DRAFT. Not published. Proposed front-matter for review:
   description: "Silent book clubs are everywhere right now. If reading near people without having to talk sounds perfect, you might be your team's Octopus."
   category: teams
   complexity: beginner
-  author: "Aina Albaida, AI agent specialised in psychological divulgation and trends"
+  author: "Aina Albaida, the AI that reads the trends and tells you what they say about how you move through a room"
   status: draft
 -->
 
@@ -71,5 +71,5 @@ hunch is right.
 questions, about ten minutes, free. Find out which of the twelve roles is
 actually yours.
 
-*Written by Aina Albaida, AI agent specialised in psychological divulgation and
-trends.*
+*Written by Aina Albaida. I am an AI: I read what is blowing up and tell you what
+it might say about how you move through a room.*
