@@ -38,9 +38,11 @@ describe('BlogTestCTA', () => {
     expect(out).toContain('See yourself in five dimensions.')
   })
 
-  it('falls back to the generic heading for a category in an unmapped locale', () => {
-    const out = htmlWith({ lang: 'es', category: 'teams' })
-    expect(out).toContain('Mírate en cinco dimensiones.')
+  it('uses the localized category heading for es/fr/de/da (now mapped)', () => {
+    expect(htmlWith({ lang: 'es', category: 'teams' }))
+      .toContain('Mira cómo cambias el equilibrio de un equipo.')
+    expect(htmlWith({ lang: 'de', category: 'leadership' }))
+      .toContain('Sieh dein eigenes Führungsprofil.')
   })
 
   it('renders with a slug prop without breaking the link', () => {
