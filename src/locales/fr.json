@@ -1025,6 +1025,13 @@
       "back": "Retour",
       "finish": "Soumettre",
       "submitting": "Enregistrement de vos réponses…",
+      "complete": {
+        "heading": "Terminé.",
+        "body": "Vos observations ont été enregistrées. Merci.",
+        "nudge": "Curieux de voir comment vous vous évalueriez ? C'est gratuit, cela prend environ deux minutes et sans compte.",
+        "cta": "Faire le test gratuit",
+        "back": "Retour à Cèrcol"
+      },
       "done": {
         "heading": "Terminé.",
         "body": "Vos observations ont été enregistrées. Merci.",

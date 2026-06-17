@@ -1025,6 +1025,13 @@
       "back": "Atrás",
       "finish": "Enviar",
       "submitting": "Guardando tus respuestas…",
+      "complete": {
+        "heading": "Hecho.",
+        "body": "Tus observaciones han quedado registradas. Gracias.",
+        "nudge": "¿Tienes curiosidad por saber cómo te puntuarías tú? Es gratis, dura unos dos minutos y no necesita cuenta.",
+        "cta": "Haz el test gratis",
+        "back": "Volver a Cèrcol"
+      },
       "done": {
         "heading": "Hecho.",
         "body": "Tus observaciones han quedado registradas. Gracias.",

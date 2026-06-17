@@ -1025,6 +1025,13 @@
       "back": "Tilbage",
       "finish": "Indsend",
       "submitting": "Gemmer dine svar…",
+      "complete": {
+        "heading": "Færdig.",
+        "body": "Dine observationer er registreret. Tak.",
+        "nudge": "Nysgerrig efter, hvordan du selv ville score? Det er gratis, tager cirka to minutter og kræver ingen konto.",
+        "cta": "Tag den gratis test",
+        "back": "Tilbage til Cèrcol"
+      },
       "done": {
         "heading": "Færdig.",
         "body": "Dine observationer er registreret. Tak.",

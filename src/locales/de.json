@@ -1025,6 +1025,13 @@
       "back": "Zurück",
       "finish": "Absenden",
       "submitting": "Deine Antworten werden gespeichert…",
+      "complete": {
+        "heading": "Fertig.",
+        "body": "Deine Beobachtungen wurden aufgezeichnet. Danke.",
+        "nudge": "Neugierig, wie du dich selbst einschätzen würdest? Es ist kostenlos, dauert etwa zwei Minuten und braucht kein Konto.",
+        "cta": "Kostenlosen Test machen",
+        "back": "Zurück zu Cèrcol"
+      },
       "done": {
         "heading": "Fertig.",
         "body": "Deine Beobachtungen wurden aufgezeichnet. Danke.",
