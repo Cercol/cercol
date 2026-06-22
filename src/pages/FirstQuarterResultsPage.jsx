@@ -24,7 +24,7 @@ import { useAuth } from '../context/AuthContext'
 import { colors } from '../design/tokens'
 import RoleProbabilityBars from '../components/RoleProbabilityBars'
 import { Card, Button, Badge, SectionLabel } from '../components/ui'
-import { DimensionRow, FacetAccordion, ReportPageHeader, RoleCard, RadarDataCard } from '../components/report'
+import { DimensionRow, FacetAccordion, ReportPageHeader, RoleCard, RadarDataCard, MethodologyNote } from '../components/report'
 import InstrumentNudge from '../components/InstrumentNudge'
 
 
@@ -173,9 +173,7 @@ export default function FirstQuarterResultsPage() {
         </div>
 
         {/* Disclaimer */}
-        <div className="bg-gray-100 rounded px-5 py-4 text-xs leading-relaxed" style={{ color: colors.textMuted }}>
-          {t('fqResults.disclaimer')}
-        </div>
+        <MethodologyNote>{t('fqResults.disclaimer')}</MethodologyNote>
 
       </div>
     </main>

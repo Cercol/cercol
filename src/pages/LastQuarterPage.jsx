@@ -26,7 +26,7 @@ import {
   zscoresToRaw,
 } from '../utils/team-narrative'
 import { RoleIcon, LastQuarterIcon, DimensionIcon, ChevronRightIcon } from '../components/MoonIcons'
-import { DimensionRow, ReportPageHeader, RadarDataCard } from '../components/report'
+import { DimensionRow, ReportPageHeader, RadarDataCard, MethodologyNote } from '../components/report'
 import RadarChart from '../components/RadarChart'
 import { Card, SectionLabel, Button } from '../components/ui'
 import { colors, ROLE_COLORS, DOMAIN_ICON_CLASSES, BALANCE_COLORS } from '../design/tokens'
@@ -516,9 +516,7 @@ export default function LastQuarterPage() {
         </div>
 
         {/* Disclaimer */}
-        <div className="bg-gray-100 rounded px-5 py-4 text-xs leading-relaxed" style={{ color: colors.textMuted }}>
-          {t('fmResults.disclaimer')}
-        </div>
+        <MethodologyNote>{t('fmResults.disclaimer')}</MethodologyNote>
 
       </div>
     </main>

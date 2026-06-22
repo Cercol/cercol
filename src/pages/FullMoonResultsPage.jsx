@@ -31,7 +31,7 @@ import { useAuth } from '../context/AuthContext'
 import { colors } from '../design/tokens'
 import RoleProbabilityBars from '../components/RoleProbabilityBars'
 import { Card, Button, Badge, SectionLabel } from '../components/ui'
-import { DimensionRow, FacetAccordion, ReportPageHeader, RoleCard, RadarDataCard, RoleComparisonView, SurprisesPanel } from '../components/report'
+import { DimensionRow, FacetAccordion, ReportPageHeader, RoleCard, RadarDataCard, RoleComparisonView, SurprisesPanel, MethodologyNote } from '../components/report'
 
 const MIN_WITNESSES_FOR_REPORT = 2
 
@@ -384,9 +384,7 @@ export default function FullMoonResultsPage() {
         </div>
 
         {/* Disclaimer */}
-        <div className="bg-gray-100 rounded px-5 py-4 text-xs leading-relaxed" style={{ color: colors.textMuted }}>
-          {t('fmResults.disclaimer')}
-        </div>
+        <MethodologyNote>{t('fmResults.disclaimer')}</MethodologyNote>
 
       </div>
     </main>
