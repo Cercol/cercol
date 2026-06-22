@@ -1,1 +1,0 @@
-function e(e,{w:t=760,q:n=80}={}){if(!e||typeof e!=`string`)return null;if(!e.includes(`images.unsplash.com`))return e;let r=e.indexOf(`?`),i=r===-1?e:e.slice(0,r),a=(r===-1?``:e.slice(r+1)).split(`?`)[0],o=new URLSearchParams(a);return o.set(`w`,String(t)),o.set(`auto`,`format`),o.set(`fit`,`crop`),o.set(`q`,String(n)),`${i}?${o.toString()}`}export{e as t};
