@@ -1,5 +1,5 @@
 /**
- * DisplayHeading — a heading rendered in the mm-design display family
+ * DisplayHeading - a heading rendered in the mm-design display family
  * (Playfair Display via --mm-font-display).
  *
  * Centralizes the repeated `style={{ fontFamily: 'var(--mm-font-display)' }}`

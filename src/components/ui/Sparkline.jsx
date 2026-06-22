@@ -1,5 +1,5 @@
 /**
- * Sparkline — tiny inline SVG trend line for dashboard cards.
+ * Sparkline - tiny inline SVG trend line for dashboard cards.
  *
  * This is a charting primitive, not an icon, so the inline <svg> here is the
  * sanctioned exception to the MoonIcons-only rule. The default stroke is the
