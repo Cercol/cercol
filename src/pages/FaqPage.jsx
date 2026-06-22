@@ -5,7 +5,7 @@
  * Uses HTML details/summary for accessible accordion without JS state.
  */
 import { useTranslation } from 'react-i18next'
-import { SectionLabel } from '../components/ui'
+import { SectionLabel, DisplayHeading } from '../components/ui'
 import { usePageMeta } from '../hooks/usePageMeta'
 
 const SECTIONS = [
@@ -71,12 +71,9 @@ export default function FaqPage() {
       <SectionLabel color="blue" className="mb-3">
         {t('faq.label')}
       </SectionLabel>
-      <h1
-        className="text-3xl font-bold text-gray-900 mb-8"
-        style={{ fontFamily: 'var(--mm-font-display)' }}
-      >
+      <DisplayHeading as="h1" className="text-3xl font-bold text-gray-900 mb-8">
         {t('faq.heading')}
-      </h1>
+      </DisplayHeading>
 
       {SECTIONS.map(({ labelKey, keys }) => (
         <FaqSection key={labelKey} label={t(labelKey)}>
