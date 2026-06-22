@@ -1,0 +1,1 @@
+var e=Array.from({length:12},(e,t)=>`R${String(t+1).padStart(2,`0`)}`);export{e as t};
