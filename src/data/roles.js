@@ -1,5 +1,5 @@
 /**
- * roles.js — canonical role id list (R01..R12) and order.
+ * roles.js - canonical role id list (R01..R12) and order.
  *
  * Single source of truth for which roles exist and in what order. Both the
  * /roles documentation page and the share-url helpers consume this, so the

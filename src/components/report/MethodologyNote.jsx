@@ -1,5 +1,5 @@
 /**
- * MethodologyNote — the small muted disclaimer footnote rendered at the bottom
+ * MethodologyNote - the small muted disclaimer footnote rendered at the bottom
  * of every report surface (Full Moon, First Quarter, New Moon, Last Quarter).
  *
  * Centralizes the shared card string so all report pages render an identical

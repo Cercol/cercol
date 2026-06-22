@@ -1,5 +1,5 @@
 /**
- * StatCard — a labelled KPI number on the canonical flat Card.
+ * StatCard - a labelled KPI number on the canonical flat Card.
  *
  * The value renders in the inherited body font. The previous admin markup
  * applied an undefined --mm-font-heading variable, which resolved to the
