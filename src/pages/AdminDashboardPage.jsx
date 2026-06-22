@@ -33,6 +33,8 @@ import {
   ResponsiveContainer, LineChart, Line, BarChart, Bar,
   XAxis, YAxis, Tooltip, CartesianGrid,
 } from 'recharts'
+import { Card, StatCard, Sparkline } from '../components/ui'
+import { colors } from '../design/tokens'
 
 // ---------------------------------------------------------------------------
 // Shared helpers
@@ -56,18 +58,6 @@ function fmt(dt) {
 // ---------------------------------------------------------------------------
 // Shared UI primitives
 // ---------------------------------------------------------------------------
-
-function StatCard({ label, value, sub }) {
-  return (
-    <div className="bg-white rounded-xl border border-gray-100 shadow-sm px-5 py-4 flex flex-col gap-1">
-      <span className="text-xs font-medium text-gray-400 uppercase tracking-wide">{label}</span>
-      <span className="text-3xl font-bold text-gray-900" style={{ fontFamily: 'var(--mm-font-heading)' }}>
-        {value ?? '—'}
-      </span>
-      {sub && <span className="text-xs text-gray-400">{sub}</span>}
-    </div>
-  )
-}
 
 function TabButton({ label, active, onClick }) {
   return (
@@ -202,49 +192,6 @@ function useInfiniteList(fetchFn, filters) {
 }
 
 // ---------------------------------------------------------------------------
-// Sparkline — SVG polyline, no external deps
-// ---------------------------------------------------------------------------
-
-function Sparkline({ data, color = '#0047ba', days = 30 }) {
-  if (!data || data.length === 0) {
-    return <div className="h-12 flex items-center text-xs text-gray-300">No data</div>
-  }
-
-  // Fill in all days (missing days = 0)
-  const filled = []
-  const today  = new Date()
-  for (let i = days - 1; i >= 0; i--) {
-    const d = new Date(today)
-    d.setDate(d.getDate() - i)
-    const key = d.toISOString().split('T')[0]
-    const found = data.find(r => r.day === key)
-    filled.push(found ? found.count : 0)
-  }
-
-  const max = Math.max(...filled, 1)
-  const W = 200
-  const H = 40
-  const pts = filled.map((v, i) => {
-    const x = (i / (filled.length - 1)) * W
-    const y = H - (v / max) * H
-    return `${x},${y}`
-  }).join(' ')
-
-  return (
-    <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-12" preserveAspectRatio="none">
-      <polyline
-        points={pts}
-        fill="none"
-        stroke={color}
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-        strokeLinecap="round"
-      />
-    </svg>
-  )
-}
-
-// ---------------------------------------------------------------------------
 // Overview tab
 // ---------------------------------------------------------------------------
 
@@ -308,24 +255,24 @@ function OverviewTab() {
             Last 30 days
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="bg-white rounded-xl border border-gray-100 shadow-sm px-5 py-4">
+            <Card className="px-5 py-4">
               <p className="text-xs font-medium text-gray-400 uppercase tracking-wide mb-2">
                 New registrations
               </p>
-              <Sparkline data={activity.registrations} color="#0047ba" days={30} />
+              <Sparkline data={activity.registrations} color={colors.blue} days={30} />
               <p className="text-xs text-gray-300 mt-1">
                 {activity.registrations.reduce((s, r) => s + r.count, 0)} total
               </p>
-            </div>
-            <div className="bg-white rounded-xl border border-gray-100 shadow-sm px-5 py-4">
+            </Card>
+            <Card className="px-5 py-4">
               <p className="text-xs font-medium text-gray-400 uppercase tracking-wide mb-2">
                 Tests completed
               </p>
-              <Sparkline data={activity.results} color="#427c42" days={30} />
+              <Sparkline data={activity.results} color={colors.green} days={30} />
               <p className="text-xs text-gray-300 mt-1">
                 {activity.results.reduce((s, r) => s + r.count, 0)} total
               </p>
-            </div>
+            </Card>
           </div>
         </section>
       )}
@@ -388,7 +335,7 @@ function UsersTab() {
         )}
       </div>
 
-      <div className="overflow-x-auto rounded-xl border border-gray-100 shadow-sm">
+      <Card className="overflow-x-auto">
         <table className="w-full bg-white">
           <thead className="border-b border-gray-100">
             <tr>
@@ -439,7 +386,7 @@ function UsersTab() {
             {!loading && items.length === 0 && <EmptyRow message="No users found." />}
           </tbody>
         </table>
-      </div>
+      </Card>
       <div ref={sentinelRef} className="h-1" />
     </div>
   )
@@ -481,7 +428,7 @@ function ResultsTab() {
         )}
       </div>
 
-      <div className="overflow-x-auto rounded-xl border border-gray-100 shadow-sm">
+      <Card className="overflow-x-auto">
         <table className="w-full bg-white">
           <thead className="border-b border-gray-100">
             <tr>
@@ -516,7 +463,7 @@ function ResultsTab() {
             {!loading && items.length === 0 && <EmptyRow message="No results found." />}
           </tbody>
         </table>
-      </div>
+      </Card>
       <div ref={sentinelRef} className="h-1" />
     </div>
   )
@@ -605,7 +552,7 @@ function NormsTab() {
                 </span>
               )}
             </h2>
-            <div className="overflow-x-auto rounded-xl border border-gray-100 shadow-sm">
+            <Card className="overflow-x-auto">
               <table className="w-full bg-white">
                 <thead className="border-b border-gray-100">
                   <tr><Th>Language</Th><Th>Active tier</Th><Th>Sample n</Th></tr>
@@ -623,7 +570,7 @@ function NormsTab() {
                   })}
                 </tbody>
               </table>
-            </div>
+            </Card>
           </section>
         )
       })}
@@ -677,11 +624,11 @@ function formatPct(n, digits = 2) {
 
 function SeoStatCard({ label, value, sub }) {
   return (
-    <div className="bg-white rounded-xl border border-gray-100 shadow-sm px-4 py-3">
+    <Card className="px-4 py-3">
       <p className="text-[10px] uppercase tracking-widest text-gray-400 mb-1">{label}</p>
       <p className="text-xl font-bold text-gray-900">{value}</p>
       {sub && <p className="text-xs text-gray-400 mt-1">{sub}</p>}
-    </div>
+    </Card>
   )
 }
 
@@ -698,15 +645,15 @@ function SourcesGrid({ sources, gsc }) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
       {sources.map(s => (
-        <div key={s.name} className="bg-white rounded-xl border border-gray-100 shadow-sm px-3 py-2">
+        <Card key={s.name} className="px-3 py-2">
           <p className="text-xs text-gray-400 mb-0.5">{s.name}</p>
           <p className="text-sm font-bold text-gray-900">{formatNum(s.row_count)} rows</p>
           <p className="text-[10px] text-gray-400 mt-0.5">
             {s.last_update ? `last ${s.last_update}` : 'no data yet'}
           </p>
-        </div>
+        </Card>
       ))}
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm px-3 py-2">
+      <Card className="px-3 py-2">
         <p className="text-xs text-gray-400 mb-0.5">gsc bulk export</p>
         <p className="text-sm font-bold text-gray-900">
           {gsc?.bulk_export_ready ? `${gsc.tables_present.length} tables` : 'pending'}
@@ -714,7 +661,7 @@ function SourcesGrid({ sources, gsc }) {
         <p className="text-[10px] text-gray-400 mt-0.5">
           {gsc?.bulk_export_ready ? 'ready' : '~48h after GSC config'}
         </p>
-      </div>
+      </Card>
     </div>
   )
 }
@@ -752,20 +699,20 @@ function HealthSection({ health }) {
 function CrawlByBotChart({ data }) {
   if (!data || !data.length) return null
   return (
-    <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+    <Card className="p-4">
       <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">
         Crawler hits last 7 days
       </p>
       <ResponsiveContainer width="100%" height={200}>
         <BarChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+          <CartesianGrid strokeDasharray="3 3" stroke="var(--mm-color-gray-200)" />
           <XAxis dataKey="bot" tick={{ fontSize: 11 }} />
           <YAxis tick={{ fontSize: 11 }} />
           <Tooltip />
           <Bar dataKey="hits" fill="var(--mm-color-blue)" />
         </BarChart>
       </ResponsiveContainer>
-    </div>
+    </Card>
   )
 }
 
@@ -782,7 +729,7 @@ function QuickWinsTable({ queries }) {
     </p>
   )
   return (
-    <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-x-auto">
+    <Card className="overflow-x-auto">
       <table className="w-full text-sm">
         <thead className="text-[10px] uppercase tracking-widest text-gray-400 border-b border-gray-100">
           <tr>
@@ -805,7 +752,7 @@ function QuickWinsTable({ queries }) {
           ))}
         </tbody>
       </table>
-    </div>
+    </Card>
   )
 }
 
@@ -818,9 +765,9 @@ function AnomaliesList({ anomalies }) {
       {anomalies.slice(0, 15).map(a => {
         const up = a.change_pct > 0
         return (
-          <div
+          <Card
             key={a.url}
-            className="bg-white rounded-xl border border-gray-100 shadow-sm px-3 py-2 flex items-center gap-3"
+            className="px-3 py-2 flex items-center gap-3"
           >
             <span className={`text-xs font-bold w-14 text-right ${up ? 'text-emerald-600' : 'text-red-500'}`}>
               {up ? '+' : ''}{a.change_pct.toFixed(0)}%
@@ -829,7 +776,7 @@ function AnomaliesList({ anomalies }) {
             <span className="text-xs text-gray-400 shrink-0">
               {formatNum(a.prior_impressions)} -&gt; {formatNum(a.recent_impressions)}
             </span>
-          </div>
+          </Card>
         )
       })}
     </div>
@@ -934,7 +881,7 @@ function SeoTab() {
               href={url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-3 py-2.5 bg-white rounded-xl border border-gray-100 shadow-sm text-sm text-gray-700 hover:border-[var(--mm-color-blue)]/30 hover:text-[var(--mm-color-blue)] transition-colors"
+              className="flex items-center gap-2 px-3 py-2.5 bg-white rounded border border-gray-200 text-sm text-gray-700 hover:border-[var(--mm-color-blue)]/30 hover:text-[var(--mm-color-blue)] transition-colors"
             >
               <span>{emoji}</span>
               <span className="truncate">{label}</span>
@@ -954,7 +901,7 @@ function SeoTab() {
         </p>
         <div className="space-y-2">
           {LLM_QUERIES.map(q => (
-            <div key={q} className="bg-white rounded-xl border border-gray-100 shadow-sm px-4 py-3">
+            <Card key={q} className="px-4 py-3">
               <p className="text-sm text-gray-700 mb-2 font-medium">"{q}"</p>
               <div className="flex items-center gap-2 flex-wrap">
                 {LLM_ENGINES.map(({ name, url }) => (
@@ -976,7 +923,7 @@ function SeoTab() {
                   {copiedQuery === q ? '✓ copied' : 'copy'}
                 </button>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
       </section>
@@ -1122,7 +1069,7 @@ function BlogTab() {
       {/* Post list */}
       {error && <p className="text-sm text-red-500">{error}</p>}
 
-      <div className="overflow-x-auto rounded-xl border border-gray-100 shadow-sm">
+      <Card className="overflow-x-auto">
         <table className="w-full bg-white">
           <thead className="border-b border-gray-100">
             <tr>
@@ -1195,11 +1142,11 @@ function BlogTab() {
             })}
           </tbody>
         </table>
-      </div>
+      </Card>
 
       {/* Create / Edit form */}
       {form && (
-        <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6 space-y-5">
+        <Card className="p-6 space-y-5">
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-semibold text-gray-800">
               {isNew ? 'New post' : `Edit: ${form.slug}`}
@@ -1321,7 +1268,7 @@ function BlogTab() {
               {saving ? 'Saving…' : 'Publish'}
             </button>
           </div>
-        </div>
+        </Card>
       )}
 
     </div>
@@ -1347,10 +1294,7 @@ export default function AdminDashboardPage() {
   return (
     <div className="py-8 space-y-6">
       <div>
-        <h1
-          className="text-2xl font-bold text-gray-900"
-          style={{ fontFamily: 'var(--mm-font-heading)' }}
-        >
+        <h1 className="text-2xl font-bold text-gray-900">
           Admin Dashboard
         </h1>
         <p className="mt-1 text-sm text-gray-400">Staff-only. Handle with care.</p>
