@@ -2,7 +2,7 @@
 
 - **Number**: 0015
 - **Title**: Unify the staff/admin area onto the shared `components/ui` layer
-- **Status**: Proposed
+- **Status**: Accepted
 - **Date**: 2026-06-23
 
 ## Context
@@ -86,8 +86,8 @@ explicitly out of scope here:
 ## Related
 
 - Consolidation audit (Phase 18 program), items 1 to 9.
-- `src/components/ui/Card.jsx` — the canonical flat card spec adopted here.
-- `src/pages/AdminDashboardPage.jsx` — the outlier that migrates onto the
+- `src/components/ui/Card.jsx`: the canonical flat card spec adopted here.
+- `src/pages/AdminDashboardPage.jsx`: the outlier that migrates onto the
   shared layer.
-- mm-design `tokens/colors.css`, `tokens/typography.css` — the token source
+- mm-design `tokens/colors.css`, `tokens/typography.css`: the token source
   the admin area will consume.
