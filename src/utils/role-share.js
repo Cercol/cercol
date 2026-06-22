@@ -8,9 +8,11 @@
  */
 import { computeRole } from './role-scoring'
 import { encodeScores } from './share-url'
+import { ROLE_IDS } from '../data/roles'
 
-/** Valid role ids R01..R12. */
-export const ROLE_IDS = Array.from({ length: 12 }, (_, i) => `R${String(i + 1).padStart(2, '0')}`)
+/** Re-exported so existing importers keep their `from '../role-share'` path.
+ *  Canonical definition lives in data/roles. */
+export { ROLE_IDS }
 
 /** True if id is a known role id. */
 export function isRoleId(id) {

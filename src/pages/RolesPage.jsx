@@ -7,36 +7,29 @@ import { useTranslation } from 'react-i18next'
 import { Card, SectionLabel } from '../components/ui'
 import { RoleIcon, ArrowRightIcon } from '../components/MoonIcons'
 import { usePageMeta } from '../hooks/usePageMeta'
+import { ROLE_IDS } from '../data/roles'
+import { ROLE_COLORS } from '../design/tokens'
 
-const ROLES = [
-  { key: 'R01', accent: 'text-emerald-600', bg: 'bg-emerald-50' }, // Dolphin  P+ B+
-  { key: 'R02', accent: 'text-red-500',     bg: 'bg-red-50'     }, // Wolf     P+ B-
-  { key: 'R03', accent: 'text-teal-600',    bg: 'bg-teal-50'    }, // Elephant P- B+
-  { key: 'R04', accent: 'text-slate-600',   bg: 'bg-slate-50'   }, // Owl      P- B-
-  { key: 'R05', accent: 'text-amber-500',   bg: 'bg-amber-50'   }, // Eagle    P+ V+
-  { key: 'R06', accent: 'text-orange-500',  bg: 'bg-orange-50'  }, // Falcon   P+ V-
-  { key: 'R07', accent: 'text-[var(--mm-color-green)]', bg: 'bg-[var(--mm-color-green-tint)]' }, // Octopus  P- V+
-  { key: 'R08', accent: 'text-stone-600',   bg: 'bg-stone-50'   }, // Tortoise P- V-
-  { key: 'R09', accent: 'text-yellow-600',  bg: 'bg-yellow-50'  }, // Bee      B+ V+
-  { key: 'R10', accent: 'text-amber-800',   bg: 'bg-amber-100'  }, // Bear     B+ V-
-  { key: 'R11', accent: 'text-[var(--mm-color-green)]', bg: 'bg-[var(--mm-color-green-tint)]' }, // Fox      B- V+
-  { key: 'R12', accent: 'text-gray-600',    bg: 'bg-gray-50'    }, // Badger   B- V-
-]
-
-function RoleSummaryCard({ roleKey, accent, bg, t }) {
+function RoleSummaryCard({ roleKey, t }) {
   const name = t(`roles.${roleKey}.name`)
   const ca   = t(`roles.${roleKey}.ca`)
   const essence     = t(`roles.${roleKey}.essence`)
   const profile     = t(`roles.${roleKey}.profile`)
   const contributes = t(`roles.${roleKey}.contributes`)
   const misses      = t(`roles.${roleKey}.misses`)
+  // Color comes from the canonical role palette (mm-design), not a local
+  // Tailwind class. The header strip is a soft tint mixed from that one color.
+  const color = ROLE_COLORS[roleKey]
 
   return (
     <Card className="overflow-hidden">
-      <div className={`px-5 pt-5 pb-4 ${bg} flex items-start gap-3`}>
-        <RoleIcon role={roleKey} size={28} className={`shrink-0 mt-0.5 ${accent}`} />
+      <div
+        className="px-5 pt-5 pb-4 flex items-start gap-3"
+        style={{ backgroundColor: `color-mix(in srgb, ${color} 12%, white)` }}
+      >
+        <RoleIcon role={roleKey} size={28} className="shrink-0 mt-0.5" style={{ color }} />
         <div>
-          <p className={`text-xs font-bold uppercase tracking-widest mb-0.5 ${accent}`}>
+          <p className="text-xs font-bold uppercase tracking-widest mb-0.5" style={{ color }}>
             {name}{ca !== name ? ` · ${ca}` : ''}
           </p>
           <p className="text-sm font-medium text-gray-800 leading-snug">{essence}</p>
@@ -120,8 +113,8 @@ export default function RolesPage() {
             {t('rolesPage.grid.heading')}
           </h2>
           <div className="flex flex-col gap-4">
-            {ROLES.map(({ key, accent, bg }) => (
-              <RoleSummaryCard key={key} roleKey={key} accent={accent} bg={bg} t={t} />
+            {ROLE_IDS.map(key => (
+              <RoleSummaryCard key={key} roleKey={key} t={t} />
             ))}
           </div>
         </section>
