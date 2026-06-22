@@ -10,7 +10,7 @@
  * Copy uses Cercol product vocabulary only (never academic instrument names).
  */
 import { Link } from 'react-router-dom'
-import { Card, SectionLabel } from './ui'
+import { Card, SectionLabel, DisplayHeading } from './ui'
 import { trackEvent } from '../lib/api'
 
 // Localized copy. es/fr/de/da are flagged for human review in the PR.
@@ -59,12 +59,12 @@ export default function BlogTestCTA({ slug, lang = 'en', category, compact = fal
   return (
     <Card accent="blue" className={`max-w-3xl ${compact ? 'p-4 my-8' : 'p-6 mt-12'}`}>
       {!compact && <SectionLabel color="blue" className="mb-2">Cèrcol</SectionLabel>}
-      <p
+      <DisplayHeading
+        as="p"
         className={`font-bold text-gray-900 ${compact ? 'text-base mb-2' : 'text-xl mb-1'}`}
-        style={{ fontFamily: 'var(--mm-font-display)' }}
       >
         {heading}
-      </p>
+      </DisplayHeading>
       {!compact && <p className="text-sm text-gray-500 leading-relaxed mb-4">{c.p}</p>}
       <Link
         to="/new-moon"

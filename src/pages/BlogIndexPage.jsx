@@ -9,7 +9,8 @@
 import { Link, useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { SectionLabel } from '../components/ui'
+import { SectionLabel, DisplayHeading } from '../components/ui'
+import { BRAND_BLUE_GRADIENT } from '../design/gradients'
 import { getBlogPosts } from '../lib/api'
 import { normalizeUnsplashUrl } from '../utils/unsplash'
 
@@ -177,12 +178,9 @@ export default function BlogIndexPage() {
       <SectionLabel color="blue" className="mb-3">
         {t('blog.label')}
       </SectionLabel>
-      <h1
-        className="text-3xl font-bold text-gray-900 mb-3"
-        style={{ fontFamily: 'var(--mm-font-display)' }}
-      >
+      <DisplayHeading as="h1" className="text-3xl font-bold text-gray-900 mb-3">
         {t('blog.heading')}
-      </h1>
+      </DisplayHeading>
       <p className="text-sm text-gray-600 leading-relaxed mb-6 max-w-xl">
         {t('blog.subtitle')}
       </p>
@@ -307,22 +305,19 @@ export default function BlogIndexPage() {
                   ) : (
                     <div
                       className="w-full h-full"
-                      style={{
-                        background:
-                          'linear-gradient(135deg, var(--mm-color-blue) 0%, #00297a 100%)',
-                      }}
+                      style={{ background: BRAND_BLUE_GRADIENT }}
                     />
                   )}
                 </div>
 
                 {/* Card body */}
                 <div className="px-5 py-4 flex flex-col flex-1">
-                  <h2
+                  <DisplayHeading
+                    as="h2"
                     className="text-sm font-bold text-gray-900 mb-2 leading-snug group-hover:text-[var(--mm-color-blue)] transition-colors"
-                    style={{ fontFamily: 'var(--mm-font-display)' }}
                   >
                     {localise(post.title)}
-                  </h2>
+                  </DisplayHeading>
                   {desc && (
                     <p className="text-xs text-gray-600 leading-relaxed line-clamp-3 mb-3">
                       {desc}

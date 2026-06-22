@@ -23,7 +23,7 @@ const ROLES = [
   { key: 'R12', accent: 'text-gray-600',    bg: 'bg-gray-50'    }, // Badger   B- V-
 ]
 
-function RoleCard({ roleKey, accent, bg, t }) {
+function RoleSummaryCard({ roleKey, accent, bg, t }) {
   const name = t(`roles.${roleKey}.name`)
   const ca   = t(`roles.${roleKey}.ca`)
   const essence     = t(`roles.${roleKey}.essence`)
@@ -121,7 +121,7 @@ export default function RolesPage() {
           </h2>
           <div className="flex flex-col gap-4">
             {ROLES.map(({ key, accent, bg }) => (
-              <RoleCard key={key} roleKey={key} accent={accent} bg={bg} t={t} />
+              <RoleSummaryCard key={key} roleKey={key} accent={accent} bg={bg} t={t} />
             ))}
           </div>
         </section>

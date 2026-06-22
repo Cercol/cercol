@@ -17,7 +17,7 @@ import { useAuth } from '../context/AuthContext'
 import { colors } from '../design/tokens'
 import { Card, Button, SectionLabel } from '../components/ui'
 import { NewMoonIcon } from '../components/MoonIcons'
-import { DimensionRow, ReportPageHeader, RadarDataCard } from '../components/report'
+import { DimensionRow, ReportPageHeader, RadarDataCard, MethodologyNote } from '../components/report'
 import InstrumentNudge from '../components/InstrumentNudge'
 
 
@@ -128,9 +128,7 @@ export default function NewMoonResultsPage() {
         </div>
 
         {/* Disclaimer */}
-        <div className="bg-gray-100 rounded px-5 py-4 text-xs leading-relaxed" style={{ color: colors.textMuted }}>
-          {t('newMoonResults.disclaimer')}
-        </div>
+        <MethodologyNote>{t('newMoonResults.disclaimer')}</MethodologyNote>
 
       </div>
     </main>

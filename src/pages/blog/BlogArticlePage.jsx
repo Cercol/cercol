@@ -11,6 +11,8 @@ import { marked } from 'marked'
 import { getBlogPost, getBlogPosts, trackBlogView } from '../../lib/api'
 import { normalizeUnsplashUrl } from '../../utils/unsplash'
 import BlogTestCTA from '../../components/BlogTestCTA'
+import { DisplayHeading } from '../../components/ui'
+import { BRAND_BLUE_GRADIENT } from '../../design/gradients'
 
 // Configure marked with custom renderers once at module load time
 marked.use({
@@ -533,21 +535,16 @@ export default function BlogArticlePage() {
         ) : (
           <div
             className="absolute inset-0"
-            style={{
-              background: 'linear-gradient(135deg, var(--mm-color-blue) 0%, #00297a 100%)',
-            }}
+            style={{ background: BRAND_BLUE_GRADIENT }}
           />
         )}
       </div>
 
       {/* Article header */}
       <header className="mb-8 max-w-3xl">
-        <h1
-          className="text-3xl font-bold text-gray-900 mb-3 leading-tight"
-          style={{ fontFamily: 'var(--mm-font-display)' }}
-        >
+        <DisplayHeading as="h1" className="text-3xl font-bold text-gray-900 mb-3 leading-tight">
           {title}
-        </h1>
+        </DisplayHeading>
         {description && (
           <p className="text-base text-gray-500 mb-3 leading-relaxed">{description}</p>
         )}
@@ -688,12 +685,9 @@ export default function BlogArticlePage() {
       {/* Related articles */}
       {relatedPosts.length > 0 && (
         <section className="mt-16 pt-10 border-t max-w-3xl">
-          <h2
-            className="text-xl font-bold text-gray-900 mb-6"
-            style={{ fontFamily: 'var(--mm-font-display)' }}
-          >
+          <DisplayHeading as="h2" className="text-xl font-bold text-gray-900 mb-6">
             {RELATED_LABEL[urlLang] || RELATED_LABEL.en}
-          </h2>
+          </DisplayHeading>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {relatedPosts.map(p => {
               const relatedHref = urlLang === 'en' ? `/blog/${p.slug}` : `/${urlLang}/blog/${p.slug}`
@@ -703,12 +697,12 @@ export default function BlogArticlePage() {
                 to={relatedHref}
                 className="group block rounded-xl border p-4 hover:shadow-md transition-shadow bg-white"
               >
-                <h3
+                <DisplayHeading
+                  as="h3"
                   className="text-sm font-semibold text-gray-900 mb-1 group-hover:underline leading-snug"
-                  style={{ fontFamily: 'var(--mm-font-display)' }}
                 >
                   {localise(p.title, urlLang)}
-                </h3>
+                </DisplayHeading>
                 {localise(p.description, urlLang) && (
                   <p className="text-xs text-gray-500 leading-relaxed line-clamp-2">
                     {localise(p.description, urlLang)}
