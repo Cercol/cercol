@@ -2,8 +2,9 @@
 
 - **Number**: 0017
 - **Title**: Two-leg backup strategy for the cercol PostgreSQL database
-- **Status**: Proposed
-- **Date**: 2026-07-05
+- **Status**: Accepted
+- **Date**: 2026-07-05 (proposed and accepted same day; design signed
+  off by the operator before implementation)
 
 ## Context
 
