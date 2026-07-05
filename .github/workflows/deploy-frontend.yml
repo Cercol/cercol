@@ -18,8 +18,38 @@ permissions:
   contents: write
 
 jobs:
-  deploy:
+  test:
+    name: Frontend tests (deploy gate)
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Install dependencies
+        # Use `npm install` instead of `npm ci` because package-lock.json
+        # is regenerated on macOS (the primary dev platform) and lacks the
+        # optional linux-x64 native binaries (@rollup/rollup-linux-x64-gnu,
+        # @tailwindcss/oxide-linux-x64-gnu, etc.) that `npm ci` strictly
+        # requires on this Ubuntu runner (npm/cli optional-deps bug).
+        # `npm install` resolves missing optional platform deps without failing.
+        run: npm install
+
+      - name: Run tests
+        run: npm test -- --run
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    # The prerender step (puppeteer over ~650 routes) has historically
+    # taken 16 to 22 minutes; 35 leaves headroom without letting a hang
+    # burn the 6-hour default.
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
         with:
@@ -33,12 +63,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        # Use `npm install` instead of `npm ci` because package-lock.json
-        # is regenerated on macOS (the primary dev platform) and lacks the
-        # optional linux-x64 native binaries (@esbuild/linux-x64-gnu,
-        # @rollup/rollup-linux-x64-gnu, @tailwindcss/oxide-linux-x64-gnu,
-        # etc.) that `npm ci` strictly requires on this Ubuntu runner.
-        # `npm install` resolves missing optional platform deps without failing.
+        # `npm install`, not `npm ci`: see the test job above.
         run: npm install
 
       - name: Build + prerender

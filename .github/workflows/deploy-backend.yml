@@ -9,8 +9,44 @@ on:
       - '.github/workflows/deploy-backend.yml'
 
 jobs:
-  deploy:
+  test:
+    name: Backend tests (deploy gate)
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install backend dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r api/requirements.txt pytest pytest-asyncio httpx
+
+      - name: Run backend tests
+        run: |
+          cd api
+          python -m pytest tests/ -v
+
+      - name: Validate Caddy snippet
+        # Same wrapper trick as ci.yml: the snippet is not a complete
+        # Caddyfile on its own, so validate it through a one-line import.
+        # This gate matters here because the deploy job below installs
+        # this exact snippet into /etc/caddy/conf.d/ on the server.
+        run: |
+          echo "import /work/api/deploy/caddy/cercol-api.caddy" > /tmp/wrapper.caddy
+          docker run --rm \
+            -v "$PWD:/work:ro" \
+            -v "/tmp/wrapper.caddy:/etc/caddy/Caddyfile:ro" \
+            caddy:2 caddy validate --adapter caddyfile --config /etc/caddy/Caddyfile
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Pull and restart on Hetzner
         uses: appleboy/ssh-action@v1.2.0
@@ -22,6 +58,13 @@ jobs:
             set -e
             cd /home/cercol/api
             git pull origin main
+
+            # Install Python dependencies BEFORE restarting the service.
+            # Mirrors scripts/deploy-api.sh so the manual and automated
+            # deploy paths converge: without this, a merged
+            # requirements.txt change would restart the service against
+            # a venv that lacks the new packages and crash-loop it.
+            api/.venv/bin/pip install --quiet -r api/requirements.txt
 
             # Install the Caddy snippet under /etc/caddy/conf.d/. Idempotent:
             # only copy + validate + reload when the source has actually
