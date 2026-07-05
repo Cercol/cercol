@@ -85,3 +85,20 @@ def test_missing_events_table_degrades_to_200():
     resp = client.post("/events", json={"name": "test_start", "instrument": "newMoon"})
     assert resp.status_code == 200
     assert resp.json()["stored"] is False
+
+
+def test_cta_click_carries_anon_id():
+    # The frontend now attaches anon_id to every funnel event (not just
+    # page_view) so the digest can stitch a visitor across reads -> cta_click.
+    # Verify a cta_click with anon_id is accepted and the id reaches the INSERT.
+    client, conn = _client()
+    resp = client.post(
+        "/events",
+        json={"name": "cta_click", "slug": "x", "lang": "en", "anon_id": "visitor-123"},
+    )
+    assert resp.status_code == 200
+    assert resp.json()["stored"] is True
+    assert len(conn.executed) == 1
+    # INSERT args: (name, slug, instrument, lang, path, anon_id) -> anon_id last.
+    _query, args = conn.executed[0]
+    assert args[-1] == "visitor-123"
