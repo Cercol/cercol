@@ -5677,7 +5677,7 @@ En tota la literatura d'investigació, una dimensió de la personalitat supera d
 El mecanisme no és misteriós. El Neuroticisme indexa la reactivitat emocional: la velocitat amb la qual el sistema nerviós activa l'afecte negatiu i la lentitud amb la qual torna a la línia de base. Per a l'esgotament emocional en particular, això crea un procés que es va acumulant: cada interacció exigent costa més, i la recuperació entre interaccions exigents és incompleta. Amb el temps, aquest dèficit s'acumula en l'estat de depleció que Maslach descriu.
 
 > "En una metaanàlisi de 35 estudis, el Neuroticisme va mostrar la relació més gran i constant amb l'esgotament en les tres dimensions de Maslach, amb correlacions mitjanes ponderades substancialment més grans que les de qualsevol altre tret del Big Five."
-> — Alarcon, Eschleman, & Bowling (2009); [https://doi.org/10.1037/0022-3514.72.3.621](https://doi.org/10.1037/0022-3514.72.3.621)
+> — Alarcon, Eschleman, & Bowling (2009); [https://doi.org/10.1080/02678370903282600](https://doi.org/10.1080/02678370903282600)
 
 Les persones amb alta Profunditat també recorren més a un afrontament ruminatiu: reprodueixen els esdeveniments estressants, anticipen resultats negatius i els costa desconnectar-se psicològicament dels problemes laborals. Aquest bucle ruminatiu fa que el descans —fins i tot el descans físic— no sempre produeixi recuperació psicològica. L'estrès persisteix com a residu cognitiu i emocional. Per a un relat complet de com s'expressa el Neuroticisme i de què significa per a la resiliència, consulta [què és el neuroticisme: entendre la profunditat emocional en el treball](/blog/what-is-neuroticism-understanding-emotional-depth-at-work) i [neuroticisme, estrès i resiliència en el treball](/blog/neuroticism-stress-resilience-at-work).
 
@@ -6135,7 +6135,7 @@ L'estil cognitiu (la manera característica en què una persona processa informa
 
 El resultat és que dues persones amb la mateixa informació i el mateix objectiu declarat poden arribar a decisions genuïnament diferents, no perquè una tingui un millor raonament, sinó perquè la seva personalitat configura com processen l'entorn de decisió.
 
-El tractament quantitatiu més exhaustiu d'aquesta relació és Zuckerman et al. (1993), un estudi metaanalític de personalitat i recerca de sensacions ([doi: 10.1037/0022-3514.72.3.621](https://doi.org/10.1037/0022-3514.72.3.621)), que va establir la base de personalitat de la resposta diferencial al risc en una àmplia gamma de contextos de decisió.
+El tractament quantitatiu més exhaustiu d'aquesta relació és Zuckerman et al. (1993), un estudi metaanalític de personalitat i recerca de sensacions ([doi: 10.1037/0022-3514.65.4.757](https://doi.org/10.1037/0022-3514.65.4.757)), que va establir la base de personalitat de la resposta diferencial al risc en una àmplia gamma de contextos de decisió.
 
 ---
 
@@ -7726,7 +7726,7 @@ En entorns organitzacionals, les persones amb Alta Presència tenen més probabi
 
 La **Visió** (Obertura a l'Experiència) prediu una mena diferent d'assumpció de riscos: la voluntat cognitiva d'implicar-se amb la incertesa i la novetat. Allà on la Presència impulsa l'assumpció de riscos socials, la Visió impulsa l'assumpció de riscos intel·lectuals: la voluntat d'explorar idees no convencionals, qüestionar la saviesa heretada i proposar enfocaments que s'aparten de la pràctica establerta.
 
-Zuckerman et al. (1993), en un dels estudis de referència sobre la personalitat de l'assumpció de riscos ([doi:10.1037/0022-3514.72.3.621](https://doi.org/10.1037/0022-3514.72.3.621)), van trobar que la faceta de cerca d'experiències dins de la cerca de sensacions —el desig de noves idees, viatges, art i experiències inusuals— es correlacionava substancialment amb l'Obertura. Els qui cerquen experiències assumeixen riscos intel·lectuals i perceptius: proven nous marcs, s'impliquen amb idees alienes i estan disposats a mantenir posicions contradictòries el temps suficient per pensar-les a fons.
+Zuckerman et al. (1993), en un dels estudis de referència sobre la personalitat de l'assumpció de riscos ([doi:10.1037/0022-3514.65.4.757](https://doi.org/10.1037/0022-3514.65.4.757)), van trobar que la faceta de cerca d'experiències dins de la cerca de sensacions —el desig de noves idees, viatges, art i experiències inusuals— es correlacionava substancialment amb l'Obertura. Els qui cerquen experiències assumeixen riscos intel·lectuals i perceptius: proven nous marcs, s'impliquen amb idees alienes i estan disposats a mantenir posicions contradictòries el temps suficient per pensar-les a fons.
 
 En contextos de treball, les persones amb Alta Visió tenen més probabilitats de proposar solucions no convencionals, qüestionar supòsits que altres donen per descomptats i defensar projectes exploratoris sense retorn garantit. Toleren l'ambigüitat d'una manera que permet una implicació sostinguda amb problemes que no tenen un camí clar cap a la solució. Per a més informació sobre com la Visió configura la innovació, consulta [el que significa l'Obertura a l'Experiència per a la innovació en equips](/blog/what-openness-to-experience-means-for-team-innovation).
 
@@ -7840,7 +7840,7 @@ L'avaluació gratuïta [Big Five de Cèrcol](https://cercol.team) dona a cada me
 - [La Tríada Fosca en el treball: narcisisme, maquiavel·lisme, psicopatia](/blog/the-dark-triad-at-work-narcissism-machiavellianism-psychopathy)
 - [La tensió Visió-Disciplina: innovació vs. execució](/blog/the-vision-discipline-tension-innovation-vs-execution)
 
-**Fonts:** Zuckerman, M., et al. (1993). A comparison of three structural models for personality. *Journal of Personality and Social Psychology*, 65(4), 757–768. [doi:10.1037/0022-3514.72.3.621](https://doi.org/10.1037/0022-3514.72.3.621) · [Risc — Wikipedia](https://en.wikipedia.org/wiki/Risk)$CAXIHXHE$::text)),
+**Fonts:** Zuckerman, M., et al. (1993). A comparison of three structural models for personality. *Journal of Personality and Social Psychology*, 65(4), 757–768. [doi:10.1037/0022-3514.65.4.757](https://doi.org/10.1037/0022-3514.65.4.757) · [Risc — Wikipedia](https://en.wikipedia.org/wiki/Risk)$CAXIHXHE$::text)),
   updated_at = now()
 WHERE slug = $CAONNMYR$personality-and-risk-taking-who-takes-risks-at-work$CAONNMYR$;
 
@@ -8604,7 +8604,7 @@ El desenvolupament iteratiu és, per disseny, un entorn d'incertesa contínua. E
 
 El Neuroticisme — la Profunditat en el marc de Cèrcol — s'associa amb una sensibilitat elevada a l'amenaça, afecte negatiu sota la incertesa i ruminació. Aquests no són defectes per se; formen part del que fa que els individus d'alta Profunditat siguin minuciosos, cautelosos i sensibles als senyals de risc. Però en l'entorn Scrum específicament, una Profunditat molt alta pot produir respostes d'ansietat davant l'ambigüitat que alenteixen el lliurament: cerca excessiva de confirmació, dificultat per comprometre's amb una direcció tècnica sense certesa i tendència a catastrofitzar quan els senyals primerencs suggereixen problemes.
 
-La recerca de [LePine et al. (2000)](https://doi.org/10.1037/0021-9010.85.6.868) va trobar que l'estabilitat emocional (baix Neuroticisme) predia l'adaptabilitat en situacions noves i imprevisibles. Els equips amb puntuacions mitjanes de Profunditat molt altes poden trobar que la incertesa inherent del desenvolupament iteratiu els desregula emocionalment, de manera que es manifesta com a colls d'ampolla, paràlisi de decisions o resistència al compromís del sprint. Per a una exposició completa de com s'expressa la Profunditat en el treball, consulta [què és el Neuroticisme: comprendre la profunditat emocional en el treball](/blog/what-is-neuroticism-understanding-emotional-depth-at-work).
+La recerca de [LePine et al. (2000)](https://doi.org/10.1111/j.1744-6570.2000.tb00214.x) va trobar que l'estabilitat emocional (baix Neuroticisme) predia l'adaptabilitat en situacions noves i imprevisibles. Els equips amb puntuacions mitjanes de Profunditat molt altes poden trobar que la incertesa inherent del desenvolupament iteratiu els desregula emocionalment, de manera que es manifesta com a colls d'ampolla, paràlisi de decisions o resistència al compromís del sprint. Per a una exposició completa de com s'expressa la Profunditat en el treball, consulta [què és el Neuroticisme: comprendre la profunditat emocional en el treball](/blog/what-is-neuroticism-understanding-emotional-depth-at-work).
 
 ---
 
@@ -10048,7 +10048,7 @@ El problema és que el rendiment en vendes no es determina principalment per la 
 
 ## El que realment troben les metaanàlisis sobre rendiment en vendes
 
-La metaanàlisi de referència sobre personalitat i rendiment en vendes és la de Barrick, Stewart i Piotrowski (2002) i el treball previ de Barrick i Mount, amb una síntesi particularment important de Vinchur et al. (1998) que examina específicament les vendes ([doi:10.1037/0021-9010.81.5.530](https://doi.org/10.1037/0021-9010.81.5.530)).
+La metaanàlisi de referència sobre personalitat i rendiment en vendes és la de Barrick, Stewart i Piotrowski (2002) i el treball previ de Barrick i Mount, amb una síntesi particularment important de Vinchur et al. (1998) que examina específicament les vendes ([doi:10.1037/0021-9010.83.4.586](https://doi.org/10.1037/0021-9010.83.4.586)).
 
 > "La Conscienciositat va ser el predictor Big Five amb més constància del rendiment objectiu en vendes en tots els estudis, amb un coeficient de validesa corregit en el rang moderat. L'Extraversió predeia el rendiment en vendes valorat pels supervisors i s'associava amb nivells d'activitat més elevats, però la seva validesa predictiva per a mètriques de rendiment objectives — ingressos, assoliment de quota — era menor i menys constant."
 > — Vinchur et al. (1998), *Journal of Applied Psychology*
