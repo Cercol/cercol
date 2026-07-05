@@ -1,0 +1,24 @@
+# Cercol - nightly two-leg backup of the cercol PostgreSQL database.
+# Runs api/deploy/backup/cercol-db-backup.sh as root: local pg_dump
+# rotation plus gpg-encrypted rclone push to Google Drive.
+# Spec: docs/decisions/0017-database-backups-two-leg.md
+#
+# Install: see the "Database backups" section of docs/ops/runbook.md
+# for the full one-time block (passphrase file, rclone OAuth config,
+# log directory, cron install, first run, restore test).
+#
+# Verify after install:
+#   ls -la /etc/cron.d/cercol-db-backup
+#   tail -2 /home/cercol/logs/db-backup.log        # after 03:15 UTC
+#   ls -la /home/cercol/logs/db-backup.FAILED      # must NOT exist
+#
+# Output is redirected to the log file on purpose: the script owns its
+# failure signalling (FAILED marker + non-zero exit), unlike the
+# MAILTO="" pattern of the older crons that swallows errors.
+
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# Daily at 03:15 UTC: offset from the 02:00 crawl parser, the 03:00
+# Sunday Bing ingest and the 04:00 token purge.
+15 3 * * * root /home/cercol/api/api/deploy/backup/cercol-db-backup.sh >> /home/cercol/logs/db-backup.log 2>&1

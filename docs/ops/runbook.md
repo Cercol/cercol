@@ -350,8 +350,99 @@ read files under `/home/cercol/api`.
 cd /home/cercol/api && sudo -u postgres psql cercol < db/migrations/<NNN>-<name>.sql
 ```
 
-Backups are the operator's responsibility (`pg_dump`). Frequency
-and offsite copy procedure: TODO document.
+### Database backups (ADR 0017)
+
+Two legs, both driven by `api/deploy/backup/cercol-db-backup.sh`
+(root cron, daily 03:15 UTC, `/etc/cron.d/cercol-db-backup`):
+
+- **Leg 1 (on-box)**: `pg_dump -Fc` of the cercol database only, under
+  `/var/backups/cercol/`, 7 most recent dumps kept.
+- **Leg 2 (off-box)**: the same dump gpg-encrypted (AES256 symmetric,
+  passphrase in root-only `/root/.cercol-backup-passphrase`) and pushed
+  via rclone to the `gdrive:cercol-db-backups` Drive folder, 30-day
+  retention.
+
+Health check: `tail /home/cercol/logs/db-backup.log` and confirm
+`/home/cercol/logs/db-backup.FAILED` does NOT exist. The marker is
+written on any failure and removed on the next success.
+
+#### One-time install (as root on the server)
+
+```
+# 1. Passphrase file (fill in a strong passphrase; ALSO store it in the
+#    operator's password manager: without it the off-box copies are
+#    unrecoverable after box loss).
+[ -f /root/.cercol-backup-passphrase ] || \
+    printf '%s' 'REPLACE-WITH-STRONG-PASSPHRASE' > /root/.cercol-backup-passphrase
+chmod 0600 /root/.cercol-backup-passphrase
+
+# 2. rclone + Drive remote named exactly "gdrive" (interactive OAuth:
+#    pick "drive", scope "drive.file" is enough, follow the browser flow).
+command -v rclone > /dev/null || apt-get install -y rclone
+rclone listremotes | grep -q '^gdrive:$' || rclone config
+
+# 3. Log directory.
+install -d -o cercol -g cercol /home/cercol/logs
+
+# 4. Cron.
+install -m 0644 /home/cercol/api/api/deploy/cron/cercol-db-backup /etc/cron.d/
+
+# 5. First run by hand + restore test (next section).
+chmod +x /home/cercol/api/api/deploy/backup/cercol-db-backup.sh
+/home/cercol/api/api/deploy/backup/cercol-db-backup.sh
+tail -1 /home/cercol/logs/db-backup.log   # expect "BACKUP OK: ..."
+```
+
+#### Restore: from an on-box dump (logical errors, bad migration)
+
+```
+# as root
+latest=$(ls -1t /var/backups/cercol/cercol-*.dump | head -1)
+runuser -u postgres -- pg_restore --list "$latest" | head   # sanity: archive readable
+# Full restore into the live database (DESTRUCTIVE, think first;
+# prefer the scratch restore below to inspect data):
+runuser -u postgres -- pg_restore --clean --if-exists --no-owner \
+    --dbname=cercol "$latest"
+```
+
+For a single table, restore into a scratch database (next section) and
+copy the rows across with `psql` instead of touching the live database.
+
+#### Restore: from the off-box copy (box loss)
+
+```
+# on any machine with rclone configured for the same Drive account
+rclone ls gdrive:cercol-db-backups            # pick the newest .dump.gpg
+rclone copy gdrive:cercol-db-backups/cercol-<STAMP>.dump.gpg /tmp/
+gpg --batch --pinentry-mode loopback \
+    --passphrase-file /root/.cercol-backup-passphrase \
+    -o /tmp/cercol-restore.dump -d /tmp/cercol-<STAMP>.dump.gpg
+# then restore as in the on-box section, pointing at /tmp/cercol-restore.dump
+```
+
+The passphrase is NOT in the repo and NOT in Drive. If the box is lost
+the passphrase must come from the operator's password manager; storing
+it there is part of the install step above.
+
+#### Restore test (run once after install, then quarterly)
+
+```
+# as root; restores the newest dump into a scratch DB, checks a core
+# table, drops the scratch DB. Safe to run on the live server.
+latest=$(ls -1t /var/backups/cercol/cercol-*.dump | head -1)
+runuser -u postgres -- createdb cercol_restore_test
+runuser -u postgres -- pg_restore --no-owner --dbname=cercol_restore_test "$latest"
+runuser -u postgres -- psql -d cercol_restore_test -tc "SELECT COUNT(*) FROM results;"
+# expect a plausible row count (compare: same query against cercol)
+runuser -u postgres -- dropdb cercol_restore_test
+```
+
+#### Last resort: Hetzner machine-level backups
+
+Hetzner Cloud automatic backups are enabled on the VPS (whole-VM,
+crash-consistent, 7-day retention, restore from the Hetzner console).
+They roll back the ENTIRE machine including topquaranta, so they are
+the last resort for total box loss, never for cercol-only recovery.
 
 ### Blog slug redirects (Phase 17.10)
 
