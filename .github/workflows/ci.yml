@@ -69,6 +69,17 @@ jobs:
       - name: Run tests
         run: npm test -- --run
 
+  shell-lint:
+    name: Shell script lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: shellcheck deploy scripts
+        # shellcheck ships preinstalled on ubuntu-latest.
+        run: shellcheck api/deploy/backup/*.sh
+
   test-backend:
     name: Backend tests
     runs-on: ubuntu-latest
