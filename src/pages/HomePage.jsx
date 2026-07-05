@@ -267,6 +267,15 @@ export default function HomePage() {
           >
             {t('sample.eyebrow')}
           </Link>
+          {' · '}
+          <a
+            href="https://miquelmatoses.github.io/portfolio/"
+            target="_blank"
+            rel="noreferrer author"
+            className="underline hover:text-white transition-colors"
+          >
+            Miquel Matoses
+          </a>
         </p>
       </footer>
     </main>
