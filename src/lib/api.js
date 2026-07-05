@@ -431,9 +431,12 @@ export function getAnonId() {
 export async function trackEvent(name, payload = {}) {
   if (typeof window !== 'undefined' && window.__PRERENDER__) return
   try {
+    // Attach the visitor id to every funnel event (not just page_view) so the
+    // digest can stitch reads -> cta_click -> test_start per visitor. An explicit
+    // anon_id in payload still wins.
     await publicFetch('/events', {
       method: 'POST',
-      body: JSON.stringify({ name, ...payload }),
+      body: JSON.stringify({ name, anon_id: getAnonId(), ...payload }),
     })
   } catch {
     // Intentionally ignored — event tracking is best-effort
