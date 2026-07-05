@@ -106,3 +106,19 @@ Implementation details (resolved during implementation, see
   `MAILTO=""` pattern lets crons die silently for weeks (proven twice:
   crawl-parser since 2026-05-28, and the 2026-04-16 Caddy outage class
   of silence).
+
+## Related
+
+- `docs/ops/runbook.md` "Database backups" section: install block,
+  restore procedures, quarterly restore test (replaces the old TODO).
+- `api/deploy/backup/cercol-db-backup.sh` and
+  `api/deploy/cron/cercol-db-backup`: the implementation this ADR
+  specifies.
+- ADR 0013 (Cloudflare front hosting, Proposed): rejected R2 coupling;
+  if 0013 is accepted later, Leg 2 can move to R2 with a one-line
+  remote change.
+- ADR 0006 (cron pattern for SEO ingest): the repo-ships-cron,
+  operator-installs-once pattern this decision reuses, minus its
+  silent-failure mode.
+- 2026-07-05 reliability audit: confirmed no pg_dump existed anywhere
+  on the server and that Hetzner machine-level backups are enabled.

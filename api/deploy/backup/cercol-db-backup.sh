@@ -62,8 +62,12 @@ chmod 0640 "$dump"
 # Integrity check: a corrupt archive fails to list.
 runuser -u postgres -- pg_restore --list "$dump" > /dev/null
 
-# Local rotation: keep the LOCAL_KEEP most recent dumps.
-ls -1t "$BACKUP_DIR"/cercol-*.dump 2>/dev/null | tail -n +$((LOCAL_KEEP + 1)) | xargs -r rm --
+# Local rotation: keep the LOCAL_KEEP most recent dumps. Filenames
+# embed a UTC timestamp (cercol-YYYYMMDDTHHMMSSZ.dump), so reverse
+# lexical order IS reverse chronological order.
+shopt -s nullglob
+printf '%s\n' "$BACKUP_DIR"/cercol-*.dump | sort -r | tail -n +$((LOCAL_KEEP + 1)) | xargs -r rm --
+shopt -u nullglob
 
 # Leg 2: encrypt and push off-box, then drop the local ciphertext.
 gpg --batch --yes --pinentry-mode loopback \
