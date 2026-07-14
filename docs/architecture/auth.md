@@ -60,6 +60,22 @@ slot-farming on the unverified password-signup path.
   premium (the grant still ORs with the current value). Accounts predating the
   migration were backfilled `TRUE` (no revocation).
 
+## Full Moon premium enforcement (server-side)
+
+Premium is enforced server-side on the **server-dependent** Full Moon value
+surfaces (ADR `0018`), while client-side scoring stays untouched. The check
+authorizes `premium = TRUE OR is_beta = TRUE` (promo accounts keep access).
+
+- Reusable dependency `require_premium` in `api/deps.py` (mirrors
+  `require_admin`: 401 without `sub`, 403 when not entitled) gates
+  `POST /witness/sessions`, `GET /witness/my-sessions`, and
+  `GET /groups/{id}/report-data` (the last on top of its active-membership check).
+- `POST /results` gates **inside the `fullMoon` branch only** — free instruments
+  and anonymous posts stay open, so no ungated Full Moon row can be written.
+- Left open by design: the public witness submission
+  (`/witness/session/{token}` + `.../complete`), `/witness/my-contributions`,
+  `/me/results`, and `POST /groups`. See ADR 0018 for the full map and rationale.
+
 ### Google OAuth
 
 - Direct OAuth 2.0 flow (no Supabase middle layer).
