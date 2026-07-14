@@ -53,21 +53,46 @@ def test_conflict_branch_grants_premium_and_beta():
     assert "profiles.is_beta OR" in conflict
     # The cap is enforced by the remaining-slots subquery.
     assert "COUNT(*) <" in conflict
+    # The grant is now gated on a verified email (migration 032). Both the fresh
+    # INSERT and the ON CONFLICT branch must consult auth_users.email_verified.
+    assert "email_verified" in upsert.split("ON CONFLICT", 1)[0]
+    assert "email_verified" in conflict
 
 
-def _granted(premium: bool, is_beta: bool, slots_remain: bool) -> tuple[bool, bool]:
-    """Python mirror of the SQL grant expression for premium and is_beta."""
-    grant = (not premium) and (not is_beta) and slots_remain
+def test_verified_gate_present_in_both_ensure_profile_branches():
+    # Email branch (above) and the no-email branch must both gate on verification.
+    conn = RecordingConn()
+    _run(main_module.ensure_profile(conn, "user-2", None))
+    upsert = next(q for q in conn.executed if "INSERT INTO profiles" in q)
+    assert "email_verified" in upsert
+    assert "COUNT(*) <" in upsert  # slot cap still present alongside the gate
+
+
+def _granted(premium: bool, is_beta: bool, slots_remain: bool, verified: bool) -> tuple[bool, bool]:
+    """Python mirror of the SQL grant expression for premium and is_beta.
+
+    Mirrors: NOT premium AND NOT is_beta AND slots_remain AND email_verified.
+    """
+    grant = (not premium) and (not is_beta) and slots_remain and verified
     return (premium or grant, is_beta or grant)
 
 
 def test_grant_truth_table():
-    # Defectively-denied beta user, slots remain -> granted both.
-    assert _granted(False, False, True) == (True, True)
-    # Slots exhausted -> stays paywalled.
-    assert _granted(False, False, False) == (False, False)
+    # Verified, defectively-denied beta user, slots remain -> granted both.
+    assert _granted(False, False, True, True) == (True, True)
+    # Slots exhausted -> stays paywalled even when verified.
+    assert _granted(False, False, False, True) == (False, False)
     # Already a beta user -> unchanged, never double-touched.
-    assert _granted(True, True, True) == (True, True)
+    assert _granted(True, True, True, True) == (True, True)
     # Paid customer (premium, not beta): keeps premium, never relabelled beta.
-    assert _granted(True, False, True) == (True, False)
-    assert _granted(True, False, False) == (True, False)
+    assert _granted(True, False, True, True) == (True, False)
+    assert _granted(True, False, False, True) == (True, False)
+
+
+def test_unverified_never_claims_a_slot():
+    # The slot-farming close: an unverified account never gets the grant, even
+    # with slots free. It becomes eligible only once its email is verified.
+    assert _granted(False, False, True, False) == (False, False)
+    assert _granted(False, False, True, True) == (True, True)
+    # Verification never revokes a paid customer's premium.
+    assert _granted(True, False, True, False) == (True, False)

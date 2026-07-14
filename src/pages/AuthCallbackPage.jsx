@@ -7,6 +7,11 @@
  *   2. Google OAuth:  /auth/callback?access_token=<at>&refresh_token=<rt>
  *      → Backend redirects here with tokens already in the URL → store → redirect home
  *
+ *   3. Email verify:  /auth/callback?type=verify&token=<token>
+ *      → POST /auth/verify-email → marks the account verified (unlocking the free
+ *        Full Moon slot) → redirect to /full-moon. No tokens: the account already
+ *        has its session from signup; this only flips email_verified.
+ *
  * On error, redirects to /auth with ?error=... query param.
  */
 import { useEffect, useRef } from 'react'
@@ -65,6 +70,33 @@ export default function AuthCallbackPage() {
           const data = await res.json()
           await applySession(data.access_token, data.refresh_token)
           navigate('/', { replace: true })
+        } catch {
+          navigate('/auth?error=network_error', { replace: true })
+        }
+        return
+      }
+
+      // Case 1b: Email verification (password signup)
+      if (type === 'verify') {
+        const token = params.get('token')
+        if (!token) {
+          navigate('/auth?error=missing_token', { replace: true })
+          return
+        }
+        try {
+          const res = await fetch(`${API_URL}/auth/verify-email`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token }),
+          })
+          if (!res.ok) {
+            const body = await res.json().catch(() => ({}))
+            const msg  = encodeURIComponent(body.detail ?? 'verify_error')
+            navigate(`/auth?error=${msg}`, { replace: true })
+            return
+          }
+          // Verified: land on the now-unlocked Full Moon instrument.
+          navigate('/full-moon', { replace: true })
         } catch {
           navigate('/auth?error=network_error', { replace: true })
         }
