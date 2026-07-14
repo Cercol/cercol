@@ -37,7 +37,7 @@ import bcrypt as _bcrypt_lib
 from pydantic import BaseModel
 from slowapi.errors import RateLimitExceeded  # noqa: F401 — used indirectly via app handler
 
-from emails import send_magic_link
+from emails import send_magic_link, send_verify_email
 from limiter import limiter
 
 # ---------------------------------------------------------------------------
@@ -180,6 +180,15 @@ async def _find_or_create_user(
     else:
         user = {"id": str(row["id"]), "email": row["email"]}
 
+    # Reaching this function means email ownership was proven — magic-link
+    # (clicked a link sent to the address) or Google OAuth (Google asserts the
+    # verified email). Mark the account verified so the beta/premium grant in
+    # ensure_profile can fire. This also verifies a pre-existing password account
+    # that later signs in via magic-link/Google with the same address.
+    await conn.execute(
+        "UPDATE auth_users SET email_verified = TRUE WHERE id = $1", user["id"],
+    )
+
     # Ensure profiles row exists and email is current. Seed the name from the
     # OAuth profile, but only when not already set (COALESCE keeps an edited
     # name; NULLIF treats an empty incoming value as "no name").
@@ -226,6 +235,10 @@ class MagicLinkRequestBody(BaseModel):
 
 
 class MagicLinkVerifyBody(BaseModel):
+    token: str
+
+
+class VerifyEmailBody(BaseModel):
     token: str
 
 
@@ -329,6 +342,48 @@ async def magic_link_verify(request: Request, body: MagicLinkVerifyBody):
     return _token_response(user["id"], user["email"], rt)
 
 
+@router.post("/verify-email")
+@limiter.limit("10/minute")
+async def verify_email(request: Request, body: VerifyEmailBody):
+    """
+    Consume an email-verification token: mark the account verified and
+    re-evaluate the beta/premium grant at that point. Token-authenticated, so no
+    session is required (the user may open the link in a fresh browser). Reuses
+    the magic_tokens table — same one-time, TTL'd semantics as a magic link.
+    """
+    token = body.token.strip()
+    now   = datetime.now(timezone.utc)
+
+    async with _pool().acquire() as conn:
+        row = await conn.fetchrow(
+            "SELECT id, email, expires_at, used_at FROM magic_tokens WHERE token = $1",
+            token,
+        )
+        if row is None:
+            raise HTTPException(status_code=401, detail="Invalid or expired verification link")
+        if row["used_at"] is not None:
+            raise HTTPException(status_code=401, detail="Verification link already used")
+        if row["expires_at"] < now:
+            raise HTTPException(status_code=401, detail="Verification link has expired")
+
+        await conn.execute(
+            "UPDATE magic_tokens SET used_at = $1 WHERE id = $2", now, row["id"],
+        )
+        urow = await conn.fetchrow(
+            "UPDATE auth_users SET email_verified = TRUE WHERE email = $1 RETURNING id",
+            row["email"],
+        )
+        if urow is not None:
+            # Re-run ensure_profile now that email_verified is TRUE, so the
+            # beta/premium slot is (re)evaluated immediately rather than waiting
+            # for the next /me/profile call. Deferred import avoids a circular
+            # import (main imports this router at module load).
+            from main import ensure_profile  # noqa: PLC0415
+            await ensure_profile(conn, str(urow["id"]), row["email"])
+
+    return {"verified": True}
+
+
 # ── Password auth ────────────────────────────────────────────────────────────
 
 @router.post("/password/signup", status_code=201)
@@ -353,6 +408,8 @@ async def password_signup(request: Request, body: PasswordSignupBody):
             raise HTTPException(status_code=409, detail="Email already registered")
 
         new_id = str(uuid.uuid4())
+        # email_verified defaults to FALSE (migration 032): a password account
+        # must confirm ownership before it can claim a beta/premium slot.
         await conn.execute(
             """
             INSERT INTO auth_users (id, email, password_hash)
@@ -368,7 +425,22 @@ async def password_signup(request: Request, body: PasswordSignupBody):
         await conn.execute(
             "UPDATE auth_users SET last_sign_in_at = now() WHERE id = $1", new_id
         )
+        # Verification token (reuses the magic_tokens one-time, TTL'd table).
+        verify_token = secrets.token_urlsafe(32)
+        await conn.execute(
+            "INSERT INTO magic_tokens (email, token, expires_at) VALUES ($1, $2, $3)",
+            email, verify_token, datetime.now(timezone.utc) + _MAGIC_TTL,
+        )
         rt = await _issue_refresh_token(conn, new_id)
+
+    # Send the verification email out of band. The account is usable immediately
+    # for the free instruments (which need no account at all); verification only
+    # unlocks the free Full Moon slot, so a send failure must not fail signup.
+    verify_link = f"{_FRONTEND_URL}/auth/callback?type=verify&token={verify_token}"
+    try:
+        await send_verify_email(email, verify_link)
+    except Exception as exc:
+        print(f"[auth] verification email failed for {email}: {exc}")
 
     return _token_response(new_id, email, rt)
 

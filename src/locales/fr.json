@@ -287,7 +287,7 @@
     "sentHeading": "Vérifiez votre boîte de réception",
     "sentBody": "Nous avons envoyé un lien à {{email}}. Cliquez dessus pour vous connecter.",
     "confirmHeading": "Confirmez votre e-mail",
-    "confirmBody": "Nous avons envoyé un lien de confirmation à {{email}}. Cliquez dessus pour activer votre compte.",
+    "confirmBody": "Nous avons envoyé un lien de confirmation à {{email}}. Cliquez dessus pour débloquer votre évaluation Pleine Lune gratuite.",
     "sentNote": "Pas d'e-mail ? Vérifiez votre dossier de courrier indésirable.",
     "signingIn": "Connexion en cours…",
     "tryAgain": "Réessayer",

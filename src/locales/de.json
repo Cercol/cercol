@@ -287,7 +287,7 @@
     "sentHeading": "Überprüfe dein Postfach",
     "sentBody": "Wir haben einen Link an {{email}} gesendet. Klicke darauf, um dich anzumelden.",
     "confirmHeading": "Bestätige deine E-Mail",
-    "confirmBody": "Wir haben einen Bestätigungslink an {{email}} gesendet. Klicke darauf, um dein Konto zu aktivieren.",
+    "confirmBody": "Wir haben einen Bestätigungslink an {{email}} gesendet. Klicke darauf, um deine kostenlose Vollmond-Auswertung freizuschalten.",
     "sentNote": "Keine E-Mail? Überprüfe deinen Spam-Ordner.",
     "signingIn": "Du wirst angemeldet…",
     "tryAgain": "Erneut versuchen",
