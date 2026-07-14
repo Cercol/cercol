@@ -117,6 +117,48 @@ _S = {
         "da": "Hvis du ikke har anmodet om dette link, kan du roligt ignorere denne e-mail.",
     },
 
+    # ── Email verification (password signup) ─────────────────────────────────
+    "verify_subject": {
+        "en": "Confirm your email — Cèrcol",
+        "ca": "Confirma el teu correu — Cèrcol",
+        "es": "Confirma tu correo — Cèrcol",
+        "fr": "Confirmez votre e-mail — Cèrcol",
+        "de": "Bestätige deine E-Mail — Cèrcol",
+        "da": "Bekræft din e-mail — Cèrcol",
+    },
+    "verify_heading": {
+        "en": "Confirm your email",
+        "ca": "Confirma el teu correu",
+        "es": "Confirma tu correo",
+        "fr": "Confirmez votre e-mail",
+        "de": "Bestätige deine E-Mail",
+        "da": "Bekræft din e-mail",
+    },
+    "verify_body": {
+        "en": "Confirm your email to unlock your free Full Moon assessment. The link is valid for 15 minutes.",
+        "ca": "Confirma el teu correu per desbloquejar la teva avaluació Lluna Plena gratuïta. L'enllaç és vàlid durant 15 minuts.",
+        "es": "Confirma tu correo para desbloquear tu evaluación Luna Llena gratuita. El enlace es válido durante 15 minutos.",
+        "fr": "Confirmez votre e-mail pour débloquer votre évaluation Pleine Lune gratuite. Le lien est valide pendant 15 minutes.",
+        "de": "Bestätige deine E-Mail, um deine kostenlose Vollmond-Auswertung freizuschalten. Der Link ist 15 Minuten gültig.",
+        "da": "Bekræft din e-mail for at låse op for din gratis Fuldmåne-vurdering. Linket er gyldigt i 15 minutter.",
+    },
+    "verify_button": {
+        "en": "Confirm email",
+        "ca": "Confirma el correu",
+        "es": "Confirmar correo",
+        "fr": "Confirmer l'e-mail",
+        "de": "E-Mail bestätigen",
+        "da": "Bekræft e-mail",
+    },
+    "verify_ignore": {
+        "en": "If you did not create a Cèrcol account, you can safely ignore this email.",
+        "ca": "Si no has creat un compte a Cèrcol, pots ignorar aquest correu.",
+        "es": "Si no has creado una cuenta en Cèrcol, puedes ignorar este correo.",
+        "fr": "Si vous n'avez pas créé de compte Cèrcol, vous pouvez ignorer cet e-mail.",
+        "de": "Falls du kein Cèrcol-Konto erstellt hast, kannst du diese E-Mail ignorieren.",
+        "da": "Hvis du ikke har oprettet en Cèrcol-konto, kan du roligt ignorere denne e-mail.",
+    },
+
     # ── Witness assigned ─────────────────────────────────────────────────────
     "wa_subject": {
         "en": "{subject_display} has asked you to evaluate them on Cèrcol",
@@ -638,6 +680,16 @@ def _magic_link_html(link: str, lang: str) -> str:
     )
 
 
+def _verify_email_html(link: str, lang: str) -> str:
+    return _base(
+        _h1(_t("verify_heading", lang))
+        + _p(_t("verify_body", lang))
+        + _btn(link, _t("verify_button", lang))
+        + _p(_t("verify_ignore", lang), muted=True),
+        lang=lang,
+    )
+
+
 def _witness_assigned_html(
     witness_name: str, subject_display: str, link: str, lang: str
 ) -> str:
@@ -705,6 +757,16 @@ async def send_magic_link(to_email: str, link: str, lang: str = "en") -> None:
         to      = to_email,
         subject = _t("magic_subject", l),
         html    = _magic_link_html(link, l),
+    )
+
+
+async def send_verify_email(to_email: str, link: str, lang: str = "en") -> None:
+    """Send a password-signup email-verification link."""
+    l = _lang(lang)
+    await _send(
+        to      = to_email,
+        subject = _t("verify_subject", l),
+        html    = _verify_email_html(link, l),
     )
 
 

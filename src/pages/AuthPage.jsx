@@ -28,16 +28,20 @@ export default function AuthPage() {
   const navigate = useNavigate()
   const { user, signIn, signInWithPassword, signUp, signInWithGoogle } = useAuth()
 
-  useEffect(() => {
-    if (user) navigate('/', { replace: true })
-  }, [user, navigate])
-
   const [email,    setEmail]    = useState('')
   const [password, setPassword] = useState('')
   const [method,   setMethod]   = useState('password')   // 'password' | 'magic'
   const [mode,     setMode]     = useState('signin')      // 'signin' | 'signup'  (password only)
   const [status,   setStatus]   = useState('idle')        // 'idle' | 'busy' | 'sent' | 'confirmed'
   const [errorMsg, setErrorMsg] = useState('')
+
+  // Redirect home once signed in, EXCEPT right after a password signup: there we
+  // hold on the "check your email" card (status 'sent') so the user learns they
+  // must verify to unlock the free Full Moon slot. The account is already signed
+  // in and can use the free instruments meanwhile.
+  useEffect(() => {
+    if (user && status !== 'sent') navigate('/', { replace: true })
+  }, [user, status, navigate])
 
   function setError(msg) { setStatus('idle'); setErrorMsg(msg) }
   function setBusy()      { setStatus('busy'); setErrorMsg('') }
@@ -60,7 +64,10 @@ export default function AuthPage() {
         // onAuthStateChange handles redirect; just stay busy
       } else {
         await signUp(email, password)
-        // Signup succeeded — access token is now set; AuthContext re-renders automatically
+        // Signup succeeded — the account is signed in, but its email is not yet
+        // verified. Hold on the confirm-email card (the redirect effect skips
+        // 'sent') so the user knows to click the link to unlock the free slot.
+        setStatus('sent')
       }
     } catch (e) {
       setError(e.message ?? t('auth.error'))

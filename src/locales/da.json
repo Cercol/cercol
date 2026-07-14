@@ -287,7 +287,7 @@
     "sentHeading": "Tjek din indbakke",
     "sentBody": "Vi sendte et link til {{email}}. Klik på det for at logge ind.",
     "confirmHeading": "Bekræft din e-mail",
-    "confirmBody": "Vi sendte et bekræftelseslink til {{email}}. Klik på det for at aktivere din konto.",
+    "confirmBody": "Vi sendte et bekræftelseslink til {{email}}. Klik på det for at låse op for din gratis Fuldmåne-vurdering.",
     "sentNote": "Ingen e-mail? Tjek din spam-mappe.",
     "signingIn": "Logger dig ind…",
     "tryAgain": "Prøv igen",

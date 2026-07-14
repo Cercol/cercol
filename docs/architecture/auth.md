@@ -36,6 +36,29 @@ Tokens are single-use; reuse returns 401.
 - bcrypt direct (no passlib wrapper).
 - Signup creates a `profiles` row with the bcrypt hash.
 - Signin verifies and issues tokens.
+- Signup creates the account **unverified** (`auth_users.email_verified = FALSE`)
+  and issues tokens (the account is immediately usable — the free instruments
+  need no account at all). A verification email is sent via Resend, reusing the
+  one-time `magic_tokens` table. Clicking it hits `POST /auth/verify-email`,
+  which consumes the token, sets `email_verified = TRUE`, and re-runs
+  `ensure_profile`. Rate-limited `5/minute` (signup) and `10/minute` (verify).
+
+## Email verification and the beta/premium grant
+
+The "first 500 free Full Moon" grant in `ensure_profile` (`api/main.py`) is gated
+on `auth_users.email_verified` (migration `032`). An account only claims a
+beta/premium slot once its email is verified, which closes disposable-email
+slot-farming on the unverified password-signup path.
+
+- Magic link and Google OAuth prove ownership by construction: both route
+  through `_find_or_create_user`, which sets `email_verified = TRUE`, so they get
+  the grant on their first `/me/profile` call as before.
+- Password accounts start `FALSE` and become eligible only after
+  `POST /auth/verify-email`.
+- The gate lives in the grant SQL itself (`_EMAIL_VERIFIED_SQL`), so every caller
+  of `ensure_profile` inherits it; it never revokes an existing grant or a paid
+  premium (the grant still ORs with the current value). Accounts predating the
+  migration were backfilled `TRUE` (no revocation).
 
 ### Google OAuth
 

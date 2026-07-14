@@ -343,6 +343,15 @@ def get_optional_user(
 
 BETA_TOTAL = 500
 
+# Grant guard: a beta/premium slot is only claimed by an account whose email is
+# verified. Magic-link and Google prove ownership by construction (set TRUE at
+# account creation); password accounts start FALSE and flip TRUE via
+# /auth/verify-email. This closes disposable-email slot-farming on the unverified
+# password-signup path. $1 is user_id in both ensure_profile branches. The
+# fragment injects only static SQL (no user data), so f-string interpolation is
+# safe; asyncpg still binds every value as a numbered parameter.
+_EMAIL_VERIFIED_SQL = "COALESCE((SELECT email_verified FROM auth_users WHERE id = $1), FALSE)"
+
 
 async def ensure_profile(conn: asyncpg.Connection, user_id: str, email: str | None = None) -> None:
     """Create/update profile row, claim beta premium if slots remain, link pending invitations.
@@ -353,24 +362,27 @@ async def ensure_profile(conn: asyncpg.Connection, user_id: str, email: str | No
     /me/results, /results) the row already exists and the INSERT branch never
     wins. Without granting on conflict, the first ~500 beta users were silently
     left on premium = false and sent to the paywall. The grant condition mirrors
-    the INSERT: a slot remains AND the row is not already premium or beta. We
-    never revoke an existing grant or a paid premium (OR with the current value),
-    and a paid user is never relabelled beta (the grant requires NOT premium)."""
+    the INSERT: a slot remains AND the row is not already premium or beta AND the
+    account's email is verified (_EMAIL_VERIFIED_SQL). We never revoke an existing
+    grant or a paid premium (OR with the current value), and a paid user is never
+    relabelled beta (the grant requires NOT premium)."""
     if email:
         await conn.execute(
-            """
+            f"""
             INSERT INTO profiles (id, email, premium, is_beta)
             SELECT $1, $2,
-                (SELECT COUNT(*) < $3 FROM profiles WHERE is_beta = TRUE),
-                (SELECT COUNT(*) < $3 FROM profiles WHERE is_beta = TRUE)
+                ((SELECT COUNT(*) < $3 FROM profiles WHERE is_beta = TRUE) AND {_EMAIL_VERIFIED_SQL}),
+                ((SELECT COUNT(*) < $3 FROM profiles WHERE is_beta = TRUE) AND {_EMAIL_VERIFIED_SQL})
             ON CONFLICT (id) DO UPDATE SET
                 email   = EXCLUDED.email,
                 premium = profiles.premium OR (
                     NOT profiles.premium AND NOT profiles.is_beta
-                    AND (SELECT COUNT(*) < $3 FROM profiles WHERE is_beta = TRUE)),
+                    AND (SELECT COUNT(*) < $3 FROM profiles WHERE is_beta = TRUE)
+                    AND {_EMAIL_VERIFIED_SQL}),
                 is_beta = profiles.is_beta OR (
                     NOT profiles.premium AND NOT profiles.is_beta
-                    AND (SELECT COUNT(*) < $3 FROM profiles WHERE is_beta = TRUE))
+                    AND (SELECT COUNT(*) < $3 FROM profiles WHERE is_beta = TRUE)
+                    AND {_EMAIL_VERIFIED_SQL})
             """,
             user_id, email.lower(), BETA_TOTAL,
         )
@@ -384,18 +396,20 @@ async def ensure_profile(conn: asyncpg.Connection, user_id: str, email: str | No
         )
     else:
         await conn.execute(
-            """
+            f"""
             INSERT INTO profiles (id, premium, is_beta)
             SELECT $1,
-                (SELECT COUNT(*) < $2 FROM profiles WHERE is_beta = TRUE),
-                (SELECT COUNT(*) < $2 FROM profiles WHERE is_beta = TRUE)
+                ((SELECT COUNT(*) < $2 FROM profiles WHERE is_beta = TRUE) AND {_EMAIL_VERIFIED_SQL}),
+                ((SELECT COUNT(*) < $2 FROM profiles WHERE is_beta = TRUE) AND {_EMAIL_VERIFIED_SQL})
             ON CONFLICT (id) DO UPDATE SET
                 premium = profiles.premium OR (
                     NOT profiles.premium AND NOT profiles.is_beta
-                    AND (SELECT COUNT(*) < $2 FROM profiles WHERE is_beta = TRUE)),
+                    AND (SELECT COUNT(*) < $2 FROM profiles WHERE is_beta = TRUE)
+                    AND {_EMAIL_VERIFIED_SQL}),
                 is_beta = profiles.is_beta OR (
                     NOT profiles.premium AND NOT profiles.is_beta
-                    AND (SELECT COUNT(*) < $2 FROM profiles WHERE is_beta = TRUE))
+                    AND (SELECT COUNT(*) < $2 FROM profiles WHERE is_beta = TRUE)
+                    AND {_EMAIL_VERIFIED_SQL})
             """,
             user_id, BETA_TOTAL,
         )

@@ -287,7 +287,7 @@
     "sentHeading": "Check your inbox",
     "sentBody": "We sent a link to {{email}}. Click it to sign in.",
     "confirmHeading": "Confirm your email",
-    "confirmBody": "We sent a confirmation link to {{email}}. Click it to activate your account.",
+    "confirmBody": "We sent a confirmation link to {{email}}. Click it to unlock your free Full Moon assessment.",
     "sentNote": "No email? Check your spam folder.",
     "signingIn": "Signing you in…",
     "tryAgain": "Try again",

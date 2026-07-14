@@ -287,7 +287,7 @@
     "sentHeading": "Revisa tu bandeja de entrada",
     "sentBody": "Enviamos un enlace a {{email}}. Haz clic en él para iniciar sesión.",
     "confirmHeading": "Confirma tu correo electrónico",
-    "confirmBody": "Enviamos un enlace de confirmación a {{email}}. Haz clic en él para activar tu cuenta.",
+    "confirmBody": "Enviamos un enlace de confirmación a {{email}}. Haz clic en él para desbloquear tu evaluación Luna Llena gratuita.",
     "sentNote": "¿No recibes el correo? Revisa la carpeta de spam.",
     "signingIn": "Iniciando sesión…",
     "tryAgain": "Intentar de nuevo",
