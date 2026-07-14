@@ -61,3 +61,27 @@ async def require_admin(
     if not row or not row["is_admin"]:
         raise HTTPException(status_code=403, detail="Forbidden")
     return user
+
+
+async def require_premium(
+    request: Request,
+    user: dict = Depends(get_current_user),
+) -> dict:
+    """Dependency — raises 403 unless the account has premium = true OR
+    is_beta = true.
+
+    Gates the server-dependent Full Moon value surfaces (ADR 0018). is_beta is
+    accepted alongside premium so the "first 500 free Full Moon" promo accounts
+    keep access while the promotion is live. Mirrors require_admin: 401 when the
+    token carries no ``sub``, 403 when the account is not entitled.
+    """
+    user_id = user.get("sub")
+    if not user_id:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
+    async with request.app.state.pool.acquire() as conn:
+        row = await conn.fetchrow(
+            "SELECT premium, is_beta FROM profiles WHERE id = $1", user_id
+        )
+    if not row or not (row["premium"] or row["is_beta"]):
+        raise HTTPException(status_code=403, detail="Forbidden")
+    return user

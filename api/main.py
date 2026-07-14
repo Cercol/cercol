@@ -42,7 +42,7 @@ from scoring import (
     DOMAINS, NORM_MIN_SAMPLE, NORM_REFRESH_DAYS, resolve_norm,
 )
 from emails import send_witness_assigned, send_witness_completed, send_group_invitation
-from deps import require_admin
+from deps import require_admin, require_premium
 import auth as auth_module
 import blog as blog_module
 import seo as seo_module
@@ -680,6 +680,22 @@ async def log_result(
     async with _pool.acquire() as conn:
         if user_id:
             await ensure_profile(conn, user_id, (user or {}).get("email"))
+        # Full Moon persistence is premium-only (ADR 0018). Free instruments
+        # (newMoon, firstQuarter) and anonymous posts stay open by design;
+        # client-side scoring is untouched. premium OR is_beta so promo accounts
+        # keep access while the "first 500 free" promotion is live. An anonymous
+        # or non-entitled Full Moon persist is refused (403), so no ungated
+        # fullMoon row can ever be written.
+        if body.instrument == "fullMoon":
+            prow = (
+                await conn.fetchrow(
+                    "SELECT premium, is_beta FROM profiles WHERE id = $1", user_id
+                )
+                if user_id
+                else None
+            )
+            if not prow or not (prow["premium"] or prow["is_beta"]):
+                raise HTTPException(status_code=403, detail="Forbidden")
         row = await conn.fetchrow(
             """
             INSERT INTO results
@@ -749,11 +765,15 @@ async def stripe_webhook(request: Request):
 async def create_witness_sessions(
     request: Request,
     body: CreateSessionsBody,
-    user: dict = Depends(get_current_user),
+    user: dict = Depends(require_premium),
 ):
     """
     Creates up to 12 witness sessions for the authenticated user.
     Returns an array of { token, name, link }.
+
+    Premium-only (ADR 0018): a witness campaign is Full Moon value. premium OR
+    is_beta (promo accounts included). The witness themselves submit via a public
+    link and are never gated.
     """
     subject_id = user["sub"]
     async with _pool.acquire() as conn:
@@ -889,8 +909,12 @@ async def complete_witness_session(
 
 
 @app.get("/witness/my-sessions")
-async def get_my_sessions(user: dict = Depends(get_current_user)):
-    """Returns all witness sessions for the authenticated user, with scores for completed ones."""
+async def get_my_sessions(user: dict = Depends(require_premium)):
+    """Returns all witness sessions for the authenticated user, with scores for completed ones.
+
+    Premium-only (ADR 0018): serving averaged witness results is Full Moon value.
+    premium OR is_beta (promo accounts included).
+    """
     subject_id = user["sub"]
     async with _pool.acquire() as conn:
         rows = await conn.fetch(
@@ -1147,11 +1171,15 @@ async def decline_group_invitation(
 @app.get("/groups/{group_id}/report-data")
 async def get_group_report_data(
     group_id: str,
-    user: dict = Depends(get_current_user),
+    user: dict = Depends(require_premium),
 ):
     """
     Returns report data for all active members of a group.
     Fetches profiles + latest Full Moon results in a single JOIN query.
+
+    Premium-only (ADR 0018): the Last Quarter team report is Full Moon value.
+    The premium/is_beta gate is ON TOP OF the existing active-membership check
+    below — a member without premium/is_beta cannot pull the report.
     """
     user_id = user["sub"]
     async with _pool.acquire() as conn:
