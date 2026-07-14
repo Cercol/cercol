@@ -1,8 +1,9 @@
 # ADR 0018: Server-side enforcement of the Full Moon paywall
 
-Status: Accepted
-Date: 2026-07-14
-Deciders: Miquel
+- **Number**: 0018
+- **Title**: Server-side enforcement of the Full Moon paywall (Option A)
+- **Status**: Accepted
+- **Date**: 2026-07-14
 
 ## Context
 
@@ -53,15 +54,35 @@ Deliberate non-targets (left open — gating them would break legitimate flows):
 | `GET /me/results`, `DELETE /me/results/{id}` | act on the user's own rows incl. free instruments; gating persistence in `POST /results` already prevents non-entitled fullMoon rows from existing |
 | `POST /groups` | creating a group is harmless without the (now gated) report |
 
+## Alternatives considered
+
+- **Option B — move Full Moon scoring server-side for the paid tier.** Stop
+  shipping the item set and scoring to non-premium clients; compute behind a
+  premium gate. Rejected: breaks "no data sent to the server during assessment",
+  is a large change to the core scoring architecture, and weakens a documented
+  privacy value and GEO selling point.
+- **Option C — accept the current porousness, keep the UI-only gate.** Rejected:
+  the enforcement map showed the server-dependent surfaces (witness aggregation,
+  team reports, result persistence) were genuinely open, so "do nothing" leaves
+  real value ungated, not just the inherently-open self-report render.
+
 ## Consequences
 
-- The server-dependent Full Moon surfaces are enforced server-side; an
-  anonymous or non-entitled caller can no longer persist a Full Moon result,
-  create a witness campaign, pull averaged witness results, or pull a team
-  report.
+- The server-dependent Full Moon surfaces are enforced server-side; an anonymous
+  or non-entitled caller can no longer persist a Full Moon result, create a
+  witness campaign, pull averaged witness results, or pull a team report.
 - Client-side scoring and the anonymous one-off self-report render stay open by
   design — the privacy promise is preserved and can be reaffirmed explicitly.
 - `is_beta` is accepted alongside `premium`, so no promo account is broken while
   the "first 500 free" promotion is live. When Full Moon is charged for again,
   no code change is required — paid `premium` accounts already pass.
 - No database migration: this is handler logic only.
+
+## Related
+
+- ADR [0016](0016-backend-db-pool-access-unification.md) — the
+  `request.app.state.pool` access pattern `require_premium` reuses.
+- `docs/architecture/auth.md` — records where Full Moon premium is enforced and
+  the `require_premium` / `require_admin` dependencies.
+- Builds on the beta/premium grant (`ensure_profile`) and the email-verification
+  gate that protects the promo slot count.
