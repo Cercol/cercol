@@ -156,6 +156,15 @@ async def gather_postgres(ws, we, ps, pe) -> dict[str, Any]:
         )
         funnel = {r["name"]: int(r["n"]) for r in funnel_rows}
 
+        # First-touch channel attribution for the week's completed tests (ADR
+        # 0014). Fetch the raw (utm_source, referrer) pairs; classification and
+        # aggregation happen in build_channels so they stay unit-testable.
+        chan_rows = await conn.fetch(
+            "SELECT utm_source, referrer FROM results "
+            "WHERE created_at >= $1 AND created_at < $2",
+            ws, we,
+        )
+
         # Top blog articles by reads (article_view events — NOT view_count, which
         # is cumulative-only and cannot yield a weekly figure). Title in English.
         article_rows = await conn.fetch(
@@ -200,6 +209,7 @@ async def gather_postgres(ws, we, ps, pe) -> dict[str, Any]:
         "week_il_rows": week_il_rows,
         "role_rows": role_rows,
         "funnel_raw": funnel,
+        "chan_rows": chan_rows,
         "tests_total": tests[0],
         "top_articles": top_articles,
         "cum_rows": cum_rows,
@@ -290,6 +300,51 @@ def build_norms(norm_rows: list) -> list[dict[str, Any]]:
             "drift": drift,
         })
     return out
+
+
+# First-touch channel classification (ADR 0014). utm_source, when present, is
+# the explicit campaign tag and wins outright; otherwise the referrer host is
+# bucketed into a coarse channel. Substring match on the host is enough for a
+# weekly digest — this is not analytics-grade attribution.
+_SEARCH_DOMAINS = ("google.", "bing.", "duckduckgo.", "yahoo.", "yandex.",
+                   "ecosia.", "baidu.", "startpage.")
+_SOCIAL_DOMAINS = ("facebook.", "instagram.", "twitter.", "t.co", "x.com",
+                   "linkedin.", "lnkd.in", "tiktok.", "reddit.", "youtube.",
+                   "youtu.be", "pinterest.", "threads.", "mastodon.")
+
+
+def classify_channel(utm_source: str | None, referrer: str | None) -> str:
+    """Map a completed test's first-touch attribution to a coarse channel.
+
+    utm_source (lowercased) wins when non-empty. Otherwise the referrer host is
+    bucketed: empty/NULL -> direct, known search engine -> search, known social
+    domain -> social, anything else -> referral.
+    """
+    if utm_source and utm_source.strip():
+        return utm_source.strip().lower()
+    ref = (referrer or "").strip().lower()
+    if not ref:
+        return "direct"
+    host = ref.split("://", 1)[1] if "://" in ref else ref
+    host = host.split("/", 1)[0]
+    if any(d in host for d in _SEARCH_DOMAINS):
+        return "search"
+    if any(d in host for d in _SOCIAL_DOMAINS):
+        return "social"
+    return "referral"
+
+
+def build_channels(chan_rows: list) -> list[tuple[str, int]]:
+    """Aggregate this-week completed tests by first-touch channel.
+
+    Returns [(channel, count), ...] sorted by count desc (channel asc on ties),
+    empty when the week had no completed tests.
+    """
+    from collections import Counter
+    counts: Counter[str] = Counter()
+    for r in chan_rows:
+        counts[classify_channel(r["utm_source"], r["referrer"])] += 1
+    return sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))
 
 
 def build_funnel(funnel_raw: dict[str, int], tests_total: int) -> dict[str, Any]:
@@ -436,6 +491,7 @@ def run(cfg: JobConfig, *, bq_client, send: bool = True) -> dict[str, Any]:
         "weekly_pivot": build_cumulative(pg["week_il_rows"]),
         "roles": compute_role_counts(pg["role_rows"]),
         "funnel": build_funnel(pg["funnel_raw"], pg["tests_total"]),
+        "channels": build_channels(pg.get("chan_rows", [])),
         "top_articles": pg["top_articles"],
         "cumulative": build_cumulative(pg["cum_rows"]),
         "norms": build_norms(pg["norm_rows"]),
