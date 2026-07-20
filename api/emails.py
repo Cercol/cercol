@@ -490,10 +490,25 @@ def _pivot_table(cum: dict) -> str:
     return _table(headers, body_rows, aligns)
 
 
-def _north_star(kpis: dict, weekly_pivot: dict) -> str:
+def _channel_split(channels: list) -> str:
+    """First-touch source/channel split for the week's completed tests.
+
+    `channels` is [(channel, count), ...] (from weekly_digest.build_channels).
+    Empty -> a muted note; no attribution yet is a real state, not an error."""
+    heading = (
+        f'<div style="font-size:12px;font-weight:600;color:{_GRAY};'
+        'text-transform:uppercase;letter-spacing:0.06em;margin-top:18px;">'
+        'Source / channel split</div>'
+    )
+    if not channels:
+        return heading + _empty("No attributable sessions this week.")
+    rows = [[c, f"{n:,}"] for c, n in channels]
+    return heading + _table(["Channel", "Tests"], rows, ["left", "right"])
+
+
+def _north_star(kpis: dict, weekly_pivot: dict, channels: list | None = None) -> str:
     """The one number: completed tests this week vs last, with the this-week
-    instrument x language pivot underneath and a placeholder for the source
-    split (filled once first-touch attribution lands)."""
+    instrument x language pivot underneath and the first-touch source split."""
     cur, prev = kpis.get("tests", (0, 0))
     block = (
         '<div style="text-align:center;padding:12px 0 4px;">'
@@ -505,8 +520,7 @@ def _north_star(kpis: dict, weekly_pivot: dict) -> str:
     )
     block += (_pivot_table(weekly_pivot) if (weekly_pivot or {}).get("rows")
               else _empty("No tests completed this week."))
-    block += _p('Source / channel split: <em>pending</em> &mdash; lands with first-touch attribution.',
-                muted=True)
+    block += _channel_split(channels or [])
     return block
 
 
@@ -535,7 +549,7 @@ def weekly_digest_html(data: dict) -> str:
         return _stat_card(label, f"{cur:,}", _kpi(cur, prev))
     parts = [
         _h1(f"Weekly digest &mdash; {data.get('week_label', '')}"),
-        _north_star(kpis, data.get("weekly_pivot") or {}),
+        _north_star(kpis, data.get("weekly_pivot") or {}, data.get("channels") or []),
         _p("How cercol.team performed last week (Mon&ndash;Sun, UTC).", muted=True),
         _metric_row([
             card("signups", "Signups"),

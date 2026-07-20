@@ -80,6 +80,59 @@ def test_build_funnel_guards_zero_denominators():
     assert all(rate == "—" for _, rate in f["conversions"])
 
 
+# ── channel classification + split ───────────────────────────────────────────
+
+def test_classify_channel_utm_wins():
+    # utm_source is the explicit tag and beats any referrer.
+    assert wd.classify_channel("Newsletter", "https://google.com/") == "newsletter"
+    assert wd.classify_channel("  ", "https://facebook.com/") == "social"  # blank utm -> fall through
+
+
+def test_classify_channel_referrer_buckets():
+    assert wd.classify_channel(None, None) == "direct"
+    assert wd.classify_channel(None, "") == "direct"
+    assert wd.classify_channel(None, "https://www.google.com/search?q=x") == "search"
+    assert wd.classify_channel(None, "https://m.facebook.com/") == "social"
+    assert wd.classify_channel(None, "https://t.co/abc") == "social"
+    assert wd.classify_channel(None, "https://someblog.example/post") == "referral"
+
+
+def test_build_channels_aggregates_and_sorts():
+    rows = [
+        {"utm_source": None, "referrer": None},                       # direct
+        {"utm_source": None, "referrer": "https://google.com/"},      # search
+        {"utm_source": None, "referrer": "https://bing.com/"},        # search
+        {"utm_source": "twitter", "referrer": None},                  # twitter (utm)
+    ]
+    assert wd.build_channels(rows) == [("search", 2), ("direct", 1), ("twitter", 1)]
+
+
+def test_build_channels_empty():
+    assert wd.build_channels([]) == []
+
+
+def test_channel_split_zero_rows_has_no_pending():
+    html = emails._channel_split([])
+    assert "Source / channel split" in html
+    assert "No attributable sessions this week" in html
+    assert "pending" not in html.lower()
+
+
+def test_channel_split_mixed_and_utm_rows_render():
+    html = emails._channel_split([("search", 2), ("direct", 1), ("twitter", 1)])
+    assert "Source / channel split" in html
+    assert "search" in html and "twitter" in html
+    assert ">2<" in html                    # the search count cell
+    assert "pending" not in html.lower()
+
+
+def test_north_star_never_prints_pending():
+    # The old placeholder text must be gone from the hero entirely.
+    html = emails._north_star({"tests": (4, 3)}, {}, [])
+    assert "pending" not in html.lower()
+    assert "No attributable sessions this week" in html
+
+
 def test_build_cumulative_pivots_by_model_and_language():
     rows = [
         {"instrument": "newMoon", "language": "en", "n": 300},
@@ -301,6 +354,8 @@ def test_run_builds_summary_without_sending(monkeypatch):
             "instruments": [("New Moon", 7)],
             "role_rows": [_row_for_role_R01()],
             "funnel_raw": {"page_view": 50, "article_view": 10, "test_start": 7, "cta_click": 2},
+            "chan_rows": [{"utm_source": None, "referrer": "https://google.com/"},
+                          {"utm_source": None, "referrer": None}],
             "tests_total": 7,
             "top_articles": [("slug-x", 9)],
             "week_il_rows": [{"instrument": "newMoon", "language": "en", "n": 7}],
