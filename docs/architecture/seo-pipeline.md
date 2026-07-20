@@ -236,3 +236,26 @@ changes with a scheduled_measure_ts for the 14-day evaluation.
   data in either window.
 - Cron file not installed in this sprint; install procedure in
   the runbook for the future "go live" of closed-loop.
+
+### Weekly digest funnel: which source feeds which number
+
+The weekly digest (`api/jobs/weekly_digest.py`) funnel mixes two
+independent tables, which is easy to misread when querying by hand:
+
+- The four event rows (page views, article reads, test starts, CTA
+  clicks) come from the `events` table.
+- "Tests completed" (both the funnel row and the north-star headline)
+  is a `COUNT(*)` over the `results` table, **not** an event.
+
+The `events` table column is `name` (not `event_type`), and a CHECK
+constraint restricts it to exactly four values: `page_view`,
+`article_view`, `cta_click`, `test_start`. There is **no**
+`test_completed` event, and completions are never counted from
+`events`.
+
+False-alarm correction (Jul 2026): a prior ad-hoc query reported
+"the events table has zero rows for `cta_click` and `test_completed`".
+That was a query artifact — it filtered on `event_type` (the column is
+`name`) and on `test_completed` (not a valid event name). Ground truth:
+`cta_click` rows do exist, and completions come from `results`. The
+digest funnel numbers are accurate.
