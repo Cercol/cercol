@@ -633,7 +633,7 @@ L'estudi fonamental en la investigació transcultural de la personalitat és McC
 
 La troballa va ser clara: en totes les cultures estudiades, va emergir la mateixa estructura de cinc factors. Extraversió, Amabilitat, Conscienciositat, Neuroticisme i Obertura — o, en termes de Cèrcol, Presència, Vincle, Disciplina, Profunditat i Visió — van organitzar la variació de la personalitat amb constància, independentment de la llengua, el sistema polític, la tradició religiosa o el desenvolupament econòmic. Els [trets de personalitat Big Five](https://en.wikipedia.org/wiki/Big_Five_personality_traits) no són un artifici occidental.
 
-> "La replicació de l'estructura de cinc factors en 51 cultures proporciona la prova més sòlida fins avui que aquestes dimensions reflecteixen aspectes bàsics de la personalitat humana — característiques que, en cert sentit, formen part de l'arquitectura evolucionada de la ment més que no pas del producte de cap tradició cultural particular." — McCrae et al. (2005), *Journal of Personality and Social Psychology* ([doi:10.1037/0022-3514.89.3.304](https://doi.org/10.1037/0022-3514.89.3.304))
+> "La replicació de l'estructura de cinc factors en 51 cultures proporciona la prova més sòlida fins avui que aquestes dimensions reflecteixen aspectes bàsics de la personalitat humana — característiques que, en cert sentit, formen part de l'arquitectura evolucionada de la ment més que no pas del producte de cap tradició cultural particular." — McCrae et al. (2005), *Journal of Personality and Social Psychology* ([doi:10.1037/0022-3514.89.3.407](https://doi.org/10.1037/0022-3514.89.3.407))
 
 Aquesta universalitat estructural és la base sobre la qual descansa la comparació de personalitat transcultural. Pots comparar puntuacions mitjanes entre cultures precisament *perquè* estàs mesurant els mateixos constructes. Per a context sobre com es van descobrir aquestes cinc dimensions, consulta la [història del Big Five: d'Allport a Goldberg](/blog/history-of-the-big-five-from-allport-to-goldberg).
 
@@ -726,7 +726,7 @@ Les mitjanes de personalitat culturals descriuen poblacions. No poden descriure 
 
 ---
 
-*Lectures addicionals: [Big Five personality traits — Wikipedia](https://en.wikipedia.org/wiki/Big_Five_personality_traits) · McCrae et al. (2005) [doi:10.1037/0022-3514.89.3.304](https://doi.org/10.1037/0022-3514.89.3.304) · [Cross-cultural psychology — Wikipedia](https://en.wikipedia.org/wiki/Cross-cultural_psychology)*
+*Lectures addicionals: [Big Five personality traits — Wikipedia](https://en.wikipedia.org/wiki/Big_Five_personality_traits) · McCrae et al. (2005) [doi:10.1037/0022-3514.89.3.407](https://doi.org/10.1037/0022-3514.89.3.407) · [Cross-cultural psychology — Wikipedia](https://en.wikipedia.org/wiki/Cross-cultural_psychology)*
 
 ## Lectures addicionals
 
@@ -1782,10 +1782,10 @@ Les metaanàlisis que abasten les tres definicions troben de manera constant la 
 
 En el marc de Cèrcol, l'Obertura s'anomena **Visió**: la disposició cap a les idees, la imaginació, la sensibilitat estètica i la curiositat intel·lectual. És el predictor de personalitat de la producció creativa replicat de manera més constant en tots els dominis. Per a un tractament exhaustiu d'aquesta dimensió, consulta [el que significa realment l'Obertura a l'Experiència](/blog/what-is-openness-to-experience-creativity-curiosity-and-its-limits).
 
-El treball quantitatiu de referència és la metaanàlisi de Feist (1998) de 83 estudis que examinen personalitat i creativitat, publicada a *Psychological Bulletin* ([doi:10.1037/0033-2909.123.2.207](https://doi.org/10.1037/0033-2909.123.2.207)). Feist va trobar que els científics i els artistes creatius puntuen tots dos més alt en Obertura que els seus companys menys creatius, amb una mida d'efecte mitjana d'aproximadament r = 0,33. És una troballa robusta per a la investigació de la personalitat, on les mides d'efecte per sobre de 0,20 es consideren pràcticament significatives.
+El treball quantitatiu de referència és la metaanàlisi de Feist (1998) de 83 estudis que examinen personalitat i creativitat, publicada a *Personality and Social Psychology Review* ([doi:10.1207/s15327957pspr0204_5](https://doi.org/10.1207/s15327957pspr0204_5)). Feist va trobar que els científics i els artistes creatius puntuen tots dos més alt en Obertura que els seus companys menys creatius, amb una mida d'efecte mitjana d'aproximadament r = 0,33. És una troballa robusta per a la investigació de la personalitat, on les mides d'efecte per sobre de 0,20 es consideren pràcticament significatives.
 
 > «Les persones creatives, en comparació amb les menys creatives, estan més obertes a noves experiències, són menys convencionals i menys consciencioses, més segures de si mateixes, més autoacceptants, més empeses, ambicioses, dominants, hostils i impulsives.»
-> — Feist, 1998 (*Psychological Bulletin*)
+> — Feist, 1998 (*Personality and Social Psychology Review*)
 
 Per què la Visió prediu la creativitat? El mecanisme probablement és motivacional i atencional. Els individus amb Visió alta se senten atrets per la novetat: busquen idees poc familiars, resisteixen el tancament prematur i troben la complexitat engrescadora en lloc d'aversiva. Això es tradueix en un mostreig més ampli de l'espai conceptual del qual emergeixen les idees creatives. Consulta [el que significa l'Obertura a l'Experiència per a la innovació en equips](/blog/what-openness-to-experience-means-for-team-innovation) per a entendre com es manifesta en l'àmbit de l'equip.
 
@@ -3350,7 +3350,7 @@ Paral·lelament al renaixement lèxic de Goldberg, Robert McCrae i Paul Costa va
 
 La contribució de McCrae i Costa també va ser teòrica. La seva Teoria dels Cinc Factors (1999) proposava mecanismes pels quals les dimensions del Big Five emergeixen de substrats biològics i romanen estables al llarg de la vida, fent passar el model d'una taxonomia descriptiva a un relat explicatiu.
 
-La metaanàlisi del Big Five de Barrick i Mount (1991) —que cobria 117 estudis de validesa— va demostrar que la Conscienciositat (Disciplina en el marc de Cèrcol) predeia el rendiment laboral entre grups ocupacionals, establint la utilitat pràctica del Big Five i accelerant-ne l'adopció en entorns organitzatius. Per veure de més a prop què significa aquesta dimensió a la pràctica, consulta [què és la Conscienciositat](/blog/what-is-conscientiousness-the-most-consistent-predictor-of-job-performance). ([doi: 10.1037/0033-2909.116.2.187](https://doi.org/10.1037/0033-2909.116.2.187))
+La metaanàlisi del Big Five de Barrick i Mount (1991) —que cobria 117 estudis de validesa— va demostrar que la Conscienciositat (Disciplina en el marc de Cèrcol) predeia el rendiment laboral entre grups ocupacionals, establint la utilitat pràctica del Big Five i accelerant-ne l'adopció en entorns organitzatius. Per veure de més a prop què significa aquesta dimensió a la pràctica, consulta [què és la Conscienciositat](/blog/what-is-conscientiousness-the-most-consistent-predictor-of-job-performance). ([doi: 10.1111/j.1744-6570.1991.tb00688.x](https://doi.org/10.1111/j.1744-6570.1991.tb00688.x))
 
 ---
 
@@ -5030,7 +5030,7 @@ Això va ser sorprenent en el seu moment. La visió dominant en psicologia organ
 
 > «La constància actitudinal entre feines i empreses suggereix que les diferències individuals — no només els factors situacionals — són un determinant principal de la satisfacció laboral. L'evidència apunta cap a un component disposicional que es porta d'un rol a l'altre.» — Staw & Ross, *Journal of Applied Psychology*, 1985
 
-La investigació posterior de Timothy Judge i col·legues va confirmar i ampliar aquesta constatació, vinculant trets específics del Big Five amb la satisfacció laboral en diverses mostres ocupacionals. Trobaràs una visió general útil del camp ampli a [Wikipedia: Job satisfaction](https://en.wikipedia.org/wiki/Job_satisfaction). L'argument disposicional també està estretament connectat amb la teoria de l'autodeterminació — el marc de Deci i Ryan que identifica l'autonomia, la competència i la relació com les tres necessitats psicològiques fonamentals en el treball; la personalitat configura la facilitat amb què se satisfà cada necessitat ([Deci & Ryan, 2000; doi:10.1080/10478400109595951](https://doi.org/10.1080/10478400109595951)).
+La investigació posterior de Timothy Judge i col·legues va confirmar i ampliar aquesta constatació, vinculant trets específics del Big Five amb la satisfacció laboral en diverses mostres ocupacionals. Trobaràs una visió general útil del camp ampli a [Wikipedia: Job satisfaction](https://en.wikipedia.org/wiki/Job_satisfaction). L'argument disposicional també està estretament connectat amb la teoria de l'autodeterminació — el marc de Deci i Ryan que identifica l'autonomia, la competència i la relació com les tres necessitats psicològiques fonamentals en el treball; la personalitat configura la facilitat amb què se satisfà cada necessitat ([Deci & Ryan, 2000; doi:10.1207/s15327965pli1104_01](https://doi.org/10.1207/s15327965pli1104_01)).
 
 ---
 
@@ -10632,7 +10632,7 @@ Però l'assumpció que això descriu la majoria dels enginyers de programari no 
 
 La literatura empírica sobre la personalitat de l'enginyer de programari és més petita que la literatura sobre, per exemple, directius o venedors, però diversos estudis robustos han examinat la qüestió directament.
 
-Un estudi àmpliament citat de Capretz i Ahmed (2010; [doi:10.1145/1822376.1822380](https://doi.org/10.1145/1822376.1822380)) va examinar els perfils de personalitat en rols de desenvolupament de programari i va trobar una variació substancial dins del rol. Si bé certes distribucions de personalitat diferien de la població general —els professionals del programari sí que puntuaven moderadament més alt en Obertura de mitjana— la variació dins del grup era gran. No hi havia un únic "tipus de personalitat d'enginyer de programari". La distribució dels perfils de personalitat en les mostres d'enginyeria de programari és àmplia, no estreta.
+Un estudi àmpliament citat de Capretz i Ahmed (2010; [doi:10.1145/1734103.1734111](https://doi.org/10.1145/1734103.1734111)) va examinar els perfils de personalitat en rols de desenvolupament de programari i va trobar una variació substancial dins del rol. Si bé certes distribucions de personalitat diferien de la població general —els professionals del programari sí que puntuaven moderadament més alt en Obertura de mitjana— la variació dins del grup era gran. No hi havia un únic "tipus de personalitat d'enginyer de programari". La distribució dels perfils de personalitat en les mostres d'enginyeria de programari és àmplia, no estreta.
 
 Una metaanàlisi posterior de Cruz, Capretz i col·legues (2015; [doi:10.1145/2695664.2695668](https://doi.org/10.1145/2695664.2695668)) va confirmar que, si bé existien diferències agregades entre els desenvolupadors de programari i les normes de la població general en algunes dimensions, aquestes diferències eren mides d'efecte de magnitud modesta. La descoberta més gran no va ser que els enginyers de programari s'assemblen entre ells, sinó que la similitud és molt més feble del que implica l'estereotip.
 
