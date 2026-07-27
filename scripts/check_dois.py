@@ -33,7 +33,10 @@ import httpx
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent / "api"))
 
-from doi_check import RESOLVER, extract_dois, is_unresolvable, resolve  # noqa: E402
+from doi_check import (  # noqa: E402
+    RESOLVER, attribution_mismatch, crossref_record, extract_dois,
+    is_unresolvable, resolve,
+)
 
 UA = {"User-Agent": "cercol-doi-check/1.0"}
 
@@ -87,6 +90,9 @@ def main() -> int:
     ap.add_argument("files", nargs="*", help="files to scan for DOIs")
     ap.add_argument("--live", action="store_true", help="scan the published corpus")
     ap.add_argument("--api", default="https://api.cercol.team")
+    ap.add_argument("--attribution", action="store_true",
+                    help="also report DOIs whose Crossref record contradicts the "
+                         "author the prose names (report-only, never fails)")
     args = ap.parse_args()
 
     if not args.files and not args.live:
@@ -121,11 +127,64 @@ def main() -> int:
         print(f"\n  UNRESOLVABLE  {RESOLVER}{doi}")
         for w in sorted(where):
             print(f"                in {w}")
+    if args.attribution:
+        _attribution_pass(args, found)
+
     if dead:
         print("\nVerify each citation against Crossref (api.crossref.org/works?query.bibliographic=...)")
         print("and correct the digits. The citation text is usually right; the DOI is not.")
         return 1
     return 0
+
+
+def _attribution_pass(args, found: dict[str, set[str]]) -> None:
+    """Report DOIs that resolve but whose record contradicts the stated author.
+
+    Deliberately report-only, and deliberately NOT wired into CI. Measured
+    against the Jul 2026 corpus it caught 17 of 17 real wrong-paper citations
+    but also flagged one correct one, because it infers the intended author
+    from a fixed window of surrounding prose. That precision is fine for an
+    audit a human triages and wrong for a gate that blocks a publish.
+    """
+    print("\n== attribution pass (report-only, needs human triage) ==")
+    with httpx.Client(headers=UA, follow_redirects=False) as client:
+        texts = _texts_for(args)
+        hits = 0
+        for doi in sorted(found):
+            record = crossref_record(client, doi)
+            if not record:
+                continue
+            for where, text in texts.get(doi, []):
+                reason = attribution_mismatch(text, doi, record)
+                if reason:
+                    hits += 1
+                    print(f"  MISMATCH  {doi}\n            in {where}\n            {reason}")
+                    break
+    print(f"  {hits} possible wrong-paper citation(s). Confirm each by hand before editing.")
+
+
+def _texts_for(args) -> dict[str, list[tuple[str, str]]]:
+    """DOI -> [(where, surrounding text)] for the sources being checked."""
+    out: dict[str, list[tuple[str, str]]] = {}
+    def add(doi, where, text):
+        out.setdefault(doi, []).append((where, text))
+    if args.live:
+        with httpx.Client(headers=UA) as c:
+            for item in c.get(f"{args.api}/blog", timeout=30).json():
+                slug = item["slug"]
+                r = c.get(f"{args.api}/blog/{slug}", timeout=30)
+                if r.status_code != 200:
+                    continue
+                body = (r.json().get("content") or {}).get("en") or ""
+                for line in body.split("\n"):
+                    for doi in extract_dois(line):
+                        add(doi, f"{slug} [en]", line)
+    for p in args.files:
+        text = pathlib.Path(p).read_text(encoding="utf-8", errors="replace")
+        for line in text.split("\n"):
+            for doi in extract_dois(line):
+                add(doi, pathlib.Path(p).name, line)
+    return out
 
 
 if __name__ == "__main__":
