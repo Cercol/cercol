@@ -422,3 +422,56 @@ touches `blog_posts.content` before shipping.
 ```
 scripts/test_content_migration.sh db/migrations/037_*.sql slug-one slug-two
 ```
+
+### Resolution is not attribution (migration 038)
+
+Every batch through 037 fixed DOIs that were **dead**. A full-corpus
+attribution audit (168 citation instances, 65 distinct DOIs, all 108
+articles) found a worse class: DOIs that are perfectly **alive** and
+cite the wrong paper. 17 of them.
+
+The resolution gate cannot see these by construction. It asks "does
+this identifier exist", never "is this the paper you named". The worst
+example: a Neuroticism article cited "Alarcon et al. (2009)
+meta-analysis" against `10.1002/job.4030140402`, which resolves to a
+1993 one-line notice titled "Best paper prize 1992 ($750 prize)". It
+passed every check the pipeline had.
+
+`doi_check.attribution_mismatch` compares the author the prose names
+against the Crossref record for the DOI it prints:
+
+```
+scripts/check_dois.py --live --attribution
+```
+
+**Report-only, deliberately not in CI.** Measured against the Jul 2026
+corpus it caught 17 of 17 real wrong-paper citations but also flagged
+one correct one, because it infers the intended author from a fixed
+window of surrounding prose. That precision is right for an audit a
+human triages and wrong for a gate that blocks publishing. Resolution
+stays the hard gate; attribution is the periodic sweep.
+
+Two rules learned from the batch:
+
+- **Scope replaces to the slug when the wrong DOI is right elsewhere.**
+  `what-is-agreeableness` cited Bell (2007)'s DOI for a Judge (2013)
+  paper. Bell is correctly cited in three other articles, so a
+  corpus-wide replace would have broken them.
+- **A fabricated reference is removed, not repointed.** "Nestsiarovich
+  & Pons (2020), *PLoS ONE* 15(3)" does not exist in any form. Their
+  real 2020 paper is a five-team observational study that supports
+  nothing the article claims, so substituting it would have been
+  laundering. The entry is gone.
+
+### Fixing a DOI does not fix a claim
+
+11 of the 17 mismatches could not be resolved with a DOI swap, because
+the *correctly*-attributed paper does not support the sentence. Examples:
+a "meta-analysis" that is four original studies, a mapping study whose
+stated conclusion is the opposite of what the article reports it
+concluding, and a work-home interference paper that measures no
+personality traits at all.
+
+Swapping the DOI in those cases makes a false claim look sourced, which
+is strictly worse than a broken link. They need prose rewrites and are
+tracked separately.
