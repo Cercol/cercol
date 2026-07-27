@@ -64,6 +64,16 @@ first-run ledger adoption. Chosen over auto-on-deploy because the host is a shar
 VPS (Cèrcol + topquaranta): keeping a human/agent in the loop for DDL is worth the
 one extra deliberate step, and merging a migration must apply nothing on its own.
 
+**Privileges on new tables (added with migration `040`).** The script connects as
+the `postgres` superuser (peer auth), so a `CREATE TABLE` in a migration is owned
+by `postgres` and the `cercol` application role gets **nothing** unless the
+migration grants it. That bit twice — `events` (created by `019`, granted by
+`027`) and `email_change_tokens` (created by `039`, granted by `040`) — each time
+as a 500 with `InsufficientPrivilegeError` only on the new code path. Migration
+`040` sets `ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA public`, so
+tables created from then on grant the app role DML automatically. A table that
+must stay app-inaccessible now has to `REVOKE` deliberately.
+
 Original open question (kept for context):
 
 **Trigger mode.** Two options, to be chosen at acceptance:
