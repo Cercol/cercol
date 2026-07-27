@@ -80,6 +80,44 @@ jobs:
         # shellcheck ships preinstalled on ubuntu-latest.
         run: shellcheck api/deploy/backup/*.sh
 
+  doi-check:
+    name: DOI resolution
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # Content-seeding migrations are the one route to production that the
+    # admin-API guard in api/blog.py cannot cover. Three batches of fabricated
+    # DOIs shipped before this existed (migrations 031, 033, 034): the citation
+    # text always named a real paper, so only the resolver could tell.
+    # Fails only on a definitive 404 from doi.org; unreachable DOIs pass.
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install httpx
+        run: pip install httpx
+
+      - name: Resolve DOIs in changed migrations
+        run: |
+          BASE="${{ github.event.pull_request.base.sha || github.event.before }}"
+          # First push to a branch reports an all-zero base; fall back to HEAD~1.
+          if [ -z "$BASE" ] || [ "$BASE" = "0000000000000000000000000000000000000000" ]; then
+            BASE=$(git rev-parse HEAD~1 2>/dev/null || git rev-parse HEAD)
+          fi
+          FILES=$(git diff --name-only --diff-filter=d "$BASE" HEAD -- 'db/migrations/*.sql')
+          if [ -z "$FILES" ]; then
+            echo "No migration changes; nothing to check."
+            exit 0
+          fi
+          echo "Checking: $FILES"
+          # shellcheck disable=SC2086
+          python scripts/check_dois.py $FILES
+
   test-backend:
     name: Backend tests
     runs-on: ubuntu-latest

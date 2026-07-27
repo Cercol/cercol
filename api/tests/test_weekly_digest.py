@@ -224,7 +224,7 @@ def test_gather_bigquery_gsc_path():
         "WITH cur AS": [{"url": "https://cercol.team/", "before": 9.0, "now": 6.0, "improvement": 3.0}],
         "pagespeed_runs": [{"url": "https://cercol.team/faq", "score": 71, "lcp_ms": 3200}],
         "external_links_status": [
-            {"url": "https://dead.example/x", "article_slug": "a", "lang": "en", "status_code": 404},
+            {"url": "https://dead.example/x", "slugs": "a, b", "instances": 12, "status_code": 404},
         ],
     })
     out = wd.gather_bigquery(_cfg(), bq, *wd.week_bounds(datetime(2026, 6, 16, tzinfo=timezone.utc)))
@@ -233,7 +233,9 @@ def test_gather_bigquery_gsc_path():
     assert out["seo"]["top_queries"][0][0] == "big five test"
     assert out["seo"]["movers"][0][3] == 3.0
     assert out["pagespeed"][0][1] == 71
-    assert out["broken_links"][0][3] == 404
+    # One row per URL: (url, slugs, lang_versions, status). A dead link repeated
+    # across languages must not consume the section's row budget (migration 034).
+    assert out["broken_links"][0] == ("https://dead.example/x", "a, b", 12, 404)
 
 
 # ── HTML builder ─────────────────────────────────────────────────────────────
@@ -267,7 +269,7 @@ def test_weekly_digest_html_populated():
                 "top_pages": [], "movers": [("https://cercol.team/", 9.0, 6.0, 3.0)],
                 "pending": False},
         "pagespeed": [("https://cercol.team/faq", 71, 3200)],
-        "broken_links": [("https://dead.example/x", "a", "en", 404)],
+        "broken_links": [("https://dead.example/x", "a, b", 12, 404)],
         "gsc_lag_note": True,
     }
     html = emails.weekly_digest_html(data)

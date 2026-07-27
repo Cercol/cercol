@@ -460,12 +460,24 @@ def gather_bigquery(cfg: JobConfig, bq, ws, we, ps, pe) -> dict[str, Any]:
                   f"GROUP BY url ORDER BY score ASC LIMIT 8")
     pagespeed = [(r["url"], r.get("score"), r.get("lcp_ms")) for r in psi]
 
-    # Broken external links from the latest snapshot.
+    # Broken external links from the latest snapshot, one row per URL.
+    #
+    # This used to select one row per (url, slug, lang) capped at LIMIT 25. A
+    # single dead DOI cited in one article occupies six rows (one per
+    # language), so the Jul 27 2026 digest spent its whole budget on three
+    # DOIs and silently dropped two more broken URLs -- the cap looked like a
+    # complete list. Grouping by URL reports the actual unit of work (one dead
+    # link is one fix, however many translations repeat it) and keeps the
+    # section far below any cap; the count of affected articles is carried
+    # alongside so nothing is hidden.
     elt = f"`{p}.{sd}.external_links_status`"
-    bl = _bq(bq, f"SELECT DISTINCT url, article_slug, lang, status_code FROM {elt} "
+    bl = _bq(bq, f"SELECT url, ANY_VALUE(status_code) AS status_code, "
+                 f"STRING_AGG(DISTINCT article_slug, ', ' ORDER BY article_slug) AS slugs, "
+                 f"COUNT(DISTINCT CONCAT(article_slug, '|', lang)) AS instances "
+                 f"FROM {elt} "
                  f"WHERE broken = TRUE AND ts_date = (SELECT MAX(ts_date) FROM {elt}) "
-                 f"ORDER BY url LIMIT 25")
-    broken_links = [(r["url"], r["article_slug"], r["lang"], r.get("status_code")) for r in bl]
+                 f"GROUP BY url ORDER BY url LIMIT 100")
+    broken_links = [(r["url"], r["slugs"], r.get("instances"), r.get("status_code")) for r in bl]
 
     return {"seo": seo, "pagespeed": pagespeed, "broken_links": broken_links}
 
