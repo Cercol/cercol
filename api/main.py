@@ -1646,6 +1646,7 @@ async def admin_purge_expired_tokens(request: Request, _: dict = Depends(require
     Safe to run repeatedly; all operations are idempotent.
     Targets:
       - magic_tokens expired more than 1 day ago (or already used)
+      - email_change_tokens expired more than 1 day ago (or already used)
       - refresh_tokens expired or revoked more than 7 days ago
       - oauth_states expired more than 1 day ago
     """
@@ -1664,6 +1665,13 @@ async def admin_purge_expired_tokens(request: Request, _: dict = Depends(require
                OR expires_at < now() - INTERVAL '1 day'
             """
         )
+        email_change_status = await conn.execute(
+            """
+            DELETE FROM email_change_tokens
+            WHERE used_at IS NOT NULL
+               OR expires_at < now() - INTERVAL '1 day'
+            """
+        )
         refresh_status = await conn.execute(
             """
             DELETE FROM refresh_tokens
@@ -1676,7 +1684,8 @@ async def admin_purge_expired_tokens(request: Request, _: dict = Depends(require
         )
 
     return {
-        "magic_tokens_purged":   _count(magic_status),
-        "refresh_tokens_purged": _count(refresh_status),
-        "oauth_states_purged":   _count(oauth_status),
+        "magic_tokens_purged":        _count(magic_status),
+        "email_change_tokens_purged": _count(email_change_status),
+        "refresh_tokens_purged":      _count(refresh_status),
+        "oauth_states_purged":        _count(oauth_status),
     }

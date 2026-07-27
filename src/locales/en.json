@@ -253,6 +253,19 @@
       "body": "Add your name to personalise your experience.",
       "cta": "Set up profile"
     },
+    "email": {
+      "title": "Email address",
+      "current": "Your account email is",
+      "newLabel": "New email address",
+      "newPlaceholder": "your.new@email.com",
+      "saveButton": "Send confirmation",
+      "sending": "Sending…",
+      "sent": "Check the new inbox. Your email changes once you open the link we just sent (valid for 15 minutes).",
+      "changed": "Your email address has been changed.",
+      "taken": "That email is already registered to another account.",
+      "same": "That is already your email address.",
+      "error": "Something went wrong. Try again."
+    },
     "security": {
       "title": "Password & security",
       "noPasswordNote": "Your account uses Google sign-in. You can also set a password to sign in with email.",

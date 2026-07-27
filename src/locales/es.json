@@ -253,6 +253,19 @@
       "body": "Añade tu nombre para personalizar tu experiencia.",
       "cta": "Configurar perfil"
     },
+    "email": {
+      "title": "Dirección de correo",
+      "current": "El correo de tu cuenta es",
+      "newLabel": "Nueva dirección de correo",
+      "newPlaceholder": "tu.nuevo@correo.com",
+      "saveButton": "Enviar confirmación",
+      "sending": "Enviando…",
+      "sent": "Revisa el nuevo buzón. El correo cambiará cuando abras el enlace que acabamos de enviar (válido 15 minutos).",
+      "changed": "Se ha cambiado tu dirección de correo.",
+      "taken": "Ese correo ya está registrado en otra cuenta.",
+      "same": "Ese ya es tu correo.",
+      "error": "Algo ha fallado. Inténtalo de nuevo."
+    },
     "security": {
       "title": "Contraseña y seguridad",
       "noPasswordNote": "Tu cuenta usa Google. Puedes establecer una contraseña para iniciar sesión con email.",
