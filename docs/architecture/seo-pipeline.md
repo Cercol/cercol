@@ -259,3 +259,59 @@ That was a query artifact — it filtered on `event_type` (the column is
 `name`) and on `test_completed` (not a valid event name). Ground truth:
 `cta_click` rows do exist, and completions come from `results`. The
 digest funnel numbers are accurate.
+
+### DOI resolution gate (Jul 2026)
+
+Three batches of unresolvable DOIs reached production (migrations 031,
+033, 034). The pattern was identical every time: the citation text
+named a real paper with the right author, year, journal, volume and
+pages, and only the DOI digits were wrong. Prose review cannot catch
+this, because nothing in the sentence is false. The only thing that
+distinguishes a good DOI from a fabricated one is asking the resolver.
+
+`api/doi_check.py` is that check, and both content entry points route
+through it:
+
+- **Admin API** (`POST`/`PUT /blog`): `api/blog.py` rejects a body
+  carrying a dead DOI with `422 unresolvable_doi`. Set
+  `DOI_CHECK_SKIP=1` to bypass in an emergency.
+- **Migration SQL** (`db/migrations/*.sql`): the `DOI resolution` CI
+  job runs `scripts/check_dois.py` over changed migrations. This is the
+  route the API guard cannot see: migration 030 seeded four articles
+  directly.
+
+Two rules matter:
+
+- **Do not follow redirects.** A registered DOI answers 302 at
+  `doi.org`; an unregistered one answers 404 there. Stopping at the
+  resolver sidesteps publisher bot-detection entirely — APA, SAGE and
+  JSTOR all serve 403 to non-browser agents, the same noise that made
+  `external_links_check` classify 403 as flaky rather than broken.
+- **Fail open on transport, closed on 404.** A `doi.org` outage must
+  never block publishing; a definitively unregistered DOI always must.
+
+A remediation migration necessarily *names* the DOIs it deletes, once
+in the header mapping and once as the `replace()` needle, so it
+declares them:
+
+```
+-- doi-check: retires 10.1177/1073191106293419
+```
+
+Those are exempt in that file only, and the declaration doubles as the
+record of which broken DOI each migration was written to kill.
+
+`scripts/check_dois.py --live` sweeps the published corpus, which is
+how you confirm a remediation migration actually landed in every
+language.
+
+### Broken-link reporting is per URL, not per instance
+
+The digest's broken-links section used to select one row per
+(url, slug, lang) capped at `LIMIT 25`. One dead DOI cited in one
+article occupies six rows, one per language, so the Jul 27 2026 digest
+spent its entire budget on three DOIs and silently dropped two more
+broken URLs — the truncated list looked complete. The query now groups
+by URL and carries the affected slugs and language-version count
+alongside. One dead link is one fix, however many translations repeat
+it.
