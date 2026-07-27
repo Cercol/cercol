@@ -8,6 +8,7 @@ as main.py.
 # Spec: docs/architecture/backend.md
 """
 
+import asyncio
 from datetime import datetime, timezone
 from typing import Optional
 
@@ -18,9 +19,17 @@ from pydantic import BaseModel
 
 import os
 
+import httpx
+
 from deps import require_admin
+from doi_check import unresolvable_dois
 
 router = APIRouter()
+
+# Set DOI_CHECK_SKIP=1 to publish without the resolver round-trip. Escape
+# hatch for an emergency fix while doi.org is misbehaving in a way the
+# fail-open path does not cover (e.g. answering 404 for everything).
+_DOI_CHECK_SKIP = os.environ.get("DOI_CHECK_SKIP") == "1"
 
 # ---------------------------------------------------------------------------
 # Auth — admin gate shared via api/deps.py (Phase 17.8, imported above).
@@ -42,6 +51,31 @@ if not _JWT_SECRET or len(_JWT_SECRET) < 32:
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
+async def _reject_dead_dois(content) -> None:
+    """422 if the body cites a DOI that doi.org reports as unregistered.
+
+    The probe is blocking I/O, so it runs off the event loop. It only ever
+    fires on admin writes, and only 404 is fatal: see api/doi_check.py for
+    why a doi.org outage must not block publishing.
+    """
+    if _DOI_CHECK_SKIP or not content:
+        return
+    def _probe():
+        with httpx.Client(headers={"User-Agent": "cercol-doi-check/1.0"}) as c:
+            return unresolvable_dois(content, c)
+    dead = await asyncio.to_thread(_probe)
+    if dead:
+        raise HTTPException(
+            status_code=422,
+            detail={
+                "error": "unresolvable_doi",
+                "message": "These DOIs do not resolve at doi.org. Verify the "
+                           "citation against Crossref and correct the digits.",
+                "dois": [{"doi": d, "langs": langs} for d, langs in dead],
+            },
+        )
+
 
 def _row_to_post(row) -> dict:
     """Convert an asyncpg Row from blog_posts into a camelCase dict."""
@@ -255,6 +289,7 @@ async def create_post(
     _: dict = Depends(require_admin),
 ):
     """Admin: create a new blog post."""
+    await _reject_dead_dois(body.content)
     published_at = None
     if body.status == "published":
         published_at = datetime.now(timezone.utc)
@@ -290,6 +325,7 @@ async def update_post(
     _: dict = Depends(require_admin),
 ):
     """Admin: update an existing post. Sets published_at if first publish."""
+    await _reject_dead_dois(body.content)
     async with request.app.state.pool.acquire() as conn:
         existing = await conn.fetchrow(
             "SELECT status, published_at FROM blog_posts WHERE slug = $1", slug

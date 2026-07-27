@@ -540,7 +540,7 @@ def weekly_digest_html(data: dict) -> str:
       seo          : {source, impressions, clicks, top_queries:[(q,imp,clk,pos)],
                       top_pages:[(url,imp,clk)], movers:[(url,before,now,impr)], pending:bool}
       pagespeed    : [(url, score, lcp_ms), ...]
-      broken_links : [(url, slug, lang, status), ...]
+      broken_links : [(url, slugs, lang_versions, status), ...]  one row per URL
       gsc_lag_note : bool
     """
     kpis = data.get("kpis", {})
@@ -666,10 +666,12 @@ def weekly_digest_html(data: dict) -> str:
     # Broken external links
     bl = data.get("broken_links") or []
     if bl:
-        rows = [[u, f"{slug} [{lang}]", str(status) if status is not None else "conn"]
-                for u, slug, lang, status in bl]
+        rows = [[u, slugs, f"{instances}&times;" if instances else "&ndash;",
+                 str(status) if status is not None else "conn"]
+                for u, slugs, instances, status in bl]
         parts.append(_section("Broken external links",
-                              _table(["URL", "In article", "Code"], rows)))
+                              _table(["URL", "In articles", "Lang versions", "Code"],
+                                     rows, ["left", "left", "right", "right"])))
     else:
         parts.append(_section("Broken external links", _empty("No broken external links. ✓")))
 
