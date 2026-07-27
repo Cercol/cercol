@@ -43,6 +43,36 @@ Tokens are single-use; reuse returns 401.
   which consumes the token, sets `email_verified = TRUE`, and re-runs
   `ensure_profile`. Rate-limited `5/minute` (signup) and `10/minute` (verify).
 
+## Changing the account email
+
+`POST /auth/email/change-request` (authenticated, `3/minute`) and
+`POST /auth/email/change-confirm` (token, `10/minute`). Migration `039` adds
+`email_change_tokens` — a table of its own rather than a `purpose` column on
+`magic_tokens`, so an email-change token can never be replayed against
+`/auth/magic-link/verify`.
+
+The address moves only when two proofs line up:
+
+1. The requester re-authenticates. Accounts with a password must re-enter it; an
+   unattended session is not enough to move the account elsewhere. Google-only
+   and magic-link-only accounts have nothing to re-enter, so the mailed link is
+   the whole proof for them.
+2. The **new** address opens a one-time link valid for 15 minutes. Nothing is
+   written to `auth_users` before that click.
+
+The current address always receives a heads-up naming the requested new address.
+It carries no button: the inbox being left behind must never be able to complete
+the change.
+
+Confirming updates `auth_users.email` (setting `email_verified = TRUE`),
+`profiles.email`, links any `group_members` invitations already waiting on the
+new address, then revokes **every** refresh token for the user and issues a
+fresh pair to whoever proved ownership. The old inbox does not keep control of
+the account, and the link works in any browser.
+
+The purge in `/admin/maintenance/purge-tokens` drops used and long-expired
+`email_change_tokens` alongside the other token tables.
+
 ## Email verification and the beta/premium grant
 
 The "first 500 free Full Moon" grant in `ensure_profile` (`api/main.py`) is gated

@@ -253,6 +253,19 @@
       "body": "Afegeix el teu nom per personalitzar la teua experiència.",
       "cta": "Configura el perfil"
     },
+    "email": {
+      "title": "Adreça de correu",
+      "current": "El correu del teu compte és",
+      "newLabel": "Nova adreça de correu",
+      "newPlaceholder": "el.teu.nou@correu.com",
+      "saveButton": "Envia la confirmació",
+      "sending": "Enviant…",
+      "sent": "Revisa la nova bústia. El correu canviarà quan obris l'enllaç que acabem d'enviar (vàlid 15 minuts).",
+      "changed": "S'ha canviat la teva adreça de correu.",
+      "taken": "Aquest correu ja està registrat en un altre compte.",
+      "same": "Aquest ja és el teu correu.",
+      "error": "Alguna cosa ha fallat. Torna-ho a provar."
+    },
     "security": {
       "title": "Contrasenya i seguretat",
       "noPasswordNote": "El teu compte utilitza Google. Pots establir una contrasenya per entrar amb correu electrònic.",

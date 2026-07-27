@@ -253,6 +253,19 @@
       "body": "Ajoutez votre nom pour personnaliser votre expérience.",
       "cta": "Configurer le profil"
     },
+    "email": {
+      "title": "Adresse e-mail",
+      "current": "L'e-mail de votre compte est",
+      "newLabel": "Nouvelle adresse e-mail",
+      "newPlaceholder": "votre.nouveau@email.com",
+      "saveButton": "Envoyer la confirmation",
+      "sending": "Envoi…",
+      "sent": "Consultez la nouvelle boîte de réception. L'e-mail changera lorsque vous ouvrirez le lien que nous venons d'envoyer (valide 15 minutes).",
+      "changed": "Votre adresse e-mail a été modifiée.",
+      "taken": "Cet e-mail est déjà enregistré sur un autre compte.",
+      "same": "C'est déjà votre adresse e-mail.",
+      "error": "Une erreur est survenue. Réessayez."
+    },
     "security": {
       "title": "Mot de passe et sécurité",
       "noPasswordNote": "Votre compte utilise Google. Vous pouvez définir un mot de passe pour vous connecter avec votre email.",

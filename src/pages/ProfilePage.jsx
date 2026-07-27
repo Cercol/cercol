@@ -3,10 +3,10 @@
  * Requires authentication. Reads/writes profiles via the backend API (PATCH /me/profile).
  */
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
-import { updateMyProfile, setMyPassword } from '../lib/api'
+import { updateMyProfile, setMyPassword, requestEmailChange } from '../lib/api'
 import { Card, Button, SectionLabel } from '../components/ui'
 
 // ── Country list (~55 entries, ISO 3166-1 alpha-2 codes) ─────────────────────
@@ -116,6 +116,7 @@ const INPUT_CLASS =
 export default function ProfilePage() {
   const { t }                              = useTranslation()
   const navigate                           = useNavigate()
+  const [params]                           = useSearchParams()
   const { user, profile, loading, refreshProfile } = useAuth()
 
   const [firstName,       setFirstName]       = useState('')
@@ -131,6 +132,15 @@ export default function ProfilePage() {
   const [pwSaving,    setPwSaving]    = useState(false)
   const [pwStatus,    setPwStatus]    = useState(null)   // 'saved' | 'error' | 'minLength' | 'wrongCurrent' | null
   const [pwErrorMsg,  setPwErrorMsg]  = useState('')
+
+  // Email section state. 'sent' means the confirmation link is in the new
+  // inbox — the address does not move until that link is opened.
+  const [newEmail,     setNewEmail]     = useState('')
+  const [emailPw,      setEmailPw]      = useState('')
+  const [emailSaving,  setEmailSaving]  = useState(false)
+  const [emailStatus,  setEmailStatus]  = useState(
+    params.get('email_changed') ? 'changed' : null,
+  )  // 'sent' | 'changed' | 'taken' | 'same' | 'wrongCurrent' | 'error' | null
 
   // Redirect if not logged in
   useEffect(() => {
@@ -200,6 +210,29 @@ export default function ProfilePage() {
       }
     } finally {
       setPwSaving(false)
+    }
+  }
+
+  async function handleEmailSubmit(e) {
+    e.preventDefault()
+    setEmailStatus(null)
+    setEmailSaving(true)
+    try {
+      await requestEmailChange({
+        newEmail: newEmail.trim(),
+        currentPassword: profile?.has_password ? emailPw : undefined,
+      })
+      setEmailStatus('sent')
+      setNewEmail('')
+      setEmailPw('')
+    } catch (err) {
+      const msg = err.message ?? ''
+      if (msg.includes('already registered'))         setEmailStatus('taken')
+      else if (msg.includes('already your email'))    setEmailStatus('same')
+      else if (msg.includes('Current password'))      setEmailStatus('wrongCurrent')
+      else                                            setEmailStatus('error')
+    } finally {
+      setEmailSaving(false)
     }
   }
 
@@ -319,6 +352,80 @@ export default function ProfilePage() {
                 onClick={() => navigate(-1)}
               >
                 {t('profile.cancel')}
+              </Button>
+            </div>
+
+          </form>
+        </Card>
+
+        {/* Email address */}
+        <SectionLabel color="gray" className="mb-1">{t('profile.email.title')}</SectionLabel>
+        <p className="text-sm text-gray-500 mb-4">
+          {t('profile.email.current')} <span className="font-semibold text-gray-700">{user?.email}</span>
+        </p>
+
+        <Card className="p-6 shadow-sm mb-8">
+          <form onSubmit={handleEmailSubmit} className="flex flex-col gap-5">
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                {t('profile.email.newLabel')}
+              </label>
+              <input
+                type="email"
+                value={newEmail}
+                onChange={(e) => setNewEmail(e.target.value)}
+                placeholder={t('profile.email.newPlaceholder')}
+                className={INPUT_CLASS}
+                autoComplete="email"
+                required
+              />
+            </div>
+
+            {/* Re-authentication — an open session alone must not move the account */}
+            {profile?.has_password && (
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                  {t('profile.security.currentPasswordLabel')}
+                </label>
+                <input
+                  type="password"
+                  value={emailPw}
+                  onChange={(e) => setEmailPw(e.target.value)}
+                  autoComplete="current-password"
+                  className={INPUT_CLASS}
+                  required
+                />
+              </div>
+            )}
+
+            {emailStatus === 'sent' && (
+              <p className="text-sm text-emerald-600">{t('profile.email.sent')}</p>
+            )}
+            {emailStatus === 'changed' && (
+              <p className="text-sm text-emerald-600">{t('profile.email.changed')}</p>
+            )}
+            {emailStatus === 'taken' && (
+              <p className="text-sm text-red-600">{t('profile.email.taken')}</p>
+            )}
+            {emailStatus === 'same' && (
+              <p className="text-sm text-red-600">{t('profile.email.same')}</p>
+            )}
+            {emailStatus === 'wrongCurrent' && (
+              <p className="text-sm text-red-600">{t('profile.security.wrongCurrent')}</p>
+            )}
+            {emailStatus === 'error' && (
+              <p className="text-sm text-red-600">{t('profile.email.error')}</p>
+            )}
+
+            <div className="pt-1">
+              <Button
+                type="submit"
+                variant="primary"
+                size="md"
+                disabled={emailSaving || !newEmail.trim()}
+              >
+                {emailSaving ? t('profile.email.sending') : t('profile.email.saveButton')}
               </Button>
             </div>
 

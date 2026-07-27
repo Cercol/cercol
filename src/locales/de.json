@@ -253,6 +253,19 @@
       "body": "Füge deinen Namen hinzu, um dein Erlebnis zu personalisieren.",
       "cta": "Profil einrichten"
     },
+    "email": {
+      "title": "E-Mail-Adresse",
+      "current": "Die E-Mail deines Kontos ist",
+      "newLabel": "Neue E-Mail-Adresse",
+      "newPlaceholder": "deine.neue@email.com",
+      "saveButton": "Bestätigung senden",
+      "sending": "Wird gesendet…",
+      "sent": "Sieh im neuen Postfach nach. Die E-Mail ändert sich, sobald du den soeben gesendeten Link öffnest (15 Minuten gültig).",
+      "changed": "Deine E-Mail-Adresse wurde geändert.",
+      "taken": "Diese E-Mail ist bereits einem anderen Konto zugeordnet.",
+      "same": "Das ist bereits deine E-Mail-Adresse.",
+      "error": "Etwas ist schiefgelaufen. Versuche es erneut."
+    },
     "security": {
       "title": "Passwort & Sicherheit",
       "noPasswordNote": "Dein Konto nutzt Google. Du kannst ein Passwort festlegen, um dich per E-Mail anzumelden.",

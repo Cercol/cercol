@@ -253,6 +253,19 @@
       "body": "Tilføj dit navn for at personliggøre din oplevelse.",
       "cta": "Opret profil"
     },
+    "email": {
+      "title": "E-mailadresse",
+      "current": "Din kontos e-mail er",
+      "newLabel": "Ny e-mailadresse",
+      "newPlaceholder": "din.nye@email.com",
+      "saveButton": "Send bekræftelse",
+      "sending": "Sender…",
+      "sent": "Tjek den nye indbakke. E-mailen ændres, når du åbner linket, vi lige har sendt (gyldigt i 15 minutter).",
+      "changed": "Din e-mailadresse er blevet ændret.",
+      "taken": "Den e-mail er allerede registreret på en anden konto.",
+      "same": "Det er allerede din e-mailadresse.",
+      "error": "Noget gik galt. Prøv igen."
+    },
     "security": {
       "title": "Adgangskode og sikkerhed",
       "noPasswordNote": "Din konto bruger Google. Du kan oprette en adgangskode for at logge ind med email.",
