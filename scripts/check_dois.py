@@ -163,6 +163,20 @@ def _attribution_pass(args, found: dict[str, set[str]]) -> None:
     print(f"  {hits} possible wrong-paper citation(s). Confirm each by hand before editing.")
 
 
+def _sentences(line: str):
+    """Split a line into sentences, keeping "et al." intact.
+
+    The unit matters. Feeding whole lines to attribution_mismatch loses most
+    real hits: a paragraph usually names the correct author somewhere, and a
+    260-character window that reaches back into it finds a match and stays
+    quiet. Measured on the Jul 2026 corpus, line-level reporting caught 2 of
+    10 known wrong-paper citations; sentence-level caught all 10.
+    """
+    protected = line.replace("et al.", "et al\x00")
+    for s in re.split(r"(?<=[.!?])\s+(?=[A-Z*\[])", protected):
+        yield s.replace("et al\x00", "et al.")
+
+
 def _texts_for(args) -> dict[str, list[tuple[str, str]]]:
     """DOI -> [(where, surrounding text)] for the sources being checked."""
     out: dict[str, list[tuple[str, str]]] = {}
@@ -177,13 +191,15 @@ def _texts_for(args) -> dict[str, list[tuple[str, str]]]:
                     continue
                 body = (r.json().get("content") or {}).get("en") or ""
                 for line in body.split("\n"):
-                    for doi in extract_dois(line):
-                        add(doi, f"{slug} [en]", line)
+                    for sentence in _sentences(line):
+                        for doi in extract_dois(sentence):
+                            add(doi, f"{slug} [en]", sentence)
     for p in args.files:
         text = pathlib.Path(p).read_text(encoding="utf-8", errors="replace")
         for line in text.split("\n"):
-            for doi in extract_dois(line):
-                add(doi, pathlib.Path(p).name, line)
+            for sentence in _sentences(line):
+                for doi in extract_dois(sentence):
+                    add(doi, pathlib.Path(p).name, sentence)
     return out
 
 
