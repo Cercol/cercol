@@ -380,3 +380,45 @@ what the claim is really standing on. If something does, cite that. If
 nothing does, the sentence is the thing that has to change. Substituting
 a plausible-looking DOI to make the gate go green is the exact failure
 this pipeline exists to prevent.
+
+### English lost its citations, not the other way round (migration 037)
+
+An audit of all 108 articles compared citation density across the six
+languages. Exactly two are skewed, and in both it is the **English**
+body that is missing what the translations kept:
+
+- `big-five-vs-disc-vs-belbin` had no source list at all, only
+  "Further reading" internal links, while making falsifiable claims
+  about DISC's validity and Belbin's inventory.
+- `blind-spots-in-teams` had the richer list of the two languages (four
+  entries against Catalan's two) but no DOIs on any of them.
+
+This is the tail of the SEO rewrite tranches (migrations 020-024): the
+English bodies were restructured for search and their reference
+apparatus did not survive. English is the SEO-primary language and the
+one an LLM is most likely to quote, so it is the worst place in the
+corpus to carry uncited claims.
+
+Kenny & West (2008) stays without a DOI: it is a Guilford book chapter
+with none registered. A missing DOI is honest; an approximate one is
+not.
+
+### Content migrations are not idempotent by default
+
+Migrations 034-036 replaced a dead DOI with a live one. Old and new
+were disjoint, so a re-run found no needle and changed nothing.
+
+A migration that *adds* text around a needle it keeps has the opposite
+property: the replacement contains the needle, so a second run inserts
+a second copy. The first draft of migration 037 did exactly this and
+produced two `## Sources` headings. Such statements need a `WHERE`
+guard on the text they add.
+
+`scripts/test_content_migration.sh` is the harness: it seeds a
+throwaway Postgres from the live API, applies the migration twice, and
+fails if the second run changes anything. Run it on any migration that
+touches `blog_posts.content` before shipping.
+
+```
+scripts/test_content_migration.sh db/migrations/037_*.sql slug-one slug-two
+```

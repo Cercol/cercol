@@ -78,7 +78,7 @@ jobs:
 
       - name: shellcheck deploy scripts
         # shellcheck ships preinstalled on ubuntu-latest.
-        run: shellcheck api/deploy/backup/*.sh
+        run: shellcheck api/deploy/backup/*.sh scripts/test_content_migration.sh
 
   doi-check:
     name: DOI resolution
