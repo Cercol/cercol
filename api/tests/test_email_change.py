@@ -12,6 +12,7 @@ Plus: the old address is always told, and confirming kills every prior session.
 
 from __future__ import annotations
 
+import asyncio
 import os
 import sys
 from datetime import datetime, timedelta, timezone
@@ -125,6 +126,10 @@ def _auth():
         main_module._JWT_SECRET, algorithm="HS256",
     )
     return {"Authorization": f"Bearer {token}"}
+
+
+def _run_coro(coro):
+    return asyncio.get_event_loop().run_until_complete(coro)
 
 
 def _token_row(*, used_at=None, expires_in=timedelta(minutes=10)):
@@ -274,6 +279,53 @@ def test_confirm_moves_the_account_and_revokes_every_session():
     )
     assert claims["email"] == _NEW
     assert claims["sub"] == _USER_ID
+
+
+# ── Google sign-in after a change must not revert the address ────────────────
+
+class GoogleReturnConn:
+    """The account was found by google_id and its stored email is the *changed*
+    one, while Google keeps asserting the address it was created with."""
+
+    def __init__(self):
+        self.executed: list = []
+
+    async def execute(self, query, *args):
+        self.executed.append((query, args))
+        return "UPDATE 1"
+
+    async def fetchrow(self, query, *args):
+        if "WHERE google_id" in query:
+            return {"id": _USER_ID, "email": _NEW}
+        return None
+
+    def args_for(self, needle):
+        return next(args for q, args in self.executed if needle in q)
+
+
+def test_google_signin_keeps_the_changed_email():
+    conn = GoogleReturnConn()
+    out = _run_coro(
+        auth_module._find_or_create_user(conn, _OLD, google_id="g-123")
+    )
+    assert out["email"] == _NEW
+    # The profiles upsert and the invitation linking must both carry the
+    # account's current address, not the one Google asserted.
+    assert _NEW in conn.args_for("INSERT INTO profiles")
+    assert _OLD not in conn.args_for("INSERT INTO profiles")
+    assert _NEW in conn.args_for("UPDATE group_members")
+
+
+def test_google_signin_still_creates_new_users_with_the_google_address():
+    # Regression guard: the fix must not break the normal first-sign-in path.
+    class NoRowConn(GoogleReturnConn):
+        async def fetchrow(self, query, *args):
+            return None
+
+    conn = NoRowConn()
+    out = _run_coro(auth_module._find_or_create_user(conn, _OLD, google_id="g-9"))
+    assert out["email"] == _OLD
+    assert _OLD in conn.args_for("INSERT INTO profiles")
 
 
 # ── Email rendering ──────────────────────────────────────────────────────────
