@@ -163,6 +163,22 @@ export async function setMyPassword({ currentPassword, newPassword }) {
   })
 }
 
+/**
+ * requestEmailChange — ask for a confirmation link to be sent to a new address.
+ * Nothing changes until that link is opened.
+ * @param {{ newEmail: string, currentPassword?: string }} params
+ *   currentPassword is required when the account already has a password.
+ */
+export async function requestEmailChange({ newEmail, currentPassword }) {
+  return authFetch('/auth/email/change-request', {
+    method: 'POST',
+    body: JSON.stringify({
+      new_email: newEmail,
+      ...(currentPassword ? { current_password: currentPassword } : {}),
+    }),
+  })
+}
+
 // ── Stripe ────────────────────────────────────────────────────────────────────
 
 export async function createCheckoutSession() {

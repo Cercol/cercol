@@ -12,6 +12,8 @@ POST /auth/password/signup      — create account with bcrypt password
 POST /auth/password/signin      — verify bcrypt password, return tokens
 POST /auth/refresh              — exchange refresh token for new access token
 POST /auth/signout              — revoke refresh token
+POST /auth/email/change-request — start an email change (confirmation to the new address)
+POST /auth/email/change-confirm — consume the token, move the account to the new address
 GET  /auth/google               — redirect to Google OAuth2 authorisation URL
 GET  /auth/google/callback      — exchange code → user info → tokens → redirect
 
@@ -30,14 +32,20 @@ from urllib.parse import urlencode
 
 import asyncpg
 import httpx
-from fastapi import APIRouter, HTTPException, Query, Request, status
+from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
 from fastapi.responses import RedirectResponse
 from jose import jwt
 import bcrypt as _bcrypt_lib
 from pydantic import BaseModel
 from slowapi.errors import RateLimitExceeded  # noqa: F401 — used indirectly via app handler
 
-from emails import send_magic_link, send_verify_email
+from deps import get_current_user
+from emails import (
+    send_email_change_confirm,
+    send_email_change_notice,
+    send_magic_link,
+    send_verify_email,
+)
 from limiter import limiter
 
 # ---------------------------------------------------------------------------
@@ -258,6 +266,15 @@ class RefreshBody(BaseModel):
 
 class SignoutBody(BaseModel):
     refresh_token: str
+
+
+class EmailChangeRequestBody(BaseModel):
+    new_email:        str
+    current_password: Optional[str] = None
+
+
+class EmailChangeConfirmBody(BaseModel):
+    token: str
 
 
 # ── Magic link ───────────────────────────────────────────────────────────────
@@ -520,6 +537,153 @@ async def signout(request: Request, body: SignoutBody):
             body.refresh_token,
         )
     return None
+
+
+# ── Email change ──────────────────────────────────────────────────────────────
+
+@router.post("/email/change-request", status_code=202)
+@limiter.limit("3/minute")
+async def email_change_request(
+    request: Request,
+    body: EmailChangeRequestBody,
+    user: dict = Depends(get_current_user),
+):
+    """
+    Start an email change for the authenticated account.
+
+    Nothing is written to auth_users here: the address only moves once the
+    one-time token mailed to it comes back (same ownership proof signup uses).
+    Accounts that have a password must re-enter it — an unattended session must
+    not be enough to move the account to somebody else's address.
+    """
+    new_email = body.new_email.strip().lower()
+    if not new_email or "@" not in new_email:
+        raise HTTPException(status_code=400, detail="Invalid email address")
+
+    user_id = user["sub"]
+    async with _pool().acquire() as conn:
+        row = await conn.fetchrow(
+            "SELECT email, password_hash FROM auth_users WHERE id = $1", user_id
+        )
+        if row is None:
+            raise HTTPException(status_code=404, detail="User not found")
+
+        current_email = row["email"]
+        if new_email == current_email:
+            raise HTTPException(status_code=400, detail="That is already your email address")
+
+        if row["password_hash"] is not None:
+            if not body.current_password:
+                raise HTTPException(status_code=400, detail="Current password required")
+            if not _pwd_verify(body.current_password, row["password_hash"]):
+                raise HTTPException(status_code=401, detail="Current password is incorrect")
+
+        if await conn.fetchval("SELECT 1 FROM auth_users WHERE email = $1", new_email):
+            raise HTTPException(status_code=409, detail="Email already registered")
+
+        token = secrets.token_urlsafe(32)
+        await conn.execute(
+            """
+            INSERT INTO email_change_tokens (user_id, new_email, token, expires_at)
+            VALUES ($1, $2, $3, $4)
+            """,
+            user_id, new_email, token, datetime.now(timezone.utc) + _MAGIC_TTL,
+        )
+        lang_row = await conn.fetchrow(
+            "SELECT native_language FROM profiles WHERE id = $1", user_id
+        )
+
+    user_lang = (lang_row["native_language"] if lang_row else None) or "en"
+    link = f"{_FRONTEND_URL}/auth/callback?type=email-change&token={token}"
+
+    # Confirmation to the new address (that click is the ownership proof); a
+    # heads-up to the old one so a hijacked session cannot move the account
+    # without the real owner seeing it.
+    try:
+        await send_email_change_confirm(new_email, link, lang=user_lang)
+    except Exception as exc:
+        print(f"[auth] email change confirmation failed for {new_email}: {exc}")
+    try:
+        await send_email_change_notice(current_email, new_email, lang=user_lang)
+    except Exception as exc:
+        print(f"[auth] email change notice failed for {current_email}: {exc}")
+
+    return {"detail": "Confirmation sent to the new address"}
+
+
+@router.post("/email/change-confirm")
+@limiter.limit("10/minute")
+async def email_change_confirm(request: Request, body: EmailChangeConfirmBody):
+    """
+    Consume an email-change token and move the account to the new address.
+
+    Token-authenticated rather than session-authenticated: the link is opened
+    from the new inbox, which may well be a different browser. Every existing
+    session is revoked (the old inbox must not keep control of the account) and
+    a fresh pair is issued to whoever proved ownership of the new address.
+    """
+    token = body.token.strip()
+    now   = datetime.now(timezone.utc)
+
+    async with _pool().acquire() as conn:
+        row = await conn.fetchrow(
+            """
+            SELECT id, user_id, new_email, expires_at, used_at
+            FROM email_change_tokens
+            WHERE token = $1
+            """,
+            token,
+        )
+        if row is None:
+            raise HTTPException(status_code=401, detail="Invalid or expired confirmation link")
+        if row["used_at"] is not None:
+            raise HTTPException(status_code=401, detail="Confirmation link already used")
+        if row["expires_at"] < now:
+            raise HTTPException(status_code=401, detail="Confirmation link has expired")
+
+        new_email = row["new_email"]
+        user_id   = str(row["user_id"])
+
+        async with conn.transaction():
+            await conn.execute(
+                "UPDATE email_change_tokens SET used_at = $1 WHERE id = $2", now, row["id"],
+            )
+            # Re-check inside the transaction: the address may have been
+            # registered by someone else while the link sat in the inbox.
+            taken = await conn.fetchval(
+                "SELECT 1 FROM auth_users WHERE email = $1 AND id <> $2", new_email, user_id,
+            )
+            if taken:
+                raise HTTPException(status_code=409, detail="Email already registered")
+
+            await conn.execute(
+                "UPDATE auth_users SET email = $1, email_verified = TRUE WHERE id = $2",
+                new_email, user_id,
+            )
+            await conn.execute(
+                "UPDATE profiles SET email = $1, updated_at = now() WHERE id = $2",
+                new_email, user_id,
+            )
+            # Group invitations sent to the new address before the user owned it
+            # here, same as _find_or_create_user does on first sign-in.
+            await conn.execute(
+                """
+                UPDATE group_members SET user_id = $1
+                WHERE invited_email = $2 AND user_id IS NULL AND status = 'pending'
+                """,
+                user_id, new_email,
+            )
+            await conn.execute(
+                """
+                UPDATE refresh_tokens SET revoked_at = $1
+                WHERE user_id = $2 AND revoked_at IS NULL
+                """,
+                now, user_id,
+            )
+
+        rt = await _issue_refresh_token(conn, user_id)
+
+    return _token_response(user_id, new_email, rt)
 
 
 # ── Google OAuth2 ─────────────────────────────────────────────────────────────

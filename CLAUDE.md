@@ -141,7 +141,7 @@ When adding a new language to Cèrcol:
 - `.github/workflows/` - `ci.yml`, `ci-docs.yml`, `deploy-frontend.yml`, `deploy-backend.yml`.
 - `docs/` - living docs (`policies/`, `architecture/`, `decisions/`, `post-mortems/`, `ops/`) plus `archive/` for decayed content.
 - `scripts/` - sitemap, prerender, deploy-api, docs-coherence and spec-path validators, blog article updaters.
-- `sql/`, `db/migrations/` - PostgreSQL seeds and migrations (001 through 015).
+- `sql/`, `db/migrations/` - PostgreSQL seeds and migrations (001 through 039).
 
 ## SEO conventions
 

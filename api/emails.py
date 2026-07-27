@@ -9,6 +9,8 @@ Triggers:
   send_witness_completed — subject is notified when a witness finishes
   send_group_invitation  — invited person receives a group invite
   send_magic_link        — one-time sign-in link
+  send_email_change_confirm — confirmation link sent to the new address
+  send_email_change_notice  — heads-up sent to the address being left behind
 
 Each send_* function accepts a `lang` parameter (ISO 639-1 code).
 Supported: en, ca, es, fr, de, da — any other value falls back to 'en'.
@@ -157,6 +159,82 @@ _S = {
         "fr": "Si vous n'avez pas créé de compte Cèrcol, vous pouvez ignorer cet e-mail.",
         "de": "Falls du kein Cèrcol-Konto erstellt hast, kannst du diese E-Mail ignorieren.",
         "da": "Hvis du ikke har oprettet en Cèrcol-konto, kan du roligt ignorere denne e-mail.",
+    },
+
+    # ── Email change ─────────────────────────────────────────────────────────
+    "ec_subject": {
+        "en": "Confirm your new email — Cèrcol",
+        "ca": "Confirma el teu nou correu — Cèrcol",
+        "es": "Confirma tu nuevo correo — Cèrcol",
+        "fr": "Confirmez votre nouvel e-mail — Cèrcol",
+        "de": "Bestätige deine neue E-Mail — Cèrcol",
+        "da": "Bekræft din nye e-mail — Cèrcol",
+    },
+    "ec_heading": {
+        "en": "Confirm your new email",
+        "ca": "Confirma el teu nou correu",
+        "es": "Confirma tu nuevo correo",
+        "fr": "Confirmez votre nouvel e-mail",
+        "de": "Bestätige deine neue E-Mail",
+        "da": "Bekræft din nye e-mail",
+    },
+    "ec_body": {
+        "en": "Confirm this address to move your Cèrcol account to it. Your account keeps all its results. The link is valid for 15 minutes.",
+        "ca": "Confirma aquesta adreça per traslladar-hi el teu compte de Cèrcol. El compte conserva tots els resultats. L'enllaç és vàlid durant 15 minuts.",
+        "es": "Confirma esta dirección para trasladar a ella tu cuenta de Cèrcol. La cuenta conserva todos sus resultados. El enlace es válido durante 15 minutos.",
+        "fr": "Confirmez cette adresse pour y transférer votre compte Cèrcol. Le compte conserve tous ses résultats. Le lien est valide pendant 15 minutes.",
+        "de": "Bestätige diese Adresse, um dein Cèrcol-Konto dorthin zu verschieben. Alle Ergebnisse bleiben erhalten. Der Link ist 15 Minuten gültig.",
+        "da": "Bekræft denne adresse for at flytte din Cèrcol-konto hertil. Kontoen beholder alle sine resultater. Linket er gyldigt i 15 minutter.",
+    },
+    "ec_button": {
+        "en": "Confirm new email",
+        "ca": "Confirma el nou correu",
+        "es": "Confirmar nuevo correo",
+        "fr": "Confirmer le nouvel e-mail",
+        "de": "Neue E-Mail bestätigen",
+        "da": "Bekræft ny e-mail",
+    },
+    "ec_ignore": {
+        "en": "If you did not ask to change your Cèrcol email, you can safely ignore this email.",
+        "ca": "Si no has demanat canviar el correu de Cèrcol, pots ignorar aquest missatge.",
+        "es": "Si no has pedido cambiar tu correo de Cèrcol, puedes ignorar este mensaje.",
+        "fr": "Si vous n'avez pas demandé à changer votre e-mail Cèrcol, vous pouvez ignorer ce message.",
+        "de": "Falls du keine Änderung deiner Cèrcol-E-Mail angefordert hast, kannst du diese Nachricht ignorieren.",
+        "da": "Hvis du ikke har bedt om at ændre din Cèrcol-e-mail, kan du roligt ignorere denne besked.",
+    },
+
+    # ── Email change — notice to the old address ─────────────────────────────
+    "ecn_subject": {
+        "en": "Someone asked to change your Cèrcol email",
+        "ca": "S'ha demanat canviar el correu del teu compte de Cèrcol",
+        "es": "Se ha pedido cambiar el correo de tu cuenta de Cèrcol",
+        "fr": "Une demande de changement d'e-mail a été faite sur votre compte Cèrcol",
+        "de": "Es wurde eine Änderung deiner Cèrcol-E-Mail angefordert",
+        "da": "Der er anmodet om at ændre din Cèrcol-e-mail",
+    },
+    "ecn_heading": {
+        "en": "Email change requested",
+        "ca": "Canvi de correu sol·licitat",
+        "es": "Cambio de correo solicitado",
+        "fr": "Changement d'e-mail demandé",
+        "de": "E-Mail-Änderung angefordert",
+        "da": "Ændring af e-mail anmodet",
+    },
+    "ecn_body": {
+        "en": "A request was made to move your Cèrcol account to {new_email}. The change only takes effect once that address confirms it.",
+        "ca": "S'ha demanat traslladar el teu compte de Cèrcol a {new_email}. El canvi només serà efectiu quan aquella adreça el confirmi.",
+        "es": "Se ha pedido trasladar tu cuenta de Cèrcol a {new_email}. El cambio solo será efectivo cuando esa dirección lo confirme.",
+        "fr": "Une demande de transfert de votre compte Cèrcol vers {new_email} a été faite. Le changement ne prendra effet qu'après confirmation par cette adresse.",
+        "de": "Es wurde angefordert, dein Cèrcol-Konto zu {new_email} zu verschieben. Die Änderung wird erst wirksam, wenn diese Adresse sie bestätigt.",
+        "da": "Der er anmodet om at flytte din Cèrcol-konto til {new_email}. Ændringen træder først i kraft, når den adresse bekræfter den.",
+    },
+    "ecn_warning": {
+        "en": "If this was not you, change your password now and write to hello@cercol.team.",
+        "ca": "Si no has estat tu, canvia la contrasenya ara mateix i escriu a hello@cercol.team.",
+        "es": "Si no has sido tú, cambia tu contraseña ahora mismo y escribe a hello@cercol.team.",
+        "fr": "Si ce n'était pas vous, changez votre mot de passe immédiatement et écrivez à hello@cercol.team.",
+        "de": "Falls du das nicht warst, ändere sofort dein Passwort und schreibe an hello@cercol.team.",
+        "da": "Hvis det ikke var dig, så skift din adgangskode med det samme og skriv til hello@cercol.team.",
     },
 
     # ── Witness assigned ─────────────────────────────────────────────────────
@@ -706,6 +784,27 @@ def _verify_email_html(link: str, lang: str) -> str:
     )
 
 
+def _email_change_confirm_html(link: str, lang: str) -> str:
+    return _base(
+        _h1(_t("ec_heading", lang))
+        + _p(_t("ec_body", lang))
+        + _btn(link, _t("ec_button", lang))
+        + _p(_t("ec_ignore", lang), muted=True),
+        lang=lang,
+    )
+
+
+def _email_change_notice_html(new_email: str, lang: str) -> str:
+    # No button: this one goes to the address that is being moved away from, so
+    # it must never be the thing that completes the change.
+    return _base(
+        _h1(_t("ecn_heading", lang))
+        + _p(_t("ecn_body", lang).format(new_email=new_email))
+        + _p(_t("ecn_warning", lang), muted=True),
+        lang=lang,
+    )
+
+
 def _witness_assigned_html(
     witness_name: str, subject_display: str, link: str, lang: str
 ) -> str:
@@ -783,6 +882,26 @@ async def send_verify_email(to_email: str, link: str, lang: str = "en") -> None:
         to      = to_email,
         subject = _t("verify_subject", l),
         html    = _verify_email_html(link, l),
+    )
+
+
+async def send_email_change_confirm(to_email: str, link: str, lang: str = "en") -> None:
+    """Send the confirmation link to the address the account is moving to."""
+    l = _lang(lang)
+    await _send(
+        to      = to_email,
+        subject = _t("ec_subject", l),
+        html    = _email_change_confirm_html(link, l),
+    )
+
+
+async def send_email_change_notice(to_email: str, new_email: str, lang: str = "en") -> None:
+    """Warn the current address that a move to `new_email` was requested."""
+    l = _lang(lang)
+    await _send(
+        to      = to_email,
+        subject = _t("ecn_subject", l),
+        html    = _email_change_notice_html(new_email, l),
     )
 
 
