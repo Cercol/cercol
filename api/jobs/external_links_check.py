@@ -5,8 +5,9 @@ Weekly external-link health check for blog articles.
 
 Pulls every published article from the public API, extracts the external
 links from each language body (reusing api/blog_links so the parsing
-rules match the audit and the CI guard), probes each unique URL with a
-short-timeout HEAD (GET fallback), and appends a snapshot to
+rules match the audit and the CI guard) plus every bare DOI mentioned in
+prose (api/doi_check), probes each unique URL with a short-timeout HEAD
+(GET fallback), and appends a snapshot to
 cercol.cercol_seo.external_links_status.
 
 "broken" is reserved for hard failures (404 and DNS/connection errors).
@@ -39,6 +40,7 @@ from ._config import JobConfig, load_config, table_id
 # api/ is on sys.path when run as `python -m jobs.external_links_check`
 # from /home/cercol/api/api, so the shared parser imports directly.
 from blog_links import extract_link_targets, is_internal, langs_with_content
+from doi_check import RESOLVER, extract_dois
 
 log = logging.getLogger("cercol.external_links_check")
 
@@ -82,8 +84,31 @@ def probe(client: httpx.Client, url: str) -> int | None:
     return last
 
 
+def _doi_url(url: str) -> str:
+    """Normalise a doi.org URL to its canonical lowercase form, else unchanged.
+
+    DOIs are case-insensitive, and the corpus writes the same paper both ways
+    across translations. Without this, `.../10.1016/S0092...` and the bare
+    `doi:10.1016/s0092...` would be probed and snapshotted as two links.
+    """
+    low = url.lower()
+    for prefix in ("https://doi.org/", "http://doi.org/", "https://dx.doi.org/"):
+        if low.startswith(prefix):
+            return RESOLVER + low[len(prefix):]
+    return url
+
+
 def collect_external_links(http_client: httpx.Client) -> list[tuple[str, str, str]]:
-    """Return [(article_slug, lang, url)] for every external link in every body."""
+    """Return [(article_slug, lang, url)] for every external link in every body.
+
+    Bare DOIs count. A reference list that writes `DOI: 10.1037/a0021212` in
+    running prose creates no link, so extract_link_targets cannot see it and
+    this job was blind to it -- which is why three remediation batches (031,
+    033, 034) never converged: they only ever fixed the hyperlinked citations.
+    The Jul 2026 corpus sweep found six more dead DOIs hiding in plain prose.
+    Those are folded in here as resolver URLs so they flow through the same
+    probe, classification and snapshot path as everything else.
+    """
     listing = http_client.get(f"{API_BASE}/blog", timeout=15)
     listing.raise_for_status()
     out: list[tuple[str, str, str]] = []
@@ -94,10 +119,15 @@ def collect_external_links(http_client: httpx.Client) -> list[tuple[str, str, st
             continue
         content = detail.json().get("content") or {}
         for lang in langs_with_content(content):
-            for url in extract_link_targets(content[lang]):
+            body = content[lang]
+            for url in extract_link_targets(body):
                 if not is_internal(url):
-                    out.append((slug, lang, url))
-    return out
+                    out.append((slug, lang, _doi_url(url)))
+            for doi in extract_dois(body):
+                out.append((slug, lang, f"{RESOLVER}{doi}"))
+    # A hyperlinked DOI is found twice (as a link target and as a bare match);
+    # both normalise to the same resolver URL, so dedupe before probing.
+    return list(dict.fromkeys(out))
 
 
 def get_previous_broken(bq_client, cfg: JobConfig) -> set[str]:

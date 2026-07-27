@@ -315,3 +315,40 @@ broken URLs — the truncated list looked complete. The query now groups
 by URL and carries the affected slugs and language-version count
 alongside. One dead link is one fix, however many translations repeat
 it.
+
+### Bare DOIs: why three batches never converged
+
+`external_links_check` probes *link targets*. A citation written as
+running prose creates no link:
+
+```
+(Connelly & Ones, 2010, DOI: 10.1037/a0021212)
+```
+
+so the job was structurally blind to it, and migrations 031, 033 and
+034 only ever fixed the hyperlinked citations. The Jul 2026 corpus
+sweep, which extracts DOIs by pattern rather than by link, found six
+more dead DOIs sitting in reference lists as plain text (migration
+035). The job now folds bare DOIs into the same probe path, normalising
+`doi.org` URLs to lowercase so the linked and prose forms of one paper
+collapse to a single row.
+
+### When a broken DOI is not a digits error
+
+Most broken DOIs in this corpus are digit errors: the citation text
+names a real paper and only the identifier is wrong, so the fix is
+mechanical. Two are not, and migration 035 deliberately leaves them
+broken:
+
+- `10.1037/0021-9010.84.6.929` — attributed to Judge et al. (1999) for
+  a claim about creative improvisation; that paper is about career
+  success.
+- `10.1037/0022-3514.89.1.122` — attributed to Roberts et al. (2005)
+  for a claim about communication formality; that paper is about the
+  factor structure of Conscientiousness.
+
+Swapping in a resolvable DOI would turn a visibly broken link into an
+invisibly false citation, and the gate would go green on it. A broken
+link is the safer failure. These need an editorial decision — find the
+real source, or soften the claim and drop the citation — and stay in
+the weekly digest until someone makes it.
