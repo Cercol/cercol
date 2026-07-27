@@ -171,3 +171,51 @@ def test_undeclared_dead_doi_is_still_collected(tmp_path):
     sql.write_text("INSERT INTO t VALUES ('see https://doi.org/10.1177/1073191106293419');\n")
     found = _check_dois_module().from_files([str(sql)])
     assert "10.1177/1073191106293419" in found
+
+
+# --- attribution: catching a live DOI that cites the wrong paper -------------
+
+BAD_RECORD = {"authors": ["Cooper"], "year": 1993,
+              "title": "Best paper prize 1992 ($750 prize)",
+              "journal": "Journal of Organizational Behavior"}
+
+
+def test_flags_a_live_doi_pointing_at_an_unrelated_paper():
+    """The real Jul 2026 case: a burnout meta-analysis citing a prize notice."""
+    text = ("see also Alarcon et al. (2009) meta-analysis; "
+            "https://doi.org/10.1002/job.4030140402")
+    reason = doi_check.attribution_mismatch(text, "10.1002/job.4030140402", BAD_RECORD)
+    assert reason and "alarcon" in reason.lower()
+
+
+def test_matching_attribution_passes():
+    good = {"authors": ["Alarcon", "Eschleman"], "year": 2009,
+            "title": "Relationships between personality variables and burnout", "journal": "Work & Stress"}
+    text = "Alarcon et al. (2009) https://doi.org/10.1080/02678370903282600"
+    assert doi_check.attribution_mismatch(text, "10.1080/02678370903282600", good) is None
+
+
+@pytest.mark.parametrize("text", [
+    "See also [doi:10.1002/job.235](https://doi.org/10.1002/job.235)",
+    "The full paper is available at https://doi.org/10.1002/job.235.",
+    "Their central finding is reported at https://doi.org/10.1002/job.235",
+])
+def test_prose_naming_nobody_is_not_a_mismatch(text):
+    """No asserted attribution means nothing to contradict.
+
+    Sentence openers like "See"/"The"/"Their" are capitalised but are not
+    surnames; without the stopword filter every bare cross-reference would be
+    reported as citing the wrong paper.
+    """
+    assert doi_check.attribution_mismatch(text, "10.1002/job.235", BAD_RECORD) is None
+
+
+def test_short_surnames_are_not_skipped():
+    """Oh, Wang & Mount (2011): a length-3 token floor silently skipped "Oh"."""
+    record = {"authors": ["Cholin", "Dell"], "year": 2011, "title": "Planning and articulation", "journal": "JEP"}
+    text = "Oh and colleagues (2011) https://doi.org/10.1037/a0021322"
+    assert doi_check.attribution_mismatch(text, "10.1037/a0021322", record) is not None
+
+
+def test_unavailable_crossref_record_is_not_a_mismatch():
+    assert doi_check.attribution_mismatch("Bell (2007) 10.1037/x", "10.1037/x", None) is None

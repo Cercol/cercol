@@ -30,6 +30,7 @@ never block publishing; a definitively unregistered DOI always must.
 from __future__ import annotations
 
 import re
+import unicodedata
 
 import httpx
 
@@ -111,6 +112,90 @@ def is_unresolvable(status_code: int | None) -> bool:
     link, whereas here an unreachable doi.org means an unreachable checker.
     """
     return status_code == 404
+
+
+def crossref_record(client: httpx.Client, doi: str) -> dict | None:
+    """First author surname, year and title from Crossref, or None."""
+    try:
+        r = client.get(f"https://api.crossref.org/works/{doi}", timeout=20)
+        if r.status_code != 200:
+            return None
+        m = r.json()["message"]
+        return {
+            "authors": [a.get("family", "") for a in (m.get("author") or []) if a.get("family")],
+            "year": ((m.get("issued", {}).get("date-parts") or [[None]])[0] or [None])[0],
+            "title": (m.get("title") or [""])[0],
+            "journal": (m.get("container-title") or [""])[0],
+        }
+    except (httpx.HTTPError, ValueError, KeyError, IndexError):
+        return None
+
+
+# Capitalised surname tokens, allowing internal hyphens (Jensen-Campbell).
+_SURNAME = re.compile(r"\b([A-Z][a-zA-Z]+(?:-[A-Z][a-zA-Z]+)?)\b")
+
+# Capitalised words that are not surnames. Without this, "See also [doi:...]"
+# reads "See" as an author and every bare cross-reference reports a mismatch.
+# Sentence openers, trait and journal vocabulary; deliberately generous,
+# because a missed check is cheaper than a false accusation.
+_NOT_A_NAME = {
+    "the", "this", "that", "these", "those", "there", "their", "they", "them",
+    "see", "also", "both", "and", "but", "for", "from", "with", "when", "where",
+    "why", "how", "what", "who", "one", "two", "its", "his", "her", "our",
+    "research", "study", "studies", "meta", "analysis", "review", "paper",
+    "full", "available", "further", "reading", "sources", "references", "note",
+    "big", "five", "ocean", "ipip", "neo", "doi", "url", "http", "https",
+    "journal", "personality", "social", "psychology", "psychological",
+    "bulletin", "science", "sciences", "american", "european", "british",
+    "applied", "personnel", "quarterly", "administrative", "educational",
+    "measurement", "occupational", "organizational", "organisational",
+    "management", "academy", "human", "resource", "performance", "behavior",
+    "behaviour", "health", "work", "stress", "inquiry", "assessment",
+    "conscientiousness", "extraversion", "agreeableness", "neuroticism",
+    "openness", "team", "teams", "wikipedia", "plos", "pone", "cercol",
+}
+
+
+def _fold(s: str) -> str:
+    return unicodedata.normalize("NFKD", s).encode("ascii", "ignore").decode().lower()
+
+
+def attribution_mismatch(text: str, doi: str, record: dict | None) -> str | None:
+    """Reason the prose's stated author/year disagrees with the DOI's record.
+
+    Returns None when they agree, when the record is unavailable, or when the
+    prose names nobody near the DOI (a bare "see also [doi:...]" carries no
+    attribution to contradict, and guessing from further away produces false
+    positives).
+
+    This catches what resolution cannot. A DOI can be perfectly live and point
+    at an entirely unrelated paper: the Jul 2026 corpus audit found 17 of
+    those, including a burnout meta-analysis whose DOI resolved to a one-line
+    prize announcement. Every one passed the 404 check.
+    """
+    if not record or not record.get("authors"):
+        return None
+    i = _fold(text).find(_fold(doi))
+    window = text[max(0, i - 260):i + 40] if i >= 0 else text
+
+    def tokens(name: str) -> set[str]:
+        # Two characters, not three: real surnames in this corpus include "Oh"
+        # (Oh, Wang & Mount 2011), which a length-3 floor silently skipped.
+        return {t for t in re.split(r"[-\s]", _fold(name)) if len(t) >= 2}
+
+    actual = set().union(*(tokens(a) for a in record["authors"]))
+    stated_names = {_fold(n) for n in _SURNAME.findall(window)} - _NOT_A_NAME
+    stated = set().union(*(tokens(n) for n in stated_names)) if stated_names else set()
+    # Nothing that looks like a surname: no attribution asserted, nothing to check.
+    if not stated:
+        return None
+    if stated & actual:
+        return None
+
+    first = record["authors"][0]
+    year = record.get("year")
+    return (f"prose cites {sorted(stated_names)[:3]} but {doi} is "
+            f"{first} et al. ({year}): {record.get('title', '')[:70]}")
 
 
 def unresolvable_dois(content: dict | None, client: httpx.Client) -> list[tuple[str, list[str]]]:
