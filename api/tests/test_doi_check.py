@@ -219,3 +219,19 @@ def test_short_surnames_are_not_skipped():
 
 def test_unavailable_crossref_record_is_not_a_mismatch():
     assert doi_check.attribution_mismatch("Bell (2007) 10.1037/x", "10.1037/x", None) is None
+
+
+def test_attribution_pass_splits_lines_into_sentences(tmp_path):
+    """Line-level context masks real mismatches; sentence-level does not.
+
+    A paragraph usually names the correct author somewhere, so a window that
+    reaches back into it finds a match and stays quiet. On the Jul 2026 corpus
+    line-level caught 2 of 10 known wrong-paper citations, sentence-level 10.
+    """
+    mod = _check_dois_module()
+    line = ("Alarcon et al. (2009) ran the burnout meta-analysis. "
+            "Cooper reported something else at doi:10.1002/job.999.")
+    got = list(mod._sentences(line))
+    assert len(got) == 2
+    assert "Alarcon" not in got[1]          # the second sentence stands alone
+    assert "et al." in got[0]               # abbreviation survives the split
