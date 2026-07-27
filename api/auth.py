@@ -150,6 +150,13 @@ async def _find_or_create_user(
     They are only written when the profile field is currently empty (COALESCE),
     so a name the user later edited is never overwritten by a subsequent login.
     Returns a dict with at least { id, email }.
+
+    Everything downstream of the lookup keys off `user["email"]` — the address
+    the account actually has — not the incoming `email`. The two differ only on
+    the google_id path, and only once the user has changed their email: Google
+    keeps asserting the address they signed up with, and taking that as
+    authoritative would silently revert profiles.email on the next Google
+    sign-in while auth_users.email kept the new one.
     """
     email = email.lower()
 
@@ -208,7 +215,7 @@ async def _find_or_create_user(
             first_name = COALESCE(profiles.first_name, EXCLUDED.first_name),
             last_name  = COALESCE(profiles.last_name,  EXCLUDED.last_name)
         """,
-        user["id"], email,
+        user["id"], user["email"],
         (first_name or "").strip() or None,
         (last_name or "").strip() or None,
     )
@@ -218,7 +225,7 @@ async def _find_or_create_user(
         UPDATE group_members SET user_id = $1
         WHERE invited_email = $2 AND user_id IS NULL AND status = 'pending'
         """,
-        user["id"], email,
+        user["id"], user["email"],
     )
     # Update last_sign_in_at
     await conn.execute(

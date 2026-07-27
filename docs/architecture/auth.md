@@ -73,6 +73,14 @@ the account, and the link works in any browser.
 The purge in `/admin/maintenance/purge-tokens` drops used and long-expired
 `email_change_tokens` alongside the other token tables.
 
+A changed address outranks the OAuth provider. Google keeps asserting whatever
+address the account signed up with, so `_find_or_create_user` keys every write
+downstream of the lookup off the account's **stored** email, never the incoming
+one. Without that, the next Google sign-in would reset `profiles.email` to the
+Google address while `auth_users.email` kept the new one — the JWT and login on
+the new address, group invitations and digest mail on the old. The two values
+differ only on the `google_id` path, and only after a change.
+
 ## Email verification and the beta/premium grant
 
 The "first 500 free Full Moon" grant in `ensure_profile` (`api/main.py`) is gated
