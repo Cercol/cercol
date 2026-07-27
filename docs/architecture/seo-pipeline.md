@@ -352,3 +352,31 @@ invisibly false citation, and the gate would go green on it. A broken
 link is the safer failure. These need an editorial decision — find the
 real source, or soften the claim and drop the citation — and stay in
 the weekly digest until someone makes it.
+
+### Resolution of the two attribution errors (migration 036)
+
+The two DOIs migration 035 left broken were resolved differently,
+because they were not the same kind of problem:
+
+- **Wrong citation, sound claim.** The claim that high Conscientiousness
+  predicts worse performance where creative improvisation is required
+  is well supported, just not by Judge et al. (1999). LePine, Colquitt &
+  Erez (2000, Personnel Psychology 53, 563-593) found exactly it: after
+  an unforeseen change of task context, *lower* Conscientiousness
+  produced better decisions, traced to the dependability facets. The
+  citation was replaced wholesale, author-year and DOI together, rather
+  than repointing someone else's name at a DOI that is not theirs.
+- **No such study.** The claim that Conscientiousness is the strongest
+  Big Five predictor of communication formality and documentation
+  habits has no source. Roberts et al. (2005) is about the factor
+  structure of Conscientiousness, and no study isolating communication
+  formality as a Big Five outcome turned up. There was no correct DOI
+  to substitute, because the sentence described research that was never
+  done, so the sentence was rewritten in all six languages to keep the
+  substance and drop the false empirical framing.
+
+The general rule: when a citation does not support its sentence, find
+what the claim is really standing on. If something does, cite that. If
+nothing does, the sentence is the thing that has to change. Substituting
+a plausible-looking DOI to make the gate go green is the exact failure
+this pipeline exists to prevent.
