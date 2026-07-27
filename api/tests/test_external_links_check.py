@@ -120,3 +120,39 @@ def test_run_skips_internal_links():
     # Only the external link is recorded.
     assert counts["links"] == 1
     assert counts["unique_urls"] == 1
+
+
+def test_bare_dois_in_prose_are_probed():
+    """A DOI written as prose creates no link, and used to be invisible here.
+
+    This is the gap that let three remediation batches (031, 033, 034) ship
+    without converging: they only ever saw hyperlinked citations. The Jul 2026
+    sweep found six dead DOIs sitting in reference lists as plain text.
+    """
+    listing = [{"slug": "a"}]
+    articles = {"a": {"en": "Connelly & Ones (2010), DOI: 10.1037/a0021212. No link here."}}
+    head_status = {"https://doi.org/10.1037/a0021212": 404}
+    http = FakeHTTP(listing, articles, head_status)
+    bq = FakeBQ()
+
+    counts = elc.run(_cfg(), http_client=http, bq_client=bq, send_digest=False)
+
+    assert counts["broken"] == 1
+    _, rows = bq.inserts[0]
+    assert rows[0]["url"] == "https://doi.org/10.1037/a0021212"
+
+
+def test_linked_and_bare_form_of_one_doi_collapse_to_one_row():
+    """Case and link-vs-prose form must not double-count the same paper."""
+    listing = [{"slug": "a"}]
+    articles = {"a": {"en": (
+        "[Ashton](https://doi.org/10.1016/S0092-6566(03)00046-1) and later "
+        "the same paper as prose: doi:10.1016/s0092-6566(03)00046-1."
+    )}}
+    http = FakeHTTP(listing, articles, {})
+    bq = FakeBQ()
+
+    counts = elc.run(_cfg(), http_client=http, bq_client=bq, send_digest=False)
+
+    assert counts["links"] == 1
+    assert counts["unique_urls"] == 1

@@ -59,11 +59,23 @@ def test_keeps_balanced_parens_in_suffix():
     assert doi_check.extract_dois(body) == ["10.1016/s0092-6566(03)00046-1"]
 
 
+def test_keeps_balanced_parens_under_emphasis():
+    # Both rules at once: strip the emphasis tail, then the unmatched paren,
+    # without eating the balanced "(03)" that belongs to the suffix.
+    body = "*[Ashton (2003)](https://doi.org/10.1016/S0092-6566(03)00046-1)*"
+    assert doi_check.extract_dois(body) == ["10.1016/s0092-6566(03)00046-1"]
+
+
 @pytest.mark.parametrize("wrapper,expected", [
     ("(doi: 10.2307/256377)", "10.2307/256377"),
     ("10.2307/256377.", "10.2307/256377"),
     ("10.2307/256377;", "10.2307/256377"),
     ("[10.2307/256377]", "10.2307/256377"),
+    # Emphasis-wrapped citation leaves a ")*" tail. The "*" used to block the
+    # unmatched-paren rule, so a live DOI was reported dead (live sweep after
+    # migration 034 flagged the very DOI that migration had just installed).
+    ("*[Bell (2007)](https://doi.org/10.2307/256377)*", "10.2307/256377"),
+    ("_see https://doi.org/10.2307/256377_", "10.2307/256377"),
 ])
 def test_trims_sentence_and_markdown_punctuation(wrapper, expected):
     assert doi_check.extract_dois(wrapper) == [expected]

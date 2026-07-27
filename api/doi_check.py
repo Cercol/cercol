@@ -41,7 +41,12 @@ import httpx
 _DOI = re.compile(r"\b(10\.\d{4,9}/[^\s\"'<>\]}]+)", re.IGNORECASE)
 
 # Punctuation that can only be sentence/markdown noise at the end of a DOI.
-_TRAILING = ".,;:"
+# `*` and `_` are here because the corpus wraps whole citations in emphasis:
+# `*[Bell (2007)](https://doi.org/10.1037/0021-9010.92.3.595)*` leaves a `)*`
+# tail, and the `*` blocked the paren rule below from ever seeing the `)`.
+# Over-trimming a real suffix would only skip a check; under-trimming reports
+# a live DOI as dead and blocks a publish, so the loop leans toward trimming.
+_TRAILING = ".,;:*_"
 
 RESOLVER = "https://doi.org/"
 
