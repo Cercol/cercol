@@ -39,7 +39,13 @@ import httpx
 # stripped below because `[doi:10.x/y](...)` and `(doi: 10.x/y)` both occur
 # in the corpus. Balanced parens inside a suffix are real and load-bearing
 # (10.1016/S0092-6566(03)00046-1), so ')' is only trimmed when unmatched.
-_DOI = re.compile(r"\b(10\.\d{4,9}/[^\s\"'<>\]}]+)", re.IGNORECASE)
+# The backslash terminates a DOI. Not because DOIs cannot contain one in
+# theory, but because the corpus reaches this function two ways: as markdown,
+# and as markdown embedded in a JSON string inside a SQL migration. In the
+# second form a newline is the two characters \ and n, so without this the
+# match runs past the end of the DOI and swallows `)\n-`, and a perfectly
+# live DOI is reported as unresolvable. Migration 043 failed CI exactly here.
+_DOI = re.compile(r"\b(10\.\d{4,9}/[^\s\\\"'<>\]}]+)", re.IGNORECASE)
 
 # Punctuation that can only be sentence/markdown noise at the end of a DOI.
 # `*` and `_` are here because the corpus wraps whole citations in emphasis:

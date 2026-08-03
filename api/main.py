@@ -41,7 +41,10 @@ from scoring import (
     _NORM, _ROLE_CENTROIDS, _compute_role, _scores_to_zscores,
     DOMAINS, NORM_MIN_SAMPLE, NORM_REFRESH_DAYS, resolve_norm,
 )
-from emails import send_witness_assigned, send_witness_completed, send_group_invitation
+from emails import (
+    send_witness_assigned, send_witness_completed, send_group_invitation,
+    send_witness_round_assigned,
+)
 from deps import require_admin, require_premium
 import auth as auth_module
 import blog as blog_module
@@ -450,6 +453,15 @@ class CreateGroupBody(BaseModel):
     emails: List[str] = []
 
 
+class InviteMembersBody(BaseModel):
+    emails: List[str] = []
+
+
+class AccuracyBody(BaseModel):
+    # 1 = "this is not me", 5 = "this is me". Self-rated face validity.
+    rating: int
+
+
 class LogResultBody(BaseModel):
     # Restrict to known instruments. Unknown values must be rejected
     # because they would silently contaminate the results table and
@@ -696,6 +708,37 @@ async def log_result(
             )
             if not prow or not (prow["premium"] or prow["is_beta"]):
                 raise HTTPException(status_code=403, detail="Forbidden")
+        # Idempotency: a double click or a reload of the results page reposts
+        # the same completion. One visitor produced three byte-identical
+        # newMoon rows this way, which the digest counted as three tests and
+        # the norms as three people. Same identity + same instrument + same
+        # five domain scores inside the window is a resubmission, not a
+        # retest: nobody answers 60 items again in ten minutes and lands on
+        # exactly the same decimals. Return the original id instead of
+        # inserting.
+        # ponytail: a lookup, not a unique index, because the scores are
+        # nullable NUMERICs; swap it for a constraint if this ever gets hot.
+        if user_id or body.anon_id:
+            dup = await conn.fetchrow(
+                """
+                SELECT id FROM results
+                 WHERE instrument = $1
+                   AND user_id IS NOT DISTINCT FROM $2
+                   AND anon_id  IS NOT DISTINCT FROM $3
+                   AND presence   IS NOT DISTINCT FROM $4
+                   AND bond       IS NOT DISTINCT FROM $5
+                   AND discipline IS NOT DISTINCT FROM $6
+                   AND depth      IS NOT DISTINCT FROM $7
+                   AND vision     IS NOT DISTINCT FROM $8
+                   AND created_at > now() - interval '10 minutes'
+                 ORDER BY created_at DESC LIMIT 1
+                """,
+                body.instrument, user_id, body.anon_id,
+                body.presence, body.bond, body.discipline, body.depth, body.vision,
+            )
+            if dup:
+                return {"id": str(dup["id"]), "duplicate": True}
+
         row = await conn.fetchrow(
             """
             INSERT INTO results
@@ -711,6 +754,38 @@ async def log_result(
             body.anon_id, body.utm_source, body.utm_medium, body.utm_campaign, body.referrer,
         )
     return {"id": str(row["id"])}
+
+
+@app.post("/results/{result_id}/accuracy")
+@limiter.limit("10/minute")
+async def rate_result_accuracy(
+    request: Request,
+    result_id: str,
+    body: AccuracyBody,
+    user: Optional[dict] = Depends(get_optional_user),
+):
+    """Record how well a report described its subject, on 1-5.
+
+    Anonymous by design, like the result itself: the caller proves ownership
+    with the row's own id, which only the person who just finished the test
+    has. Write-once, so a shared link cannot restack the rating.
+    """
+    if not 1 <= body.rating <= 5:
+        raise HTTPException(status_code=400, detail="rating must be between 1 and 5")
+
+    async with _pool.acquire() as conn:
+        updated = await conn.execute(
+            """
+            UPDATE results SET accuracy_rating = $2, accuracy_rated_at = now()
+             WHERE id = $1 AND accuracy_rating IS NULL
+            """,
+            result_id, body.rating,
+        )
+    if updated.endswith(" 0"):
+        # Already rated, or no such row. Same answer either way: nothing to do,
+        # and the caller learns nothing about which of the two it was.
+        raise HTTPException(status_code=409, detail="Already rated")
+    return {"ok": True}
 
 
 # ---------------------------------------------------------------------------
@@ -970,6 +1045,77 @@ async def get_my_contributions(user: dict = Depends(get_current_user)):
 # Routes — Groups
 # ---------------------------------------------------------------------------
 
+async def _display_name(conn, user_id: str, fallback_email: str | None) -> str:
+    """Best available human name for a group inviter."""
+    row = await conn.fetchrow(
+        "SELECT first_name, last_name FROM profiles WHERE id = $1", user_id
+    )
+    if row:
+        full = f"{row['first_name'] or ''} {row['last_name'] or ''}".strip()
+        if full:
+            return full
+    return fallback_email or "Someone"
+
+
+async def _invite_emails(conn, group_id, emails: List[str], creator_email: str):
+    """Insert pending group_members rows for `emails`.
+
+    Returns (invited, errors). An address that already has an account is
+    linked by user_id; anything else is parked on invited_email until the
+    person signs up. Shared by POST /groups and POST /groups/{id}/invite.
+    """
+    invited: List[str] = []
+    errors: List[str] = []
+    for raw_email in emails:
+        email = raw_email.strip().lower()
+        if not email or email == creator_email:
+            continue
+        try:
+            existing = await conn.fetchrow(
+                "SELECT id FROM profiles WHERE email = $1", email
+            )
+            if existing:
+                await conn.execute(
+                    """
+                    INSERT INTO group_members (group_id, user_id, status, invited_at)
+                    VALUES ($1, $2, 'pending', now())
+                    ON CONFLICT DO NOTHING
+                    """,
+                    group_id, existing["id"],
+                )
+            else:
+                await conn.execute(
+                    """
+                    INSERT INTO group_members (group_id, status, invited_email)
+                    VALUES ($1, 'pending', $2)
+                    ON CONFLICT DO NOTHING
+                    """,
+                    group_id, email,
+                )
+            invited.append(email)
+        except Exception:
+            errors.append(email)
+    return invited, errors
+
+
+async def _send_group_invitations(invited: List[str], group_name: str, inviter_name: str):
+    """Fire-and-forget invitation emails, in each recipient's language."""
+    if not invited:
+        return
+    async with _pool.acquire() as lang_conn:
+        lang_rows = await lang_conn.fetch(
+            "SELECT email, native_language FROM profiles WHERE email = ANY($1)", invited
+        )
+    lang_by_email = {r["email"]: r["native_language"] for r in lang_rows}
+    for email in invited:
+        asyncio.create_task(send_group_invitation(
+            invited_email = email,
+            group_name    = group_name,
+            inviter_name  = inviter_name,
+            lang          = lang_by_email.get(email) or "en",
+        ))
+
+
 @app.post("/groups")
 async def create_group(
     body: CreateGroupBody,
@@ -997,70 +1143,181 @@ async def create_group(
             group_id, user_id,
         )
 
-        errors = []
-        invited_emails = []   # collect for post-commit email sending
-        creator_name   = user.get("email") or "Someone"
-        creator_email  = (user.get("email") or "").lower()
-
-        # Use creator's display name if available
-        creator_profile = await conn.fetchrow(
-            "SELECT first_name, last_name FROM profiles WHERE id = $1", user_id
+        creator_name = await _display_name(conn, user_id, user.get("email"))
+        invited_emails, errors = await _invite_emails(
+            conn, group_id, body.emails, (user.get("email") or "").lower()
         )
-        if creator_profile:
-            full = f"{creator_profile['first_name'] or ''} {creator_profile['last_name'] or ''}".strip()
-            if full:
-                creator_name = full
 
-        for raw_email in body.emails:
-            email = raw_email.strip().lower()
-            if not email or email == creator_email:
-                continue
-            try:
-                # If this email belongs to a registered user, invite them directly
-                existing = await conn.fetchrow(
-                    "SELECT id FROM profiles WHERE email = $1", email
-                )
-                if existing:
-                    await conn.execute(
-                        """
-                        INSERT INTO group_members (group_id, user_id, status, invited_at)
-                        VALUES ($1, $2, 'pending', now())
-                        ON CONFLICT DO NOTHING
-                        """,
-                        group_id, existing["id"],
-                    )
-                else:
-                    await conn.execute(
-                        """
-                        INSERT INTO group_members (group_id, status, invited_email)
-                        VALUES ($1, 'pending', $2)
-                        ON CONFLICT DO NOTHING
-                        """,
-                        group_id, email,
-                    )
-                invited_emails.append(email)
-            except Exception:
-                errors.append(email)
-
-    # Send invitation emails outside the DB transaction (fire-and-forget)
-    # Look up each recipient's preferred language in one query
-    if invited_emails:
-        async with _pool.acquire() as lang_conn:
-            lang_rows = await lang_conn.fetch(
-                "SELECT email, native_language FROM profiles WHERE email = ANY($1)",
-                invited_emails,
-            )
-        lang_by_email = {r["email"]: r["native_language"] for r in lang_rows}
-
-        for email in invited_emails:
-            asyncio.create_task(send_group_invitation(
-                invited_email = email,
-                group_name    = name,
-                inviter_name  = creator_name,
-                lang          = lang_by_email.get(email) or "en",
-            ))
+    # Emails go out after the DB work, fire-and-forget.
+    await _send_group_invitations(invited_emails, name, creator_name)
 
     return {"id": str(group_id), "name": name, "errors": errors}
+
+
+async def _assert_group_owner(conn, group_id: str, user_id: str) -> str:
+    """Return the group name, or raise if `user_id` did not create the group."""
+    row = await conn.fetchrow(
+        "SELECT name, created_by FROM groups WHERE id = $1", group_id
+    )
+    if row is None:
+        raise HTTPException(status_code=404, detail="Group not found")
+    if str(row["created_by"]) != str(user_id):
+        raise HTTPException(status_code=403, detail="Forbidden")
+    return row["name"]
+
+
+@app.post("/groups/{group_id}/invite")
+async def invite_to_group(
+    group_id: str,
+    body: InviteMembersBody,
+    user: dict = Depends(get_current_user),
+):
+    """Invite more people to an existing group. Owner only.
+
+    Without this the only way to fix a mistyped invitation was to delete the
+    group and rebuild it, which is exactly what the first real team did:
+    three groups in eleven minutes because one address had a typo.
+    """
+    user_id = user["sub"]
+    async with _pool.acquire() as conn:
+        name = await _assert_group_owner(conn, group_id, user_id)
+        invited, errors = await _invite_emails(
+            conn, group_id, body.emails, (user.get("email") or "").lower()
+        )
+        creator_name = await _display_name(conn, user_id, user.get("email"))
+
+    await _send_group_invitations(invited, name, creator_name)
+    return {"invited": invited, "errors": errors}
+
+
+@app.delete("/groups/{group_id}/members")
+async def remove_group_member(
+    group_id: str,
+    email: Optional[str] = None,
+    member_id: Optional[str] = None,
+    user: dict = Depends(get_current_user),
+):
+    """Remove one member from a group by invited email or user id. Owner only.
+
+    The owner cannot remove themselves: a group with no owner has no way back.
+    """
+    user_id = user["sub"]
+    if not email and not member_id:
+        raise HTTPException(status_code=400, detail="email or member_id is required")
+    if member_id and str(member_id) == str(user_id):
+        raise HTTPException(status_code=400, detail="The group owner cannot be removed")
+
+    async with _pool.acquire() as conn:
+        await _assert_group_owner(conn, group_id, user_id)
+        if member_id:
+            deleted = await conn.execute(
+                "DELETE FROM group_members WHERE group_id = $1 AND user_id = $2",
+                group_id, member_id,
+            )
+        else:
+            # A pending invite can sit on either column: invited_email when the
+            # address had no account, user_id once it did.
+            deleted = await conn.execute(
+                """
+                DELETE FROM group_members
+                 WHERE group_id = $1
+                   AND user_id IS DISTINCT FROM $3
+                   AND (lower(invited_email) = $2
+                        OR user_id = (SELECT id FROM profiles WHERE lower(email) = $2))
+                """,
+                group_id, email.strip().lower(), user_id,
+            )
+    if deleted.endswith(" 0"):
+        raise HTTPException(status_code=404, detail="Member not found in this group")
+    return {"ok": True}
+
+
+@app.post("/groups/{group_id}/witness-round")
+async def start_witness_round(
+    group_id: str,
+    user: dict = Depends(get_current_user),
+):
+    """Create a round-robin witness campaign for a group. Owner only.
+
+    Every active member becomes a subject, and every other active member
+    becomes one of their witnesses. This is the only path that produces
+    self/observer agreement data, which is the check that tells us whether the
+    12 roles measure anything: the individual /witness-setup flow has been
+    live for months with no real use, because nobody discovers it alone.
+
+    Idempotent per pair: a member who already has an open session for a given
+    subject is skipped, so re-running the round chases stragglers instead of
+    duplicating everyone's work.
+    """
+    user_id = user["sub"]
+    async with _pool.acquire() as conn:
+        group_name = await _assert_group_owner(conn, group_id, user_id)
+        members = await conn.fetch(
+            """
+            SELECT p.id, p.email, p.first_name, p.last_name, p.native_language
+              FROM group_members m JOIN profiles p ON p.id = m.user_id
+             WHERE m.group_id = $1 AND m.status = 'active' AND m.user_id IS NOT NULL
+            """,
+            group_id,
+        )
+        if len(members) < 2:
+            raise HTTPException(
+                status_code=400,
+                detail="A witness round needs at least two active members",
+            )
+
+        def display(m):
+            full = f"{m['first_name'] or ''} {m['last_name'] or ''}".strip()
+            return full or (m["email"] or "A teammate")
+
+        # witness id -> [(subject_display, link), ...]
+        assignments: dict[str, list] = {}
+        created = 0
+        for subject in members:
+            for witness in members:
+                if subject["id"] == witness["id"]:
+                    continue
+                existing = await conn.fetchval(
+                    """
+                    SELECT 1 FROM witness_sessions
+                     WHERE subject_id = $1 AND lower(witness_email) = $2
+                       AND completed_at IS NULL
+                    """,
+                    subject["id"], (witness["email"] or "").lower(),
+                )
+                if existing:
+                    continue
+                token = secrets.token_urlsafe(32)
+                await conn.execute(
+                    """
+                    INSERT INTO witness_sessions
+                        (subject_id, subject_display, token, witness_name, witness_email)
+                    VALUES ($1, $2, $3, $4, $5)
+                    """,
+                    subject["id"], display(subject), token,
+                    display(witness), witness["email"],
+                )
+                created += 1
+                assignments.setdefault(str(witness["id"]), []).append(
+                    (display(subject), f"{_FRONTEND_URL}/witness/{token}")
+                )
+
+        inviter_name = await _display_name(conn, user_id, user.get("email"))
+        by_id = {str(m["id"]): m for m in members}
+
+    for witness_id, items in assignments.items():
+        w = by_id[witness_id]
+        asyncio.create_task(send_witness_round_assigned(
+            witness_name  = f"{w['first_name'] or ''} {w['last_name'] or ''}".strip() or (w["email"] or ""),
+            witness_email = w["email"],
+            inviter_name  = inviter_name,
+            group_name    = group_name,
+            items         = items,
+            lang          = w["native_language"] or "en",
+        ))
+
+    return {"members": len(members), "sessions_created": created,
+            "witnesses_emailed": len(assignments)}
 
 
 @app.get("/groups/mine")
@@ -1190,15 +1447,30 @@ async def get_group_report_data(
         if not membership:
             raise HTTPException(status_code=403, detail="Not a member of this group")
 
-        group = await conn.fetchrow("SELECT id, name FROM groups WHERE id = $1", group_id)
+        group = await conn.fetchrow(
+            "SELECT id, name, created_by FROM groups WHERE id = $1", group_id
+        )
         if not group:
             raise HTTPException(status_code=404, detail="Group not found")
+
+        # Pending invitations were invisible to the owner, so a mistyped
+        # address could only be "fixed" by rebuilding the group from scratch.
+        pending = await conn.fetch(
+            """
+            SELECT gm.invited_email, gm.user_id, p.email AS account_email
+              FROM group_members gm
+              LEFT JOIN profiles p ON p.id = gm.user_id
+             WHERE gm.group_id = $1 AND gm.status = 'pending'
+             ORDER BY gm.invited_at
+            """,
+            group_id,
+        )
 
         rows = await conn.fetch(
             """
             SELECT
                 gm.user_id,
-                p.first_name, p.last_name,
+                p.first_name, p.last_name, p.email,
                 r.presence, r.bond, r.discipline, r.depth, r.vision, r.language
             FROM group_members gm
             LEFT JOIN profiles p ON p.id = gm.user_id
@@ -1213,6 +1485,36 @@ async def get_group_report_data(
             """,
             group_id,
         )
+
+        # Witness round progress. Two directions, and the owner needs both:
+        # "given" is what this person still owes the others, "received" is how
+        # much outside view their own report has. Without it the owner starts
+        # a round and goes blind, with no way to chase the two people holding
+        # the whole team up.
+        member_ids = [r["user_id"] for r in rows]
+        witness_rows = await conn.fetch(
+            """
+            SELECT ws.subject_id, lower(ws.witness_email) AS witness_email,
+                   (ws.completed_at IS NOT NULL) AS done
+              FROM witness_sessions ws
+             WHERE ws.subject_id = ANY($1::uuid[]) AND NOT ws.is_seed
+            """,
+            member_ids,
+        )
+
+    given, received = {}, {}
+    for w in witness_rows:
+        sid = str(w["subject_id"])
+        received.setdefault(sid, [0, 0])
+        received[sid][1] += 1
+        if w["done"]:
+            received[sid][0] += 1
+        email = w["witness_email"]
+        if email:
+            given.setdefault(email, [0, 0])
+            given[email][1] += 1
+            if w["done"]:
+                given[email][0] += 1
 
     members_data = []
     for row in rows:
@@ -1229,6 +1531,8 @@ async def get_group_report_data(
             zscores = None
             role    = None
 
+        g = given.get((row["email"] or "").lower(), [0, 0])
+        rc = received.get(mid, [0, 0])
         members_data.append({
             "user_id":      mid,
             "display_name": full or None,
@@ -1236,12 +1540,23 @@ async def get_group_report_data(
             "zscores":      zscores,
             "completed":    has_result,
             "is_self":      mid == user_id,
+            # [done, total]; [0, 0] means no round has reached this person.
+            "witness_given":    {"done": g[0],  "total": g[1]},
+            "witness_received": {"done": rc[0], "total": rc[1]},
         })
 
     return {
         "group_id":   group_id,
         "group_name": group["name"],
         "members":    members_data,
+        "is_owner":   str(group["created_by"]) == str(user_id),
+        "pending": [
+            {
+                "email":   p["invited_email"] or p["account_email"],
+                "user_id": str(p["user_id"]) if p["user_id"] else None,
+            }
+            for p in pending
+        ],
     }
 
 
@@ -1486,7 +1801,7 @@ async def admin_results(
         if r["presence"] is not None:
             raw  = {k: r[k] for k in ("presence", "bond", "discipline", "depth", "vision")}
             norm, _ = resolve_norm(r["instrument"], r["language"], _norm_cache)
-            role = _compute_role(_scores_to_zscores(raw, norm))
+            role = _compute_role(_scores_to_zscores(raw, norm, r["instrument"]))
         return {
             "id":         str(r["id"]),
             "created_at": r["created_at"].isoformat(),
@@ -1530,7 +1845,7 @@ async def admin_results_csv(
             return ""
         raw  = {k: r[k] for k in ("presence", "bond", "discipline", "depth", "vision")}
         norm, _ = resolve_norm(r["instrument"], r["language"], _norm_cache)
-        return _compute_role(_scores_to_zscores(raw, norm))
+        return _compute_role(_scores_to_zscores(raw, norm, r["instrument"]))
 
     def generate():
         yield "id,created_at,instrument,language,user_id,user_email,presence,bond,discipline,depth,vision,role\n"

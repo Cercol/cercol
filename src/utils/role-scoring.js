@@ -53,6 +53,27 @@ export const NORM_SD = {
   N: 0.72,
 }
 
+// ── Response scale normalisation ──────────────────────────────────────────
+// New Moon (TIPI) answers on 1-7; every other instrument answers on 1-5, and
+// NORM_MEAN/NORM_SD above are 1-5 statistics. Feeding a 1-7 score straight
+// into the z-score turns a mild "slightly agree" (5) into +2.4 SD and pushes
+// most respondents into the wrong role, so 1-7 instruments are mapped first.
+const SEVEN_POINT_INSTRUMENTS = new Set(['newMoon'])
+
+/**
+ * toFiveScale — linearly map a 1-7 domain score set onto 1-5.
+ * Returns the input untouched for instruments that already answer on 1-5.
+ * @param {Record<string, number>} scores
+ * @param {string|null} instrument
+ * @returns {Record<string, number>}
+ */
+export function toFiveScale(scores, instrument = null) {
+  if (!SEVEN_POINT_INSTRUMENTS.has(instrument)) return scores
+  return Object.fromEntries(
+    Object.entries(scores).map(([k, v]) => [k, ((v - 1) * 4) / 6 + 1]),
+  )
+}
+
 // ── Arc role probability threshold ────────────────────────────────────────
 // A role is included in the arc if its probability exceeds this value.
 export const ARC_PROBABILITY_THRESHOLD = 0.15
@@ -76,15 +97,18 @@ function euclidean(zArr, centroid) {
  * computeRole — main export
  *
  * @param {Object} domainScores - {presence, bond, vision, discipline, depth} on 1–5 scale
+ * @param {string|null} [instrument] - source instrument; 1-7 instruments
+ *   ('newMoon') are mapped onto 1-5 first. Omit for scores already on 1-5.
  * @returns {Object} {
  *   role: 'R01'|'R02'|…|'R12',
  *   arc: string[],          // other roles with probability > 15%
  *   probabilities: Object,  // {R01…R12: 0–1}
  * }
  */
-export function computeRole(domainScores) {
+export function computeRole(domainScores, instrument = null) {
+  const scores = toFiveScale(domainScores, instrument)
   // Step 1 — Normalise raw 1-5 scores to z-scores using per-domain published priors
-  const z = FACTOR_KEYS.map(f => (domainScores[DOMAIN_MAP[f]] - NORM_MEAN[f]) / NORM_SD[f])
+  const z = FACTOR_KEYS.map(f => (scores[DOMAIN_MAP[f]] - NORM_MEAN[f]) / NORM_SD[f])
 
   // Step 2 — Euclidean distance to all 12 centroids in 5D space
   const roles = Object.keys(CENTROIDS)

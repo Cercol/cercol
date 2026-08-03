@@ -23,6 +23,7 @@ import { decodeScores, CLIPBOARD_FEEDBACK_MS } from '../utils/share-url'
 import { shareResult } from '../utils/role-share'
 import { fmScoreToPercent, fmScoreLabel } from '../utils/full-moon-scoring'
 import { logResult } from '../utils/logger'
+import AccuracyRating from '../components/AccuracyRating'
 import { computeRole } from '../utils/role-scoring'
 import { averageWitnessScores, computeCombinedRole, compareRoleViews } from '../utils/witness-scoring'
 import { getMyWitnessSessions, getLatestFullMoonResult } from '../lib/api'
@@ -43,6 +44,8 @@ export default function FullMoonResultsPage() {
   const { t, i18n } = useTranslation()
   const { user, loading: authLoading } = useAuth()
   const [copied, setCopied] = useState(false)
+  // Set once the result row exists; the accuracy question needs its id.
+  const [resultId, setResultId] = useState(null)
   const [sessions, setSessions] = useState([])
   const [loadedDomains, setLoadedDomains] = useState(null)
   const [loadedFacets, setLoadedFacets] = useState(null)
@@ -98,7 +101,7 @@ export default function FullMoonResultsPage() {
   useEffect(() => {
     if (fromTest && domains && !loggedRef.current) {
       loggedRef.current = true
-      logResult(domains, i18n.language, 'fullMoon', user?.id ?? null, stateFacets)
+      logResult(domains, i18n.language, 'fullMoon', user?.id ?? null, stateFacets).then(setResultId)
     }
   }, [domains]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -384,6 +387,8 @@ export default function FullMoonResultsPage() {
         </div>
 
         {/* Disclaimer */}
+        <AccuracyRating resultId={resultId} />
+
         <MethodologyNote>{t('fmResults.disclaimer')}</MethodologyNote>
 
       </div>

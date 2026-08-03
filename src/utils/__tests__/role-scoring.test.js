@@ -5,6 +5,7 @@ import {
   NORM_SD,
   ARC_PROBABILITY_THRESHOLD,
   DOMAIN_MAP,
+  toFiveScale,
 } from '../role-scoring'
 
 // Build domain scores at the normative mean (all z = 0)
@@ -126,5 +127,38 @@ describe('DOMAIN_MAP', () => {
     expect(DOMAIN_MAP.O).toBe('vision')
     expect(DOMAIN_MAP.C).toBe('discipline')
     expect(DOMAIN_MAP.N).toBe('depth')
+  })
+})
+
+describe('toFiveScale', () => {
+  it('leaves 1-5 instruments untouched', () => {
+    const scores = { presence: 3.2, bond: 4.1, vision: 2.8, discipline: 3.9, depth: 2.2 }
+    expect(toFiveScale(scores, 'fullMoon')).toEqual(scores)
+    expect(toFiveScale(scores, null)).toEqual(scores)
+  })
+
+  it('maps the 1-7 endpoints onto the 1-5 endpoints', () => {
+    const mapped = toFiveScale({ presence: 1, bond: 4, vision: 7 }, 'newMoon')
+    expect(mapped.presence).toBeCloseTo(1)   // floor to floor
+    expect(mapped.bond).toBeCloseTo(3)       // midpoint to midpoint
+    expect(mapped.vision).toBeCloseTo(5)     // ceiling to ceiling
+  })
+
+  it('stops a mild New Moon answer from reading as an extreme profile', () => {
+    // A flat "5 out of 7" is mildly agreeable. Scored against the 1-5 priors
+    // it lands above +2 SD on presence, which is what mislabelled a third of
+    // the historical results.
+    const flatFive = { presence: 5, bond: 5, vision: 5, discipline: 5, depth: 5 }
+    const zRaw = (flatFive.presence - NORM_MEAN.E) / NORM_SD.E
+    const mapped = toFiveScale(flatFive, 'newMoon')
+    const zMapped = (mapped.presence - NORM_MEAN.E) / NORM_SD.E
+    expect(zRaw).toBeGreaterThan(2)
+    expect(Math.abs(zMapped)).toBeLessThan(1)
+  })
+
+  it('changes which role a New Moon result is assigned to', () => {
+    const scores = { presence: 3.5, bond: 5.5, vision: 5.5, discipline: 5.0, depth: 3.0 }
+    expect(computeRole(scores, 'newMoon').role)
+      .not.toBe(computeRole(scores).role)
   })
 })

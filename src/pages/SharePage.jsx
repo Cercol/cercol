@@ -6,9 +6,10 @@
  * (public/og/role-<roleId>.png) and share title baked in, so social/AI
  * crawlers (which do not run JS) see the right card.
  *
- * The scores ride in ?r=<encodedScores>; when present the role is recomputed
- * from them (authoritative) and the page shows that role. Without ?r= (the
- * prerendered shell, or a bare link) it falls back to the path role.
+ * The role in the path is the one the sharer's own report computed, so it is
+ * authoritative. The scores ride in ?r=<encodedScores> only to render the
+ * radar; they are not re-scored here (they carry the instrument's own 1-5 or
+ * 1-7 scale, which this route cannot tell apart).
  *
  * No account, no API: a low-friction bridge to the free test.
  */
@@ -27,8 +28,12 @@ export default function SharePage() {
 
   const encoded = params.get('r')
   const scores = encoded ? decodeScores(encoded) : null
-  // Scores are authoritative; the path role is the fallback for the shell.
-  const roleId = scores ? computeRole(scores).role : (isRoleId(raw) ? raw : 'R01')
+  // The path role is authoritative: it was computed by the sharer, who knew
+  // which instrument (and therefore which response scale) produced the scores.
+  // ?r= carries raw scores on the instrument's own scale, so recomputing here
+  // would mislabel every 1-7 New Moon link. Recompute only when the path has
+  // no usable role, which is the legacy /share/<junk>?r= case.
+  const roleId = isRoleId(raw) ? raw : (scores ? computeRole(scores).role : 'R01')
   const name = t(`roles.${roleId}.name`)
   const essence = t(`roles.${roleId}.essence`)
 

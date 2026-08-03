@@ -296,6 +296,49 @@ export async function getGroupReportData(groupId) {
   return authFetch(`/groups/${groupId}/report-data`)
 }
 
+/**
+ * inviteToGroup — invite more people to an existing group. Owner only.
+ * @param {string} groupId
+ * @param {string[]} emails
+ */
+export async function inviteToGroup(groupId, emails) {
+  return authFetch(`/groups/${groupId}/invite`, {
+    method: 'POST',
+    body: JSON.stringify({ emails }),
+  })
+}
+
+/**
+ * removeGroupMember — drop a member or a pending invitation. Owner only.
+ * @param {string} groupId
+ * @param {{ email?: string, memberId?: string }} target
+ */
+export async function removeGroupMember(groupId, { email, memberId } = {}) {
+  const q = new URLSearchParams(memberId ? { member_id: memberId } : { email })
+  return authFetch(`/groups/${groupId}/members?${q}`, { method: 'DELETE' })
+}
+
+/**
+ * startWitnessRound — every active member rates every other one. Owner only.
+ * @param {string} groupId
+ */
+export async function startWitnessRound(groupId) {
+  return authFetch(`/groups/${groupId}/witness-round`, { method: 'POST' })
+}
+
+/**
+ * rateResultAccuracy — how well a report described its subject, 1 to 5.
+ * Write-once; a second call answers 409 and is safe to ignore.
+ * @param {string} resultId
+ * @param {number} rating
+ */
+export async function rateResultAccuracy(resultId, rating) {
+  return publicFetch(`/results/${resultId}/accuracy`, {
+    method: 'POST',
+    body: JSON.stringify({ rating }),
+  })
+}
+
 // ── Results ───────────────────────────────────────────────────────────────────
 
 /**
@@ -452,6 +495,12 @@ export async function trackEvent(name, payload = {}) {
     // anon_id in payload still wins.
     await publicFetch('/events', {
       method: 'POST',
+      // keepalive lets the request outlive the page. cta_click fires from a
+      // link handler that does not preventDefault, so without it the browser
+      // tears the document down mid-flight and cancels the POST: every other
+      // funnel event fires on mount and survives, which is exactly why the
+      // digest showed thousands of page views and zero CTA clicks.
+      keepalive: true,
       body: JSON.stringify({ name, anon_id: getAnonId(), ...payload }),
     })
   } catch {

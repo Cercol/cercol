@@ -46,6 +46,30 @@ _NORM = {
 
 DOMAINS = list(_NORM.keys())
 
+# ---------------------------------------------------------------------------
+# Response scale normalisation
+# ---------------------------------------------------------------------------
+# New Moon (TIPI) is answered on 1-7; every other instrument is 1-5, and the
+# priors above are 1-5 statistics. Results are stored on the instrument's own
+# scale, so a New Moon row must be mapped before it meets the priors: without
+# it a mild "5" reads as +2.4 SD and the respondent lands in the wrong role.
+# Empirical norms (Tier 1/2) are computed from the same stored column, so they
+# already match the stored scale and must NOT be rescaled.
+_SEVEN_POINT_INSTRUMENTS = {"newMoon"}
+
+
+def to_five_scale(scores: dict, instrument: str | None) -> dict:
+    """Linearly map a 1-7 instrument's domain scores onto 1-5.
+
+    Returns `scores` unchanged for instruments already answered on 1-5.
+    """
+    if instrument not in _SEVEN_POINT_INSTRUMENTS:
+        return scores
+    return {
+        k: ((float(v) - 1) * 4 / 6 + 1) if v is not None else v
+        for k, v in scores.items()
+    }
+
 # Role centroids (presence, bond, vision, discipline, depth) — must match role-scoring.js
 _ROLE_CENTROIDS = {
     "R01": ( 1.0,  1.0,  0.0,  0.0, -0.5),
@@ -113,13 +137,20 @@ def _norm_is_valid(norm: dict) -> bool:
 # Scoring
 # ---------------------------------------------------------------------------
 
-def _scores_to_zscores(scores: dict, norm: dict | None = None) -> dict:
+def _scores_to_zscores(scores: dict, norm: dict | None = None,
+                       instrument: str | None = None) -> dict:
     """
     Convert raw domain scores to z-scores using the provided norm dict.
     Falls back to researcher priors (_NORM) if norm is None.
     Only domains present in both scores and norm are included in the output.
+
+    `instrument` triggers the 1-7 to 1-5 map, and only against the priors:
+    an empirical norm was aggregated from the same stored column as `scores`,
+    so both are already on the instrument's own scale.
     """
     effective = norm if norm is not None else _NORM
+    if effective is _NORM:
+        scores = to_five_scale(scores, instrument)
     # Cast each raw score to float before the arithmetic. Scores reach this
     # function from two sources: the JSON request body (already float) and
     # Postgres NUMERIC columns read by the admin endpoints (asyncpg returns
