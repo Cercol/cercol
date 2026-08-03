@@ -1509,5 +1509,28 @@
       "title": "Confidentialité Cèrcol : données, suppression et RGPD",
       "description": "Comment Cèrcol gère vos données : ce que nous stockons, ce que nous ne partageons jamais, vos droits RGPD et la suppression du compte. Langage clair."
     }
+  },
+  "groupTools": {
+    "heading": "Gérer cette équipe",
+    "pendingHeading": "Invitations en attente d'acceptation",
+    "remove": "Retirer",
+    "removed": "Invitation retirée.",
+    "inviteLabel": "Inviter d'autres personnes (un e-mail par ligne, ou séparés par des virgules)",
+    "invitePlaceholder": "nom@entreprise.com",
+    "invite": "Envoyer les invitations",
+    "invited": "{{count}} invitation envoyée.",
+    "invited_plural": "{{count}} invitations envoyées.",
+    "roundBody": "Demandez à chacun d'évaluer les autres. Chaque rapport montrera alors comment l'équipe voit une personne, à côté de la façon dont elle se voit.",
+    "roundButton": "Lancer un tour d'équipe",
+    "roundStarted": "Tour lancé : {{sessions_created}} évaluations demandées, {{witnesses_emailed}} personnes prévenues par e-mail.",
+    "roundNote": "Chaque personne reçoit un seul e-mail avec ses liens. Personne ne voit qui a dit quoi.",
+    "failed": "Cela n'a pas fonctionné. Réessayez dans un instant."
+  },
+  "accuracy": {
+    "heading": "Dans quelle mesure cela vous décrit-il ?",
+    "option": "{{value}} sur 5",
+    "low": "Pas du tout moi",
+    "high": "C'est moi",
+    "thanks": "Merci. Cela nous aide à vérifier si les profils tiennent la route."
   }
 }

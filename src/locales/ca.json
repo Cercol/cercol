@@ -1509,5 +1509,28 @@
       "title": "Privadesa de Cèrcol: dades, drets de supressió i RGPD",
       "description": "Com Cèrcol gestiona les teves dades: què emmagatzemem, què no compartim mai, els teus drets RGPD i com esborrar el compte. Llenguatge clar, sense lletra petita."
     }
+  },
+  "groupTools": {
+    "heading": "Gestiona aquest equip",
+    "pendingHeading": "Invitacions pendents d'acceptar",
+    "remove": "Elimina",
+    "removed": "Invitació eliminada.",
+    "inviteLabel": "Convida més persones (un correu per línia, o separats per comes)",
+    "invitePlaceholder": "nom@empresa.com",
+    "invite": "Envia les invitacions",
+    "invited": "{{count}} invitació enviada.",
+    "invited_plural": "{{count}} invitacions enviades.",
+    "roundBody": "Demana que tothom valore la resta. Cada informe mostrarà com veu l'equip una persona al costat de com es veu ella mateixa.",
+    "roundButton": "Inicia una ronda d'equip",
+    "roundStarted": "Ronda iniciada: {{sessions_created}} valoracions demanades, {{witnesses_emailed}} persones avisades per correu.",
+    "roundNote": "Cada persona rep un sol correu amb els seus enllaços. Ningú no veu qui ha dit què.",
+    "failed": "No ha funcionat. Torna-ho a provar d'ací a un moment."
+  },
+  "accuracy": {
+    "heading": "Fins a quin punt et descriu això?",
+    "option": "{{value}} de 5",
+    "low": "No sóc jo",
+    "high": "Sóc jo",
+    "thanks": "Gràcies. Això ens ajuda a comprovar si els perfils funcionen."
   }
 }

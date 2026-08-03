@@ -378,6 +378,50 @@ _S = {
         "de": "Du benötigst ein Cèrcol-Konto, um anzunehmen. Die Registrierung dauert nur einen Moment.",
         "da": "Du skal bruge en Cèrcol-konto for at acceptere. Det tager kun et øjeblik at tilmelde sig.",
     },
+
+    # Witness round: one email per witness listing every teammate they were
+    # asked to rate, instead of one email per pair. A seven-person team round
+    # is 42 pairs, and 42 separate emails would read as spam.
+    "wr_subject": {
+        "en": "Your team round on Cèrcol: {n} teammates to rate",
+        "ca": "La ronda del teu equip a Cèrcol: {n} companys per valorar",
+        "es": "La ronda de tu equipo en Cèrcol: {n} compañeros por valorar",
+        "fr": "Le tour de votre équipe sur Cèrcol : {n} collègues à évaluer",
+        "de": "Eure Teamrunde bei Cèrcol: {n} Kolleginnen und Kollegen zu bewerten",
+        "da": "Jeres teamrunde på Cèrcol: {n} kolleger at vurdere",
+    },
+    "wr_heading": {
+        "en": "Hello {witness_name}",
+        "ca": "Hola {witness_name}",
+        "es": "Hola {witness_name}",
+        "fr": "Bonjour {witness_name}",
+        "de": "Hallo {witness_name}",
+        "da": "Hej {witness_name}",
+    },
+    "wr_body1": {
+        "en": "{inviter_name} started a team round for {group_name}. Each member rates the others, and each report gets a second point of view alongside the self-assessment.",
+        "ca": "{inviter_name} ha iniciat una ronda d'equip per a {group_name}. Cada membre valora els altres, i cada informe guanya un segon punt de vista al costat de l'autoavaluació.",
+        "es": "{inviter_name} ha iniciado una ronda de equipo para {group_name}. Cada miembro valora a los demás, y cada informe gana un segundo punto de vista junto a la autoevaluación.",
+        "fr": "{inviter_name} a lancé un tour d'équipe pour {group_name}. Chaque membre évalue les autres, et chaque rapport gagne un second point de vue à côté de l'auto-évaluation.",
+        "de": "{inviter_name} hat eine Teamrunde für {group_name} gestartet. Alle bewerten einander, und jeder Bericht bekommt neben der Selbsteinschätzung eine zweite Perspektive.",
+        "da": "{inviter_name} har startet en teamrunde for {group_name}. Hver deltager vurderer de andre, og hver rapport får et andet perspektiv ved siden af selvvurderingen.",
+    },
+    "wr_body2": {
+        "en": "Each link takes about two minutes. Your answers are never shown to the person you rate on their own.",
+        "ca": "Cada enllaç et portarà uns dos minuts. Les teues respostes mai no es mostren soles a la persona que valores.",
+        "es": "Cada enlace te llevará unos dos minutos. Tus respuestas nunca se muestran solas a la persona que valoras.",
+        "fr": "Chaque lien prend environ deux minutes. Vos réponses ne sont jamais montrées seules à la personne évaluée.",
+        "de": "Jeder Link dauert etwa zwei Minuten. Deine Antworten werden der bewerteten Person nie einzeln gezeigt.",
+        "da": "Hvert link tager cirka to minutter. Dine svar vises aldrig alene til den, du vurderer.",
+    },
+    "wr_ignore": {
+        "en": "If you would rather not take part, ignore this email. Nothing is sent on your behalf.",
+        "ca": "Si prefereixes no participar, ignora aquest correu. No s'envia res en nom teu.",
+        "es": "Si prefieres no participar, ignora este correo. No se envía nada en tu nombre.",
+        "fr": "Si vous préférez ne pas participer, ignorez cet e-mail. Rien n'est envoyé en votre nom.",
+        "de": "Wenn du nicht teilnehmen möchtest, ignoriere diese E-Mail. In deinem Namen wird nichts verschickt.",
+        "da": "Hvis du hellere vil lade være, kan du ignorere denne mail. Der sendes intet i dit navn.",
+    },
 }
 
 def _t(key: str, lang: str) -> str:
@@ -684,17 +728,23 @@ def weekly_digest_html(data: dict) -> str:
     # Funnel
     f = data.get("funnel") or {}
     if f:
+        # Two columns on purpose: events measure volume, people measure reach.
+        # A single visitor can fire test_start a dozen times, so the rates below
+        # the table are computed on the people column only.
         stages = [
-            ("Page views", f.get("page_view", 0)),
-            ("Article reads", f.get("article_view", 0)),
-            ("Test starts", f.get("test_start", 0)),
-            ("Tests completed", f.get("test_complete", 0)),
-            ("CTA clicks", f.get("cta_click", 0)),
+            ("Page views", f.get("page_view", 0), f.get("visitors")),
+            ("Article reads", f.get("article_view", 0), None),
+            ("Test starts", f.get("test_start", 0), f.get("starters")),
+            ("Tests completed", f.get("test_complete", 0), f.get("finishers")),
+            ("CTA clicks", f.get("cta_click", 0), None),
         ]
-        rows = [[lbl, f"{n:,}"] for lbl, n in stages]
+        rows = [[lbl, f"{n:,}", f"{p:,}" if p is not None else "—"] for lbl, n, p in stages]
         conv = f.get("conversions") or []
         conv_html = "".join(_p(f"{lbl}: <strong>{val}</strong>", muted=True) for lbl, val in conv)
-        parts.append(_section("Funnel", _table(["Stage", "Count"], rows, ["left", "right"]) + conv_html))
+        parts.append(_section(
+            "Funnel",
+            _table(["Stage", "Events", "People"], rows, ["left", "right", "right"]) + conv_html,
+        ))
     else:
         parts.append(_section("Funnel", _empty("No funnel events this week.")))
 
@@ -918,6 +968,38 @@ async def send_witness_assigned(
         to      = witness_email,
         subject = _t("wa_subject", l).format(subject_display=subject_display),
         html    = _witness_assigned_html(witness_name, subject_display, link, l),
+    )
+
+
+def _witness_round_html(witness_name, inviter_name, group_name, items, lang) -> str:
+    """`items` is [(subject_display, link), ...], one button per teammate."""
+    buttons = "".join(_btn(link, name) for name, link in items)
+    return _base(
+        _h1(_t("wr_heading", lang).format(witness_name=witness_name))
+        + _p(_t("wr_body1", lang).format(inviter_name=inviter_name, group_name=group_name))
+        + _p(_t("wr_body2", lang))
+        + buttons
+        + _p(_t("wr_ignore", lang), muted=True),
+        lang=lang,
+    )
+
+
+async def send_witness_round_assigned(
+    witness_name: str,
+    witness_email: str,
+    inviter_name: str,
+    group_name: str,
+    items: list,
+    lang: str = "en",
+) -> None:
+    """One email per witness covering every teammate they were asked to rate."""
+    if not items:
+        return
+    l = _lang(lang)
+    await _send(
+        to      = witness_email,
+        subject = _t("wr_subject", l).format(n=len(items)),
+        html    = _witness_round_html(witness_name, inviter_name, group_name, items, l),
     )
 
 

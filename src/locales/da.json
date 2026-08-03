@@ -1509,5 +1509,28 @@
       "title": "Cèrcol privatliv: data, sletteret og GDPR",
       "description": "Sådan håndterer Cèrcol dine data: hvad vi gemmer, hvad vi aldrig deler, dine GDPR-rettigheder og hvordan du sletter din konto. Klart sprog, ingen jura."
     }
+  },
+  "groupTools": {
+    "heading": "Administrer dette team",
+    "pendingHeading": "Invitationer, der venter på svar",
+    "remove": "Fjern",
+    "removed": "Invitation fjernet.",
+    "inviteLabel": "Inviter flere (en mail pr. linje, eller adskilt med komma)",
+    "invitePlaceholder": "navn@firma.dk",
+    "invite": "Send invitationer",
+    "invited": "{{count}} invitation sendt.",
+    "invited_plural": "{{count}} invitationer sendt.",
+    "roundBody": "Bed alle om at vurdere hinanden. Hver rapport viser så teamets syn på en person ved siden af personens eget.",
+    "roundButton": "Start en teamrunde",
+    "roundStarted": "Runde startet: {{sessions_created}} vurderinger bedt om, {{witnesses_emailed}} personer fik en mail.",
+    "roundNote": "Hver person får én mail med sine egne links. Ingen ser, hvem der har sagt hvad.",
+    "failed": "Det virkede ikke. Prøv igen om et øjeblik."
+  },
+  "accuracy": {
+    "heading": "Hvor godt beskriver det dig?",
+    "option": "{{value}} ud af 5",
+    "low": "Slet ikke mig",
+    "high": "Det er mig",
+    "thanks": "Tak. Det hjælper os med at tjekke, om profilerne holder."
   }
 }

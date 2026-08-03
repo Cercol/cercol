@@ -29,6 +29,7 @@ import { RoleIcon, LastQuarterIcon, DimensionIcon, ChevronRightIcon } from '../c
 import { DimensionRow, ReportPageHeader, RadarDataCard, MethodologyNote } from '../components/report'
 import RadarChart from '../components/RadarChart'
 import { Card, SectionLabel, Button } from '../components/ui'
+import GroupOwnerTools from '../components/GroupOwnerTools'
 import { colors, ROLE_COLORS, DOMAIN_ICON_CLASSES, BALANCE_COLORS } from '../design/tokens'
 import { DOMAIN_KEYS } from '../data/domains'
 
@@ -305,11 +306,10 @@ export default function LastQuarterPage() {
   const [copied,    setCopied]    = useState(false)
   const [radarMode, setRadarMode] = useState('teamAverage') // 'myProfile' | 'teamAverage'
 
-  useEffect(() => {
-    if (authLoading) return
-    if (!user) { navigate('/auth'); return }
-
-    getGroupReportData(id)
+  // Named so the owner tools can refresh the report after inviting or
+  // removing someone, instead of asking the user to reload the page.
+  function load() {
+    return getGroupReportData(id)
       .then(setData)
       .catch(err => {
         if (err.message?.includes('403')) {
@@ -319,7 +319,15 @@ export default function LastQuarterPage() {
         }
       })
       .finally(() => setLoading(false))
+  }
+
+  useEffect(() => {
+    if (authLoading) return
+    if (!user) { navigate('/auth'); return }
+
+    load()
   }, [id, user, authLoading]) // eslint-disable-line react-hooks/exhaustive-deps
+
 
   function handleCopyLink() {
     navigator.clipboard.writeText(window.location.href).then(() => {
@@ -474,6 +482,15 @@ export default function LastQuarterPage() {
           <p className="text-xs text-gray-400">
             {t('lastQuarter.pendingNote', { count: pendingCount })}
           </p>
+        )}
+
+        {data?.is_owner && (
+          <GroupOwnerTools
+            groupId={data.group_id}
+            pending={data.pending ?? []}
+            memberCount={members.length}
+            onChange={load}
+          />
         )}
 
         {/* ── Bottom row: 2-column [50/50] ── */}

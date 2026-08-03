@@ -1509,5 +1509,28 @@
       "title": "Datenschutz bei Cèrcol: Daten, Löschung und DSGVO",
       "description": "Wie Cèrcol mit deinen Daten umgeht: was wir speichern, was wir nie teilen, deine DSGVO-Rechte und wie du dein Konto löschst. Klare Sprache, keine Floskeln."
     }
+  },
+  "groupTools": {
+    "heading": "Dieses Team verwalten",
+    "pendingHeading": "Einladungen, die noch offen sind",
+    "remove": "Entfernen",
+    "removed": "Einladung entfernt.",
+    "inviteLabel": "Weitere Personen einladen (eine E-Mail pro Zeile oder durch Komma getrennt)",
+    "invitePlaceholder": "name@firma.de",
+    "invite": "Einladungen senden",
+    "invited": "{{count}} Einladung gesendet.",
+    "invited_plural": "{{count}} Einladungen gesendet.",
+    "roundBody": "Bitte alle, einander zu bewerten. Jeder Bericht zeigt dann die Sicht des Teams neben der Selbsteinschätzung.",
+    "roundButton": "Teamrunde starten",
+    "roundStarted": "Runde gestartet: {{sessions_created}} Bewertungen angefragt, {{witnesses_emailed}} Personen per E-Mail benachrichtigt.",
+    "roundNote": "Jede Person bekommt eine einzige E-Mail mit ihren Links. Niemand sieht, wer was gesagt hat.",
+    "failed": "Das hat nicht geklappt. Versuche es gleich noch einmal."
+  },
+  "accuracy": {
+    "heading": "Wie gut beschreibt dich das?",
+    "option": "{{value}} von 5",
+    "low": "Gar nicht ich",
+    "high": "Genau ich",
+    "thanks": "Danke. Das hilft uns zu prüfen, ob die Profile tragen."
   }
 }

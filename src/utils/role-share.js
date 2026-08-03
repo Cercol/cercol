@@ -29,8 +29,10 @@ export function roleOgImage(roleId) {
  * @param {Record<string, number>} scores
  * @returns {string}
  */
-export function buildSharePath(scores) {
-  const { role } = computeRole(scores)
+export function buildSharePath(scores, instrument = null) {
+  const { role } = computeRole(scores, instrument)
+  // The encoded scores stay on the instrument's own scale so the landing page
+  // renders the same numbers the user saw; only the role is scale-corrected.
   return `/share/${role}?r=${encodeScores(scores)}`
 }
 
@@ -41,12 +43,13 @@ export function buildSharePath(scores) {
  * @param {Record<string, number>} scores
  * @param {(key: string, opts?: object) => string} t  react-i18next translator
  * @param {() => void} [onCopied]  called after a successful clipboard fallback
+ * @param {string|null} [instrument]  source instrument, for scale correction
  */
-export function shareResult(scores, t, onCopied) {
+export function shareResult(scores, t, onCopied, instrument = null) {
   if (typeof window === 'undefined') return
-  const { role } = computeRole(scores)
+  const { role } = computeRole(scores, instrument)
   const roleName = t(`roles.${role}.name`)
-  const url = `${window.location.origin}${buildSharePath(scores)}`
+  const url = `${window.location.origin}${buildSharePath(scores, instrument)}`
   const data = {
     title: t('share.title', { role: roleName }),
     text: t('share.text', { role: roleName }),

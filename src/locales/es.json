@@ -1509,5 +1509,28 @@
       "title": "Privacidad de Cèrcol: datos, derecho de supresión y RGPD",
       "description": "Cómo gestiona Cèrcol tus datos: qué almacenamos, qué no compartimos, tus derechos RGPD y cómo borrar la cuenta. Lenguaje claro, sin jerga legal."
     }
+  },
+  "groupTools": {
+    "heading": "Gestiona este equipo",
+    "pendingHeading": "Invitaciones pendientes de aceptar",
+    "remove": "Eliminar",
+    "removed": "Invitación eliminada.",
+    "inviteLabel": "Invita a más personas (un correo por línea, o separados por comas)",
+    "invitePlaceholder": "nombre@empresa.com",
+    "invite": "Enviar invitaciones",
+    "invited": "{{count}} invitación enviada.",
+    "invited_plural": "{{count}} invitaciones enviadas.",
+    "roundBody": "Pide que todos valoren a los demás. Cada informe mostrará cómo ve el equipo a una persona junto a cómo se ve ella misma.",
+    "roundButton": "Iniciar una ronda de equipo",
+    "roundStarted": "Ronda iniciada: {{sessions_created}} valoraciones solicitadas, {{witnesses_emailed}} personas avisadas por correo.",
+    "roundNote": "Cada persona recibe un solo correo con sus enlaces. Nadie ve quién dijo qué.",
+    "failed": "No ha funcionado. Vuelve a intentarlo en un momento."
+  },
+  "accuracy": {
+    "heading": "¿Hasta qué punto te describe esto?",
+    "option": "{{value}} de 5",
+    "low": "No soy yo",
+    "high": "Soy yo",
+    "thanks": "Gracias. Esto nos ayuda a comprobar si los perfiles funcionan."
   }
 }

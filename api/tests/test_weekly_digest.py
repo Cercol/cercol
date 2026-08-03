@@ -52,9 +52,10 @@ def test_week_bounds_covers_prior_full_week():
 
 # ── cluster counting ─────────────────────────────────────────────────────────
 
-def _row_for_role_R01() -> dict:
+def _row_for_role_R01(instrument: str = "fullMoon") -> dict:
     """Raw scores that yield z = (P+1, B+1, V0, D0, Dep-0.5) == R01 (Dolphin)."""
     return {
+        "instrument": instrument,
         "presence":   _NORM["presence"]["mean"]  + 1.0 * _NORM["presence"]["sd"],
         "bond":       _NORM["bond"]["mean"]       + 1.0 * _NORM["bond"]["sd"],
         "vision":     _NORM["vision"]["mean"],
@@ -177,11 +178,36 @@ def test_build_funnel_computes_rates():
     f = wd.build_funnel(
         {"page_view": 100, "article_view": 40, "test_start": 20, "cta_click": 10},
         tests_total=5,
+        people={"page_view": 50, "test_start": 8, "test_complete": 5},
     )
     rates = dict(f["conversions"])
-    assert rates["Visits → test starts"] == "20.0%"   # 20/100
-    assert rates["Reads → CTA clicks"] == "25.0%"      # 10/40
-    assert rates["Starts → completions"] == "25.0%"    # 5/20
+    # Rates are per person, never per event: 8 of 50 visitors opened a test and
+    # 5 of those 8 finished, even though those 8 fired 20 test_start events.
+    assert rates["Visitors → test starters"] == "16.0%"   # 8/50
+    assert rates["Reads → CTA clicks"] == "25.0%"          # 10/40
+    assert rates["Starters → finishers"] == "62.5%"        # 5/8
+    assert f["test_start"] == 20 and f["starters"] == 8
+
+
+def test_build_funnel_without_people_reports_no_rate():
+    """People counts are missing only on a pre-migration week; the block must
+    still render rather than dividing by an event count and lying."""
+    f = wd.build_funnel({"page_view": 100, "article_view": 40,
+                         "test_start": 20, "cta_click": 10}, tests_total=5)
+    rates = dict(f["conversions"])
+    assert rates["Visitors → test starters"] == "—"
+    assert rates["Starters → finishers"] == "—"
+
+
+def test_compute_role_counts_rescales_new_moon():
+    """A New Moon row is answered on 1-7 and must be mapped onto the 1-5
+    priors first. The same raw numbers under both instruments must not land on
+    the same cluster, otherwise the rescale is not running."""
+    raw = {"instrument": "newMoon", "presence": 3.5, "bond": 5.5,
+           "discipline": 5.0, "depth": 3.0, "vision": 5.5}
+    as_seven = wd.compute_role_counts([raw])
+    as_five  = wd.compute_role_counts([dict(raw, instrument="fullMoon")])
+    assert as_seven != as_five
 
 
 # ── BigQuery gathering ───────────────────────────────────────────────────────

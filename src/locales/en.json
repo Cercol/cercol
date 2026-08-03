@@ -1509,5 +1509,28 @@
       "title": "Cèrcol privacy: data, deletion rights and EU GDPR",
       "description": "How Cèrcol handles your data: what we store, what we never share, your GDPR rights, and how to delete your account. Plain language, no boilerplate."
     }
+  },
+  "groupTools": {
+    "heading": "Manage this team",
+    "pendingHeading": "Invitations waiting to be accepted",
+    "remove": "Remove",
+    "removed": "Invitation removed.",
+    "inviteLabel": "Invite more people (one email per line, or separated by commas)",
+    "invitePlaceholder": "name@company.com",
+    "invite": "Send invitations",
+    "invited": "{{count}} invitation sent.",
+    "invited_plural": "{{count}} invitations sent.",
+    "roundBody": "Ask everyone to rate everyone else. Each report then shows how the team sees a person next to how they see themselves.",
+    "roundButton": "Start a team round",
+    "roundStarted": "Round started: {{sessions_created}} ratings requested, {{witnesses_emailed}} people emailed.",
+    "roundNote": "Each person gets one email with their own links. Nobody sees who said what.",
+    "failed": "That did not work. Try again in a moment."
+  },
+  "accuracy": {
+    "heading": "How well does this describe you?",
+    "option": "{{value}} out of 5",
+    "low": "Not me at all",
+    "high": "That is me",
+    "thanks": "Thank you. This helps us check whether the profiles hold up."
   }
 }
