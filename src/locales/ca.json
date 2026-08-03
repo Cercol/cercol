@@ -168,7 +168,9 @@
     "copyLink": "Copiar l'enllaç",
     "copied": "Copiat!",
     "downloadPdf": "Descarregar PDF",
-    "viewReport": "Veure informe"
+    "viewReport": "Veure informe",
+    "witnessGiven": "ha valorat {{done}}/{{total}} companys",
+    "witnessGivenTitle": "Quantes de les valoracions assignades ha completat aquesta persona"
   },
   "cookies": {
     "notice": "Cèrcol utilitza únicament galetes funcionals — sense analítiques, sense rastreig publicitari.",
@@ -1524,7 +1526,10 @@
     "roundButton": "Inicia una ronda d'equip",
     "roundStarted": "Ronda iniciada: {{sessions_created}} valoracions demanades, {{witnesses_emailed}} persones avisades per correu.",
     "roundNote": "Cada persona rep un sol correu amb els seus enllaços. Ningú no veu qui ha dit què.",
-    "failed": "No ha funcionat. Torna-ho a provar d'ací a un moment."
+    "failed": "No ha funcionat. Torna-ho a provar d'ací a un moment.",
+    "roundProgress": "Ronda en marxa: {{done}} de {{total}} valoracions fetes.",
+    "roundWaitingOn": "Encara falten: {{names}}",
+    "roundResend": "Recorda-ho a qui falta"
   },
   "accuracy": {
     "heading": "Fins a quin punt et descriu això?",

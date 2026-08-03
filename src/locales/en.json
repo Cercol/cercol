@@ -168,7 +168,9 @@
     "copyLink": "Copy link",
     "copied": "Copied!",
     "downloadPdf": "Download PDF",
-    "viewReport": "View report"
+    "viewReport": "View report",
+    "witnessGiven": "rated {{done}}/{{total}} teammates",
+    "witnessGivenTitle": "How many of their assigned ratings this person has completed"
   },
   "cookies": {
     "notice": "Cèrcol uses only functional cookies — no analytics, no advertising trackers.",
@@ -1524,7 +1526,10 @@
     "roundButton": "Start a team round",
     "roundStarted": "Round started: {{sessions_created}} ratings requested, {{witnesses_emailed}} people emailed.",
     "roundNote": "Each person gets one email with their own links. Nobody sees who said what.",
-    "failed": "That did not work. Try again in a moment."
+    "failed": "That did not work. Try again in a moment.",
+    "roundProgress": "Round in progress: {{done}} of {{total}} ratings done.",
+    "roundWaitingOn": "Still waiting on: {{names}}",
+    "roundResend": "Remind the people still missing"
   },
   "accuracy": {
     "heading": "How well does this describe you?",

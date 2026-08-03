@@ -136,6 +136,19 @@ function MemberRow({ member, t }) {
             {t('lastQuarter.pendingLabel')}
           </span>
         )}
+        {/* Only rendered once a round has actually reached this person, so a
+            team that never started one sees no empty counters. */}
+        {member.witness_given?.total > 0 && (
+          <span
+            className="text-xs text-gray-400 block"
+            title={t('lastQuarter.witnessGivenTitle')}
+          >
+            {t('lastQuarter.witnessGiven', {
+              done: member.witness_given.done,
+              total: member.witness_given.total,
+            })}
+          </span>
+        )}
       </div>
 
       {/* Secondary arc role icon — 16px, right-aligned, muted, with tooltip */}
@@ -488,7 +501,7 @@ export default function LastQuarterPage() {
           <GroupOwnerTools
             groupId={data.group_id}
             pending={data.pending ?? []}
-            memberCount={members.length}
+            members={members}
             onChange={load}
           />
         )}

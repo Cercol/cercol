@@ -11,7 +11,21 @@ import { useTranslation } from 'react-i18next'
 import { inviteToGroup, removeGroupMember, startWitnessRound } from '../lib/api'
 import { Card, Button, SectionLabel } from './ui'
 
-export default function GroupOwnerTools({ groupId, pending = [], memberCount, onChange }) {
+/** Round progress across the whole team, or null when no round has run. */
+function roundTotals(members) {
+  const total = members.reduce((n, m) => n + (m.witness_given?.total ?? 0), 0)
+  if (!total) return null
+  return { done: members.reduce((n, m) => n + (m.witness_given?.done ?? 0), 0), total }
+}
+
+export default function GroupOwnerTools({ groupId, pending = [], members = [], onChange }) {
+  const memberCount = members.length
+  const round = roundTotals(members)
+  // Who is holding the round up. Named, because "3 of 7 done" is not
+  // actionable and the owner is the only person who can chase them.
+  const outstanding = members.filter(
+    m => (m.witness_given?.total ?? 0) > m.witness_given?.done,
+  )
   const { t } = useTranslation()
   const [emails, setEmails] = useState('')
   const [busy, setBusy] = useState(false)
@@ -89,12 +103,37 @@ export default function GroupOwnerTools({ groupId, pending = [], memberCount, on
       </div>
 
       <div className="flex flex-col gap-2 border-t border-gray-100 pt-4">
-        <p className="text-sm text-gray-700">{t('groupTools.roundBody')}</p>
+        {round ? (
+          <>
+            <p className="text-sm text-gray-700">
+              {t('groupTools.roundProgress', round)}
+            </p>
+            <div className="h-1.5 bg-gray-100 rounded overflow-hidden">
+              <div
+                className="h-full bg-[var(--mm-color-green)]"
+                style={{ width: `${Math.round((round.done / round.total) * 100)}%` }}
+              />
+            </div>
+            {outstanding.length > 0 && (
+              <p className="text-xs text-gray-500">
+                {t('groupTools.roundWaitingOn', {
+                  names: outstanding
+                    .map(m => m.display_name ?? '?')
+                    .join(', '),
+                })}
+              </p>
+            )}
+          </>
+        ) : (
+          <p className="text-sm text-gray-700">{t('groupTools.roundBody')}</p>
+        )}
         <Button
           disabled={busy || memberCount < 2}
           onClick={() => run(() => startWitnessRound(groupId), 'groupTools.roundStarted')}
         >
-          {t('groupTools.roundButton')}
+          {/* The same endpoint chases stragglers: it skips pairs that already
+              have an open session, so a second press is a nudge, not a reset. */}
+          {round ? t('groupTools.roundResend') : t('groupTools.roundButton')}
         </Button>
         <p className="text-xs text-gray-400">{t('groupTools.roundNote')}</p>
       </div>

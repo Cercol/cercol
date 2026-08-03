@@ -1470,7 +1470,7 @@ async def get_group_report_data(
             """
             SELECT
                 gm.user_id,
-                p.first_name, p.last_name,
+                p.first_name, p.last_name, p.email,
                 r.presence, r.bond, r.discipline, r.depth, r.vision, r.language
             FROM group_members gm
             LEFT JOIN profiles p ON p.id = gm.user_id
@@ -1485,6 +1485,36 @@ async def get_group_report_data(
             """,
             group_id,
         )
+
+        # Witness round progress. Two directions, and the owner needs both:
+        # "given" is what this person still owes the others, "received" is how
+        # much outside view their own report has. Without it the owner starts
+        # a round and goes blind, with no way to chase the two people holding
+        # the whole team up.
+        member_ids = [r["user_id"] for r in rows]
+        witness_rows = await conn.fetch(
+            """
+            SELECT ws.subject_id, lower(ws.witness_email) AS witness_email,
+                   (ws.completed_at IS NOT NULL) AS done
+              FROM witness_sessions ws
+             WHERE ws.subject_id = ANY($1::uuid[]) AND NOT ws.is_seed
+            """,
+            member_ids,
+        )
+
+    given, received = {}, {}
+    for w in witness_rows:
+        sid = str(w["subject_id"])
+        received.setdefault(sid, [0, 0])
+        received[sid][1] += 1
+        if w["done"]:
+            received[sid][0] += 1
+        email = w["witness_email"]
+        if email:
+            given.setdefault(email, [0, 0])
+            given[email][1] += 1
+            if w["done"]:
+                given[email][0] += 1
 
     members_data = []
     for row in rows:
@@ -1501,6 +1531,8 @@ async def get_group_report_data(
             zscores = None
             role    = None
 
+        g = given.get((row["email"] or "").lower(), [0, 0])
+        rc = received.get(mid, [0, 0])
         members_data.append({
             "user_id":      mid,
             "display_name": full or None,
@@ -1508,6 +1540,9 @@ async def get_group_report_data(
             "zscores":      zscores,
             "completed":    has_result,
             "is_self":      mid == user_id,
+            # [done, total]; [0, 0] means no round has reached this person.
+            "witness_given":    {"done": g[0],  "total": g[1]},
+            "witness_received": {"done": rc[0], "total": rc[1]},
         })
 
     return {

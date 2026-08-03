@@ -168,7 +168,9 @@
     "copyLink": "Copiar enlace",
     "copied": "¡Copiado!",
     "downloadPdf": "Descargar PDF",
-    "viewReport": "Ver informe"
+    "viewReport": "Ver informe",
+    "witnessGiven": "ha valorado {{done}}/{{total}} compañeros",
+    "witnessGivenTitle": "Cuántas de las valoraciones asignadas ha completado esta persona"
   },
   "cookies": {
     "notice": "Cèrcol usa solo cookies funcionales — sin analíticas, sin rastreadores publicitarios.",
@@ -1524,7 +1526,10 @@
     "roundButton": "Iniciar una ronda de equipo",
     "roundStarted": "Ronda iniciada: {{sessions_created}} valoraciones solicitadas, {{witnesses_emailed}} personas avisadas por correo.",
     "roundNote": "Cada persona recibe un solo correo con sus enlaces. Nadie ve quién dijo qué.",
-    "failed": "No ha funcionado. Vuelve a intentarlo en un momento."
+    "failed": "No ha funcionado. Vuelve a intentarlo en un momento.",
+    "roundProgress": "Ronda en marcha: {{done}} de {{total}} valoraciones hechas.",
+    "roundWaitingOn": "Aún faltan: {{names}}",
+    "roundResend": "Recordar a quien falta"
   },
   "accuracy": {
     "heading": "¿Hasta qué punto te describe esto?",

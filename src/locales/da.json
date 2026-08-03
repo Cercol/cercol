@@ -168,7 +168,9 @@
     "copyLink": "Kopiér link",
     "copied": "Kopieret!",
     "downloadPdf": "Download PDF",
-    "viewReport": "Se rapport"
+    "viewReport": "Se rapport",
+    "witnessGiven": "har vurderet {{done}}/{{total}} kolleger",
+    "witnessGivenTitle": "Hvor mange af de tildelte vurderinger denne person har gennemført"
   },
   "cookies": {
     "notice": "Cèrcol bruger kun funktionelle cookies — ingen analyser, ingen reklame-trackere.",
@@ -1524,7 +1526,10 @@
     "roundButton": "Start en teamrunde",
     "roundStarted": "Runde startet: {{sessions_created}} vurderinger bedt om, {{witnesses_emailed}} personer fik en mail.",
     "roundNote": "Hver person får én mail med sine egne links. Ingen ser, hvem der har sagt hvad.",
-    "failed": "Det virkede ikke. Prøv igen om et øjeblik."
+    "failed": "Det virkede ikke. Prøv igen om et øjeblik.",
+    "roundProgress": "Runde i gang: {{done}} af {{total}} vurderinger færdige.",
+    "roundWaitingOn": "Mangler stadig: {{names}}",
+    "roundResend": "Mind dem der mangler"
   },
   "accuracy": {
     "heading": "Hvor godt beskriver det dig?",
