@@ -79,6 +79,18 @@ def fetch(client: httpx.Client, doi: str) -> dict | None:
     }
 
 
+def _strip(doi: str) -> str:
+    """Drop trailing prose punctuation, keeping parentheses that belong."""
+    while doi:
+        if doi[-1] in ".,;:*_":
+            doi = doi[:-1]
+        elif doi[-1] == ")" and doi.count("(") < doi.count(")"):
+            doi = doi[:-1]
+        else:
+            break
+    return doi
+
+
 def citation_context(body: str, doi: str) -> str:
     """The text immediately preceding a DOI mention."""
     idx = body.lower().find(doi.lower())
@@ -89,8 +101,10 @@ def citation_context(body: str, doi: str) -> str:
 
 def compare(context: str, record: dict) -> list[str]:
     problems = []
-    surnames = {s for s in _SURNAME.findall(context) if s not in _STOPWORDS}
-    crossref_authors = {a.split()[-1] for a in record["authors"]}
+    surnames = {s.lower() for s in _SURNAME.findall(context) if s not in _STOPWORDS}
+    # Crossref returns some records in full uppercase (BARRICK, MOUNT), which
+    # a case-sensitive comparison never matches.
+    crossref_authors = {a.split()[-1].lower() for a in record["authors"]}
 
     if crossref_authors and surnames:
         # A hit on any author is enough: "Judge et al." naming only the first
@@ -135,10 +149,14 @@ async def main() -> int:
 
     # DOI -> [(slug, lang, context)]. One Crossref call per distinct DOI, not
     # per occurrence: the corpus reuses the same twenty papers everywhere.
-    doi_re = re.compile(r"\b(10\.\d{4,9}/[^\s\\\"'<>\])},]+)", re.IGNORECASE)
+    # Parentheses are legal inside a DOI: 10.1016/S0092-6566(03)00046-1 is a
+    # real identifier. Excluding ")" truncated three of them and reported
+    # live DOIs as unknown, so the class allows a balanced pair and the
+    # trailing strip below removes an unbalanced closer picked up from prose.
+    doi_re = re.compile(r"\b(10\.\d{4,9}/[^\s\\\"'<>\]},]+)", re.IGNORECASE)
     seen: dict[str, list] = {}
     for slug, lang, body in bodies:
-        for doi in {m.group(1).rstrip(".,;:*_").lower() for m in doi_re.finditer(body)}:
+        for doi in {_strip(m.group(1)).lower() for m in doi_re.finditer(body)}:
             seen.setdefault(doi, []).append((slug, lang, citation_context(body, doi)))
 
     dois = sorted(seen)
