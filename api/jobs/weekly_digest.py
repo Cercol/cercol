@@ -109,9 +109,11 @@ async def gather_postgres(ws, we, ps, pe) -> dict[str, Any]:
             await _count(conn, "SELECT COUNT(*) FROM auth_users WHERE created_at >= $1 AND created_at < $2", ws, we),
             await _count(conn, "SELECT COUNT(*) FROM auth_users WHERE created_at >= $1 AND created_at < $2", ps, pe),
         )
+        # Every `results` read in this job filters seed rows (migration 041):
+        # the demo-phase data is synthetic and would inflate every counter.
         tests = (
-            await _count(conn, "SELECT COUNT(*) FROM results WHERE created_at >= $1 AND created_at < $2", ws, we),
-            await _count(conn, "SELECT COUNT(*) FROM results WHERE created_at >= $1 AND created_at < $2", ps, pe),
+            await _count(conn, "SELECT COUNT(*) FROM results WHERE NOT is_seed AND created_at >= $1 AND created_at < $2", ws, we),
+            await _count(conn, "SELECT COUNT(*) FROM results WHERE NOT is_seed AND created_at >= $1 AND created_at < $2", ps, pe),
         )
         page_views = (
             await _count(conn, "SELECT COUNT(*) FROM events WHERE name='page_view' AND created_at >= $1 AND created_at < $2", ws, we),
@@ -125,7 +127,7 @@ async def gather_postgres(ws, we, ps, pe) -> dict[str, Any]:
         # Tests by instrument.
         instr_rows = await conn.fetch(
             "SELECT instrument, COUNT(*) AS n FROM results "
-            "WHERE created_at >= $1 AND created_at < $2 GROUP BY instrument ORDER BY n DESC",
+            "WHERE NOT is_seed AND created_at >= $1 AND created_at < $2 GROUP BY instrument ORDER BY n DESC",
             ws, we,
         )
         instruments = [(_INSTRUMENT_LABELS.get(r["instrument"], r["instrument"] or "unknown"), int(r["n"]))
@@ -134,14 +136,16 @@ async def gather_postgres(ws, we, ps, pe) -> dict[str, Any]:
         # This-week tests by instrument x language (the north-star pivot).
         week_il_rows = await conn.fetch(
             "SELECT instrument, language, COUNT(*) AS n FROM results "
-            "WHERE created_at >= $1 AND created_at < $2 GROUP BY instrument, language ORDER BY n DESC",
+            "WHERE NOT is_seed AND created_at >= $1 AND created_at < $2 GROUP BY instrument, language ORDER BY n DESC",
             ws, we,
         )
 
         # Raw domain scores for cluster computation (all five domains present).
+        # `instrument` rides along so New Moon's 1-7 answers can be mapped onto
+        # the 1-5 priors before clustering (scoring.to_five_scale).
         role_rows = await conn.fetch(
-            "SELECT presence, bond, discipline, depth, vision FROM results "
-            "WHERE created_at >= $1 AND created_at < $2 "
+            "SELECT instrument, presence, bond, discipline, depth, vision FROM results "
+            "WHERE NOT is_seed AND created_at >= $1 AND created_at < $2 "
             "AND presence IS NOT NULL AND bond IS NOT NULL AND discipline IS NOT NULL "
             "AND depth IS NOT NULL AND vision IS NOT NULL",
             ws, we,
@@ -156,12 +160,28 @@ async def gather_postgres(ws, we, ps, pe) -> dict[str, Any]:
         )
         funnel = {r["name"]: int(r["n"]) for r in funnel_rows}
 
+        # Same funnel, counted in people. `test_start` fires once per attempt,
+        # so the event count overstates the denominator badly; the visitor
+        # behind the event is the honest unit for a conversion rate.
+        people_rows = await conn.fetch(
+            "SELECT name, COUNT(DISTINCT anon_id) AS n FROM events "
+            "WHERE created_at >= $1 AND created_at < $2 AND anon_id IS NOT NULL "
+            "AND name IN ('page_view','article_view','test_start','cta_click') GROUP BY name",
+            ws, we,
+        )
+        people = {r["name"]: int(r["n"]) for r in people_rows}
+        people["test_complete"] = int(await conn.fetchval(
+            "SELECT COUNT(DISTINCT anon_id) FROM results "
+            "WHERE NOT is_seed AND anon_id IS NOT NULL AND created_at >= $1 AND created_at < $2",
+            ws, we,
+        ) or 0)
+
         # First-touch channel attribution for the week's completed tests (ADR
         # 0014). Fetch the raw (utm_source, referrer) pairs; classification and
         # aggregation happen in build_channels so they stay unit-testable.
         chan_rows = await conn.fetch(
             "SELECT utm_source, referrer FROM results "
-            "WHERE created_at >= $1 AND created_at < $2",
+            "WHERE NOT is_seed AND created_at >= $1 AND created_at < $2",
             ws, we,
         )
 
@@ -182,7 +202,7 @@ async def gather_postgres(ws, we, ps, pe) -> dict[str, Any]:
         # validity). Counts every result, not just complete-domain ones.
         cum_rows = await conn.fetch(
             "SELECT instrument, language, COUNT(*) AS n FROM results "
-            "GROUP BY instrument, language ORDER BY n DESC"
+            "WHERE NOT is_seed GROUP BY instrument, language ORDER BY n DESC"
         )
 
         # Population norms per (instrument, language): the same aggregation
@@ -192,7 +212,7 @@ async def gather_postgres(ws, we, ps, pe) -> dict[str, Any]:
         agg = ", ".join(f"AVG({d}) AS {d}_mean, STDDEV_SAMP({d}) AS {d}_sd" for d in DOMAINS)
         norm_rows = await conn.fetch(
             f"SELECT instrument, language, COUNT(*) AS n, {agg} FROM results "
-            f"WHERE {' AND '.join(f'{d} IS NOT NULL' for d in DOMAINS)} "
+            f"WHERE NOT is_seed AND {' AND '.join(f'{d} IS NOT NULL' for d in DOMAINS)} "
             f"GROUP BY instrument, language ORDER BY instrument, language"
         )
     finally:
@@ -209,6 +229,7 @@ async def gather_postgres(ws, we, ps, pe) -> dict[str, Any]:
         "week_il_rows": week_il_rows,
         "role_rows": role_rows,
         "funnel_raw": funnel,
+        "funnel_people": people,
         "chan_rows": chan_rows,
         "tests_total": tests[0],
         "top_articles": top_articles,
@@ -228,7 +249,7 @@ def compute_role_counts(role_rows: list) -> list[tuple[str, int]]:
     counts: Counter[str] = Counter()
     for r in role_rows:
         scores = {d: r[d] for d in DOMAINS}
-        z = _scores_to_zscores(scores, norm=None)
+        z = _scores_to_zscores(scores, norm=None, instrument=r["instrument"])
         counts[_compute_role(z)] += 1
     return sorted(counts.items(), key=lambda kv: kv[1], reverse=True)
 
@@ -347,12 +368,26 @@ def build_channels(chan_rows: list) -> list[tuple[str, int]]:
     return sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))
 
 
-def build_funnel(funnel_raw: dict[str, int], tests_total: int) -> dict[str, Any]:
-    """Assemble the funnel block with guarded conversion rates."""
+def build_funnel(funnel_raw: dict[str, int], tests_total: int,
+                 people: dict[str, int] | None = None) -> dict[str, Any]:
+    """Assemble the funnel block with guarded conversion rates.
+
+    `funnel_raw` counts events; `people` counts distinct visitors behind the
+    same events. Both matter, but they answer different questions and mixing
+    them lies: test_start fires once per attempt, so one visitor who opened
+    the test seven times before finishing turned a real 8-of-12 completion
+    rate into a reported 29%. Rates are computed per person; raw event counts
+    stay in the table for volume.
+    """
     pv = funnel_raw.get("page_view", 0)
     av = funnel_raw.get("article_view", 0)
     ts = funnel_raw.get("test_start", 0)
     cc = funnel_raw.get("cta_click", 0)
+
+    people = people or {}
+    visitors  = people.get("page_view", 0)
+    starters  = people.get("test_start", 0)
+    finishers = people.get("test_complete", 0)
 
     def rate(num: int, den: int) -> str:
         return f"{num / den:.1%}" if den else "—"
@@ -363,10 +398,13 @@ def build_funnel(funnel_raw: dict[str, int], tests_total: int) -> dict[str, Any]
         "test_start": ts,
         "cta_click": cc,
         "test_complete": tests_total,
+        "visitors": visitors,
+        "starters": starters,
+        "finishers": finishers,
         "conversions": [
-            ("Visits → test starts", rate(ts, pv)),
+            ("Visitors → test starters", rate(starters, visitors)),
             ("Reads → CTA clicks", rate(cc, av)),
-            ("Starts → completions", rate(tests_total, ts)),
+            ("Starters → finishers", rate(finishers, starters)),
         ],
     }
 
@@ -502,7 +540,7 @@ def run(cfg: JobConfig, *, bq_client, send: bool = True) -> dict[str, Any]:
         "instruments": pg["instruments"],
         "weekly_pivot": build_cumulative(pg["week_il_rows"]),
         "roles": compute_role_counts(pg["role_rows"]),
-        "funnel": build_funnel(pg["funnel_raw"], pg["tests_total"]),
+        "funnel": build_funnel(pg["funnel_raw"], pg["tests_total"], pg.get("funnel_people")),
         "channels": build_channels(pg.get("chan_rows", [])),
         "top_articles": pg["top_articles"],
         "cumulative": build_cumulative(pg["cum_rows"]),

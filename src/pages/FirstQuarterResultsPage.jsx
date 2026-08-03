@@ -18,6 +18,7 @@ import { decodeScores, CLIPBOARD_FEEDBACK_MS } from '../utils/share-url'
 import { shareResult } from '../utils/role-share'
 import { fqScoreToPercent, fqScoreLabel } from '../utils/first-quarter-scoring'
 import { logResult } from '../utils/logger'
+import AccuracyRating from '../components/AccuracyRating'
 import { computeRole } from '../utils/role-scoring'
 import { FullMoonIcon, ShareIcon, FirstQuarterIcon } from '../components/MoonIcons'
 import { useAuth } from '../context/AuthContext'
@@ -35,6 +36,8 @@ export default function FirstQuarterResultsPage() {
   const { t, i18n } = useTranslation()
   const { user } = useAuth()
   const [copied, setCopied] = useState(false)
+  // Set once the result row exists; the accuracy question needs its id.
+  const [resultId, setResultId] = useState(null)
   const loggedRef = useRef(false)
 
   const stateScores = location.state
@@ -61,7 +64,7 @@ export default function FirstQuarterResultsPage() {
   useEffect(() => {
     if (fromTest && !loggedRef.current) {
       loggedRef.current = true
-      logResult(domains, i18n.language, 'firstQuarter', user?.id ?? null, facets)
+      logResult(domains, i18n.language, 'firstQuarter', user?.id ?? null, facets).then(setResultId)
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -173,6 +176,8 @@ export default function FirstQuarterResultsPage() {
         </div>
 
         {/* Disclaimer */}
+        <AccuracyRating resultId={resultId} />
+
         <MethodologyNote>{t('fqResults.disclaimer')}</MethodologyNote>
 
       </div>

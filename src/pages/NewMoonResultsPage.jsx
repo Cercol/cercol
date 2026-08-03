@@ -13,6 +13,7 @@ import { decodeScores, CLIPBOARD_FEEDBACK_MS } from '../utils/share-url'
 import { shareResult } from '../utils/role-share'
 import { radarScoreToPercent, radarScoreLabel } from '../utils/new-moon-scoring'
 import { logResult } from '../utils/logger'
+import AccuracyRating from '../components/AccuracyRating'
 import { useAuth } from '../context/AuthContext'
 import { colors } from '../design/tokens'
 import { Card, Button, SectionLabel } from '../components/ui'
@@ -28,6 +29,8 @@ export default function NewMoonResultsPage() {
   const { t, i18n } = useTranslation()
   const { user } = useAuth()
   const [copied, setCopied] = useState(false)
+  // Set once the result row exists; the accuracy question needs its id.
+  const [resultId, setResultId] = useState(null)
   const loggedRef = useRef(false)
 
   const stateData = location.state
@@ -53,15 +56,17 @@ export default function NewMoonResultsPage() {
   useEffect(() => {
     if (fromTest && !loggedRef.current) {
       loggedRef.current = true
-      logResult(scores, i18n.language, 'newMoon', user?.id ?? null)
+      logResult(scores, i18n.language, 'newMoon', user?.id ?? null).then(setResultId)
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   function handleShare() {
+    // 'newMoon' matters: these scores are on 1-7 and must be mapped to 1-5
+    // before the role is derived (see toFiveScale in role-scoring.js).
     shareResult(scores, t, () => {
       setCopied(true)
       setTimeout(() => setCopied(false), CLIPBOARD_FEEDBACK_MS)
-    })
+    }, 'newMoon')
   }
 
   const domainKeys = DOMAIN_KEYS
@@ -128,6 +133,8 @@ export default function NewMoonResultsPage() {
         </div>
 
         {/* Disclaimer */}
+        <AccuracyRating resultId={resultId} />
+
         <MethodologyNote>{t('newMoonResults.disclaimer')}</MethodologyNote>
 
       </div>
