@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import json
 import pathlib
+import re
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -91,7 +92,10 @@ def build(lang: str) -> str:
         "AB5C, DISC, MBTI, HEXACO.",
         "",
     ]
-    return "\n".join(parts) + "\n"
+    # Collapse blank-line runs rather than tuning the spacing of every
+    # section: markdownlint MD012 rejects doubles, and composing the sections
+    # by hand means one more section is one more chance to get it wrong.
+    return re.sub(r"\n{3,}", "\n\n", "\n".join(parts)).rstrip("\n") + "\n"
 
 
 def main() -> int:

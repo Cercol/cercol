@@ -50,4 +50,3 @@ Instrument names are brand names and are identical in every language:
 
 On the blog only, never in the app interface: Big Five, OCEAN, IPIP, NEO,
 AB5C, DISC, MBTI, HEXACO.
-

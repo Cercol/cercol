@@ -235,3 +235,18 @@ def test_attribution_pass_splits_lines_into_sentences(tmp_path):
     assert len(got) == 2
     assert "Alarcon" not in got[1]          # the second sentence stands alone
     assert "et al." in got[0]               # abbreviation survives the split
+
+
+def test_dois_survive_json_escaped_markdown():
+    """A migration stores article markdown as a JSON string, so a newline is
+    the two characters backslash and n. Without a terminator the match runs
+    past the DOI and swallows `)\\n-`, which reported live DOIs as dead and
+    failed CI on migration 043."""
+    sql = (
+        r'content = \'"siehe [Bell](https://doi.org/10.1037/0021-9010.92.3.595)'
+        r'\\n- [Edmondson](https://doi.org/10.2307/2666999).\\n\\nweiter"\'::jsonb'
+    )
+    assert doi_check.extract_dois(sql) == [
+        "10.1037/0021-9010.92.3.595",
+        "10.2307/2666999",
+    ]
