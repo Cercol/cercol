@@ -97,6 +97,23 @@ article:
 - The typography of the target language: quotation marks, decimal
   separators, thousands separators, spacing before units and percent.
 
+## Changing the source after translation has started
+
+A one-word change in English is not a one-word change downstream. Two
+cases from the roles article, both invisible in an English diff:
+
+- Replacing "dimensions" with "factors" in a caption flipped the pronoun
+  that followed it in French, from `elles` to `eux`.
+- Swapping the worked example from Bee to Owl changed the gender of the
+  participle in Catalan, Spanish, French and German, and in French it also
+  changed which agreement the phrase "both on the social plane" takes,
+  because Presence and Bond are of different genders there.
+
+So a correction round tells translators what changed and why, and lets each
+one decide the scope of their own edit. It never ships a diff for them to
+apply mechanically, and a reviewer never checks a translation by diffing it
+against the previous version of itself.
+
 ## Statistical typography
 
 Decimal separators follow the target language: `r = 0,31` in German,
