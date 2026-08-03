@@ -78,6 +78,21 @@ jobs:
       - name: Run spec validator
         run: python3 scripts/check_spec_paths.py
 
+  glossary:
+    name: Translation glossaries match the locales
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      # The glossaries are generated from src/locales/*.json. If a locale
+      # changes and the glossary does not, translators start working from a
+      # term the app no longer uses, which is exactly how the German corpus
+      # ended up carrying three different words for one dimension.
+      - name: Check glossaries are current
+        run: python3 scripts/build_glossary.py --check
+
   docs-coherence:
     name: Docs vs code coherence (soft)
     runs-on: ubuntu-latest
