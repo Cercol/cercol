@@ -147,7 +147,7 @@ describe('priorFor', () => {
     const p = priorFor('witness')
     for (const f of ['E', 'A', 'O', 'C', 'N']) {
       expect(p.mean[f]).toBe(3.0)
-      expect(p.sd[f]).toBe(0.5)
+      expect(p.sd[f]).toBe(0.93)
     }
   })
 })

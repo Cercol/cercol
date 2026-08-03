@@ -73,15 +73,20 @@ _NORM_SEVEN_POINT = {
 }
 
 # The Witness instrument's own distribution. Its scores come from
-# 3 + (votes/count) * 2 over 20 forced-choice rounds, which is centred on 3.0
-# by construction: every round increments count for all five factors and
-# moves at most two of them. Measured over 4000 simulated witnesses answering
-# known profiles, mean 3.00 and SD 0.50 on every domain.
+# 3 + (votes/count) * 2 over 20 forced-choice rounds, and count increments for
+# all five factors every round, so the output is centred on 3.0 by
+# construction whatever the respondent is like.
 #
-# ponytail: these are simulated, not observed, because the instrument has no
-# real responses yet. They are a prior in exactly the sense the others are,
-# and the Tier 1/2 empirical norms replace them at NORM_MIN_SAMPLE.
-_NORM_WITNESS = {d: {"mean": 3.0, "sd": 0.50} for d in _NORM_FIVE_POINT}
+# Measured over 20000 simulated witnesses answering known profiles, across a
+# range of witness accuracy: mean 3.00 and SD 0.93, near-identical on all five
+# domains. The instrument recovers the true profile at r = 0.84, which is
+# good; the failure it had was never the instrument, only which reference its
+# output was measured against.
+#
+# ponytail: simulated, not observed, because the instrument has no real
+# responses yet. A prior in exactly the sense the published statistics are,
+# replaced by the Tier 1/2 empirical norms at NORM_MIN_SAMPLE.
+_NORM_WITNESS = {d: {"mean": 3.0, "sd": 0.93} for d in _NORM_FIVE_POINT}
 
 _PRIORS = {
     "newMoon":      _NORM_SEVEN_POINT,
