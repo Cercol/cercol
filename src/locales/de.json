@@ -1077,7 +1077,9 @@
       },
       "errorHeading": "Etwas ist schiefgelaufen.",
       "errorBody": "Wir konnten deine Antwort nicht speichern. Versuche es später erneut."
-    }
+    },
+    "term": "Zeuge",
+    "termPlural": "Zeugen"
   },
   "witnessResults": {
     "title": "Full Moon Bericht",

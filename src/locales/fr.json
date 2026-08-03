@@ -1077,7 +1077,9 @@
       },
       "errorHeading": "Une erreur s'est produite.",
       "errorBody": "Nous n'avons pas pu enregistrer votre réponse. Réessayez plus tard."
-    }
+    },
+    "term": "Témoin",
+    "termPlural": "Témoins"
   },
   "witnessResults": {
     "title": "Rapport Pleine Lune",

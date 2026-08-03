@@ -1077,7 +1077,9 @@
       },
       "errorHeading": "Noget gik galt.",
       "errorBody": "Vi kunne ikke gemme dit svar. Prøv igen senere."
-    }
+    },
+    "term": "Vidne",
+    "termPlural": "Vidner"
   },
   "witnessResults": {
     "title": "Fuldmåne-rapport",

@@ -1077,7 +1077,9 @@
       },
       "errorHeading": "Algo salió mal.",
       "errorBody": "No pudimos guardar tu respuesta. Inténtalo de nuevo más tarde."
-    }
+    },
+    "term": "Testigo",
+    "termPlural": "Testigos"
   },
   "witnessResults": {
     "title": "Informe Full Moon",

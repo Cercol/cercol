@@ -1077,7 +1077,9 @@
       },
       "errorHeading": "Alguna cosa ha anat malament.",
       "errorBody": "No hem pogut guardar la teua resposta. Torna-ho a intentar més tard."
-    }
+    },
+    "term": "Testimoni",
+    "termPlural": "Testimonis"
   },
   "witnessResults": {
     "title": "Informe de Lluna Plena",

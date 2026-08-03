@@ -39,9 +39,11 @@ Presence. Vincle, not Bond. A reader who sees "Bindung" in the app and
 academic Big Five term may appear once in parentheses on first mention,
 because that is what earns the search impression.
 
-**Instrument names are never translated.** New Moon Cèrcol, First Quarter
-Cèrcol, Full Moon Cèrcol, Last Quarter Cèrcol. They are brand names, and
-they are identical in all six languages.
+**Instrument names follow the app.** Use exactly the form in your
+glossary. This rule used to read "never translated", which was wrong: every
+non-English locale translates them, so the policy described a product that
+does not exist. Whether they should be translated is an open product
+question. Until it is settled, the blog matches the interface.
 
 **The peer-rating concept is the Witness**, in the target language's word
 for it, and never "observer" in any language. `Beobachter`, `observador`,
@@ -52,6 +54,15 @@ cited study genuinely means an observer.
 Five, OCEAN, IPIP, NEO, AB5C: they must appear in blog titles, meta
 descriptions and body text, because that is where search traffic comes
 from, and they must never appear in the interface. See CLAUDE.md.
+
+This covers the five factor names too: Openness, Conscientiousness,
+Extraversion, Agreeableness, Neuroticism stay English in running text and
+in figure labels. Cèrcol's own dimension names go in the target language.
+The distinction matters and it is easy to miss: Bindung is a Cèrcol
+dimension, Agreeableness is the academic factor it maps onto. Five
+translators of the same article split on this, four translating the figure
+labels and one keeping them English, which is how the rule earned its own
+paragraph.
 
 **The twelve roles are the twelve in the glossary.** No others. If a draft
 names an animal that is not on that list, the draft is wrong, not the

@@ -1077,7 +1077,9 @@
       },
       "errorHeading": "Something went wrong.",
       "errorBody": "We couldn't save your response. Try again later."
-    }
+    },
+    "term": "Witness",
+    "termPlural": "Witnesses"
   },
   "witnessResults": {
     "title": "Full Moon report",
