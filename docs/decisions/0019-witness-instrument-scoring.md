@@ -47,6 +47,15 @@ measured against 1-5 statistics. Both were fixed together by keying priors
 to instruments, so that nothing can z-score without naming the instrument
 that produced the numbers.
 
+## Decision
+
+Priors are keyed by instrument, and `_scores_to_zscores` takes the instrument
+that produced the scores. `_NORM_WITNESS` is mean 3.0, SD 0.93. Nothing
+z-scores against a reference built for a different instrument.
+
+The round-design change below is proposed, measured, and deliberately not
+implemented: it is a product change to a live instrument, not a correction.
+
 ## What the instrument actually does
 
 With the corrected prior and a faithful model:
@@ -107,6 +116,33 @@ Implementing it means touching `buildRounds`, `computeWitnessScores`, the
 `WitnessPage` interaction, and re-deriving `_NORM_WITNESS` for the new
 design, since the prior is specific to the scoring weights.
 
+## Alternatives considered
+
+**Leave the scoring alone and lower the ambition of the feature.** Present
+the self and Witness roles side by side without combining them, and drop the
+claim that the Witness validates anything. Rejected: with the corrected
+prior the instrument does discriminate, so there is nothing to lower.
+
+**Rescale the Witness output to a 1-7 base.** Rejected because it changes
+nothing. A linear rescale multiplies the score and its SD by the same factor
+and the z-score divides by the SD, so the two cancel exactly. Measured:
+correlation 0.4835 against 0.4831, identical within noise. This is worth
+recording because it is an intuitive fix that cannot work, and the same
+argument applies to any future proposal to widen a scale.
+
+**Two best and two worst per round.** Rejected on measurement: 0.831 against
+0.844, at twice the clicks. Two picks of equal weight cannot distinguish
+first from second, so ordering information is lost rather than gained.
+
+**Full graded ranking of all five each round.** Works (0.844 to 0.848) but
+needs a new interaction pattern and a higher cognitive load per round, for
+0.003 less than the three-pick option.
+
+**Thurstonian IRT scoring**, which is how modern forced-choice instruments
+recover normative estimates. The right long-term answer and a research
+project, not a task. The blog already describes this approach in
+`forced-choice-personality-assessment-more-honest-data`.
+
 ## Consequences
 
 - Priors are per instrument and `_scores_to_zscores` takes the instrument.
@@ -122,3 +158,12 @@ design, since the prior is specific to the scoring weights.
   distribution of agreement, not from the fact of a mismatch.
 - `api/tests/test_witness_prior.py` sweeps the instrument's reachable range
   and fails if any of the twelve roles becomes unreachable again.
+
+## Related
+
+- ADR 0003 for the auth layer these accounts sit on.
+- `docs/architecture/backend.md` for where scoring lives.
+- `forced-choice-personality-assessment-more-honest-data` on the blog, which
+  already documents the ipsative-versus-normative tradeoff this instrument
+  sits inside.
+- `api/tests/test_witness_prior.py`, the regression guard.
