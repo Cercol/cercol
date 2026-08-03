@@ -44,9 +44,10 @@ async def gather(conn, after_days: int) -> list[dict]:
     """Groups old enough to have stalled, that are not finished, not nudged.
 
     "Finished" means every active member has completed Full Moon AND has at
-    least one witness session. A team where everyone has done the self
-    assessment but nobody has been rated is exactly the state this job
-    exists to unstick.
+    least MIN_WITNESSES_FOR_REPORT completed witness sessions. Two, not one:
+    with a single witness the aggregate is that named person's answer and the
+    server will not release it, so a member with one witness has no result
+    and the team is not done.
     """
     cutoff = datetime.now(timezone.utc) - timedelta(days=after_days)
     rows = await conn.fetch(
@@ -58,7 +59,7 @@ async def gather(conn, after_days: int) -> list[dict]:
                COUNT(*) FILTER (WHERE m.status = 'active')                 AS members,
                COUNT(*) FILTER (WHERE m.status = 'pending')                AS pending,
                COUNT(*) FILTER (WHERE m.status = 'active' AND r.id IS NOT NULL) AS completed_fullmoon,
-               COUNT(*) FILTER (WHERE m.status = 'active' AND w.n > 0)     AS have_witnesses
+               COUNT(*) FILTER (WHERE m.status = 'active' AND w.n >= 2)    AS have_witnesses
           FROM groups g
           JOIN profiles p ON p.id = g.created_by
           JOIN group_members m ON m.group_id = g.id
@@ -68,8 +69,13 @@ async def gather(conn, after_days: int) -> list[dict]:
                LIMIT 1
           ) r ON true
           LEFT JOIN LATERAL (
+              -- Completed, not merely created, and at least
+              -- MIN_WITNESSES_FOR_REPORT of them: a member with one finished
+              -- witness still has no releasable result, so the team is not
+              -- done. Mirrors the gate in main.py and FullMoonResultsPage.
               SELECT count(*) AS n FROM witness_sessions
                WHERE subject_id = m.user_id AND NOT is_seed
+                 AND completed_at IS NOT NULL
           ) w ON true
          WHERE g.created_at < $1
            AND g.nudged_at IS NULL

@@ -65,3 +65,26 @@ def test_every_language_has_the_nudge_strings():
     for k in keys:
         for lang in ("en", "ca", "es", "fr", "de", "da"):
             assert emails._S[k].get(lang), (k, lang)
+
+
+def test_two_completed_witnesses_is_the_bar_not_one():
+    """The documented gate is MIN_WITNESSES_FOR_REPORT = 2. With one witness
+    the aggregate is that named person's answer, the server will not release
+    it, and the member therefore has no result. A job that treated one as
+    done would stop nudging a team that cannot see anything."""
+    import re, pathlib
+    sql = pathlib.Path(__file__).parent.parent.joinpath("jobs/group_nudge.py").read_text()
+    assert "w.n >= 2" in sql, "the nudge must require two completed witnesses"
+    assert "completed_at IS NOT NULL" in sql, "created sessions are not completed ones"
+
+
+def test_the_api_never_returns_individual_witness_scores():
+    """A witness answers on the understanding that the subject sees an
+    aggregate. Returning domain_scores per session let the subject read what
+    each named colleague said straight from the network tab."""
+    import pathlib
+    main = pathlib.Path(__file__).parent.parent.joinpath("main.py").read_text()
+    block = main[main.index('@app.get("/witness/my-sessions")'):]
+    block = block[:block.index("@app.", 10)]
+    assert '"scores"' not in block, "per-session scores must not leave the server"
+    assert '"aggregate"' in block and "MIN_WITNESSES_FOR_REPORT" in block
