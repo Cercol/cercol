@@ -70,8 +70,19 @@ def headings(body: str) -> int:
     return len(re.findall(r'^#{1,6} ', body, re.M))
 
 
+def _flat(text: str) -> str:
+    """Collapse whitespace so a term split across a line wrap still matches.
+
+    Markdown renders "Big\nFive" and "Big Five" identically, but a literal
+    search sees only the second. Every content check below runs on the
+    flattened text; the raw text is kept for anything line-based.
+    """
+    return re.sub(r"\s+", " ", text)
+
+
 def check_post(row, lang: str, animals: set[str]) -> list[str]:
     content = row["content"].get(lang) or ""
+    flat = _flat(content)
     title = (row["title"].get(lang) or "").strip()
     desc = (row["description"].get(lang) or "").strip()
     english = row["content"].get("en") or ""
@@ -90,7 +101,7 @@ def check_post(row, lang: str, animals: set[str]) -> list[str]:
         problems.append("missing title or description")
 
     if lang != "en":
-        leaked = [d for d in ENGLISH_DIMENSIONS if re.search(rf'\b{d}\b', content)]
+        leaked = [d for d in ENGLISH_DIMENSIONS if re.search(rf'\b{d}\b', flat)]
         if leaked:
             problems.append("English dimension name: " + ", ".join(leaked))
 
@@ -99,7 +110,7 @@ def check_post(row, lang: str, animals: set[str]) -> list[str]:
     # made; requiring the full set catches any future substitution too.
     if row["slug"] == ROLES_ARTICLE:
         expected = localised_animals(lang) if lang != "en" else animals
-        missing = sorted(a for a in expected if not re.search(rf'\b{re.escape(a)}\b', content))
+        missing = sorted(a for a in expected if not re.search(rf'\b{re.escape(a)}\b', flat))
         if missing:
             problems.append("roles article is missing: " + ", ".join(missing))
 

@@ -126,6 +126,19 @@ Spanish, Catalan, French and Danish. Apply this only to statistics. DOIs,
 version numbers, URLs and SVG coordinates keep their dots, and a comma
 inside an SVG path silently breaks the drawing.
 
+## Numbers that change meaning across languages
+
+English **billion** is 10^9. In Catalan, Spanish, French, German and Danish
+the cognate is 10^12. A literal rendering inflates the figure a thousandfold
+and still looks plausible, because the word is the same. Write out the value
+in the target language's own scale, and say in your report that you did.
+
+The same care applies to a term split across a line wrap. Markdown renders
+`Big\nFive` and `Big Five` identically, so a wrapped term reads correctly and
+is invisible to any literal check, including
+`scripts/check_translation.py`. Do not let a required term straddle a line
+break.
+
 ## Definition of done
 
 1. `python3 scripts/check_translation.py --lang <lang>` passes.
