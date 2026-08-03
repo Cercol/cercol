@@ -1,6 +1,6 @@
 {
   "beta": {
-    "banner": "Beta-lancering — {{remaining}} gratis Fuldmåne-licenser tilbage. Hjælp os med at finde fejl.",
+    "banner": "Beta-lancering: {{remaining}} gratis Fuldmåne-licenser tilbage. Hjælp os med at finde fejl.",
     "cta": "Få gratis adgang",
     "badge": "Beta-tester"
   },
@@ -102,7 +102,7 @@
     "balance": {
       "topContributor": "Højeste:",
       "compensates": "kan balancere dette",
-      "suggestRole": "Ingen kompenserer — overvej en {{role}}-profil",
+      "suggestRole": "Ingen kompenserer: overvej en {{role}}-profil",
       "suggestRoles": "Disse profiler ville styrke teamet:",
       "notes": {
         "presence_balanced": "Tilstedeværelse er afbalanceret. Energi og lytning sameksisterer.",
@@ -121,8 +121,8 @@
       "stronglyHigh": "Stærkt høj",
       "stronglyLow": "Stærkt lav",
       "highGood": "Høj",
-      "lowCaution": "Lav — vær opmærksom",
-      "highCaution": "Høj — vær opmærksom",
+      "lowCaution": "Lav: vær opmærksom",
+      "highCaution": "Høj: vær opmærksom",
       "lowGood": "Lav"
     },
     "narrativeHeading": "Teamfortælling",
@@ -131,15 +131,15 @@
       "watchOutHeading": "Vær opmærksom på",
       "helpHeading": "Hvad der ville hjælpe",
       "move": {
-        "high_p": "Dit team har en stærk udadvendt tilstedeværelse — synligt, direkte og hurtigt til at bringe ideer frem. Møder kører med energi. Eksterne interessenter bemærker denne gruppe.",
+        "high_p": "Dit team har en stærk udadvendt tilstedeværelse, synligt, direkte og hurtigt til at bringe ideer frem. Møder kører med energi. Eksterne interessenter bemærker denne gruppe.",
         "low_p": "Dit team arbejder med stille dybde. Ideer udvikler sig langsomt og omhyggeligt. Gruppen har tendens til at handle ud fra refleksion frem for impuls.",
         "high_b": "Sammenhæng er dette teams fundament. Folk lytter godt, støtter hinanden og har tendens til at bevæge sig konstruktivt gennem uenigheder. Tillid er høj.",
         "low_b": "Dit team er direkte, opgaveorienteret og effektivt. Folk siger, hvad de mener. Social friktion accepteres som en del af ærligt arbejde.",
         "high_v": "Innovation er gruppens naturlige tilstand. Kreativ udforskning og nye ideer kommer let. Teamet er komfortabelt med tvetydighed.",
         "low_v": "Dit team er pragmatisk og udførelsesfokuseret. Konkrete planer, klare skridt og målbart fremskridt er denne gruppes sprog.",
-        "low_c": "Dit team er fleksibelt og tilpasningsdygtigt — men kan have svært ved at opretholde momentum eller koordinere ejerskab uden bevidst struktur.",
+        "low_c": "Dit team er fleksibelt og tilpasningsdygtigt, men kan have svært ved at opretholde momentum eller koordinere ejerskab uden bevidst struktur.",
         "high_n": "Følelsesmæssig reaktivitet er til stede i denne gruppe. Teamet mærker tingene intenst og kan bære stress synligt.",
-        "balanced": "Dit team viser et veldistribueret profil på tværs af alle dimensioner. Ingen enkelt tendens dominerer, hvilket skaber alsidighed — og kræver aktiv koordinering for at forblive sammenhængende."
+        "balanced": "Dit team viser et veldistribueret profil på tværs af alle dimensioner. Ingen enkelt tendens dominerer, hvilket skaber alsidighed, og kræver aktiv koordinering for at forblive sammenhængende."
       },
       "watchOut": {
         "high_p": "Teams med høj tilstedeværelse risikerer at dominere diskussionen. Mere stille medlemmer kan tilbageholde ideer. Teamet kan virke overvældende på mindre vokale samarbejdspartnere.",
@@ -150,7 +150,7 @@
         "low_v": "Teams med lav vision kan misse strategiske muligheder eller have svært ved at tilpasse sig, når deres nuværende tilgang holder op med at virke.",
         "low_c": "Teams med lav disciplin har tendens til at efterlade ejerskab uklart og tidsfrister løse. Risikoen er ambition uden færdiggørelse.",
         "high_n": "Forhøjet stressreaktivitet kan forstærke interpersonelle spændinger. Under pres kan teamets humør destabilisere, inden problemerne løses.",
-        "balanced": "Ingen enkelt dimension markerer stærkt. Hold øje med diffus ansvarlighed — alsidige teams antager sommetider, at nogen anden ejer en opgave."
+        "balanced": "Ingen enkelt dimension markerer stærkt. Hold øje med diffus ansvarlighed, alsidige teams antager sommetider, at nogen anden ejer en opgave."
       },
       "help": {
         "high_p": "Skab bevidst plads til mindre synlige medlemmer. Rotér hvem der åbner diskussionen. Giv stille bidragsydere ejerskab over første udkast på vigtige beslutninger.",
@@ -161,7 +161,7 @@
         "low_v": "Planlæg tid til horisontscanning: hvad ændrer sig i jeres miljø? Hvilke tilgange er I måske ved at overstole på?",
         "low_c": "Indfør lette ejerskabsritualer: navngiv én person per resultat, én deadline per beslutning. Gennemgå forpligtelser ugentligt.",
         "high_n": "Investér i stressforståelse som team. Navngiv hvornår gruppen er reaktiv versus reflektiv. Opret lavrisiko-kanaler til at ventilere bekymringer, inden de eskalerer.",
-        "balanced": "Med et afbalanceret profil er risikoen koordinationsomkostninger. Vær eksplicit om beslutningsrettigheder, kommunikationsnormer og hvem der leder hvad — antag ikke tilpasning."
+        "balanced": "Med et afbalanceret profil er risikoen koordinationsomkostninger. Vær eksplicit om beslutningsrettigheder, kommunikationsnormer og hvem der leder hvad, antag ikke tilpasning."
       }
     },
     "shareHeading": "Del",
@@ -173,7 +173,7 @@
     "witnessGivenTitle": "Hvor mange af de tildelte vurderinger denne person har gennemført"
   },
   "cookies": {
-    "notice": "Cèrcol bruger kun funktionelle cookies — ingen analyser, ingen reklame-trackere.",
+    "notice": "Cèrcol bruger kun funktionelle cookies, ingen analyser, ingen reklame-trackere.",
     "learnMore": "Privatlivspolitik",
     "ok": "OK",
     "dismiss": "Luk cookie-meddelelse"
@@ -182,31 +182,31 @@
     "eyebrow": "Juridisk",
     "title": "Privatlivspolitik",
     "lastUpdated": "Sidst opdateret: maj 2026",
-    "intro": "Denne politik forklarer, hvilke data Cèrcol indsamler, hvorfor og hvad du kan gøre ved det. Den er skrevet i et klart sprog — hvis noget er uklart, så send os en e-mail.",
+    "intro": "Denne politik forklarer, hvilke data Cèrcol indsamler, hvorfor og hvad du kan gøre ved det. Den er skrevet i et klart sprog, hvis noget er uklart, så send os en e-mail.",
     "collected": {
       "heading": "Hvad vi indsamler",
       "body": "Afhængigt af hvordan du bruger Cèrcol, kan vi gemme:",
-      "email": "Din e-mailadresse — når du opretter en konto eller logger ind.",
-      "results": "Dine testresultater — point knyttet til din konto, når du er logget ind. Anonyme point (ingen konto) gemmes uden identificerende oplysninger.",
+      "email": "Din e-mailadresse: når du opretter en konto eller logger ind.",
+      "results": "Dine testresultater: point knyttet til din konto, når du er logget ind. Anonyme point (ingen konto) gemmes uden identificerende oplysninger.",
       "profile": "Profilfelter du frivilligt udfylder: fornavn, efternavn, land, modersmål. Alle valgfrie undtagen fornavn.",
-      "payment": "Betalingsdata — behandles fuldt ud af Stripe. Cèrcol ser eller gemmer aldrig dine kortoplysninger.",
-      "anonymous": "Anonyme brugsdata — hvis du gennemfører en vurdering uden en konto, gemmes kun pointene. Intet navn, ingen e-mail, ingen IP eller enhedsoplysninger.",
-      "attribution": "Besøgskilde — det henvisende websted og eventuelle kampagne-tags (utm) fra linket, du kom ind via, gemt sammen med en gennemført test. Kun førstepart, aldrig delt og aldrig knyttet til din identitet."
+      "payment": "Betalingsdata: behandles fuldt ud af Stripe. Cèrcol ser eller gemmer aldrig dine kortoplysninger.",
+      "anonymous": "Anonyme brugsdata: hvis du gennemfører en vurdering uden en konto, gemmes kun pointene. Intet navn, ingen e-mail, ingen IP eller enhedsoplysninger.",
+      "attribution": "Besøgskilde: det henvisende websted og eventuelle kampagne-tags (utm) fra linket, du kom ind via, gemt sammen med en gennemført test. Kun førstepart, aldrig delt og aldrig knyttet til din identitet."
     },
     "why": {
       "heading": "Hvorfor vi indsamler det",
       "body": "Vi indsamler kun data til tre formål:",
-      "function": "For at levere tjenesten — din e-mailadresse er nødvendig for at godkende dig; dine resultater gemmes, så du kan se din historik.",
-      "research": "Anonymiseret forskning — aggregerede, de-identificerede point bruges til at forbedre personlighedsmodellen og validere normer på tværs af befolkningsgrupper. Individuelle resultater offentliggøres aldrig.",
-      "payment": "For at behandle din betaling — Stripe har brug for dine kortoplysninger for at opkræve dig for Fuldmåne Cèrcol. Vi modtager kun en bekræftelse.",
+      "function": "For at levere tjenesten: din e-mailadresse er nødvendig for at godkende dig; dine resultater gemmes, så du kan se din historik.",
+      "research": "Anonymiseret forskning: aggregerede, de-identificerede point bruges til at forbedre personlighedsmodellen og validere normer på tværs af befolkningsgrupper. Individuelle resultater offentliggøres aldrig.",
+      "payment": "For at behandle din betaling: Stripe har brug for dine kortoplysninger for at opkræve dig for Fuldmåne Cèrcol. Vi modtager kun en bekræftelse.",
       "noAds": "Vi sælger ikke data. Vi bruger ikke data til reklame. Vi deler ikke data med tredjeparter undtagen som beskrevet ovenfor."
     },
     "retention": {
       "heading": "Hvor længe vi opbevarer det",
       "body": "Vi opbevarer dine data så længe din konto er aktiv. Nærmere bestemt:",
-      "account": "Kontodata (e-mail, profil, resultater) — opbevares, indtil du sletter din konto.",
-      "anonymous": "Anonyme testresultater — opbevares på ubestemt tid som forskningsdata uden link til nogen enkeltperson.",
-      "payment": "Betalingsregistreringer — opbevares af Stripe i henhold til deres egen politik (typisk 7 år for skattemæssig overholdelse)."
+      "account": "Kontodata (e-mail, profil, resultater), opbevares, indtil du sletter din konto.",
+      "anonymous": "Anonyme testresultater: opbevares på ubestemt tid som forskningsdata uden link til nogen enkeltperson.",
+      "payment": "Betalingsregistreringer: opbevares af Stripe i henhold til deres egen politik (typisk 7 år for skattemæssig overholdelse)."
     },
     "cookies": {
       "heading": "Cookies",
@@ -215,16 +215,16 @@
     "rights": {
       "heading": "Dine rettigheder",
       "body": "Under GDPR, hvis du befinder dig i EU eller EØS, har du ret til:",
-      "access": "Indsigt — anmod om en kopi af de personoplysninger, vi har om dig.",
-      "deletion": "Sletning — anmod om at din konto og alle tilknyttede personoplysninger slettes.",
-      "portability": "Portabilitet — anmod om dine testresultater i et maskinlæsbart format.",
-      "correction": "Rettelse — opdater eller korriger dine profiloplysninger til enhver tid via profilsiden.",
+      "access": "Indsigt: anmod om en kopi af de personoplysninger, vi har om dig.",
+      "deletion": "Sletning: anmod om at din konto og alle tilknyttede personoplysninger slettes.",
+      "portability": "Portabilitet: anmod om dine testresultater i et maskinlæsbart format.",
+      "correction": "Rettelse: opdater eller korriger dine profiloplysninger til enhver tid via profilsiden.",
       "how": "For at udøve en af disse rettigheder, send os en e-mail. Vi svarer inden for 30 dage."
     },
     "thirdParties": {
       "heading": "Tredjepartstjenester",
-      "hosting": "Dine kontodata og testresultater opbevares på en dedikeret server hostet af Hetzner Online GmbH (Tyskland, EU). Transaktionsmails (login-links) sendes via Resend (Resend, Inc.), et amerikansk selskab der opererer under standardkontraktbestemmelser for EU-dataoverførsler. Autentificering er fuldt selvhostet — ingen tredjepart har adgang til dine loginoplysninger.",
-      "stripe": "Betalinger håndteres af Stripe (Stripe, Inc.), et amerikansk selskab med EU-dataoverførselsoverholdelse. Cèrcol modtager ingen betalingskortdata — kun en transaktionsbekræftelse.",
+      "hosting": "Dine kontodata og testresultater opbevares på en dedikeret server hostet af Hetzner Online GmbH (Tyskland, EU). Transaktionsmails (login-links) sendes via Resend (Resend, Inc.), et amerikansk selskab der opererer under standardkontraktbestemmelser for EU-dataoverførsler. Autentificering er fuldt selvhostet, ingen tredjepart har adgang til dine loginoplysninger.",
+      "stripe": "Betalinger håndteres af Stripe (Stripe, Inc.), et amerikansk selskab med EU-dataoverførselsoverholdelse. Cèrcol modtager ingen betalingskortdata, kun en transaktionsbekræftelse.",
       "noTrackers": "Ingen andre tredjepartstjenester modtager dine personoplysninger. Der er ingen analyseplattforme, reklamenetværk eller sociale medie-trackere på dette websted."
     },
     "contact": {
@@ -320,7 +320,7 @@
       "description": "Et hurtigt kig på dine fem kerndimensioner."
     },
     "firstQuarter": {
-      "name": "Første Kvartal Cèrcol",
+      "name": "Første Kvarter Cèrcol",
       "tagline": "Fuldt portræt",
       "meta": "60 spørgsmål · ~10 min",
       "description": "Et dybere kig, opdelt i 30 facetter."
@@ -329,17 +329,20 @@
       "name": "Fuldmåne Cèrcol",
       "tagline": "Komplet portræt",
       "meta": "120 spørgsmål · ~20 min",
-      "description": "Den dybeste selvrapport — alle 30 facetter i fuld opløsning.",
+      "description": "Den dybeste selvrapport: alle 30 facetter i fuld opløsning.",
       "paid": "Engangsbetaling"
     },
     "lastQuarter": {
       "name": "Sidste Kvarter Cèrcol",
       "meta": "Teamrapport",
-      "description": "Dit teams rollerprofil — balance, fortælling og fælles blinde vinkler."
+      "description": "Dit teams rollerprofil: balance, fortælling og fælles blinde vinkler."
     },
     "footnote": "Open source · ",
     "viewOnGitHub": "Se på GitHub",
-    "h1": "Cèrcol: open source-personlighedsvurdering for teams"
+    "h1": "Cèrcol: open source-personlighedsvurdering for teams",
+    "witness": {
+      "name": "Vidne Cèrcol"
+    }
   },
   "newMoon": {
     "subtitle": "Nymåne Cèrcol",
@@ -370,15 +373,15 @@
     "share": "Del resultater",
     "copied": "Kopieret!",
     "retake": "Start forfra",
-    "disclaimer": "Resultater afspejler tendenser på tidspunktet for vurderingen. Begge ender af en dimension har deres egne styrker — ingen score er god eller dårlig.",
+    "disclaimer": "Resultater afspejler tendenser på tidspunktet for vurderingen. Begge ender af en dimension har deres egne styrker, ingen score er god eller dårlig.",
     "upgrade": {
       "heading": "Vil du have et mere fuldstændigt billede?",
-      "body": "Første Kvartal Cèrcol giver dig 5 dimensioner opdelt i 30 facetter.",
-      "cta": "Start Første Kvartal Cèrcol"
+      "body": "Første Kvarter Cèrcol giver dig 5 dimensioner opdelt i 30 facetter.",
+      "cta": "Start Første Kvarter Cèrcol"
     }
   },
   "fq": {
-    "subtitle": "Første Kvartal Cèrcol",
+    "subtitle": "Første Kvarter Cèrcol",
     "blockProgress": "{{current}} af {{total}} i denne blok",
     "blockLabel": "Blok {{current}} af {{total}}",
     "overallProgress": "{{current}} af {{total}} i alt",
@@ -393,14 +396,14 @@
       "cta": "Fortsæt til {{name}}"
     },
     "intro": {
-      "heading": "Første Kvartal Cèrcol",
+      "heading": "Første Kvarter Cèrcol",
       "meta": "60 spørgsmål · ~10 min",
       "scale": "1–5 · Meget uenig → Meget enig",
       "guidance": "Ingen rigtige svar. Gå med det, der er sandt for dig lige nu.",
       "cta": "Begynd"
     },
     "alreadyCompleted": {
-      "heading": "Du har allerede gennemført Første Kvartal Cèrcol",
+      "heading": "Du har allerede gennemført Første Kvarter Cèrcol",
       "body": "Du har et eksisterende resultat for dette instrument.",
       "cta": "Se mine resultater",
       "redo": "Gentag"
@@ -408,7 +411,7 @@
   },
   "fqResults": {
     "title": "Din profil",
-    "subtitle": "Første Kvartal Cèrcol · 5 dimensioner · 30 facetter",
+    "subtitle": "Første Kvarter Cèrcol · 5 dimensioner · 30 facetter",
     "domainSection": "Fem dimensioner",
     "facetSection": "Facet-opdeling",
     "facetsCount": "facetter",
@@ -427,11 +430,11 @@
     "share": "Del resultater",
     "copied": "Kopieret!",
     "retake": "Start forfra",
-    "disclaimer": "Resultater afspejler tendenser på tidspunktet for vurderingen. Begge ender af en dimension har deres egne styrker — ingen score er god eller dårlig.",
+    "disclaimer": "Resultater afspejler tendenser på tidspunktet for vurderingen. Begge ender af en dimension har deres egne styrker, ingen score er god eller dårlig.",
     "paymentSuccess": "Betaling modtaget. Din fulde facet-opdeling er nu låst op.",
     "unlock": {
       "heading": "30 facetter. Én betaling.",
-      "body": "Se detaljerne bag hver dimension — hvad der driver dig, hvor du holder igen, og hvordan du bevæger dig gennem verden.",
+      "body": "Se detaljerne bag hver dimension, hvad der driver dig, hvor du holder igen, og hvordan du bevæger dig gennem verden.",
       "cta": "Lås fuld rapport op",
       "loading": "Omdirigerer til betaling…",
       "signInNote": "Du skal logge ind først."
@@ -474,7 +477,7 @@
     },
     "alreadyCompleted": {
       "heading": "Du har allerede gennemført Full Moon Cèrcol",
-      "body": "Personlighed ændrer sig ikke markant over korte perioder. Dit eksisterende resultat er stadig præcist — en ny udfyldning ville give meget lignende scorer.",
+      "body": "Personlighed ændrer sig ikke markant over korte perioder. Dit eksisterende resultat er stadig præcist, en ny udfyldning ville give meget lignende scorer.",
       "cta": "Se din rapport",
       "redo": "Gentag"
     }
@@ -493,7 +496,7 @@
     "share": "Del resultater",
     "copied": "Kopieret!",
     "retake": "Start forfra",
-    "disclaimer": "Resultater afspejler tendenser på tidspunktet for vurderingen. Begge ender af en dimension har deres egne styrker — ingen score er god eller dårlig.",
+    "disclaimer": "Resultater afspejler tendenser på tidspunktet for vurderingen. Begge ender af en dimension har deres egne styrker, ingen score er god eller dårlig.",
     "witnessCta": {
       "eyebrow": "Vidne Cèrcol",
       "heading": "Se dig selv udefra.",
@@ -506,7 +509,7 @@
     "depth": {
       "name": "Dybde",
       "description": "Hvordan du behandler følelser og navigerer usikkerhed.",
-      "blockIntro": "Disse spørgsmål udforsker dit følelsesmæssige landskab — hvordan du reagerer på stress, forandring og indre spænding."
+      "blockIntro": "Disse spørgsmål udforsker dit følelsesmæssige landskab, hvordan du reagerer på stress, forandring og indre spænding."
     },
     "presence": {
       "name": "Tilstedeværelse",
@@ -550,7 +553,7 @@
   },
   "results": {
     "title": "Din profil",
-    "subtitle": "Første Kvartal Cèrcol · 5 dimensioner · 15 facetter",
+    "subtitle": "Første Kvarter Cèrcol · 5 dimensioner · 15 facetter",
     "domainSection": "Fem dimensioner",
     "facetSection": "Facet-opdeling",
     "scoreLabels": {
@@ -561,7 +564,7 @@
     "share": "Del resultater",
     "copied": "Kopieret!",
     "retake": "Start forfra",
-    "disclaimer": "Resultater afspejler tendenser på tidspunktet for vurderingen. Begge ender af en dimension har deres egne styrker — ingen score er god eller dårlig."
+    "disclaimer": "Resultater afspejler tendenser på tidspunktet for vurderingen. Begge ender af en dimension har deres egne styrker, ingen score er god eller dårlig."
   },
   "radarResults": {
     "title": "Dit overblik",
@@ -570,11 +573,11 @@
     "share": "Del resultater",
     "copied": "Kopieret!",
     "retake": "Start forfra",
-    "disclaimer": "Resultater afspejler tendenser på tidspunktet for vurderingen. Begge ender af en dimension har deres egne styrker — ingen score er god eller dårlig.",
+    "disclaimer": "Resultater afspejler tendenser på tidspunktet for vurderingen. Begge ender af en dimension har deres egne styrker, ingen score er god eller dårlig.",
     "upgrade": {
       "heading": "Vil du have et mere fuldstændigt billede?",
-      "body": "Første Kvartal Cèrcol giver dig 5 dimensioner opdelt i 30 facetter.",
-      "cta": "Start Første Kvartal Cèrcol"
+      "body": "Første Kvarter Cèrcol giver dig 5 dimensioner opdelt i 30 facetter.",
+      "cta": "Start Første Kvarter Cèrcol"
     }
   },
   "feedback": {
@@ -608,7 +611,7 @@
     "negativeEmotionality": {
       "label": "Dybde",
       "description": "Hvordan du behandler følelser og navigerer usikkerhed.",
-      "blockIntro": "Disse spørgsmål udforsker dit følelsesmæssige landskab — hvordan du reagerer på stress, forandring og indre spænding."
+      "blockIntro": "Disse spørgsmål udforsker dit følelsesmæssige landskab, hvordan du reagerer på stress, forandring og indre spænding."
     },
     "openMindedness": {
       "label": "Vision",
@@ -620,7 +623,7 @@
     "depth": {
       "name": "Dybde",
       "description": "Hvordan du behandler følelser og navigerer usikkerhed.",
-      "blockIntro": "Disse spørgsmål udforsker dit følelsesmæssige landskab — hvordan du reagerer på stress, forandring og indre spænding."
+      "blockIntro": "Disse spørgsmål udforsker dit følelsesmæssige landskab, hvordan du reagerer på stress, forandring og indre spænding."
     },
     "presence": {
       "name": "Tilstedeværelse",
@@ -650,18 +653,18 @@
     },
     "bond": {
       "high": "Du mærker, hvad andre mærker, nogle gange inden de gør det selv. Konflikter koster dig mere end andre, og du glatter ofte tingene ud for bare at holde luften ren. Det er en gave, så længe du ikke forsvinder i processen.",
-      "low": "Du er ikke her for at blive holdt af — du er her for at være nyttig. Du siger det svære, når andre ikke vil, og du behøver ikke konsensus for at føle dig tryg. Grupper har brug for nogen som dig, selvom de ikke indrømmer det."
+      "low": "Du er ikke her for at blive holdt af, du er her for at være nyttig. Du siger det svære, når andre ikke vil, og du behøver ikke konsensus for at føle dig tryg. Grupper har brug for nogen som dig, selvom de ikke indrømmer det."
     },
     "discipline": {
-      "high": "Du afslutter, hvad du starter. Når du siger, at noget bliver gjort, bliver det gjort. Struktur er ikke en begrænsning for dig — det er sådan du bygger ting, der holder. Andre stoler mere på det, end de siger.",
+      "high": "Du afslutter, hvad du starter. Når du siger, at noget bliver gjort, bliver det gjort. Struktur er ikke en begrænsning for dig, det er sådan du bygger ting, der holder. Andre stoler mere på det, end de siger.",
       "low": "Regler føles som andres svar på et problem, du ville løse anderledes. Du er bedre til at starte ting end til at afslutte dem, hvilket betyder, at du har brug for folk omkring dig, der elsker de sidste 20 %. Du ved sikkert allerede, hvem de er."
     },
     "depth": {
-      "high": "Du mærker tingene fuldt ud. Det betyder, at de svære øjeblikke rammer hårdere, men det betyder også, at du opfanger ting, som andre fuldstændig overser. Din sensitivitet er ikke en fejl i systemet — det er sådan systemet kalibreres.",
-      "low": "Pres ryster dig ikke. Når tingene går skævt, er du ofte den, andre kigger på — ikke fordi du er upåvirket, men fordi du ikke viser det. Den stabilitet er sjældnere, end den ser ud."
+      "high": "Du mærker tingene fuldt ud. Det betyder, at de svære øjeblikke rammer hårdere, men det betyder også, at du opfanger ting, som andre fuldstændig overser. Din sensitivitet er ikke en fejl i systemet, det er sådan systemet kalibreres.",
+      "low": "Pres ryster dig ikke. Når tingene går skævt, er du ofte den, andre kigger på, ikke fordi du er upåvirket, men fordi du ikke viser det. Den stabilitet er sjældnere, end den ser ud."
     },
     "vision": {
-      "high": "Du tiltrækkes af ideen inden planen, spørgsmålet inden svaret. Nye ting skræmmer dig ikke — ensformighed gør det. Du ser ofte, hvor noget kan gå hen, inden andre overhovedet har kigget op fra, hvor de er.",
+      "high": "Du tiltrækkes af ideen inden planen, spørgsmålet inden svaret. Nye ting skræmmer dig ikke: ensformighed gør det. Du ser ofte, hvor noget kan gå hen, inden andre overhovedet har kigget op fra, hvor de er.",
       "low": "Du stoler på det, der virker. Ikke hvert problem behøver en ny løsning, og det ved du. Når alle andre jager det næste, sikrer du, at det nuværende faktisk holder. Det er undervurderet."
     }
   },
@@ -674,17 +677,17 @@
     "assertiveness": {
       "label": "Selvhævdelse",
       "high": "Du venter ikke på tilladelse. Når noget skal siges eller besluttes, siger du det eller beslutter det. Den klarhed skærer igennem støj, og de fleste grupper har brug for mere af det, end de har.",
-      "low": "Du foretrækker at observere inden du handler. Du giver andre plads til at lede, og når du træder ind, er det fordi du allerede har tænkt det igennem. Den omhyggelighed er ikke tøven — det er præcision."
+      "low": "Du foretrækker at observere inden du handler. Du giver andre plads til at lede, og når du træder ind, er det fordi du allerede har tænkt det igennem. Den omhyggelighed er ikke tøven, det er præcision."
     },
     "energyLevel": {
       "label": "Energiniveau",
-      "high": "Du kører varmt. Lange møder, dag efter dag, krævende projekter — du finder et ekstra gear, hvor andre allerede er færdige. Risikoen er, at du ikke altid bemærker, når menneskene omkring dig er holdt op med at følge med.",
+      "high": "Du kører varmt. Lange møder, dag efter dag, krævende projekter, du finder et ekstra gear, hvor andre allerede er færdige. Risikoen er, at du ikke altid bemærker, når menneskene omkring dig er holdt op med at følge med.",
       "low": "Du er bæredygtig. Du kender dit tempo og holder det. Du vil ikke brænde stærkt og bryde sammen, hvilket gør dig til en, andre kan stole på, når et projekt trækker ud."
     },
     "compassion": {
       "label": "Medfølelse",
       "high": "Når nogen i rummet kæmper, bemærker du det, inden de siger noget. Du tilpasser dig. Den bevidsthed får folk til at føle sig set, hvilket er en af de mest nyttige ting, et menneske kan gøre for et andet.",
-      "low": "Du overtager ikke automatisk andres følelsesmæssige vægt. Det er ikke kulde — det er en anden slags klarhed. Du fokuserer på problemet, ikke følelserne omkring det, og nogle gange er det præcis, hvad der er brug for."
+      "low": "Du overtager ikke automatisk andres følelsesmæssige vægt. Det er ikke kulde: det er en anden slags klarhed. Du fokuserer på problemet, ikke følelserne omkring det, og nogle gange er det præcis, hvad der er brug for."
     },
     "respectfulness": {
       "label": "Respektfuld",
@@ -699,7 +702,7 @@
     "organization": {
       "label": "Organisation",
       "high": "Du ved, hvor alt er, hvornår alt er forfaldent, og hvad der sker, hvis det ikke er. Den mentale orden frigør dig til at fokusere, og det at arbejde med dig føles pålideligt på en måde, der er svær at erstatte.",
-      "low": "Din arbejdsplads ser måske ud som kaos, men du ved, hvor tingene er — for det meste. Du arbejder i udbrud og styrer efter prioritet, ikke efter system. Hvad du mister i ryddelighed, vinder du nogle gange i hastighed."
+      "low": "Din arbejdsplads ser måske ud som kaos, men du ved, hvor tingene er, for det meste. Du arbejder i udbrud og styrer efter prioritet, ikke efter system. Hvad du mister i ryddelighed, vinder du nogle gange i hastighed."
     },
     "productiveness": {
       "label": "Produktivitet",
@@ -718,8 +721,8 @@
     },
     "depression": {
       "label": "Humør",
-      "high": "Du bærer ting. Tilbageslag preller ikke bare af — de sætter sig en stund. Den dybde af følelse betyder, at du tager ting alvorligt på en måde, som overfladiske mennesker aldrig vil. Det er noget værd, selv når det ikke føles sådan.",
-      "low": "Du kommer dig hurtigt. Dårlige dage fortsætter ikke i dårlige uger. Den modstandsdygtighed er ikke fraværet af følelse — det er evnen til at bevæge sig igennem ting uden at sidde fast. Grupper har brug for den slags ballast."
+      "high": "Du bærer ting. Tilbageslag preller ikke bare af, de sætter sig en stund. Den dybde af følelse betyder, at du tager ting alvorligt på en måde, som overfladiske mennesker aldrig vil. Det er noget værd, selv når det ikke føles sådan.",
+      "low": "Du kommer dig hurtigt. Dårlige dage fortsætter ikke i dårlige uger. Den modstandsdygtighed er ikke fraværet af følelse, det er evnen til at bevæge sig igennem ting uden at sidde fast. Grupper har brug for den slags ballast."
     },
     "emotionalVolatility": {
       "label": "Følelsesmæssig stabilitet",
@@ -733,7 +736,7 @@
     },
     "aestheticSensitivity": {
       "label": "Æstetisk sensitivitet",
-      "high": "Du bemærker, når noget er smukt og når det ikke er. Den opmærksomhed på form er ikke overfladisk — det er sådan, du behandler kvalitet. Du vil ofte føle, at noget er galt, inden du kan sige hvorfor, og du har som regel ret.",
+      "high": "Du bemærker, når noget er smukt og når det ikke er. Den opmærksomhed på form er ikke overfladisk, det er sådan, du behandler kvalitet. Du vil ofte føle, at noget er galt, inden du kan sige hvorfor, og du har som regel ret.",
       "low": "Funktion betyder mere for dig end form. Hvis det virker, virker det. Du vil ikke bruge tid på at gøre noget smukt, når det at gøre det bedre stadig er på bordet. Det fokus på substans holder tingene i bevægelse."
     },
     "creativeImagination": {
@@ -756,7 +759,7 @@
     "hollow": {
       "label": "Hollow",
       "high": "Du bærer vægt. Tilbageslag sætter sig frem for at prale af. Den dybde af følelse betyder, at du tager ting alvorligt på en måde, som lettere mennesker aldrig vil. Det koster dig, og det er noget værd.",
-      "low": "Du kommer dig hurtigt. Dårlige dage bliver ikke til dårlige uger. Den evne til at gå videre er ikke ligegyldighed — det er en slags modstandsdygtighed, der holder dig funktionsdygtig, når andre stadig behandler."
+      "low": "Du kommer dig hurtigt. Dårlige dage bliver ikke til dårlige uger. Den evne til at gå videre er ikke ligegyldighed, det er en slags modstandsdygtighed, der holder dig funktionsdygtig, når andre stadig behandler."
     },
     "veil": {
       "label": "Veil",
@@ -770,12 +773,12 @@
     },
     "fracture": {
       "label": "Fracture",
-      "high": "Når presset bygger op, mærker du det fuldt ud. Den sensitivitet er ikke svaghed — det er et signal. Du opfanger belastning, inden andre gør det, hvilket betyder, at du ofte er den, der siger, at noget skal ændres.",
+      "high": "Når presset bygger op, mærker du det fuldt ud. Den sensitivitet er ikke svaghed, det er et signal. Du opfanger belastning, inden andre gør det, hvilket betyder, at du ofte er den, der siger, at noget skal ændres.",
       "low": "Du holder under pres uden synlige revner. Folk kigger på dig, når tingene bliver svære, ikke fordi du er upåvirket, men fordi du bliver ved med at fungere. Det er bærende arbejde på ethvert team."
     },
     "hearth": {
       "label": "Hearth",
-      "high": "Folk føler sig velkomne omkring dig uden at vide præcist hvorfor. Du gør en indsats for at forbinde, huske, spørge. Den varme er ikke smalltalk — det er fundamentet for tillid.",
+      "high": "Folk føler sig velkomne omkring dig uden at vide præcist hvorfor. Du gør en indsats for at forbinde, huske, spørge. Den varme er ikke smalltalk: det er fundamentet for tillid.",
       "low": "Du varmer ikke op øjeblikkeligt og giver ikke udtryk for at gøre det. De forbindelser, du skaber, er ægte og holdbare. Folk, der kender dig godt, ved, at de får noget reelt."
     },
     "gather": {
@@ -786,11 +789,11 @@
     "command": {
       "label": "Command",
       "high": "Du venter ikke på tilladelse. Når noget skal besluttes, beslutter du det. Når noget skal siges, siger du det. Den direkthed skærer igennem støj, og de fleste grupper har brug for mere af den.",
-      "low": "Du observerer inden du handler. Du lader andre lede, og når du træder ind, er det fordi du allerede har tænkt det igennem. Det er ikke tøven — det er præcision."
+      "low": "Du observerer inden du handler. Du lader andre lede, og når du træder ind, er det fordi du allerede har tænkt det igennem. Det er ikke tøven: det er præcision."
     },
     "drive": {
       "label": "Drive",
-      "high": "Du kører i et højt tempo. Dag efter dag, flere projekter, lange møder — du finder et ekstra gear, hvor andre allerede er færdige. Tjek bare, at menneskene omkring dig stadig følger med.",
+      "high": "Du kører i et højt tempo. Dag efter dag, flere projekter, lange møder, du finder et ekstra gear, hvor andre allerede er færdige. Tjek bare, at menneskene omkring dig stadig følger med.",
       "low": "Du er bæredygtig. Du kender dit tempo og holder det. Du vil ikke brænde stærkt og bryde sammen, hvilket gør dig til én, andre kan stole på, når et projekt kører længere end forventet."
     },
     "thrill": {
@@ -805,22 +808,22 @@
     },
     "dream": {
       "label": "Dream",
-      "high": "Dit sind bevæger sig til steder uden at blive bedt om det. Dagdrømmeri er ikke distraktion for dig — det er der, ideer kommer fra. Den indre verden er rig, og den nærer den ydre på måder, der ikke altid er synlige.",
+      "high": "Dit sind bevæger sig til steder uden at blive bedt om det. Dagdrømmeri er ikke distraktion for dig, det er der, ideer kommer fra. Den indre verden er rig, og den nærer den ydre på måder, der ikke altid er synlige.",
       "low": "Du holder dig tæt på jorden. Hvad der er reelt, hvad der er her, hvad der virker. Det fokus holder dig nyttig på måder, som drømmere nogle gange ikke er."
     },
     "craft": {
       "label": "Craft",
-      "high": "Du bemærker, når noget er smukt og når det ikke er. Den opmærksomhed på form er ikke overfladisk — det er sådan du behandler kvalitet. Du mærker, at noget er galt, inden du kan sige hvorfor, og du har som regel ret.",
+      "high": "Du bemærker, når noget er smukt og når det ikke er. Den opmærksomhed på form er ikke overfladisk, det er sådan du behandler kvalitet. Du mærker, at noget er galt, inden du kan sige hvorfor, og du har som regel ret.",
       "low": "Funktion betyder mere for dig end form. Hvis det virker, virker det. Du vil ikke bruge tid på at gøre noget smukt, når det at gøre det bedre stadig er på bordet."
     },
     "resonance": {
       "label": "Resonance",
-      "high": "Du er stemt ind på følelsesregistret — dit og andres. Den indstilling gør dig til en omhyggelig læser af rum og en eftertænksom kommunikator. Det betyder også, at du bærer mere end de fleste.",
+      "high": "Du er stemt ind på følelsesregistret, dit og andres. Den indstilling gør dig til en omhyggelig læser af rum og en eftertænksom kommunikator. Det betyder også, at du bærer mere end de fleste.",
       "low": "Du leder med logik frem for følelse. Det holder tingene klare og ubelastede. I følelsesmæssigt ladede situationer er din ro ofte præcis, hvad der er brug for."
     },
     "drift": {
       "label": "Drift",
-      "high": "Variation holder dig engageret. Nye tilgange, forskellige kontekster, ukendt territorium — det er der, du tænker bedst. Gentagelse er der, hvor du mister interessen hurtigst.",
+      "high": "Variation holder dig engageret. Nye tilgange, forskellige kontekster, ukendt territorium, det er der, du tænker bedst. Gentagelse er der, hvor du mister interessen hurtigst.",
       "low": "Du stoler på det, der virker, og holder dig til det. Ikke hvert problem behøver en ny løsning. Når andre jager nyhed, sikrer du, at det nuværende faktisk holder."
     },
     "prism": {
@@ -841,7 +844,7 @@
     "edge": {
       "label": "Edge",
       "high": "Det du siger er det, du mener. Ingen optræden, ingen styring af indtryk, ingen strategisk tvetydighed. Folk ved altid, hvor de står med dig, hvilket er mere værdifuldt, end det lyder.",
-      "low": "Du er dygtig til at navigere social kompleksitet. Du ved, hvornår du skal holde tilbage, hvornår du skal formulere tingene omhyggeligt, hvornår direkthed ville koste mere, end det er værd. Det er ikke uærlighed — det er sofistikation."
+      "low": "Du er dygtig til at navigere social kompleksitet. Du ved, hvornår du skal holde tilbage, hvornår du skal formulere tingene omhyggeligt, hvornår direkthed ville koste mere, end det er værd. Det er ikke uærlighed: det er sofistikation."
     },
     "gift": {
       "label": "Gift",
@@ -856,7 +859,7 @@
     "shadow": {
       "label": "Shadow",
       "high": "Du tager ikke mere plads end du har brug for. Anerkendelse deles, præstationer annonceres ikke. Den tilbageholdenhed opbygger en slags tillid, som selvpromovering aldrig gør.",
-      "low": "Du ved, hvad du er værd, og du gemmer det ikke. Den selvtillid i din egen værdi er ikke arrogance — det er klarhed. Og nogle gange har rummet brug for nogen, der er villig til at sige, hvad de bringer."
+      "low": "Du ved, hvad du er værd, og du gemmer det ikke. Den selvtillid i din egen værdi er ikke arrogance, det er klarhed. Og nogle gange har rummet brug for nogen, der er villig til at sige, hvad de bringer."
     },
     "shield": {
       "label": "Shield",
@@ -865,13 +868,13 @@
     },
     "mastery": {
       "label": "Mastery",
-      "high": "Du håndterer ting godt, og du ved det. Den selvtillid i dine egne evner er ikke arrogance — det er præcist. Du lammer dig ikke med selvtvivl, fordi du som regel har gjort arbejdet.",
+      "high": "Du håndterer ting godt, og du ved det. Den selvtillid i dine egne evner er ikke arrogance, det er præcist. Du lammer dig ikke med selvtvivl, fordi du som regel har gjort arbejdet.",
       "low": "Du finder stadig ud af tingene, og du er ærlig om det. Den åbenhed for at lære holder dig fra den overmod, der snubler folk, der tror, de allerede er kommet frem."
     },
     "structure": {
       "label": "Structure",
       "high": "Du ved, hvor alt er, hvornår alt er forfaldent, og hvad der sker, hvis det ikke er. Den mentale orden frigør dig til at fokusere, og det at arbejde med dig føles pålideligt på en måde, der er svær at erstatte.",
-      "low": "Din arbejdsplads ser måske ud som kaos, men du ved, hvor tingene er — for det meste. Du styrer efter prioritet, ikke efter system. Hvad du mister i ryddelighed, vinder du nogle gange i hastighed."
+      "low": "Din arbejdsplads ser måske ud som kaos, men du ved, hvor tingene er, for det meste. Du styrer efter prioritet, ikke efter system. Hvad du mister i ryddelighed, vinder du nogle gange i hastighed."
     },
     "oath": {
       "label": "Oath",
@@ -916,7 +919,7 @@
     "R01": {
       "name": "Delfin",
       "ca": "Dolphin",
-      "essence": "Når du er i rummet, taler folk. Ikke fordi du spørger — fordi du gjorde det nemt. Teamet varmer op med dig.",
+      "essence": "Når du er i rummet, taler folk. Ikke fordi du spørger: fordi du gjorde det nemt. Teamet varmer op med dig.",
       "profile": "Høj Tilstedeværelse og Tilknytning. Varm, udadvendt og nem at være sammen med. Folk åbner sig i dit selskab.",
       "contributes": "Sammenhæng. Sænker den sociale aktiveringsenergi i rummet.",
       "misses": "Den produktive friktion, der skærper ideer. Varme kan glatte over reelle uenigheder."
@@ -932,7 +935,7 @@
     "R03": {
       "name": "Elefant",
       "ca": "Elephant",
-      "essence": "Du tager ikke plads — du skaber den. Folk forklarer sig godt ved siden af dig, fordi de ved, at du virkelig lytter.",
+      "essence": "Du tager ikke plads: du skaber den. Folk forklarer sig godt ved siden af dig, fordi de ved, at du virkelig lytter.",
       "profile": "Lav Tilstedeværelse, høj Tilknytning. Stille og dybt samarbejdende. Skaber plads til, at andre kan tænke højt.",
       "contributes": "Lyttedybde. Folk formulerer sig bedre i din tilstedeværelse.",
       "misses": "Fremdrift. Teamet kan tænke klart sammen, men stadig ikke bevæge sig."
@@ -956,7 +959,7 @@
     "R06": {
       "name": "Falk",
       "ca": "Falcon",
-      "essence": "Det er ikke vision — det er timing. Du ved præcis, hvornår du skal bevæge dig, og når du gør det, bemærker teamet det.",
+      "essence": "Det er ikke vision: det er timing. Du ved præcis, hvornår du skal bevæge dig, og når du gør det, bemærker teamet det.",
       "profile": "Høj Tilstedeværelse, lav Vision. Til stede, beslutsom og praktisk. Ved præcis, hvornår man skal handle.",
       "contributes": "Timing. Bevæger sig på det rette tidspunkt og tager folk med.",
       "misses": "Langsigtet tænkning. Kan gå glip af det strategiske lag, mens det udfører godt i højt tempo."
@@ -996,7 +999,7 @@
     "R11": {
       "name": "Ræv",
       "ca": "Fox",
-      "essence": "Du ser det, der ikke hænger sammen — i ideer og i relationer. Dit ubehag er produktivt.",
+      "essence": "Du ser det, der ikke hænger sammen, i ideer og i relationer. Dit ubehag er produktivt.",
       "profile": "Lav Tilknytning, høj Vision. Intellektuelt skarp og kritisk tænkende. Opfanger inkonsistens hurtigt.",
       "contributes": "Kritisk distance. Opfanger det, der ikke hænger sammen, inden det bliver et problem.",
       "misses": "Relationel lethed. Ubehaget kan belaste et team, der har brug for sammenhæng for at fungere."
@@ -1036,7 +1039,7 @@
       "loading": "Indlæser…",
       "intro": {
         "heading": "Du er blevet bedt om at beskrive nogen.",
-        "body": "Du vil se grupper af ord og vælge, hvilet der passer bedst til denne person — og hvilet der passer mindst. Det tager ca. 5 minutter.",
+        "body": "Du vil se grupper af ord og vælge, hvilet der passer bedst til denne person, og hvilet der passer mindst. Det tager ca. 5 minutter.",
         "subjectLabel": "Du beskriver",
         "youAreLabel": "Du er",
         "youArePlaceholder": "Dit navn",
@@ -1100,7 +1103,7 @@
     "combinedRoleSection": "Din rolle",
     "roleSection": "Din rolle · Vidne",
     "setupCta": "Inviter vidner",
-    "disclaimer": "Vidne-resultater afspejler perspektivet hos de personer, der gennemførte instrumentet. Divergens er ikke en fejl — det er information.",
+    "disclaimer": "Vidne-resultater afspejler perspektivet hos de personer, der gennemførte instrumentet. Divergens er ikke en fejl: det er information.",
     "definitiveLabel": "Vidne inkluderet",
     "definitiveNote": "Vidne-signalet reducerer usikkerheden i rolletildelingen. Dette er dit mest komplette resultat.",
     "domainsSection": "De fem dimensioner",
@@ -1123,12 +1126,12 @@
     "intro": {
       "eyebrow": "Open source personlighedsvurdering",
       "heading": "Se dig selv klarere.",
-      "body": "Cèrcol er tre instrumenter bygget på videnskab i det offentlige domæne. Hvert måler de samme fem dimensioner — på forskellige dybder. Ingen score fortæller dig, hvad du skal tænke. Intet resultat er godt eller dårligt.",
+      "body": "Cèrcol er tre instrumenter bygget på videnskab i det offentlige domæne. Hvert måler de samme fem dimensioner, på forskellige dybder. Ingen score fortæller dig, hvad du skal tænke. Intet resultat er godt eller dårligt.",
       "founding": "Hvert bidrag tæller. Ingen er uundværlig, men vi alle er nødvendige."
     },
     "philosophy": {
       "heading": "Bygget i det åbne",
-      "body": "De fleste personlighedsvurderinger er proprietære. Elementerne, scoringen, de normative data — bag betalingsmure eller fortrolighedsaftaler. Du tager testen, får et resultat og har ingen måde at vide, om algoritmen er solid. Cèrcol er anderledes. Hvert spørgsmål kommer fra offentlig-domæne forskning. Scoringen er på GitHub. Alle kan læse den, sætte spørgsmålstegn ved den og forbedre den. Vi mener, personlighedsvurderinger bør fungere sådan."
+      "body": "De fleste personlighedsvurderinger er proprietære. Elementerne, scoringen, de normative data, bag betalingsmure eller fortrolighedsaftaler. Du tager testen, får et resultat og har ingen måde at vide, om algoritmen er solid. Cèrcol er anderledes. Hvert spørgsmål kommer fra offentlig-domæne forskning. Scoringen er på GitHub. Alle kan læse den, sætte spørgsmålstegn ved den og forbedre den. Vi mener, personlighedsvurderinger bør fungere sådan."
     },
     "explore": {
       "heading": "Gå dybere",
@@ -1147,7 +1150,7 @@
     },
     "dimensions": {
       "heading": "Fem dimensioner",
-      "subheading": "Enhver score befinder sig på et spektrum. Begge ender er gyldige — de beskriver forskellige måder at være effektiv på.",
+      "subheading": "Enhver score befinder sig på et spektrum. Begge ender er gyldige: de beskriver forskellige måder at være effektiv på.",
       "presence": {
         "name": "Tilstedeværelse",
         "desc": "Hvor meget energi du retter udad. Høj: du trækker folk ind. Lav: du går i dybden med færre."
@@ -1174,11 +1177,11 @@
       "item1": "Et diagnostisk værktøj. Disse resultater har ingen klinisk gyldighed.",
       "item2": "Et fast etiket. Scorer skifter med kontekst, tid og sindstilstand.",
       "item3": "En rangering. Ingen dimension er bedre eller dårligere end en anden.",
-      "item4": "En forudsiger for succes. Tendenser beskriver, hvordan du har tendens til at operere — ikke hvad du vil opnå."
+      "item4": "En forudsiger for succes. Tendenser beskriver, hvordan du har tendens til at operere, ikke hvad du vil opnå."
     },
     "framing": {
       "heading": "En note om scorer",
-      "body": "Det er tendenser, ikke etiketter. Det samme træk, der skaber friktion i én kontekst, er præcis det, der er brug for i en anden. Lav Disciplin er ikke fiasko — det er ofte det, der holder tingene i gang, når planen falder fra hinanden."
+      "body": "Det er tendenser, ikke etiketter. Det samme træk, der skaber friktion i én kontekst, er præcis det, der er brug for i en anden. Lav Disciplin er ikke fiasko: det er ofte det, der holder tingene i gang, når planen falder fra hinanden."
     }
   },
   "science": {
@@ -1191,16 +1194,16 @@
     "fiveFactors": {
       "eyebrow": "Femfaktormodellen",
       "heading": "Det mest replikerede fund i personlighedspsykologi.",
-      "body": "På tværs af kulturer, sprog og metoder genfinder forskning konsekvent de samme fem brede personlighedsdimensioner. Cèrcol bruger disse under andre navne — Tilstedeværelse, Tilknytning, Disciplin, Dybde, Vision — for at gøre sproget varmere uden at ændre, hvad der måles.",
+      "body": "På tværs af kulturer, sprog og metoder genfinder forskning konsekvent de samme fem brede personlighedsdimensioner. Cèrcol bruger disse under andre navne, Tilstedeværelse, Tilknytning, Disciplin, Dybde, Vision, for at gøre sproget varmere uden at ændre, hvad der måles.",
       "note": "Replikeret i mere end 50 lande. Det stærkeste konsensusresultat i differentiel psykologi."
     },
     "dimensions": {
       "eyebrow": "Fem dimensioner",
       "heading": "Hvad Cèrcol faktisk måler.",
-      "intro": "Fem brede personlighedsdimensioner — hver dækkende en anden akse af menneskelig variation. Dimensionerne er de samme på tværs af alle tre instrumenter. Kun opløsningen ændrer sig.",
+      "intro": "Fem brede personlighedsdimensioner, hver dækkende en anden akse af menneskelig variation. Dimensionerne er de samme på tværs af alle tre instrumenter. Kun opløsningen ændrer sig.",
       "presence": {
         "academic": "Ekstraversion",
-        "body": "Hvor meget energi du bringer ind i et rum — og hvor meget du trækker fra at være sammen med andre. Høj Tilstedeværelse betyder initiativ, udtryksevne og komfort i rampelyset. Lav Tilstedeværelse betyder dybde i fokuseret arbejde og en lyttekvalitet, som de fleste grupper undervurderer. Teams har brug for begge.",
+        "body": "Hvor meget energi du bringer ind i et rum, og hvor meget du trækker fra at være sammen med andre. Høj Tilstedeværelse betyder initiativ, udtryksevne og komfort i rampelyset. Lav Tilstedeværelse betyder dybde i fokuseret arbejde og en lyttekvalitet, som de fleste grupper undervurderer. Teams har brug for begge.",
         "ref": "Bell, 2007"
       },
       "bond": {
@@ -1215,20 +1218,20 @@
       },
       "discipline": {
         "academic": "Samvittighedsfuldhed",
-        "body": "Hvor pålideligt du følger igennem. Høj Disciplin betyder planlægning, struktur og at gøre det, du sagde, du ville gøre. Det er den mest replikerede forudsiger for jobpræstation i forskningslitteraturen — ikke fordi rigide mennesker klarer sig bedre, men fordi konsekvente mennesker gør det.",
+        "body": "Hvor pålideligt du følger igennem. Høj Disciplin betyder planlægning, struktur og at gøre det, du sagde, du ville gøre. Det er den mest replikerede forudsiger for jobpræstation i forskningslitteraturen, ikke fordi rigide mennesker klarer sig bedre, men fordi konsekvente mennesker gør det.",
         "ref": "Barrick & Mount, 1991"
       },
       "depth": {
         "academic": "Neurotisisme",
-        "body": "Hvor let du oplever negative følelser — bekymring, frustration, sensitivitet. Høj Dybde følges ofte med forhøjet årvågenhed og stærk empati. Lav Dybde betyder stabilitet under pres. Intet ekstrem er en fejl; begge afspejler forskellige måder at læse verden på.",
+        "body": "Hvor let du oplever negative følelser, bekymring, frustration, sensitivitet. Høj Dybde følges ofte med forhøjet årvågenhed og stærk empati. Lav Dybde betyder stabilitet under pres. Intet ekstrem er en fejl; begge afspejler forskellige måder at læse verden på.",
         "ref": "Bell, 2007"
       }
     },
     "roles": {
       "eyebrow": "Rolletaxonomi",
       "heading": "Tolv roller. Afledt fra forskningen, ikke opfundet.",
-      "body": "Rolletaxonomien er forankret i AB5C-cirkumplekset (Hofstee, De Raad & Goldberg, 1992) og teamkompositionslitteraturen (Bell, 2007). Tre OCEAN-dimensioner — Tilstedeværelse, Tilknytning og Vision — kræver balance i teams. De tolv roller dækker de seks skæringspunkter af disse tre dimensioner på begge poler. Disciplin og Dybde modulerer, hvordan hver rolle udtrykkes.",
-      "beta": "Nuværende rolletildelinger bruger teoretiske centroider afledt fra publiceret forskning. Efterhånden som reelle data akkumuleres — mål: 300 Fuldmåne-gennemførelser — vil centroider blive erstattet med empiriske værdier fra faktiske profiler.",
+      "body": "Rolletaxonomien er forankret i AB5C-cirkumplekset (Hofstee, De Raad & Goldberg, 1992) og teamkompositionslitteraturen (Bell, 2007). Tre OCEAN-dimensioner: Tilstedeværelse, Tilknytning og Vision, kræver balance i teams. De tolv roller dækker de seks skæringspunkter af disse tre dimensioner på begge poler. Disciplin og Dybde modulerer, hvordan hver rolle udtrykkes.",
+      "beta": "Nuværende rolletildelinger bruger teoretiske centroider afledt fra publiceret forskning. Efterhånden som reelle data akkumuleres, mål: 300 Fuldmåne-gennemførelser, vil centroider blive erstattet med empiriske værdier fra faktiske profiler.",
       "betaNote": "Rolle-scoring er markeret beta i grænsefladen. Det er illustrativt, ikke diagnostisk."
     },
     "fullMoon": {
@@ -1236,13 +1239,13 @@
       "heading": "To linser på den samme person.",
       "selfReport": {
         "heading": "Selvrapport",
-        "body": "120 elementer på tværs af 5 domæner og 30 facetter — dobbelt opløsning af Første Kvartal. Danner det primære rolleresultat."
+        "body": "120 elementer på tværs af 5 domæner og 30 facetter, dobbelt opløsning af Første Kvarter. Danner det primære rolleresultat."
       },
       "witness": {
         "heading": "Vidne Cèrcol",
-        "body": "En tvungen-valg-opgave givet til nogen, der kender dig godt. I hver runde ser vidnet fem ord og vælger den bedst passende og mindst passende for dig — et adjektiv pr. dimension. Tvunget valg eliminerer den sociale ønskelighedsbias, der fordrejer selvrapporter.",
-        "idealWitness": "Et ideelt vidne har arbejdet med dig, boet med dig eller brugt reel tid omkring dig. Ikke din tætteste allierede, ikke din hårdeste kritiker — nogen, der ser dig, som du faktisk er.",
-        "blindSpots": "Vidne-resultatet sammenlignes med selvrapporten. Hvor de afviger betydeligt, markeres en blind plet — en dimension, du ser anderledes end menneskene omkring dig."
+        "body": "En tvungen-valg-opgave givet til nogen, der kender dig godt. I hver runde ser vidnet fem ord og vælger den bedst passende og mindst passende for dig, et adjektiv pr. dimension. Tvunget valg eliminerer den sociale ønskelighedsbias, der fordrejer selvrapporter.",
+        "idealWitness": "Et ideelt vidne har arbejdet med dig, boet med dig eller brugt reel tid omkring dig. Ikke din tætteste allierede, ikke din hårdeste kritiker, nogen, der ser dig, som du faktisk er.",
+        "blindSpots": "Vidne-resultatet sammenlignes med selvrapporten. Hvor de afviger betydeligt, markeres en blind plet, en dimension, du ser anderledes end menneskene omkring dig."
       }
     },
     "sources": {
@@ -1257,7 +1260,7 @@
       "milestonesDetail": "Valideringsmilepæle. Cèrcols model er en arbejdshypotese, der forfines, efterhånden som rigtige data samles. Planen er eksplicit om, hvad der ændrer sig ved hver stikprøvestørrelse. Ved N ≥ 100 gennemgår vi rollefordelingen og markerer enhver arketype, der tiltrækker en usædvanlig andel af profiler. Ved N ≥ 200 erstatter vi de publicerede normative priors med Cèrcols egne stikprøvestatistikker, herunder vidnespecifikke normer. Ved N ≥ 300 kører vi k-means (k = 12) for at sammenligne de empiriske centroider med de teoretiske og tester, om kognitiv evne forudsiger rolletildeling ud over Big Five. Intet af dette validerer modellen som prædiktor for teampræstation, hvilket kræver eksterne data om reel teamadfærd. Milepælene forfiner modellens interne geometri, ikke dens eksterne påstande.",
       "eyebrow": "Valideringsplan",
       "heading": "En arbejdshypotese, ikke et færdigt produkt.",
-      "body": "Cèrcols rollesystem bruger teoretiske centroider afledt af publiceret AB5C-forskning. Rolletildelinger er illustrative — de er endnu ikke empirisk valideret mod reelle teamresultater. Validering er planlagt i tre faser.",
+      "body": "Cèrcols rollesystem bruger teoretiske centroider afledt af publiceret AB5C-forskning. Rolletildelinger er illustrative, de er endnu ikke empirisk valideret mod reelle teamresultater. Validering er planlagt i tre faser.",
       "milestones": {
         "n300": {
           "label": "N ≥ 300",
@@ -1288,35 +1291,35 @@
     },
     "q1": {
       "q": "Er mine data private?",
-      "a": "De gratis instrumenter logger anonyme scorer uden personlige oplysninger — intet navn, ingen e-mail, ingen IP-adresse. Hvis du opretter en konto, gemmes din e-mail på vores egne servere, og dine resultater knyttes til din konto. Du kan slette din konto til enhver tid. Ingen data sælges eller deles med tredjeparter."
+      "a": "De gratis instrumenter logger anonyme scorer uden personlige oplysninger, intet navn, ingen e-mail, ingen IP-adresse. Hvis du opretter en konto, gemmes din e-mail på vores egne servere, og dine resultater knyttes til din konto. Du kan slette din konto til enhver tid. Ingen data sælges eller deles med tredjeparter."
     },
     "q2": {
       "q": "Er resultaterne nøjagtige?",
-      "a": "Spørgsmålene kommer fra fagfællebedømte, bredt validerede instrumenter. Fem-dimensionsscorerne er pålidelige for et selvrapporteringsværktøj af denne længde. Rolle-scoringen er tydeligt markeret beta — den bruger teoretiske udgangspunkter og vil blive mere nøjagtig, efterhånden som reelle data akkumuleres. Tag dimensionerne alvorligt; behandl rollen som et nyttigt første gæt."
+      "a": "Spørgsmålene kommer fra fagfællebedømte, bredt validerede instrumenter. Fem-dimensionsscorerne er pålidelige for et selvrapporteringsværktøj af denne længde. Rolle-scoringen er tydeligt markeret beta, den bruger teoretiske udgangspunkter og vil blive mere nøjagtig, efterhånden som reelle data akkumuleres. Tag dimensionerne alvorligt; behandl rollen som et nyttigt første gæt."
     },
     "q3": {
       "q": "Hvad er vidnet, og hvem skal jeg invitere?",
-      "a": "Vidnet er nogen, du inviterer til at beskrive dig udefra. De ser grupper af ord og vælger, hvilke der passer bedst og dårligst til dig — en kort tvungen-valg-opgave, der tager ca. 5 minutter. Et ideelt vidne er nogen, der har brugt reel tid med dig: en kollega, en bofælle, en nær ven. Ikke din største fan, ikke din hårdeste kritiker. Nogen, der ser dig, som du faktisk er."
+      "a": "Vidnet er nogen, du inviterer til at beskrive dig udefra. De ser grupper af ord og vælger, hvilke der passer bedst og dårligst til dig, en kort tvungen-valg-opgave, der tager ca. 5 minutter. Et ideelt vidne er nogen, der har brugt reel tid med dig: en kollega, en bofælle, en nær ven. Ikke din største fan, ikke din hårdeste kritiker. Nogen, der ser dig, som du faktisk er."
     },
     "q4": {
       "q": "Hvad er forskellen mellem de tre instrumenter?",
-      "a": "Nymåne er 10 spørgsmål og tager 2 minutter — en hurtig orientering. Første Kvartal er 60 spørgsmål og tager 10 minutter — et mere fuldstændigt billede med 30 facetter og et første blik på din rolle. Fuldmåne er 120 spørgsmål, inkluderer vidnevurderingen og er betalt — det er det definitive resultat. Hvert instrument er selvstændigt; du kan starte hvor som helst."
+      "a": "Nymåne er 10 spørgsmål og tager 2 minutter, en hurtig orientering. Første Kvarter er 60 spørgsmål og tager 10 minutter, et mere fuldstændigt billede med 30 facetter og et første blik på din rolle. Fuldmåne er 120 spørgsmål, inkluderer vidnevurderingen og er betalt, det er det definitive resultat. Hvert instrument er selvstændigt; du kan starte hvor som helst."
     },
     "q5": {
       "q": "Er Fuldmåne værd at betale for?",
-      "a": "Hvis Første Kvartal føles utilstrækkeligt — hvis du vil forstå en specifik facet dybere, se hvordan andre opfatter dig, eller få et pålideligt rolleresultat — så ja. Vidnesammenligningen er den mest distinctive del: den viser, hvor din selvopfattelse matcher udefrasynspunktet, og hvor den ikke gør det. Den kløft er ofte der, hvor den mest nyttige information befinder sig."
+      "a": "Hvis Første Kvarter føles utilstrækkeligt, hvis du vil forstå en specifik facet dybere, se hvordan andre opfatter dig, eller få et pålideligt rolleresultat, så ja. Vidnesammenligningen er den mest distinctive del: den viser, hvor din selvopfattelse matcher udefrasynspunktet, og hvor den ikke gør det. Den kløft er ofte der, hvor den mest nyttige information befinder sig."
     },
     "q6": {
       "q": "Kan jeg gentage vurderingerne?",
-      "a": "Ja. Hvert instrument gemmer dit seneste resultat. Hvis du gentager, fjernes det tidligere resultat permanent fra din konto — du vil blive bedt om at bekræfte, inden det sker. At gentage kan være nyttigt for at se, hvordan du har ændret dig over måneder eller år."
+      "a": "Ja. Hvert instrument gemmer dit seneste resultat. Hvis du gentager, fjernes det tidligere resultat permanent fra din konto, du vil blive bedt om at bekræfte, inden det sker. At gentage kan være nyttigt for at se, hvordan du har ændret dig over måneder eller år."
     },
     "q7": {
       "q": "Er Cèrcol baseret på Big Five (OCEAN)?",
-      "a": "Ja. Cèrcol måler personlighed med OCEAN-modellen (Big Five) via IPIP — den International Personality Item Pool, en samling af spørgsmål i det offentlige domæne, valideret i tusindvis af publicerede studier. De fem dimensioner er Tilstedeværelse (Ekstraversion), Bånd (Venlighed), Vision (Åbenhed), Disciplin (Samvittighedsfuldhed) og Dybde (Neuroticisme). Da IPIP er i det offentlige domæne, er der ingen licensbegrænsninger: den fulde itempool og scoringslogik er åben og citerbar."
+      "a": "Ja. Cèrcol måler personlighed med OCEAN-modellen (Big Five) via IPIP, den International Personality Item Pool, en samling af spørgsmål i det offentlige domæne, valideret i tusindvis af publicerede studier. De fem dimensioner er Tilstedeværelse (Ekstraversion), Bånd (Venlighed), Vision (Åbenhed), Disciplin (Samvittighedsfuldhed) og Dybde (Neuroticisme). Da IPIP er i det offentlige domæne, er der ingen licensbegrænsninger: den fulde itempool og scoringslogik er åben og citerbar."
     },
     "q8": {
       "q": "Hvad adskiller Cèrcol fra Belbin, DISC eller StrengthsFinder?",
-      "a": "Tre ting adskiller Cèrcol. For det første stammer itemsene fra Big Five (OCEAN), den mest replikerede personlighedsmodel i akademisk forskning — ikke fra en proprietær ramme. For det andet er den fulde itempool (IPIP) og scoringspipelinen i det offentlige domæne og reviderbar; ingen sort boks. For det tredje bruger Vidne Cèrcol tvunget adjektivvalg i stedet for Likert-skalaer, hvilket eliminerer den sociale ønskværdighedsbias, der påvirker de fleste 360-feedbackværktøjer. Belbin og DISC bruger lukkede, proprietære metoder."
+      "a": "Tre ting adskiller Cèrcol. For det første stammer itemsene fra Big Five (OCEAN), den mest replikerede personlighedsmodel i akademisk forskning, ikke fra en proprietær ramme. For det andet er den fulde itempool (IPIP) og scoringspipelinen i det offentlige domæne og reviderbar; ingen sort boks. For det tredje bruger Vidne Cèrcol tvunget adjektivvalg i stedet for Likert-skalaer, hvilket eliminerer den sociale ønskværdighedsbias, der påvirker de fleste 360-feedbackværktøjer. Belbin og DISC bruger lukkede, proprietære metoder."
     },
     "q9": {
       "q": "Kan jeg bruge Cèrcol til at vurdere hele mit team?",
@@ -1324,22 +1327,22 @@
     },
     "q10": {
       "q": "Hvilke sprog er Cèrcol tilgængeligt på?",
-      "a": "Cèrcol er tilgængeligt på engelsk, catalansk/valenciansk, spansk, fransk, tysk og dansk. Alle seks sprog dækker den fulde vurdering — instrumentspørgsmål, resultater og alt indhold. Den danske oversættelse er baseret på den validerede tilpasning af Vedel, Gøtzsche-Astrup og Holm (2018, Nordic Psychology). Den franske oversættelse følger Thiry og Pioltis (2023) dokumenterede europæisk-franske IPIP-tilpasning (Université de Mons), opført på ipip.ori.org."
+      "a": "Cèrcol er tilgængeligt på engelsk, catalansk/valenciansk, spansk, fransk, tysk og dansk. Alle seks sprog dækker den fulde vurdering, instrumentspørgsmål, resultater og alt indhold. Den danske oversættelse er baseret på den validerede tilpasning af Vedel, Gøtzsche-Astrup og Holm (2018, Nordic Psychology). Den franske oversættelse følger Thiry og Pioltis (2023) dokumenterede europæisk-franske IPIP-tilpasning (Université de Mons), opført på ipip.ori.org."
     },
     "q11": {
       "q": "Hvordan fungerer Vidnet-vurderingen præcist?",
-      "a": "Du sender et Vidne — en der kender dig godt — et unikt link. De ser fem adjektiver per runde, ét per personlighedsdimension, og vælger det, der passer bedst på dig, og det, der passer mindst. Dette format med tvunget valg eliminerer den sociale ønskværdighedsbias, der opstår ved Likert-vurderinger. Efter 20 runder sammenlignes deres scores med din selvrapport. Dimensioner, hvor forskellen overstiger 0,8 standardafvigelser, markeres som mulige blinde pletter. Du kan invitere op til 12 Vidner; scores gennemsnittes."
+      "a": "Du sender et Vidne: en der kender dig godt, et unikt link. De ser fem adjektiver per runde, ét per personlighedsdimension, og vælger det, der passer bedst på dig, og det, der passer mindst. Dette format med tvunget valg eliminerer den sociale ønskværdighedsbias, der opstår ved Likert-vurderinger. Efter 20 runder sammenlignes deres scores med din selvrapport. Dimensioner, hvor forskellen overstiger 0,8 standardafvigelser, markeres som mulige blinde pletter. Du kan invitere op til 12 Vidner; scores gennemsnittes."
     },
     "q12": {
       "q": "Hvad er blinde pletter?",
-      "a": "En blind plet er en personlighedsdimension, hvor din selvopfattelse og andres opfattelse af dig afviger betydeligt — mere end 0,8 standardafvigelser. Hvis du f.eks. vurderer dig selv lavt på Tilstedeværelse, men dine Vidner konsekvent vurderer dig højt, er dette en blind plet. Blinde pletter er hverken gode eller dårlige. De er information: de viser, hvor din selvopfattelse og andres oplevelse af dig ikke stemmer overens — det er ofte mere nyttigt end selve scoren."
+      "a": "En blind plet er en personlighedsdimension, hvor din selvopfattelse og andres opfattelse af dig afviger betydeligt, mere end 0,8 standardafvigelser. Hvis du f.eks. vurderer dig selv lavt på Tilstedeværelse, men dine Vidner konsekvent vurderer dig højt, er dette en blind plet. Blinde pletter er hverken gode eller dårlige. De er information: de viser, hvor din selvopfattelse og andres oplevelse af dig ikke stemmer overens, det er ofte mere nyttigt end selve scoren."
     }
   },
   "instruments": {
     "title": "Instrumenter",
     "intro": {
       "heading": "Tre instrumenter. Én skala.",
-      "body": "Hvert instrument måler de samme fem dimensioner — ved forskellig dybde og opløsning. De er designet til at bruges i rækkefølge, men hvert stå alene."
+      "body": "Hvert instrument måler de samme fem dimensioner, ved forskellig dybde og opløsning. De er designet til at bruges i rækkefølge, men hvert stå alene."
     },
     "freeLabel": "Gratis",
     "paidLabel": "Engangsbetaling · Ikke et abonnement",
@@ -1348,9 +1351,9 @@
       "heading": "Nymåne Cèrcol",
       "eyebrow": "Hurtigt overblik",
       "meta": "10 spørgsmål · ~2 min",
-      "scaleNote": "7-punkts skala: 'Meget uenig' til 'Meget enig'. Hvert punkt bærer mening — ikke bare to ekstremer med tal imellem.",
+      "scaleNote": "7-punkts skala: 'Meget uenig' til 'Meget enig'. Hvert punkt bærer mening: ikke bare to ekstremer med tal imellem.",
       "measures": "Fem dimensioner. Én score pr. dimension. Ingen facet-opdeling.",
-      "get": "Et radardiagram over din position på alle fem dimensioner. Godt til en hurtig orientering. Ikke præcist nok til finmaskede påstande om facetter — det er hvad Første Kvartal er til.",
+      "get": "Et radardiagram over din position på alle fem dimensioner. Godt til en hurtig orientering. Ikke præcist nok til finmaskede påstande om facetter, det er hvad Første Kvarter er til.",
       "items": [
         "Ekstrovert, entusiastisk.",
         "Pålidelig, selvdisciplineret.",
@@ -1359,12 +1362,12 @@
       "itemPrefix": "Jeg ser mig selv som:"
     },
     "firstQuarter": {
-      "heading": "Første Kvartal Cèrcol",
+      "heading": "Første Kvarter Cèrcol",
       "eyebrow": "Fuldt portræt",
       "meta": "60 spørgsmål · ~10 min",
       "scaleNote": "5-punkts skala: 'Meget uenig' til 'Meget enig'. Fem-punkts skalaer er standard for facet-niveau personlighedsmåling.",
-      "measures": "Fem dimensioner, hver opdelt i 6 facetter — 30 datapunkter. To elementer pr. facet.",
-      "get": "Domænediagram, 30-facet-opdeling og et første beta-kig på din rolle. Facet-opdelingen er der, den nyttige information befinder sig — domænetotalerne er bare overskriften.",
+      "measures": "Fem dimensioner, hver opdelt i 6 facetter, 30 datapunkter. To elementer pr. facet.",
+      "get": "Domænediagram, 30-facet-opdeling og et første beta-kig på din rolle. Facet-opdelingen er der, den nyttige information befinder sig, domænetotalerne er bare overskriften.",
       "items": [
         "Tager styringen.",
         "Bekymrer mig om ting.",
@@ -1380,7 +1383,7 @@
         "label": "Del 1",
         "heading": "Selvrapport",
         "meta": "120 spørgsmål · ~20 min · 5-punkts skala",
-        "body": "De samme 30 facetter som Første Kvartal — ved dobbelt opløsning. Fire elementer pr. facet i stedet for to. I psykometriske termer betyder flere elementer pr. facet mere pålidelige scorer, især for facetter tæt på skalens midte, hvor to elementer kan give et støjfyldt resultat.",
+        "body": "De samme 30 facetter som Første Kvarter, ved dobbelt opløsning. Fire elementer pr. facet i stedet for to. I psykometriske termer betyder flere elementer pr. facet mere pålidelige scorer, især for facetter tæt på skalens midte, hvor to elementer kan give et støjfyldt resultat.",
         "items": [
           "Sjældent føler mig nedtrykt.",
           "Forudser andres behov.",
@@ -1392,15 +1395,15 @@
         "label": "Del 2",
         "heading": "Vidne Cèrcol",
         "whyHeading": "Hvorfor et vidne?",
-        "whyBody": "Selvrapporter har en kendt begrænsning: vi opfatter ikke altid os selv, som vi fremstår for andre. Mennesker med høj Dybde kan underrapportere — følelsen virker normal indefra. Mennesker med høj Tilknytning kan overrapportere varme — hensigten er ægte, men påvirkningen kan variere. Selvvurdering er et filtreret signal. Vidnet tilføjer et uafhængigt.",
+        "whyBody": "Selvrapporter har en kendt begrænsning: vi opfatter ikke altid os selv, som vi fremstår for andre. Mennesker med høj Dybde kan underrapportere, følelsen virker normal indefra. Mennesker med høj Tilknytning kan overrapportere varme, hensigten er ægte, men påvirkningen kan variere. Selvvurdering er et filtreret signal. Vidnet tilføjer et uafhængigt.",
         "howHeading": "Sådan virker det",
-        "howBody": "Hvert vidne modtager et unikt link. Opgaven tager ca. 5 minutter. De ser 20 runder med 5 ord — et adjektiv pr. dimension — og vælger det, der passer bedst, og det, der passer mindst. Tvunget valg: ingen Likert-skala, ingen mulighed for at give alle positive svar.",
+        "howBody": "Hvert vidne modtager et unikt link. Opgaven tager ca. 5 minutter. De ser 20 runder med 5 ord: et adjektiv pr. dimension: og vælger det, der passer bedst, og det, der passer mindst. Tvunget valg: ingen Likert-skala, ingen mulighed for at give alle positive svar.",
         "whoHeading": "Hvem er et ideelt vidne?",
-        "whoBody": "Nogen, der har arbejdet med dig, boet med dig eller set dig under pres. Ikke din største fortaler — nogen ærlig nok til at markere, hvor du har kanter. Du kan invitere op til 12 vidner. Flere vidner reducerer støj: scorerne gennemsnitsberegnes.",
+        "whoBody": "Nogen, der har arbejdet med dig, boet med dig eller set dig under pres. Ikke din største fortaler: nogen ærlig nok til at markere, hvor du har kanter. Du kan invitere op til 12 vidner. Flere vidner reducerer støj: scorerne gennemsnitsberegnes.",
         "privacyHeading": "Privatliv",
-        "privacyBody": "Vidner ser aldrig dine scorer. Du ser det gennemsnitlige resultat fra alle vidner — ikke individuelle svar.",
+        "privacyBody": "Vidner ser aldrig dine scorer. Du ser det gennemsnitlige resultat fra alle vidner, ikke individuelle svar.",
         "blindSpotsHeading": "Blinde pletter",
-        "blindSpotsBody": "Hvor din selvrapport og vidne-scorer afviger betydeligt, markeres en blind plet. Ikke fordi én er rigtig og den anden forkert — men fordi kløften i sig selv er informativ. En dimension, du opfatter meget anderledes end menneskene omkring dig, er værd at undersøge."
+        "blindSpotsBody": "Hvor din selvrapport og vidne-scorer afviger betydeligt, markeres en blind plet. Ikke fordi én er rigtig og den anden forkert, men fordi kløften i sig selv er informativ. En dimension, du opfatter meget anderledes end menneskene omkring dig, er værd at undersøge."
       }
     }
   },
@@ -1409,15 +1412,15 @@
     "intro": {
       "heading": "Tolv roller. Én taksonomi.",
       "body1": "Personlighedsprofiler beskriver, hvem du er. Roller beskriver, hvordan du har tendens til at flytte balancen i et team. Kløften mellem disse to ting er der, Cèrcol forsøger at arbejde.",
-      "body2": "De tolv roller er afledt af AB5C-cirkumplekset (Hofstee, De Raad & Goldberg, 1992) og teamkompositionslitteraturen (Bell, 2007). Tre OCEAN-dimensioner kræver balance i teams — Tilstedeværelse, Tilknytning og Vision. De tolv roller dækker de seks skæringspunkter af disse dimensioner på begge poler. Navnene er vores. Strukturen er fra litteraturen."
+      "body2": "De tolv roller er afledt af AB5C-cirkumplekset (Hofstee, De Raad & Goldberg, 1992) og teamkompositionslitteraturen (Bell, 2007). Tre OCEAN-dimensioner kræver balance i teams, Tilstedeværelse, Tilknytning og Vision. De tolv roller dækker de seks skæringspunkter af disse dimensioner på begge poler. Navnene er vores. Strukturen er fra litteraturen."
     },
     "beta": {
       "heading": "Dette er en starthypotese, ikke et valideret instrument.",
-      "body": "Nuværende rolletildelinger bruger teoretiske centroider afledt fra publiceret forskning. Efterhånden som reelle data akkumuleres — mål: 300 Fuldmåne-gennemførelser — vil centroider blive erstattet med empiriske værdier fra faktiske profiler. Rolle-scoring er markeret beta i grænsefladen af netop denne grund."
+      "body": "Nuværende rolletildelinger bruger teoretiske centroider afledt fra publiceret forskning. Efterhånden som reelle data akkumuleres, mål: 300 Fuldmåne-gennemførelser, vil centroider blive erstattet med empiriske værdier fra faktiske profiler. Rolle-scoring er markeret beta i grænsefladen af netop denne grund."
     },
     "critique": {
       "heading": "Ser du et problem med denne model?",
-      "body": "Denne taksonomi er en hypotese. Hvis du har baggrund inden for psykometri, organisationspsykologi eller teamdynamik og ser en fejl — i centroiderne, navngivningen, tvunget-valg-designet, noget som helst — så åbn en sag.",
+      "body": "Denne taksonomi er en hypotese. Hvis du har baggrund inden for psykometri, organisationspsykologi eller teamdynamik og ser en fejl, i centroiderne, navngivningen, tvunget-valg-designet, noget som helst, så åbn en sag.",
       "cta": "Åbn en sag på GitHub"
     },
     "grid": {
@@ -1432,16 +1435,16 @@
     },
     "arcNote": {
       "heading": "Personlig bue",
-      "body": "De fleste rolleresultater inkluderer en bue — sekundære roller, der scorede tæt på den primære i sandsynlighedsrummet. En Wolf med en Falcon-bue bringer initiativ og beslutsom timing. En Bee med en Elephant-bue bringer syntese og dyb lytning. Buen giver resultatet en tekstur, som et enkelt etiket ikke kan."
+      "body": "De fleste rolleresultater inkluderer en bue, sekundære roller, der scorede tæt på den primære i sandsynlighedsrummet. En Wolf med en Falcon-bue bringer initiativ og beslutsom timing. En Bee med en Elephant-bue bringer syntese og dyb lytning. Buen giver resultatet en tekstur, som et enkelt etiket ikke kan."
     },
     "contextNote": {
       "heading": "Roller er ikke skæbner",
-      "body": "Den samme person kan fungere forskelligt i forskellige teamkompositioner. En Wolf i et team, der allerede konfronterer alt, kan trække sig tilbage. En Tortoise i et team, der har brug for bevægelse, kan accelerere. Det er tendenser i kontekst — ikke faste identiteter. Brug ikke et rolleresultat som et loft."
+      "body": "Den samme person kan fungere forskelligt i forskellige teamkompositioner. En Wolf i et team, der allerede konfronterer alt, kan trække sig tilbage. En Tortoise i et team, der har brug for bevægelse, kan accelerere. Det er tendenser i kontekst: ikke faste identiteter. Brug ikke et rolleresultat som et loft."
     }
   },
   "onboarding": {
     "heading": "Velkommen til Cèrcol",
-    "intro": "Tre instrumenter. Én skala. Start hvor du vil — hvert enkelt står alene.",
+    "intro": "Tre instrumenter. Én skala. Start hvor du vil: hvert enkelt står alene.",
     "newMoon": {
       "desc": "10 spørgsmål. Et hurtigt blik på dine fem dimensioner."
     },
@@ -1458,13 +1461,13 @@
   "nudge": {
     "nextUp": "Næste",
     "firstQuarter": {
-      "heading": "Gå dybere med Første Kvartal",
+      "heading": "Gå dybere med Første Kvarter",
       "body": "60 spørgsmål. De samme fem dimensioner med fuld facetopløsning.",
-      "cta": "Begynd Første Kvartal Cèrcol"
+      "cta": "Begynd Første Kvarter Cèrcol"
     },
     "fullMoon": {
       "heading": "Fuldfør dit portræt med Fuldmåne",
-      "body": "120 spørgsmål og et Vidne — det mest præcise resultat.",
+      "body": "120 spørgsmål og et Vidne: det mest præcise resultat.",
       "cta": "Begynd Fuldmåne Cèrcol"
     }
   },

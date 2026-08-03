@@ -1,6 +1,6 @@
 {
   "beta": {
-    "banner": "Beta-Launch — noch {{remaining}} kostenlose Vollmond-Lizenzen verfügbar. Hilf uns, Fehler zu finden.",
+    "banner": "Beta-Launch: noch {{remaining}} kostenlose Vollmond-Lizenzen verfügbar. Hilf uns, Fehler zu finden.",
     "cta": "Kostenlosen Zugang sichern",
     "badge": "Beta-Tester"
   },
@@ -102,7 +102,7 @@
     "balance": {
       "topContributor": "Höchster:",
       "compensates": "kann das ausbalancieren",
-      "suggestRole": "Niemand kompensiert — erwägen Sie ein {{role}}-Profil",
+      "suggestRole": "Niemand kompensiert: erwägen Sie ein {{role}}-Profil",
       "suggestRoles": "Diese Profile würden das Team stärken:",
       "notes": {
         "presence_balanced": "Präsenz ist ausgewogen. Energie und Zuhören koexistieren.",
@@ -121,8 +121,8 @@
       "stronglyHigh": "Stark erhöht",
       "stronglyLow": "Stark niedrig",
       "highGood": "Hoch",
-      "lowCaution": "Niedrig — Achtung",
-      "highCaution": "Hoch — Achtung",
+      "lowCaution": "Niedrig: Achtung",
+      "highCaution": "Hoch: Achtung",
       "lowGood": "Niedrig"
     },
     "narrativeHeading": "Team-Narrative",
@@ -131,15 +131,15 @@
       "watchOutHeading": "Achtung",
       "helpHeading": "Was helfen würde",
       "move": {
-        "high_p": "Dein Team hat eine starke äußere Präsenz — sichtbar, direkt und schnell beim Aufwerfen von Ideen. Meetings verlaufen mit Energie. Externe Stakeholder bemerken diese Gruppe.",
+        "high_p": "Dein Team hat eine starke äußere Präsenz, sichtbar, direkt und schnell beim Aufwerfen von Ideen. Meetings verlaufen mit Energie. Externe Stakeholder bemerken diese Gruppe.",
         "low_p": "Dein Team arbeitet mit stiller Tiefe. Ideen entwickeln sich langsam und sorgfältig. Die Gruppe neigt dazu, aus Reflexion statt aus Impuls heraus zu handeln.",
         "high_b": "Kohäsion ist das Fundament dieses Teams. Menschen hören gut zu, unterstützen sich gegenseitig und tendieren dazu, Meinungsverschiedenheiten konstruktiv zu durchlaufen. Vertrauen ist hoch.",
         "low_b": "Dein Team ist direkt, aufgabenorientiert und effizient. Menschen sagen, was sie meinen. Soziale Reibung wird als Teil ehrlicher Arbeit akzeptiert.",
         "high_v": "Innovation ist der natürliche Modus der Gruppe. Kreative Erkundung und neue Ideen kommen leicht. Das Team fühlt sich in Mehrdeutigkeit wohl.",
         "low_v": "Dein Team ist pragmatisch und ausführungsorientiert. Konkrete Pläne, klare Schritte und messbarer Fortschritt sind die Sprache dieser Gruppe.",
-        "low_c": "Dein Team ist flexibel und anpassungsfähig — kann aber Schwierigkeiten haben, Schwung zu erhalten oder Verantwortung ohne bewusste Struktur zu koordinieren.",
+        "low_c": "Dein Team ist flexibel und anpassungsfähig, kann aber Schwierigkeiten haben, Schwung zu erhalten oder Verantwortung ohne bewusste Struktur zu koordinieren.",
         "high_n": "Emotionale Reaktivität ist in dieser Gruppe präsent. Das Team fühlt Dinge intensiv und kann Stress sichtbar tragen.",
-        "balanced": "Dein Team zeigt ein gut verteiltes Profil über alle Dimensionen. Keine einzelne Tendenz dominiert, was Vielseitigkeit schafft — und aktive Koordination erfordert, um kohärent zu bleiben."
+        "balanced": "Dein Team zeigt ein gut verteiltes Profil über alle Dimensionen. Keine einzelne Tendenz dominiert, was Vielseitigkeit schafft, und aktive Koordination erfordert, um kohärent zu bleiben."
       },
       "watchOut": {
         "high_p": "Teams mit hoher Präsenz riskieren, die Diskussion zu dominieren. Stillere Mitglieder könnten Ideen zurückhalten. Das Team kann auf weniger stimmstarke Mitarbeiter überwältigend wirken.",
@@ -150,7 +150,7 @@
         "low_v": "Teams mit geringer Vision können strategische Chancen verpassen oder Schwierigkeiten haben, sich anzupassen, wenn ihr aktueller Ansatz nicht mehr funktioniert.",
         "low_c": "Teams mit geringer Disziplin lassen Verantwortung oft unklar und Zeitpläne weich. Das Risiko ist Ehrgeiz ohne Vollendung.",
         "high_n": "Erhöhte Stressreaktivität kann interpersonelle Spannungen verstärken. Unter Druck kann die Stimmung des Teams destabilisieren, bevor Probleme gelöst werden.",
-        "balanced": "Keine einzelne Dimension zeigt stark aus. Aufpassen auf diffuse Verantwortlichkeit — vielseitige Teams nehmen manchmal an, jemand anderes kümmere sich um eine Aufgabe."
+        "balanced": "Keine einzelne Dimension zeigt stark aus. Aufpassen auf diffuse Verantwortlichkeit, vielseitige Teams nehmen manchmal an, jemand anderes kümmere sich um eine Aufgabe."
       },
       "help": {
         "high_p": "Schafft bewusst Raum für weniger sichtbare Mitglieder. Rotiert, wer die Diskussion eröffnet. Gebt stillen Beitragenden die Erstautor-Verantwortung bei Schlüsselentscheidungen.",
@@ -161,7 +161,7 @@
         "low_v": "Plant Zeit für Horizontbeobachtung ein: Was ändert sich in eurem Umfeld? Welche Ansätze werdet ihr möglicherweise überstrapazieren?",
         "low_c": "Übernehmt leichte Verantwortungsrituale: eine Person pro Ergebnis benennen, ein Fälligkeitsdatum pro Entscheidung. Verpflichtungen wöchentlich überprüfen.",
         "high_n": "Investiert als Team in Stresskompetenz. Benennt, wann die Gruppe reaktiv versus reflektiv ist. Schafft risikoarme Kanäle zum Ablassen von Bedenken, bevor sie eskalieren.",
-        "balanced": "Bei einem ausgewogenen Profil ist das Risiko der Koordinationsaufwand. Seid explizit über Entscheidungsrechte, Kommunikationsnormen und wer was leitet — nehmt keine Ausrichtung an."
+        "balanced": "Bei einem ausgewogenen Profil ist das Risiko der Koordinationsaufwand. Seid explizit über Entscheidungsrechte, Kommunikationsnormen und wer was leitet, nehmt keine Ausrichtung an."
       }
     },
     "shareHeading": "Teilen",
@@ -173,7 +173,7 @@
     "witnessGivenTitle": "Wie viele der zugewiesenen Bewertungen diese Person erledigt hat"
   },
   "cookies": {
-    "notice": "Cèrcol verwendet nur funktionale Cookies — keine Analyse-Cookies, keine Werbe-Tracker.",
+    "notice": "Cèrcol verwendet nur funktionale Cookies, keine Analyse-Cookies, keine Werbe-Tracker.",
     "learnMore": "Datenschutzrichtlinie",
     "ok": "OK",
     "dismiss": "Cookie-Hinweis schließen"
@@ -182,31 +182,31 @@
     "eyebrow": "Rechtliches",
     "title": "Datenschutzrichtlinie",
     "lastUpdated": "Zuletzt aktualisiert: Mai 2026",
-    "intro": "Diese Richtlinie erklärt, welche Daten Cèrcol erhebt, warum und was du damit tun kannst. Sie ist in einfacher Sprache verfasst — falls etwas unklar ist, schreib uns.",
+    "intro": "Diese Richtlinie erklärt, welche Daten Cèrcol erhebt, warum und was du damit tun kannst. Sie ist in einfacher Sprache verfasst, falls etwas unklar ist, schreib uns.",
     "collected": {
       "heading": "Was wir erheben",
       "body": "Je nachdem, wie du Cèrcol nutzt, können wir Folgendes speichern:",
-      "email": "Deine E-Mail-Adresse — wenn du ein Konto erstellst oder dich anmeldest.",
-      "results": "Deine Testergebnisse — Punkte, die mit deinem Konto verknüpft sind, wenn du angemeldet bist. Anonyme Punkte (ohne Konto) werden ohne jegliche identifizierende Informationen gespeichert.",
+      "email": "Deine E-Mail-Adresse: wenn du ein Konto erstellst oder dich anmeldest.",
+      "results": "Deine Testergebnisse: Punkte, die mit deinem Konto verknüpft sind, wenn du angemeldet bist. Anonyme Punkte (ohne Konto) werden ohne jegliche identifizierende Informationen gespeichert.",
       "profile": "Profilangaben, die du freiwillig machst: Vorname, Nachname, Land, Muttersprache. Alle optional außer dem Vornamen.",
-      "payment": "Zahlungsdaten — vollständig von Stripe verarbeitet. Cèrcol sieht oder speichert deine Kartendaten niemals.",
-      "anonymous": "Anonyme Nutzungsdaten — wenn du eine Auswertung ohne Konto abschließt, werden nur die Punkte gespeichert. Kein Name, keine E-Mail, keine IP, keine Geräteinformationen.",
-      "attribution": "Besuchsquelle — die verweisende Website und etwaige Kampagnen-Tags (utm) aus dem Link, über den du gekommen bist, gespeichert mit einem abgeschlossenen Test. Nur Erstanbieter, niemals geteilt und niemals mit deiner Identität verknüpft."
+      "payment": "Zahlungsdaten: vollständig von Stripe verarbeitet. Cèrcol sieht oder speichert deine Kartendaten niemals.",
+      "anonymous": "Anonyme Nutzungsdaten: wenn du eine Auswertung ohne Konto abschließt, werden nur die Punkte gespeichert. Kein Name, keine E-Mail, keine IP, keine Geräteinformationen.",
+      "attribution": "Besuchsquelle: die verweisende Website und etwaige Kampagnen-Tags (utm) aus dem Link, über den du gekommen bist, gespeichert mit einem abgeschlossenen Test. Nur Erstanbieter, niemals geteilt und niemals mit deiner Identität verknüpft."
     },
     "why": {
       "heading": "Warum wir es erheben",
       "body": "Wir erheben Daten ausschließlich für drei Zwecke:",
-      "function": "Um den Dienst bereitzustellen — deine E-Mail-Adresse wird benötigt, um dich zu authentifizieren; deine Ergebnisse werden gespeichert, damit du deine Historie einsehen kannst.",
-      "research": "Anonymisierte Forschung — aggregierte, de-identifizierte Punkte werden verwendet, um das Persönlichkeitsmodell zu verbessern und Normen populationsübergreifend zu validieren. Individuelle Ergebnisse werden niemals veröffentlicht.",
-      "payment": "Um deine Zahlung zu verarbeiten — Stripe benötigt deine Kartendaten, um dir den Cèrcol des Vollmondes in Rechnung zu stellen. Wir erhalten nur eine Bestätigung.",
+      "function": "Um den Dienst bereitzustellen: deine E-Mail-Adresse wird benötigt, um dich zu authentifizieren; deine Ergebnisse werden gespeichert, damit du deine Historie einsehen kannst.",
+      "research": "Anonymisierte Forschung: aggregierte, de-identifizierte Punkte werden verwendet, um das Persönlichkeitsmodell zu verbessern und Normen populationsübergreifend zu validieren. Individuelle Ergebnisse werden niemals veröffentlicht.",
+      "payment": "Um deine Zahlung zu verarbeiten, Stripe benötigt deine Kartendaten, um dir den Cèrcol des Vollmondes in Rechnung zu stellen. Wir erhalten nur eine Bestätigung.",
       "noAds": "Wir verkaufen keine Daten. Wir nutzen keine Daten für Werbung. Wir teilen keine Daten mit Dritten, außer wie oben beschrieben."
     },
     "retention": {
       "heading": "Wie lange wir sie aufbewahren",
       "body": "Wir bewahren deine Daten so lange auf, wie dein Konto aktiv ist. Im Einzelnen:",
-      "account": "Kontodaten (E-Mail, Profil, Ergebnisse) — bis zur Löschung deines Kontos aufbewahrt.",
-      "anonymous": "Anonyme Testergebnisse — auf unbestimmte Zeit als Forschungsdaten aufbewahrt, ohne Verknüpfung zu einer Person.",
-      "payment": "Zahlungsaufzeichnungen — von Stripe gemäß ihrer eigenen Richtlinie aufbewahrt (in der Regel 7 Jahre für steuerliche Compliance)."
+      "account": "Kontodaten (E-Mail, Profil, Ergebnisse), bis zur Löschung deines Kontos aufbewahrt.",
+      "anonymous": "Anonyme Testergebnisse: auf unbestimmte Zeit als Forschungsdaten aufbewahrt, ohne Verknüpfung zu einer Person.",
+      "payment": "Zahlungsaufzeichnungen: von Stripe gemäß ihrer eigenen Richtlinie aufbewahrt (in der Regel 7 Jahre für steuerliche Compliance)."
     },
     "cookies": {
       "heading": "Cookies",
@@ -215,16 +215,16 @@
     "rights": {
       "heading": "Deine Rechte",
       "body": "Gemäß der DSGVO hast du, wenn du in der EU oder im EWR ansässig bist, das Recht auf:",
-      "access": "Auskunft — eine Kopie der personenbezogenen Daten anzufordern, die wir über dich speichern.",
-      "deletion": "Löschung — die Löschung deines Kontos und aller damit verbundenen personenbezogenen Daten anzufordern.",
-      "portability": "Datenübertragbarkeit — deine Testergebnisse in einem maschinenlesbaren Format anzufordern.",
-      "correction": "Berichtigung — deine Profilinformationen jederzeit über die Profilseite zu aktualisieren oder zu korrigieren.",
+      "access": "Auskunft: eine Kopie der personenbezogenen Daten anzufordern, die wir über dich speichern.",
+      "deletion": "Löschung: die Löschung deines Kontos und aller damit verbundenen personenbezogenen Daten anzufordern.",
+      "portability": "Datenübertragbarkeit: deine Testergebnisse in einem maschinenlesbaren Format anzufordern.",
+      "correction": "Berichtigung: deine Profilinformationen jederzeit über die Profilseite zu aktualisieren oder zu korrigieren.",
       "how": "Um eines dieser Rechte auszuüben, schreib uns. Wir werden innerhalb von 30 Tagen antworten."
     },
     "thirdParties": {
       "heading": "Drittanbieterdienste",
-      "hosting": "Deine Kontodaten und Testergebnisse werden auf einem eigenen Server gespeichert, der von Hetzner Online GmbH (Deutschland, EU) gehostet wird. Transaktions-E-Mails (Anmelde-Links) werden über Resend (Resend, Inc.) versendet, einem in den USA ansässigen Unternehmen, das Standardvertragsklauseln für EU-Datenübertragungen anwendet. Die Authentifizierung ist vollständig selbst gehostet — kein Drittanbieter hat Zugriff auf deine Anmeldedaten.",
-      "stripe": "Zahlungen werden von Stripe (Stripe, Inc.) abgewickelt, einem in den USA ansässigen Unternehmen mit EU-konformer Datenübertragung. Cèrcol erhält keine Zahlungskartendaten — nur eine Transaktionsbestätigung.",
+      "hosting": "Deine Kontodaten und Testergebnisse werden auf einem eigenen Server gespeichert, der von Hetzner Online GmbH (Deutschland, EU) gehostet wird. Transaktions-E-Mails (Anmelde-Links) werden über Resend (Resend, Inc.) versendet, einem in den USA ansässigen Unternehmen, das Standardvertragsklauseln für EU-Datenübertragungen anwendet. Die Authentifizierung ist vollständig selbst gehostet, kein Drittanbieter hat Zugriff auf deine Anmeldedaten.",
+      "stripe": "Zahlungen werden von Stripe (Stripe, Inc.) abgewickelt, einem in den USA ansässigen Unternehmen mit EU-konformer Datenübertragung. Cèrcol erhält keine Zahlungskartendaten, nur eine Transaktionsbestätigung.",
       "noTrackers": "Keine anderen Drittanbieterdienste erhalten deine personenbezogenen Daten. Auf dieser Website gibt es keine Analyseplattformen, Werbenetzwerke oder Social-Media-Tracker."
     },
     "contact": {
@@ -329,17 +329,20 @@
       "name": "Cèrcol des Vollmondes",
       "tagline": "Vollständiges Porträt",
       "meta": "120 Fragen · ~20 Min.",
-      "description": "Der tiefste Selbstbericht — alle 30 Facetten in voller Auflösung.",
+      "description": "Der tiefste Selbstbericht: alle 30 Facetten in voller Auflösung.",
       "paid": "Einmalige Zahlung"
     },
     "lastQuarter": {
-      "name": "Letztes Viertel Cèrcol",
+      "name": "Cèrcol des Letzten Viertels",
       "meta": "Teambericht",
-      "description": "Das Rollenprofil Ihres Teams — Balance, Narrativ und gemeinsame blinde Flecken."
+      "description": "Das Rollenprofil Ihres Teams: Balance, Narrativ und gemeinsame blinde Flecken."
     },
     "footnote": "Open Source · ",
     "viewOnGitHub": "Auf GitHub ansehen",
-    "h1": "Cèrcol: Open-Source-Persönlichkeitsbewertung für Teams"
+    "h1": "Cèrcol: Open-Source-Persönlichkeitsbewertung für Teams",
+    "witness": {
+      "name": "Cèrcol des Zeugen"
+    }
   },
   "newMoon": {
     "subtitle": "Cèrcol des Neumondes",
@@ -370,7 +373,7 @@
     "share": "Ergebnisse teilen",
     "copied": "Kopiert!",
     "retake": "Von vorne beginnen",
-    "disclaimer": "Die Ergebnisse spiegeln Tendenzen zum Zeitpunkt der Auswertung wider. Jedes Ende einer Dimension hat seine eigenen Stärken — kein Ergebnis ist gut oder schlecht.",
+    "disclaimer": "Die Ergebnisse spiegeln Tendenzen zum Zeitpunkt der Auswertung wider. Jedes Ende einer Dimension hat seine eigenen Stärken, kein Ergebnis ist gut oder schlecht.",
     "upgrade": {
       "heading": "Möchtest du ein vollständigeres Bild?",
       "body": "Cèrcol des Ersten Viertels gibt dir 5 Dimensionen, aufgeteilt in 30 Facetten.",
@@ -427,11 +430,11 @@
     "share": "Ergebnisse teilen",
     "copied": "Kopiert!",
     "retake": "Von vorne beginnen",
-    "disclaimer": "Die Ergebnisse spiegeln Tendenzen zum Zeitpunkt der Auswertung wider. Jedes Ende einer Dimension hat seine eigenen Stärken — kein Ergebnis ist gut oder schlecht.",
+    "disclaimer": "Die Ergebnisse spiegeln Tendenzen zum Zeitpunkt der Auswertung wider. Jedes Ende einer Dimension hat seine eigenen Stärken, kein Ergebnis ist gut oder schlecht.",
     "paymentSuccess": "Zahlung erhalten. Deine vollständige Facettenaufschlüsselung ist jetzt freigeschaltet.",
     "unlock": {
       "heading": "30 Facetten. Eine Zahlung.",
-      "body": "Sieh das Detail hinter jeder Dimension — was dich antreibt, wo du dich zurückhältst und wie du dich durch die Welt bewegst.",
+      "body": "Sieh das Detail hinter jeder Dimension, was dich antreibt, wo du dich zurückhältst und wie du dich durch die Welt bewegst.",
       "cta": "Vollständigen Bericht freischalten",
       "loading": "Weiterleitung zur Zahlung…",
       "signInNote": "Du musst dich zuerst anmelden."
@@ -474,7 +477,7 @@
     },
     "alreadyCompleted": {
       "heading": "Du hast Full Moon Cèrcol bereits abgeschlossen",
-      "body": "Die Persönlichkeit verändert sich in kurzen Zeiträumen nicht wesentlich. Dein vorhandenes Ergebnis bleibt präzise — eine Wiederholung würde sehr ähnliche Werte ergeben.",
+      "body": "Die Persönlichkeit verändert sich in kurzen Zeiträumen nicht wesentlich. Dein vorhandenes Ergebnis bleibt präzise, eine Wiederholung würde sehr ähnliche Werte ergeben.",
       "cta": "Bericht anzeigen",
       "redo": "Wiederholen"
     }
@@ -493,7 +496,7 @@
     "share": "Ergebnisse teilen",
     "copied": "Kopiert!",
     "retake": "Von vorne beginnen",
-    "disclaimer": "Die Ergebnisse spiegeln Tendenzen zum Zeitpunkt der Auswertung wider. Jedes Ende einer Dimension hat seine eigenen Stärken — kein Ergebnis ist gut oder schlecht.",
+    "disclaimer": "Die Ergebnisse spiegeln Tendenzen zum Zeitpunkt der Auswertung wider. Jedes Ende einer Dimension hat seine eigenen Stärken, kein Ergebnis ist gut oder schlecht.",
     "witnessCta": {
       "eyebrow": "Zeuge Cèrcol",
       "heading": "Sieh dich von außen.",
@@ -506,7 +509,7 @@
     "depth": {
       "name": "Tiefe",
       "description": "Wie du Emotionen verarbeitest und mit Unsicherheit umgehst.",
-      "blockIntro": "Diese Fragen erforschen deine emotionale Landschaft — wie du auf Stress, Veränderung und innere Anspannung reagierst."
+      "blockIntro": "Diese Fragen erforschen deine emotionale Landschaft, wie du auf Stress, Veränderung und innere Anspannung reagierst."
     },
     "presence": {
       "name": "Präsenz",
@@ -561,7 +564,7 @@
     "share": "Ergebnisse teilen",
     "copied": "Kopiert!",
     "retake": "Von vorne beginnen",
-    "disclaimer": "Die Ergebnisse spiegeln Tendenzen zum Zeitpunkt der Auswertung wider. Jedes Ende einer Dimension hat seine eigenen Stärken — kein Ergebnis ist gut oder schlecht."
+    "disclaimer": "Die Ergebnisse spiegeln Tendenzen zum Zeitpunkt der Auswertung wider. Jedes Ende einer Dimension hat seine eigenen Stärken, kein Ergebnis ist gut oder schlecht."
   },
   "radarResults": {
     "title": "Dein Schnappschuss",
@@ -570,7 +573,7 @@
     "share": "Ergebnisse teilen",
     "copied": "Kopiert!",
     "retake": "Von vorne beginnen",
-    "disclaimer": "Die Ergebnisse spiegeln Tendenzen zum Zeitpunkt der Auswertung wider. Jedes Ende einer Dimension hat seine eigenen Stärken — kein Ergebnis ist gut oder schlecht.",
+    "disclaimer": "Die Ergebnisse spiegeln Tendenzen zum Zeitpunkt der Auswertung wider. Jedes Ende einer Dimension hat seine eigenen Stärken, kein Ergebnis ist gut oder schlecht.",
     "upgrade": {
       "heading": "Möchtest du ein vollständigeres Bild?",
       "body": "Cèrcol des Ersten Viertels gibt dir 5 Dimensionen, aufgeteilt in 30 Facetten.",
@@ -608,7 +611,7 @@
     "negativeEmotionality": {
       "label": "Tiefe",
       "description": "Wie du Emotionen verarbeitest und mit Unsicherheit umgehst.",
-      "blockIntro": "Diese Fragen erforschen deine emotionale Landschaft — wie du auf Stress, Veränderung und innere Anspannung reagierst."
+      "blockIntro": "Diese Fragen erforschen deine emotionale Landschaft, wie du auf Stress, Veränderung und innere Anspannung reagierst."
     },
     "openMindedness": {
       "label": "Vision",
@@ -620,7 +623,7 @@
     "depth": {
       "name": "Tiefe",
       "description": "Wie du Emotionen verarbeitest und mit Unsicherheit umgehst.",
-      "blockIntro": "Diese Fragen erforschen deine emotionale Landschaft — wie du auf Stress, Veränderung und innere Anspannung reagierst."
+      "blockIntro": "Diese Fragen erforschen deine emotionale Landschaft, wie du auf Stress, Veränderung und innere Anspannung reagierst."
     },
     "presence": {
       "name": "Präsenz",
@@ -650,18 +653,18 @@
     },
     "bond": {
       "high": "Du fühlst, was andere fühlen, manchmal bevor sie es selbst tun. Konflikte kosten dich mehr als andere, und du glättest oft die Dinge, nur um die Luft rein zu halten. Das ist ein Geschenk, solange du dich dabei nicht verlierst.",
-      "low": "Du bist nicht hier, um gemocht zu werden — du bist hier, um nützlich zu sein. Du sagst das Schwierige, wenn andere es nicht tun, und du brauchst keinen Konsens, um dich sicher zu fühlen. Gruppen brauchen jemanden wie dich, auch wenn sie es nicht zugeben."
+      "low": "Du bist nicht hier, um gemocht zu werden, du bist hier, um nützlich zu sein. Du sagst das Schwierige, wenn andere es nicht tun, und du brauchst keinen Konsens, um dich sicher zu fühlen. Gruppen brauchen jemanden wie dich, auch wenn sie es nicht zugeben."
     },
     "discipline": {
-      "high": "Du beendest, was du anfängst. Wenn du sagst, dass etwas erledigt wird, wird es erledigt. Struktur ist für dich keine Einschränkung — es ist die Art, wie du Dinge baust, die dauern. Andere verlassen sich darauf mehr als sie sagen.",
+      "high": "Du beendest, was du anfängst. Wenn du sagst, dass etwas erledigt wird, wird es erledigt. Struktur ist für dich keine Einschränkung, es ist die Art, wie du Dinge baust, die dauern. Andere verlassen sich darauf mehr als sie sagen.",
       "low": "Regeln fühlen sich wie die Antwort anderer auf ein Problem an, das du anders lösen würdest. Du bist besser darin, Dinge anzufangen als sie zu beenden, was bedeutet, dass du Menschen um dich brauchst, die die letzten 20 % lieben. Du weißt wahrscheinlich schon, wer das ist."
     },
     "depth": {
-      "high": "Du fühlst Dinge vollständig. Das bedeutet, dass die schweren Momente härter treffen, aber auch, dass du Dinge aufgreifst, die andere vollständig übersehen. Deine Sensibilität ist kein Fehler im System — so wird das System kalibriert.",
+      "high": "Du fühlst Dinge vollständig. Das bedeutet, dass die schweren Momente härter treffen, aber auch, dass du Dinge aufgreifst, die andere vollständig übersehen. Deine Sensibilität ist kein Fehler im System, so wird das System kalibriert.",
       "low": "Druck erschüttert dich nicht. Wenn die Dinge schiefgehen, schauen andere oft zu dir, nicht weil du unberührt bist, sondern weil du es nicht zeigst. Diese Beständigkeit ist seltener als sie aussieht."
     },
     "vision": {
-      "high": "Du wirst von der Idee vor dem Plan angezogen, der Frage vor der Antwort. Neue Dinge ängstigen dich nicht — Gleichförmigkeit schon. Du siehst oft, wohin etwas gehen könnte, bevor andere überhaupt aufgeschaut haben.",
+      "high": "Du wirst von der Idee vor dem Plan angezogen, der Frage vor der Antwort. Neue Dinge ängstigen dich nicht, Gleichförmigkeit schon. Du siehst oft, wohin etwas gehen könnte, bevor andere überhaupt aufgeschaut haben.",
       "low": "Du vertraust dem, was funktioniert. Nicht jedes Problem braucht eine neue Lösung, und das weißt du. Wenn alle das Nächste verfolgen, stellst du sicher, dass das Aktuelle wirklich hält. Das wird unterschätzt."
     }
   },
@@ -674,17 +677,17 @@
     "assertiveness": {
       "label": "Durchsetzungsvermögen",
       "high": "Du wartest nicht auf Erlaubnis. Wenn etwas gesagt oder entschieden werden muss, sagst du es oder entscheidest es. Diese Klarheit schneidet durch Lärm, und die meisten Gruppen brauchen mehr davon, als sie haben.",
-      "low": "Du beobachtest lieber, bevor du handelst. Du gibst anderen Raum zum Führen, und wenn du eingreifst, ist es weil du es bereits durchdacht hast. Diese Bedachtheit ist keine Zögerlichkeit — es ist Präzision."
+      "low": "Du beobachtest lieber, bevor du handelst. Du gibst anderen Raum zum Führen, und wenn du eingreifst, ist es weil du es bereits durchdacht hast. Diese Bedachtheit ist keine Zögerlichkeit, es ist Präzision."
     },
     "energyLevel": {
       "label": "Energieniveau",
-      "high": "Du läufst heiß. Lange Meetings, aufeinanderfolgende Tage, anspruchsvolle Projekte — du findest einen zweiten Gang, wo andere schon fertig sind. Das Risiko ist, dass du nicht immer merkst, wenn die Menschen um dich herum aufgehört haben, mitzuhalten.",
+      "high": "Du läufst heiß. Lange Meetings, aufeinanderfolgende Tage, anspruchsvolle Projekte, du findest einen zweiten Gang, wo andere schon fertig sind. Das Risiko ist, dass du nicht immer merkst, wenn die Menschen um dich herum aufgehört haben, mitzuhalten.",
       "low": "Du bist nachhaltig. Du kennst dein Tempo und hältst es. Du wirst nicht hell brennen und dann zusammenbrechen, was dich zu jemandem macht, auf den andere zählen können, wenn ein Projekt lang wird."
     },
     "compassion": {
       "label": "Mitgefühl",
       "high": "Wenn jemand im Raum kämpft, merkst du es, bevor er etwas sagt. Du passt dich an. Dieses Bewusstsein lässt Menschen sich gesehen fühlen, was eine der nützlichsten Dinge ist, die eine Person für eine andere tun kann.",
-      "low": "Du nimmst nicht automatisch das emotionale Gewicht anderer auf dich. Das ist keine Kälte — es ist eine andere Art von Klarheit. Du konzentrierst dich auf das Problem, nicht auf die Gefühle drum herum, und manchmal ist das genau das, was gebraucht wird."
+      "low": "Du nimmst nicht automatisch das emotionale Gewicht anderer auf dich. Das ist keine Kälte: es ist eine andere Art von Klarheit. Du konzentrierst dich auf das Problem, nicht auf die Gefühle drum herum, und manchmal ist das genau das, was gebraucht wird."
     },
     "respectfulness": {
       "label": "Respekt",
@@ -718,8 +721,8 @@
     },
     "depression": {
       "label": "Stimmung",
-      "high": "Du trägst Dinge. Rückschläge prallen nicht einfach ab — sie setzen sich für eine Weile. Diese Tiefe des Gefühls bedeutet, dass du Dinge ernst nimmst auf eine Weise, die oberflächliche Menschen niemals werden. Es ist etwas wert, auch wenn es sich nicht so anfühlt.",
-      "low": "Du erholst dich schnell. Schlechte Tage werden nicht zu schlechten Wochen. Diese Belastbarkeit ist nicht die Abwesenheit von Gefühl — es ist die Fähigkeit, durch Dinge hindurchzugehen, ohne stecken zu bleiben. Gruppen brauchen diese Art von Ballast."
+      "high": "Du trägst Dinge. Rückschläge prallen nicht einfach ab, sie setzen sich für eine Weile. Diese Tiefe des Gefühls bedeutet, dass du Dinge ernst nimmst auf eine Weise, die oberflächliche Menschen niemals werden. Es ist etwas wert, auch wenn es sich nicht so anfühlt.",
+      "low": "Du erholst dich schnell. Schlechte Tage werden nicht zu schlechten Wochen. Diese Belastbarkeit ist nicht die Abwesenheit von Gefühl, es ist die Fähigkeit, durch Dinge hindurchzugehen, ohne stecken zu bleiben. Gruppen brauchen diese Art von Ballast."
     },
     "emotionalVolatility": {
       "label": "Emotionale Stabilität",
@@ -733,7 +736,7 @@
     },
     "aestheticSensitivity": {
       "label": "Ästhetische Sensibilität",
-      "high": "Du merkst, wenn etwas schön ist und wenn nicht. Diese Aufmerksamkeit für die Form ist nicht oberflächlich — so verarbeitest du Qualität. Du wirst oft spüren, dass etwas falsch ist, bevor du sagen kannst warum, und normalerweise hast du recht.",
+      "high": "Du merkst, wenn etwas schön ist und wenn nicht. Diese Aufmerksamkeit für die Form ist nicht oberflächlich, so verarbeitest du Qualität. Du wirst oft spüren, dass etwas falsch ist, bevor du sagen kannst warum, und normalerweise hast du recht.",
       "low": "Funktion ist dir wichtiger als Form. Wenn es funktioniert, funktioniert es. Du wirst keine Zeit damit verbringen, etwas schön zu machen, wenn es noch verbessert werden kann. Dieser Fokus auf Substanz hält die Dinge in Bewegung."
     },
     "creativeImagination": {
@@ -756,7 +759,7 @@
     "hollow": {
       "label": "Hollow",
       "high": "Du trägst Gewicht. Rückschläge setzen sich, statt abzuprallen. Diese Tiefe des Gefühls bedeutet, dass du Dinge ernst nimmst auf eine Weise, die leichtere Menschen niemals werden. Es kostet dich, und es ist etwas wert.",
-      "low": "Du erholst dich schnell. Schlechte Tage werden nicht zu schlechten Wochen. Diese Fähigkeit, voranzugehen, ist keine Gleichgültigkeit — es ist eine Art Belastbarkeit, die dich funktionsfähig hält, wenn andere noch verarbeiten."
+      "low": "Du erholst dich schnell. Schlechte Tage werden nicht zu schlechten Wochen. Diese Fähigkeit, voranzugehen, ist keine Gleichgültigkeit, es ist eine Art Belastbarkeit, die dich funktionsfähig hält, wenn andere noch verarbeiten."
     },
     "veil": {
       "label": "Veil",
@@ -770,12 +773,12 @@
     },
     "fracture": {
       "label": "Fracture",
-      "high": "Wenn der Druck steigt, spürst du ihn vollständig. Diese Sensibilität ist keine Schwäche — sie ist ein Signal. Du nimmst Belastung wahr, bevor andere es tun, was bedeutet, dass du oft derjenige bist, der sagt, dass sich etwas ändern muss.",
+      "high": "Wenn der Druck steigt, spürst du ihn vollständig. Diese Sensibilität ist keine Schwäche, sie ist ein Signal. Du nimmst Belastung wahr, bevor andere es tun, was bedeutet, dass du oft derjenige bist, der sagt, dass sich etwas ändern muss.",
       "low": "Du hältst dem Druck ohne sichtbare Risse stand. Die Leute schauen zu dir, wenn es schwierig wird, nicht weil du unberührt bist, sondern weil du weiter funktionierst. Das ist tragende Arbeit in jedem Team."
     },
     "hearth": {
       "label": "Hearth",
-      "high": "Menschen fühlen sich in deiner Nähe willkommen, ohne genau zu wissen warum. Du machst die Mühe, dich zu verbinden, dich zu erinnern, zu fragen. Diese Wärme ist kein Small Talk — sie ist die Grundlage des Vertrauens.",
+      "high": "Menschen fühlen sich in deiner Nähe willkommen, ohne genau zu wissen warum. Du machst die Mühe, dich zu verbinden, dich zu erinnern, zu fragen. Diese Wärme ist kein Small Talk, sie ist die Grundlage des Vertrauens.",
       "low": "Du tauchst nicht sofort auf und tust nicht so als ob. Die Verbindungen, die du eingehst, sind echt und dauerhaft. Menschen, die dich gut kennen, wissen, dass sie etwas Echtes bekommen."
     },
     "gather": {
@@ -786,11 +789,11 @@
     "command": {
       "label": "Command",
       "high": "Du wartest nicht auf Erlaubnis. Wenn etwas entschieden werden muss, entscheidest du es. Wenn etwas gesagt werden muss, sagst du es. Diese Direktheit schneidet durch Lärm und die meisten Gruppen brauchen mehr davon.",
-      "low": "Du beobachtest, bevor du handelst. Du lässt andere führen, und wenn du eingreifst, ist es weil du es bereits durchdacht hast. Das ist keine Zögerlichkeit — es ist Präzision."
+      "low": "Du beobachtest, bevor du handelst. Du lässt andere führen, und wenn du eingreifst, ist es weil du es bereits durchdacht hast. Das ist keine Zögerlichkeit: es ist Präzision."
     },
     "drive": {
       "label": "Drive",
-      "high": "Du läufst in einem hohen Tempo. Aufeinanderfolgende Tage, mehrere Projekte, lange Meetings — du findest einen zweiten Gang, wo andere schon fertig sind. Überprüfe nur, dass die Menschen um dich herum noch mithalten.",
+      "high": "Du läufst in einem hohen Tempo. Aufeinanderfolgende Tage, mehrere Projekte, lange Meetings, du findest einen zweiten Gang, wo andere schon fertig sind. Überprüfe nur, dass die Menschen um dich herum noch mithalten.",
       "low": "Du bist nachhaltig. Du kennst dein Tempo und hältst es. Du wirst nicht hell brennen und zusammenbrechen, was dich zu jemandem macht, auf den andere zählen können, wenn ein Projekt länger dauert als erwartet."
     },
     "thrill": {
@@ -805,22 +808,22 @@
     },
     "dream": {
       "label": "Dream",
-      "high": "Dein Geist geht unaufgefordert an Orte. Tagträumen ist für dich keine Ablenkung — es ist der Ursprung von Ideen. Die innere Welt ist reich und nährt die äußere auf Weisen, die nicht immer sichtbar sind.",
+      "high": "Dein Geist geht unaufgefordert an Orte. Tagträumen ist für dich keine Ablenkung, es ist der Ursprung von Ideen. Die innere Welt ist reich und nährt die äußere auf Weisen, die nicht immer sichtbar sind.",
       "low": "Du bleibst nah am Boden. Was real ist, was hier ist, was funktioniert. Dieser Fokus hält dich nützlich auf Weisen, die Träumer*innen manchmal nicht sind."
     },
     "craft": {
       "label": "Craft",
-      "high": "Du merkst, wenn etwas schön ist und wenn nicht. Diese Aufmerksamkeit für die Form ist nicht oberflächlich — so verarbeitest du Qualität. Du spürst, dass etwas falsch ist, bevor du sagen kannst warum, und normalerweise hast du recht.",
+      "high": "Du merkst, wenn etwas schön ist und wenn nicht. Diese Aufmerksamkeit für die Form ist nicht oberflächlich, so verarbeitest du Qualität. Du spürst, dass etwas falsch ist, bevor du sagen kannst warum, und normalerweise hast du recht.",
       "low": "Funktion ist dir wichtiger als Form. Wenn es funktioniert, funktioniert es. Du wirst keine Zeit damit verbringen, etwas schön zu machen, wenn es noch verbessert werden kann."
     },
     "resonance": {
       "label": "Resonance",
-      "high": "Du bist auf den emotionalen Register eingestimmt — deinen und den anderer. Diese Abstimmung macht dich zu einem sorgfältigen Leser von Räumen und einem nachdenklichen Kommunikator. Es bedeutet auch, dass du mehr trägst als die meisten.",
+      "high": "Du bist auf den emotionalen Register eingestimmt, deinen und den anderer. Diese Abstimmung macht dich zu einem sorgfältigen Leser von Räumen und einem nachdenklichen Kommunikator. Es bedeutet auch, dass du mehr trägst als die meisten.",
       "low": "Du führst mit Logik statt mit Gefühl. Das hält die Dinge klar und unbelastet. In emotional aufgeladenen Situationen ist deine Ausgeglichenheit oft genau das, was gebraucht wird."
     },
     "drift": {
       "label": "Drift",
-      "high": "Abwechslung hält dich engagiert. Neue Ansätze, andere Kontexte, unbekanntes Terrain — dort denkst du am besten. Wiederholung ist, wo du das Interesse am schnellsten verlierst.",
+      "high": "Abwechslung hält dich engagiert. Neue Ansätze, andere Kontexte, unbekanntes Terrain, dort denkst du am besten. Wiederholung ist, wo du das Interesse am schnellsten verlierst.",
       "low": "Du vertraust dem, was funktioniert, und bleibst dabei. Nicht jedes Problem braucht eine neue Lösung. Wenn andere Neuheit verfolgen, stellst du sicher, dass das Aktuelle wirklich hält."
     },
     "prism": {
@@ -841,7 +844,7 @@
     "edge": {
       "label": "Edge",
       "high": "Was du sagst, meinst du. Keine Vorstellung, kein Impressionsmanagement, keine strategische Mehrdeutigkeit. Die Leute wissen immer, woran sie mit dir sind, was wertvoller ist, als es klingt.",
-      "low": "Du bist geschickt darin, soziale Komplexität zu navigieren. Du weißt, wann du dich zurückhalten solltest, wann du Dinge sorgfältig formulieren solltest, wann Direktheit mehr kosten würde, als es wert ist. Das ist keine Unehrlichkeit — das ist Raffinesse."
+      "low": "Du bist geschickt darin, soziale Komplexität zu navigieren. Du weißt, wann du dich zurückhalten solltest, wann du Dinge sorgfältig formulieren solltest, wann Direktheit mehr kosten würde, als es wert ist. Das ist keine Unehrlichkeit: das ist Raffinesse."
     },
     "gift": {
       "label": "Gift",
@@ -856,7 +859,7 @@
     "shadow": {
       "label": "Shadow",
       "high": "Du nimmst nicht mehr Raum ein, als du brauchst. Verdienste werden geteilt, Leistungen werden nicht angekündigt. Diese Zurückhaltung baut eine Art Vertrauen auf, die Selbstpromotion niemals aufbaut.",
-      "low": "Du weißt, was du wert bist, und versteckst es nicht. Dieses Selbstvertrauen in deinen eigenen Wert ist keine Arroganz — es ist Klarheit. Und manchmal braucht der Raum jemanden, der bereit ist zu sagen, was er einbringt."
+      "low": "Du weißt, was du wert bist, und versteckst es nicht. Dieses Selbstvertrauen in deinen eigenen Wert ist keine Arroganz, es ist Klarheit. Und manchmal braucht der Raum jemanden, der bereit ist zu sagen, was er einbringt."
     },
     "shield": {
       "label": "Shield",
@@ -865,7 +868,7 @@
     },
     "mastery": {
       "label": "Mastery",
-      "high": "Du gehst gut mit Dingen um und weißt es. Dieses Vertrauen in deine eigene Fähigkeit ist keine Arroganz — es ist akkurat. Du lähmst dich nicht mit Selbstzweifeln, weil du normalerweise die Arbeit getan hast.",
+      "high": "Du gehst gut mit Dingen um und weißt es. Dieses Vertrauen in deine eigene Fähigkeit ist keine Arroganz, es ist akkurat. Du lähmst dich nicht mit Selbstzweifeln, weil du normalerweise die Arbeit getan hast.",
       "low": "Du findest noch heraus, wie die Dinge funktionieren, und bist ehrlich darüber. Diese Offenheit zum Lernen schützt dich vor der Überheblichkeit, die Leute stolpert, die glauben, sie seien schon angekommen."
     },
     "structure": {
@@ -916,7 +919,7 @@
     "R01": {
       "name": "Delfin",
       "ca": "Delfin",
-      "essence": "Wenn du im Raum bist, reden die Leute. Nicht weil du fragst — weil du es leicht gemacht hast. Das Team erwärmt sich mit dir.",
+      "essence": "Wenn du im Raum bist, reden die Leute. Nicht weil du fragst: weil du es leicht gemacht hast. Das Team erwärmt sich mit dir.",
       "profile": "Hohe Präsenz und Bindung. Warm, aufgeschlossen und leicht umzugehen. Menschen öffnen sich in deiner Gesellschaft.",
       "contributes": "Kohäsion. Senkt die soziale Aktivierungsenergie im Raum.",
       "misses": "Die produktive Reibung, die Ideen schärft. Wärme kann echte Meinungsverschiedenheiten glätten."
@@ -932,7 +935,7 @@
     "R03": {
       "name": "Elefant",
       "ca": "Elefant",
-      "essence": "Du nimmst keinen Raum ein — du schaffst ihn. Menschen erklären sich gut neben dir, weil sie wissen, dass du wirklich zuhörst.",
+      "essence": "Du nimmst keinen Raum ein: du schaffst ihn. Menschen erklären sich gut neben dir, weil sie wissen, dass du wirklich zuhörst.",
       "profile": "Niedrige Präsenz, hohe Bindung. Ruhig und zutiefst kooperativ. Schafft Raum für andere, laut zu denken.",
       "contributes": "Tiefe des Zuhörens. Menschen artikulieren sich besser in deiner Gegenwart.",
       "misses": "Schwung. Das Team kann klar zusammen denken, sich aber immer noch nicht bewegen."
@@ -956,7 +959,7 @@
     "R06": {
       "name": "Falke",
       "ca": "Falke",
-      "essence": "Es ist keine Vision — es ist Timing. Du weißt genau, wann du dich bewegen solltest, und wenn du es tust, bemerkt es das Team.",
+      "essence": "Es ist keine Vision: es ist Timing. Du weißt genau, wann du dich bewegen solltest, und wenn du es tust, bemerkt es das Team.",
       "profile": "Hohe Präsenz, niedrige Vision. Präsent, entschlossen und praktisch. Weiß genau, wann man handeln soll.",
       "contributes": "Timing. Bewegt sich zum richtigen Moment und nimmt Menschen mit.",
       "misses": "Langfristiges Denken. Kann die strategische Ebene verpassen, während er gut in hohem Tempo ausführt."
@@ -996,7 +999,7 @@
     "R11": {
       "name": "Fuchs",
       "ca": "Fuchs",
-      "essence": "Du siehst, was nicht zusammenpasst — in Ideen und in Beziehungen. Dein Unbehagen ist produktiv.",
+      "essence": "Du siehst, was nicht zusammenpasst, in Ideen und in Beziehungen. Dein Unbehagen ist produktiv.",
       "profile": "Niedrige Bindung, hohe Vision. Intellektuell scharf und kritisch denkend. Entdeckt Inkonsistenzen schnell.",
       "contributes": "Kritische Distanz. Erkennt, was nicht zusammenpasst, bevor es ein Problem wird.",
       "misses": "Relationale Leichtigkeit. Das Unbehagen kann ein Team belasten, das Kohäsion braucht, um zu funktionieren."
@@ -1036,7 +1039,7 @@
       "loading": "Lädt…",
       "intro": {
         "heading": "Du wurdest gebeten, jemanden zu beschreiben.",
-        "body": "Du wirst Gruppen von Wörtern sehen und auswählen, welches am besten auf diese Person passt — und welches am wenigsten passt. Das dauert etwa 5 Minuten.",
+        "body": "Du wirst Gruppen von Wörtern sehen und auswählen, welches am besten auf diese Person passt, und welches am wenigsten passt. Das dauert etwa 5 Minuten.",
         "subjectLabel": "Du beschreibst",
         "youAreLabel": "Du bist",
         "youArePlaceholder": "Dein Name",
@@ -1100,7 +1103,7 @@
     "combinedRoleSection": "Deine Rolle",
     "roleSection": "Deine Rolle · Zeugen",
     "setupCta": "Zeugen einladen",
-    "disclaimer": "Zeugen-Ergebnisse spiegeln die Perspektive der Personen wider, die das Instrument abgeschlossen haben. Divergenz ist kein Fehler — sie ist Information.",
+    "disclaimer": "Zeugen-Ergebnisse spiegeln die Perspektive der Personen wider, die das Instrument abgeschlossen haben. Divergenz ist kein Fehler: sie ist Information.",
     "definitiveLabel": "Zeuge einbezogen",
     "definitiveNote": "Das Zeugensignal reduziert die Unsicherheit bei der Rollenzuweisung. Dies ist dein vollständigstes Ergebnis.",
     "domainsSection": "Die fünf Dimensionen",
@@ -1123,12 +1126,12 @@
     "intro": {
       "eyebrow": "Open-Source-Persönlichkeitsauswertung",
       "heading": "Sieh dich klarer.",
-      "body": "Cèrcol sind drei Instrumente, die auf Wissenschaft der öffentlichen Domäne aufgebaut sind. Jedes misst dieselben fünf Dimensionen — in unterschiedlichen Tiefen. Kein Ergebnis sagt dir, was du denken sollst. Kein Ergebnis ist gut oder schlecht.",
+      "body": "Cèrcol sind drei Instrumente, die auf Wissenschaft der öffentlichen Domäne aufgebaut sind. Jedes misst dieselben fünf Dimensionen, in unterschiedlichen Tiefen. Kein Ergebnis sagt dir, was du denken sollst. Kein Ergebnis ist gut oder schlecht.",
       "founding": "Jeder Beitrag zählt. Niemand ist unersetzlich, aber wir alle sind notwendig."
     },
     "philosophy": {
       "heading": "Im Offenen gebaut",
-      "body": "Die meisten Persönlichkeitstests sind proprietär. Die Items, die Bewertung, die normativen Daten — hinter Bezahlschranken oder NDAs. Du machst den Test, bekommst ein Ergebnis und hast keine Möglichkeit zu wissen, ob der Algorithmus solide ist. Cèrcol ist anders. Jede Frage stammt aus gemeinfreier Forschung. Die Bewertung ist auf GitHub. Jeder kann sie lesen, hinterfragen und verbessern. Wir glauben, Persönlichkeitsauswertungen sollten so funktionieren."
+      "body": "Die meisten Persönlichkeitstests sind proprietär. Die Items, die Bewertung, die normativen Daten, hinter Bezahlschranken oder NDAs. Du machst den Test, bekommst ein Ergebnis und hast keine Möglichkeit zu wissen, ob der Algorithmus solide ist. Cèrcol ist anders. Jede Frage stammt aus gemeinfreier Forschung. Die Bewertung ist auf GitHub. Jeder kann sie lesen, hinterfragen und verbessern. Wir glauben, Persönlichkeitsauswertungen sollten so funktionieren."
     },
     "explore": {
       "heading": "Tiefer gehen",
@@ -1147,7 +1150,7 @@
     },
     "dimensions": {
       "heading": "Fünf Dimensionen",
-      "subheading": "Jedes Ergebnis liegt auf einem Spektrum. Beide Enden sind gültig — sie beschreiben verschiedene Wege, effektiv zu sein.",
+      "subheading": "Jedes Ergebnis liegt auf einem Spektrum. Beide Enden sind gültig: sie beschreiben verschiedene Wege, effektiv zu sein.",
       "presence": {
         "name": "Präsenz",
         "desc": "Wie viel Energie du nach außen richtest. Hoch: du bringst Menschen herein. Niedrig: du gehst mit weniger tief."
@@ -1174,11 +1177,11 @@
       "item1": "Ein diagnostisches Werkzeug. Diese Ergebnisse haben keine klinische Gültigkeit.",
       "item2": "Ein festes Label. Ergebnisse verschieben sich mit Kontext, Zeit und Gemütszustand.",
       "item3": "Ein Ranking. Keine Dimension ist besser oder schlechter als eine andere.",
-      "item4": "Ein Prädiktor für Erfolg. Tendenzen beschreiben, wie du tendierst zu arbeiten — nicht was du erreichen wirst."
+      "item4": "Ein Prädiktor für Erfolg. Tendenzen beschreiben, wie du tendierst zu arbeiten, nicht was du erreichen wirst."
     },
     "framing": {
       "heading": "Eine Anmerkung zu Ergebnissen",
-      "body": "Das sind Tendenzen, keine Labels. Dieselbe Eigenschaft, die in einem Kontext Reibung erzeugt, ist genau das, was in einem anderen gebraucht wird. Niedrige Disziplin ist kein Versagen — es ist oft das, was die Dinge am Laufen hält, wenn der Plan auseinanderfällt."
+      "body": "Das sind Tendenzen, keine Labels. Dieselbe Eigenschaft, die in einem Kontext Reibung erzeugt, ist genau das, was in einem anderen gebraucht wird. Niedrige Disziplin ist kein Versagen, es ist oft das, was die Dinge am Laufen hält, wenn der Plan auseinanderfällt."
     }
   },
   "science": {
@@ -1191,16 +1194,16 @@
     "fiveFactors": {
       "eyebrow": "Das Fünf-Faktoren-Modell",
       "heading": "Der am häufigsten replizierte Befund in der Persönlichkeitspsychologie.",
-      "body": "Über Kulturen, Sprachen und Methoden hinweg erholt die Forschung konsistent dieselben fünf breiten Persönlichkeitsdimensionen. Cèrcol verwendet diese unter anderen Namen — Präsenz, Bindung, Disziplin, Tiefe, Vision — um die Sprache wärmer zu machen, ohne zu ändern, was gemessen wird.",
+      "body": "Über Kulturen, Sprachen und Methoden hinweg erholt die Forschung konsistent dieselben fünf breiten Persönlichkeitsdimensionen. Cèrcol verwendet diese unter anderen Namen, Präsenz, Bindung, Disziplin, Tiefe, Vision, um die Sprache wärmer zu machen, ohne zu ändern, was gemessen wird.",
       "note": "In mehr als 50 Ländern repliziert. Das stärkste Konsensergebnis in der Differenzialpsychologie."
     },
     "dimensions": {
       "eyebrow": "Fünf Dimensionen",
       "heading": "Was Cèrcol tatsächlich misst.",
-      "intro": "Fünf breite Persönlichkeitsdimensionen — jede deckt eine andere Achse menschlicher Variation ab. Die Dimensionen sind über alle drei Instrumente gleich. Nur die Auflösung ändert sich.",
+      "intro": "Fünf breite Persönlichkeitsdimensionen, jede deckt eine andere Achse menschlicher Variation ab. Die Dimensionen sind über alle drei Instrumente gleich. Nur die Auflösung ändert sich.",
       "presence": {
         "academic": "Extraversion",
-        "body": "Wie viel Energie du in einen Raum einbringst — und wie viel du aus dem Zusammensein mit anderen ziehst. Hohe Präsenz bedeutet Initiative, Ausdrucksstärke und Wohlbefinden im Rampenlicht. Niedrige Präsenz bedeutet Tiefe in fokussierter Arbeit und eine Zuhörqualität, die die meisten Gruppen unterschätzen. Teams brauchen beides.",
+        "body": "Wie viel Energie du in einen Raum einbringst, und wie viel du aus dem Zusammensein mit anderen ziehst. Hohe Präsenz bedeutet Initiative, Ausdrucksstärke und Wohlbefinden im Rampenlicht. Niedrige Präsenz bedeutet Tiefe in fokussierter Arbeit und eine Zuhörqualität, die die meisten Gruppen unterschätzen. Teams brauchen beides.",
         "ref": "Bell, 2007"
       },
       "bond": {
@@ -1215,20 +1218,20 @@
       },
       "discipline": {
         "academic": "Gewissenhaftigkeit",
-        "body": "Wie zuverlässig du durchhältst. Hohe Disziplin bedeutet Planung, Struktur und das Tun dessen, was du gesagt hast, dass du tun würdest. Sie ist der am häufigsten replizierte Prädiktor für Berufsleistung in der Forschungsliteratur — nicht weil rigide Menschen besser abschneiden, sondern weil konsequente Menschen es tun.",
+        "body": "Wie zuverlässig du durchhältst. Hohe Disziplin bedeutet Planung, Struktur und das Tun dessen, was du gesagt hast, dass du tun würdest. Sie ist der am häufigsten replizierte Prädiktor für Berufsleistung in der Forschungsliteratur, nicht weil rigide Menschen besser abschneiden, sondern weil konsequente Menschen es tun.",
         "ref": "Barrick & Mount, 1991"
       },
       "depth": {
         "academic": "Neurotizismus",
-        "body": "Wie leicht du negative Emotionen erlebst — Sorge, Frustration, Sensibilität. Hohe Tiefe geht oft mit erhöhter Wachsamkeit und starker Empathie einher. Niedrige Tiefe bedeutet Beständigkeit unter Druck. Kein Extrem ist ein Fehler; beide spiegeln verschiedene Wege wider, die Welt zu lesen.",
+        "body": "Wie leicht du negative Emotionen erlebst, Sorge, Frustration, Sensibilität. Hohe Tiefe geht oft mit erhöhter Wachsamkeit und starker Empathie einher. Niedrige Tiefe bedeutet Beständigkeit unter Druck. Kein Extrem ist ein Fehler; beide spiegeln verschiedene Wege wider, die Welt zu lesen.",
         "ref": "Bell, 2007"
       }
     },
     "roles": {
       "eyebrow": "Rollentaxonomie",
       "heading": "Zwölf Rollen. Aus der Forschung abgeleitet, nicht erfunden.",
-      "body": "Die Rollentaxonomie ist im AB5C-Circumplex (Hofstee, De Raad & Goldberg, 1992) und der Teamzusammensetzungsliteratur (Bell, 2007) verankert. Drei OCEAN-Dimensionen — Präsenz, Bindung und Vision — erfordern Balance in Teams. Die zwölf Rollen decken die sechs Kreuzungen dieser drei Dimensionen auf beiden Polen ab. Disziplin und Tiefe modulieren, wie jede Rolle ausgedrückt wird.",
-      "beta": "Aktuelle Rollenzuweisungen verwenden theoretische Zentroide aus veröffentlichter Forschung. Wenn reale Daten akkumulieren — Ziel: 300 vollständige Full Moon-Abschlüsse — werden Zentroide durch empirische Werte aus tatsächlichen Profilen ersetzt.",
+      "body": "Die Rollentaxonomie ist im AB5C-Circumplex (Hofstee, De Raad & Goldberg, 1992) und der Teamzusammensetzungsliteratur (Bell, 2007) verankert. Drei OCEAN-Dimensionen: Präsenz, Bindung und Vision, erfordern Balance in Teams. Die zwölf Rollen decken die sechs Kreuzungen dieser drei Dimensionen auf beiden Polen ab. Disziplin und Tiefe modulieren, wie jede Rolle ausgedrückt wird.",
+      "beta": "Aktuelle Rollenzuweisungen verwenden theoretische Zentroide aus veröffentlichter Forschung. Wenn reale Daten akkumulieren: Ziel: 300 vollständige Full Moon-Abschlüsse, werden Zentroide durch empirische Werte aus tatsächlichen Profilen ersetzt.",
       "betaNote": "Die Rollenbewertung ist in der Benutzeroberfläche als Beta gekennzeichnet. Sie ist illustrativ, nicht diagnostisch."
     },
     "fullMoon": {
@@ -1236,13 +1239,13 @@
       "heading": "Zwei Linsen auf dieselbe Person.",
       "selfReport": {
         "heading": "Selbstbericht",
-        "body": "120 Items über 5 Domänen und 30 Facetten — doppelte Auflösung im Vergleich zu Erstes Viertel. Bildet das primäre Rollenergebnis."
+        "body": "120 Items über 5 Domänen und 30 Facetten, doppelte Auflösung im Vergleich zu Erstes Viertel. Bildet das primäre Rollenergebnis."
       },
       "witness": {
         "heading": "Zeuge Cèrcol",
-        "body": "Eine Forced-Choice-Aufgabe, die jemanden erhält, der dich gut kennt. In jeder Runde sieht die Zeuge/Zeugin fünf Wörter und wählt die beste und die schlechteste Passung für dich — ein Adjektiv pro Dimension. Forced Choice eliminiert den sozialen Erwünschtheitseffekt, der Selbstberichte verzerrt.",
-        "idealWitness": "Eine ideale Zeuge/Zeugin hat mit dir gearbeitet, mit dir gelebt oder echte Zeit um dich herum verbracht. Nicht dein engster Verbündeter, nicht dein härtester Kritiker — jemand, der dich so sieht, wie du wirklich bist.",
-        "blindSpots": "Das Zeugenergebnis wird mit dem Selbstbericht verglichen. Wo sie erheblich abweichen, wird ein blinder Fleck markiert — eine Dimension, die du anders siehst als die Menschen um dich herum."
+        "body": "Eine Forced-Choice-Aufgabe, die jemanden erhält, der dich gut kennt. In jeder Runde sieht die Zeuge/Zeugin fünf Wörter und wählt die beste und die schlechteste Passung für dich, ein Adjektiv pro Dimension. Forced Choice eliminiert den sozialen Erwünschtheitseffekt, der Selbstberichte verzerrt.",
+        "idealWitness": "Eine ideale Zeuge/Zeugin hat mit dir gearbeitet, mit dir gelebt oder echte Zeit um dich herum verbracht. Nicht dein engster Verbündeter, nicht dein härtester Kritiker, jemand, der dich so sieht, wie du wirklich bist.",
+        "blindSpots": "Das Zeugenergebnis wird mit dem Selbstbericht verglichen. Wo sie erheblich abweichen, wird ein blinder Fleck markiert, eine Dimension, die du anders siehst als die Menschen um dich herum."
       }
     },
     "sources": {
@@ -1257,7 +1260,7 @@
       "milestonesDetail": "Validierungs-Meilensteine. Das Modell von Cèrcol ist eine Arbeitshypothese, die verfeinert wird, sobald echte Daten zusammenkommen. Der Plan benennt klar, was sich bei jeder Stichprobengröße ändert. Bei N ≥ 100 prüfen wir die Rollenverteilung und markieren jeden Archetyp, der einen ungewöhnlichen Anteil an Profilen anzieht. Bei N ≥ 200 ersetzen wir die veröffentlichten normativen Priors durch Cèrcols eigene Stichprobenstatistiken, einschließlich zeugenspezifischer Normen. Bei N ≥ 300 führen wir k-means (k = 12) aus, um die empirischen Zentroide mit den theoretischen zu vergleichen, und testen, ob kognitive Fähigkeit die Rollenzuordnung über die Big Five hinaus vorhersagt. Nichts davon validiert das Modell als Prädiktor der Teamleistung, wofür externe Daten zum tatsächlichen Teamverhalten nötig sind. Die Meilensteine verfeinern die interne Geometrie des Modells, nicht seine externen Aussagen.",
       "eyebrow": "Validierungsplan",
       "heading": "Eine Arbeitshypothese, kein fertiges Produkt.",
-      "body": "Das Rollensystem von Cèrcol verwendet theoretische Zentroide, die aus veröffentlichter AB5C-Forschung abgeleitet wurden. Rollenzuweisungen sind illustrativ — sie wurden noch nicht empirisch gegen reale Teamergebnisse validiert. Die Validierung ist in drei Phasen geplant.",
+      "body": "Das Rollensystem von Cèrcol verwendet theoretische Zentroide, die aus veröffentlichter AB5C-Forschung abgeleitet wurden. Rollenzuweisungen sind illustrativ, sie wurden noch nicht empirisch gegen reale Teamergebnisse validiert. Die Validierung ist in drei Phasen geplant.",
       "milestones": {
         "n300": {
           "label": "N ≥ 300",
@@ -1288,35 +1291,35 @@
     },
     "q1": {
       "q": "Sind meine Daten privat?",
-      "a": "Die kostenlosen Instrumente speichern anonyme Ergebnisse ohne persönliche Informationen — kein Name, keine E-Mail, keine IP-Adresse. Wenn du ein Konto erstellst, wird deine E-Mail auf unseren eigenen Servern gespeichert und deine Ergebnisse werden mit deinem Konto verknüpft. Du kannst dein Konto jederzeit löschen. Keine Daten werden an Dritte verkauft oder weitergegeben."
+      "a": "Die kostenlosen Instrumente speichern anonyme Ergebnisse ohne persönliche Informationen, kein Name, keine E-Mail, keine IP-Adresse. Wenn du ein Konto erstellst, wird deine E-Mail auf unseren eigenen Servern gespeichert und deine Ergebnisse werden mit deinem Konto verknüpft. Du kannst dein Konto jederzeit löschen. Keine Daten werden an Dritte verkauft oder weitergegeben."
     },
     "q2": {
       "q": "Sind die Ergebnisse genau?",
-      "a": "Die Fragen stammen aus begutachteten, weitgehend validierten Instrumenten. Die Fünf-Dimensionen-Ergebnisse sind für ein Selbstberichts-Tool dieser Länge zuverlässig. Die Rollenbewertung ist klar als Beta gekennzeichnet — sie verwendet theoretische Ausgangspunkte und wird genauer, wenn sich reale Daten akkumulieren. Nimm die Dimensionen ernst; behandle die Rolle als nützliche erste Schätzung."
+      "a": "Die Fragen stammen aus begutachteten, weitgehend validierten Instrumenten. Die Fünf-Dimensionen-Ergebnisse sind für ein Selbstberichts-Tool dieser Länge zuverlässig. Die Rollenbewertung ist klar als Beta gekennzeichnet, sie verwendet theoretische Ausgangspunkte und wird genauer, wenn sich reale Daten akkumulieren. Nimm die Dimensionen ernst; behandle die Rolle als nützliche erste Schätzung."
     },
     "q3": {
       "q": "Was ist die Zeuge/Zeugin und wen soll ich einladen?",
-      "a": "Die Zeuge/Zeugin ist jemand, den du einlädst, dich von außen zu beschreiben. Sie sehen Gruppen von Wörtern und wählen aus, welche am besten und schlechtesten zu dir passen — eine kurze Forced-Choice-Aufgabe, die etwa 5 Minuten dauert. Eine ideale Zeuge/Zeugin ist jemand, der echte Zeit mit dir verbracht hat: ein*e Kolleg*in, ein*e Mitbewohner*in, ein*e enge Freund*in. Nicht dein größter Fan, nicht dein härtester Kritiker. Jemand, der dich so sieht, wie du wirklich bist."
+      "a": "Die Zeuge/Zeugin ist jemand, den du einlädst, dich von außen zu beschreiben. Sie sehen Gruppen von Wörtern und wählen aus, welche am besten und schlechtesten zu dir passen, eine kurze Forced-Choice-Aufgabe, die etwa 5 Minuten dauert. Eine ideale Zeuge/Zeugin ist jemand, der echte Zeit mit dir verbracht hat: ein*e Kolleg*in, ein*e Mitbewohner*in, ein*e enge Freund*in. Nicht dein größter Fan, nicht dein härtester Kritiker. Jemand, der dich so sieht, wie du wirklich bist."
     },
     "q4": {
       "q": "Was ist der Unterschied zwischen den drei Instrumenten?",
-      "a": "Neumond hat 10 Fragen und dauert 2 Minuten — eine schnelle Orientierung. Erstes Viertel hat 60 Fragen und dauert 10 Minuten — ein vollständigeres Bild mit 30 Facetten und einem ersten Blick auf deine Rolle. Vollmond hat 120 Fragen, umfasst die Zeugenbewertung und ist kostenpflichtig — es ist das definitive Ergebnis. Jedes Instrument ist eigenständig; du kannst überall beginnen."
+      "a": "Neumond hat 10 Fragen und dauert 2 Minuten, eine schnelle Orientierung. Erstes Viertel hat 60 Fragen und dauert 10 Minuten, ein vollständigeres Bild mit 30 Facetten und einem ersten Blick auf deine Rolle. Vollmond hat 120 Fragen, umfasst die Zeugenbewertung und ist kostenpflichtig, es ist das definitive Ergebnis. Jedes Instrument ist eigenständig; du kannst überall beginnen."
     },
     "q5": {
       "q": "Lohnt es sich, für den Vollmond zu zahlen?",
-      "a": "Wenn Erstes Viertel unzureichend erscheint — wenn du eine bestimmte Facette tiefer verstehen möchtest, siehst, wie andere dich wahrnehmen, oder ein zuverlässiges Rollenergebnis erhalten möchtest — dann ja. Der Zeugenvergleich ist der markanteste Teil: Er zeigt, wo deine Selbstwahrnehmung mit der Außensicht übereinstimmt und wo nicht. Diese Lücke ist oft der Ort, wo die nützlichsten Informationen liegen."
+      "a": "Wenn Erstes Viertel unzureichend erscheint, wenn du eine bestimmte Facette tiefer verstehen möchtest, siehst, wie andere dich wahrnehmen, oder ein zuverlässiges Rollenergebnis erhalten möchtest, dann ja. Der Zeugenvergleich ist der markanteste Teil: Er zeigt, wo deine Selbstwahrnehmung mit der Außensicht übereinstimmt und wo nicht. Diese Lücke ist oft der Ort, wo die nützlichsten Informationen liegen."
     },
     "q6": {
       "q": "Kann ich die Auswertungen wiederholen?",
-      "a": "Ja. Jedes Instrument speichert dein aktuellstes Ergebnis. Wenn du es wiederholst, wird das vorherige Ergebnis dauerhaft aus deinem Konto entfernt — du wirst vor dem Löschen um Bestätigung gebeten. Eine Wiederholung kann nützlich sein, um zu sehen, wie du dich über Monate oder Jahre verändert hast."
+      "a": "Ja. Jedes Instrument speichert dein aktuellstes Ergebnis. Wenn du es wiederholst, wird das vorherige Ergebnis dauerhaft aus deinem Konto entfernt, du wirst vor dem Löschen um Bestätigung gebeten. Eine Wiederholung kann nützlich sein, um zu sehen, wie du dich über Monate oder Jahre verändert hast."
     },
     "q7": {
       "q": "Basiert Cèrcol auf dem Big Five (OCEAN)?",
-      "a": "Ja. Cèrcol misst die Persönlichkeit mit dem OCEAN-Modell (Big Five) über den IPIP — den International Personality Item Pool, eine gemeinfreie Sammlung von Items, die in Tausenden veröffentlichter Studien validiert wurde. Die fünf Dimensionen sind Präsenz (Extraversion), Band (Verträglichkeit), Vision (Offenheit), Disziplin (Gewissenhaftigkeit) und Tiefe (Neurotizismus). Da der IPIP gemeinfrei ist, gibt es keine Lizenzbeschränkungen: der vollständige Itempool und die Bewertungslogik sind offen und zitierbar."
+      "a": "Ja. Cèrcol misst die Persönlichkeit mit dem OCEAN-Modell (Big Five) über den IPIP, den International Personality Item Pool, eine gemeinfreie Sammlung von Items, die in Tausenden veröffentlichter Studien validiert wurde. Die fünf Dimensionen sind Präsenz (Extraversion), Band (Verträglichkeit), Vision (Offenheit), Disziplin (Gewissenhaftigkeit) und Tiefe (Neurotizismus). Da der IPIP gemeinfrei ist, gibt es keine Lizenzbeschränkungen: der vollständige Itempool und die Bewertungslogik sind offen und zitierbar."
     },
     "q8": {
       "q": "Wie unterscheidet sich Cèrcol von Belbin, DISC oder StrengthsFinder?",
-      "a": "Drei Dinge unterscheiden Cèrcol. Erstens stammen die Items aus dem Big Five (OCEAN), dem am häufigsten replizierten Persönlichkeitsmodell der akademischen Forschung — nicht aus einem proprietären Rahmen. Zweitens sind der vollständige Itempool (IPIP) und die Bewertungspipeline gemeinfrei und prüfbar; keine schwarze Box. Drittens verwendet die Zeuge/Zeugin Cèrcol erzwungene Adjektivauswahl statt Likert-Skalen, was den Bias sozialer Erwünschtheit eliminiert, der die meisten 360-Feedback-Tools beeinträchtigt. Belbin und DISC verwenden geschlossene, proprietäre Methoden."
+      "a": "Drei Dinge unterscheiden Cèrcol. Erstens stammen die Items aus dem Big Five (OCEAN), dem am häufigsten replizierten Persönlichkeitsmodell der akademischen Forschung, nicht aus einem proprietären Rahmen. Zweitens sind der vollständige Itempool (IPIP) und die Bewertungspipeline gemeinfrei und prüfbar; keine schwarze Box. Drittens verwendet die Zeuge/Zeugin Cèrcol erzwungene Adjektivauswahl statt Likert-Skalen, was den Bias sozialer Erwünschtheit eliminiert, der die meisten 360-Feedback-Tools beeinträchtigt. Belbin und DISC verwenden geschlossene, proprietäre Methoden."
     },
     "q9": {
       "q": "Kann ich Cèrcol verwenden, um mein gesamtes Team zu bewerten?",
@@ -1324,22 +1327,22 @@
     },
     "q10": {
       "q": "In welchen Sprachen ist Cèrcol verfügbar?",
-      "a": "Cèrcol ist auf Englisch, Katalanisch/Valencianisch, Spanisch, Französisch, Deutsch und Dänisch verfügbar. Alle sechs Sprachen decken die vollständige Bewertung ab — Instrumentenfragen, Ergebnisse und alle Inhalte. Die dänische Übersetzung basiert auf der validierten Adaption von Vedel, Gøtzsche-Astrup und Holm (2018, Nordic Psychology). Die französische Übersetzung folgt der dokumentierten europäisch-französischen IPIP-Adaption von Thiry und Piolti (2023, Universität Mons), gelistet auf ipip.ori.org."
+      "a": "Cèrcol ist auf Englisch, Katalanisch/Valencianisch, Spanisch, Französisch, Deutsch und Dänisch verfügbar. Alle sechs Sprachen decken die vollständige Bewertung ab, Instrumentenfragen, Ergebnisse und alle Inhalte. Die dänische Übersetzung basiert auf der validierten Adaption von Vedel, Gøtzsche-Astrup und Holm (2018, Nordic Psychology). Die französische Übersetzung folgt der dokumentierten europäisch-französischen IPIP-Adaption von Thiry und Piolti (2023, Universität Mons), gelistet auf ipip.ori.org."
     },
     "q11": {
       "q": "Wie funktioniert die Zeuge/Zeugin-Bewertung genau?",
-      "a": "Sie senden einer Zeuge/Zeugin — jemand, der Sie gut kennt — einen einzigartigen Link. Sie sehen pro Runde fünf Adjektive, eines pro Persönlichkeitsdimension, und wählen das, das am besten zu Ihnen passt, und das, das am wenigsten passt. Dieses Format erzwungener Wahl eliminiert den Bias sozialer Erwünschtheit, der bei Likert-Bewertungen auftritt. Nach 20 Runden werden ihre Werte mit Ihrer Selbsteinschätzung verglichen. Dimensionen, bei denen die Differenz 0,8 Standardabweichungen überschreitet, werden als mögliche blinde Flecken markiert. Sie können bis zu 12 Zeugen/Zeuginnen einladen; die Werte werden gemittelt."
+      "a": "Sie senden einer Zeuge/Zeugin: jemand, der Sie gut kennt, einen einzigartigen Link. Sie sehen pro Runde fünf Adjektive, eines pro Persönlichkeitsdimension, und wählen das, das am besten zu Ihnen passt, und das, das am wenigsten passt. Dieses Format erzwungener Wahl eliminiert den Bias sozialer Erwünschtheit, der bei Likert-Bewertungen auftritt. Nach 20 Runden werden ihre Werte mit Ihrer Selbsteinschätzung verglichen. Dimensionen, bei denen die Differenz 0,8 Standardabweichungen überschreitet, werden als mögliche blinde Flecken markiert. Sie können bis zu 12 Zeugen/Zeuginnen einladen; die Werte werden gemittelt."
     },
     "q12": {
       "q": "Was sind blinde Flecken?",
-      "a": "Ein blinder Fleck ist eine Persönlichkeitsdimension, in der Ihre Selbstwahrnehmung und die Wahrnehmung anderer erheblich abweichen — mehr als 0,8 Standardabweichungen. Wenn Sie sich beispielsweise bei Präsenz niedrig einschätzen, Ihre Zeugen/Zeuginnen Sie aber konsequent hoch einschätzen, ist diese Lücke ein blinder Fleck. Blinde Flecken sind weder gut noch schlecht. Sie sind Informationen: Sie zeigen, wo Selbstwahrnehmung und die Erfahrung, die andere mit Ihnen machen, nicht übereinstimmen — das ist oft nützlicher als der Score selbst."
+      "a": "Ein blinder Fleck ist eine Persönlichkeitsdimension, in der Ihre Selbstwahrnehmung und die Wahrnehmung anderer erheblich abweichen, mehr als 0,8 Standardabweichungen. Wenn Sie sich beispielsweise bei Präsenz niedrig einschätzen, Ihre Zeugen/Zeuginnen Sie aber konsequent hoch einschätzen, ist diese Lücke ein blinder Fleck. Blinde Flecken sind weder gut noch schlecht. Sie sind Informationen: Sie zeigen, wo Selbstwahrnehmung und die Erfahrung, die andere mit Ihnen machen, nicht übereinstimmen, das ist oft nützlicher als der Score selbst."
     }
   },
   "instruments": {
     "title": "Instrumente",
     "intro": {
       "heading": "Drei Instrumente. Eine Skala.",
-      "body": "Jedes Instrument misst dieselben fünf Dimensionen — bei unterschiedlicher Tiefe und Auflösung. Sie sind für die sequentielle Verwendung konzipiert, aber jedes steht für sich allein."
+      "body": "Jedes Instrument misst dieselben fünf Dimensionen, bei unterschiedlicher Tiefe und Auflösung. Sie sind für die sequentielle Verwendung konzipiert, aber jedes steht für sich allein."
     },
     "freeLabel": "Kostenlos",
     "paidLabel": "Einmalige Zahlung · Kein Abonnement",
@@ -1348,9 +1351,9 @@
       "heading": "Cèrcol des Neumondes",
       "eyebrow": "Schneller Überblick",
       "meta": "10 Fragen · ~2 Min.",
-      "scaleNote": "7-Punkte-Skala: 'Stimme überhaupt nicht zu' bis 'Stimme vollständig zu'. Jeder Punkt trägt Bedeutung — nicht nur zwei Extreme mit Zahlen dazwischen.",
+      "scaleNote": "7-Punkte-Skala: 'Stimme überhaupt nicht zu' bis 'Stimme vollständig zu'. Jeder Punkt trägt Bedeutung: nicht nur zwei Extreme mit Zahlen dazwischen.",
       "measures": "Fünf Dimensionen. Ein Ergebnis pro Dimension. Keine Facettenaufschlüsselung.",
-      "get": "Ein Radardiagramm deiner Position auf allen fünf Dimensionen. Gut für eine schnelle Orientierung. Nicht präzise genug für differenzierte Aussagen über Facetten — das ist, wofür Erstes Viertel ist.",
+      "get": "Ein Radardiagramm deiner Position auf allen fünf Dimensionen. Gut für eine schnelle Orientierung. Nicht präzise genug für differenzierte Aussagen über Facetten, das ist, wofür Erstes Viertel ist.",
       "items": [
         "Extrovertiert, enthusiastisch.",
         "Zuverlässig, selbstdiszipliniert.",
@@ -1363,8 +1366,8 @@
       "eyebrow": "Vollständiges Porträt",
       "meta": "60 Fragen · ~10 Min.",
       "scaleNote": "5-Punkte-Skala: 'Stimme überhaupt nicht zu' bis 'Stimme vollständig zu'. Fünf-Punkte-Skalen sind Standard für Facetten-Persönlichkeitsmessungen.",
-      "measures": "Fünf Dimensionen, jede aufgeteilt in 6 Facetten — 30 Datenpunkte. Zwei Items pro Facette.",
-      "get": "Domänendiagramm, 30-Facetten-Aufschlüsselung und einen ersten Beta-Blick auf deine Rolle. Die Facettenaufschlüsselung ist der Ort, wo die nützlichen Informationen liegen — die Domänensummen sind nur die Überschrift.",
+      "measures": "Fünf Dimensionen, jede aufgeteilt in 6 Facetten, 30 Datenpunkte. Zwei Items pro Facette.",
+      "get": "Domänendiagramm, 30-Facetten-Aufschlüsselung und einen ersten Beta-Blick auf deine Rolle. Die Facettenaufschlüsselung ist der Ort, wo die nützlichen Informationen liegen, die Domänensummen sind nur die Überschrift.",
       "items": [
         "Die Führung übernehme.",
         "Mir Sorgen mache.",
@@ -1380,7 +1383,7 @@
         "label": "Teil 1",
         "heading": "Selbstbericht",
         "meta": "120 Fragen · ~20 Min. · 5-Punkte-Skala",
-        "body": "Dieselben 30 Facetten wie Erstes Viertel — bei doppelter Auflösung. Vier Items pro Facette statt zwei. In psychometrischen Begriffen bedeuten mehr Items pro Facette zuverlässigere Ergebnisse, besonders für Facetten nahe der Skalenmitte, wo zwei Items ein verrauschtes Ergebnis liefern können.",
+        "body": "Dieselben 30 Facetten wie Erstes Viertel, bei doppelter Auflösung. Vier Items pro Facette statt zwei. In psychometrischen Begriffen bedeuten mehr Items pro Facette zuverlässigere Ergebnisse, besonders für Facetten nahe der Skalenmitte, wo zwei Items ein verrauschtes Ergebnis liefern können.",
         "items": [
           "Mich selten niedergeschlagen fühle.",
           "Die Bedürfnisse anderer vorhersehe.",
@@ -1392,15 +1395,15 @@
         "label": "Teil 2",
         "heading": "Zeuge Cèrcol",
         "whyHeading": "Warum eine Zeuge/Zeugin?",
-        "whyBody": "Selbstberichte haben eine bekannte Einschränkung: Wir nehmen uns nicht immer so wahr, wie wir auf andere wirken. Menschen mit hoher Tiefe könnten unterberichten — die Emotion fühlt sich von innen normal an. Menschen mit hoher Bindung könnten Wärme überberichten — die Absicht ist echt, aber die Wirkung kann abweichen. Selbstbeurteilung ist ein gefiltertes Signal. Die Zeuge/Zeugin fügt ein unabhängiges hinzu.",
+        "whyBody": "Selbstberichte haben eine bekannte Einschränkung: Wir nehmen uns nicht immer so wahr, wie wir auf andere wirken. Menschen mit hoher Tiefe könnten unterberichten, die Emotion fühlt sich von innen normal an. Menschen mit hoher Bindung könnten Wärme überberichten, die Absicht ist echt, aber die Wirkung kann abweichen. Selbstbeurteilung ist ein gefiltertes Signal. Die Zeuge/Zeugin fügt ein unabhängiges hinzu.",
         "howHeading": "Wie es funktioniert",
-        "howBody": "Jede Zeuge/Zeugin erhält einen einzigartigen Link. Die Aufgabe dauert etwa 5 Minuten. Sie sehen 20 Runden mit je 5 Wörtern — ein Adjektiv pro Dimension — und wählen das, das am besten passt, und das, das am wenigsten passt. Forced Choice: keine Likert-Skala, keine Möglichkeit, alle positiven Antworten zu geben.",
+        "howBody": "Jede Zeuge/Zeugin erhält einen einzigartigen Link. Die Aufgabe dauert etwa 5 Minuten. Sie sehen 20 Runden mit je 5 Wörtern, ein Adjektiv pro Dimension, und wählen das, das am besten passt, und das, das am wenigsten passt. Forced Choice: keine Likert-Skala, keine Möglichkeit, alle positiven Antworten zu geben.",
         "whoHeading": "Wer ist eine ideale Zeuge/Zeugin?",
-        "whoBody": "Jemand, der mit dir gearbeitet hat, mit dir gelebt hat oder dich unter Druck gesehen hat. Nicht dein größter Befürworter — jemand ehrlich genug, um zu markieren, wo du Ecken hast. Du kannst bis zu 12 Zeugen einladen. Mehr Zeugen reduzieren Rauschen: die Ergebnisse werden gemittelt.",
+        "whoBody": "Jemand, der mit dir gearbeitet hat, mit dir gelebt hat oder dich unter Druck gesehen hat. Nicht dein größter Befürworter: jemand ehrlich genug, um zu markieren, wo du Ecken hast. Du kannst bis zu 12 Zeugen einladen. Mehr Zeugen reduzieren Rauschen: die Ergebnisse werden gemittelt.",
         "privacyHeading": "Datenschutz",
-        "privacyBody": "Zeugen sehen deine Ergebnisse niemals. Du siehst das gemittelte Ergebnis aller Zeugen — nicht einzelne Antworten.",
+        "privacyBody": "Zeugen sehen deine Ergebnisse niemals. Du siehst das gemittelte Ergebnis aller Zeugen, nicht einzelne Antworten.",
         "blindSpotsHeading": "Blinde Flecken",
-        "blindSpotsBody": "Wo dein Selbstbericht und die Zeugenergebnisse erheblich abweichen, wird ein blinder Fleck markiert. Nicht weil eines richtig und das andere falsch ist — sondern weil die Lücke selbst informativ ist. Eine Dimension, die du sehr anders wahrnimmst als die Menschen um dich herum, ist es wert, untersucht zu werden."
+        "blindSpotsBody": "Wo dein Selbstbericht und die Zeugenergebnisse erheblich abweichen, wird ein blinder Fleck markiert. Nicht weil eines richtig und das andere falsch ist, sondern weil die Lücke selbst informativ ist. Eine Dimension, die du sehr anders wahrnimmst als die Menschen um dich herum, ist es wert, untersucht zu werden."
       }
     }
   },
@@ -1409,15 +1412,15 @@
     "intro": {
       "heading": "Zwölf Rollen. Eine Taxonomie.",
       "body1": "Persönlichkeitsprofile beschreiben, wie du bist. Rollen beschreiben, wie du tendierst, die Balance eines Teams zu bewegen. Die Lücke zwischen diesen beiden Dingen ist, wo Cèrcol zu arbeiten versucht.",
-      "body2": "Die zwölf Rollen sind aus dem AB5C-Circumplex (Hofstee, De Raad & Goldberg, 1992) und der Teamzusammensetzungsliteratur (Bell, 2007) abgeleitet. Drei OCEAN-Dimensionen erfordern Balance in Teams — Präsenz, Bindung und Vision. Die zwölf Rollen decken die sechs Kreuzungen dieser Dimensionen auf beiden Polen ab. Die Namen gehören uns. Die Struktur stammt aus der Literatur."
+      "body2": "Die zwölf Rollen sind aus dem AB5C-Circumplex (Hofstee, De Raad & Goldberg, 1992) und der Teamzusammensetzungsliteratur (Bell, 2007) abgeleitet. Drei OCEAN-Dimensionen erfordern Balance in Teams, Präsenz, Bindung und Vision. Die zwölf Rollen decken die sechs Kreuzungen dieser Dimensionen auf beiden Polen ab. Die Namen gehören uns. Die Struktur stammt aus der Literatur."
     },
     "beta": {
       "heading": "Dies ist eine Ausgangshypothese, kein validiertes Instrument.",
-      "body": "Aktuelle Rollenzuweisungen verwenden theoretische Zentroide aus veröffentlichter Forschung. Wenn reale Daten akkumulieren — Ziel: 300 vollständige Full Moon-Abschlüsse — werden Zentroide durch empirische Werte aus tatsächlichen Profilen ersetzt. Die Rollenbewertung ist in der Benutzeroberfläche genau aus diesem Grund als Beta gekennzeichnet."
+      "body": "Aktuelle Rollenzuweisungen verwenden theoretische Zentroide aus veröffentlichter Forschung. Wenn reale Daten akkumulieren: Ziel: 300 vollständige Full Moon-Abschlüsse, werden Zentroide durch empirische Werte aus tatsächlichen Profilen ersetzt. Die Rollenbewertung ist in der Benutzeroberfläche genau aus diesem Grund als Beta gekennzeichnet."
     },
     "critique": {
       "heading": "Siehst du ein Problem mit diesem Modell?",
-      "body": "Diese Taxonomie ist eine Hypothese. Wenn du Hintergrund in Psychometrie, Organisationspsychologie oder Teamdynamik hast und einen Fehler siehst — in den Zentroiden, der Benennung, dem Forced-Choice-Design, irgendetwas — öffne ein Issue.",
+      "body": "Diese Taxonomie ist eine Hypothese. Wenn du Hintergrund in Psychometrie, Organisationspsychologie oder Teamdynamik hast und einen Fehler siehst, in den Zentroiden, der Benennung, dem Forced-Choice-Design, irgendetwas, öffne ein Issue.",
       "cta": "Ein Issue auf GitHub öffnen"
     },
     "grid": {
@@ -1432,16 +1435,16 @@
     },
     "arcNote": {
       "heading": "Persönlicher Bogen",
-      "body": "Die meisten Rollenergebnisse umfassen einen Bogen — sekundäre Rollen, die in der Wahrscheinlichkeitsskala nahe am Primären lagen. Ein Wolf mit einem Falken-Bogen bringt Initiative und entscheidungsfreudiges Timing. Eine Biene mit einem Elefanten-Bogen bringt Synthese und tiefes Zuhören. Der Bogen gibt dem Ergebnis eine Textur, die ein einzelnes Label nicht kann."
+      "body": "Die meisten Rollenergebnisse umfassen einen Bogen, sekundäre Rollen, die in der Wahrscheinlichkeitsskala nahe am Primären lagen. Ein Wolf mit einem Falken-Bogen bringt Initiative und entscheidungsfreudiges Timing. Eine Biene mit einem Elefanten-Bogen bringt Synthese und tiefes Zuhören. Der Bogen gibt dem Ergebnis eine Textur, die ein einzelnes Label nicht kann."
     },
     "contextNote": {
       "heading": "Rollen sind keine Schicksale",
-      "body": "Dieselbe Person kann in verschiedenen Teamzusammensetzungen unterschiedlich funktionieren. Ein Wolf in einem Team, das bereits alles konfrontiert, könnte sich zurückziehen. Eine Schildkröte in einem Team, das Bewegung braucht, könnte beschleunigen. Das sind Tendenzen im Kontext — keine festen Identitäten. Verwende ein Rollenergebnis nicht als Deckel."
+      "body": "Dieselbe Person kann in verschiedenen Teamzusammensetzungen unterschiedlich funktionieren. Ein Wolf in einem Team, das bereits alles konfrontiert, könnte sich zurückziehen. Eine Schildkröte in einem Team, das Bewegung braucht, könnte beschleunigen. Das sind Tendenzen im Kontext: keine festen Identitäten. Verwende ein Rollenergebnis nicht als Deckel."
     }
   },
   "onboarding": {
     "heading": "Willkommen bei Cèrcol",
-    "intro": "Drei Instrumente. Eine Skala. Beginne, wo du möchtest — jedes steht für sich.",
+    "intro": "Drei Instrumente. Eine Skala. Beginne, wo du möchtest: jedes steht für sich.",
     "newMoon": {
       "desc": "10 Fragen. Ein schneller Blick auf deine fünf Dimensionen."
     },
@@ -1464,7 +1467,7 @@
     },
     "fullMoon": {
       "heading": "Dein Portrait mit dem Vollmond vervollständigen",
-      "body": "120 Fragen plus ein Zeuge — das präziseste Ergebnis.",
+      "body": "120 Fragen plus ein Zeuge: das präziseste Ergebnis.",
       "cta": "Vollmond Cèrcol beginnen"
     }
   },

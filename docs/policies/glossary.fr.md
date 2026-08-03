@@ -51,27 +51,32 @@ cited study genuinely means an observer.
 
 ## Instrument names
 
-Use exactly the form the app uses for this language, shown below.
-Whether these should be translated at all is an open product question:
-English keeps them as brand names, every other locale translates them.
-Until that is settled, match the app so the blog and the interface agree.
+Each language has its own form and they are settled. Use exactly what
+is below, and never invent one: until August 2026 the Witness had no
+canonical name in any locale, and five translators of one article
+produced five different names for it.
 
 | English | fr |
 |---|---|
 | New Moon Cèrcol | Cèrcol de Nouvelle Lune |
 | First Quarter Cèrcol | Cèrcol de Premier Quartier |
 | Full Moon Cèrcol | Cèrcol de Pleine Lune |
-| Last Quarter Cèrcol | Dernier Quartier Cèrcol |
+| Last Quarter Cèrcol | Cèrcol de Dernier Quartier |
+| Witness Cèrcol | Cèrcol de Témoin |
 
 ## Required in English, for search
 
 On the blog only, never in the app interface: Big Five, OCEAN, IPIP, NEO,
 AB5C, DISC, MBTI, HEXACO.
 
-This includes the five Big Five factor names when they appear as
-academic terms: Openness, Conscientiousness, Extraversion, Agreeableness,
-Neuroticism. They stay English in running text and in figure labels.
-Cèrcol's own dimension names, in the table at the top of this file, are
-the ones that go in the target language. The two are different things:
+The five Big Five factor names work differently from the acronyms.
+Give the English form on first mention, then use the target language
+for the rest of the article: the English earns the search impression
+once, and forcing it through every inflected sentence afterwards costs
+fluency for nothing. Figure and diagram labels stay English, because
+they carry no grammar and the coordinates are drawn for those strings.
+
+Cèrcol's own dimension names, in the table at the top of this file, go
+in the target language everywhere. The two are different things:
 Bindung is a Cèrcol dimension, Agreeableness is the academic factor it
 maps onto.

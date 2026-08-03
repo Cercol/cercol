@@ -1,6 +1,6 @@
 {
   "beta": {
-    "banner": "Beta launch — {{remaining}} free Full Moon licences remaining. Help us find bugs.",
+    "banner": "Beta launch: {{remaining}} free Full Moon licences remaining. Help us find bugs.",
     "cta": "Claim free access",
     "badge": "Beta tester"
   },
@@ -102,7 +102,7 @@
     "balance": {
       "topContributor": "Highest:",
       "compensates": "can balance this",
-      "suggestRole": "No one compensates — consider a {{role}} profile",
+      "suggestRole": "No one compensates: consider a {{role}} profile",
       "suggestRoles": "These profiles would strengthen the team:",
       "notes": {
         "presence_balanced": "Presence is balanced. Energy and listening coexist.",
@@ -121,8 +121,8 @@
       "stronglyHigh": "Strongly high",
       "stronglyLow": "Strongly low",
       "highGood": "Strong",
-      "lowCaution": "Low — watch out",
-      "highCaution": "High — watch out",
+      "lowCaution": "Low: watch out",
+      "highCaution": "High: watch out",
       "lowGood": "Low"
     },
     "narrativeHeading": "Team narrative",
@@ -131,15 +131,15 @@
       "watchOutHeading": "Watch out for",
       "helpHeading": "What would help",
       "move": {
-        "high_p": "Your team has a strong outward presence — visible, direct, and quick to surface ideas. Meetings run with energy. External stakeholders notice this group.",
+        "high_p": "Your team has a strong outward presence, visible, direct, and quick to surface ideas. Meetings run with energy. External stakeholders notice this group.",
         "low_p": "Your team operates with quiet depth. Ideas develop slowly and with care. The group tends to act from reflection rather than impulse.",
         "high_b": "Cohesion is this team's foundation. People listen well, support each other, and tend to move through disagreement constructively. Trust is high.",
         "low_b": "Your team is direct, task-focused, and efficient. People say what they mean. Social friction is accepted as part of honest work.",
         "high_v": "Innovation is the group's natural mode. Creative exploration and novel ideas come easily. The team is comfortable in ambiguity and tolerates unfinished thinking.",
         "low_v": "Your team is pragmatic and execution-focused. Concrete plans, clear steps, and measurable progress are this group's language.",
-        "low_c": "Your team is flexible and adaptive — but may struggle to sustain momentum or coordinate ownership without deliberate structure.",
+        "low_c": "Your team is flexible and adaptive, but may struggle to sustain momentum or coordinate ownership without deliberate structure.",
         "high_n": "Emotional reactivity is present in this group. The team feels things acutely and may carry stress visibly.",
-        "balanced": "Your team shows a well-distributed profile across all dimensions. No single tendency dominates, which creates versatility — and requires active coordination to stay coherent."
+        "balanced": "Your team shows a well-distributed profile across all dimensions. No single tendency dominates, which creates versatility, and requires active coordination to stay coherent."
       },
       "watchOut": {
         "high_p": "High-presence teams risk dominating discussion. Quieter members may withhold ideas. The team can read as overwhelming to less vocal collaborators.",
@@ -150,7 +150,7 @@
         "low_v": "Teams low in vision may miss strategic opportunities or struggle to adapt when their current approach stops working.",
         "low_c": "Teams low in discipline tend to leave ownership unclear and timelines soft. The risk is ambition without completion.",
         "high_n": "Elevated stress reactivity can amplify interpersonal tension. Under pressure, the team's mood may destabilise before problems are solved.",
-        "balanced": "No single dimension flags strongly. Watch for diffuse accountability — versatile teams sometimes assume someone else owns a task."
+        "balanced": "No single dimension flags strongly. Watch for diffuse accountability, versatile teams sometimes assume someone else owns a task."
       },
       "help": {
         "high_p": "Deliberately create space for less visible members. Rotate who opens discussion. Give quiet contributors first-draft ownership on key decisions.",
@@ -161,7 +161,7 @@
         "low_v": "Schedule time for horizon scanning: what is changing in your environment? What approaches might you be over-relying on?",
         "low_c": "Adopt lightweight ownership rituals: name one person per outcome, one due date per decision. Review commitments weekly.",
         "high_n": "Invest in stress literacy as a team. Name when the group is reactive versus reflective. Create low-stakes channels for ventilating concerns before they escalate.",
-        "balanced": "With a balanced profile, the risk is coordination overhead. Be explicit about decision rights, communication norms, and who leads what — don't assume alignment."
+        "balanced": "With a balanced profile, the risk is coordination overhead. Be explicit about decision rights, communication norms, and who leads what, don't assume alignment."
       }
     },
     "shareHeading": "Share",
@@ -173,7 +173,7 @@
     "witnessGivenTitle": "How many of their assigned ratings this person has completed"
   },
   "cookies": {
-    "notice": "Cèrcol uses only functional cookies — no analytics, no advertising trackers.",
+    "notice": "Cèrcol uses only functional cookies, no analytics, no advertising trackers.",
     "learnMore": "Privacy policy",
     "ok": "OK",
     "dismiss": "Dismiss cookie notice"
@@ -182,31 +182,31 @@
     "eyebrow": "Legal",
     "title": "Privacy policy",
     "lastUpdated": "Last updated: May 2026",
-    "intro": "This policy explains what data Cèrcol collects, why, and what you can do with it. It is written in plain language — if anything is unclear, email us.",
+    "intro": "This policy explains what data Cèrcol collects, why, and what you can do with it. It is written in plain language, if anything is unclear, email us.",
     "collected": {
       "heading": "What we collect",
       "body": "Depending on how you use Cèrcol, we may hold:",
-      "email": "Your email address — when you create an account or sign in.",
-      "results": "Your test results — scores linked to your account when you are signed in. Anonymous scores (no account) are stored without any identifying information.",
+      "email": "Your email address: when you create an account or sign in.",
+      "results": "Your test results: scores linked to your account when you are signed in. Anonymous scores (no account) are stored without any identifying information.",
       "profile": "Profile fields you provide voluntarily: first name, last name, country, native language. All optional except first name.",
-      "payment": "Payment data — processed entirely by Stripe. Cèrcol never sees or stores your card details.",
-      "anonymous": "Anonymous usage data — if you complete an assessment without an account, only the scores are stored. No name, email, IP, or device information.",
-      "attribution": "Visit source — the referring website and any campaign tags (utm) from the link you arrived through, stored with a completed test. First-party only, never shared, and never linked to your identity."
+      "payment": "Payment data: processed entirely by Stripe. Cèrcol never sees or stores your card details.",
+      "anonymous": "Anonymous usage data: if you complete an assessment without an account, only the scores are stored. No name, email, IP, or device information.",
+      "attribution": "Visit source: the referring website and any campaign tags (utm) from the link you arrived through, stored with a completed test. First-party only, never shared, and never linked to your identity."
     },
     "why": {
       "heading": "Why we collect it",
       "body": "We collect data for three purposes only:",
-      "function": "To provide the service — your email is needed to authenticate you; your results are stored so you can view your history.",
-      "research": "Anonymised research — aggregated, de-identified scores are used to improve the personality model and validate norms across populations. Individual results are never published.",
-      "payment": "To process your payment — Stripe needs your card details to charge you for Full Moon Cèrcol. We receive only a confirmation.",
+      "function": "To provide the service: your email is needed to authenticate you; your results are stored so you can view your history.",
+      "research": "Anonymised research: aggregated, de-identified scores are used to improve the personality model and validate norms across populations. Individual results are never published.",
+      "payment": "To process your payment: Stripe needs your card details to charge you for Full Moon Cèrcol. We receive only a confirmation.",
       "noAds": "We do not sell data. We do not use data for advertising. We do not share data with third parties except as described above."
     },
     "retention": {
       "heading": "How long we keep it",
       "body": "We keep your data for as long as your account is active. Specifically:",
-      "account": "Account data (email, profile, results) — retained until you delete your account.",
-      "anonymous": "Anonymous test scores — retained indefinitely as research data, with no link to any individual.",
-      "payment": "Payment records — retained by Stripe according to their own policy (typically 7 years for tax compliance)."
+      "account": "Account data (email, profile, results), retained until you delete your account.",
+      "anonymous": "Anonymous test scores: retained indefinitely as research data, with no link to any individual.",
+      "payment": "Payment records: retained by Stripe according to their own policy (typically 7 years for tax compliance)."
     },
     "cookies": {
       "heading": "Cookies",
@@ -215,16 +215,16 @@
     "rights": {
       "heading": "Your rights",
       "body": "Under GDPR, if you are based in the EU or EEA, you have the right to:",
-      "access": "Access — request a copy of the personal data we hold about you.",
-      "deletion": "Deletion — request that your account and all associated personal data be deleted.",
-      "portability": "Portability — request your test results in a machine-readable format.",
-      "correction": "Correction — update or correct your profile information at any time via the profile page.",
+      "access": "Access: request a copy of the personal data we hold about you.",
+      "deletion": "Deletion: request that your account and all associated personal data be deleted.",
+      "portability": "Portability: request your test results in a machine-readable format.",
+      "correction": "Correction: update or correct your profile information at any time via the profile page.",
       "how": "To exercise any of these rights, email us. We will respond within 30 days."
     },
     "thirdParties": {
       "heading": "Third-party services",
-      "hosting": "Your account data and test results are stored on a dedicated server hosted by Hetzner Online GmbH (Germany, EU). Transactional emails (sign-in links) are sent via Resend (Resend, Inc.), a US-based company operating under standard contractual clauses for EU data transfers. Authentication is fully self-hosted — no third-party provider holds your credentials.",
-      "stripe": "Payments are handled by Stripe (Stripe, Inc.), a US-based company with EU data transfer compliance. Cèrcol receives no payment card data — only a transaction confirmation.",
+      "hosting": "Your account data and test results are stored on a dedicated server hosted by Hetzner Online GmbH (Germany, EU). Transactional emails (sign-in links) are sent via Resend (Resend, Inc.), a US-based company operating under standard contractual clauses for EU data transfers. Authentication is fully self-hosted, no third-party provider holds your credentials.",
+      "stripe": "Payments are handled by Stripe (Stripe, Inc.), a US-based company with EU data transfer compliance. Cèrcol receives no payment card data, only a transaction confirmation.",
       "noTrackers": "No other third-party services receive your personal data. There are no analytics platforms, advertising networks, or social media trackers on this site."
     },
     "contact": {
@@ -329,17 +329,20 @@
       "name": "Full Moon Cèrcol",
       "tagline": "Complete portrait",
       "meta": "120 questions · ~20 min",
-      "description": "The deepest self-report — all 30 facets at full resolution.",
+      "description": "The deepest self-report: all 30 facets at full resolution.",
       "paid": "One-time payment"
     },
     "lastQuarter": {
       "name": "Last Quarter Cèrcol",
       "meta": "Team report",
-      "description": "Your team's role profile — balance, narrative, and shared blind spots."
+      "description": "Your team's role profile: balance, narrative, and shared blind spots."
     },
     "footnote": "Open source · ",
     "viewOnGitHub": "View on GitHub",
-    "h1": "Cèrcol: open-source team personality assessment"
+    "h1": "Cèrcol: open-source team personality assessment",
+    "witness": {
+      "name": "Witness Cèrcol"
+    }
   },
   "newMoon": {
     "subtitle": "New Moon Cèrcol",
@@ -370,7 +373,7 @@
     "share": "Share results",
     "copied": "Copied!",
     "retake": "Start over",
-    "disclaimer": "Scores reflect tendencies at the time of assessment. Each end of a dimension has its own strengths — no score is good or bad.",
+    "disclaimer": "Scores reflect tendencies at the time of assessment. Each end of a dimension has its own strengths, no score is good or bad.",
     "upgrade": {
       "heading": "Want a fuller picture?",
       "body": "First Quarter Cèrcol gives you 5 dimensions broken into 30 facets.",
@@ -427,11 +430,11 @@
     "share": "Share results",
     "copied": "Copied!",
     "retake": "Start over",
-    "disclaimer": "Scores reflect tendencies at the time of assessment. Each end of a dimension has its own strengths — no score is good or bad.",
+    "disclaimer": "Scores reflect tendencies at the time of assessment. Each end of a dimension has its own strengths, no score is good or bad.",
     "paymentSuccess": "Payment received. Your full facet breakdown is now unlocked.",
     "unlock": {
       "heading": "30 facets. One payment.",
-      "body": "See the detail behind each dimension — what drives you, where you hold back, and how you move through the world.",
+      "body": "See the detail behind each dimension, what drives you, where you hold back, and how you move through the world.",
       "cta": "Unlock full report",
       "loading": "Redirecting to payment…",
       "signInNote": "You need to sign in first."
@@ -474,7 +477,7 @@
     },
     "alreadyCompleted": {
       "heading": "You've already completed Full Moon Cèrcol",
-      "body": "Personality doesn't change significantly over short periods. Your existing result remains accurate — retaking would produce very similar scores.",
+      "body": "Personality doesn't change significantly over short periods. Your existing result remains accurate, retaking would produce very similar scores.",
       "cta": "View your report",
       "redo": "Redo"
     }
@@ -493,7 +496,7 @@
     "share": "Share results",
     "copied": "Copied!",
     "retake": "Start over",
-    "disclaimer": "Scores reflect tendencies at the time of assessment. Each end of a dimension has its own strengths — no score is good or bad.",
+    "disclaimer": "Scores reflect tendencies at the time of assessment. Each end of a dimension has its own strengths, no score is good or bad.",
     "witnessCta": {
       "eyebrow": "Witness Cèrcol",
       "heading": "See yourself from the outside.",
@@ -506,7 +509,7 @@
     "depth": {
       "name": "Depth",
       "description": "How you process emotions and navigate uncertainty.",
-      "blockIntro": "These questions explore your emotional landscape — how you respond to stress, change, and inner tension."
+      "blockIntro": "These questions explore your emotional landscape, how you respond to stress, change, and inner tension."
     },
     "presence": {
       "name": "Presence",
@@ -561,7 +564,7 @@
     "share": "Share results",
     "copied": "Copied!",
     "retake": "Start over",
-    "disclaimer": "Scores reflect tendencies at the time of assessment. Each end of a dimension has its own strengths — no score is good or bad."
+    "disclaimer": "Scores reflect tendencies at the time of assessment. Each end of a dimension has its own strengths, no score is good or bad."
   },
   "radarResults": {
     "title": "Your Snapshot",
@@ -570,7 +573,7 @@
     "share": "Share results",
     "copied": "Copied!",
     "retake": "Start over",
-    "disclaimer": "Scores reflect tendencies at the time of assessment. Each end of a dimension has its own strengths — no score is good or bad.",
+    "disclaimer": "Scores reflect tendencies at the time of assessment. Each end of a dimension has its own strengths, no score is good or bad.",
     "upgrade": {
       "heading": "Want a fuller picture?",
       "body": "First Quarter Cèrcol gives you 5 dimensions broken into 30 facets.",
@@ -608,7 +611,7 @@
     "negativeEmotionality": {
       "label": "Depth",
       "description": "How you process emotions and navigate uncertainty.",
-      "blockIntro": "These questions explore your emotional landscape — how you respond to stress, change, and inner tension."
+      "blockIntro": "These questions explore your emotional landscape, how you respond to stress, change, and inner tension."
     },
     "openMindedness": {
       "label": "Vision",
@@ -620,7 +623,7 @@
     "depth": {
       "name": "Depth",
       "description": "How you process emotions and navigate uncertainty.",
-      "blockIntro": "These questions explore your emotional landscape — how you respond to stress, change, and inner tension."
+      "blockIntro": "These questions explore your emotional landscape, how you respond to stress, change, and inner tension."
     },
     "presence": {
       "name": "Presence",
@@ -916,7 +919,7 @@
     "R01": {
       "name": "Dolphin",
       "ca": "Dolphin",
-      "essence": "When you are in the room, people talk. Not because you ask — because you made it easy. The team warms up with you.",
+      "essence": "When you are in the room, people talk. Not because you ask: because you made it easy. The team warms up with you.",
       "profile": "High Presence and Bond. Warm, outgoing, and easy to be around. People open up in your company.",
       "contributes": "Cohesion. Lowers the social activation energy in the room.",
       "misses": "The productive friction that sharpens ideas. Warmth can smooth over real disagreements."
@@ -932,7 +935,7 @@
     "R03": {
       "name": "Elephant",
       "ca": "Elephant",
-      "essence": "You do not take up space — you create it. People explain themselves well beside you because they know you are really listening.",
+      "essence": "You do not take up space: you create it. People explain themselves well beside you because they know you are really listening.",
       "profile": "Low Presence, high Bond. Quiet and deeply cooperative. Creates space for others to think out loud.",
       "contributes": "Depth of listening. People articulate themselves better in your presence.",
       "misses": "Momentum. The team can think clearly together but still not move."
@@ -956,7 +959,7 @@
     "R06": {
       "name": "Falcon",
       "ca": "Falcon",
-      "essence": "It is not vision — it is timing. You know exactly when to move, and when you do, the team notices.",
+      "essence": "It is not vision: it is timing. You know exactly when to move, and when you do, the team notices.",
       "profile": "High Presence, low Vision. Present, decisive, and practical. Knows exactly when to act.",
       "contributes": "Timing. Moves at the right moment and carries people with them.",
       "misses": "Long-horizon thinking. Can miss the strategic layer while executing well at speed."
@@ -996,7 +999,7 @@
     "R11": {
       "name": "Fox",
       "ca": "Fox",
-      "essence": "You see what does not add up — in ideas and in relationships. Your discomfort is productive.",
+      "essence": "You see what does not add up: in ideas and in relationships. Your discomfort is productive.",
       "profile": "Low Bond, high Vision. Intellectually sharp and critically minded. Spots inconsistency fast.",
       "contributes": "Critical distance. Catches what does not add up before it becomes a problem.",
       "misses": "Relational ease. The discomfort can wear on a team that needs cohesion to function."
@@ -1036,7 +1039,7 @@
       "loading": "Loading…",
       "intro": {
         "heading": "You've been asked to describe someone.",
-        "body": "You'll see groups of words and pick which one fits this person best — and which fits least. Takes about 5 minutes.",
+        "body": "You'll see groups of words and pick which one fits this person best, and which fits least. Takes about 5 minutes.",
         "subjectLabel": "You're describing",
         "youAreLabel": "You are",
         "youArePlaceholder": "Your name",
@@ -1100,7 +1103,7 @@
     "combinedRoleSection": "Your role",
     "roleSection": "Your role · Witness",
     "setupCta": "Invite witnesses",
-    "disclaimer": "Witness results reflect the perspective of the people who completed the instrument. Divergence is not a flaw — it is information.",
+    "disclaimer": "Witness results reflect the perspective of the people who completed the instrument. Divergence is not a flaw: it is information.",
     "definitiveLabel": "Witness included",
     "definitiveNote": "The Witness signal reduces uncertainty in the role assignment. This is your most complete result.",
     "domainsSection": "The five dimensions",
@@ -1123,12 +1126,12 @@
     "intro": {
       "eyebrow": "Open-source personality assessment",
       "heading": "See yourself more clearly.",
-      "body": "Cèrcol is three instruments built on public-domain science. Each measures the same five dimensions — at different depths. No score tells you what to think. No result is good or bad.",
+      "body": "Cèrcol is three instruments built on public-domain science. Each measures the same five dimensions, at different depths. No score tells you what to think. No result is good or bad.",
       "founding": "Every contribution matters. No one is indispensable, but all of us are necessary."
     },
     "philosophy": {
       "heading": "Built in the open",
-      "body": "Most personality assessments are proprietary. The items, the scoring, the normative data — behind paywalls or NDAs. You take the test, get a result, and have no way to know if the algorithm is sound. Cèrcol is different. Every question comes from public-domain research. The scoring is on GitHub. Anyone can read it, question it, and improve it. We think personality assessments should work that way."
+      "body": "Most personality assessments are proprietary. The items, the scoring, the normative data, behind paywalls or NDAs. You take the test, get a result, and have no way to know if the algorithm is sound. Cèrcol is different. Every question comes from public-domain research. The scoring is on GitHub. Anyone can read it, question it, and improve it. We think personality assessments should work that way."
     },
     "explore": {
       "heading": "Go deeper",
@@ -1147,7 +1150,7 @@
     },
     "dimensions": {
       "heading": "Five dimensions",
-      "subheading": "Every score sits on a spectrum. Both ends are valid — they describe different ways of being effective.",
+      "subheading": "Every score sits on a spectrum. Both ends are valid: they describe different ways of being effective.",
       "presence": {
         "name": "Presence",
         "desc": "How much energy you direct outward. High: you bring people in. Low: you go deep with fewer."
@@ -1174,11 +1177,11 @@
       "item1": "A diagnostic tool. These results have no clinical validity.",
       "item2": "A fixed label. Scores shift with context, time, and state of mind.",
       "item3": "A ranking. No dimension is better or worse than another.",
-      "item4": "A predictor of success. Tendencies describe how you tend to operate — not what you'll achieve."
+      "item4": "A predictor of success. Tendencies describe how you tend to operate, not what you'll achieve."
     },
     "framing": {
       "heading": "A note on scores",
-      "body": "These are tendencies, not labels. The same trait that creates friction in one context is exactly what's needed in another. Low Discipline isn't failure — it's often what keeps things moving when the plan falls apart."
+      "body": "These are tendencies, not labels. The same trait that creates friction in one context is exactly what's needed in another. Low Discipline isn't failure: it's often what keeps things moving when the plan falls apart."
     }
   },
   "science": {
@@ -1191,16 +1194,16 @@
     "fiveFactors": {
       "eyebrow": "The five-factor model",
       "heading": "The most replicated finding in personality psychology.",
-      "body": "Across cultures, languages, and methods, research consistently recovers the same five broad dimensions of personality. Cèrcol uses these under different names — Presence, Bond, Discipline, Depth, Vision — to make the language warmer without changing what's being measured.",
+      "body": "Across cultures, languages, and methods, research consistently recovers the same five broad dimensions of personality. Cèrcol uses these under different names, Presence, Bond, Discipline, Depth, Vision, to make the language warmer without changing what's being measured.",
       "note": "Replicated in more than 50 countries. The strongest consensus result in differential psychology."
     },
     "dimensions": {
       "eyebrow": "Five dimensions",
       "heading": "What Cèrcol actually measures.",
-      "intro": "Five broad dimensions of personality — each covering a different axis of human variation. The dimensions are the same across all three instruments. Only the resolution changes.",
+      "intro": "Five broad dimensions of personality, each covering a different axis of human variation. The dimensions are the same across all three instruments. Only the resolution changes.",
       "presence": {
         "academic": "Extraversion",
-        "body": "How much energy you bring into a room — and how much you draw from being around others. High Presence means initiative, expressiveness, and comfort in the spotlight. Low Presence means depth in focused work, and a listening quality most groups undervalue. Teams need both.",
+        "body": "How much energy you bring into a room, and how much you draw from being around others. High Presence means initiative, expressiveness, and comfort in the spotlight. Low Presence means depth in focused work, and a listening quality most groups undervalue. Teams need both.",
         "ref": "Bell, 2007"
       },
       "bond": {
@@ -1215,20 +1218,20 @@
       },
       "discipline": {
         "academic": "Conscientiousness",
-        "body": "How reliably you follow through. High Discipline means planning, structure, and doing what you said you would do. It is the most replicated predictor of job performance in the research literature — not because rigid people do better, but because consistent people do.",
+        "body": "How reliably you follow through. High Discipline means planning, structure, and doing what you said you would do. It is the most replicated predictor of job performance in the research literature, not because rigid people do better, but because consistent people do.",
         "ref": "Barrick & Mount, 1991"
       },
       "depth": {
         "academic": "Neuroticism",
-        "body": "How readily you experience negative emotion — worry, frustration, sensitivity. High Depth often comes with heightened vigilance and strong empathy. Low Depth means steadiness under pressure. Neither extreme is a flaw; both reflect different ways of reading the world.",
+        "body": "How readily you experience negative emotion, worry, frustration, sensitivity. High Depth often comes with heightened vigilance and strong empathy. Low Depth means steadiness under pressure. Neither extreme is a flaw; both reflect different ways of reading the world.",
         "ref": "Bell, 2007"
       }
     },
     "roles": {
       "eyebrow": "Role taxonomy",
       "heading": "Twelve roles. Derived from the research, not invented.",
-      "body": "The role taxonomy is grounded in the AB5C circumplex (Hofstee, De Raad & Goldberg, 1992) and the team composition literature (Bell, 2007). Three OCEAN dimensions — Presence, Bond, and Vision — require balance in teams. The twelve roles cover the six intersections of these three dimensions at both poles. Discipline and Depth modulate how each role is expressed.",
-      "beta": "Current role assignments use theoretical centroids derived from published research. As real data accumulates — target: 300 Full Moon completions — centroids will be replaced with empirical values from actual profiles.",
+      "body": "The role taxonomy is grounded in the AB5C circumplex (Hofstee, De Raad & Goldberg, 1992) and the team composition literature (Bell, 2007). Three OCEAN dimensions: Presence, Bond, and Vision, require balance in teams. The twelve roles cover the six intersections of these three dimensions at both poles. Discipline and Depth modulate how each role is expressed.",
+      "beta": "Current role assignments use theoretical centroids derived from published research. As real data accumulates: target: 300 Full Moon completions, centroids will be replaced with empirical values from actual profiles.",
       "betaNote": "Role scoring is labelled beta in the interface. It is illustrative, not diagnostic."
     },
     "fullMoon": {
@@ -1236,13 +1239,13 @@
       "heading": "Two lenses on the same person.",
       "selfReport": {
         "heading": "Self-report",
-        "body": "120 items across 5 domains and 30 facets — twice the resolution of First Quarter. Forms the primary role result."
+        "body": "120 items across 5 domains and 30 facets, twice the resolution of First Quarter. Forms the primary role result."
       },
       "witness": {
         "heading": "Witness Cèrcol",
-        "body": "A forced-choice task given to someone who knows you well. Each round, the Witness sees five words and picks the best fit and worst fit for you — one adjective per dimension. Forced choice eliminates the social desirability bias that distorts self-report.",
-        "idealWitness": "An ideal Witness has worked with you, lived with you, or spent real time around you. Not your closest ally, not your harshest critic — someone who sees you as you actually are.",
-        "blindSpots": "The Witness result is compared to the self-report. Where they diverge significantly, a blind spot is flagged — a dimension you see differently than the people around you do."
+        "body": "A forced-choice task given to someone who knows you well. Each round, the Witness sees five words and picks the best fit and worst fit for you, one adjective per dimension. Forced choice eliminates the social desirability bias that distorts self-report.",
+        "idealWitness": "An ideal Witness has worked with you, lived with you, or spent real time around you. Not your closest ally, not your harshest critic, someone who sees you as you actually are.",
+        "blindSpots": "The Witness result is compared to the self-report. Where they diverge significantly, a blind spot is flagged, a dimension you see differently than the people around you do."
       }
     },
     "sources": {
@@ -1257,7 +1260,7 @@
       "milestonesDetail": "Validation milestones. Cèrcol's model is a working hypothesis, refined as real data accumulates. The plan is explicit about what changes at each sample size. At N ≥ 100 we review the role distribution and flag any archetype that attracts an unusual share of profiles. At N ≥ 200 we replace the published normative priors with Cèrcol's own sample statistics, including Witness-specific norms. At N ≥ 300 we run k-means (k = 12) to compare the empirical centroids against the theoretical ones, and test whether cognitive ability predicts role assignment beyond the Big Five. None of this validates the model as a predictor of team performance, which requires external data on real team behaviour. The milestones refine the model's internal geometry, not its external claims.",
       "eyebrow": "Validation plan",
       "heading": "A working hypothesis, not a finished product.",
-      "body": "Cèrcol's role system uses theoretical centroids derived from published AB5C research. Role assignments are illustrative — they have not yet been empirically validated against real team outcomes. Validation is planned in three stages.",
+      "body": "Cèrcol's role system uses theoretical centroids derived from published AB5C research. Role assignments are illustrative, they have not yet been empirically validated against real team outcomes. Validation is planned in three stages.",
       "milestones": {
         "n300": {
           "label": "N ≥ 300",
@@ -1288,35 +1291,35 @@
     },
     "q1": {
       "q": "Is my data private?",
-      "a": "The free instruments log anonymous scores with no personal information — no name, no email, no IP address. If you create an account, your email is stored on our own servers and your results are linked to your account. You can delete your account at any time. No data is sold or shared with third parties."
+      "a": "The free instruments log anonymous scores with no personal information, no name, no email, no IP address. If you create an account, your email is stored on our own servers and your results are linked to your account. You can delete your account at any time. No data is sold or shared with third parties."
     },
     "q2": {
       "q": "Are the results accurate?",
-      "a": "The questions come from peer-reviewed, widely-validated instruments. The five-dimension scores are reliable for a self-report tool of this length. The role scoring is clearly labelled beta — it uses theoretical starting points and will become more accurate as real data accumulates. Take the dimensions seriously; treat the role as a useful first guess."
+      "a": "The questions come from peer-reviewed, widely-validated instruments. The five-dimension scores are reliable for a self-report tool of this length. The role scoring is clearly labelled beta, it uses theoretical starting points and will become more accurate as real data accumulates. Take the dimensions seriously; treat the role as a useful first guess."
     },
     "q3": {
       "q": "What is the Witness and who should I invite?",
-      "a": "The Witness is someone you invite to describe you from the outside. They see groups of words and pick which ones fit you best and worst — a short forced-choice task that takes about 5 minutes. An ideal Witness is someone who has spent real time with you: a colleague, a housemate, a close friend. Not your biggest fan, not your harshest critic. Someone who sees you as you actually are."
+      "a": "The Witness is someone you invite to describe you from the outside. They see groups of words and pick which ones fit you best and worst, a short forced-choice task that takes about 5 minutes. An ideal Witness is someone who has spent real time with you: a colleague, a housemate, a close friend. Not your biggest fan, not your harshest critic. Someone who sees you as you actually are."
     },
     "q4": {
       "q": "What is the difference between the three instruments?",
-      "a": "New Moon is 10 questions and takes 2 minutes — a quick orientation. First Quarter is 60 questions and takes 10 minutes — a fuller picture with 30 facets and a first look at your role. Full Moon is 120 questions, includes the Witness assessment, and is paid — it is the definitive result. Each instrument is standalone; you can start anywhere."
+      "a": "New Moon is 10 questions and takes 2 minutes, a quick orientation. First Quarter is 60 questions and takes 10 minutes, a fuller picture with 30 facets and a first look at your role. Full Moon is 120 questions, includes the Witness assessment, and is paid, it is the definitive result. Each instrument is standalone; you can start anywhere."
     },
     "q5": {
       "q": "Is Full Moon worth paying for?",
-      "a": "If First Quarter feels insufficient — if you want to understand a specific facet more deeply, see how others perceive you, or get a reliable role result — then yes. The Witness comparison is the most distinctive part: it shows where your self-perception matches the outside view and where it doesn't. That gap is often where the most useful information lives."
+      "a": "If First Quarter feels insufficient, if you want to understand a specific facet more deeply, see how others perceive you, or get a reliable role result, then yes. The Witness comparison is the most distinctive part: it shows where your self-perception matches the outside view and where it doesn't. That gap is often where the most useful information lives."
     },
     "q6": {
       "q": "Can I retake the assessments?",
-      "a": "Yes. Each instrument stores your most recent result. If you retake, your previous result will be permanently removed from your account — you will be asked to confirm before this happens. Retaking can be useful to track how you have changed over months or years."
+      "a": "Yes. Each instrument stores your most recent result. If you retake, your previous result will be permanently removed from your account, you will be asked to confirm before this happens. Retaking can be useful to track how you have changed over months or years."
     },
     "q7": {
       "q": "Is Cèrcol based on the Big Five (OCEAN)?",
-      "a": "Yes. Cèrcol measures personality using the OCEAN model (Big Five) via the IPIP — the International Personality Item Pool, a public-domain collection validated in thousands of published studies. The five dimensions are Presence (Extraversion), Bond (Agreeableness), Vision (Openness), Discipline (Conscientiousness), and Depth (Neuroticism). Because the IPIP is public domain there are no licence restrictions: the full item pool and scoring logic are open and citable."
+      "a": "Yes. Cèrcol measures personality using the OCEAN model (Big Five) via the IPIP, the International Personality Item Pool, a public-domain collection validated in thousands of published studies. The five dimensions are Presence (Extraversion), Bond (Agreeableness), Vision (Openness), Discipline (Conscientiousness), and Depth (Neuroticism). Because the IPIP is public domain there are no licence restrictions: the full item pool and scoring logic are open and citable."
     },
     "q8": {
       "q": "How is Cèrcol different from Belbin, DISC, or StrengthsFinder?",
-      "a": "Three things set Cèrcol apart. First, the items come from the Big Five (OCEAN), the most replicated personality model in academic research — not a proprietary framework. Second, the full item pool (IPIP) and scoring pipeline are public domain and auditable; there is no black box. Third, the Witness peer assessment uses forced-choice adjective selection instead of Likert scales, which eliminates the social desirability bias that affects most 360-feedback tools. Belbin and DISC use closed, proprietary methodologies."
+      "a": "Three things set Cèrcol apart. First, the items come from the Big Five (OCEAN), the most replicated personality model in academic research, not a proprietary framework. Second, the full item pool (IPIP) and scoring pipeline are public domain and auditable; there is no black box. Third, the Witness peer assessment uses forced-choice adjective selection instead of Likert scales, which eliminates the social desirability bias that affects most 360-feedback tools. Belbin and DISC use closed, proprietary methodologies."
     },
     "q9": {
       "q": "Can I use Cèrcol to assess my whole team?",
@@ -1324,22 +1327,22 @@
     },
     "q10": {
       "q": "What languages is Cèrcol available in?",
-      "a": "Cèrcol is available in English, Catalan/Valencian, Spanish, French, German, and Danish. All six languages cover the full assessment — instrument questions, results, and all content. The Danish translation is based on the validated adaptation by Vedel, Gøtzsche-Astrup & Holm (2018, Nordic Psychology). The French translation follows the documented European-French IPIP adaptation by Thiry & Piolti (2023, University of Mons), listed on ipip.ori.org."
+      "a": "Cèrcol is available in English, Catalan/Valencian, Spanish, French, German, and Danish. All six languages cover the full assessment, instrument questions, results, and all content. The Danish translation is based on the validated adaptation by Vedel, Gøtzsche-Astrup & Holm (2018, Nordic Psychology). The French translation follows the documented European-French IPIP adaptation by Thiry & Piolti (2023, University of Mons), listed on ipip.ori.org."
     },
     "q11": {
       "q": "How does the Witness assessment work exactly?",
-      "a": "You send a Witness — someone who knows you well — a unique link. They see five adjectives per round, one for each personality dimension, and pick the one that best fits you and the one that least fits you. This forced-choice format eliminates the social desirability bias that appears in Likert-scale peer ratings. After 20 rounds, their scores are compared with your self-report. Dimensions where the gap exceeds 0.8 standard deviations are flagged as potential blind spots. You can invite up to 12 Witnesses; scores are averaged across all of them."
+      "a": "You send a Witness: someone who knows you well, a unique link. They see five adjectives per round, one for each personality dimension, and pick the one that best fits you and the one that least fits you. This forced-choice format eliminates the social desirability bias that appears in Likert-scale peer ratings. After 20 rounds, their scores are compared with your self-report. Dimensions where the gap exceeds 0.8 standard deviations are flagged as potential blind spots. You can invite up to 12 Witnesses; scores are averaged across all of them."
     },
     "q12": {
       "q": "What are blind spots?",
-      "a": "A blind spot is a personality dimension where how you see yourself and how others see you diverge significantly — more than 0.8 standard deviations apart. For example, if you rate yourself low on Presence but your Witnesses consistently rate you high, that gap is a blind spot. Blind spots are neither good nor bad. They are information: they show where your self-perception and others' experience of you don't match, which is often more useful than the score itself."
+      "a": "A blind spot is a personality dimension where how you see yourself and how others see you diverge significantly, more than 0.8 standard deviations apart. For example, if you rate yourself low on Presence but your Witnesses consistently rate you high, that gap is a blind spot. Blind spots are neither good nor bad. They are information: they show where your self-perception and others' experience of you don't match, which is often more useful than the score itself."
     }
   },
   "instruments": {
     "title": "Instruments",
     "intro": {
       "heading": "Three instruments. One scale.",
-      "body": "Each instrument measures the same five dimensions — at different depth and resolution. They are designed to be used in sequence, but each stands alone."
+      "body": "Each instrument measures the same five dimensions, at different depth and resolution. They are designed to be used in sequence, but each stands alone."
     },
     "freeLabel": "Free",
     "paidLabel": "One-time payment · Not a subscription",
@@ -1348,9 +1351,9 @@
       "heading": "New Moon Cèrcol",
       "eyebrow": "Quick snapshot",
       "meta": "10 questions · ~2 min",
-      "scaleNote": "7-point scale: 'Disagree strongly' to 'Agree strongly'. Each point carries meaning — not just two extremes with numbers in between.",
+      "scaleNote": "7-point scale: 'Disagree strongly' to 'Agree strongly'. Each point carries meaning: not just two extremes with numbers in between.",
       "measures": "Five dimensions. One score per dimension. No facet breakdown.",
-      "get": "A radar chart of your position on all five dimensions. Good for a quick orientation. Not precise enough for fine-grained claims about facets — that's what First Quarter is for.",
+      "get": "A radar chart of your position on all five dimensions. Good for a quick orientation. Not precise enough for fine-grained claims about facets, that's what First Quarter is for.",
       "items": [
         "Extraverted, enthusiastic.",
         "Dependable, self-disciplined.",
@@ -1363,8 +1366,8 @@
       "eyebrow": "Full portrait",
       "meta": "60 questions · ~10 min",
       "scaleNote": "5-point scale: 'Disagree strongly' to 'Agree strongly'. Five-point scales are standard for facet-level personality measurement.",
-      "measures": "Five dimensions, each broken into 6 facets — 30 data points. Two items per facet.",
-      "get": "Domain chart, 30-facet breakdown, and a first beta read on your role. The facet breakdown is where the useful information lives — the domain totals are just the headline.",
+      "measures": "Five dimensions, each broken into 6 facets, 30 data points. Two items per facet.",
+      "get": "Domain chart, 30-facet breakdown, and a first beta read on your role. The facet breakdown is where the useful information lives, the domain totals are just the headline.",
       "items": [
         "Take charge.",
         "Worry about things.",
@@ -1380,7 +1383,7 @@
         "label": "Part 1",
         "heading": "Self-report",
         "meta": "120 questions · ~20 min · 5-point scale",
-        "body": "The same 30 facets as First Quarter — at twice the resolution. Four items per facet instead of two. In psychometric terms, more items per facet means more reliable scores, especially for facets near the centre of the scale where two items can give a noisy result.",
+        "body": "The same 30 facets as First Quarter, at twice the resolution. Four items per facet instead of two. In psychometric terms, more items per facet means more reliable scores, especially for facets near the centre of the scale where two items can give a noisy result.",
         "items": [
           "Seldom feel blue.",
           "Anticipate the needs of others.",
@@ -1392,15 +1395,15 @@
         "label": "Part 2",
         "heading": "Witness Cèrcol",
         "whyHeading": "Why a Witness?",
-        "whyBody": "Self-reports have a known limitation: we don't always perceive ourselves the way we come across to others. People high on Depth may under-report — the emotion feels normal from the inside. People high on Bond may over-report warmth — the intent is genuine but the impact can differ. Self-assessment is a filtered signal. The Witness adds an independent one.",
+        "whyBody": "Self-reports have a known limitation: we don't always perceive ourselves the way we come across to others. People high on Depth may under-report, the emotion feels normal from the inside. People high on Bond may over-report warmth, the intent is genuine but the impact can differ. Self-assessment is a filtered signal. The Witness adds an independent one.",
         "howHeading": "How it works",
-        "howBody": "Each Witness receives a unique link. The task takes about 5 minutes. They see 20 rounds of 5 words — one adjective per dimension — and pick the one that fits best and the one that fits least. Forced choice: no Likert scale, no ability to give all positive answers.",
+        "howBody": "Each Witness receives a unique link. The task takes about 5 minutes. They see 20 rounds of 5 words: one adjective per dimension, and pick the one that fits best and the one that fits least. Forced choice: no Likert scale, no ability to give all positive answers.",
         "whoHeading": "Who is an ideal Witness?",
-        "whoBody": "Someone who has worked with you, lived with you, or seen you under pressure. Not your biggest advocate — someone honest enough to mark where you have edges. You can invite up to 12 Witnesses. More Witnesses reduce noise: the scores are averaged.",
+        "whoBody": "Someone who has worked with you, lived with you, or seen you under pressure. Not your biggest advocate: someone honest enough to mark where you have edges. You can invite up to 12 Witnesses. More Witnesses reduce noise: the scores are averaged.",
         "privacyHeading": "Privacy",
-        "privacyBody": "Witnesses never see your scores. You see the averaged result from all Witnesses — not individual responses.",
+        "privacyBody": "Witnesses never see your scores. You see the averaged result from all Witnesses, not individual responses.",
         "blindSpotsHeading": "Blind spots",
-        "blindSpotsBody": "Where your self-report and Witness scores diverge significantly, a blind spot is flagged. Not because one is right and the other wrong — but because the gap itself is informative. A dimension you perceive very differently than those around you is worth examining."
+        "blindSpotsBody": "Where your self-report and Witness scores diverge significantly, a blind spot is flagged. Not because one is right and the other wrong, but because the gap itself is informative. A dimension you perceive very differently than those around you is worth examining."
       }
     }
   },
@@ -1409,15 +1412,15 @@
     "intro": {
       "heading": "Twelve roles. One taxonomy.",
       "body1": "Personality profiles describe how you are. Roles describe how you tend to move the balance of a team. The gap between those two things is where Cèrcol tries to work.",
-      "body2": "The twelve roles are derived from the AB5C circumplex (Hofstee, De Raad & Goldberg, 1992) and the team composition literature (Bell, 2007). Three OCEAN dimensions require balance in teams — Presence, Bond, and Vision. The twelve roles cover the six intersections of these dimensions at both poles. The names are ours. The structure is from the literature."
+      "body2": "The twelve roles are derived from the AB5C circumplex (Hofstee, De Raad & Goldberg, 1992) and the team composition literature (Bell, 2007). Three OCEAN dimensions require balance in teams, Presence, Bond, and Vision. The twelve roles cover the six intersections of these dimensions at both poles. The names are ours. The structure is from the literature."
     },
     "beta": {
       "heading": "This is a starting hypothesis, not a validated instrument.",
-      "body": "Current role assignments use theoretical centroids derived from published research. As real data accumulates — target: 300 Full Moon completions — centroids will be replaced with empirical values from actual profiles. Role scoring is labelled beta in the interface for exactly this reason."
+      "body": "Current role assignments use theoretical centroids derived from published research. As real data accumulates: target: 300 Full Moon completions, centroids will be replaced with empirical values from actual profiles. Role scoring is labelled beta in the interface for exactly this reason."
     },
     "critique": {
       "heading": "See a problem with this model?",
-      "body": "This taxonomy is a hypothesis. If you have background in psychometrics, organisational psychology, or team dynamics and see a flaw — in the centroids, the naming, the forced-choice design, anything — open an issue.",
+      "body": "This taxonomy is a hypothesis. If you have background in psychometrics, organisational psychology, or team dynamics and see a flaw, in the centroids, the naming, the forced-choice design, anything, open an issue.",
       "cta": "Open an issue on GitHub"
     },
     "grid": {
@@ -1432,16 +1435,16 @@
     },
     "arcNote": {
       "heading": "Personal arc",
-      "body": "Most role results include an arc — secondary roles that scored close to the primary in probability space. A Wolf with a Falcon arc brings initiative and decisive timing. A Bee with an Elephant arc brings synthesis and deep listening. The arc gives the result texture that a single label can't."
+      "body": "Most role results include an arc, secondary roles that scored close to the primary in probability space. A Wolf with a Falcon arc brings initiative and decisive timing. A Bee with an Elephant arc brings synthesis and deep listening. The arc gives the result texture that a single label can't."
     },
     "contextNote": {
       "heading": "Roles are not destinies",
-      "body": "The same person can function differently in different team compositions. A Wolf in a team that already confronts everything may pull back. A Tortoise in a team that needs movement may accelerate. These are tendencies in context — not fixed identities. Don't use a role result as a ceiling."
+      "body": "The same person can function differently in different team compositions. A Wolf in a team that already confronts everything may pull back. A Tortoise in a team that needs movement may accelerate. These are tendencies in context, not fixed identities. Don't use a role result as a ceiling."
     }
   },
   "onboarding": {
     "heading": "Welcome to Cèrcol",
-    "intro": "Three instruments. One scale. Start anywhere — each stands alone.",
+    "intro": "Three instruments. One scale. Start anywhere: each stands alone.",
     "newMoon": {
       "desc": "10 questions. A quick look at your five dimensions."
     },
@@ -1464,7 +1467,7 @@
     },
     "fullMoon": {
       "heading": "Complete your portrait with Full Moon",
-      "body": "120 questions plus a Witness — the most precise result.",
+      "body": "120 questions plus a Witness: the most precise result.",
       "cta": "Begin Full Moon Cèrcol"
     }
   },

@@ -99,8 +99,27 @@ def citation_context(body: str, doi: str) -> str:
     return body[max(0, idx - LOOKBACK):idx]
 
 
+# "a meta-analysis of X" is a claim about the strength of the evidence, not
+# a flourish. A paper that is one nearly always says so in its own title or
+# subtitle, so the absence of that word is a reliable prompt to check.
+# Two things the obvious pattern gets wrong. Crossref titles use
+# typographic dashes rather than the ASCII hyphen, so "META-ANALYSIS" needs
+# the whole dash range. And a title far more often says "meta-analytic
+# review" than "meta-analysis", so the stem cannot end at analys/analyz.
+# Both bugs made the check report real meta-analyses as mislabelled.
+# ASCII hyphen last: anywhere else in the class it opens a character range.
+_DASHES = "\u2010\u2011\u2012\u2013\u2014\u2015\u2212-"
+_META = re.compile(rf"meta[\s{_DASHES}]?analy", re.IGNORECASE)
+
+
 def compare(context: str, record: dict) -> list[str]:
     problems = []
+
+    if _META.search(context) and not _META.search(record["title"]):
+        problems.append(
+            f"cited as a meta-analysis; Crossref title does not say so: "
+            f"{record['title'][:80]!r}"
+        )
     surnames = {s.lower() for s in _SURNAME.findall(context) if s not in _STOPWORDS}
     # Crossref returns some records in full uppercase (BARRICK, MOUNT), which
     # a case-sensitive comparison never matches.

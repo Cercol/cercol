@@ -30,9 +30,11 @@ LOCALES = ROOT / "src" / "locales"
 DOCS = ROOT / "docs" / "policies"
 LANGS = ["en", "ca", "es", "fr", "de", "da"]
 
-# Instrument names live under home.<key>.name and are brand names: they are
-# identical in every locale and must stay that way.
-INSTRUMENTS = ["newMoon", "firstQuarter", "fullMoon", "lastQuarter"]
+# Instrument names live under home.<key>.name. Each language uses its own
+# form, following its own pattern, and the locale is the authority. Witness
+# is here because it had no canonical name at all until August 2026, which
+# is why five translators invented five different ones for it.
+INSTRUMENTS = ["newMoon", "firstQuarter", "fullMoon", "lastQuarter", "witness"]
 
 
 def load(lang: str) -> dict:
@@ -57,10 +59,7 @@ def build(lang: str) -> str:
         for k in sorted(src.get("roles", {}))
         if k.startswith("R")
     ]
-    # Shown as the app renders them, per language. The policy used to say
-    # instrument names are never translated; every non-English locale
-    # translates them, so the policy was describing a product that does not
-    # exist. The generator reports the truth and the decision stays open.
+    # Shown as the app renders them, per language.
     instruments = [
         (src["home"][k]["name"], tgt["home"][k]["name"])
         for k in INSTRUMENTS
@@ -103,10 +102,10 @@ def build(lang: str) -> str:
         "",
         "## Instrument names",
         "",
-        "Use exactly the form the app uses for this language, shown below.",
-        "Whether these should be translated at all is an open product question:",
-        "English keeps them as brand names, every other locale translates them.",
-        "Until that is settled, match the app so the blog and the interface agree.",
+        "Each language has its own form and they are settled. Use exactly what",
+        "is below, and never invent one: until August 2026 the Witness had no",
+        "canonical name in any locale, and five translators of one article",
+        "produced five different names for it.",
         "",
         table(instruments, ("English", lang)),
         "",
@@ -115,11 +114,15 @@ def build(lang: str) -> str:
         "On the blog only, never in the app interface: Big Five, OCEAN, IPIP, NEO,",
         "AB5C, DISC, MBTI, HEXACO.",
         "",
-        "This includes the five Big Five factor names when they appear as",
-        "academic terms: Openness, Conscientiousness, Extraversion, Agreeableness,",
-        "Neuroticism. They stay English in running text and in figure labels.",
-        "Cèrcol's own dimension names, in the table at the top of this file, are",
-        "the ones that go in the target language. The two are different things:",
+        "The five Big Five factor names work differently from the acronyms.",
+        "Give the English form on first mention, then use the target language",
+        "for the rest of the article: the English earns the search impression",
+        "once, and forcing it through every inflected sentence afterwards costs",
+        "fluency for nothing. Figure and diagram labels stay English, because",
+        "they carry no grammar and the coordinates are drawn for those strings.",
+        "",
+        "Cèrcol's own dimension names, in the table at the top of this file, go",
+        "in the target language everywhere. The two are different things:",
         "Bindung is a Cèrcol dimension, Agreeableness is the academic factor it",
         "maps onto.",
         "",

@@ -55,14 +55,19 @@ Five, OCEAN, IPIP, NEO, AB5C: they must appear in blog titles, meta
 descriptions and body text, because that is where search traffic comes
 from, and they must never appear in the interface. See CLAUDE.md.
 
-This covers the five factor names too: Openness, Conscientiousness,
-Extraversion, Agreeableness, Neuroticism stay English in running text and
-in figure labels. Cèrcol's own dimension names go in the target language.
-The distinction matters and it is easy to miss: Bindung is a Cèrcol
-dimension, Agreeableness is the academic factor it maps onto. Five
-translators of the same article split on this, four translating the figure
-labels and one keeping them English, which is how the rule earned its own
-paragraph.
+The five factor names work differently from the acronyms. Give the English
+form on first mention, then the target language for the rest of the
+article. The English earns the search impression once; forcing it through
+every inflected sentence afterwards costs fluency and buys nothing. The
+Spanish translator made this case with "una Agreeableness baja", which is
+what the earlier all-English rule produced, and it was right.
+
+Figure and diagram labels are the exception and stay English: they carry no
+grammar, and the coordinates are drawn for those strings.
+
+Cèrcol's own dimension names go in the target language everywhere. The
+distinction is easy to miss: Bindung is a Cèrcol dimension, Agreeableness
+is the academic factor it maps onto.
 
 **The twelve roles are the twelve in the glossary.** No others. If a draft
 names an animal that is not on that list, the draft is wrong, not the
