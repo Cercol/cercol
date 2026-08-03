@@ -215,7 +215,10 @@ export function computeInterimRole(rounds) {
   const answered = rounds.filter(r => r.best !== null && r.worst !== null)
   if (answered.length === 0) return null
   const scores = computeWitnessScores(answered)
-  return computeRole(scores)
+  // 'witness' matters: computeWitnessScores is centred on 3.0 with an SD near
+  // 0.50, not on the self-report means, and the wrong prior sends most
+  // respondents to the same role.
+  return computeRole(scores, 'witness')
 }
 
 /**

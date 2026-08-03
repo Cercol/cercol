@@ -33,10 +33,29 @@ NORM_MIN_SAMPLE   = 200   # minimum results required to use empirical norms
 NORM_REFRESH_DAYS = 28    # how often the background task refreshes the cache
 
 # ---------------------------------------------------------------------------
-# Researcher priors — Tier 3 fallback (from SCIENCE.md)
+# Researcher priors, per instrument - Tier 3 fallback (from SCIENCE.md)
 # ---------------------------------------------------------------------------
+# A prior belongs to an instrument, not to the platform. Three times now a
+# score has been z-scored against a reference built for a different
+# instrument, and each time the result was not noise but a systematic push
+# toward one corner of the role space:
+#
+#   New Moon answers on 1-7 and was measured against 1-5 statistics, so a
+#   mild "5" read as +2.4 SD.
+#
+#   The Witness instrument is forced-choice and its own output is centred on
+#   3.0 with an SD near 0.50, because count[] increments for all five factors
+#   every round while only two receive a vote. Measured against self-report
+#   means of 3.3 to 3.9 it put four roles out of reach entirely and sent 41%
+#   of everyone to Badger.
+#
+# So the priors are keyed by instrument and nothing may z-score without
+# saying which instrument produced the numbers.
 
-_NORM = {
+# Published Big Five statistics on the 1-5 IPIP response scale.
+# Johnson (2014) doi:10.1016/j.jrp.2014.05.003 and
+# Maples-Keller et al. (2019) doi:10.1080/00223891.2018.1467425.
+_NORM_FIVE_POINT = {
     "presence":   {"mean": 3.3, "sd": 0.72},
     "bond":       {"mean": 3.9, "sd": 0.58},
     "discipline": {"mean": 3.7, "sd": 0.62},
@@ -44,31 +63,44 @@ _NORM = {
     "vision":     {"mean": 3.7, "sd": 0.60},
 }
 
-DOMAINS = list(_NORM.keys())
+# The same statistics expressed on the 1-7 TIPI scale: x7 = (x5 - 1) * 6/4 + 1,
+# so the mean maps through and the SD scales by 6/4. This replaces the earlier
+# to_five_scale() rescale. Same arithmetic, but stated where a reader looks
+# for it, and it cannot be forgotten at a call site.
+_NORM_SEVEN_POINT = {
+    d: {"mean": (v["mean"] - 1) * 6 / 4 + 1, "sd": v["sd"] * 6 / 4}
+    for d, v in _NORM_FIVE_POINT.items()
+}
 
-# ---------------------------------------------------------------------------
-# Response scale normalisation
-# ---------------------------------------------------------------------------
-# New Moon (TIPI) is answered on 1-7; every other instrument is 1-5, and the
-# priors above are 1-5 statistics. Results are stored on the instrument's own
-# scale, so a New Moon row must be mapped before it meets the priors: without
-# it a mild "5" reads as +2.4 SD and the respondent lands in the wrong role.
-# Empirical norms (Tier 1/2) are computed from the same stored column, so they
-# already match the stored scale and must NOT be rescaled.
-_SEVEN_POINT_INSTRUMENTS = {"newMoon"}
+# The Witness instrument's own distribution. Its scores come from
+# 3 + (votes/count) * 2 over 20 forced-choice rounds, which is centred on 3.0
+# by construction: every round increments count for all five factors and
+# moves at most two of them. Measured over 4000 simulated witnesses answering
+# known profiles, mean 3.00 and SD 0.50 on every domain.
+#
+# ponytail: these are simulated, not observed, because the instrument has no
+# real responses yet. They are a prior in exactly the sense the others are,
+# and the Tier 1/2 empirical norms replace them at NORM_MIN_SAMPLE.
+_NORM_WITNESS = {d: {"mean": 3.0, "sd": 0.50} for d in _NORM_FIVE_POINT}
+
+_PRIORS = {
+    "newMoon":      _NORM_SEVEN_POINT,
+    "firstQuarter": _NORM_FIVE_POINT,
+    "fullMoon":     _NORM_FIVE_POINT,
+    "witness":      _NORM_WITNESS,
+}
+
+# The default when an instrument is not named. Kept as the 1-5 statistics
+# because that is what two of the three self-report instruments use.
+_NORM = _NORM_FIVE_POINT
+
+DOMAINS = list(_NORM_FIVE_POINT.keys())
 
 
-def to_five_scale(scores: dict, instrument: str | None) -> dict:
-    """Linearly map a 1-7 instrument's domain scores onto 1-5.
+def prior_for(instrument: str | None) -> dict:
+    """The Tier 3 prior for one instrument, falling back to the 1-5 scale."""
+    return _PRIORS.get(instrument, _NORM_FIVE_POINT)
 
-    Returns `scores` unchanged for instruments already answered on 1-5.
-    """
-    if instrument not in _SEVEN_POINT_INSTRUMENTS:
-        return scores
-    return {
-        k: ((float(v) - 1) * 4 / 6 + 1) if v is not None else v
-        for k, v in scores.items()
-    }
 
 # Role centroids (presence, bond, vision, discipline, depth) — must match role-scoring.js
 _ROLE_CENTROIDS = {
@@ -141,16 +173,16 @@ def _scores_to_zscores(scores: dict, norm: dict | None = None,
                        instrument: str | None = None) -> dict:
     """
     Convert raw domain scores to z-scores using the provided norm dict.
-    Falls back to researcher priors (_NORM) if norm is None.
-    Only domains present in both scores and norm are included in the output.
 
-    `instrument` triggers the 1-7 to 1-5 map, and only against the priors:
-    an empirical norm was aggregated from the same stored column as `scores`,
-    so both are already on the instrument's own scale.
+    With no explicit `norm`, the Tier 3 prior for `instrument` is used.
+    Passing neither is the mistake this signature exists to make visible: a
+    raw score means nothing without the instrument that produced it, and
+    measuring one instrument's numbers against another's reference is what
+    put 41% of Witness respondents on the same role.
+
+    Only domains present in both scores and norm are included in the output.
     """
-    effective = norm if norm is not None else _NORM
-    if effective is _NORM:
-        scores = to_five_scale(scores, instrument)
+    effective = norm if norm is not None else prior_for(instrument)
     # Cast each raw score to float before the arithmetic. Scores reach this
     # function from two sources: the JSON request body (already float) and
     # Postgres NUMERIC columns read by the admin endpoints (asyncpg returns

@@ -76,7 +76,7 @@ export default function FirstQuarterResultsPage() {
   }
 
   const domainKeys = DOMAIN_KEYS
-  const roleResult = computeRole(domains)
+  const roleResult = computeRole(domains, 'firstQuarter')
 
   return (
     <main className="py-10 sm:py-16">

@@ -1525,7 +1525,7 @@ async def get_group_report_data(
         if has_result:
             raw  = {k: row[k] for k in ("presence", "bond", "discipline", "depth", "vision")}
             norm, _ = resolve_norm("fullMoon", row.get("language"), _norm_cache)
-            zscores = _scores_to_zscores(raw, norm)
+            zscores = _scores_to_zscores(raw, norm, "fullMoon")
             role    = _compute_role(zscores)
         else:
             zscores = None

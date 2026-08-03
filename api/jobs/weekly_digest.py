@@ -142,7 +142,7 @@ async def gather_postgres(ws, we, ps, pe) -> dict[str, Any]:
 
         # Raw domain scores for cluster computation (all five domains present).
         # `instrument` rides along so New Moon's 1-7 answers can be mapped onto
-        # the 1-5 priors before clustering (scoring.to_five_scale).
+        # the prior built for its own 1-7 scale (scoring.prior_for).
         role_rows = await conn.fetch(
             "SELECT instrument, presence, bond, discipline, depth, vision FROM results "
             "WHERE NOT is_seed AND created_at >= $1 AND created_at < $2 "

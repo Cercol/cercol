@@ -22,7 +22,7 @@ import { colors } from '../design/tokens'
 
 export default function SampleReportPage() {
   const { t } = useTranslation()
-  const { role } = computeRole(SAMPLE_SCORES)
+  const { role } = computeRole(SAMPLE_SCORES, 'fullMoon')
 
   usePageMeta({
     title: t('sample.title'),
