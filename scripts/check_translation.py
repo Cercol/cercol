@@ -94,12 +94,23 @@ def links(body: str, lang: str = "en") -> list[str]:
 
 
 def dois(body: str) -> list[str]:
-    # Trailing punctuation is part of the sentence, not of the DOI. Without
-    # the strip, a citation that ends a sentence in one language and is
-    # followed by a colon in another reads as two different DOIs, which is
-    # how "10.1207/s15327957pspr0204_5" and the same DOI before a French
-    # non-breaking space and colon were once reported as a divergence.
-    return sorted(d.rstrip('.,;:') for d in re.findall(r'10\.\d{4,9}/[^\s)\]]+', body))
+    """Every DOI in the body, normalised enough to compare across languages.
+
+    Two shapes need handling. A DOI may contain balanced parentheses, as
+    10.1016/S0149-2063(03)00079-5 does, so a pattern that simply stops at the
+    first ')' truncates it. And the same DOI appears percent-encoded inside a
+    markdown link target, because a bare ')' there would end the link early.
+
+    Trailing punctuation belongs to the sentence, not the DOI. Without the
+    strip, a citation ending a sentence in one language and followed by a
+    French space-colon in another reads as two different DOIs.
+    """
+    found = re.findall(r'10\.\d{4,9}/(?:\([^()\s]*\)|[^\s()\[\]<>])+', body)
+    out = []
+    for d in found:
+        d = d.replace('%28', '(').replace('%29', ')')
+        out.append(d.rstrip('.,;:'))
+    return sorted(out)
 
 
 def headings(body: str) -> int:
@@ -176,6 +187,19 @@ def check_post(row, lang: str, animals: set[str]) -> list[str]:
         problems.append(f"description {len(desc)} chars")
     if not title or not desc:
         problems.append("missing title or description")
+
+    # A stat card is the most prominent thing on the page and the most likely
+    # to be quoted back. Nine articles carried 25 of them between them with no
+    # DOI anywhere, and when those were checked against the literature four
+    # coefficients had the wrong sign, one was off by more than three times,
+    # and four block quotations turned out not to exist in the papers they
+    # were attributed to. So: a card obliges a citation.
+    #
+    # Matched on the class rather than the tag, because the sweep that found
+    # the nine looked for '<div class="stat-value">' and missed a tenth
+    # article that writes '<span'.
+    if 'class="stat-value"' in content and not dois(content):
+        problems.append("stat card with no DOI anywhere in the article")
 
     if lang != "en":
         leaked = [d for d in ENGLISH_DIMENSIONS if re.search(rf'\b{d}\b', flat)]
