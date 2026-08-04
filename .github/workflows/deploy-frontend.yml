@@ -28,8 +28,13 @@ permissions:
 # two pushes a few minutes apart overlap, and both then push to gh-pages.
 # The loser of that race fails on a non-fast-forward and its content never
 # ships, which looks like a deploy that succeeded and did nothing.
-# Queue instead of cancelling: the later run is a superset of the earlier
-# one, but cancelling mid-push is how gh-pages ends up half-written.
+# cancel-in-progress: false protects the run that is actually building. A
+# run already queued behind it is still superseded by the next one to
+# arrive, because GitHub keeps at most one pending run per group, so those
+# show as "cancelled" in the run list. That is the wanted behaviour: the
+# newer run is a superset, since the prerender reads the whole corpus from
+# the API at build time rather than a diff. What must never be cancelled is
+# a build mid-push, which is how gh-pages ends up half written.
 concurrency:
   group: deploy-frontend
   cancel-in-progress: false
