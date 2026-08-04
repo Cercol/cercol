@@ -1,0 +1,41 @@
+# Cèrcol — one-off nudge to the owner of a team that stalled (ADR 0019).
+#
+# A team arrives, everyone takes Full Moon, and then nothing. That is the
+# observed pattern, not a hypothesis. The Witness round is the only thing
+# that produces self-observer agreement data and it has never been run by
+# anyone outside the seed, because /witness-setup has two page views in the
+# product's entire history: nobody finds it alone.
+#
+# Fifteen days after a group is created, if every active member has not both
+# taken Full Moon and been rated by someone, the owner gets one email with
+# the team's actual state and the button that starts the round. Once only:
+# groups.nudged_at is set on success, so a team that stays incomplete is not
+# written to again.
+#
+# Install (one-time, as root on the production server):
+#   sudo cp /home/cercol/api/api/deploy/cron/cercol-group-nudge /etc/cron.d/
+#   sudo chmod 644 /etc/cron.d/cercol-group-nudge
+#
+# Verify after install:
+#   ls -la /etc/cron.d/cercol-group-nudge
+#   journalctl -t CRON --since "5 minutes ago" | grep group-nudge
+#
+# Dry run (lists who would be emailed, sends nothing):
+#   sudo -u cercol bash -c 'cd /home/cercol/api/api && set -a && . /home/cercol/.env && set +a && /home/cercol/api/api/.venv/bin/python -m jobs.group_nudge --dry-run'
+#
+# Secrets required in /home/cercol/.env:
+#   DATABASE_URL
+#   RESEND_API_KEY
+#   FRONTEND_URL                (the team-page link; defaults to https://cercol.team)
+#
+# Optional: GROUP_NUDGE_AFTER_DAYS overrides the 15-day threshold.
+#
+# Prerequisite: db/migrations/060 applied (groups.nudged_at), otherwise the
+# job fails on the first query rather than emailing anyone twice.
+
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# Daily at 09:15 UTC. Late enough to be a working-hours email in Europe,
+# and off the hour so it does not collide with the other jobs.
+15 9 * * * cercol cd /home/cercol/api/api && set -a && . /home/cercol/.env && set +a && /home/cercol/api/api/.venv/bin/python -m jobs.group_nudge

@@ -25,7 +25,7 @@ import { fmScoreToPercent, fmScoreLabel } from '../utils/full-moon-scoring'
 import { logResult } from '../utils/logger'
 import AccuracyRating from '../components/AccuracyRating'
 import { computeRole } from '../utils/role-scoring'
-import { averageWitnessScores, computeCombinedRole, compareRoleViews } from '../utils/witness-scoring'
+import { computeCombinedRole, compareRoleViews } from '../utils/witness-scoring'
 import { getMyWitnessSessions, getLatestFullMoonResult } from '../lib/api'
 import { FullMoonIcon, ShareIcon } from '../components/MoonIcons'
 import { useAuth } from '../context/AuthContext'
@@ -47,6 +47,8 @@ export default function FullMoonResultsPage() {
   // Set once the result row exists; the accuracy question needs its id.
   const [resultId, setResultId] = useState(null)
   const [sessions, setSessions] = useState([])
+  // Released by the server only once MIN_WITNESSES_FOR_REPORT is met.
+  const [witnessAggregate, setWitnessAggregate] = useState(null)
   const [loadedDomains, setLoadedDomains] = useState(null)
   const [loadedFacets, setLoadedFacets] = useState(null)
   const loggedRef = useRef(false)
@@ -114,7 +116,10 @@ export default function FullMoonResultsPage() {
   useEffect(() => {
     if (isSharedLink || authLoading || !user) return
     getMyWitnessSessions()
-      .then(setSessions)
+      .then((res) => {
+        setSessions(res.sessions ?? [])
+        setWitnessAggregate(res.aggregate ?? null)
+      })
       .catch(() => {}) // silently fail — solo result still renders
   }, [user, authLoading, isSharedLink]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -137,14 +142,16 @@ export default function FullMoonResultsPage() {
   const domainKeys = DOMAIN_KEYS
   const selfRole   = computeRole(domains, 'fullMoon')
 
-  const completedSessions  = sessions.filter(s => s.completed_at && s.scores)
+  const completedSessions  = sessions.filter(s => s.completed_at)
   const pendingSessions    = sessions.filter(s => !s.completed_at)
   const hasEnoughWitnesses = completedSessions.length >= MIN_WITNESSES_FOR_REPORT
   const hasAnyWitness      = completedSessions.length >= 1
 
-  const witnessScores = hasAnyWitness
-    ? averageWitnessScores(completedSessions.map(s => s.scores))
-    : null
+  // The aggregate comes from the server, which releases it only at
+  // MIN_WITNESSES_FOR_REPORT. Individual scores are no longer sent at all:
+  // with one completed witness the average IS that named person's answer,
+  // and the subject knows exactly whose it is because they invited them.
+  const witnessScores = witnessAggregate
   const witnessRole = witnessScores ? computeRole(witnessScores, 'witness') : null
 
   // Combined role: self × 2/3 + witness × 1/3 (falls back to selfRole when no witnesses)

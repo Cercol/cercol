@@ -130,7 +130,7 @@ export default function WitnessSetupPage() {
     if (gateState !== 'ready') return
 
     getMyWitnessSessions()
-      .then(setSessions)
+      .then((res) => setSessions(res.sessions ?? []))
       .catch(() => setSessionsError(t('witness.setup.error')))
   }, [gateState]) // eslint-disable-line react-hooks/exhaustive-deps
 
