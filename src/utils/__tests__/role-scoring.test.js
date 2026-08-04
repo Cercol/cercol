@@ -5,7 +5,7 @@ import {
   NORM_SD,
   ARC_PROBABILITY_THRESHOLD,
   DOMAIN_MAP,
-  toFiveScale,
+  priorFor,
 } from '../role-scoring'
 
 // Build domain scores at the normative mean (all z = 0)
@@ -130,35 +130,63 @@ describe('DOMAIN_MAP', () => {
   })
 })
 
-describe('toFiveScale', () => {
-  it('leaves 1-5 instruments untouched', () => {
-    const scores = { presence: 3.2, bond: 4.1, vision: 2.8, discipline: 3.9, depth: 2.2 }
-    expect(toFiveScale(scores, 'fullMoon')).toEqual(scores)
-    expect(toFiveScale(scores, null)).toEqual(scores)
+describe('priorFor', () => {
+  it('falls back to the 1-5 self-report statistics when no instrument is named', () => {
+    expect(priorFor(null).mean).toEqual(NORM_MEAN)
+    expect(priorFor('fullMoon').mean).toEqual(NORM_MEAN)
   })
 
-  it('maps the 1-7 endpoints onto the 1-5 endpoints', () => {
-    const mapped = toFiveScale({ presence: 1, bond: 4, vision: 7 }, 'newMoon')
-    expect(mapped.presence).toBeCloseTo(1)   // floor to floor
-    expect(mapped.bond).toBeCloseTo(3)       // midpoint to midpoint
-    expect(mapped.vision).toBeCloseTo(5)     // ceiling to ceiling
+  it('expresses the same statistics on the 1-7 scale for New Moon', () => {
+    const p = priorFor('newMoon')
+    // x7 = (x5 - 1) * 6/4 + 1, so the SD scales by 6/4 and the mean maps through
+    expect(p.mean.E).toBeCloseTo(((NORM_MEAN.E - 1) * 6) / 4 + 1)
+    expect(p.sd.E).toBeCloseTo((NORM_SD.E * 6) / 4)
   })
 
-  it('stops a mild New Moon answer from reading as an extreme profile', () => {
-    // A flat "5 out of 7" is mildly agreeable. Scored against the 1-5 priors
-    // it lands above +2 SD on presence, which is what mislabelled a third of
-    // the historical results.
+  it('gives the Witness instrument its own centre and spread', () => {
+    const p = priorFor('witness')
+    for (const f of ['E', 'A', 'O', 'C', 'N']) {
+      expect(p.mean[f]).toBe(3.0)
+      expect(p.sd[f]).toBe(0.93)
+    }
+  })
+})
+
+describe('computeRole against the right prior', () => {
+  it('puts a neutral Witness result at the origin, not in a corner', () => {
+    // computeWitnessScores is centred on 3.0 by construction. Against the
+    // self-report norms that lands at z = (-0.42, -1.55, -1.17, -1.13, +0.28),
+    // a fixed point that sent 41% of witnessed reports to the same role.
+    const neutral = { presence: 3, bond: 3, vision: 3, discipline: 3, depth: 3 }
+    const witness = computeRole(neutral, 'witness')
+    const wrong = computeRole(neutral)
+    expect(witness.role).not.toBe(wrong.role)
+    // Every domain sits exactly at its own instrument's mean.
+    const { mean, sd } = priorFor('witness')
+    expect((neutral.bond - mean.A) / sd.A).toBe(0)
+  })
+
+  it('stops a mild New Moon answer reading as an extreme profile', () => {
     const flatFive = { presence: 5, bond: 5, vision: 5, discipline: 5, depth: 5 }
-    const zRaw = (flatFive.presence - NORM_MEAN.E) / NORM_SD.E
-    const mapped = toFiveScale(flatFive, 'newMoon')
-    const zMapped = (mapped.presence - NORM_MEAN.E) / NORM_SD.E
-    expect(zRaw).toBeGreaterThan(2)
-    expect(Math.abs(zMapped)).toBeLessThan(1)
+    const p = priorFor('newMoon')
+    const zNewMoon = (flatFive.presence - p.mean.E) / p.sd.E
+    const zWrong = (flatFive.presence - NORM_MEAN.E) / NORM_SD.E
+    expect(zWrong).toBeGreaterThan(2)
+    expect(Math.abs(zNewMoon)).toBeLessThan(1)
   })
 
-  it('changes which role a New Moon result is assigned to', () => {
+  it('assigns a different role when the instrument is named', () => {
     const scores = { presence: 3.5, bond: 5.5, vision: 5.5, discipline: 5.0, depth: 3.0 }
-    expect(computeRole(scores, 'newMoon').role)
-      .not.toBe(computeRole(scores).role)
+    expect(computeRole(scores, 'newMoon').role).not.toBe(computeRole(scores).role)
+  })
+})
+
+describe('DOMAIN_MAP', () => {
+  it('maps all five OCEAN factors to domain names', () => {
+    expect(DOMAIN_MAP.E).toBe('presence')
+    expect(DOMAIN_MAP.A).toBe('bond')
+    expect(DOMAIN_MAP.O).toBe('vision')
+    expect(DOMAIN_MAP.C).toBe('discipline')
+    expect(DOMAIN_MAP.N).toBe('depth')
   })
 })

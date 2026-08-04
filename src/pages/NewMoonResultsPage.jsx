@@ -61,8 +61,8 @@ export default function NewMoonResultsPage() {
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   function handleShare() {
-    // 'newMoon' matters: these scores are on 1-7 and must be mapped to 1-5
-    // before the role is derived (see toFiveScale in role-scoring.js).
+    // 'newMoon' matters: these scores are on 1-7 and must be measured
+    // against the 1-7 prior (see priorFor in role-scoring.js).
     shareResult(scores, t, () => {
       setCopied(true)
       setTimeout(() => setCopied(false), CLIPBOARD_FEEDBACK_MS)

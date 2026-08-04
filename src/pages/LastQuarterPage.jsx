@@ -102,8 +102,11 @@ function DomainRows({ scores, t }) {
  * MemberRow — compact member row with primary role icon + name + arc role.
  */
 function MemberRow({ member, t }) {
+  // zscoresToRaw inverts the 1-5 self-report norms, so the result is on the
+  // Full Moon scale and must be scored against the Full Moon prior. The team
+  // report is Full Moon only (report-data selects instrument = 'fullMoon').
   const roleResult = member.completed && member.zscores
-    ? computeRole(zscoresToRaw(member.zscores))
+    ? computeRole(zscoresToRaw(member.zscores), 'fullMoon')
     : null
 
   const primaryRole  = member.role
