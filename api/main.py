@@ -457,6 +457,15 @@ class InviteMembersBody(BaseModel):
     emails: List[str] = []
 
 
+class TranslationFeedbackBody(BaseModel):
+    language:   str
+    suggestion: str
+    instrument: Optional[str] = None
+    context:    Optional[str] = None
+    itemId:     Optional[int] = None
+    itemText:   Optional[str] = None
+
+
 class AccuracyBody(BaseModel):
     # 1 = "this is not me", 5 = "this is me". Self-rated face validity.
     rating: int
@@ -754,6 +763,91 @@ async def log_result(
             body.anon_id, body.utm_source, body.utm_medium, body.utm_campaign, body.referrer,
         )
     return {"id": str(row["id"])}
+
+
+@app.post("/translation-feedback")
+@limiter.limit("5/minute")
+async def submit_translation_feedback(
+    request: Request,
+    body: TranslationFeedbackBody,
+    user: Optional[dict] = Depends(get_optional_user),
+):
+    """Record a reader's suggested correction to a translation.
+
+    Anonymous by design. Requiring an account to report a typo is how you get
+    no reports, and a suggestion is worth having either way. The user id is
+    stored when a token happens to be present and is never required.
+
+    The widget has existed since Phase 13 and stayed hidden because there was
+    nowhere to send this. Six languages ship; a reader who spots a bad
+    translation had no way to say so.
+    """
+    suggestion = (body.suggestion or "").strip()
+    if not suggestion:
+        raise HTTPException(status_code=400, detail="suggestion is required")
+    # Long enough for a rewritten paragraph, short enough not to be a dump.
+    suggestion = suggestion[:4000]
+
+    async with _pool.acquire() as conn:
+        await conn.execute(
+            """
+            INSERT INTO translation_feedback
+                (language, instrument, context, suggestion, item_id, item_text, user_id)
+            VALUES ($1, $2, $3, $4, $5, $6, $7)
+            """,
+            body.language[:12], body.instrument, (body.context or "")[:300],
+            suggestion, body.itemId, (body.itemText or "")[:1000],
+            user["sub"] if user else None,
+        )
+    return {"ok": True}
+
+
+@app.get("/admin/translation-feedback")
+async def list_translation_feedback(
+    language: Optional[str] = None,
+    include_resolved: bool = False,
+    limit: int = 100,
+    _admin: dict = Depends(require_admin),
+):
+    """Suggestions, newest first. Admin only."""
+    clauses, args = [], []
+    if language:
+        args.append(language); clauses.append(f"language = ${len(args)}")
+    if not include_resolved:
+        clauses.append("resolved_at IS NULL")
+    where = ("WHERE " + " AND ".join(clauses)) if clauses else ""
+    args.append(min(max(limit, 1), 500))
+    async with _pool.acquire() as conn:
+        rows = await conn.fetch(
+            f"SELECT id, created_at, language, instrument, context, suggestion, "
+            f"       item_id, item_text, resolved_at "
+            f"FROM translation_feedback {where} ORDER BY created_at DESC LIMIT ${len(args)}",
+            *args,
+        )
+    return [
+        {**dict(r),
+         "id": str(r["id"]),
+         "created_at": r["created_at"].isoformat(),
+         "resolved_at": r["resolved_at"].isoformat() if r["resolved_at"] else None}
+        for r in rows
+    ]
+
+
+@app.post("/admin/translation-feedback/{feedback_id}/resolve")
+async def resolve_translation_feedback(
+    feedback_id: str,
+    _admin: dict = Depends(require_admin),
+):
+    """Mark a suggestion as dealt with. Admin only."""
+    async with _pool.acquire() as conn:
+        updated = await conn.execute(
+            "UPDATE translation_feedback SET resolved_at = now() "
+            " WHERE id = $1 AND resolved_at IS NULL",
+            feedback_id,
+        )
+    if updated.endswith(" 0"):
+        raise HTTPException(status_code=404, detail="Not found or already resolved")
+    return {"ok": True}
 
 
 @app.post("/results/{result_id}/accuracy")

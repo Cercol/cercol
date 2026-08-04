@@ -1,13 +1,24 @@
 /**
- * sendTranslationFeedback — submits a translation suggestion to the backend.
+ * sendTranslationFeedback — submit a suggested correction to a translation.
  *
- * Returns true on success, false if the endpoint is unavailable.
- * The backend endpoint (POST /translation-feedback) is not yet implemented —
- * it requires migration 013_translation_feedback.sql + a route in main.py.
+ * Anonymous: the endpoint takes no auth. Requiring an account to report a
+ * typo is how you get no reports.
  *
- * TODO (Phase X): create the table and endpoint, then remove the early return.
+ * Returns true when the suggestion was stored, false otherwise. The caller
+ * shows success only on true, so a failure never claims something was saved
+ * that was not.
+ *
+ * @param {{language: string, suggestion: string, instrument?: string,
+ *          context?: string, itemId?: number|null, itemText?: string|null}} payload
+ * @returns {Promise<boolean>}
  */
-export async function sendTranslationFeedback(_payload) {
-  // Backend endpoint not yet implemented — do not show fake success to users.
-  return false
+import { sendTranslationSuggestion } from '../lib/api'
+
+export async function sendTranslationFeedback(payload) {
+  try {
+    await sendTranslationSuggestion(payload)
+    return true
+  } catch {
+    return false
+  }
 }

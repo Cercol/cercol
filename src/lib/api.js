@@ -327,6 +327,18 @@ export async function startWitnessRound(groupId) {
 }
 
 /**
+ * sendTranslationSuggestion — report a bad translation. No auth: asking for
+ * an account to report a typo is how you get no reports.
+ * @param {{language, suggestion, instrument?, context?, itemId?, itemText?}} payload
+ */
+export async function sendTranslationSuggestion(payload) {
+  return publicFetch('/translation-feedback', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  })
+}
+
+/**
  * rateResultAccuracy — how well a report described its subject, 1 to 5.
  * Write-once; a second call answers 409 and is safe to ignore.
  * @param {string} resultId
