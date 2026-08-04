@@ -114,6 +114,32 @@ services that ask for a TXT record:
 
 The Porkbun API docs are at https://porkbun.com/api/json/v3/documentation .
 
+## When the beta grant runs out
+
+`BETA_TOTAL` in `api/main.py` is 500 free Full Moon licences, and
+`GET /beta` reports what is left. While any remain, Full Moon is free
+to a new account, and the copy says so in several places.
+
+Two strings stop being true the day it reaches zero, and nothing
+watches for that:
+
+- `seo.instruments.description` in every `src/locales/*.json`: "Four
+  free Big Five instruments", which counts Full Moon among them. It is
+  a meta description, so a search engine will keep serving the old one
+  for a while after it changes.
+- `auth.confirmBody`: "unlock your free Full Moon assessment".
+
+The FAQ answer at `faq.instruments.a` already says Full Moon is paid,
+so the copy is internally inconsistent the moment the grant ends. The
+blog said the same thing and was wrong about it in six languages until
+migration 074.
+
+Check with:
+
+```
+curl -s https://api.cercol.team/beta
+```
+
 ## SEO ingest jobs
 
 Three cron jobs ingest external SEO signals into BigQuery (see
