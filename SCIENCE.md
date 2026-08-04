@@ -34,8 +34,11 @@ From OCEAN, we select the three dimensions that the team composition literature
 identifies as requiring balance: Presence (E), Bond (A), and Vision (O). We
 define roles as intersections of these three dimensions at both poles, following
 the AB5C circumplex structure (Hofstee et al. 1992). The selection of Bond (A) and Vision (O) draws on Bell (2007), which found
-team minimum agreeableness and team mean openness to experience among the
-strongest composition predictors of team performance in field studies, and on
+team minimum agreeableness and team mean openness to experience among
+the strongest composition predictors of team performance in field studies
+(from the published abstract; the results tables are behind a paywall and
+were not obtained, and a secondary reproduction gives a different figure
+for Openness, so treat that one as unsettled), and on
 Neuman & Wright (1999), which found Agreeableness predictive of team
 performance in 79 four-person work teams. Neither study examined Extraversion,
 so the inclusion of Presence (P) is a design decision and not a finding carried
@@ -310,6 +313,43 @@ NORM_MIN_SAMPLE = 200 per instrument, via the Tier 1 and Tier 2 machinery in
 `api/scoring.py`.
 
 ---
+
+## How stable is the assigned role
+
+The twelve roles are an authored layer on a measured profile, and the
+assignment is a nearest-centroid label in a continuous space. Near a boundary
+between two centroids, ordinary measurement error moves it.
+
+Simulated with the published reliabilities, drawing a true profile and giving
+the same person two independent administrations:
+
+| Instrument | Reliability used | Different role on retest |
+|---|---|---|
+| Full Moon, First Quarter | domain α .82–.90 (Kajonius & Johnson 2019, Table A1) | **47%** |
+| New Moon | six-week test-retest r = .72 (Gosling et al. 2003) | **62%** |
+
+A sanity check at near-perfect reliability gives 5%, so essentially all of it
+is measurement error crossing a centroid boundary rather than an artefact of
+the simulation.
+
+This has to be stated because Cèrcol's own blog criticises the MBTI for a
+comparable figure, and a criticism you do not apply to yourself is marketing.
+
+Two things make Cèrcol's position different, and neither is a reason to soften
+the number:
+
+- **The role is not the result.** The measurement is the five-dimensional
+  profile, which is continuous and does not flip. The role is a label on it.
+- **The product already shows the neighbours.** `computeRole` returns a
+  softmax probability over all twelve centroids and an `arc` of every role
+  above ARC_PROBABILITY_THRESHOLD, and the report renders it. A person near a
+  boundary sees both roles, which is the honest presentation of exactly this
+  instability.
+
+What follows for the copy: the animal may be introduced as the nearest of
+twelve descriptions, never as a category the person belongs to, and any
+sentence of the form "you are a Wolf" is wrong by this table. The dimensional
+profile is what a second sitting reproduces.
 
 ## Witness Cèrcol scoring
 
