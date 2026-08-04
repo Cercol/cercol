@@ -84,13 +84,22 @@ def links(body: str, lang: str = "en") -> list[str]:
     languages did this on the sales article and were reported as divergent
     until the subdomain and the article slug were normalised away.
     """
-    # Collapsed to a bare marker, not to the English URL: the article slugs
-    # genuinely differ, so all this can check is that the translation links
-    # out to Wikipedia as many times as the English does.
-    return sorted(
-        re.sub(r'^https?://\w{2}\.wikipedia\.org/wiki/.*$', 'wikipedia', url)
-        for url in re.findall(r'\]\((https?://[^)\s]+)\)', body)
-    )
+    # Wikipedia is collapsed to a bare marker, not to the English URL: the
+    # article slugs genuinely differ, so all this can check is that the
+    # translation links out as many times as the English does.
+    #
+    # Internal links are included and normalised, so an absolute
+    # https://cercol.team/x and a relative /x count as the same destination.
+    # Counting them at all is the point: a translation that drops the link to
+    # /instruments leaves the reader with no route to the product, and the
+    # earlier version of this function only looked at http(s) URLs and so saw
+    # none of that.
+    out = []
+    for url in re.findall(r'\]\((https?://[^)\s]+|/[^)\s]*)\)', body):
+        url = re.sub(r'^https?://\w{2}\.wikipedia\.org/wiki/.*$', 'wikipedia', url)
+        url = re.sub(r'^(https?://cercol\.team|)(/.*)?$', lambda m: 'internal:' + (m.group(2) or '/'), url)
+        out.append(url)
+    return sorted(out)
 
 
 def dois(body: str) -> list[str]:
