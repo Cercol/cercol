@@ -58,12 +58,38 @@ def test_every_role_is_reachable_from_the_witness_instrument():
     assert len(reachable) == 12, sorted(reachable)
 
 
-def test_seven_point_prior_matches_the_linear_map():
+def test_seven_point_prior_is_the_tipi_published_norms():
+    """Pinned to Gosling, Rentfrow & Potter (2014), N = 278,000, pooled over
+    six age bands per sex, not derived from the 1-5 statistics.
+
+    The derivation is what was wrong. Rescaling the IPIP figures put the Bond
+    mean 0.74 of its own SD too high and every SD 25 to 45% too narrow, so an
+    ordinary New Moon answer scored as cold and every z-score was pushed
+    toward the edges of the role space. 41% of the real New Moon results held
+    at the time were assigned a different role by the two priors.
+    """
+    seven = scoring.prior_for("newMoon")
+    assert seven == {
+        "presence":   {"mean": 3.95, "sd": 1.58},
+        "bond":       {"mean": 4.71, "sd": 1.23},
+        "discipline": {"mean": 4.65, "sd": 1.41},
+        "depth":      {"mean": 3.64, "sd": 1.48},
+        "vision":     {"mean": 5.51, "sd": 1.14},
+    }
+
+
+def test_the_seven_point_prior_is_not_a_stretched_five_point_one():
+    """Regression guard: reinstating the linear map trips this."""
     five = scoring.prior_for("fullMoon")
     seven = scoring.prior_for("newMoon")
+    stretched = all(
+        abs(seven[d]["mean"] - ((five[d]["mean"] - 1) * 6 / 4 + 1)) < 0.01
+        for d in scoring.DOMAINS
+    )
+    assert not stretched
+    # A ten-item instrument spreads wider than a 120-item one, on every domain.
     for d in scoring.DOMAINS:
-        assert seven[d]["mean"] == (five[d]["mean"] - 1) * 6 / 4 + 1
-        assert seven[d]["sd"] == five[d]["sd"] * 6 / 4
+        assert seven[d]["sd"] > five[d]["sd"] * 6 / 4
 
 
 def test_a_mild_tipi_answer_is_not_extreme():

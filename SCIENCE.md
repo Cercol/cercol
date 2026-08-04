@@ -219,10 +219,45 @@ Never mix the two within the same context.
 
 ---
 
-## Normative priors (IPIP-NEO, 1–5 scale)
+## Normative priors
 
-Source: Johnson (2014) doi:10.1016/j.jrp.2014.05.003;
-        Maples-Keller et al. (2019) doi:10.1080/00223891.2017.1381968
+A prior belongs to an instrument, not to the platform. Nothing may z-score
+without naming the instrument that produced the numbers, and naming it is not
+enough: the prior has to be that instrument's own, looked up rather than
+derived from another's.
+
+### New Moon, the TIPI, 1–7 scale
+
+Source: Gosling, S. D., Rentfrow, P. J., & Potter, J. (2014). Norms for the
+Ten Item Personality Inventory. Unpublished data, tables published at
+<https://gosling.psy.utexas.edu>. N = 278,000 (122,567 male, 155,433
+female), reported in six age bands per sex; the figures below pool them with
+the between-band variance included.
+
+| Factor | Domain     | NORM_MEAN | NORM_SD |
+|--------|------------|-----------|---------|
+| E      | presence   |   3.95    |  1.58   |
+| A      | bond       |   4.71    |  1.23   |
+| C      | discipline |   4.65    |  1.41   |
+| N      | depth      |   3.64    |  1.48   |
+| O      | vision     |   5.51    |  1.14   |
+
+The TIPI publishes Emotional Stability where Cèrcol keys Neuroticism. On a
+1–7 scale the reflection is 8 − x, and a reflection leaves the SD alone.
+
+This table replaced a linear rescale of the IPIP figures below,
+x₇ = (x₅ − 1) × 6/4 + 1. The arithmetic was right and the reference was
+wrong: a ten-item adjective-pair instrument does not produce a 120-item
+inventory's distribution, whatever scale it is written on. Measured against
+the TIPI's own norms, the rescale put the Bond mean 0.74 of its own SD too
+high and every SD 25 to 45% too narrow, so an ordinary New Moon answer scored
+as notably cold and every z-score was inflated toward the edges of the role
+space. On the 17 real New Moon results held when this was found, 41% were
+assigned a different role by the two priors.
+
+### First Quarter and Full Moon, IPIP-NEO, 1–5 scale
+
+Source: Johnson (2014) doi:10.1016/j.jrp.2014.05.003.
 
 | Factor | Domain     | NORM_MEAN | NORM_SD |
 |--------|------------|-----------|---------|
@@ -232,7 +267,24 @@ Source: Johnson (2014) doi:10.1016/j.jrp.2014.05.003;
 | N      | depth      |   2.8     |  0.72   |
 | O      | vision     |   3.7     |  0.60   |
 
-Replace with sample means/SDs at N≥200.
+**These five are not yet traced to a table.** Johnson (2014) reports alphas,
+correlations and factor loadings, not domain means and standard deviations,
+so the citation above establishes the instrument and not these numbers. They
+are treated as a Tier 3 prior until either a published table is found for
+them or Cèrcol's own sample replaces them at NORM_MIN_SAMPLE. Do not cite
+them as published statistics in any user-facing text until that is settled.
+
+### Sample limitations
+
+Both sources are large Western internet samples, self-selected and skewed
+young. That is the standard limitation of open Big Five norms and it should
+be stated wherever these figures are, rather than implied by omission.
+
+### Replacement
+
+All priors are replaced by Cèrcol's own sample means and SDs at
+NORM_MIN_SAMPLE = 200 per instrument, via the Tier 1 and Tier 2 machinery in
+`api/scoring.py`.
 
 ---
 

@@ -154,6 +154,29 @@ recover normative estimates. The right long-term answer and a research
 project, not a task. The blog already describes this approach in
 `forced-choice-personality-assessment-more-honest-data`.
 
+## The same failure, one step further in
+
+Recorded here because this ADR is where the rule lives.
+
+The rule was "nothing may z-score without saying which instrument produced
+the numbers". New Moon said so, and was still wrong, because its prior was
+manufactured rather than looked up: the 1-5 IPIP statistics rescaled onto
+1-7 by x7 = (x5 - 1) * 6/4 + 1.
+
+The arithmetic is correct and the reference is not. A ten-item
+adjective-pair instrument does not produce a 120-item inventory's
+distribution whatever scale it is written on. Against the TIPI's own
+published norms (Gosling, Rentfrow & Potter 2014, N = 278,000) the rescale
+put the Bond mean 0.74 of its own SD too high and every SD 25 to 45% too
+narrow. Ordinary warmth scored as cold, every z-score was inflated toward
+the edges of the role space, and 41% of the real New Moon results held at
+the time changed role between the two priors.
+
+So the rule needs its second half: **a prior is looked up from the
+instrument's own published norms, or it is derived and labelled as such.**
+A derived prior is a placeholder. `api/tests/test_witness_prior.py` now
+fails if the 1-7 prior is ever a stretched copy of the 1-5 one again.
+
 ## Consequences
 
 - Priors are per instrument and `_scores_to_zscores` takes the instrument.
