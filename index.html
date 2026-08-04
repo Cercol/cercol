@@ -106,8 +106,12 @@
     }
     </script>
 
-    <!-- JSON-LD: FAQPage -->
-    <script type="application/ld+json">
+    <!-- JSON-LD: FAQPage. Answers questions about the product, so it belongs
+         to the home page. data-shell-faq lets BlogArticlePage pull it while
+         an article is mounted: an article is not the product FAQ, and an
+         article carrying its own questions section would otherwise ship two
+         competing FAQPage entities on one URL. Restored on unmount. -->
+    <script type="application/ld+json" data-shell-faq="1">
     {
       "@context": "https://schema.org",
       "@type": "FAQPage",
