@@ -173,6 +173,7 @@ Full SEO and LLM visibility strategy: SEO.md
 - Backend architecture: docs/architecture/backend.md
 - Auth architecture: docs/architecture/auth.md
 - Operations runbook: docs/ops/runbook.md
+- Email, Resend and Stalwart: docs/ops/email.md
 - Code conventions and patterns: docs/policies/conventions.md
 - Architecture decisions: docs/decisions/
 - Post-mortems: docs/post-mortems/
