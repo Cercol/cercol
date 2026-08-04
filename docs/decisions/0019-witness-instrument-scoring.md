@@ -2,7 +2,7 @@
 
 - **Number**: 0019
 - **Title**: Witness instrument scoring and round design
-- **Status**: Proposed
+- **Status**: Accepted
 - **Date**: 2026-08-03
 
 ## Context
@@ -53,8 +53,9 @@ Priors are keyed by instrument, and `_scores_to_zscores` takes the instrument
 that produced the scores. `_NORM_WITNESS` is mean 3.0, SD 0.93. Nothing
 z-scores against a reference built for a different instrument.
 
-The round-design change below is proposed, measured, and deliberately not
-implemented: it is a product change to a live instrument, not a correction.
+The round design is thirteen rounds of three picks: best, second best,
+worst. `TOTAL_ROUNDS` lives in `witness-scoring.js` next to the weights,
+because the prior is derived for both and changing either invalidates it.
 
 ## What the instrument actually does
 
@@ -85,10 +86,10 @@ factors competing every round, a consistent witness picks the same winner
 and the same loser twenty times and three factors never move. The design
 relies on inconsistency to discover the middle of the ranking.
 
-## Proposed change, not implemented
+## The round change, now implemented
 
-Each round currently asks for one best and one worst. Adding a second-best
-pick, and shortening the instrument, tests better:
+Each round used to ask for one best and one worst. Adding a second-best pick
+and shortening the instrument tested better:
 
 | Design | Picks per round | 20 rounds | 14 rounds | 10 rounds |
 |---|---|---|---|---|
@@ -112,9 +113,19 @@ binding constraint. The instrument has never been completed by a real
 person. It is something a user asks a colleague to do for them, and the
 ask is the barrier.
 
-Implementing it means touching `buildRounds`, `computeWitnessScores`, the
-`WitnessPage` interaction, and re-deriving `_NORM_WITNESS` for the new
-design, since the prior is specific to the scoring weights.
+Shipped as thirteen rounds of three picks. `_NORM_WITNESS` was re-derived
+for the new weights and length: mean 3.07, SD 1.03 over 15000 simulated
+witnesses, r = 0.844, matching the twenty-round design it replaces at 39
+picks instead of 40.
+
+The mean is not a round 3.0 because the rank weights are asymmetric
+(+1, +0.5, -1). The prior absorbs that rather than the scoring pretending
+otherwise, and the tests are anchored to `prior_for("witness")` rather than
+to a hardcoded 3.0, so a future change to the weights cannot pass silently.
+
+All three picks are required to advance. Made optional, the second would
+simply be skipped and the round would be the old two-pick round with a
+longer prompt.
 
 ## Alternatives considered
 

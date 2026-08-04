@@ -7,7 +7,8 @@
  *   notFound   — token unknown (404)
  *   done       — session already submitted
  *   intro      — show context, subject name (read-only), witness name (editable), CTA
- *   instrument — 20 rounds of forced-choice (5 adjectives, pick best + worst)
+ *   instrument: 13 rounds of forced-choice (5 adjectives; pick best,
+ *   second best, and worst)
  *   submitting — sending scores to API
  *   complete   — thank-you screen
  *   error      — network or API failure
@@ -20,12 +21,13 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
 import { getWitnessSession, completeWitnessSession, trackEvent } from '../lib/api'
-import { buildRounds, computeWitnessScores } from '../utils/witness-scoring'
+import { TOTAL_ROUNDS as WITNESS_ROUNDS, buildRounds, computeWitnessScores } from '../utils/witness-scoring'
 import { Card, Button, SectionLabel } from '../components/ui'
 import { CheckIcon, InfoCircleIcon, XIcon } from '../components/MoonIcons'
 import { colors } from '../design/tokens'
 
-const TOTAL_ROUNDS = 20
+// Length lives with the scoring, which is what the prior is derived for.
+const TOTAL_ROUNDS = WITNESS_ROUNDS
 
 /**
  * AdjCard — one selectable adjective in a round.
@@ -36,8 +38,11 @@ function AdjCard({ adj, state, lang, onSelect }) {
 
   const base = 'flex-1 text-left rounded border px-4 py-3 transition-all cursor-pointer text-sm font-medium'
   let styles = 'border-gray-200 bg-white hover:border-gray-300 text-gray-800'
-  if (state === 'best')  styles = 'border-emerald-400 bg-emerald-50 text-emerald-800 shadow-sm'
-  if (state === 'worst') styles = 'border-red-300 bg-red-50 text-red-800 shadow-sm'
+  if (state === 'best')   styles = 'border-emerald-400 bg-emerald-50 text-emerald-800 shadow-sm'
+  // Second best reads as a lighter version of best, not as a third colour:
+  // the rank is the point and the eye should see the ordering.
+  if (state === 'second') styles = 'border-emerald-200 bg-emerald-50/50 text-emerald-700'
+  if (state === 'worst')  styles = 'border-red-300 bg-red-50 text-red-800 shadow-sm'
 
   const tipText = lang === 'ca' ? adj.tip?.ca : adj.tip?.en
 
@@ -121,17 +126,15 @@ export default function WitnessPage() {
       const updated = [...prev]
       const r = { ...updated[currentRound] }
 
-      if (r.best === adjId) {
-        r.best = null
-      } else if (r.worst === adjId) {
-        r.worst = null
-      } else if (r.best === null) {
-        r.best = adjId
-      } else if (r.worst === null) {
-        if (r.best !== adjId) r.worst = adjId
-      } else {
-        if (r.best !== adjId) r.worst = adjId
-      }
+      // Tapping a selected adjective clears it; tapping a free one fills the
+      // next empty slot in order, and once all three are taken it replaces
+      // the worst, which is the slot people revise most.
+      if (r.best === adjId)        r.best = null
+      else if (r.second === adjId) r.second = null
+      else if (r.worst === adjId)  r.worst = null
+      else if (r.best === null)    r.best = adjId
+      else if (r.second === null)  r.second = adjId
+      else                         r.worst = adjId
 
       updated[currentRound] = r
       return updated
@@ -141,14 +144,18 @@ export default function WitnessPage() {
   function getAdjState(adjId) {
     const r = rounds[currentRound]
     if (!r) return null
-    if (r.best === adjId)  return 'best'
-    if (r.worst === adjId) return 'worst'
+    if (r.best === adjId)   return 'best'
+    if (r.second === adjId) return 'second'
+    if (r.worst === adjId)  return 'worst'
     return null
   }
 
   function canAdvance() {
     const r = rounds[currentRound]
-    return r?.best !== null && r?.worst !== null
+    // All three, not two. The second pick is where the extra signal comes
+    // from; made optional it would simply be skipped and the round would be
+    // the old two-pick round with a longer prompt.
+    return r?.best !== null && r?.second !== null && r?.worst !== null
   }
 
   async function handleNext() {
@@ -367,6 +374,10 @@ export default function WitnessPage() {
           <span className="flex items-center gap-1.5">
             <CheckIcon size={14} style={{ color: colors.green }} />
             {t('witness.page.bestLabel')}
+          </span>
+          <span className="flex items-center gap-1.5" style={{ opacity: 0.65 }}>
+            <CheckIcon size={14} style={{ color: colors.green }} />
+            {t('witness.page.secondLabel')}
           </span>
           <span className="flex items-center gap-1.5">
             <XIcon size={14} style={{ color: colors.red }} />

@@ -1050,10 +1050,10 @@
       "tooltipLabel": "Om dette ord",
       "progress": "{{current}} af {{total}}",
       "instruction": "Hvilket ord passer bedst til {{name}}?",
-      "instructionSub": "Vælg ét for Bedst passende og ét for Mindst passende.",
+      "instructionSub": "Vælg det ord der passer bedst, det næstbedste, og det der passer dårligst.",
       "bestLabel": "Bedst passende",
       "worstLabel": "Mindst passende",
-      "selectBothNote": "Vælg ét Bedst og ét Mindst for at fortsætte.",
+      "selectBothNote": "Vælg et bedste, et næstbedste og et dårligste for at fortsætte.",
       "next": "Næste",
       "back": "Tilbage",
       "finish": "Indsend",
@@ -1079,7 +1079,8 @@
         "body": "Tjek linket og prøv igen."
       },
       "errorHeading": "Noget gik galt.",
-      "errorBody": "Vi kunne ikke gemme dit svar. Prøv igen senere."
+      "errorBody": "Vi kunne ikke gemme dit svar. Prøv igen senere.",
+      "secondLabel": "Næstbedste"
     },
     "term": "Vidne",
     "termPlural": "Vidner"

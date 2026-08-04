@@ -131,8 +131,23 @@ function shuffle(arr) {
 // Which id sign goes into positive-pole rounds for each factor
 const POSITIVE_POLE_SIGN = { E: '+', A: '+', C: '+', N: '-', O: '+' }
 
-// Fixed polarity pattern: 15 positive (P), 5 negative (N) across 20 rounds
+// Polarity pattern, roughly 3 positive to 1 negative. Written for 20 and
+// sliced to whatever length buildRounds is asked for, so shortening the
+// instrument does not silently change the positive/negative balance.
 const ROUND_POLARITY = ['P','P','N','P','P','P','N','P','P','N','P','P','P','N','P','P','N','P','P','P']
+
+// Rank weights for the three picks in a round: best, second best, worst.
+// Two picks of equal weight cannot distinguish first from second, which is
+// why "two best and two worst" measured worse than what it replaced. See
+// ADR 0019 for the full comparison.
+const RANK_WEIGHT = { best: 1, second: 0.5, worst: -1 }
+
+// Thirteen rounds of three picks recovers the same signal as the twenty
+// rounds of two picks it replaces (r = 0.844 either way, simulated against
+// known profiles), at 39 picks instead of 40 and seven fewer screens. The
+// binding constraint on this instrument is not precision, it is that someone
+// has to ask a colleague to sit through it.
+export const TOTAL_ROUNDS = 13
 
 /**
  * Returns adjectives for a given factor filtered to the requested pole.
@@ -145,7 +160,7 @@ function getPoleAdjectives(factor, polarity) {
   return ADJECTIVES_BY_FACTOR[factor].filter(a => a.id.charAt(1) === targetSign)
 }
 
-export function buildRounds(totalRounds = 20) {
+export function buildRounds(totalRounds = TOTAL_ROUNDS) {
   // Build independently shuffled pools for each factor × polarity
   const pools = { pos: {}, neg: {} }
   const ptrs  = { pos: {}, neg: {} }
@@ -167,7 +182,7 @@ export function buildRounds(totalRounds = 20) {
       }
       return pools[polarity][f][ptrs[polarity][f]++]
     })
-    rounds.push({ adjectives, best: null, worst: null })
+    rounds.push({ adjectives, best: null, second: null, worst: null })
   }
   return rounds
 }
@@ -183,14 +198,18 @@ export function computeWitnessScores(rounds) {
   const count = { E: 0, A: 0, C: 0, N: 0, O: 0 }
 
   for (const round of rounds) {
-    if (!round.best && !round.worst) continue
+    if (!round.best && !round.second && !round.worst) continue
 
     for (const adj of round.adjectives) {
       count[adj.factor] += 1
+      // The weight carries the rank, the valence carries the direction. A
+      // negative-pole adjective picked as best-fitting lowers its factor.
       if (round.best === adj.id) {
-        votes[adj.factor] += adj.valence
+        votes[adj.factor] += RANK_WEIGHT.best * adj.valence
+      } else if (round.second === adj.id) {
+        votes[adj.factor] += RANK_WEIGHT.second * adj.valence
       } else if (round.worst === adj.id) {
-        votes[adj.factor] -= adj.valence
+        votes[adj.factor] += RANK_WEIGHT.worst * adj.valence
       }
     }
   }

@@ -1050,10 +1050,10 @@
       "tooltipLabel": "Sobre esta palabra",
       "progress": "{{current}} de {{total}}",
       "instruction": "¿Qué palabra describe mejor a {{name}}?",
-      "instructionSub": "Elige una para Mejor ajuste y una para Peor ajuste.",
+      "instructionSub": "Elige la que encaja mejor, la segunda y la que encaja peor.",
       "bestLabel": "Mejor ajuste",
       "worstLabel": "Peor ajuste",
-      "selectBothNote": "Elige un Mejor y un Peor para continuar.",
+      "selectBothNote": "Elige una mejor, una segunda y una peor para continuar.",
       "next": "Siguiente",
       "back": "Atrás",
       "finish": "Enviar",
@@ -1079,7 +1079,8 @@
         "body": "Comprueba el enlace e inténtalo de nuevo."
       },
       "errorHeading": "Algo salió mal.",
-      "errorBody": "No pudimos guardar tu respuesta. Inténtalo de nuevo más tarde."
+      "errorBody": "No pudimos guardar tu respuesta. Inténtalo de nuevo más tarde.",
+      "secondLabel": "Segunda mejor"
     },
     "term": "Testigo",
     "termPlural": "Testigos"

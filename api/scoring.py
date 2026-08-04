@@ -77,16 +77,18 @@ _NORM_SEVEN_POINT = {
 # all five factors every round, so the output is centred on 3.0 by
 # construction whatever the respondent is like.
 #
-# Measured over 20000 simulated witnesses answering known profiles, across a
-# range of witness accuracy: mean 3.00 and SD 0.93, near-identical on all five
-# domains. The instrument recovers the true profile at r = 0.84, which is
-# good; the failure it had was never the instrument, only which reference its
-# output was measured against.
+# Derived for the three-pick, 13-round design (ADR 0019): mean 3.07, SD 1.03
+# over 15000 simulated witnesses across a range of accuracy. The mean is not
+# exactly 3.0 because the rank weights are not symmetric (+1, +0.5, -1), and
+# the prior absorbs that rather than the scoring pretending otherwise.
+#
+# This number belongs to those weights and that length. Change either and it
+# has to be re-derived, which is why they live next to each other.
 #
 # ponytail: simulated, not observed, because the instrument has no real
 # responses yet. A prior in exactly the sense the published statistics are,
 # replaced by the Tier 1/2 empirical norms at NORM_MIN_SAMPLE.
-_NORM_WITNESS = {d: {"mean": 3.0, "sd": 0.93} for d in _NORM_FIVE_POINT}
+_NORM_WITNESS = {d: {"mean": 3.07, "sd": 1.03} for d in _NORM_FIVE_POINT}
 
 _PRIORS = {
     "newMoon":      _NORM_SEVEN_POINT,

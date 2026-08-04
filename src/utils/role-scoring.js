@@ -75,15 +75,16 @@ const NORM_SEVEN_POINT = {
   sd:   Object.fromEntries(Object.entries(NORM_SD).map(([k, v]) => [k, (v * 6) / 4])),
 }
 
-// The Witness instrument's own distribution, measured over 20000 simulated
-// witnesses answering known profiles across a range of witness accuracy:
-// mean 3.00, SD 0.93, near-identical on all five domains. Simulated rather
+// The Witness instrument's own distribution for the three-pick, 13-round
+// design: mean 3.07, SD 1.03 over 15000 simulated witnesses across a range of
+// accuracy. The mean is off 3.0 because the rank weights are asymmetric
+// (+1, +0.5, -1) and the prior absorbs that. Simulated rather
 // than observed, because the instrument has no real responses yet; a prior in
 // exactly the sense the published statistics are, replaced by empirical norms
 // at N >= 200.
 const NORM_WITNESS = {
-  mean: Object.fromEntries(Object.keys(NORM_MEAN).map(k => [k, 3.0])),
-  sd:   Object.fromEntries(Object.keys(NORM_SD).map(k => [k, 0.93])),
+  mean: Object.fromEntries(Object.keys(NORM_MEAN).map(k => [k, 3.07])),
+  sd:   Object.fromEntries(Object.keys(NORM_SD).map(k => [k, 1.03])),
 }
 
 const PRIORS = {

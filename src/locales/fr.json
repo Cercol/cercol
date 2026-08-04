@@ -1050,10 +1050,10 @@
       "tooltipLabel": "À propos de ce mot",
       "progress": "{{current}} sur {{total}}",
       "instruction": "Quel mot correspond le mieux à {{name}} ?",
-      "instructionSub": "Choisissez-en un pour Meilleure correspondance et un pour Pire correspondance.",
+      "instructionSub": "Choisissez le mot qui correspond le mieux, le deuxième, et celui qui correspond le moins.",
       "bestLabel": "Meilleure correspondance",
       "worstLabel": "Pire correspondance",
-      "selectBothNote": "Choisissez une Meilleure et une Pire pour continuer.",
+      "selectBothNote": "Choisissez un meilleur, un deuxième et un moins bon pour continuer.",
       "next": "Suivant",
       "back": "Retour",
       "finish": "Soumettre",
@@ -1079,7 +1079,8 @@
         "body": "Vérifiez le lien et réessayez."
       },
       "errorHeading": "Une erreur s'est produite.",
-      "errorBody": "Nous n'avons pas pu enregistrer votre réponse. Réessayez plus tard."
+      "errorBody": "Nous n'avons pas pu enregistrer votre réponse. Réessayez plus tard.",
+      "secondLabel": "Deuxième"
     },
     "term": "Témoin",
     "termPlural": "Témoins"
