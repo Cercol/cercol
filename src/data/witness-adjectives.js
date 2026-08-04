@@ -1,7 +1,30 @@
 /**
  * Witness Cèrcol — AB5C lexical adjective corpus.
  * 100 adjectives, 20 per OCEAN factor, 10 positive (+1) and 10 negative (−1) valence.
- * Derived from public-domain IPIP lexical markers (Goldberg; ipip.ori.org).
+ *
+ * Provenance, stated precisely because the earlier wording overstated it.
+ * Thirty of the hundred are items from Goldberg's Big-Five marker set as
+ * tabulated in Saucier (1994), Table 1, on the same factor Cercol assigns
+ * them. The other seventy are everyday synonyms chosen in the same semantic
+ * space; they are not published markers and should not be described as such.
+ *
+ * One was on the wrong factor. 'steady' sat here as a low-Neuroticism marker
+ * and is a Conscientiousness marker in Saucier's table, with B = 0: in none
+ * of the twelve data sets did its loading on the expected factor double its
+ * loading on any other, making it the weakest item in the whole published
+ * set. Replaced by 'relaxed', one of the six positive-pole Factor IV markers
+ * there (A = 10 of 12).
+ *
+ * Saucier also documents why that pole is thin: "for Factor IV (Emotional
+ * Stability), few positive items showed a strong performance", so his
+ * 40-item Mini-Marker set takes two positive-pole items and six negative
+ * ones rather than four and four. Cercol's 10/10 split is a design choice
+ * the English lexicon does not fully support, and the round polarity below
+ * is where that shows.
+ *
+ * Saucier, G. (1994). Mini-Markers: A brief version of Goldberg's unipolar
+ * Big-Five markers. Journal of Personality Assessment, 63(3), 506-516.
+ * doi:10.1207/s15327752jpa6303_8
  *
  * Mapping to Cèrcol domain names:
  *   E → presence    A → bond    C → discipline    N → depth    O → vision
@@ -114,7 +137,7 @@ export const WITNESS_ADJECTIVES = [
   { id: 'N-04', en: 'grounded',      ca: 'arrelat',       es: 'centrado',     fr: 'ancré',        de: 'geerdet',        da: 'jordnær',     factor: 'N', valence: -1, tip: { en: 'Stays connected to reality and inner steadiness.', ca: 'Es manté connectat a la realitat i a la serenitat interior.', es: 'Se mantiene conectado con la realidad y con la firmeza interior.', fr: 'Reste connecté à la réalité et à une stabilité intérieure.', de: 'Bleibt mit der Realität und innerer Festigkeit verbunden.', da: 'Forbliver forbundet med virkeligheden og en indre fasthed.' } },
   { id: 'N-05', en: 'unflappable',   ca: 'impertorbable', es: 'imperturbable', fr: 'imperturbable', de: 'unerschütterlich', da: 'urokkelig', factor: 'N', valence: -1, tip: { en: 'Rarely rattled or thrown off balance.', ca: 'Rarament es desequilibra o es desborda.', es: 'Rara vez se altera o pierde el equilibrio.', fr: 'Rarement déstabilisé ou décontenancé.', de: 'Lässt sich selten aus der Ruhe bringen.', da: 'Sjældent rystet eller bragt ud af balance.' } },
   { id: 'N-06', en: 'secure',        ca: 'segur',         es: 'seguro',       fr: 'assuré',       de: 'gefestigt',      da: 'tryg',        factor: 'N', valence: -1, tip: { en: "Has a stable sense of self and isn't easily threatened.", ca: "Té un sentit estable d'un mateix i no es deixa amenaçar fàcilment.", es: 'Tiene un sentido estable de sí mismo y no se siente amenazado con facilidad.', fr: 'A un sens stable de soi et ne se sent pas facilement menacé.', de: 'Hat ein stabiles Selbstgefühl und fühlt sich nicht leicht bedroht.', da: 'Har en stabil selvfølelse og føler sig ikke let truet.' } },
-  { id: 'N-07', en: 'steady',        ca: 'ferm',          es: 'firme',        fr: 'constant',     de: 'beständig',      da: 'fast',        factor: 'N', valence: -1, tip: { en: 'Consistent and dependable in mood and behaviour.', ca: 'Consistent i fiable en l\'humor i el comportament.', es: 'Consistente y fiable en su humor y comportamiento.', fr: 'Constant et fiable dans son humeur et son comportement.', de: 'Beständig und verlässlich in Stimmung und Verhalten.', da: 'Konsekvent og pålidelig i humør og adfærd.' } },
+  { id: 'N-07', en: 'relaxed',       ca: 'relaxat',       es: 'relajado',     fr: 'détendu',      de: 'entspannt',      da: 'afslappet',   factor: 'N', valence: -1, tip: { en: 'Stays loose under pressure rather than tightening up.', ca: 'Es manté distès sota pressió en lloc de tensar-se.', es: 'Se mantiene distendido bajo presión en lugar de tensarse.', fr: 'Reste détendu sous pression au lieu de se crisper.', de: 'Bleibt unter Druck locker, statt sich zu verspannen.', da: 'Forbliver afslappet under pres i stedet for at spænde op.' } },
   { id: 'N-08', en: 'serene',        ca: 'tranquil',      es: 'tranquilo',    fr: 'serein',       de: 'gelassen',       da: 'rolig',       factor: 'N', valence: -1, tip: { en: 'Radiates calmness and inner peace.', ca: 'Irradia calma i pau interior.', es: 'Irradia calma y paz interior.', fr: "Dégage du calme et une paix intérieure.", de: 'Strahlt Ruhe und inneren Frieden aus.', da: 'Udstråler ro og indre fred.' } },
   { id: 'N-09', en: 'patient',       ca: 'pacient',       es: 'paciente',     fr: 'patient',      de: 'geduldig',       da: 'tålmodig',    factor: 'N', valence: -1, tip: { en: 'Tolerates delays or difficulty without agitation.', ca: 'Tolera els retards o les dificultats sense agitar-se.', es: 'Tolera los retrasos o las dificultades sin agitarse.', fr: "Tolère les retards ou les difficultés sans s'agiter.", de: 'Erträgt Verzögerungen oder Schwierigkeiten ohne Unruhe.', da: 'Tåler forsinkelser eller vanskeligheder uden uro.' } },
   { id: 'N-10', en: 'levelheaded',   ca: 'equilibrat',    es: 'equilibrado',  fr: 'pondéré',      de: 'besonnen',       da: 'besindig',    factor: 'N', valence: -1, tip: { en: 'Makes clear judgements even under stress.', ca: 'Pren decisions clares fins i tot sota estrès.', es: 'Toma decisiones claras incluso bajo estrés.', fr: 'Porte des jugements clairs même sous stress.', de: 'Trifft auch unter Stress klare Urteile.', da: 'Træffer klare vurderinger selv under stress.' } },

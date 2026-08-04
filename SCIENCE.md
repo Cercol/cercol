@@ -429,6 +429,22 @@ The 100 adjectives in the corpus are distributed as 20 per factor with a
 10:10 valence split. At 13 rounds the sequence draws from that corpus rather
 than exhausting it, which the 20-round design did.
 
+**Marker provenance.** Thirty of the hundred adjectives are items from
+Goldberg's Big-Five marker set as tabulated in Saucier (1994) Table 1, on the
+same factor Cèrcol assigns them. The other seventy are everyday synonyms in
+the same semantic space and are not published markers. One was on the wrong
+factor: `steady` was a low-Neuroticism marker here and is a Conscientiousness
+marker in Saucier's table, with the weakest univocality of any item in the
+published set, so it was replaced by `relaxed`, one of the six positive-pole
+Factor IV markers there.
+
+Saucier documents why that pole is thin: "for Factor IV (Emotional Stability),
+few positive items showed a strong performance", and his 40-item set takes two
+positive-pole items against six negative ones rather than four and four.
+Cèrcol's 10/10 split per factor is a design choice the English lexicon does not
+fully support on Depth, and that is the honest reading of the round polarity
+convention above.
+
 **Adjective corpus design.**
 
 The 100 adjectives are organised as 20 per OCEAN factor with a
@@ -825,6 +841,9 @@ implemented. When it ships, suggestions will be stored with the `language` field
 - Peeters, M. A. G., Van Tuijl, H. F. J. M., Rutte, C. G., & Reymen, I. M. M. J.
   (2006). Personality and team performance: A meta-analysis. *European Journal
   of Personality, 20*(5), 377–396. https://doi.org/10.1002/per.588
+- Saucier, G. (1994). Mini-Markers: A brief version of Goldberg's unipolar
+  Big-Five markers. *Journal of Personality Assessment, 63*(3), 506–516.
+  https://doi.org/10.1207/s15327752jpa6303_8
 - Thiry, B., & Piolti, M. (2023). *Adaptation française de l'IPIP* [French
   adaptation of the IPIP]. University of Mons. A documented European-French
   IPIP adaptation listed on ipip.ori.org.
