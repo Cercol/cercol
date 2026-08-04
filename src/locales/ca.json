@@ -1050,10 +1050,10 @@
       "tooltipLabel": "Sobre aquesta paraula",
       "progress": "{{current}} de {{total}}",
       "instruction": "Quina paraula encaixa millor amb {{name}}?",
-      "instructionSub": "Tria una paraula per al Millor encaix i una per al Pitjor encaix.",
+      "instructionSub": "Tria la que encaixa millor, la segona i la que encaixa pitjor.",
       "bestLabel": "Millor encaix",
       "worstLabel": "Pitjor encaix",
-      "selectBothNote": "Tria un Millor i un Pitjor per continuar.",
+      "selectBothNote": "Tria una millor, una segona i una pitjor per continuar.",
       "next": "Següent",
       "back": "Enrere",
       "finish": "Enviar",
@@ -1079,7 +1079,8 @@
         "body": "Comprova l'enllaç i torna-ho a intentar."
       },
       "errorHeading": "Alguna cosa ha anat malament.",
-      "errorBody": "No hem pogut guardar la teua resposta. Torna-ho a intentar més tard."
+      "errorBody": "No hem pogut guardar la teua resposta. Torna-ho a intentar més tard.",
+      "secondLabel": "Segon millor"
     },
     "term": "Testimoni",
     "termPlural": "Testimonis"

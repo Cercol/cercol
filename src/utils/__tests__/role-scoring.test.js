@@ -146,8 +146,8 @@ describe('priorFor', () => {
   it('gives the Witness instrument its own centre and spread', () => {
     const p = priorFor('witness')
     for (const f of ['E', 'A', 'O', 'C', 'N']) {
-      expect(p.mean[f]).toBe(3.0)
-      expect(p.sd[f]).toBe(0.93)
+      expect(p.mean[f]).toBe(3.07)
+      expect(p.sd[f]).toBe(1.03)
     }
   })
 })
@@ -157,13 +157,15 @@ describe('computeRole against the right prior', () => {
     // computeWitnessScores is centred on 3.0 by construction. Against the
     // self-report norms that lands at z = (-0.42, -1.55, -1.17, -1.13, +0.28),
     // a fixed point that sent 41% of witnessed reports to the same role.
-    const neutral = { presence: 3, bond: 3, vision: 3, discipline: 3, depth: 3 }
-    const witness = computeRole(neutral, 'witness')
-    const wrong = computeRole(neutral)
-    expect(witness.role).not.toBe(wrong.role)
-    // Every domain sits exactly at its own instrument's mean.
+    // Typical means the instrument's own centre, not a round 3.0: the rank
+    // weights are asymmetric so the mean is 3.07.
     const { mean, sd } = priorFor('witness')
-    expect((neutral.bond - mean.A) / sd.A).toBe(0)
+    const typical = {
+      presence: mean.E, bond: mean.A, vision: mean.O,
+      discipline: mean.C, depth: mean.N,
+    }
+    expect(computeRole(typical, 'witness').role).not.toBe(computeRole(typical).role)
+    expect((typical.bond - mean.A) / sd.A).toBe(0)
   })
 
   it('stops a mild New Moon answer reading as an extreme profile', () => {

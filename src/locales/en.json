@@ -1050,10 +1050,10 @@
       "tooltipLabel": "About this word",
       "progress": "{{current}} of {{total}}",
       "instruction": "Which word fits {{name}} best?",
-      "instructionSub": "Pick one for Best fit and one for Worst fit.",
+      "instructionSub": "Pick a best fit, a second best, and a worst fit.",
       "bestLabel": "Best fit",
       "worstLabel": "Worst fit",
-      "selectBothNote": "Pick one Best and one Worst to continue.",
+      "selectBothNote": "Pick a best, a second best and a worst to continue.",
       "next": "Next",
       "back": "Back",
       "finish": "Submit",
@@ -1079,7 +1079,8 @@
         "body": "Check the link and try again."
       },
       "errorHeading": "Something went wrong.",
-      "errorBody": "We couldn't save your response. Try again later."
+      "errorBody": "We couldn't save your response. Try again later.",
+      "secondLabel": "Second best"
     },
     "term": "Witness",
     "termPlural": "Witnesses"
