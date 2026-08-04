@@ -33,8 +33,16 @@ published studies. This step has strong scientific grounding.
 From OCEAN, we select the three dimensions that the team composition literature
 identifies as requiring balance: Presence (E), Bond (A), and Vision (O). We
 define roles as intersections of these three dimensions at both poles, following
-the AB5C circumplex structure (Hofstee et al. 1992). The selection of P, B and V
-as balance dimensions is grounded in Bell (2007) and Neuman & Wright (1999).
+the AB5C circumplex structure (Hofstee et al. 1992). The selection of Bond (A) and Vision (O) draws on Bell (2007), which found
+team minimum agreeableness and team mean openness to experience among the
+strongest composition predictors of team performance in field studies, and on
+Neuman & Wright (1999), which found Agreeableness predictive of team
+performance in 79 four-person work teams. Neither study examined Extraversion,
+so the inclusion of Presence (P) is a design decision and not a finding carried
+over from those sources. Neither tested a bipolar balance effect either: both
+report directional mean- or minimum-level relationships, so the requirement for
+representation at both poles is Cèrcol's hypothesis rather than a result
+imported from the literature.
 The AB5C structure is the published scientific framework — we are applying it,
 not inventing it.
 
@@ -66,8 +74,10 @@ Cèrcol roles are derived from the AB5C circumplex (Hofstee, De Raad & Goldberg
 Each AB5C facet has a known, measured OCEAN profile published in the public domain
 (ipip.ori.org).
 
-The translation from AB5C facets to team effects is grounded in the OCEAN team
-composition literature, primarily Bell (2007) and Neuman & Wright (1999). This
+The translation from AB5C facets to team effects draws on the OCEAN team
+composition literature, primarily Bell (2007) and Neuman & Wright (1999), which
+establish that Agreeableness, Conscientiousness and Openness matter at team
+level. Extraversion is in neither paper's findings. This
 is a composition of two evidence bases — AB5C structure and team-level OCEAN
 effects — not direct evidence of team roles. It is the most principled inference
 available from existing literature.
@@ -77,8 +87,15 @@ decisions are documented and open to refutation.
 
 ### Why three balance dimensions
 
-The team composition literature identifies three OCEAN dimensions with a clear
-balance effect: teams need representation at both poles.
+Cèrcol selects three OCEAN dimensions as balance dimensions, on the hypothesis
+that a team needs representation at both poles of each. **This is a design
+hypothesis, not a finding.** The team composition literature establishes that
+these dimensions matter at team level; it does not establish a both-poles
+requirement, and Halfhill et al. (2005), in the reference list below, reports
+that trait *variance* within a group correlates negatively with effectiveness,
+which is evidence against the premise rather than for it. The three arguments
+below are the reasoning behind the choice, and Cèrcol's own data is what will
+eventually confirm or refute it.
 
 - **Presence (E)**: initiative and listening must coexist. A team high in
   Presence consumes oxygen; a team low in Presence stalls.
@@ -105,9 +122,7 @@ is expressed — not as dimensions that define team balance.
 
 ### Why g (cognitive ability) is excluded from the role system
 
-There is evidence that g moderates how an OCEAN profile expresses itself in team
-contexts (Furnham, Crump & Whelan 1997; Halfhill et al. 2005), but no study has
-integrated AB5C and g to define team roles. Adding g to centroids without specific
+No study has integrated AB5C and g to define team roles. Adding g to centroids without specific
 evidence of the AB5C×g interaction would introduce arbitrariness disguised as
 precision.
 
@@ -226,23 +241,29 @@ Replace with sample means/SDs at N≥200.
 Implemented in `src/utils/witness-scoring.js`.
 Source corpus in `src/data/witness-adjectives.js`.
 
-**Round structure:** 5 adjectives per round (one per OCEAN factor), 20 rounds
-total. Witness picks one best fit and one worst fit per round.
+**Round structure:** 5 adjectives per round (one per OCEAN factor),
+`TOTAL_ROUNDS` = 13. The Witness picks a best fit, a second best and a worst
+fit, and all three are required to advance. This replaced a 20-round design
+asking for best and worst only; see ADR 0019 for the measurement that chose
+it, which reached r = 0.851 at 39 picks against 0.844 at 40.
 
-**Per-factor vote calculation:**
-- Best pick of adjective with valence V on factor F → votes[F] += V
-- Worst pick of adjective with valence V on factor F → votes[F] -= V
-- Neither picked → 0 contribution
+**Per-factor vote calculation.** `RANK_WEIGHT` is `{best: 1, second: 0.5,
+worst: -1}` and the adjective's valence carries the direction, so a
+negative-pole adjective picked as best-fitting lowers its factor:
+- Best pick, adjective with valence V on factor F → votes[F] += 1 × V
+- Second pick → votes[F] += 0.5 × V
+- Worst pick → votes[F] += −1 × V
+- Not picked → 0 contribution, but `count[F]` still increments
 
 **Domain score:** score[F] = clamp(3 + (sum_votes[F] / N_rounds) × 2, 1, 5)
 Centred at 3 (neutral), range [1, 5], compatible with self-report scale.
 
-**Round polarity:** fixed 20-round sequence, 15 positive and 5 negative
-rounds (75/25 split). Positive and negative poles never mixed within a round.
+**Round polarity:** fixed sequence, positive and negative rounds in a
+roughly 75/25 split. Positive and negative poles never mixed within a round.
 N factor is inverted: N− is the positive pole, N+ is the negative pole.
 The 100 adjectives in the corpus are distributed as 20 per factor with a
-10:10 valence split, so each adjective appears in exactly one round across
-the 20-round sequence.
+10:10 valence split. At 13 rounds the sequence draws from that corpus rather
+than exhausting it, which the 20-round design did.
 
 **Adjective corpus design.**
 
@@ -482,11 +503,16 @@ localised regionalisms nor formal register that would increase perceived test-ta
 difficulty. Gender-inclusive forms (e.g. the slash notation -o/a) are used where the
 source item's meaning requires it.
 
-**Validation precedent:** Cupani, M., de Minzi, M. C. R., Pérez, E. R., & Pjurisdición, M. A. (2014).
-An assessment of a short measure of personality: The IPIP-NEO-60 in an Argentine sample.
-*Psychological Reports, 114*(3), 777–797. This study validated an Argentine Spanish adaptation
-of the IPIP-NEO, establishing that the five-factor structure replicates in Spanish-speaking
-populations. Cèrcol's translation follows the same item-level translation methodology.
+**Precedent:** Cupani, M., Pilatti, A., Urrizaga, A., Chincolla, A., &
+Richaud de Minzi, M. C. (2014). Inventario de Personalidad IPIP-NEO: estudios
+preliminares de adaptación al español en estudiantes argentinos.
+*Revista Mexicana de Investigación en Psicología, 6*(1), 55–73. A Spanish
+adaptation of the IPIP-NEO for Argentine students, following the same
+item-level translation approach. Note what it does and does not establish: it
+covers the 300-item IPIP-NEO rather than the 60-item version Cèrcol uses, its
+authors describe it as preliminary, and several scales are flagged there for
+revision. It is a precedent for the method, not evidence that the structure
+replicates.
 This is not a formally validated translation — it is a principled open-source translation
 of public-domain items, documented as such.
 
@@ -573,10 +599,11 @@ implemented. When it ships, suggestions will be stored with the `language` field
 
 ## References
 
-- Cupani, M., de Minzi, M. C. R., Pérez, E. R., & Pjurisdición, M. A. (2014).
-  An assessment of a short measure of personality: The IPIP-NEO-60 in an
-  Argentine sample. *Psychological Reports, 114*(3), 777–797.
-  https://doi.org/10.2466/03.PR0.114k25w4
+- Cupani, M., Pilatti, A., Urrizaga, A., Chincolla, A., & Richaud de Minzi,
+  M. C. (2014). Inventario de Personalidad IPIP-NEO: estudios preliminares de
+  adaptación al español en estudiantes argentinos. *Revista Mexicana de
+  Investigación en Psicología, 6*(1), 55–73.
+  https://doi.org/10.32870/rmip.vi.303
 
 - Barrick, M. R., & Mount, M. K. (1991). The Big Five personality dimensions
   and job performance: A meta-analysis. *Personnel Psychology, 44*(1), 1–26.
@@ -588,11 +615,8 @@ implemented. When it ships, suggestions will be stored with the `language` field
 
 - Condon, D. M., & Revelle, W. (2014). The International Cognitive Ability
   Resource. *Intelligence, 46*, 79–90.
-  https://doi.org/10.1016/j.intell.2014.05.004
+  https://doi.org/10.1016/j.intell.2014.01.004
 
-- Furnham, A., Crump, J., & Whelan, J. (1997). Personality, type A behaviour
-  and work success. *European Journal of Personality, 11*(3), 201–213.
-  https://doi.org/10.1002/(SICI)1099-0984(199709)11:3<201::AID-PER286>3.0.CO;2-C
 
 - Goldberg, L. R., Johnson, J. A., Eber, H. W., Hogan, R., Ashton, M. C.,
   Cloninger, C. R., & Gough, H. C. (2006). The International Personality Item
