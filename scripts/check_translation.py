@@ -81,7 +81,16 @@ def headings(body: str) -> int:
 # translation.
 _ACADEMIC = re.compile(
     r'\b(Big[ -]Five|OCEAN|IPIP|NEO|AB5C|HEXACO|MBTI|Myers[ -]Briggs|Dark Triad|'
-    r'Openness|Conscientiousness|Extraversion|Agreeableness|Neuroticism)\b',
+    r'Openness|Conscientiousness|Extraversion|Agreeableness|Neuroticism|'
+    # The reverse pole of Neuroticism, and a factor name in its own right in
+    # HEXACO. Same class as the five above and it stays English for the same
+    # reason. Two of five translators rendered it in their language before it
+    # was written down anywhere, which is what put it on this list.
+    r'Emotional Stability|'
+    # Spelled the same in enough of these languages that an identical label
+    # is not evidence of anything. "Trait" is French for trait, and "item" is
+    # the term of art in all six.
+    r'Traits?|items?)\b',
     re.I,
 )
 
