@@ -27,12 +27,12 @@ function getInstrument(pathname) {
  *   itemId   {number|null} — id of item currently shown (test pages only)
  *   itemText {string|null} — English text of that item
  */
-// The translation-feedback backend is a stub: sendTranslationFeedback() always
-// returns false and the endpoint POST /translation-feedback + table (migration
-// 013) do not exist yet (see src/utils/translationFeedback.js). Hide the widget
-// until the backend lands so it never silently discards what users type. Flip
-// to true when the endpoint and table ship.
-const TRANSLATION_FEEDBACK_ENABLED = false
+// The endpoint and table shipped in migration 064. The widget stayed hidden
+// for two phases because sending a suggestion nowhere would have discarded
+// what people typed, which was the right call while there was nowhere to
+// send it. Six languages ship and the corpus turned out to carry real
+// translation defects, so a reader needs a way to say so.
+const TRANSLATION_FEEDBACK_ENABLED = true
 
 export default function FeedbackButton({ itemId = null, itemText = null }) {
   const { t, i18n } = useTranslation()
@@ -43,6 +43,12 @@ export default function FeedbackButton({ itemId = null, itemText = null }) {
   const panelRef = useRef(null)
 
   const isNonEnglish = i18n.language !== 'en'
+
+  function closePanel() {
+    setPanelOpen(false)
+    setStatus('idle')
+    setSuggestion('')
+  }
 
   // Close panel on outside click
   useEffect(() => {
@@ -60,12 +66,6 @@ export default function FeedbackButton({ itemId = null, itemText = null }) {
     setSuggestion('')
     setStatus('idle')
     setPanelOpen(true)
-  }
-
-  function closePanel() {
-    setPanelOpen(false)
-    setStatus('idle')
-    setSuggestion('')
   }
 
   async function handleSubmit(e) {
