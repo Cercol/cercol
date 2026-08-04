@@ -90,24 +90,73 @@ decisions are documented and open to refutation.
 
 ### Why three balance dimensions
 
-Cèrcol selects three OCEAN dimensions as balance dimensions, on the hypothesis
-that a team needs representation at both poles of each. **This is a design
-hypothesis, not a finding.** The team composition literature establishes that
-these dimensions matter at team level; it does not establish a both-poles
-requirement, and Halfhill et al. (2005), in the reference list below, reports
-that trait *variance* within a group correlates negatively with effectiveness,
-which is evidence against the premise rather than for it. The three arguments
-below are the reasoning behind the choice, and Cèrcol's own data is what will
-eventually confirm or refute it.
+Cèrcol builds its roles from three OCEAN dimensions taken at both poles:
+Presence, Bond and Vision. **That is a construction, not a performance claim,
+and the evidence is against reading it as one.**
+
+Peeters, Van Tuijl, Rutte & Reymen (2006) is the direct test. It is a
+meta-analysis of Big Five team composition that separated *elevation* (the
+team's average) from *variability* (the spread within the team), and
+pre-registered the both-poles prediction for Extraversion as its hypothesis
+H1b. Corrected population correlations with team performance:
+
+| Trait | Elevation ρ | Variability ρ | 90% CI on variability |
+|---|---|---|---|
+| Extraversion | 0.04 | **0.05** | −0.06 to 0.18, includes zero |
+| Agreeableness | **0.24** | **−0.12** | −0.16 to −0.07 |
+| Conscientiousness | **0.20** | **−0.24** | −0.33 to −0.14 |
+| Emotional stability | 0.04 | 0.02 | −0.13 to 0.16 |
+| Openness | 0.03 | −0.01 | −0.15 to 0.12 |
+
+Their own summary: "the higher the average level of agreeableness and
+conscientiousness within teams, and the more similar team members are with
+respect to agreeableness and conscientiousness, the better their team
+performs".
+
+So, honestly, per dimension:
+
+- **Bond (A): the both-poles reading is contradicted.** Spread on Agreeableness
+  is negatively related to performance, and the effect is significant. Teams do
+  better when members are *alike* here, and the strongest single result in the
+  field literature is Bell's team *minimum* agreeableness (ρ = .37): what
+  matters is not having a low member.
+- **Vision (O): unsupported.** Variability is ρ = −0.01 overall and
+  significantly negative in professional teams (ρ = −0.11, CI −0.14 to −0.08).
+- **Presence (E): tested and not confirmed.** The point estimate is in the
+  predicted direction and the interval includes zero, across k = 6, N = 332.
+  This is the one where the premise is open rather than refuted, and the
+  complementarity tradition gives it a theoretical case: the interpersonal
+  circumplex holds that dominance is complementary while warmth is reciprocal,
+  which would predict exactly this asymmetry between E and A.
+
+**What Cèrcol therefore claims, and does not.** The three dimensions at both
+poles are how the twelve roles are laid out, and the roles are a vocabulary
+for describing where a person sits. Cèrcol does not claim that a team performs
+better with both poles represented; on Bond and Vision the evidence says the
+opposite or says nothing. This is consistent with the scope this document
+already sets elsewhere, that Cèrcol does not claim roles predict team
+performance. The earlier wording of this section was a performance claim
+smuggled into a document that disclaims performance prediction.
+
+The three arguments below are the design reasoning, kept because they explain
+why the layout is useful for describing a team, not because the literature
+endorses them:
 
 - **Presence (E)**: initiative and listening must coexist. A team high in
   Presence consumes oxygen; a team low in Presence stalls.
 - **Bond (A)**: cohesion without confrontation produces groupthink. Confrontation
-  without cohesion destroys. Both poles are necessary.
+  without cohesion destroys.
 - **Vision (O)**: innovation without pragmatism never lands. Pragmatism without
-  innovation repeats mistakes. No healthy team is homogeneous in Vision.
+  innovation repeats mistakes.
 
 ### Why C and N are not balance dimensions
+
+Conscientiousness is the one dimension where the directional reading holds:
+elevation ρ = 0.20 and variability ρ = −0.24, the largest variance penalty of
+any trait in Peeters et al. Neuroticism is not: emotional stability elevation
+is ρ = 0.04 with an interval including zero, and the authors decline to draw a
+conclusion. Cèrcol treats Depth as directional on the individual literature,
+not on a team-level finding, and should say so wherever it says it.
 
 **Conscientiousness (Discipline)** is directional upward. Barrick & Mount (1991)
 is the most replicated finding in applied personality psychology: C predicts
@@ -774,6 +823,9 @@ implemented. When it ships, suggestions will be stored with the `language` field
   44*(1), 45–53. [German NEO-PI-R validation establishing five-factor replication
   in German-speaking populations.]
 
+- Peeters, M. A. G., Van Tuijl, H. F. J. M., Rutte, C. G., & Reymen, I. M. M. J.
+  (2006). Personality and team performance: A meta-analysis. *European Journal
+  of Personality, 20*(5), 377–396. https://doi.org/10.1002/per.588
 - Thiry, B., & Piolti, M. (2023). *Adaptation française de l'IPIP* [French
   adaptation of the IPIP]. University of Mons. A documented European-French
   IPIP adaptation listed on ipip.ori.org.
