@@ -1050,10 +1050,10 @@
       "tooltipLabel": "Über dieses Wort",
       "progress": "{{current}} von {{total}}",
       "instruction": "Welches Wort passt am besten zu {{name}}?",
-      "instructionSub": "Wähle eine für Beste Passung und eine für Schlechteste Passung.",
+      "instructionSub": "Wähle das passendste Wort, das zweitpassendste und das unpassendste.",
       "bestLabel": "Beste Passung",
       "worstLabel": "Schlechteste Passung",
-      "selectBothNote": "Wähle eine Beste und eine Schlechteste, um fortzufahren.",
+      "selectBothNote": "Wähle ein passendstes, ein zweitpassendstes und ein unpassendstes, um fortzufahren.",
       "next": "Weiter",
       "back": "Zurück",
       "finish": "Absenden",
@@ -1079,7 +1079,8 @@
         "body": "Überprüfe den Link und versuche es erneut."
       },
       "errorHeading": "Etwas ist schiefgelaufen.",
-      "errorBody": "Wir konnten deine Antwort nicht speichern. Versuche es später erneut."
+      "errorBody": "Wir konnten deine Antwort nicht speichern. Versuche es später erneut.",
+      "secondLabel": "Zweitbeste"
     },
     "term": "Zeuge",
     "termPlural": "Zeugen"

@@ -19,18 +19,23 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 import scoring  # noqa: E402
 
 
-def test_neutral_witness_sits_at_the_origin():
-    neutral = {d: 3.0 for d in scoring.DOMAINS}
-    z = scoring._scores_to_zscores(neutral, instrument="witness")
+def test_a_typical_witness_sits_at_the_origin():
+    """Typical means the instrument's own mean, not a round 3.0. The rank
+    weights are asymmetric so the centre is 3.07, and hardcoding 3.0 here
+    would silently pass whatever the prior said."""
+    prior = scoring.prior_for("witness")
+    typical = {d: prior[d]["mean"] for d in scoring.DOMAINS}
+    z = scoring._scores_to_zscores(typical, instrument="witness")
     assert all(abs(v) < 1e-9 for v in z.values()), z
 
 
-def test_neutral_witness_is_off_centre_under_the_wrong_prior():
-    """The regression this file exists for. Without the instrument, a neutral
-    witness lands over a standard deviation from centre on three domains."""
-    neutral = {d: 3.0 for d in scoring.DOMAINS}
+def test_a_typical_witness_is_off_centre_under_the_wrong_prior():
+    """The regression this file exists for. Measured against the self-report
+    priors, a typical witness lands over a standard deviation out on Bond."""
+    prior = scoring.prior_for("witness")
+    neutral = {d: prior[d]["mean"] for d in scoring.DOMAINS}
     z = scoring._scores_to_zscores(neutral)
-    assert z["bond"] < -1.5
+    assert z["bond"] < -1.0   # over a full SD out on Bond alone
     assert scoring._compute_role(z) != scoring._compute_role(
         scoring._scores_to_zscores(neutral, instrument="witness")
     )
