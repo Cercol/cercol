@@ -40,6 +40,23 @@ MAX_TITLE, MAX_DESC = 60, 155
 # and Presence are unmistakably English here.
 ENGLISH_DIMENSIONS = ["Bond", "Depth", "Presence"]
 
+# CLAUDE.md: the peer-assessment instrument is the Witness, and it has a name
+# in every language. The English word appeared 81 times across four of them
+# before this check existed. Catalan had none, which is what done looks like.
+WITNESS = {"ca": "Testimoni", "es": "Testigo", "fr": "Témoin",
+           "de": "Zeug", "da": "Vidne"}
+
+# And never "observer" for this concept: it invites a surveillance reading of
+# something that is a colleague choosing to describe you.
+#
+# The word does have legitimate uses and this check cannot tell them apart,
+# so it reports rather than forbids. The three found in this corpus, all
+# correct: Belbin's own Observer Assessment, "outside observers" in the
+# sentence about Hofstee et al. (1992) where an observer is a rater in a
+# published study, and "observer-report" as the field's term of art.
+OBSERVER = {"ca": r'observador', "es": r'observador', "fr": r'observateur',
+            "de": r'Beobachter', "da": r'observatør'}
+
 # The one article that enumerates the twelve roles, and therefore the one
 # that can silently invent them.
 ROLES_ARTICLE = "the-12-cercol-team-roles-explained"
@@ -58,8 +75,22 @@ def localised_animals(lang: str) -> set[str]:
     return {v["name"] for k, v in roles.items() if k.startswith("R")}
 
 
-def links(body: str) -> list[str]:
-    return sorted(re.findall(r'\]\((https?://[^)\s]+)\)', body))
+def links(body: str, lang: str = "en") -> list[str]:
+    """External links, with a localised Wikipedia counted as the English one.
+
+    A translation that points at es.wikipedia.org/wiki/Venta where the
+    English points at en.wikipedia.org/wiki/Sales has not lost a link, it has
+    made a better one: the reader lands on an article they can read. Five
+    languages did this on the sales article and were reported as divergent
+    until the subdomain and the article slug were normalised away.
+    """
+    # Collapsed to a bare marker, not to the English URL: the article slugs
+    # genuinely differ, so all this can check is that the translation links
+    # out to Wikipedia as many times as the English does.
+    return sorted(
+        re.sub(r'^https?://\w{2}\.wikipedia\.org/wiki/.*$', 'wikipedia', url)
+        for url in re.findall(r'\]\((https?://[^)\s]+)\)', body)
+    )
 
 
 def dois(body: str) -> list[str]:
@@ -150,6 +181,16 @@ def check_post(row, lang: str, animals: set[str]) -> list[str]:
         leaked = [d for d in ENGLISH_DIMENSIONS if re.search(rf'\b{d}\b', flat)]
         if leaked:
             problems.append("English dimension name: " + ", ".join(leaked))
+
+        n = len(re.findall(r'\bWitness\b', flat))
+        if n:
+            problems.append(f'"Witness" left in English {n}x, should be {WITNESS[lang]}')
+        n = len(re.findall(OBSERVER[lang], flat, re.I))
+        if n:
+            # Reported, not forbidden: see the note on OBSERVER. A reviewer
+            # decides whether each one names Cercol's instrument or a rater
+            # in somebody else's study.
+            problems.append(f'"{OBSERVER[lang]}" appears {n}x, check each against the Witness rule')
 
     # The article that enumerates the roles must enumerate all of them. A
     # blacklist of wrong animals would only ever catch the mistakes already
