@@ -24,6 +24,16 @@ on:
 permissions:
   contents: write
 
+# The build takes most of its 35 minute budget prerendering 648 routes, so
+# two pushes a few minutes apart overlap, and both then push to gh-pages.
+# The loser of that race fails on a non-fast-forward and its content never
+# ships, which looks like a deploy that succeeded and did nothing.
+# Queue instead of cancelling: the later run is a superset of the earlier
+# one, but cancelling mid-push is how gh-pages ends up half-written.
+concurrency:
+  group: deploy-frontend
+  cancel-in-progress: false
+
 jobs:
   test:
     name: Frontend tests (deploy gate)
