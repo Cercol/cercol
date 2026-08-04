@@ -63,13 +63,36 @@ _NORM_FIVE_POINT = {
     "vision":     {"mean": 3.7, "sd": 0.60},
 }
 
-# The same statistics expressed on the 1-7 TIPI scale: x7 = (x5 - 1) * 6/4 + 1,
-# so the mean maps through and the SD scales by 6/4. This replaces the earlier
-# to_five_scale() rescale. Same arithmetic, but stated where a reader looks
-# for it, and it cannot be forgotten at a call site.
+# The TIPI's own published norms, for New Moon, which is the TIPI.
+#
+# Gosling, S. D., Rentfrow, P. J., & Potter, J. (2014). Norms for the Ten
+# Item Personality Inventory. Unpublished data, tables published at
+# gosling.psy.utexas.edu. N = 278,000 (122,567 male, 155,433 female), six
+# age bands per sex, pooled here with the between-band variance included.
+#
+# This replaces a rescale. The earlier version took the 1-5 IPIP statistics
+# and stretched them, x7 = (x5 - 1) * 6/4 + 1, which is correct arithmetic
+# and the wrong reference: a ten-item adjective-pair instrument does not
+# produce the same distribution as a 120-item statement inventory, whatever
+# scale it is written on. Against the TIPI's own norms the rescale put the
+# Bond mean 0.74 of its own SD too high and every SD 25 to 45% too narrow, so
+# a New Moon respondent of ordinary warmth was scored as notably cold and
+# every z-score was inflated toward the edges of the role space. On the 17
+# real New Moon results held when this was found, 41% were assigned a
+# different role by the two priors.
+#
+# This is the failure ADR 0019 exists to prevent, one step further in: the
+# instrument was named correctly, and then its prior was manufactured
+# instead of looked up.
+#
+# Cercol keys Neuroticism where the TIPI publishes Emotional Stability. On a
+# 1-7 scale the reflection is 8 - x, and a reflection leaves the SD alone.
 _NORM_SEVEN_POINT = {
-    d: {"mean": (v["mean"] - 1) * 6 / 4 + 1, "sd": v["sd"] * 6 / 4}
-    for d, v in _NORM_FIVE_POINT.items()
+    "presence":   {"mean": 3.95, "sd": 1.58},   # Extraversion
+    "bond":       {"mean": 4.71, "sd": 1.23},   # Agreeableness
+    "discipline": {"mean": 4.65, "sd": 1.41},   # Conscientiousness
+    "depth":      {"mean": 3.64, "sd": 1.48},   # 8 - Emotional Stability
+    "vision":     {"mean": 5.51, "sd": 1.14},   # Openness
 }
 
 # The Witness instrument's own distribution. Its scores come from

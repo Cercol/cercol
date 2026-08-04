@@ -68,11 +68,26 @@ export const NORM_SD = {
 //   Measured against self-report means of 3.3 to 3.9 it put four roles
 //   permanently out of reach and sent 41% of respondents to Badger.
 
-// The same statistics on the 1-7 TIPI scale: x7 = (x5 - 1) * 6/4 + 1, so the
-// mean maps through and the SD scales by 6/4.
+// The TIPI's own published norms, for New Moon, which is the TIPI.
+//
+// Gosling, S. D., Rentfrow, P. J., & Potter, J. (2014). Norms for the Ten
+// Item Personality Inventory. Unpublished data, tables published at
+// gosling.psy.utexas.edu. N = 278,000 across six age bands per sex, pooled
+// with the between-band variance included.
+//
+// This replaces a rescale of the 1-5 IPIP statistics. The arithmetic was
+// right and the reference was wrong: a ten-item adjective-pair instrument
+// does not produce a 120-item inventory's distribution whatever scale it is
+// written on. The rescale put Bond 0.74 of its own SD too high and every SD
+// 25 to 45% too narrow, so ordinary warmth scored as cold and every z-score
+// was pushed toward the edges of the role space. 41% of the real New Moon
+// results held at the time changed role between the two priors.
+//
+// Cercol keys Neuroticism where the TIPI publishes Emotional Stability; on
+// 1-7 the reflection is 8 - x, which leaves the SD alone.
 const NORM_SEVEN_POINT = {
-  mean: Object.fromEntries(Object.entries(NORM_MEAN).map(([k, v]) => [k, ((v - 1) * 6) / 4 + 1])),
-  sd:   Object.fromEntries(Object.entries(NORM_SD).map(([k, v]) => [k, (v * 6) / 4])),
+  mean: { E: 3.95, A: 4.71, O: 5.51, C: 4.65, N: 3.64 },
+  sd:   { E: 1.58, A: 1.23, O: 1.14, C: 1.41, N: 1.48 },
 }
 
 // The Witness instrument's own distribution for the three-pick, 13-round

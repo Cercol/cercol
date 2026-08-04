@@ -136,11 +136,30 @@ describe('priorFor', () => {
     expect(priorFor('fullMoon').mean).toEqual(NORM_MEAN)
   })
 
-  it('expresses the same statistics on the 1-7 scale for New Moon', () => {
+  it("uses the TIPI's own published norms for New Moon, not a rescale", () => {
+    // Gosling, Rentfrow & Potter (2014), N = 278,000, pooled over six age
+    // bands per sex. Pinned to the published figures rather than derived,
+    // because the derivation is exactly what was wrong: rescaling the 1-5
+    // IPIP statistics put Bond 0.74 of its own SD too high and every SD 25
+    // to 45% too narrow, and reassigned 41% of real New Moon results.
     const p = priorFor('newMoon')
-    // x7 = (x5 - 1) * 6/4 + 1, so the SD scales by 6/4 and the mean maps through
-    expect(p.mean.E).toBeCloseTo(((NORM_MEAN.E - 1) * 6) / 4 + 1)
-    expect(p.sd.E).toBeCloseTo((NORM_SD.E * 6) / 4)
+    expect(p.mean).toEqual({ E: 3.95, A: 4.71, O: 5.51, C: 4.65, N: 3.64 })
+    expect(p.sd).toEqual({ E: 1.58, A: 1.23, O: 1.14, C: 1.41, N: 1.48 })
+  })
+
+  it('does not let the 1-7 prior be a stretched copy of the 1-5 one', () => {
+    // The regression guard. If someone reinstates the linear map, every
+    // domain lands back on (x5 - 1) * 6/4 + 1 and this fails.
+    const p = priorFor('newMoon')
+    const stretched = ['E', 'A', 'O', 'C', 'N'].every(
+      f => Math.abs(p.mean[f] - (((NORM_MEAN[f] - 1) * 6) / 4 + 1)) < 0.01,
+    )
+    expect(stretched).toBe(false)
+    // And the spread must be the instrument's, which is wider than the
+    // stretch produced on every domain.
+    for (const f of ['E', 'A', 'O', 'C', 'N']) {
+      expect(p.sd[f]).toBeGreaterThan((NORM_SD[f] * 6) / 4)
+    }
   })
 
   it('gives the Witness instrument its own centre and spread', () => {
