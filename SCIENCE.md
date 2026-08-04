@@ -781,11 +781,10 @@ implemented. When it ships, suggestions will be stored with the `language` field
   Resource. *Intelligence, 46*, 79–90.
   https://doi.org/10.1016/j.intell.2014.01.004
 
-
 - Goldberg, L. R., Johnson, J. A., Eber, H. W., Hogan, R., Ashton, M. C.,
-  Cloninger, C. R., & Gough, H. C. (2006). The International Personality Item
+  Cloninger, C. R., & Gough, H. G. (2006). The International Personality Item
   Pool and the future of public-domain personality measures. *Journal of Research
-  in Personality, 40*, 84–96.
+  in Personality, 40*(1), 84–96.
   https://doi.org/10.1016/j.jrp.2005.08.007
 
 - Gosling, S. D., Rentfrow, P. J., & Swann, W. B., Jr. (2003). A very brief
