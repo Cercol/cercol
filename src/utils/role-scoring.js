@@ -34,7 +34,7 @@ export const DOMAIN_MAP  = { E: 'presence', A: 'bond', O: 'vision', C: 'discipli
 
 // ── Published normative statistics for IPIP-NEO (1-5 scale) ───────────────
 // Source: Johnson (2014) doi:10.1016/j.jrp.2014.05.003;
-//         Maples-Keller et al. (2019) doi:10.1080/00223891.2018.1467425
+//         Maples-Keller et al. (2019) doi:10.1080/00223891.2017.1381968
 // Approximate cross-study means for general adult samples.
 // These are the authoritative normative statistics for the whole codebase.
 // Import NORM_MEAN and NORM_SD from this file — never redefine them elsewhere.

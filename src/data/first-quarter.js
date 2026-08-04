@@ -6,7 +6,8 @@
  * Using item response theory to develop a 60-item representation
  * of the NEO PI-R using the International Personality Item Pool:
  * Development of the IPIP-NEO-60.
- * Psychological Assessment, 31(2), 188-203.
+ * Journal of Personality Assessment, 101(1), 4-15.
+ * doi:10.1080/00223891.2017.1381968
  *
  * 60 items · 5 domains · 30 facets · 2 items per facet
  * Scale: 1 (Disagree strongly) → 5 (Agree strongly)

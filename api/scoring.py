@@ -54,7 +54,7 @@ NORM_REFRESH_DAYS = 28    # how often the background task refreshes the cache
 
 # Published Big Five statistics on the 1-5 IPIP response scale.
 # Johnson (2014) doi:10.1016/j.jrp.2014.05.003 and
-# Maples-Keller et al. (2019) doi:10.1080/00223891.2018.1467425.
+# Maples-Keller et al. (2019) doi:10.1080/00223891.2017.1381968.
 _NORM_FIVE_POINT = {
     "presence":   {"mean": 3.3, "sd": 0.72},
     "bond":       {"mean": 3.9, "sd": 0.58},

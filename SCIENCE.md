@@ -207,7 +207,7 @@ Never mix the two within the same context.
 ## Normative priors (IPIP-NEO, 1–5 scale)
 
 Source: Johnson (2014) doi:10.1016/j.jrp.2014.05.003;
-        Maples-Keller et al. (2019) doi:10.1080/00223891.2018.1467425
+        Maples-Keller et al. (2019) doi:10.1080/00223891.2017.1381968
 
 | Factor | Domain     | NORM_MEAN | NORM_SD |
 |--------|------------|-----------|---------|
@@ -623,8 +623,8 @@ implemented. When it ships, suggestions will be stored with the `language` field
 - Maples-Keller, J. L., Williamson, R. L., Sleep, C. E., Carter, N. T.,
   Campbell, W. K., & Miller, J. D. (2019). Using item response theory to develop
   a 60-item representation of the NEO PI-R using the International Personality
-  Item Pool. *Psychological Assessment, 31*(2), 188–203.
-  https://doi.org/10.1037/pas0000544
+  Item Pool. *Journal of Personality Assessment, 101*(1), 4–15.
+  https://doi.org/10.1080/00223891.2017.1381968
 
 - Neuman, G. A., & Wright, J. (1999). Team effectiveness: Beyond skills and
   cognitive ability. *Journal of Applied Psychology, 84*(3), 376–389.
@@ -642,4 +642,4 @@ implemented. When it ships, suggestions will be stored with the `language` field
 - Vedel, A., Gøtzsche-Astrup, O., & Holm, P. (2018). The Danish IPIP-NEO-120:
   A free, validated five-factor measure of personality. *Nordic Psychology,
   71*(1), 62–77.
-  https://doi.org/10.1080/19012276.2018.1470108
+  https://doi.org/10.1080/19012276.2018.1470553
