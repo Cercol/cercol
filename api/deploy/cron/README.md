@@ -130,3 +130,20 @@ ls -la /etc/cron.d/cercol-weekly-digest
 sudo -u cercol bash -c 'cd /home/cercol/api/api && set -a && . /home/cercol/.env && set +a && /home/cercol/api/api/.venv/bin/python -m jobs.weekly_digest'
 journalctl -t CRON --since "today" | grep weekly-digest
 ```
+
+## cercol-group-nudge
+
+One email to the owner of a team that stalled partway through setting up,
+fifteen days after the group was created. Sent once per group, tracked by
+`groups.nudged_at` (migration 060). Only the owner is contacted: the other
+members joined because that person asked them to, and starting the round
+emails each of them anyway.
+
+See ADR 0019 for why the Witness round needs a nudge at all.
+
+### Install
+
+```bash
+sudo cp /home/cercol/api/api/deploy/cron/cercol-group-nudge /etc/cron.d/
+sudo chmod 644 /etc/cron.d/cercol-group-nudge
+```

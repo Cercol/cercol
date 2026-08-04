@@ -983,6 +983,13 @@ async def complete_witness_session(
     return {"ok": True}
 
 
+# Two completed witnesses before any aggregate is released. With one, the
+# "average" is a single named person's answer and the subject knows exactly
+# whose. Mirrored in FullMoonResultsPage; changing one without the other
+# reopens the leak.
+MIN_WITNESSES_FOR_REPORT = 2
+
+
 @app.get("/witness/my-sessions")
 async def get_my_sessions(user: dict = Depends(require_premium)):
     """Returns all witness sessions for the authenticated user, with scores for completed ones.
@@ -1003,19 +1010,41 @@ async def get_my_sessions(user: dict = Depends(require_premium)):
             """,
             subject_id,
         )
-    return [
-        {
-            "id":            str(s["id"]),
-            "token":         s["token"],
-            "witness_name":  s["witness_name"],
-            "witness_email": s["witness_email"],
-            "completed_at":  s["completed_at"].isoformat() if s["completed_at"] else None,
-            "created_at":    s["created_at"].isoformat(),
-            "scores":        s["domain_scores"],
-            "link":          f"{_FRONTEND_URL}/witness/{s['token']}",
+    # A witness answers on the understanding that the subject sees an
+    # aggregate, not their answers. Returning domain_scores per session broke
+    # that outright: the subject could read exactly what each named colleague
+    # said by opening the network tab, whatever the UI chose to render.
+    #
+    # So individual scores never leave the server. The aggregate is computed
+    # here and released only at MIN_WITNESSES_FOR_REPORT, because with one
+    # completed session the aggregate IS that person's answer.
+    completed = [s for s in rows if s["completed_at"] and s["domain_scores"]]
+    aggregate = None
+    if len(completed) >= MIN_WITNESSES_FOR_REPORT:
+        doms = ("presence", "bond", "discipline", "depth", "vision")
+        aggregate = {
+            d: sum(float(s["domain_scores"][d]) for s in completed) / len(completed)
+            for d in doms
+            if all(d in (s["domain_scores"] or {}) for s in completed)
         }
-        for s in rows
-    ]
+
+    return {
+        "sessions": [
+            {
+                "id":            str(s["id"]),
+                "token":         s["token"],
+                "witness_name":  s["witness_name"],
+                "witness_email": s["witness_email"],
+                "completed_at":  s["completed_at"].isoformat() if s["completed_at"] else None,
+                "created_at":    s["created_at"].isoformat(),
+                "link":          f"{_FRONTEND_URL}/witness/{s['token']}",
+            }
+            for s in rows
+        ],
+        "completed":     len(completed),
+        "min_required":  MIN_WITNESSES_FOR_REPORT,
+        "aggregate":     aggregate,
+    }
 
 
 @app.get("/witness/my-contributions")

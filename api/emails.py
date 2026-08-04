@@ -422,6 +422,80 @@ _S = {
         "de": "Wenn du nicht teilnehmen möchtest, ignoriere diese E-Mail. In deinem Namen wird nichts verschickt.",
         "da": "Hvis du hellere vil lade være, kan du ignorere denne mail. Der sendes intet i dit navn.",
     },
+
+    # Group nudge: one email to the owner of a team that stalled.
+    "gn_subject": {
+        "en": "{group_name} is halfway there",
+        "ca": "{group_name} està a mig camí",
+        "es": "{group_name} está a medio camino",
+        "fr": "{group_name} est à mi-chemin",
+        "de": "{group_name} ist auf halbem Weg",
+        "da": "{group_name} er halvvejs",
+    },
+    "gn_heading": {
+        "en": "Hello {name}",
+        "ca": "Hola {name}",
+        "es": "Hola {name}",
+        "fr": "Bonjour {name}",
+        "de": "Hallo {name}",
+        "da": "Hej {name}",
+    },
+    "gn_body1": {
+        "en": "You set up {group_name} {days} days ago and it has not finished. Here is where it stands.",
+        "ca": "Vas crear {group_name} fa {days} dies i encara no està acabat. Este és l'estat.",
+        "es": "Creaste {group_name} hace {days} días y sigue sin terminar. Este es el estado.",
+        "fr": "Vous avez créé {group_name} il y a {days} jours et ce n'est pas terminé. Voici où en est l'équipe.",
+        "de": "Du hast {group_name} vor {days} Tagen angelegt, und es ist noch nicht fertig. So steht es.",
+        "da": "Du oprettede {group_name} for {days} dage siden, og det er ikke færdigt. Sådan ser det ud.",
+    },
+    "gn_status": {
+        "en": "{completed} of {members} have taken Full Moon Cèrcol. {no_witnesses} of {members} have nobody rating them yet.",
+        "ca": "{completed} de {members} han fet Cèrcol de Lluna Plena. {no_witnesses} de {members} encara no tenen ningú que els valore.",
+        "es": "{completed} de {members} han hecho Cèrcol de Luna Llena. {no_witnesses} de {members} todavía no tienen a nadie que los valore.",
+        "fr": "{completed} sur {members} ont passé Cèrcol de Pleine Lune. {no_witnesses} sur {members} n'ont encore personne pour les évaluer.",
+        "de": "{completed} von {members} haben Cèrcol des Vollmondes absolviert. {no_witnesses} von {members} haben noch niemanden, der sie einschätzt.",
+        "da": "{completed} af {members} har taget Fuldmåne Cèrcol. {no_witnesses} af {members} har endnu ingen til at vurdere sig.",
+    },
+    "gn_pending": {
+        "en": "{pending} invitation(s) are still waiting to be accepted. You can remove or resend them from the team page.",
+        "ca": "Queden {pending} invitacions per acceptar. Les pots eliminar o tornar a enviar des de la pàgina de l'equip.",
+        "es": "Quedan {pending} invitaciones sin aceptar. Puedes eliminarlas o reenviarlas desde la página del equipo.",
+        "fr": "Il reste {pending} invitations en attente. Vous pouvez les retirer ou les renvoyer depuis la page de l'équipe.",
+        "de": "{pending} Einladungen sind noch offen. Du kannst sie auf der Teamseite entfernen oder erneut senden.",
+        "da": "{pending} invitationer venter stadig. Du kan fjerne dem eller sende dem igen fra teamsiden.",
+    },
+    "gn_body2": {
+        "en": "The piece most teams miss is the team round: everyone rates everyone else, and each report gains a second point of view next to the self assessment. It is one button on the team page, and each person gets a single email with their own links.",
+        "ca": "El pas que quasi tots els equips es deixen és la ronda d'equip: tothom valora la resta, i cada informe guanya un segon punt de vista al costat de l'autoavaluació. És un botó a la pàgina de l'equip, i cada persona rep un sol correu amb els seus enllaços.",
+        "es": "El paso que casi todos los equipos se saltan es la ronda de equipo: todos valoran a los demás, y cada informe gana un segundo punto de vista junto a la autoevaluación. Es un botón en la página del equipo, y cada persona recibe un solo correo con sus enlaces.",
+        "fr": "L'étape que presque toutes les équipes sautent est le tour d'équipe : chacun évalue les autres, et chaque rapport gagne un second point de vue à côté de l'auto-évaluation. C'est un bouton sur la page de l'équipe, et chaque personne reçoit un seul e-mail avec ses liens.",
+        "de": "Der Schritt, den fast alle Teams auslassen, ist die Teamrunde: Alle bewerten einander, und jeder Bericht bekommt neben der Selbsteinschätzung eine zweite Perspektive. Es ist ein Knopf auf der Teamseite, und jede Person bekommt eine einzige E-Mail mit ihren Links.",
+        "da": "Det trin, næsten alle teams springer over, er teamrunden: alle vurderer hinanden, og hver rapport får et andet perspektiv ved siden af selvvurderingen. Det er én knap på teamsiden, og hver person får én mail med sine egne links.",
+    },
+    "gn_body3": {
+        "en": "This is also the part that makes the report worth rereading. A profile you wrote about yourself is one data point. The gap between that and how six colleagues see you is the conversation.",
+        "ca": "És també la part que fa que valga la pena rellegir l'informe. Un perfil que has escrit tu de tu mateix és una dada. La distància entre això i com et veuen sis companys és la conversa.",
+        "es": "Es también la parte que hace que merezca la pena releer el informe. Un perfil que has escrito tú sobre ti mismo es un dato. La distancia entre eso y cómo te ven seis compañeros es la conversación.",
+        "fr": "C'est aussi ce qui rend le rapport digne d'une relecture. Un profil que vous avez écrit sur vous-même est une donnée. L'écart entre cela et la façon dont six collègues vous voient, c'est la conversation.",
+        "de": "Das ist auch der Teil, der den Bericht lesenswert macht. Ein Profil, das du über dich selbst geschrieben hast, ist ein Datenpunkt. Der Abstand dazwischen und dem, wie sechs Kolleginnen und Kollegen dich sehen, ist das Gespräch.",
+        "da": "Det er også det, der gør rapporten værd at læse igen. En profil, du selv har skrevet om dig selv, er ét datapunkt. Afstanden mellem den og hvordan seks kolleger ser dig, er samtalen.",
+    },
+    "gn_button": {
+        "en": "Open your team page",
+        "ca": "Obri la pàgina de l'equip",
+        "es": "Abrir la página del equipo",
+        "fr": "Ouvrir la page de l'équipe",
+        "de": "Teamseite öffnen",
+        "da": "Åbn teamsiden",
+    },
+    "gn_note": {
+        "en": "If you would rather not, ignore this. You will not hear from us about this team again.",
+        "ca": "Si prefereixes deixar-ho, ignora este correu. No et tornarem a escriure sobre este equip.",
+        "es": "Si prefieres dejarlo, ignora este correo. No volveremos a escribirte sobre este equipo.",
+        "fr": "Si vous préférez en rester là, ignorez cet e-mail. Nous ne vous réécrirons pas au sujet de cette équipe.",
+        "de": "Wenn du es lieber lässt, ignoriere diese E-Mail. Wegen dieses Teams hörst du nichts mehr von uns.",
+        "da": "Hvis du hellere vil lade være, kan du ignorere denne mail. Du hører ikke mere fra os om dette team.",
+    },
 }
 
 def _t(key: str, lang: str) -> str:
@@ -1000,6 +1074,47 @@ async def send_witness_round_assigned(
         to      = witness_email,
         subject = _t("wr_subject", l).format(n=len(items)),
         html    = _witness_round_html(witness_name, inviter_name, group_name, items, l),
+    )
+
+
+def _group_nudge_html(name, status, group_id, lang) -> str:
+    """The team's actual state, then the one action that unsticks it."""
+    parts = [
+        _h1(_t("gn_heading", lang).format(name=name or "")),
+        _p(_t("gn_body1", lang).format(group_name=status["group_name"], days=status["days"])),
+        _p(_t("gn_status", lang).format(**status)),
+    ]
+    # Only mentioned when there is something to act on: a nudge that lists
+    # zero pending invitations reads as a form letter.
+    if status["pending"]:
+        parts.append(_p(_t("gn_pending", lang).format(pending=status["pending"]), muted=True))
+    parts += [
+        _p(_t("gn_body2", lang)),
+        _p(_t("gn_body3", lang)),
+        _btn(f"{FRONTEND_URL}/groups/{group_id}", _t("gn_button", lang)),
+        _p(_t("gn_note", lang), muted=True),
+    ]
+    return _base("".join(parts), lang=lang)
+
+
+async def send_group_nudge(
+    owner_email: str,
+    owner_name: str,
+    status: dict,
+    group_id: str,
+    lang: str = "en",
+) -> None:
+    """Email the owner of a team that stalled partway through setting up.
+
+    Sent once per group, by jobs/group_nudge.py. Only the owner: the other
+    members joined because this person asked them to, and starting the round
+    emails each of them anyway.
+    """
+    l = _lang(lang)
+    await _send(
+        to      = owner_email,
+        subject = _t("gn_subject", l).format(group_name=status["group_name"]),
+        html    = _group_nudge_html(owner_name, status, group_id, l),
     )
 
 
