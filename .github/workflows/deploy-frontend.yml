@@ -12,6 +12,14 @@ on:
   push:
     branches: [main]
     paths:
+      # A content migration changes what the prerender reads from the API,
+      # so it has to rebuild. Without this, a migration merged after the
+      # last frontend-touching commit sits in the database and never
+      # reaches a reader until the nightly run. That happened with the
+      # fabricated citation in 078: removed from the database at 08:30 and
+      # still on the live page half an hour later, because every commit
+      # after it touched only docs and CI.
+      - 'db/migrations/**'
       - 'src/**'
       - 'public/**'
       - 'index.html'
