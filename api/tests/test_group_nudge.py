@@ -13,16 +13,61 @@ from datetime import datetime, timedelta, timezone
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
-from jobs.group_nudge import build_status  # noqa: E402
+from jobs.group_nudge import build_status, choose_per_owner  # noqa: E402
 
 
 def _row(**kw):
     base = dict(id="00000000-0000-0000-0000-000000000001", name="Team",
                 created_at=datetime.now(timezone.utc) - timedelta(days=15),
                 owner_email="a@b.c", owner_first_name="A", owner_lang="en",
-                members=6, pending=0, completed_fullmoon=6, have_witnesses=0)
+                members=6, pending=0, completed_fullmoon=6, have_witnesses=0,
+                due=True)
     base.update(kw)
     return base
+
+
+def test_the_email_describes_the_owners_largest_team_not_the_first_one_due():
+    """The real shape this hit, from production.
+
+    One owner, three incomplete groups: a one-member group created on 28
+    July and their actual six-member team created on the 30th. At a 15 day
+    threshold the small one comes due two days before the others.
+
+    Choosing only among the groups already past the threshold sent them an
+    email about the abandoned one-member group, marked the rest suppressed,
+    and never mentioned the team they actually use.
+    """
+    now = datetime.now(timezone.utc)
+    small = _row(id="small", name="SL:T", members=1,
+                 created_at=now - timedelta(days=16), due=True)
+    real  = _row(id="real", name="Logs Sqn SLT v2", members=6,
+                 created_at=now - timedelta(days=14), due=False)
+    other = _row(id="other", name="Logs Sqn SLT", members=4,
+                 created_at=now - timedelta(days=14), due=False)
+
+    chosen = choose_per_owner([small, real, other])
+
+    assert len(chosen) == 1, "one email per owner"
+    assert chosen[0]["id"] == "real", "the email is about the team they use"
+    assert sorted(chosen[0]["suppress_ids"]) == ["other", "small"], \
+        "the others are suppressed now, or the owner is written to again in two days"
+
+
+def test_no_email_until_at_least_one_group_is_due():
+    now = datetime.now(timezone.utc)
+    assert choose_per_owner([
+        _row(id="a", members=6, created_at=now - timedelta(days=2), due=False),
+        _row(id="b", members=1, created_at=now - timedelta(days=1), due=False),
+    ]) == []
+
+
+def test_two_owners_get_one_email_each():
+    chosen = choose_per_owner([
+        _row(id="a", owner_email="one@x.c", members=3),
+        _row(id="b", owner_email="one@x.c", members=9),
+        _row(id="c", owner_email="two@x.c", members=2),
+    ])
+    assert sorted(c["id"] for c in chosen) == ["b", "c"]
 
 
 def test_status_reports_what_is_missing_not_what_is_done():

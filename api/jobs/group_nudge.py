@@ -52,7 +52,7 @@ async def gather(conn, after_days: int) -> list[dict]:
     cutoff = datetime.now(timezone.utc) - timedelta(days=after_days)
     rows = await conn.fetch(
         """
-        SELECT g.id, g.name, g.created_at,
+        SELECT g.id, g.name, g.created_at, g.created_at < $1 AS due,
                p.email                AS owner_email,
                p.first_name           AS owner_first_name,
                p.native_language      AS owner_lang,
@@ -77,8 +77,7 @@ async def gather(conn, after_days: int) -> list[dict]:
                WHERE subject_id = m.user_id AND NOT is_seed
                  AND completed_at IS NOT NULL
           ) w ON true
-         WHERE g.created_at < $1
-           AND g.nudged_at IS NULL
+         WHERE g.nudged_at IS NULL
            AND NOT g.is_seed
          GROUP BY g.id, g.name, g.created_at, p.email, p.first_name, p.native_language
         """,
@@ -86,7 +85,7 @@ async def gather(conn, after_days: int) -> list[dict]:
     )
     # A group is finished when every active member has both a Full Moon result
     # and at least one witness. Anything short of that is worth an email.
-    eligible = [
+    incomplete = [
         dict(r) for r in rows
         if r["members"] > 0
         and not (r["completed_fullmoon"] == r["members"] and r["have_witnesses"] == r["members"])
@@ -95,16 +94,38 @@ async def gather(conn, after_days: int) -> list[dict]:
     # One email per owner, not one per group. The first dry run against
     # production proposed writing three times to the same person, because a
     # mistyped invitation had left two abandoned groups behind the one they
-    # actually use. Pick the largest, which is the live one in every case
-    # that shape arises, and suppress the rest so tomorrow's run does not
-    # walk down the list.
+    # actually use.
+    #
+    # Which one the email is about is decided across ALL of an owner's
+    # incomplete groups, not only the ones already past the threshold. That
+    # matters because the threshold is a date and groups are created days
+    # apart. This owner has a one-member group from 28 July and their real
+    # six-member team from 30 July. Filtering by the cutoff before choosing
+    # sent them, on the 12th, an email about the abandoned one-member group,
+    # marked the other two suppressed, and never mentioned the actual team.
+    # Simulated at a lowered threshold against production, which is how the
+    # ordering was caught: at five days it chose the one-member group, at
+    # four days it chose the six-member one.
+    #
+    # So: any group past the threshold makes the owner due, and the email
+    # then describes the largest group they have.
+    return choose_per_owner(incomplete)
+
+
+def choose_per_owner(incomplete: list[dict]) -> list[dict]:
+    """At most one group per owner: the largest, once any of theirs is due."""
     by_owner: dict[str, list[dict]] = {}
-    for row in eligible:
+    for row in incomplete:
         by_owner.setdefault(row["owner_email"], []).append(row)
     chosen = []
     for rows_for_owner in by_owner.values():
+        if not any(r["due"] for r in rows_for_owner):
+            continue
         rows_for_owner.sort(key=lambda r: (r["members"], r["created_at"]), reverse=True)
         best, rest = rows_for_owner[0], rows_for_owner[1:]
+        # Suppress every one of them, including any not yet past the
+        # threshold. Otherwise the owner is written to again when the next
+        # one comes due, which is the duplicate this dedup exists to stop.
         best["suppress_ids"] = [r["id"] for r in rest]
         chosen.append(best)
     return chosen
