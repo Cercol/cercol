@@ -18,6 +18,15 @@ descriptions. Use a regular hyphen, a colon, or a pair of commas
 instead. Em dashes are easy to inject by accident from autocorrect
 or LLM output and clutter searches for plain hyphens.
 
+The en dash is a different character and a narrower rule. Between
+the ends of a numeric range it is correct and stays: `r=.20–.40`
+written with a hyphen reads as a subtraction. What is banned is the
+en dash standing in for an em dash as sentence punctuation, and that
+usage always has a space beside it. So: no `—` anywhere, and no `–`
+with a space on either side. An automated pass that treats the two
+characters as one rule rewrites correct statistics, which is worse
+than the thing it was cleaning up.
+
 ### Snippets only in PR descriptions
 
 When a PR description quotes code, quote only the snippet that
