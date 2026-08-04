@@ -40,11 +40,17 @@ jobs:
           #   sees 403 / 404 even when the DOI resolves fine in a
           #   browser. Excluded entirely; correctness of DOIs is
           #   checked by humans when adding new references.
-          # - ipip.ori.org: returns intermittent "Connection reset
-          #   by peer" to lychee. Authoritative host for IPIP items
-          #   so the link is correct; flap suppressed here.
+          # - ipip.ori.org and projects.ori.org: return "Connection
+          #   reset by peer" to lychee from a runner. Both are
+          #   authoritative Oregon Research Institute hosts, ipip for
+          #   the item pool and projects for Goldberg's paper PDFs,
+          #   and both fetch fine from a developer machine. Flap
+          #   suppressed here rather than the links removed.
           # Accept 403 as a valid response for everything else so a
-          # bot-detected publisher does not turn the gate red.
+          # bot-detected publisher does not turn the gate red, and 405
+          # because lychee tries HEAD first: api.cercol.team/beta is a
+          # GET-only FastAPI route, so HEAD is correctly refused and the
+          # link is fine. That 405 is what first turned this job red.
           #
           # docs/seo/links-audit-*.md is a GENERATED report whose whole
           # job is to list broken links found by scripts/audit_blog_links.py.
@@ -53,13 +59,14 @@ jobs:
           # exclusion holds whichever path-matching the pinned lychee uses).
           args: >-
             --no-progress
-            --accept '200,206,301,302,304,403'
+            --accept '200,206,301,302,304,403,405'
             --exclude '^https?://(?:www\.)?example\.(?:com|org|net)'
             --exclude '^https?://localhost'
             --exclude '^https?://127\.0\.0\.1'
             --exclude 'porkbun\.com/api'
             --exclude 'doi\.org'
             --exclude 'ipip\.ori\.org'
+            --exclude 'projects\.ori\.org'
             --exclude 'dlc\.iec\.cat'
             --exclude 'gencat\.cat'
             --exclude-path 'docs/seo/links-audit-*.md'
