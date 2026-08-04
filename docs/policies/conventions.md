@@ -73,6 +73,35 @@ the schema described in the most recent migration on disk.
 
 The PR template has a checkbox for this.
 
+### A migration verifies its shape, not its violation count
+
+A migration that writes JSON ends with an assertion that the columns
+are still the shape they were, and a count of rows that are readable.
+Not only a count of rows that break a rule.
+
+Migration 066 rewrote every English title and description and
+double-encoded them: each column became a jsonb string holding the
+JSON text instead of the object. Every guard passed.
+
+- The dry run passed. A JSON string is valid jsonb, so Postgres had
+  nothing to object to.
+- Every statement reported `UPDATE 1`. The writes succeeded exactly
+  as asked.
+- The verification queries passed, and this is the part worth
+  remembering. They were `count(*) WHERE length(title->>'en') > 60`.
+  On a jsonb string `->>'en'` is NULL, `length(NULL)` is NULL, and
+  `NULL > 60` is not true. A table where no title was readable at all
+  reported zero titles over the limit.
+
+A count of violations cannot tell "clean" from "gone". Pair every
+negative check with a positive one: `0 over the limit` and
+`108 readable` together mean something, either alone does not.
+
+`db/migrations/067_repair_double_encoded_jsonb.sql` carries the
+assertion block to copy: a `DO $$` that raises inside the
+transaction, so a dry run of a migration that flattens one of these
+columns rolls back on that line instead of printing success.
+
 ## Smoke tests against real APIs
 
 Smoke tests that hit live external APIs use the `qa_smoke@cercol.team`

@@ -63,11 +63,48 @@ def links(body: str) -> list[str]:
 
 
 def dois(body: str) -> list[str]:
-    return sorted(re.findall(r'10\.\d{4,9}/[^\s)\]]+', body))
+    # Trailing punctuation is part of the sentence, not of the DOI. Without
+    # the strip, a citation that ends a sentence in one language and is
+    # followed by a colon in another reads as two different DOIs, which is
+    # how "10.1207/s15327957pspr0204_5" and the same DOI before a French
+    # non-breaking space and colon were once reported as a divergence.
+    return sorted(d.rstrip('.,;:') for d in re.findall(r'10\.\d{4,9}/[^\s)\]]+', body))
 
 
 def headings(body: str) -> int:
     return len(re.findall(r'^#{1,6} ', body, re.M))
+
+
+# Terms that are correct in English inside a translated article, because the
+# SEO policy requires the academic vocabulary to be indexable in every
+# language. A chart label made only of these is not evidence of a missed
+# translation.
+_ACADEMIC = re.compile(
+    r'\b(Big[ -]Five|OCEAN|IPIP|NEO|AB5C|HEXACO|MBTI|Myers[ -]Briggs|Dark Triad|'
+    r'Openness|Conscientiousness|Extraversion|Agreeableness|Neuroticism)\b',
+    re.I,
+)
+
+
+def svg_labels(body: str) -> list[str]:
+    """The translatable text inside inline SVG charts.
+
+    Charts are written as inline SVG in the article body, so their labels are
+    part of the content and have to be translated with it. They are easy to
+    miss: a translator working on prose scrolls past a block of markup, and
+    27 charts across seven articles shipped with English axis labels sitting
+    inside otherwise fully translated pages.
+
+    Academic terms and anything without a real word (numbers, "r = 0.18",
+    bullets) are dropped, so a label set that is legitimately identical
+    across languages does not register as untranslated.
+    """
+    out = []
+    for raw in re.findall(r'<text[^>]*>([^<]+)</text>', body):
+        rest = _ACADEMIC.sub('', raw)
+        if re.search(r'[A-Za-zÀ-ÿ]{4,}', rest):
+            out.append(_flat(raw).strip())
+    return sorted(out)
 
 
 def _flat(text: str) -> str:
@@ -119,6 +156,9 @@ def check_post(row, lang: str, animals: set[str]) -> list[str]:
             problems.append("link set differs from English")
         if dois(content) != dois(english):
             problems.append("DOI set differs from English")
+        labels = svg_labels(content)
+        if labels and labels == svg_labels(english):
+            problems.append(f"{len(labels)} SVG chart label(s) still in English")
         if headings(content) != headings(english):
             problems.append(
                 f"heading count {headings(content)} vs {headings(english)} in English"
