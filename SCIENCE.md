@@ -257,28 +257,51 @@ assigned a different role by the two priors.
 
 ### First Quarter and Full Moon, IPIP-NEO, 1–5 scale
 
-Source: Johnson (2014) doi:10.1016/j.jrp.2014.05.003.
+Source: Kajonius, P. J., & Johnson, J. A. (2019). Assessing the structure of
+the Five Factor Model of Personality (IPIP-NEO-120) in the public domain.
+*Europe's Journal of Psychology, 15*(2), 260–275, Table A1. Open access.
+<https://doi.org/10.5964/ejop.v15i2.1671>
 
-| Factor | Domain     | NORM_MEAN | NORM_SD |
-|--------|------------|-----------|---------|
-| E      | presence   |   3.3     |  0.72   |
-| A      | bond       |   3.9     |  0.58   |
-| C      | discipline |   3.7     |  0.62   |
-| N      | depth      |   2.8     |  0.72   |
-| O      | vision     |   3.7     |  0.60   |
+N = 320,128 (127,695 male, 192,433 female, mean age 28.13). The published
+table is on the 4–20 facet metric: a facet is four items answered 1–5, and
+each domain figure is the mean of its six facets, so dividing by four puts it
+on the item mean Cèrcol scores.
 
-**These five are not yet traced to a table.** Johnson (2014) reports alphas,
-correlations and factor loadings, not domain means and standard deviations,
-so the citation above establishes the instrument and not these numbers. They
-are treated as a Tier 3 prior until either a published table is found for
-them or Cèrcol's own sample replaces them at NORM_MIN_SAMPLE. Do not cite
-them as published statistics in any user-facing text until that is settled.
+| Factor | Domain     | Published (4–20) | NORM_MEAN | NORM_SD |
+|--------|------------|------------------|-----------|---------|
+| E      | presence   | 13.69 / 2.36     |   3.42    |  0.59   |
+| A      | bond       | 14.87 / 2.01     |   3.72    |  0.50   |
+| C      | discipline | 14.95 / 2.34     |   3.74    |  0.59   |
+| N      | depth      | 11.10 / 2.66     |   2.78    |  0.67   |
+| O      | vision     | 13.71 / 2.06     |   3.43    |  0.52   |
+
+These replaced five figures that had been attributed to Johnson (2014) and
+Maples-Keller et al. (2019) and appear in neither. Johnson (2014) reports
+alphas, correlations and factor loadings, not domain descriptives. The
+largest correction is Openness: the old mean was 0.27 too high and its SD
+0.08 too wide, so every respondent's Vision was understated by roughly half a
+standard deviation. On the 18 real 1–5 results held when this was found, 55%
+were assigned a different role by the two priors.
+
+Two caveats the authors state and Cèrcol should carry rather than bury.
+Openness is the most loosely structured of the five factors in this
+instrument, with an ECV of .43, and what it measures is intellectual and
+artistic curiosity rather than emotion or politics. Read Vision accordingly.
 
 ### Sample limitations
 
-Both sources are large Western internet samples, self-selected and skewed
-young. That is the standard limitation of open Big Five norms and it should
-be stated wherever these figures are, rather than implied by omission.
+Both sources are large self-selected online samples: people who sought out a
+personality test. Kajonius & Johnson describe theirs as one of the largest US
+public samples to date, mean age 28. The TIPI norms come from the same
+tradition of online data collection. That is the standard limitation of open
+Big Five norms, and it is the reason the Tier 1 and Tier 2 machinery exists:
+these are the starting point, not the destination.
+
+The IPIP project itself declines to publish norms, on the grounds that
+"most 'norms' are misleading, and therefore they should not be used"
+(<https://ipip.ori.org/newNorms.htm>). Cèrcol uses these figures as an
+explicitly labelled Tier 3 prior for exactly that reason, and replaces them
+with its own sample as soon as there is one.
 
 ### Replacement
 
