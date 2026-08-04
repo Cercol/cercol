@@ -118,6 +118,24 @@ jobs:
           # shellcheck disable=SC2086
           python scripts/check_dois.py $FILES
 
+      # check_dois.py only asks whether a DOI resolves. That is not enough:
+      # a fabricated citation shipped in six languages with a DOI that
+      # resolved perfectly, to a PLOS ONE study of health services in Nepal,
+      # under the name of two authors who had written a different paper in a
+      # different journal. Two sentences were attributed to it, one of them
+      # quoted, both saying Cercol's approach beats its main competitor.
+      #
+      # check_doi_attribution.py compares the surnames in the citation text
+      # against the Crossref record and would have caught it on the day. It
+      # existed and nothing ran it. This is that.
+      - name: Check DOI attribution against Crossref
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        if: env.DATABASE_URL != ''
+        run: |
+          pip install asyncpg
+          python scripts/check_doi_attribution.py
+
   test-backend:
     name: Backend tests
     runs-on: ubuntu-latest
