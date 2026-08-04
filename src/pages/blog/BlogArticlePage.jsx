@@ -13,6 +13,7 @@ import { normalizeUnsplashUrl } from '../../utils/unsplash'
 import BlogTestCTA from '../../components/BlogTestCTA'
 import { DisplayHeading } from '../../components/ui'
 import { BRAND_BLUE_GRADIENT } from '../../design/gradients'
+import { buildFaqSchema } from '../../utils/faq-schema'
 
 // Configure marked with custom renderers once at module load time
 marked.use({
@@ -333,6 +334,13 @@ export default function BlogArticlePage() {
     document.querySelectorAll('link[rel="alternate"][hreflang], link[rel="canonical"]').forEach(el => el.remove())
     document.querySelectorAll('script[type="application/ld+json"][data-blog]').forEach(el => el.remove())
 
+    // The shell's FAQPage answers questions about the product and belongs to
+    // the home page. It was shipping on all 648 article routes, so every
+    // article in every language claimed to be the site FAQ. Park it while an
+    // article is mounted and put it back on unmount.
+    const shellFaq = document.querySelector('script[data-shell-faq]')
+    if (shellFaq) shellFaq.remove()
+
     // Mutate (do not duplicate) the meta description. The shell's
     // index.html ships exactly one <meta name="description"> with the
     // generic site description; we override its content for this
@@ -409,6 +417,24 @@ export default function BlogArticlePage() {
     document.head.appendChild(script)
     addedEls.push(script)
 
+    // JSON-LD FAQPage, when the article carries a questions section. SEO.md
+    // lists this among the structured data Cercol emits and six articles are
+    // written for it, but nothing ever produced it, so those sections earned
+    // no rich result in any language.
+    const faq = buildFaqSchema(
+      post.content?.[urlLang] || post.content?.en || '',
+      canonicalUrl,
+      urlLang,
+    )
+    if (faq) {
+      const faqScript = document.createElement('script')
+      faqScript.type = 'application/ld+json'
+      faqScript.dataset.blog = '1'
+      faqScript.textContent = JSON.stringify(faq)
+      document.head.appendChild(faqScript)
+      addedEls.push(faqScript)
+    }
+
     // Hreflang alternates
     const langs = ['en', 'ca', 'es', 'fr', 'de', 'da']
     langs.forEach(l => {
@@ -439,6 +465,12 @@ export default function BlogArticlePage() {
       ogPrev.forEach(({ el, prev }) => prev !== null && el.setAttribute('content', prev))
       twPrev.forEach(({ el, prev }) => prev !== null && el.setAttribute('content', prev))
       addedEls.forEach(el => el.remove())
+      // Put the product FAQ back, so the home page still has it after a
+      // visitor navigates away from an article. Appended rather than put back
+      // between its old siblings: JSON-LD blocks are order independent, and
+      // insertBefore against a remembered sibling throws once that sibling
+      // has been removed by one of the other tag rewrites above.
+      if (shellFaq) document.head.appendChild(shellFaq)
     }
   }, [post, urlLang, slug])
 
