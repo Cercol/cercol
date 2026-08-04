@@ -33,24 +33,37 @@ const FACTOR_KEYS = ['E', 'A', 'O', 'C', 'N']
 export const DOMAIN_MAP  = { E: 'presence', A: 'bond', O: 'vision', C: 'discipline', N: 'depth' }
 
 // ── Published normative statistics for IPIP-NEO (1-5 scale) ───────────────
-// Source: Johnson (2014) doi:10.1016/j.jrp.2014.05.003;
-//         Maples-Keller et al. (2019) doi:10.1080/00223891.2017.1381968
-// Approximate cross-study means for general adult samples.
-// These are the authoritative normative statistics for the whole codebase.
-// Import NORM_MEAN and NORM_SD from this file — never redefine them elsewhere.
+// Kajonius, P. J., & Johnson, J. A. (2019). Assessing the structure of the
+// Five Factor Model of Personality (IPIP-NEO-120) in the public domain.
+// Europe's Journal of Psychology, 15(2), 260-275, Table A1. Open access.
+// doi:10.5964/ejop.v15i2.1671
+//
+// N = 320,128 (127,695 male, 192,433 female, mean age 28.13). The table is on
+// the 4-20 facet metric and each domain figure is the mean of its six facets,
+// so dividing by four puts it on the item mean this codebase scores.
+//
+// These replace five numbers attributed to Johnson (2014) and Maples-Keller
+// et al. (2019) that appear in neither, and that were described here as
+// "approximate cross-study means". The largest correction is Openness: the
+// old mean was 0.27 too high and its SD 0.08 too wide, understating everyone's
+// Openness by about half a standard deviation. 55% of the real 1-5 results
+// held when this was found changed role between the two priors.
+//
+// The authoritative normative statistics for the whole codebase. Import
+// NORM_MEAN and NORM_SD from this file, never redefine them elsewhere.
 export const NORM_MEAN = {
-  E: 3.3,  // Presence (Extraversion)
-  A: 3.9,  // Bond (Agreeableness)
-  O: 3.7,  // Vision (Openness)
-  C: 3.7,  // Discipline (Conscientiousness)
-  N: 2.8,  // Depth (Neuroticism)
+  E: 3.42,  // Presence (Extraversion),      published 13.69 / 4
+  A: 3.72,  // Bond (Agreeableness),         published 14.87 / 4
+  O: 3.43,  // Vision (Openness),            published 13.71 / 4
+  C: 3.74,  // Discipline (Conscientiousness), published 14.95 / 4
+  N: 2.78,  // Depth (Neuroticism),          published 11.10 / 4
 }
 export const NORM_SD = {
-  E: 0.72,
-  A: 0.58,
-  O: 0.60,
-  C: 0.62,
-  N: 0.72,
+  E: 0.59,
+  A: 0.50,
+  O: 0.52,
+  C: 0.59,
+  N: 0.67,
 }
 
 // ── Priors, per instrument ────────────────────────────────────────────────

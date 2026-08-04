@@ -52,15 +52,44 @@ NORM_REFRESH_DAYS = 28    # how often the background task refreshes the cache
 # So the priors are keyed by instrument and nothing may z-score without
 # saying which instrument produced the numbers.
 
-# Published Big Five statistics on the 1-5 IPIP response scale.
-# Johnson (2014) doi:10.1016/j.jrp.2014.05.003 and
-# Maples-Keller et al. (2019) doi:10.1080/00223891.2017.1381968.
+# The IPIP-NEO-120's own published descriptives, for First Quarter and Full
+# Moon, which are IPIP-NEO instruments.
+#
+# Kajonius, P. J., & Johnson, J. A. (2019). Assessing the structure of the
+# Five Factor Model of Personality (IPIP-NEO-120) in the public domain.
+# Europe's Journal of Psychology, 15(2), 260-275. Table A1.
+# doi:10.5964/ejop.v15i2.1671  (open access)
+#
+# N = 320,128 (127,695 male, 192,433 female, mean age 28.13). The table
+# reports domain scores on the 4-20 facet metric; a facet is four items on
+# 1-5, and each domain figure is the mean of its six facets, so dividing by
+# four puts it on the item mean Cercol scores. Published / 4:
+#
+#   Extraversion       13.69 / 2.36  ->  3.42 / 0.59
+#   Agreeableness      14.87 / 2.01  ->  3.72 / 0.50
+#   Conscientiousness  14.95 / 2.34  ->  3.74 / 0.59
+#   Neuroticism        11.10 / 2.66  ->  2.78 / 0.67
+#   Openness           13.71 / 2.06  ->  3.43 / 0.52
+#
+# These replace five numbers that were attributed to Johnson (2014) and
+# Maples-Keller et al. (2019) and are in neither. Johnson (2014) reports
+# alphas, correlations and factor loadings, not domain descriptives. The
+# largest correction is Openness, whose mean was 0.27 too high and whose SD
+# was 0.08 too wide, understating every respondent's Openness by about half
+# a standard deviation. On the 18 real 1-5 results held when this was found,
+# 55% were assigned a different role by the two priors.
+#
+# Sample: a US public sample, self-selected by seeking out an online
+# personality test. The paper also notes Openness is the most loosely
+# structured of the five in this instrument (ECV .43) and that its Openness
+# measures intellectual and artistic curiosity rather than emotion or
+# politics, which is worth remembering before reading much into Vision.
 _NORM_FIVE_POINT = {
-    "presence":   {"mean": 3.3, "sd": 0.72},
-    "bond":       {"mean": 3.9, "sd": 0.58},
-    "discipline": {"mean": 3.7, "sd": 0.62},
-    "depth":      {"mean": 2.8, "sd": 0.72},
-    "vision":     {"mean": 3.7, "sd": 0.60},
+    "presence":   {"mean": 3.42, "sd": 0.59},
+    "bond":       {"mean": 3.72, "sd": 0.50},
+    "discipline": {"mean": 3.74, "sd": 0.59},
+    "depth":      {"mean": 2.78, "sd": 0.67},
+    "vision":     {"mean": 3.43, "sd": 0.52},
 }
 
 # The TIPI's own published norms, for New Moon, which is the TIPI.
