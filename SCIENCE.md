@@ -1,4 +1,4 @@
-# Cèrcol — Scientific Foundation
+# Cèrcol: Scientific Foundation
 
 This file documents the role-scoring pipeline, normative statistics, theoretical
 centroids, validation plan, and all academic sources used in Cèrcol.
@@ -23,13 +23,13 @@ design choices.
 
 The pipeline has three steps:
 
-**Step 1 — Personality measurement**
+**Step 1: Personality measurement**
 We measure personality using OCEAN via the IPIP item pool. OCEAN is the most
 replicated structure in personality psychology. IPIP items are public domain,
 validated against multiple criterion measures, and used in thousands of
 published studies. This step has strong scientific grounding.
 
-**Step 2 — Dimension selection and role definition**
+**Step 2: Dimension selection and role definition**
 From OCEAN, we select the three dimensions that the team composition literature
 identifies as requiring balance: Presence (E), Bond (A), and Vision (O). We
 define roles as intersections of these three dimensions at both poles, following
@@ -46,13 +46,13 @@ over from those sources. Neither tested a bipolar balance effect either: both
 report directional mean- or minimum-level relationships, so the requirement for
 representation at both poles is Cèrcol's hypothesis rather than a result
 imported from the literature.
-The AB5C structure is the published scientific framework — we are applying it,
+The AB5C structure is the published scientific framework: we are applying it,
 not inventing it.
 
-**Step 3 — Team balance descriptions**
+**Step 3: Team balance descriptions**
 From the role definitions, we derive descriptions of how each role moves team
 balance. These descriptions follow directly from steps 1 and 2. They are not
-validated against real team outcomes — that validation does not yet exist for
+validated against real team outcomes, that validation does not yet exist for
 this specific model. What exists is the logical chain: if P/B/V require balance
 (step 2), and a person scores high on P and low on B (step 1), then that person
 pushes team balance toward Presence and away from Bond.
@@ -81,8 +81,8 @@ The translation from AB5C facets to team effects draws on the OCEAN team
 composition literature, primarily Bell (2007) and Neuman & Wright (1999), which
 establish that Agreeableness, Conscientiousness and Openness matter at team
 level. Extraversion is in neither paper's findings. This
-is a composition of two evidence bases — AB5C structure and team-level OCEAN
-effects — not direct evidence of team roles. It is the most principled inference
+is a composition of two evidence bases, AB5C structure and team-level OCEAN
+effects, not direct evidence of team roles. It is the most principled inference
 available from existing literature.
 
 The system is a working hypothesis, not a validated instrument. All design
@@ -159,9 +159,15 @@ conclusion. Cèrcol treats Depth as directional on the individual literature,
 not on a team-level finding, and should say so wherever it says it.
 
 **Conscientiousness (Discipline)** is directional upward. Barrick & Mount (1991)
-is the most replicated finding in applied personality psychology: C predicts
-individual performance across almost all job contexts. Bell (2007) confirms the
-effect at team level. There is no evidence that teams benefit from low-C members
+meta-analysed 162 samples from 117 studies, N = 23,994, and found
+Conscientiousness a valid predictor for all five occupational groups they
+examined and all three criterion types. Their abstract: "one dimension of
+personality, Conscientiousness, showed consistent relations with all job
+performance criteria for all occupational groups". It was the only one of the
+five to hold in every cell, with estimated true score correlations of .20 to
+.23, mean ρ = .22. Consistent, and modest. Peeters et al. (2006) find the same
+direction at team level, elevation ρ = 0.20, and the largest variance penalty
+of any trait, ρ = −0.24. There is no evidence that teams benefit from low-C members
 as a counterweight.
 
 **Neuroticism (Depth)** is directional downward. Bell (2007) finds a consistent
@@ -170,7 +176,7 @@ evidence of a team role that requires high N as a desirable characteristic in
 itself.
 
 C and N are included in role centroids as dimensions that modulate how each role
-is expressed — not as dimensions that define team balance.
+is expressed, not as dimensions that define team balance.
 
 ### Why g (cognitive ability) is excluded from the role system
 
@@ -197,7 +203,7 @@ Softmax over negative distances produces probabilities across all 12 roles.
 Roles with probability > 15% form the personal arc (secondary roles).
 
 There is no neutral centre role. A person at the centre of P/B/V space moves
-no team balance in any direction — they are better described by their C and N
+no team balance in any direction, and they are better described by their C and N
 values than assigned a role with no functional content.
 
 ---
@@ -224,10 +230,15 @@ Source: AB5C (Hofstee et al. 1992) + OCEAN team composition literature
 
 ### Notes on rare profiles
 
-Fox (B-V+) and Octopus (P-V+) are statistically less frequent because they
-run against the natural positive correlations between E, A and O (r ≈ +0.15
-to +0.20). Rarity does not invalidate them — they are the profiles that bring
-the most unusual and hardest-to-replace imbalance correction to a team.
+Fox (B-V+) and Octopus (P-V+) are statistically less frequent because they run
+against the positive correlations the IPIP-NEO-120 shows between Openness and
+the other two balance dimensions: Openness with Extraversion +.15 and with
+Agreeableness +.21 in the original English inventory, +.18 and +.11 in the
+Danish validation (Vedel et al. 2018, Table 2). Extraversion and Agreeableness
+are only weakly related to each other, +.09 in the original and not significant
+in Danish, so no role is rare on that account. Rarity does not invalidate them:
+they are the profiles that bring the most unusual and hardest-to-replace
+imbalance correction to a team.
 
 ---
 
@@ -235,18 +246,18 @@ the most unusual and hardest-to-replace imbalance correction to a team.
 
 Implemented in `src/utils/role-scoring.js`.
 
-**Step 1** — Normalise OCEAN scores to z-scores using per-domain published
+**Step 1**: Normalise OCEAN scores to z-scores using per-domain published
 priors (Johnson 2014; Maples-Keller et al. 2019). Replace with sample
 statistics at N≥200.
 
-**Step 2** — Euclidean distance in 5D space (E, A, O, C, N) to all 12
+**Step 2**: Euclidean distance in 5D space (E, A, O, C, N) to all 12
 theoretical centroids.
 d(profile, centroid) = sqrt(Σ(z_i − c_i)²) for i in {E, A, O, C, N}
 
-**Step 3** — Softmax over negative distances → full probability map across
+**Step 3**: Softmax over negative distances → full probability map across
 all 12 roles. Roles with probability > 15% form the personal arc.
 
-**Step 4** — No centre rule. Profiles near the P/B/V origin are assigned
+**Step 4**: No centre rule. Profiles near the P/B/V origin are assigned
 the closest centroid by distance. The report explains low maximum probability
 as a diffuse profile, not a separate role category.
 
@@ -513,8 +524,8 @@ witness-minus-self z-difference is approximately:
 These offsets are an artefact of the comparison, not a property of
 the witness's perception. For this reason, the Full Moon report
 does not display witness-vs-self comparisons as absolute z-score
-differences. Comparisons are expressed structurally — as relative
-rankings of archetypes — which do not depend on the comparability
+differences. Comparisons are expressed structurally, as relative
+rankings of archetypes: which do not depend on the comparability
 of the two scales.
 
 Witness-specific normative statistics (NORM_MEAN, NORM_SD per
@@ -633,7 +644,7 @@ when both have identical fit scores).
 - If k-means suggests k≠12: revise taxonomy before any product changes
 
 **Critical limitation**: the ground truth for validation is not the role
-assignments Cèrcol has made to date — it is external data on actual team
+assignments Cèrcol has made to date: it is external data on actual team
 behaviour. Accumulated data allows refinement of the model's internal geometry,
 not validation of it as a predictor of team performance. This distinction is
 fundamental and must be explicit in all scientific communication about
@@ -652,7 +663,7 @@ All 190 items (10 TIPI + 60 IPIP-NEO-60 + 120 IPIP-NEO-120) are translated into 
 and in production.
 
 **Translation approach (when applied):** Same direct translation methodology as all other
-languages — exact psychological meaning preserved, Valencian orthographic standard
+languages: exact psychological meaning preserved, Valencian orthographic standard
 (normativa de l'Acadèmia Valenciana de la Llengua), no regional softening or register
 elevation that would affect construct measurement. Gender-inclusive Catalan forms
 (e.g. -at/ada contracted as -at/da) used where the source item requires it.
@@ -678,7 +689,7 @@ approach from the English source items. IPIP items are in the public domain
 **Translation approach:** Direct translation by a human translator with knowledge of
 both the source language and the psychometric context of each item. The translation
 preserves the precise psychological meaning of each item without softening, strengthening,
-or reframing the construct being measured. Neutral international Spanish is used — neither
+or reframing the construct being measured. Neutral international Spanish is used, neither
 localised regionalisms nor formal register that would increase perceived test-taking
 difficulty. Gender-inclusive forms (e.g. the slash notation -o/a) are used where the
 source item's meaning requires it.
@@ -693,7 +704,7 @@ covers the 300-item IPIP-NEO rather than the 60-item version Cèrcol uses, its
 authors describe it as preliminary, and several scales are flagged there for
 revision. It is a precedent for the method, not evidence that the structure
 replicates.
-This is not a formally validated translation — it is a principled open-source translation
+This is not a formally validated translation: it is a principled open-source translation
 of public-domain items, documented as such.
 
 **Ongoing correction (planned):** A translation feedback mechanism for Spanish-speaking
@@ -709,7 +720,7 @@ methodology as the Spanish adaptation.
 **Source language:** English (ipip.ori.org public domain corpus)
 
 **Translation approach:** Direct translation preserving the precise psychological meaning
-of each item. Neutral European French is used — no regional variants (not Québécois),
+of each item. Neutral European French is used, no regional variants (not Québécois),
 no register elevation that would affect construct measurement. Gender-inclusive forms
 (e.g. the mid-dot notation -·e) are used where the source item's meaning requires it.
 
@@ -717,7 +728,7 @@ no register elevation that would affect construct measurement. Gender-inclusive 
 & Piolti, M. (2023), University of Mons, a documented European-French IPIP adaptation
 listed on ipip.ori.org. The item-level translation methodology is documented, and
 Cèrcol's translation follows the same item-level approach.
-This is not a formally validated translation — it is a principled open-source translation
+This is not a formally validated translation: it is a principled open-source translation
 of public-domain items, documented as such.
 
 **Ongoing correction (planned):** A translation feedback mechanism is planned but not yet
@@ -732,16 +743,19 @@ methodology as the Spanish and French adaptations.
 **Source language:** English (ipip.ori.org public domain corpus)
 
 **Translation approach:** Direct translation preserving the precise psychological meaning
-of each item. Standard High German (Hochdeutsch) is used — no regional variants (not
+of each item. Standard High German (Hochdeutsch) is used, no regional variants (not
 Austrian, not Swiss German), neutral register. Gender-inclusive forms are used where
 the source item's meaning requires it.
 
-**Scientific basis:** German adaptations of the IPIP are referenced in the published
-psychometric literature and listed on ipip.ori.org. The five-factor structure replicates
-in German-speaking populations (see e.g. Ostendorf & Angleitner 1994 for the German
-NEO-PI-R). Cèrcol's translation follows the same item-level direct translation methodology.
-This is not a formally validated translation — it is a principled open-source translation
-of public-domain items, documented as such.
+**Scientific basis:** German adaptations of the IPIP are listed on ipip.ori.org:
+the 50-item Big-Five factor markers were translated at Bielefeld, and the 300
+items measuring NEO-PI-R constructs at Koblenz-Landau. The five-factor structure
+itself replicates in German, established by the German NEO-PI-R manual
+(Ostendorf & Angleitner 2004) rather than by their 1994 instrument comparison,
+which is what this document previously cited for it. Cèrcol's translation
+follows the same item-level direct translation methodology. It is not a formally
+validated translation: it is a principled open-source translation of
+public-domain items, documented as such.
 
 **Ongoing correction (planned):** A translation feedback mechanism is planned but not yet
 implemented. When it ships, suggestions will be stored with the `language` field set to
@@ -758,7 +772,7 @@ specific IPIP-NEO-120 item set.
 **Source language:** English (ipip.ori.org public domain corpus)
 
 **Translation approach:** Direct translation following the Vedel et al. (2018) methodology.
-Standard Danish (Rigsdansk) is used — no regional variants (not Faroese, not Greenlandic).
+Standard Danish (Rigsdansk) is used, no regional variants (not Faroese, not Greenlandic).
 Gender-neutral or inclusive forms are used where the source item requires it.
 
 **Altered items (Vedel et al. 2018):** Two items in the Values/Compass facet were altered
@@ -768,7 +782,7 @@ for legal reasons related to Danish voting behaviour context. For the item origi
 original voting formulation. If a liberal item is added in a future update, the same alteration
 applies: "View myself as predominantly liberal politically."
 
-This is not a formally validated translation — it is a principled open-source translation
+This is not a formally validated translation: it is a principled open-source translation
 of public-domain items, following the Vedel et al. methodology, documented as such.
 
 **Ongoing correction (planned):** A translation feedback mechanism is planned but not yet
@@ -833,10 +847,11 @@ implemented. When it ships, suggestions will be stored with the `language` field
   cognitive ability. *Journal of Applied Psychology, 84*(3), 376–389.
   https://doi.org/10.1037/0021-9010.84.3.376
 
-- Ostendorf, F., & Angleitner, A. (1994). A comparison of different instruments
-  proposed to measure the Big Five. *European Review of Applied Psychology,
-  44*(1), 45–53. [German NEO-PI-R validation establishing five-factor replication
-  in German-speaking populations.]
+- Ostendorf, F., & Angleitner, A. (2004). *NEO-PI-R: NEO
+  Persönlichkeitsinventar nach Costa und McCrae, Revidierte Fassung*. Göttingen:
+  Hogrefe. [The German NEO-PI-R manual. Cited for the five-factor replication in
+  German; their 1994 paper, previously cited here, is a comparison of
+  instruments and does not establish it.]
 
 - Peeters, M. A. G., Van Tuijl, H. F. J. M., Rutte, C. G., & Reymen, I. M. M. J.
   (2006). Personality and team performance: A meta-analysis. *European Journal
