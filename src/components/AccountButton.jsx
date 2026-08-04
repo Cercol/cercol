@@ -28,7 +28,7 @@ export default function AccountButton() {
     getLatestFullMoonResult()
       .then((result) => {
         if (result) {
-          const { role } = computeRole(result)
+          const { role } = computeRole(result, 'fullMoon')
           setRoleCode(role)
         }
       })

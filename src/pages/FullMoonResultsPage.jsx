@@ -135,7 +135,7 @@ export default function FullMoonResultsPage() {
   }
 
   const domainKeys = DOMAIN_KEYS
-  const selfRole   = computeRole(domains)
+  const selfRole   = computeRole(domains, 'fullMoon')
 
   const completedSessions  = sessions.filter(s => s.completed_at && s.scores)
   const pendingSessions    = sessions.filter(s => !s.completed_at)
@@ -145,7 +145,7 @@ export default function FullMoonResultsPage() {
   const witnessScores = hasAnyWitness
     ? averageWitnessScores(completedSessions.map(s => s.scores))
     : null
-  const witnessRole = witnessScores ? computeRole(witnessScores) : null
+  const witnessRole = witnessScores ? computeRole(witnessScores, 'witness') : null
 
   // Combined role: self × 2/3 + witness × 1/3 (falls back to selfRole when no witnesses)
   const roleResult = computeCombinedRole(selfRole, witnessRole)

@@ -53,25 +53,55 @@ export const NORM_SD = {
   N: 0.72,
 }
 
-// ── Response scale normalisation ──────────────────────────────────────────
-// New Moon (TIPI) answers on 1-7; every other instrument answers on 1-5, and
-// NORM_MEAN/NORM_SD above are 1-5 statistics. Feeding a 1-7 score straight
-// into the z-score turns a mild "slightly agree" (5) into +2.4 SD and pushes
-// most respondents into the wrong role, so 1-7 instruments are mapped first.
-const SEVEN_POINT_INSTRUMENTS = new Set(['newMoon'])
+// ── Priors, per instrument ────────────────────────────────────────────────
+// A prior belongs to an instrument, not to the platform. Feeding one
+// instrument's raw scores to another's reference does not add noise, it
+// pushes everyone toward the same corner of the role space, and it has now
+// happened twice:
+//
+//   New Moon answers on 1-7 and was measured against these 1-5 statistics,
+//   so a mild "slightly agree" read as +2.4 SD.
+//
+//   The Witness instrument is forced-choice. Its own output is centred on
+//   3.0 with an SD near 0.50, because the score is 3 + (votes/count) * 2 and
+//   every round increments count for all five factors while moving only two.
+//   Measured against self-report means of 3.3 to 3.9 it put four roles
+//   permanently out of reach and sent 41% of respondents to Badger.
+
+// The same statistics on the 1-7 TIPI scale: x7 = (x5 - 1) * 6/4 + 1, so the
+// mean maps through and the SD scales by 6/4.
+const NORM_SEVEN_POINT = {
+  mean: Object.fromEntries(Object.entries(NORM_MEAN).map(([k, v]) => [k, ((v - 1) * 6) / 4 + 1])),
+  sd:   Object.fromEntries(Object.entries(NORM_SD).map(([k, v]) => [k, (v * 6) / 4])),
+}
+
+// The Witness instrument's own distribution, measured over 20000 simulated
+// witnesses answering known profiles across a range of witness accuracy:
+// mean 3.00, SD 0.93, near-identical on all five domains. Simulated rather
+// than observed, because the instrument has no real responses yet; a prior in
+// exactly the sense the published statistics are, replaced by empirical norms
+// at N >= 200.
+const NORM_WITNESS = {
+  mean: Object.fromEntries(Object.keys(NORM_MEAN).map(k => [k, 3.0])),
+  sd:   Object.fromEntries(Object.keys(NORM_SD).map(k => [k, 0.93])),
+}
+
+const PRIORS = {
+  newMoon:      NORM_SEVEN_POINT,
+  firstQuarter: { mean: NORM_MEAN, sd: NORM_SD },
+  fullMoon:     { mean: NORM_MEAN, sd: NORM_SD },
+  witness:      NORM_WITNESS,
+}
 
 /**
- * toFiveScale — linearly map a 1-7 domain score set onto 1-5.
- * Returns the input untouched for instruments that already answer on 1-5.
- * @param {Record<string, number>} scores
+ * priorFor — the Tier 3 prior for one instrument.
+ * Falls back to the 1-5 statistics, which is what two of the three
+ * self-report instruments use.
  * @param {string|null} instrument
- * @returns {Record<string, number>}
+ * @returns {{mean: Record<string, number>, sd: Record<string, number>}}
  */
-export function toFiveScale(scores, instrument = null) {
-  if (!SEVEN_POINT_INSTRUMENTS.has(instrument)) return scores
-  return Object.fromEntries(
-    Object.entries(scores).map(([k, v]) => [k, ((v - 1) * 4) / 6 + 1]),
-  )
+export function priorFor(instrument = null) {
+  return PRIORS[instrument] ?? { mean: NORM_MEAN, sd: NORM_SD }
 }
 
 // ── Arc role probability threshold ────────────────────────────────────────
@@ -96,9 +126,12 @@ function euclidean(zArr, centroid) {
 /**
  * computeRole — main export
  *
- * @param {Object} domainScores - {presence, bond, vision, discipline, depth} on 1–5 scale
- * @param {string|null} [instrument] - source instrument; 1-7 instruments
- *   ('newMoon') are mapped onto 1-5 first. Omit for scores already on 1-5.
+ * @param {Object} domainScores - {presence, bond, vision, discipline, depth}
+ *   on whatever scale `instrument` produces.
+ * @param {string|null} [instrument] - 'newMoon' | 'firstQuarter' | 'fullMoon'
+ *   | 'witness'. Always pass it: the raw numbers do not say which instrument
+ *   they came from, and the wrong prior does not blur a result, it relocates
+ *   it. Omitting it falls back to the 1-5 self-report statistics.
  * @returns {Object} {
  *   role: 'R01'|'R02'|…|'R12',
  *   arc: string[],          // other roles with probability > 15%
@@ -106,9 +139,9 @@ function euclidean(zArr, centroid) {
  * }
  */
 export function computeRole(domainScores, instrument = null) {
-  const scores = toFiveScale(domainScores, instrument)
-  // Step 1 — Normalise raw 1-5 scores to z-scores using per-domain published priors
-  const z = FACTOR_KEYS.map(f => (scores[DOMAIN_MAP[f]] - NORM_MEAN[f]) / NORM_SD[f])
+  // Step 1 — z-score against the prior built for THIS instrument
+  const { mean, sd } = priorFor(instrument)
+  const z = FACTOR_KEYS.map(f => (domainScores[DOMAIN_MAP[f]] - mean[f]) / sd[f])
 
   // Step 2 — Euclidean distance to all 12 centroids in 5D space
   const roles = Object.keys(CENTROIDS)
