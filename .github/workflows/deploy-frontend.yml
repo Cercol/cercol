@@ -2,6 +2,13 @@ name: Deploy frontend
 
 on:
   workflow_dispatch: {}
+  # The blog is prerendered at build time from api.cercol.team, so an article
+  # corrected in the database does not reach a reader until something in this
+  # repo happens to change. Twenty-odd content migrations landed before anyone
+  # noticed that the live pages were still serving the version before them.
+  # A nightly rebuild closes that on its own, and costs one build.
+  schedule:
+    - cron: '20 3 * * *'
   push:
     branches: [main]
     paths:
