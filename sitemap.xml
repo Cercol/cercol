@@ -507,6 +507,150 @@
     <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/privacy/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/privacy/"/>
   </url>
+  <url>
+    <loc>https://cercol.team/new-moon/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/new-moon/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/ca/new-moon/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/new-moon/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/es/new-moon/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/new-moon/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/fr/new-moon/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/new-moon/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/de/new-moon/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/new-moon/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/da/new-moon/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/new-moon/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/new-moon/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/first-quarter/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/first-quarter/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/ca/first-quarter/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/first-quarter/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/es/first-quarter/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/first-quarter/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/fr/first-quarter/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/first-quarter/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/de/first-quarter/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/first-quarter/"/>
+  </url>
+  <url>
+    <loc>https://cercol.team/da/first-quarter/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cercol.team/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://cercol.team/ca/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cercol.team/es/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cercol.team/fr/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://cercol.team/de/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://cercol.team/da/first-quarter/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cercol.team/first-quarter/"/>
+  </url>
 
   <!-- Blog index (one entry per language) -->
   <url>
