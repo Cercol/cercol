@@ -19,6 +19,7 @@ import { FQ_ITEMS, FQ_SCALE_LABELS } from '../data/first-quarter'
 import { useScaleLabels } from '../hooks/useScaleLabels'
 import { useInstrumentKeyboard } from '../hooks/useInstrumentKeyboard'
 import { useTrackTestStart } from '../hooks/useTrackTestStart'
+import { usePageMeta } from '../hooks/usePageMeta'
 import { INSTRUMENT_DOMAIN_ORDER } from '../data/domains'
 import { computeFQScores } from '../utils/first-quarter-scoring'
 import { useFeedbackContext } from '../context/FeedbackContext'
@@ -70,6 +71,14 @@ export default function FirstQuarterPage() {
   const navigate = useNavigate()
   const { t } = useTranslation()
   useTrackTestStart('firstQuarter')
+
+  // See NewMoonPage: without a per-page canonical the pre-rendered instrument
+  // pages canonicalise to the home.
+  usePageMeta({
+    title: t('seo.firstQuarter.title'),
+    description: t('seo.firstQuarter.description'),
+    path: '/first-quarter/',
+  })
   const { setItemContext } = useFeedbackContext()
   const { user, loading: authLoading } = useAuth()
 

@@ -21,6 +21,7 @@ import { INSTRUMENT_DOMAIN_ORDER } from '../data/domains'
 import { computeFMScores } from '../utils/full-moon-scoring'
 import { useScaleLabels } from '../hooks/useScaleLabels'
 import { useTrackTestStart } from '../hooks/useTrackTestStart'
+import { usePageMeta } from '../hooks/usePageMeta'
 import { useInstrumentKeyboard } from '../hooks/useInstrumentKeyboard'
 import { useFeedbackContext } from '../context/FeedbackContext'
 import { useAuth } from '../context/AuthContext'
@@ -51,6 +52,17 @@ export default function FullMoonPage() {
   useTrackTestStart('fullMoon')
   const [searchParams] = useSearchParams()
   const { t } = useTranslation()
+
+  // Unlike New Moon and First Quarter this route is not pre-rendered and not
+  // in the sitemap: the effect below sends an anonymous visitor to /auth, so
+  // there is nothing for a crawler here. This runs for the signed-in visitor
+  // who actually reaches the instrument, and gives them a tab title that
+  // names it instead of the site.
+  usePageMeta({
+    title: t('seo.fullMoon.title'),
+    description: t('seo.fullMoon.description'),
+    path: '/full-moon/',
+  })
   const { setItemContext } = useFeedbackContext()
   const { user, loading: authLoading } = useAuth()
 

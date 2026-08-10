@@ -305,7 +305,7 @@ def test_weekly_digest_html_populated():
     assert "What is Extraversion" in html
     assert "big five test" in html
     assert "dead.example" in html
-    assert "Completed tests this week" in html        # north-star hero
+    assert "Completed tests, last 4 weeks" in html    # north-star hero
     assert "Source / channel split" in html           # attribution placeholder
     assert "Cumulative tests" in html
     assert ">Model<" in html              # pivot header
@@ -319,7 +319,7 @@ def test_weekly_digest_html_populated():
 def test_weekly_digest_html_empty_degrades():
     # A completely quiet week must render placeholders, not crash.
     html = emails.weekly_digest_html({"week_label": "—", "kpis": {}})
-    assert "Completed tests this week" in html        # hero renders even when empty
+    assert "Completed tests, last 4 weeks" in html    # hero renders even when empty
     assert "No tests completed this week." in html
     assert "No completed tests to cluster." in html
     assert "No tests recorded yet." in html
@@ -400,3 +400,35 @@ def test_run_builds_summary_without_sending(monkeypatch):
     assert summary["tests"] == 7
     assert summary["clusters"] == 1
     assert summary["broken_links"] == 0
+
+
+# ---------------------------------------------------------------------------
+# The north-star headline is a four-week total, not a week-over-week delta
+# ---------------------------------------------------------------------------
+#
+# The 2026-08-03 digest led with "0 tests, down 100 per cent" against a prior
+# week of 9. Nothing had broken: those 9 were one manual push, and the blog
+# had converted at roughly zero for ten straight weeks either side of it. At
+# these volumes a weekly percentage reports noise as a trend.
+
+def test_headline_reports_the_four_week_total():
+    html = emails.weekly_digest_html({
+        "week_label": "x",
+        "kpis": {"tests": (0, 9), "tests_4w": (40, 31)},
+    })
+    assert "Completed tests, last 4 weeks" in html
+    # The four-week total is the big number, and it is up, even though the
+    # week itself went 9 -> 0.
+    assert ">40<" in html
+    assert "vs the 4 weeks before (31)" in html
+    # The bad week is still reported, just not as the headline.
+    assert "0 this week" in html
+    # And the headline arrow follows the four-week trend (up), not the week.
+    assert "&#9650;" in html
+
+
+def test_headline_falls_back_when_tests_4w_is_absent():
+    # An older payload must render rather than raise.
+    html = emails.weekly_digest_html({"week_label": "x", "kpis": {"tests": (3, 1)}})
+    assert "Completed tests, last 4 weeks" in html
+    assert ">3<" in html

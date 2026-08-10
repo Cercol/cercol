@@ -77,7 +77,27 @@ const BASE_URL   = 'http://localhost:4173'
 const CONCURRENCY = 4
 
 // Static routes to prerender — auth-gated routes are excluded.
-const STATIC_ROUTES = ['/', '/about', '/instruments', '/roles', '/science', '/faq', '/privacy', '/sample']
+//
+// New Moon and First Quarter are public (no auth, no purchase gate) and are
+// the destination of every blog CTA, so they belong here. Omitting them made
+// GitHub Pages serve public/404.html — a JS redirect shim — which means the
+// pages answered HTTP 404 to Googlebot, to Slack/LinkedIn/WhatsApp link
+// previews and to LLM crawlers, while still working for a human with JS.
+// The product was unindexable for as long as that list lacked them.
+// useTrackTestStart is safe here: trackEvent returns early on
+// window.__PRERENDER__, so the build pass emits no funnel events.
+//
+// /full-moon is deliberately NOT here, which the first attempt got wrong.
+// FullMoonPage redirects an anonymous visitor to /auth, so pre-rendering it
+// captured the loading skeleton, and the redirect unmounted the page before
+// usePageMeta could apply anything: the artefact had the home's title and no
+// canonical at all. It is an auth-gated route like /account, and the public
+// description of the instrument already lives on /instruments, which is
+// pre-rendered and in the sitemap.
+const STATIC_ROUTES = [
+  '/', '/about', '/instruments', '/roles', '/science', '/faq', '/privacy', '/sample',
+  '/new-moon', '/first-quarter',
+]
 const BLOG_LANGS = ['en', 'ca', 'es', 'fr', 'de', 'da']
 
 // ---------------------------------------------------------------------------
@@ -541,7 +561,19 @@ async function renderWithPool(browser, routes, concurrency, globals) {
       const item = queue.shift()
       if (!item) break
       console.log(`[prerender]   → ${item.route} (${item.lang}) [${++completed}/${total}]`)
-      await renderOneRoute(browser, item, globals)
+      // One retry. Any thrown error here aborts the whole run and therefore
+      // the deploy, and puppeteer produces transient failures at this scale:
+      // a run of these 637 routes died on /fr/privacy with "Attempted to use
+      // detached Frame" and succeeded on the identical input immediately
+      // after. Each route builds and closes its own browser context, so a
+      // second attempt starts from a clean one and cannot inherit the broken
+      // state. A route that fails twice is a real failure and still aborts.
+      try {
+        await renderOneRoute(browser, item, globals)
+      } catch (err) {
+        console.warn(`[prerender]   retrying ${item.route} (${item.lang}) after: ${err.message}`)
+        await renderOneRoute(browser, item, globals)
+      }
     }
   }
 
