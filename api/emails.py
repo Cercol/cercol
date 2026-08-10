@@ -703,15 +703,28 @@ def _channel_split(channels: list) -> str:
 
 
 def _north_star(kpis: dict, weekly_pivot: dict, channels: list | None = None) -> str:
-    """The one number: completed tests this week vs last, with the this-week
-    instrument x language pivot underneath and the first-touch source split."""
+    """The one number: completed tests over the trailing four weeks, with the
+    this-week instrument x language pivot underneath and the source split.
+
+    The headline was this week against last week, and at this project's
+    volumes that comparison mostly reported noise. The week of 2026-08-03 led
+    with "0, down 100 per cent" against a prior week of 9 whose tests were a
+    single manual push; nothing had broken and nothing had changed. A
+    four-week total needs a real shift to move, so the arrow means something
+    when it does move. The week's own number is kept, smaller, because the
+    pivot and the funnel underneath are still weekly.
+    """
     cur, prev = kpis.get("tests", (0, 0))
+    # Fall back to the weekly pair if a caller predates tests_4w, so an older
+    # payload renders a slightly wrong label rather than raising.
+    cur4, prev4 = kpis.get("tests_4w", (cur, prev))
     block = (
         '<div style="text-align:center;padding:12px 0 4px;">'
         f'<div style="font-size:12px;font-weight:600;color:{_GRAY};'
-        'text-transform:uppercase;letter-spacing:0.06em;">Completed tests this week</div>'
-        f'<div style="font-size:44px;font-weight:700;color:{_BLUE};line-height:1.1;margin:4px 0;">{cur:,}</div>'
-        f'<div style="font-size:13px;color:{_GRAY};">{_delta_span(cur, prev)} &nbsp;vs last week ({prev:,})</div>'
+        'text-transform:uppercase;letter-spacing:0.06em;">Completed tests, last 4 weeks</div>'
+        f'<div style="font-size:44px;font-weight:700;color:{_BLUE};line-height:1.1;margin:4px 0;">{cur4:,}</div>'
+        f'<div style="font-size:13px;color:{_GRAY};">{_delta_span(cur4, prev4)} &nbsp;vs the 4 weeks before ({prev4:,})</div>'
+        f'<div style="font-size:12px;color:{_GRAY};margin-top:6px;">{cur:,} this week</div>'
         '</div>'
     )
     block += (_pivot_table(weekly_pivot) if (weekly_pivot or {}).get("rows")

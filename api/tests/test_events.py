@@ -102,3 +102,91 @@ def test_cta_click_carries_anon_id():
     # INSERT args: (name, slug, instrument, lang, path, anon_id) -> anon_id last.
     _query, args = conn.executed[0]
     assert args[-1] == "visitor-123"
+
+
+# ---------------------------------------------------------------------------
+# Automated-client filter
+# ---------------------------------------------------------------------------
+#
+# The digest's visitor and page-view counts are built from this table, and
+# the access log for the week of 2026-08-03 showed a large share of the
+# traffic was Chrome-Lighthouse (our own PageSpeed runs), Google-NotebookLM
+# and Bytespider. Those are accepted and dropped.
+
+# Real strings taken from /var/log/caddy, not invented.
+LIGHTHOUSE_UA = (
+    "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36 Chrome-Lighthouse"
+)
+BYTESPIDER_UA = (
+    "Mozilla/5.0 (Linux; Android 5.0) AppleWebKit/537.36 (KHTML, like Gecko) "
+    "Mobile Safari/537.36 (compatible; Bytespider; https://zhanzhang.toutiao.com/)"
+)
+HUMAN_UA = (
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 "
+    "(KHTML, like Gecko) Version/26.5.2 Mobile/15E148 Safari/604.1"
+)
+# The same Moto G Power model, without the Lighthouse token: a real phone.
+REAL_MOTO_UA = (
+    "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36"
+)
+# CUBOT is a phone brand whose name contains "bot"; a bare substring match
+# on "bot" would delete these readers.
+CUBOT_UA = (
+    "Mozilla/5.0 (Linux; Android 10; CUBOT_NOTE_20) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/119.0.0.0 Mobile Safari/537.36"
+)
+
+
+def _post_ua(ua, name="page_view"):
+    client, conn = _client()
+    resp = client.post("/events", json={"name": name}, headers={"User-Agent": ua})
+    return resp, conn
+
+
+def test_lighthouse_is_accepted_and_dropped():
+    resp, conn = _post_ua(LIGHTHOUSE_UA)
+    assert resp.status_code == 200
+    assert resp.json()["stored"] is False
+    assert conn.executed == []
+
+
+def test_notebooklm_is_dropped():
+    resp, conn = _post_ua("Google-NotebookLM")
+    assert resp.json()["stored"] is False
+    assert conn.executed == []
+
+
+def test_bytespider_is_dropped():
+    resp, conn = _post_ua(BYTESPIDER_UA)
+    assert resp.json()["stored"] is False
+    assert conn.executed == []
+
+
+def test_a_real_reader_is_still_stored():
+    resp, conn = _post_ua(HUMAN_UA)
+    assert resp.json()["stored"] is True
+    assert len(conn.executed) == 1
+
+
+def test_the_same_phone_without_lighthouse_is_a_reader():
+    # It is the Chrome-Lighthouse token that identifies the PageSpeed run,
+    # not the device it emulates. Filtering the device would delete every
+    # real Moto G Power visitor.
+    resp, conn = _post_ua(REAL_MOTO_UA)
+    assert resp.json()["stored"] is True
+    assert len(conn.executed) == 1
+
+
+def test_a_phone_brand_containing_bot_is_not_a_bot():
+    resp, conn = _post_ua(CUBOT_UA)
+    assert resp.json()["stored"] is True
+    assert len(conn.executed) == 1
+
+
+def test_missing_user_agent_is_treated_as_a_reader():
+    client, conn = _client()
+    resp = client.post("/events", json={"name": "page_view"})
+    assert resp.json()["stored"] is True
+    assert len(conn.executed) == 1
