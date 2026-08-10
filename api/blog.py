@@ -167,6 +167,55 @@ class BlogStatusBody(BaseModel):
 # page-visit signal fired on every route change (db/migrations/026).
 _EVENT_NAMES = {"article_view", "cta_click", "test_start", "page_view"}
 
+# User-Agent substrings that identify a client which must not be counted as a
+# visitor. Matched case-insensitively against the raw header.
+#
+# The weekly digest reported 130 visitors and 217 page views for the week of
+# 2026-08-03, up 13 per cent on visitors, alongside zero test starts. The
+# access log for that week says a large part of that traffic was never human:
+#
+#   Chrome-Lighthouse   the biggest single source, and it is ours. The digest
+#                       runs PageSpeed against eight URLs every week, each run
+#                       renders the page, and each render fired page_view and
+#                       article_view. The digest was counting its own
+#                       measurements as readers.
+#   Google-NotebookLM   an LLM agent reading articles.
+#   Bytespider          ByteDance's crawler, self-identifying.
+#
+# Every entry is an explicit, self-identifying token. A bare "bot" substring
+# is deliberately not used: it matches the CUBOT phone brand, which appears
+# in real Android User-Agents, and silently deleting real visitors to tidy up
+# a metric would be worse than the problem being fixed.
+#
+# Matching clients are accepted and dropped rather than rejected, so a
+# crawler sees the same 200 a reader does and nothing about the site changes
+# shape for it. Nothing is truly lost either: the Caddy access log keeps the
+# full request with its User-Agent, so the split stays recoverable.
+_AUTOMATED_UA = (
+    # Ours, and the largest source of the inflation.
+    "chrome-lighthouse", "pagespeed", "headless",
+    # Generic self-identifying tokens.
+    "crawler", "spider", "slurp",
+    # Search and social.
+    "googlebot", "bingbot", "duckduckbot", "yandexbot", "baiduspider",
+    "applebot", "facebookexternalhit", "twitterbot", "linkedinbot",
+    "slackbot", "telegrambot", "discordbot", "whatsapp", "petalbot",
+    # LLM and answer engines.
+    "google-notebooklm", "gptbot", "oai-searchbot", "chatgpt-user",
+    "claudebot", "claude-web", "anthropic-ai", "perplexitybot", "ccbot",
+    "amazonbot", "bytespider", "meta-externalagent",
+    # SEO suites.
+    "semrushbot", "ahrefsbot", "mj12bot", "dotbot", "screaming frog",
+    # Scripted clients.
+    "curl/", "wget", "python-requests", "go-http-client", "httpx", "axios",
+)
+
+
+def is_automated(request: Request) -> bool:
+    """True when the User-Agent self-identifies as something other than a reader."""
+    ua = request.headers.get("user-agent", "").lower()
+    return any(token in ua for token in _AUTOMATED_UA)
+
 
 class EventBody(BaseModel):
     name:       str
@@ -241,7 +290,15 @@ async def get_post(slug: str, request: Request):
 
 @router.post("/blog/{slug}/view")
 async def increment_view(slug: str, request: Request):
-    """Increment view_count by 1. Silent if slug not found."""
+    """Increment view_count by 1. Silent if slug not found.
+
+    Automated clients are dropped here for the same reason as in /events:
+    view_count is shown as a reader count in the admin dashboard, and the
+    same Lighthouse and crawler traffic inflates it.
+    """
+    if is_automated(request):
+        return {"ok": True}
+
     async with request.app.state.pool.acquire() as conn:
         await conn.execute(
             "UPDATE blog_posts SET view_count = view_count + 1 WHERE slug = $1",
@@ -261,6 +318,13 @@ async def record_event(body: EventBody, request: Request):
     """
     if body.name not in _EVENT_NAMES:
         raise HTTPException(status_code=400, detail="Unknown event name")
+
+    # Crawlers, LLM agents and our own PageSpeed runs are accepted and
+    # dropped: every funnel number in the weekly digest is built from this
+    # table, and a visitor count that includes the job measuring it is not a
+    # number anyone can act on.
+    if is_automated(request):
+        return {"ok": True, "stored": False}
 
     async with request.app.state.pool.acquire() as conn:
         try:

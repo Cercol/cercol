@@ -1509,6 +1509,18 @@
       "title": "Los cuatro instrumentos lunares de Cèrcol para equipos",
       "description": "Cuatro instrumentos Big Five (OCEAN/IPIP) gratuitos: Luna Nueva (10), Cuarto Creciente (60), Luna Llena (120 y Testigo) y Cuarto Menguante para equipos."
     },
+    "newMoon": {
+      "title": "Test de personalidad Big Five gratis de 10 ítems",
+      "description": "Un test de personalidad Big Five (OCEAN) gratuito de dos minutos. Diez ítems del TIPI de dominio público, cinco dimensiones, sin cuenta ni tarjeta."
+    },
+    "firstQuarter": {
+      "title": "Test Big Five IPIP-NEO-60 gratis con 30 facetas",
+      "description": "Un test de personalidad Big Five (OCEAN) gratuito de 60 ítems basado en el IPIP-NEO-60 de dominio público. Cinco dimensiones y 30 facetas."
+    },
+    "fullMoon": {
+      "title": "Test Big Five IPIP-NEO-120 con valoraciones de Testigo",
+      "description": "La evaluación Big Five (OCEAN) de 120 ítems basada en el IPIP-NEO-120 de dominio público, con valoraciones de hasta doce personas que te conocen."
+    },
     "roles": {
       "title": "Los 12 roles de equipo Cèrcol según facetas Big Five",
       "description": "Doce roles de equipo derivados del circumplex AB5C de los Big Five (OCEAN/IPIP). Cada rol con fortalezas, perfil OCEAN y limitaciones abiertas."

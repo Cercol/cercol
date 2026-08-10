@@ -96,3 +96,85 @@ def test_internal_blog_links_resolve():
         "redirect (add the article, fix the link, or add a row to "
         f"db/migrations/016_blog_slug_redirects.sql):\n" + "\n".join(unique)
     )
+
+
+# ---------------------------------------------------------------------------
+# Internal links to non-blog routes
+# ---------------------------------------------------------------------------
+#
+# The check above only ever looked at /blog/<slug>. That is how
+# https://cercol.team/first-quarter sat in the corpus while answering HTTP
+# 404: the route existed in the router, was missing from prerender.mjs, and
+# nothing here looked at links that were not blog links. A route that is not
+# pre-rendered is served public/404.html, which recovers for a browser with
+# JS and is a hard 404 for every crawler.
+
+# Routes the site links to on purpose and never pre-renders: sign-in and
+# per-user pages. The header links to /auth from every page, so these are
+# skipped rather than failed. They are a product decision, not a regression,
+# and failing on them would fail every article in the corpus.
+GATED_ROUTES = {
+    "/auth", "/login", "/signup", "/account", "/my-results", "/admin",
+    "/witness", "/groups",
+    # FullMoonPage sends an anonymous visitor to /auth, so it belongs here
+    # rather than in STATIC_ROUTES. See scripts/prerender.mjs.
+    "/full-moon",
+}
+
+LANG_PREFIXES = ("ca", "es", "fr", "de", "da")
+
+# Only anchors. <link rel=preload/stylesheet> and <script src> point at
+# /assets/... and are not navigation; the first version of this guard read
+# every href in the document and reported the stylesheet as a dead link.
+ANCHOR_HREF = re.compile(r'<a\b[^>]*?\bhref="([^"]+)"', re.IGNORECASE)
+
+
+def _internal_path(href: str) -> str | None:
+    """The site-root path an href points at, or None if it is not internal."""
+    for prefix in ("https://cercol.team", "http://cercol.team"):
+        if href.startswith(prefix):
+            href = href[len(prefix):] or "/"
+            break
+    else:
+        if not href.startswith("/"):
+            return None          # external, mailto:, #anchor, or relative
+    href = href.split("#", 1)[0].split("?", 1)[0]
+    if not href.startswith("/"):
+        return None
+    # Strip a language prefix: /es/instruments and /instruments are the same
+    # route, and only one of them needs to exist for the link to resolve.
+    parts = [p for p in href.strip("/").split("/") if p]
+    if parts and parts[0] in LANG_PREFIXES:
+        parts = parts[1:]
+    if not parts:
+        return None
+    return "/" + "/".join(parts)
+
+
+@pytest.mark.skipif(not _has_prerendered(), reason="dist/ not prerendered; run `npm run build:full` first")
+def test_internal_non_blog_links_are_prerendered():
+    broken: list[str] = []
+    for path in _all_blog_html_files():
+        html = path.read_text(encoding="utf-8")
+        for href in ANCHOR_HREF.findall(html):
+            if parse_blog_target(href) is not None:
+                continue                      # covered by the test above
+            target = _internal_path(href)
+            if target is None:
+                continue
+            if target.startswith("/blog"):
+                continue                      # index pages, covered elsewhere
+            # First path segment only: /groups/<id> is gated as a family.
+            if target in GATED_ROUTES or "/" + target.strip("/").split("/")[0] in GATED_ROUTES:
+                continue
+            if not (DIST / target.strip("/") / "index.html").is_file():
+                broken.append(f"{path.relative_to(DIST)}: {target}")
+
+    unique = sorted(set(broken))
+    assert not unique, (
+        "Internal links pointing at routes with no pre-rendered page. These "
+        "answer HTTP 404 to every crawler and link preview even though a "
+        "browser with JS recovers, which is exactly how /first-quarter sat "
+        "broken in the corpus. Add the route to STATIC_ROUTES in "
+        "scripts/prerender.mjs, or fix the link:\n" + "\n".join(unique)
+    )

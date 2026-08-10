@@ -115,6 +115,17 @@ async def gather_postgres(ws, we, ps, pe) -> dict[str, Any]:
             await _count(conn, "SELECT COUNT(*) FROM results WHERE NOT is_seed AND created_at >= $1 AND created_at < $2", ws, we),
             await _count(conn, "SELECT COUNT(*) FROM results WHERE NOT is_seed AND created_at >= $1 AND created_at < $2", ps, pe),
         )
+        # Trailing four weeks, and the four before them. At the volumes this
+        # project actually runs at, a week-over-week percentage is noise wearing
+        # a trend's clothes: the week of 2026-08-03 reported "0 tests, down 100
+        # per cent" against a prior week of 9, and those 9 were one manual push.
+        # A four-week total moves slowly enough to mean something.
+        m4_start = ws - timedelta(days=21)          # ws is the start of week 1 of 4
+        m4_prev_start = m4_start - timedelta(days=28)
+        tests_4w = (
+            await _count(conn, "SELECT COUNT(*) FROM results WHERE NOT is_seed AND created_at >= $1 AND created_at < $2", m4_start, we),
+            await _count(conn, "SELECT COUNT(*) FROM results WHERE NOT is_seed AND created_at >= $1 AND created_at < $2", m4_prev_start, m4_start),
+        )
         page_views = (
             await _count(conn, "SELECT COUNT(*) FROM events WHERE name='page_view' AND created_at >= $1 AND created_at < $2", ws, we),
             await _count(conn, "SELECT COUNT(*) FROM events WHERE name='page_view' AND created_at >= $1 AND created_at < $2", ps, pe),
@@ -222,6 +233,7 @@ async def gather_postgres(ws, we, ps, pe) -> dict[str, Any]:
         "kpis": {
             "signups": signups,
             "tests": tests,
+            "tests_4w": tests_4w,
             "page_views": page_views,
             "unique_visitors": visitors,
         },

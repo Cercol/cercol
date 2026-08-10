@@ -19,6 +19,7 @@ import { useFeedbackContext } from '../context/FeedbackContext'
 import { useAuth } from '../context/AuthContext'
 import { getMyResults, anonymiseResult } from '../lib/api'
 import { useTrackTestStart } from '../hooks/useTrackTestStart'
+import { usePageMeta } from '../hooks/usePageMeta'
 import QuestionCard from '../components/QuestionCard'
 import ProgressBar from '../components/ProgressBar'
 import { Button, Card, SectionLabel } from '../components/ui'
@@ -83,6 +84,15 @@ export default function NewMoonPage() {
 
   // First-party funnel signal: the test page mounted. Fire-and-forget.
   useTrackTestStart('newMoon')
+
+  // The instrument pages are pre-rendered from the same index.html shell as
+  // every other top-level page, so without this they would all ship the
+  // home's title and canonical and Google would fold them into the home.
+  usePageMeta({
+    title: t('seo.newMoon.title'),
+    description: t('seo.newMoon.description'),
+    path: '/new-moon/',
+  })
 
   async function handleRedo() {
     if (!existingResult) return

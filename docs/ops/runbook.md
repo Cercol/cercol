@@ -120,7 +120,7 @@ The Porkbun API docs are at https://porkbun.com/api/json/v3/documentation .
 `GET /beta` reports what is left. While any remain, Full Moon is free
 to a new account, and the copy says so in several places.
 
-Two strings stop being true the day it reaches zero, and nothing
+These strings stop being true the day it reaches zero, and nothing
 watches for that:
 
 - `seo.instruments.description` in every `src/locales/*.json`: "Four
@@ -128,11 +128,28 @@ watches for that:
   a meta description, so a search engine will keep serving the old one
   for a while after it changes.
 - `auth.confirmBody`: "unlock your free Full Moon assessment".
+- Three sentences in the `best-free-personality-tests-for-teams-2026`
+  article, in all six language bodies, added by migration 093: the
+  pricing line, the comparison table row, and the closing section that
+  introduces the Witness assessment. Each says Full Moon is a one-time
+  paid purchase **and** free to new accounts while the open beta lasts,
+  so when the grant ends the fix is to delete the second half of a
+  sentence rather than to rewrite a claim. Grep for `open beta`,
+  `beta oberta`, `beta abierta`, `bêta ouverte`, `offenen Beta` and
+  `åbne beta`.
 
-The FAQ answer at `faq.instruments.a` already says Full Moon is paid,
-so the copy is internally inconsistent the moment the grant ends. The
-blog said the same thing and was wrong about it in six languages until
-migration 074.
+Migration 093 deliberately bounded the claim ("while the open beta
+lasts") so that at zero these sentences become out of date rather than
+false, which is the failure mode 074 had to clean up.
+
+The FAQ answer at `faq.instruments.a` says Full Moon is paid without
+that qualifier, so it now reads as narrower than the blog rather than
+as a contradiction, and it needs no change when the grant ends.
+
+Note that `seo.newMoon`, `seo.firstQuarter` and `seo.fullMoon`, added
+when the instrument pages became indexable, deliberately carry **no**
+beta claim. A meta description keeps being served from the index long
+after it changes, so a time-limited offer does not belong in one.
 
 Check with:
 
