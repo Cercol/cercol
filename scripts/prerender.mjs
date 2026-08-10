@@ -77,7 +77,19 @@ const BASE_URL   = 'http://localhost:4173'
 const CONCURRENCY = 4
 
 // Static routes to prerender — auth-gated routes are excluded.
-const STATIC_ROUTES = ['/', '/about', '/instruments', '/roles', '/science', '/faq', '/privacy', '/sample']
+//
+// The three instrument pages are public (no auth, no purchase gate) and are
+// the destination of every blog CTA, so they belong here. Omitting them made
+// GitHub Pages serve public/404.html — a JS redirect shim — which means the
+// pages answered HTTP 404 to Googlebot, to Slack/LinkedIn/WhatsApp link
+// previews and to LLM crawlers, while still working for a human with JS.
+// The product was unindexable for as long as that list lacked these three.
+// useTrackTestStart is safe here: trackEvent returns early on
+// window.__PRERENDER__, so the build pass emits no funnel events.
+const STATIC_ROUTES = [
+  '/', '/about', '/instruments', '/roles', '/science', '/faq', '/privacy', '/sample',
+  '/new-moon', '/first-quarter', '/full-moon',
+]
 const BLOG_LANGS = ['en', 'ca', 'es', 'fr', 'de', 'da']
 
 // ---------------------------------------------------------------------------

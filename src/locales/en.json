@@ -1509,6 +1509,18 @@
       "title": "Cèrcol's four lunar instruments: New, First, Full, Last",
       "description": "Four free Big Five (OCEAN/IPIP) instruments: New Moon (10 items), First Quarter (60), Full Moon (120 plus Witness peer review), Last Quarter for teams."
     },
+    "newMoon": {
+      "title": "Free 10-item Big Five personality test (TIPI)",
+      "description": "A free two-minute Big Five (OCEAN) personality test. Ten items from the public-domain TIPI, five dimension scores, no account and no card."
+    },
+    "firstQuarter": {
+      "title": "Free IPIP-NEO-60 Big Five test with 30 facets",
+      "description": "A free 60-item Big Five (OCEAN) personality test built on the public-domain IPIP-NEO-60. Five dimension scores plus a 30-facet breakdown."
+    },
+    "fullMoon": {
+      "title": "IPIP-NEO-120 Big Five test with Witness ratings",
+      "description": "The 120-item Big Five (OCEAN) assessment on the public-domain IPIP-NEO-120, with Witness ratings from up to twelve people who know you."
+    },
     "roles": {
       "title": "The 12 Cèrcol team roles based on Big Five facets",
       "description": "Twelve science-derived team roles built on the AB5C circumplex of the Big Five (OCEAN/IPIP). Each role with strengths, OCEAN profile, and open limits."

@@ -1509,6 +1509,18 @@
       "title": "Cèrcols fire måneinstrumenter til teams",
       "description": "Fire gratis Big Five (OCEAN/IPIP)-instrumenter: Nymåne (10), Første Kvarter (60), Fuldmåne (120 og Vidne) og Sidste Kvarter til teamarbejde."
     },
+    "newMoon": {
+      "title": "Gratis Big Five-personlighedstest med 10 items",
+      "description": "En gratis Big Five-personlighedstest (OCEAN) på to minutter. Ti items fra det ophavsretsfrie TIPI, fem dimensioner, uden konto og kort."
+    },
+    "firstQuarter": {
+      "title": "Gratis IPIP-NEO-60 Big Five-test med 30 facetter",
+      "description": "En gratis Big Five-personlighedstest (OCEAN) med 60 items bygget på det ophavsretsfrie IPIP-NEO-60. Fem dimensioner og 30 facetter."
+    },
+    "fullMoon": {
+      "title": "IPIP-NEO-120 Big Five-test med Vidne-vurderinger",
+      "description": "Big Five-vurderingen (OCEAN) med 120 items bygget på det ophavsretsfrie IPIP-NEO-120, med vurderinger fra op til tolv, der kender dig."
+    },
     "roles": {
       "title": "Cèrcols 12 teamroller bygget på Big Five-facetter",
       "description": "Tolv videnskabeligt udledte teamroller fra AB5C-circumplex af Big Five (OCEAN/IPIP). Hver rolle med styrker, OCEAN-profil og åbne begrænsninger."

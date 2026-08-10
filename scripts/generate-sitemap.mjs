@@ -24,6 +24,13 @@ const STATIC_PAGES = [
   { path: '/science',   priority: '0.9', changefreq: 'monthly' },
   { path: '/faq',       priority: '0.7', changefreq: 'monthly' },
   { path: '/privacy',   priority: '0.4', changefreq: 'yearly' },
+  // The instrument pages are the conversion destination, so they carry the
+  // highest priority after the home. They were absent from both this list and
+  // the prerender route list, which is why they answered HTTP 404 and never
+  // entered the index. Keep the two lists in step.
+  { path: '/new-moon',      priority: '0.9', changefreq: 'monthly' },
+  { path: '/first-quarter', priority: '0.9', changefreq: 'monthly' },
+  { path: '/full-moon',     priority: '0.9', changefreq: 'monthly' },
 ]
 
 // Trailing slash required: GitHub Pages serves <path>/index.html and

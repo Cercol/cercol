@@ -1509,6 +1509,18 @@
       "title": "Cèrcols vier Mondinstrumente für Teamprofile",
       "description": "Vier kostenlose Big-Five-Instrumente (OCEAN/IPIP): Neumond (10), Erstes Viertel (60), Vollmond (120 und Zeuge) und Letztes Viertel für Teams."
     },
+    "newMoon": {
+      "title": "Kostenloser Big-Five-Persönlichkeitstest mit 10 Items",
+      "description": "Ein kostenloser Big-Five-Persönlichkeitstest (OCEAN) in zwei Minuten. Zehn Items aus dem gemeinfreien TIPI, fünf Dimensionen, ohne Konto und Karte."
+    },
+    "firstQuarter": {
+      "title": "Kostenloser IPIP-NEO-60 Big-Five-Test mit 30 Facetten",
+      "description": "Ein kostenloser Big-Five-Persönlichkeitstest (OCEAN) mit 60 Items auf Basis des gemeinfreien IPIP-NEO-60. Fünf Dimensionen und 30 Facetten."
+    },
+    "fullMoon": {
+      "title": "IPIP-NEO-120 Big-Five-Test mit Zeugen-Einschätzungen",
+      "description": "Die Big-Five-Erhebung (OCEAN) mit 120 Items auf Basis des gemeinfreien IPIP-NEO-120, mit Einschätzungen von bis zu zwölf Menschen, die Sie kennen."
+    },
     "roles": {
       "title": "Die 12 Cèrcol-Teamrollen aus Big-Five-Facetten",
       "description": "Zwölf wissenschaftlich abgeleitete Teamrollen aus dem AB5C-Circumplex der Big Five (OCEAN/IPIP). Jede Rolle mit Stärken, OCEAN-Profil und Grenzen."
