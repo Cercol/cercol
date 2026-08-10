@@ -50,6 +50,15 @@
 -- Every replacement is a plain string substitution across all six language
 -- bodies at once, because a dead URL is dead in every translation and the
 -- URLs are not themselves translated.
+--
+-- Matching is strpos, not LIKE, and that is not a style preference. Three of
+-- these five URLs contain underscores, and LIKE reads an underscore as
+-- "any single character". The first run of this migration failed its own
+-- assertion on '%Dual_concern_model%', which had matched the Danish body's
+-- "Dual concern-modellen" with the space and the hyphen standing in for the
+-- two underscores. The substitutions had all worked. An assertion that can
+-- report a link as dead because a sentence nearby is shaped like its URL is
+-- worse than no assertion.
 
 BEGIN;
 
@@ -62,7 +71,7 @@ UPDATE blog_posts
            FROM jsonb_each(content) AS e(k, v)
        ),
        updated_at = now()
- WHERE content::text LIKE '%10.2307/1170497%';
+ WHERE strpos(content::text, '10.2307/1170497') > 0;
 
 UPDATE blog_posts
    SET content = (
@@ -72,7 +81,7 @@ UPDATE blog_posts
            FROM jsonb_each(content) AS e(k, v)
        ),
        updated_at = now()
- WHERE content::text LIKE '%en.wikipedia.org/wiki/16Personalities%';
+ WHERE strpos(content::text, 'en.wikipedia.org/wiki/16Personalities') > 0;
 
 UPDATE blog_posts
    SET content = (
@@ -82,7 +91,7 @@ UPDATE blog_posts
            FROM jsonb_each(content) AS e(k, v)
        ),
        updated_at = now()
- WHERE content::text LIKE '%Arousal_theory_of_extraversion%';
+ WHERE strpos(content::text, 'Arousal_theory_of_extraversion') > 0;
 
 UPDATE blog_posts
    SET content = (
@@ -92,7 +101,7 @@ UPDATE blog_posts
            FROM jsonb_each(content) AS e(k, v)
        ),
        updated_at = now()
- WHERE content::text LIKE '%Dual_concern_model%';
+ WHERE strpos(content::text, 'Dual_concern_model') > 0;
 
 UPDATE blog_posts
    SET content = (
@@ -102,7 +111,7 @@ UPDATE blog_posts
            FROM jsonb_each(content) AS e(k, v)
        ),
        updated_at = now()
- WHERE content::text LIKE '%overview-thomas-kilmann-conflict-mode-instrument-tki/%';
+ WHERE strpos(content::text, 'overview-thomas-kilmann-conflict-mode-instrument-tki/') > 0;
 
 DO $$
 DECLARE bad integer;
@@ -112,22 +121,22 @@ BEGIN
 
   -- None of the five dead URLs may survive in any language.
   SELECT count(*) INTO bad FROM blog_posts
-   WHERE content::text LIKE '%10.2307/1170497%'
-      OR content::text LIKE '%en.wikipedia.org/wiki/16Personalities%'
-      OR content::text LIKE '%Arousal_theory_of_extraversion%'
-      OR content::text LIKE '%Dual_concern_model%'
-      OR content::text LIKE '%overview-thomas-kilmann-conflict-mode-instrument-tki/%';
+   WHERE strpos(content::text, '10.2307/1170497') > 0
+      OR strpos(content::text, 'en.wikipedia.org/wiki/16Personalities') > 0
+      OR strpos(content::text, 'Arousal_theory_of_extraversion') > 0
+      OR strpos(content::text, 'Dual_concern_model') > 0
+      OR strpos(content::text, 'overview-thomas-kilmann-conflict-mode-instrument-tki/') > 0;
   IF bad > 0 THEN RAISE EXCEPTION 'blog_posts: % body(ies) still carry a dead link', bad; END IF;
 
   -- The live Pittenger DOI must have landed wherever the dead one was, and
   -- the 403-answering DOIs must not have been touched: 10.2307/2666999
   -- (Edmondson) is the control, a JSTOR DOI that resolves and stays.
   SELECT count(*) INTO bad FROM blog_posts
-   WHERE content::text LIKE '%10.3102/00346543063004467%';
+   WHERE strpos(content::text, '10.3102/00346543063004467') > 0;
   IF bad < 1 THEN RAISE EXCEPTION 'blog_posts: the replacement Pittenger DOI is absent'; END IF;
 
   SELECT count(*) INTO bad FROM blog_posts
-   WHERE content::text LIKE '%10.2307/2666999%';
+   WHERE strpos(content::text, '10.2307/2666999') > 0;
   IF bad < 1 THEN RAISE EXCEPTION 'blog_posts: the Edmondson DOI was collateral damage'; END IF;
 END $$;
 
