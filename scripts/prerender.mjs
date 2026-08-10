@@ -553,7 +553,19 @@ async function renderWithPool(browser, routes, concurrency, globals) {
       const item = queue.shift()
       if (!item) break
       console.log(`[prerender]   → ${item.route} (${item.lang}) [${++completed}/${total}]`)
-      await renderOneRoute(browser, item, globals)
+      // One retry. Any thrown error here aborts the whole run and therefore
+      // the deploy, and puppeteer produces transient failures at this scale:
+      // a run of these 637 routes died on /fr/privacy with "Attempted to use
+      // detached Frame" and succeeded on the identical input immediately
+      // after. Each route builds and closes its own browser context, so a
+      // second attempt starts from a clean one and cannot inherit the broken
+      // state. A route that fails twice is a real failure and still aborts.
+      try {
+        await renderOneRoute(browser, item, globals)
+      } catch (err) {
+        console.warn(`[prerender]   retrying ${item.route} (${item.lang}) after: ${err.message}`)
+        await renderOneRoute(browser, item, globals)
+      }
     }
   }
 
