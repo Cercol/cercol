@@ -53,8 +53,11 @@ export default function FullMoonPage() {
   const [searchParams] = useSearchParams()
   const { t } = useTranslation()
 
-  // See NewMoonPage: without a per-page canonical the pre-rendered instrument
-  // pages canonicalise to the home.
+  // Unlike New Moon and First Quarter this route is not pre-rendered and not
+  // in the sitemap: the effect below sends an anonymous visitor to /auth, so
+  // there is nothing for a crawler here. This runs for the signed-in visitor
+  // who actually reaches the instrument, and gives them a tab title that
+  // names it instead of the site.
   usePageMeta({
     title: t('seo.fullMoon.title'),
     description: t('seo.fullMoon.description'),

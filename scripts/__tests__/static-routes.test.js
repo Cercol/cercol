@@ -49,14 +49,23 @@ describe('static route lists', () => {
     expect(missing).toEqual([])
   })
 
-  it('pre-renders the three instrument pages', () => {
+  it('pre-renders the two public instrument pages', () => {
     // Named explicitly rather than left to the containment rule above: these
     // are the conversion destination of every blog CTA, and dropping them
     // from both lists at once would satisfy containment while restoring the
     // original bug.
     const rendered = new Set(prerenderRoutes())
-    for (const route of ['/new-moon', '/first-quarter', '/full-moon']) {
+    for (const route of ['/new-moon', '/first-quarter']) {
       expect(rendered.has(route), `${route} must be pre-rendered`).toBe(true)
     }
+  })
+
+  it('does not pre-render the auth-gated /full-moon', () => {
+    // FullMoonPage sends an anonymous visitor to /auth. Pre-rendering it
+    // captured a loading skeleton whose title and canonical were the home's,
+    // because the redirect unmounted the page and usePageMeta's cleanup ran.
+    // A page a crawler is bounced out of should not be advertised at all.
+    expect(prerenderRoutes()).not.toContain('/full-moon')
+    expect(sitemapPaths()).not.toContain('/full-moon')
   })
 })
