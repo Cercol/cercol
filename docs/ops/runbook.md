@@ -383,6 +383,37 @@ already applied by hand): run once with `baseline: <highest-already-applied>`
 not idempotent (bare `CREATE TABLE` / `INSERT`) and would error if
 re-run. Then a `dry_run: false` run applies the rest.
 
+The ledger drifted once and was re-adopted, so `baseline` is not only a
+first-run tool. On 2026-08-10 it held 40 entries with a newest of
+`040`, while `041` through `091` had all been applied by hand: the
+dry run listed fifty-one already-live migrations as pending, and a
+plain apply would have re-executed them. It was re-baselined at `091`
+after checking each suspect migration's own assertion against live
+data, `085` included, whose eight surviving uses of *Verbundenheit* are
+deliberate and would otherwise have looked like a migration that never
+ran. **Never baseline on the assumption that a migration ran. Check the
+data it claims to have changed.**
+
+### Apply migrations before the frontend rebuild, not after
+
+`db/migrations/**` is in the `deploy-frontend.yml` path filter, so
+merging a content migration starts a rebuild immediately, while the
+migration itself needs a separate manual `workflow_dispatch`. The
+prerender reads every article body from `api.cercol.team`, so if the
+build starts first it bakes the pre-migration text.
+
+This is not a clean win or lose. The build takes most of its 35 minute
+budget across 648 routes and fetches bodies as it goes, so a migration
+applied two minutes into a run leaves the site **half updated**: on
+2026-08-10 the rendered English body of the rankings article carried
+the new sentence while the Catalan payload embedded in the same page
+still carried a corrected-away DOI.
+
+Order it: merge, apply the migration, then dispatch `deploy-frontend`
+by hand and let the concurrency group queue it behind the running one.
+The nightly 03:20 UTC rebuild would eventually fix it either way, but
+not before a reader sees the mixture.
+
 Emergency fallback only (if the workflow is unavailable), the manual
 path still works (peer auth as the `postgres` superuser; the `cercol`
 role may prompt for a password). Feed the file via stdin (`<`), not
