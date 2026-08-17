@@ -67,6 +67,7 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from 
 import { join, resolve } from 'path'
 import { fileURLToPath } from 'url'
 import { normalizeUnsplashUrl } from '../src/utils/unsplash.js'
+import { canonicaliseInternalHrefs } from './lib/canonical-links.mjs'
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url))
 const DIST_DIR   = resolve(__dirname, '../dist')
@@ -536,6 +537,13 @@ async function renderOneRoute(browser, { route, lang }, { articles, articlesBySl
     console.warn(`[prerender] beasties failed for ${route} (${err.message}) — using un-inlined HTML`)
     finalHtml = htmlWithInjections
   }
+
+  // --- Step 2b: canonicalise internal hrefs --------------------------------
+  //
+  // After Beasties, so it applies to the exact bytes that ship. See
+  // scripts/lib/canonical-links.mjs for why the slash is added here and not
+  // at each <Link>.
+  finalHtml = canonicaliseInternalHrefs(finalHtml)
 
   // --- Step 3: write to dist -----------------------------------------------
   if (route === '/') {

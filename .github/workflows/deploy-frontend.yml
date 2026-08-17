@@ -104,6 +104,24 @@ jobs:
         env:
           CHROME_PATH: /usr/bin/google-chrome-stable
 
+      # api/tests/test_internal_links_integrity.py reads dist/ and skips when
+      # it has not been prerendered, which is every other job in this repo:
+      # ci.yml runs `npm run build`, not build:full, so the guard has never
+      # once executed. It was written after /first-quarter answered 404 to
+      # every crawler, and it was dormant while 66 dead /blog/ links sat in
+      # the corpus. This is the only place a prerendered dist/ exists, so it
+      # is the only place the guard can run. Blocking on purpose: shipping a
+      # known set of crawlable 404s is worse than a stale deploy.
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Internal link integrity (prerendered dist)
+        run: |
+          pip install pytest
+          python -m pytest api/tests/test_internal_links_integrity.py -v
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:

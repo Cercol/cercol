@@ -52,6 +52,14 @@ jobs:
           # GET-only FastAPI route, so HEAD is correctly refused and the
           # link is fine. That 405 is what first turned this job red.
           #
+          # 203 is pubmed.ncbi.nlm.nih.gov, which started labelling every
+          # response "Non-Authoritative Information" some time after
+          # 2026-08-10, when this job was last green. It is not bot
+          # detection: a browser User-Agent gets the same 203, and the
+          # pages resolve. 203 is a 2xx and lychee simply does not accept
+          # it by default, so it belongs in this list rather than in the
+          # exclusions, which would stop checking NCBI links at all.
+          #
           # docs/seo/links-audit-*.md is a GENERATED report whose whole
           # job is to list broken links found by scripts/audit_blog_links.py.
           # Link-checking it would always fail by design, so it is
@@ -59,7 +67,7 @@ jobs:
           # exclusion holds whichever path-matching the pinned lychee uses).
           args: >-
             --no-progress
-            --accept '200,206,301,302,304,403,405'
+            --accept '200,203,206,301,302,304,403,405'
             --exclude '^https?://(?:www\.)?example\.(?:com|org|net)'
             --exclude '^https?://localhost'
             --exclude '^https?://127\.0\.0\.1'

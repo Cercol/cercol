@@ -203,8 +203,12 @@ export default function InstrumentsPage() {
             </div>
 
             <div className="border-t border-gray-100 px-6 py-4">
+              {/* nofollow: /full-moon is deliberately not pre-rendered (it
+                  bounces an anonymous visitor to /auth), so it answers 404 to
+                  a crawler. This page is the only public link to it. */}
               <Link
                 to="/full-moon"
+                rel="nofollow"
                 className="text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors flex items-center gap-1.5"
               >
                 {t('instruments.fullMoon.heading')}

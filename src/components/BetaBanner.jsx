@@ -61,8 +61,12 @@ export default function BetaBanner({ userIsPremium }) {
         </div>
 
         {/* Right: CTA */}
+        {/* nofollow: /auth is not pre-rendered, so GitHub Pages answers it
+            404 to a crawler. The banner sits on all 168 pre-rendered pages,
+            which made it the single largest source of crawled 404s. */}
         <Link
           to="/auth"
+          rel="nofollow"
           className="shrink-0 text-xs font-bold text-gray-900 underline hover:no-underline"
         >
           {t('beta.cta')}
