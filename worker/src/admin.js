@@ -276,3 +276,15 @@ export async function probeUrl(env, request) {
   } catch (e) { out.HEAD_timeout = `ERR ${e.name}: ${e.message}` }
   return Response.json(out)
 }
+
+/** GET /admin/bq?sql= — run one read query and return rows or the raw error. Admin debugging. */
+export async function bqDebug(env, request) {
+  const a = await requireAdmin(env, request); if (a instanceof Response) return a
+  const sql = new URL(request.url).searchParams.get('sql') || ''
+  if (!/^\s*(select|with)\b/i.test(sql)) return httpError(400, 'SELECT/WITH only')
+  try {
+    const { query } = await import('./bigquery.js')
+    const rows = await query(env, sql)
+    return Response.json({ rows: rows.slice(0, 50), n: rows.length })
+  } catch (e) { return Response.json({ error: e.message }, { status: 500 }) }
+}

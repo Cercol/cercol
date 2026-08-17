@@ -34,6 +34,7 @@ import {
 } from './groups.js'
 import { createCheckout, stripeWebhook } from './stripe.js'
 import * as admin from './admin.js'
+import * as seo from './seo.js'
 import { scheduled, JOBS } from './scheduled.js'
 import { rateAccuracy } from './writes.js'
 import { emailChangeRequest, emailChangeConfirm } from './auth.js'
@@ -110,6 +111,14 @@ const MIGRATED = [
   { method: 'POST', pattern: /^\/admin\/maintenance\/purge-tokens$/, handler: (env, m, req) => admin.purgeTokens(env, req), gated: true },
   { method: 'POST', pattern: /^\/admin\/jobs\/([a-z-]+)$/, handler: (env, m, req) => admin.runJob(env, req, m[1]), gated: true },
   { method: 'GET', pattern: /^\/admin\/probe$/, handler: (env, m, req) => admin.probeUrl(env, req), gated: true },
+  { method: 'GET', pattern: /^\/admin\/bq$/, handler: (env, m, req) => admin.bqDebug(env, req), gated: true },
+  // Admin SEO (api/seo.py).
+  { method: 'GET', pattern: /^\/admin\/seo\/sources$/, handler: (env, m, req) => seo.sources(env, req), gated: true },
+  { method: 'GET', pattern: /^\/admin\/seo\/health$/, handler: (env, m, req) => seo.health(env, req), gated: true },
+  { method: 'GET', pattern: /^\/admin\/seo\/queries$/, handler: (env, m, req) => seo.queries(env, req), gated: true },
+  { method: 'GET', pattern: /^\/admin\/seo\/pages$/, handler: (env, m, req) => seo.pages(env, req), gated: true },
+  { method: 'GET', pattern: /^\/admin\/seo\/anomalies$/, handler: (env, m, req) => seo.anomalies(env, req), gated: true },
+  { method: 'GET', pattern: /^\/admin\/seo\/page\/(.+)\/lifecycle$/, handler: (env, m, req) => seo.pageLifecycle(env, req, m[1]), gated: true },
 ]
 
 const JSON_HEADERS = { 'content-type': 'application/json' }
