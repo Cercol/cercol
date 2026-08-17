@@ -156,3 +156,15 @@ export async function translationFeedback(env, request) {
          (body.itemText || '').slice(0, 500) || null, user?.sub ?? null).run()
   return Response.json({ ok: true })
 }
+
+/** POST /results/<id>/accuracy — write-once 1..5, anonymous by design. */
+export async function rateAccuracy(env, request, resultId) {
+  const body = await jsonBody(request)
+  const rating = body?.rating
+  if (!Number.isInteger(rating) || rating < 1 || rating > 5) return httpError(400, 'rating must be between 1 and 5')
+  const r = await env.DB.prepare(
+    `UPDATE results SET accuracy_rating = ?, accuracy_rated_at = ? WHERE id = ? AND accuracy_rating IS NULL`
+  ).bind(rating, now(), resultId).run()
+  if (!r.meta?.changes) return httpError(409, 'Already rated')
+  return Response.json({ ok: true })
+}
