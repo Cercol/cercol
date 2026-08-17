@@ -520,8 +520,9 @@ in-body link is root-relative, so a reader and a crawler resolve it
 against cercol.team, a static host with no redirect table, which
 answers public/404.html. The redirect existed for a hop nobody makes.
 A human with JS still reached the article, because the SPA fetches the
-API and the API does honour the redirect, which is the same shape as
-#134: working for everyone who clicked, 404 for everyone who crawled.
+API and the API does honour the redirect. That is the same shape as
+the instrument-page bug: working for everyone who clicked, 404 for
+everyone who crawled.
 
 Migration 094 fixes the bodies. Both guards lost the exemption.
 `blog_slug_redirects` stays, because it is the right mechanism for a
@@ -532,7 +533,7 @@ The remaining two 404s are `/auth` and `/full-moon`, which are
 deliberately not prerendered and are linked from public pages: the beta
 banner links `/auth` from all 168 of them. Both links carry
 `rel="nofollow"` now. Prerendering them was rejected for the reason
-#134 gives.
+given in scripts/prerender.mjs.
 
 ### The guard had never run
 
