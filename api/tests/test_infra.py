@@ -29,8 +29,16 @@ def test_caddy_snippet_exists():
 
 def test_caddy_snippet_has_expected_block():
     content = SNIPPET.read_text(encoding="utf-8")
-    assert "api.cercol.team {" in content, (
+    # A site block may carry several names ("api.cercol.team, origin.cercol.team {"),
+    # so match api.cercol.team as a site address on the block's opening line
+    # rather than the literal "api.cercol.team {".
+    import re
+    assert re.search(r"^[^#\n]*\bapi\.cercol\.team\b[^{\n]*\{", content, re.M), (
         "snippet must declare an api.cercol.team site block"
+    )
+    assert re.search(r"^[^#\n]*\borigin\.cercol\.team\b[^{\n]*\{", content, re.M), (
+        "snippet must also serve origin.cercol.team: the Cloudflare Worker "
+        "reaches this box through that name and needs Caddy to hold its cert"
     )
     assert "reverse_proxy 127.0.0.1:8090" in content, (
         "snippet must reverse_proxy to the local FastAPI uvicorn on :8090"
