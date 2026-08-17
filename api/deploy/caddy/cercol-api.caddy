@@ -1,4 +1,10 @@
-api.cercol.team {
+# origin.cercol.team is the name the Cloudflare Worker uses to reach this
+# box during the migration off Hetzner. Workers cannot fetch a bare IP, and
+# api.cercol.team is becoming the Worker itself, so the Worker needs a
+# hostname of its own that still lands here. Caddy has to hold a certificate
+# for it or the TLS handshake fails before any request is seen (525). Same
+# site block, same upstream: the two names are the same service.
+api.cercol.team, origin.cercol.team {
 	encode zstd gzip
 
 	# Access log in Caddy's JSON format, consumed by

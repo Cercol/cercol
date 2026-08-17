@@ -1,0 +1,10 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "cercol-api",
+  "main": "src/index.js",
+  "compatibility_date": "2026-08-01",
+  "observability": { "enabled": true },
+  "d1_databases": [
+    { "binding": "DB", "database_name": "cercol", "database_id": "928ddbd6-5fc6-4e2b-9fd1-e7de66435ef6" }
+  ]
+}
