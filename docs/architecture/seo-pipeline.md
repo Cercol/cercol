@@ -475,3 +475,70 @@ personality traits at all.
 Swapping the DOI in those cases makes a false claim look sourced, which
 is strictly worse than a broken link. They need prose rewrites and are
 tracked separately.
+
+## Internal link canonicalisation (Aug 2026)
+
+Search Console opened two new indexing reasons in the same week,
+"Page with redirect" and "Not found (404)", four days after it validated
+the 98 pages the instrument-page fix (#134) recovered. A crawl of the
+site from the sitemap outward found 767 distinct internal link targets:
+103 answered 200, 656 answered 301, and 8 answered 404.
+
+### The redirect half: the router's paths are not URLs
+
+Every prerendered route is written as `<route>/index.html`, so GitHub
+Pages 301s the extension-less form. The sitemap, the canonical tag and
+every hreflang emit the slash form. React Router's `to` props do not,
+and to the router they are not wrong: `/roles` and `/roles/` are the
+same route, and a client-side navigation issues no HTTP request at all,
+so a reader never sees the hop. A crawler follows the links as written
+and takes a 301 on all of them, and reports the non-canonical form.
+
+Article bodies were already normalised (`localizeBlogLinks` in
+BlogArticlePage) and component links never were, which is why the
+related-article cards and the body prose on the same page disagreed
+about the same URL.
+
+The slash is added in `scripts/lib/canonical-links.mjs`, called from
+prerender after Beasties, rather than on thirty-odd `to` props. That is
+the single point where router paths become URLs a host has to serve,
+and a rule applied there cannot be regressed by the next `<Link>`.
+
+### The 404 half: a redirect on the wrong host
+
+Six of the eight 404s were `/blog/<slug>` targets, 66 instances across
+10 articles and all six languages. All six had a row in
+`blog_slug_redirects`, and both guards that should have caught them
+treated that row as an exemption:
+`scripts/audit_blog_links.py` probed api.cercol.team and filed them
+under "resolved via redirect, NOT broken", and
+`api/tests/test_internal_links_integrity.py` allowlisted every
+`slug_old` parsed out of migration 016.
+
+The row is real and the 308 is real. It is served by the API. An
+in-body link is root-relative, so a reader and a crawler resolve it
+against cercol.team, a static host with no redirect table, which
+answers public/404.html. The redirect existed for a hop nobody makes.
+A human with JS still reached the article, because the SPA fetches the
+API and the API does honour the redirect, which is the same shape as
+#134: working for everyone who clicked, 404 for everyone who crawled.
+
+Migration 094 fixes the bodies. Both guards lost the exemption.
+`blog_slug_redirects` stays, because it is the right mechanism for a
+URL already indexed or linked from off-site; it just cannot excuse a
+link inside the corpus.
+
+The remaining two 404s are `/auth` and `/full-moon`, which are
+deliberately not prerendered and are linked from public pages: the beta
+banner links `/auth` from all 168 of them. Both links carry
+`rel="nofollow"` now. Prerendering them was rejected for the reason
+#134 gives.
+
+### The guard had never run
+
+`test_internal_links_integrity.py` skips unless `dist/` is prerendered.
+`ci.yml` runs `npm run build`, not `build:full`, so the skip fired on
+every run since the test was written and the assertion had never once
+executed. It is now a step in `deploy-frontend.yml`, after `build:full`
+and before the gh-pages push, which is the only job in the repo where a
+prerendered `dist/` exists.

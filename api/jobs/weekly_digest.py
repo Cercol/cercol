@@ -459,9 +459,16 @@ def gather_bigquery(cfg: JobConfig, bq, ws, we, ps, pe) -> dict[str, Any]:
         gt = f"`{p}.{sg}.searchdata_url_impression`"
         totals = _bq(bq, f"SELECT SUM(impressions) AS impressions, SUM(clicks) AS clicks "
                          f"FROM {gt} WHERE data_date BETWEEN '{cw_s}' AND '{cw_e}'")
+        # query IS NOT NULL drops the anonymised bucket. Google withholds the
+        # text of rare queries and exports them with a NULL query, which is
+        # most of the traffic on a site this size: it grouped into one row
+        # holding 2,181 of 2,324 impressions, sorted to the top of the table
+        # as "None", and pushed a real query off the bottom. The totals above
+        # are a separate query and still count it.
         tq = _bq(bq, f"SELECT query, SUM(impressions) AS impressions, SUM(clicks) AS clicks, "
                      f"AVG(sum_position/impressions) AS pos FROM {gt} "
                      f"WHERE data_date BETWEEN '{cw_s}' AND '{cw_e}' "
+                     f"AND query IS NOT NULL "
                      f"GROUP BY query ORDER BY impressions DESC LIMIT 10")
         # Position movers: this week vs prior week, biggest absolute change.
         movers = _bq(bq, f"""
