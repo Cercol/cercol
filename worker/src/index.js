@@ -23,11 +23,25 @@
 // empirically: with the Host header the origin answers 200, without it 525.
 const ORIGIN = 'https://origin.cercol.team'
 
+import { recordEvent, incrementView, logResult, translationFeedback } from './writes.js'
+
 // Paths this Worker owns. Order matters only for readability; each entry is
 // tested with its own matcher below.
+//
+// The write endpoints are behind WRITES_LIVE, a plain env var flipped with
+// `wrangler secret put` or the dashboard, no redeploy. Until it is "1" they
+// keep proxying to Hetzner, which is what makes the cutover a single switch:
+// flip it, and in the same minute copy the counters and results written on
+// the server since the last sync. Reads and the view-count write must move
+// together or the counters diverge (see scripts/diff-api.mjs, which caught
+// exactly that drift during the first comparison).
 const MIGRATED = [
   { method: 'GET', pattern: /^\/blog$/, handler: listPosts },
   { method: 'GET', pattern: /^\/blog\/([^/]+)$/, handler: getPost },
+  { method: 'POST', pattern: /^\/events$/, handler: (env, m, req) => recordEvent(env, req), gated: true },
+  { method: 'POST', pattern: /^\/blog\/([^/]+)\/view$/, handler: (env, m, req) => incrementView(env, req, decodeURIComponent(m[1])), gated: true },
+  { method: 'POST', pattern: /^\/results$/, handler: (env, m, req) => logResult(env, req), gated: true },
+  { method: 'POST', pattern: /^\/translation-feedback$/, handler: (env, m, req) => translationFeedback(env, req), gated: true },
 ]
 
 const JSON_HEADERS = { 'content-type': 'application/json' }
@@ -37,6 +51,7 @@ export default {
     const url = new URL(request.url)
     for (const route of MIGRATED) {
       if (request.method !== route.method) continue
+      if (route.gated && env.WRITES_LIVE !== '1') continue
       const m = url.pathname.match(route.pattern)
       if (m) return route.handler(env, m, request)
     }
