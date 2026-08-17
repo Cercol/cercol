@@ -36,7 +36,7 @@ import { createCheckout, stripeWebhook } from './stripe.js'
 import * as admin from './admin.js'
 import * as seo from './seo.js'
 import { createPost, updatePost, patchStatus, health, robots } from './blog-admin.js'
-import { scheduled, JOBS } from './scheduled.js'
+import { scheduled } from './scheduled.js'
 import { rateAccuracy } from './writes.js'
 import { emailChangeRequest, emailChangeConfirm } from './auth.js'
 
