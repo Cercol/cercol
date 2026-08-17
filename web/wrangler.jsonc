@@ -1,0 +1,25 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  // The frontend: 726 prerendered pages plus the SPA bundle, served as
+  // static assets by Cloudflare. Replaces GitHub Pages. No Worker code:
+  // assets-only, so it costs no invocations and has no CPU budget to hit.
+  //
+  // not_found_handling = single-page-application: any path with no file
+  // gets /index.html with a 200, which is what React Router needs for the
+  // routes that are deliberately not prerendered (/auth, /my-results,
+  // /groups/...). This replaces public/404.html, whose JS redirect shim was
+  // how those routes worked on GitHub Pages and why /new-moon once answered
+  // 404 to every crawler. Here a missing route is a 200 with the app in it.
+  //
+  // html_handling = auto-trailing-slash: /roles serves /roles/index.html
+  // and redirects to /roles/, matching what GitHub Pages did and what the
+  // sitemap and canonicals already say.
+  "name": "cercol-web",
+  "compatibility_date": "2026-08-01",
+  "observability": { "enabled": true },
+  "assets": {
+    "directory": "../dist",
+    "not_found_handling": "single-page-application",
+    "html_handling": "auto-trailing-slash"
+  }
+}
