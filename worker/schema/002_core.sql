@@ -16,6 +16,13 @@
 --   boolean      -> INTEGER 0/1. The Worker maps to true/false on the way
 --                   out so the API contract does not change.
 --
+-- Foreign keys: only the five Postgres actually has (witness_responses ->
+-- witness_sessions, group_members -> groups, and the three token tables ->
+-- auth_users). A first draft added profiles/results/groups -> auth_users
+-- too, and D1 enforces FKs where the Postgres schema never declared them:
+-- the load rejected 7 legitimate orphan profiles (deleted accounts) and 6
+-- anonymised results. Same constraints as production, no more.
+--
 -- password_hash is deliberately gone: passwords are being retired in this
 -- migration (magic link and Google remain). The column is not created, so
 -- there is nothing to leak and nothing to hash within a 10 ms CPU budget.
@@ -30,7 +37,7 @@ CREATE TABLE IF NOT EXISTS auth_users (
 );
 
 CREATE TABLE IF NOT EXISTS profiles (
-  id               TEXT PRIMARY KEY REFERENCES auth_users(id) ON DELETE CASCADE,
+  id               TEXT PRIMARY KEY,
   created_at       TEXT NOT NULL,
   updated_at       TEXT NOT NULL,
   premium          INTEGER NOT NULL DEFAULT 0,
@@ -89,7 +96,7 @@ CREATE TABLE IF NOT EXISTS results (
   discipline         REAL,
   depth              REAL,
   vision             REAL,
-  user_id            TEXT REFERENCES auth_users(id) ON DELETE SET NULL,
+  user_id            TEXT,
   facets             TEXT,
   anon_id            TEXT,
   utm_source         TEXT,
@@ -121,7 +128,7 @@ CREATE INDEX IF NOT EXISTS events_name_created_idx ON events (name, created_at);
 CREATE TABLE IF NOT EXISTS groups (
   id          TEXT PRIMARY KEY,
   name        TEXT NOT NULL,
-  created_by  TEXT NOT NULL REFERENCES auth_users(id) ON DELETE CASCADE,
+  created_by  TEXT NOT NULL,
   created_at  TEXT NOT NULL,
   nudged_at   TEXT,
   is_seed     INTEGER NOT NULL DEFAULT 0
@@ -129,7 +136,7 @@ CREATE TABLE IF NOT EXISTS groups (
 
 CREATE TABLE IF NOT EXISTS group_members (
   group_id       TEXT NOT NULL REFERENCES groups(id) ON DELETE CASCADE,
-  user_id        TEXT REFERENCES auth_users(id) ON DELETE CASCADE,
+  user_id        TEXT,
   status         TEXT NOT NULL DEFAULT 'pending',
   invited_email  TEXT,
   invited_at     TEXT NOT NULL,
@@ -140,7 +147,7 @@ CREATE INDEX IF NOT EXISTS group_members_user_idx ON group_members (user_id);
 
 CREATE TABLE IF NOT EXISTS witness_sessions (
   id               TEXT PRIMARY KEY,
-  subject_id       TEXT NOT NULL REFERENCES auth_users(id) ON DELETE CASCADE,
+  subject_id       TEXT NOT NULL,
   token            TEXT NOT NULL UNIQUE,
   witness_name     TEXT NOT NULL,
   witness_email    TEXT,

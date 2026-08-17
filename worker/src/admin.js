@@ -12,6 +12,7 @@ import { requireUser } from './auth.js'
 import { httpError, jsonBody, now, bool } from './db.js'
 import { computeRole } from '../../src/utils/role-scoring.js'
 import { getNorms, resolveNorm, NORM_MIN_SAMPLE, NORM_REFRESH_DAYS } from './norms.js'
+import { NAMED } from './scheduled.js'
 
 const DOMAINS = ['presence', 'bond', 'discipline', 'depth', 'vision']
 const INSTRUMENTS = ['newMoon', 'firstQuarter', 'fullMoon']
@@ -234,4 +235,44 @@ export async function purgeTokens(env, request) {
     magic_tokens_purged: m.meta?.changes || 0, email_change_tokens_purged: e.meta?.changes || 0,
     refresh_tokens_purged: r.meta?.changes || 0, oauth_states_purged: o.meta?.changes || 0,
   })
+}
+
+/**
+ * POST /admin/jobs/<name>?dry_run=1 — run one scheduled job now.
+ *
+ * The server had `python -m jobs.<name>` for this. A Worker has no shell,
+ * so the same lever is an admin endpoint. dry_run is honoured by the jobs
+ * that have one (nudge, digest with send=false).
+ */
+export async function runJob(env, request, name) {
+  const a = await requireAdmin(env, request); if (a instanceof Response) return a
+  const fn = NAMED[name]
+  if (!fn) return httpError(404, `Unknown job. Known: ${Object.keys(NAMED).join(', ')}`)
+  const dry = ['1', 'true'].includes(new URL(request.url).searchParams.get('dry_run') || '')
+  const t0 = Date.now()
+  try {
+    const result = await fn(env, name === 'weekly-digest' ? { send: !dry } : { dryRun: dry })
+    return Response.json({ job: name, dry_run: dry, ms: Date.now() - t0, result })
+  } catch (e) {
+    return Response.json({ job: name, dry_run: dry, ms: Date.now() - t0, error: e.message }, { status: 500 })
+  }
+}
+
+/** GET /admin/probe?url= — one link probe, with the raw error, for debugging the sweep. */
+export async function probeUrl(env, request) {
+  const a = await requireAdmin(env, request); if (a instanceof Response) return a
+  const url = new URL(request.url).searchParams.get('url')
+  if (!url) return httpError(400, 'url required')
+  const out = {}
+  for (const method of ['HEAD', 'GET']) {
+    try {
+      const r = await fetch(url, { method, redirect: 'follow', headers: { 'user-agent': 'cercol-link-check/1.0' } })
+      out[method] = r.status
+    } catch (e) { out[method] = `ERR ${e.name}: ${e.message}` }
+  }
+  try {
+    const r = await fetch(url, { method: 'HEAD', redirect: 'follow', headers: { 'user-agent': 'cercol-link-check/1.0' }, signal: AbortSignal.timeout(10000) })
+    out.HEAD_timeout = r.status
+  } catch (e) { out.HEAD_timeout = `ERR ${e.name}: ${e.message}` }
+  return Response.json(out)
 }

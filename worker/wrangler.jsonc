@@ -4,6 +4,7 @@
   "main": "src/index.js",
   "compatibility_date": "2026-08-01",
   "observability": { "enabled": true },
+  "triggers": { "crons": ["0 4 * * *", "0 5 * * *", "0 3 * * SUN", "0 4 * * SUN", "0 9 * * MON"] },
   "kv_namespaces": [
     { "binding": "NORMS", "id": "34d45ee221ff417d83b2bead1dc20f26" }
   ],

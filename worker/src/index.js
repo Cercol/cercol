@@ -34,6 +34,7 @@ import {
 } from './groups.js'
 import { createCheckout, stripeWebhook } from './stripe.js'
 import * as admin from './admin.js'
+import { scheduled, JOBS } from './scheduled.js'
 import { rateAccuracy } from './writes.js'
 import { emailChangeRequest, emailChangeConfirm } from './auth.js'
 
@@ -107,6 +108,8 @@ const MIGRATED = [
   { method: 'GET', pattern: /^\/admin\/translation-feedback$/, handler: (env, m, req) => admin.feedbackList(env, req), gated: true },
   { method: 'POST', pattern: /^\/admin\/translation-feedback\/([^/]+)\/resolve$/, handler: (env, m, req) => admin.feedbackResolve(env, req, m[1]), gated: true },
   { method: 'POST', pattern: /^\/admin\/maintenance\/purge-tokens$/, handler: (env, m, req) => admin.purgeTokens(env, req), gated: true },
+  { method: 'POST', pattern: /^\/admin\/jobs\/([a-z-]+)$/, handler: (env, m, req) => admin.runJob(env, req, m[1]), gated: true },
+  { method: 'GET', pattern: /^\/admin\/probe$/, handler: (env, m, req) => admin.probeUrl(env, req), gated: true },
 ]
 
 const JSON_HEADERS = { 'content-type': 'application/json' }
@@ -143,6 +146,7 @@ function preflight(request) {
 }
 
 export default {
+  scheduled,
   async fetch(request, env, ctx) {
     const url = new URL(request.url)
     for (const route of MIGRATED) {
