@@ -35,6 +35,7 @@ import {
 import { createCheckout, stripeWebhook } from './stripe.js'
 import * as admin from './admin.js'
 import * as seo from './seo.js'
+import { createPost, updatePost, patchStatus, health, robots } from './blog-admin.js'
 import { scheduled, JOBS } from './scheduled.js'
 import { rateAccuracy } from './writes.js'
 import { emailChangeRequest, emailChangeConfirm } from './auth.js'
@@ -52,6 +53,11 @@ import { emailChangeRequest, emailChangeConfirm } from './auth.js'
 const MIGRATED = [
   { method: 'GET', pattern: /^\/blog$/, handler: listPosts },
   { method: 'GET', pattern: /^\/blog\/([^/]+)$/, handler: getPost },
+  { method: 'GET', pattern: /^\/health$/, handler: () => health() },
+  { method: 'GET', pattern: /^\/robots\.txt$/, handler: () => robots() },
+  { method: 'POST', pattern: /^\/blog$/, handler: (env, m, req) => createPost(env, req), gated: true },
+  { method: 'PUT', pattern: /^\/blog\/([^/]+)$/, handler: (env, m, req) => updatePost(env, req, decodeURIComponent(m[1])), gated: true },
+  { method: 'PATCH', pattern: /^\/blog\/([^/]+)\/status$/, handler: (env, m, req) => patchStatus(env, req, decodeURIComponent(m[1])), gated: true },
   { method: 'POST', pattern: /^\/events$/, handler: (env, m, req) => recordEvent(env, req), gated: true },
   { method: 'POST', pattern: /^\/blog\/([^/]+)\/view$/, handler: (env, m, req) => incrementView(env, req, decodeURIComponent(m[1])), gated: true },
   { method: 'POST', pattern: /^\/results$/, handler: (env, m, req) => logResult(env, req), gated: true },
