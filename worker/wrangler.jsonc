@@ -4,6 +4,13 @@
   "main": "src/index.js",
   "compatibility_date": "2026-08-01",
   "observability": { "enabled": true },
+  "kv_namespaces": [
+    { "binding": "NORMS", "id": "34d45ee221ff417d83b2bead1dc20f26" }
+  ],
+  "vars": {
+    "FRONTEND_URL": "https://cercol.team",
+    "BACKEND_URL": "https://api.cercol.team"
+  },
   "d1_databases": [
     { "binding": "DB", "database_name": "cercol", "database_id": "928ddbd6-5fc6-4e2b-9fd1-e7de66435ef6" }
   ]

@@ -316,3 +316,58 @@ export async function betaStatus(env) {
 /** The retired password endpoints. 410 says "gone on purpose", not "broken". */
 export const passwordGone = () =>
   httpError(410, 'Password sign-in has been retired. Use the magic link or Google.')
+
+// ---------------------------------------------------------------------------
+// Email change
+// ---------------------------------------------------------------------------
+
+/**
+ * POST /auth/email/change-request — nothing moves until the token mailed to
+ * the new address comes back. Without passwords the "re-enter it" branch is
+ * gone; the two emails (confirm to new, notice to old) are the safeguard.
+ */
+export async function emailChangeRequest(env, request) {
+  const user = await requireUser(env, request)
+  if (user instanceof Response) return user
+  const body = await jsonBody(request)
+  const newEmail = String(body?.new_email || '').trim().toLowerCase()
+  if (!newEmail || !newEmail.includes('@')) return httpError(400, 'Invalid email address')
+  const db = env.DB
+  const row = await db.prepare(`SELECT email FROM auth_users WHERE id = ?`).bind(user.sub).first()
+  if (!row) return httpError(404, 'User not found')
+  if (newEmail === row.email) return httpError(400, 'That is already your email address')
+  if (await db.prepare(`SELECT 1 AS x FROM auth_users WHERE email = ?`).bind(newEmail).first()) return httpError(409, 'Email already registered')
+  const token = randomToken(32)
+  await db.prepare(`INSERT INTO email_change_tokens (id, user_id, new_email, token, expires_at, created_at) VALUES (?, ?, ?, ?, ?, ?)`)
+    .bind(uuid(), user.sub, newEmail, token, iso(Date.now() + MAGIC_TTL_MS), now()).run()
+  const lr = await db.prepare(`SELECT native_language FROM profiles WHERE id = ?`).bind(user.sub).first()
+  const l = lr?.native_language || 'en'
+  const link = `${env.FRONTEND_URL || 'https://cercol.team'}/auth/callback?type=email-change&token=${token}`
+  const { sendEmailChangeConfirm, sendEmailChangeNotice } = await import('./emails.js')
+  try { await sendEmailChangeConfirm(env, newEmail, link, l) } catch (e) { console.log(`[auth] email change confirm failed: ${e.message}`) }
+  try { await sendEmailChangeNotice(env, row.email, newEmail, l) } catch (e) { console.log(`[auth] email change notice failed: ${e.message}`) }
+  return Response.json({ detail: 'Confirmation sent to the new address' }, { status: 202 })
+}
+
+/** POST /auth/email/change-confirm — move the account, revoke every session, issue a fresh pair. */
+export async function emailChangeConfirm(env, request) {
+  const body = await jsonBody(request)
+  const token = String(body?.token || '').trim()
+  const db = env.DB
+  const row = await db.prepare(`SELECT id, user_id, new_email, expires_at, used_at FROM email_change_tokens WHERE token = ?`).bind(token).first()
+  if (!row) return httpError(401, 'Invalid or expired confirmation link')
+  if (row.used_at) return httpError(401, 'Confirmation link already used')
+  if (new Date(row.expires_at) < new Date()) return httpError(401, 'Confirmation link has expired')
+  const taken = await db.prepare(`SELECT 1 AS x FROM auth_users WHERE email = ? AND id <> ?`).bind(row.new_email, row.user_id).first()
+  if (taken) return httpError(409, 'Email already registered')
+  const ts = now()
+  await db.batch([
+    db.prepare(`UPDATE email_change_tokens SET used_at = ? WHERE id = ?`).bind(ts, row.id),
+    db.prepare(`UPDATE auth_users SET email = ?, email_verified = 1 WHERE id = ?`).bind(row.new_email, row.user_id),
+    db.prepare(`UPDATE profiles SET email = ?, updated_at = ? WHERE id = ?`).bind(row.new_email, ts, row.user_id),
+    db.prepare(`UPDATE group_members SET user_id = ? WHERE invited_email = ? AND user_id IS NULL AND status = 'pending'`).bind(row.user_id, row.new_email),
+    db.prepare(`UPDATE refresh_tokens SET revoked_at = ? WHERE user_id = ? AND revoked_at IS NULL`).bind(ts, row.user_id),
+  ])
+  const rt = await issueRefreshToken(db, row.user_id)
+  return tokenResponse(env, row.user_id, row.new_email, rt)
+}

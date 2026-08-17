@@ -32,6 +32,10 @@ import {
   createGroup, inviteToGroup, removeMember, startWitnessRound, myGroups, pendingInvitations,
   acceptInvitation, declineInvitation, reportData,
 } from './groups.js'
+import { createCheckout, stripeWebhook } from './stripe.js'
+import * as admin from './admin.js'
+import { rateAccuracy } from './writes.js'
+import { emailChangeRequest, emailChangeConfirm } from './auth.js'
 
 // Paths this Worker owns. Order matters only for readability; each entry is
 // tested with its own matcher below.
@@ -83,6 +87,26 @@ const MIGRATED = [
   { method: 'POST', pattern: /^\/groups\/([^/]+)\/accept$/, handler: (env, m, req) => acceptInvitation(env, req, m[1]), gated: true },
   { method: 'POST', pattern: /^\/groups\/([^/]+)\/decline$/, handler: (env, m, req) => declineInvitation(env, req, m[1]), gated: true },
   { method: 'GET', pattern: /^\/groups\/([^/]+)\/report-data$/, handler: (env, m, req) => reportData(env, req, m[1]), gated: true },
+  // Remaining public writes and auth.
+  { method: 'POST', pattern: /^\/results\/([^/]+)\/accuracy$/, handler: (env, m, req) => rateAccuracy(env, req, m[1]), gated: true },
+  { method: 'POST', pattern: /^\/auth\/email\/change-request$/, handler: (env, m, req) => emailChangeRequest(env, req), gated: true },
+  { method: 'POST', pattern: /^\/auth\/email\/change-confirm$/, handler: (env, m, req) => emailChangeConfirm(env, req), gated: true },
+  // Stripe.
+  { method: 'POST', pattern: /^\/checkout$/, handler: (env, m, req) => createCheckout(env, req), gated: true },
+  { method: 'POST', pattern: /^\/webhooks\/stripe$/, handler: (env, m, req) => stripeWebhook(env, req), gated: true },
+  // Admin.
+  { method: 'GET', pattern: /^\/admin\/stats$/, handler: (env, m, req) => admin.stats(env, req), gated: true },
+  { method: 'GET', pattern: /^\/admin\/users$/, handler: (env, m, req) => admin.users(env, req), gated: true },
+  { method: 'GET', pattern: /^\/admin\/users\/export\.csv$/, handler: (env, m, req) => admin.usersCsv(env, req), gated: true },
+  { method: 'PATCH', pattern: /^\/admin\/users\/([^/]+)$/, handler: (env, m, req) => admin.patchUser(env, req, m[1]), gated: true },
+  { method: 'GET', pattern: /^\/admin\/results$/, handler: (env, m, req) => admin.results(env, req), gated: true },
+  { method: 'GET', pattern: /^\/admin\/results\/export\.csv$/, handler: (env, m, req) => admin.resultsCsv(env, req), gated: true },
+  { method: 'GET', pattern: /^\/admin\/norms$/, handler: (env, m, req) => admin.norms(env, req), gated: true },
+  { method: 'POST', pattern: /^\/admin\/norms\/refresh$/, handler: (env, m, req) => admin.normsRefresh(env, req), gated: true },
+  { method: 'GET', pattern: /^\/admin\/activity$/, handler: (env, m, req) => admin.activity(env, req), gated: true },
+  { method: 'GET', pattern: /^\/admin\/translation-feedback$/, handler: (env, m, req) => admin.feedbackList(env, req), gated: true },
+  { method: 'POST', pattern: /^\/admin\/translation-feedback\/([^/]+)\/resolve$/, handler: (env, m, req) => admin.feedbackResolve(env, req, m[1]), gated: true },
+  { method: 'POST', pattern: /^\/admin\/maintenance\/purge-tokens$/, handler: (env, m, req) => admin.purgeTokens(env, req), gated: true },
 ]
 
 const JSON_HEADERS = { 'content-type': 'application/json' }
