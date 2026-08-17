@@ -81,3 +81,9 @@ scripts/probe-*.mjs
 *.Rproj.user/
 .claude.json
 /CLAUDE_*.md
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example

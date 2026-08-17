@@ -132,3 +132,14 @@ export function sendWitnessRoundAssigned(env, to, witnessName, inviterName, grou
     + p(fmt(t('wr_body1', L), { inviter_name: inviterName, group_name: groupName })) + p(t('wr_body2', L))
     + buttons + p(t('wr_ignore', L), true), L, F(env)))
 }
+export function sendGroupNudge(env, to, ownerName, status, groupId, l = 'en') {
+  const L = lang(l)
+  const parts = [
+    h1(fmt(t('gn_heading', L), { name: ownerName || '' })),
+    p(fmt(t('gn_body1', L), { group_name: status.group_name, days: String(status.days) })),
+    p(fmt(t('gn_status', L), Object.fromEntries(Object.entries(status).map(([k, v]) => [k, String(v)])))),
+  ]
+  if (status.pending) parts.push(p(fmt(t('gn_pending', L), { pending: String(status.pending) }), true))
+  parts.push(p(t('gn_body2', L)), p(t('gn_body3', L)), btn(`${F(env)}/groups/${groupId}`, t('gn_button', L)), p(t('gn_note', L), true))
+  return send(env, to, fmt(t('gn_subject', L), { group_name: status.group_name }), base(parts.join(''), L, F(env)))
+}
