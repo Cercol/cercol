@@ -543,3 +543,73 @@ every run since the test was written and the assertion had never once
 executed. It is now a step in `deploy-frontend.yml`, after `build:full`
 and before the gh-pages push, which is the only job in the repo where a
 prerendered `dist/` exists.
+
+## The Cloudflare migration (Aug 2026)
+
+Cèrcol shared seven things with topquaranta on one Hetzner box: Caddy,
+the Postgres cluster, the mail server, the MX of its own domain, the SPF
+that authorised that server to send as cercol.team, the DKIM keys, and
+the OS. On 2026-08-17 all of them were cut, in this order, each step
+verified before the next and each reversible on its own:
+
+1. **DNS to Cloudflare.** Zone replicated, all A/AAAA/CNAME records set
+   DNS-only so nothing changed behaviour, three TXTs the scanner missed
+   added, and every answer compared between the Porkbun and Cloudflare
+   nameservers before the delegation moved. Identical.
+2. **Mail to Purelymail.** hello@, miquel@ and admin@ as real IMAP
+   mailboxes; MX, SPF and DMARC repointed. Verified end to end: a message
+   sent before the cutover landed on Stalwart, one sent after landed on
+   all three new inboxes with dkim=pass spf=pass, and authenticated SMTP
+   from hello@ signs with Purelymail's selector. Stalwart untouched;
+   rollback is one MX record.
+3. **The strangler Worker on api.cercol.team.** `worker/src/index.js`
+   answers what it owns from D1 and forwards the rest to Hetzner through
+   `origin.cercol.team` (Caddy holds its certificate). The list of owned
+   routes is the migration; removing a line is the rollback.
+4. **Blog on D1.** 108 articles, ids transferred and md5-verified, 648
+   language bodies length-compared. `scripts/diff-api.mjs`: 111 endpoints,
+   0 differences.
+5-7. **Every other endpoint**, behind one `WRITES_LIVE` switch, flipped
+   the same day: events, results, auth (magic link, Google; passwords
+   retired, 410), profiles, witness, groups, Stripe, admin. Verified with a
+   real magic-link sign-in through the production Worker; the JWT it
+   issued also validated on Hetzner. Secrets travelled server-to-Cloudflare
+   through a one-hour, scripts-only token placed on the box over ssh
+   stdin and revoked after; the same for the D1 data load. Nothing passed
+   through the operator or the assistant.
+8. **Seven scheduled jobs on five cron triggers.** BigQuery via a
+   service-account client with no SDK. All verified from the Worker
+   except PageSpeed, whose API key is IP-restricted to Hetzner in the
+   Google Cloud console (403 from Cloudflare, 200 from the box) and cannot
+   be changed with the BigQuery service account. That one Hetzner cron
+   stays alive until the key's application restriction is removed.
+9. **Frontend as Cloudflare static assets** (`web/wrangler.jsonc`),
+   dual-published with GitHub Pages by `deploy-frontend.yml`. SPA routes
+   answer 200 with the app instead of GitHub Pages' 404 shim.
+
+Still to do: point cercol.team and www at the `cercol-web` Worker (the
+gh-pages step then goes), then a quiet period, then stop `cercol-api` and
+`cercol-mcp` on Hetzner and drop the Caddy snippet and the database.
+
+### Two limits of the free plan that shaped the code
+
+**50 subrequests per invocation.** The external-links sweep probes 15
+URLs per tick and keeps its cursor in KV, advancing on every daily
+trigger; a full sweep of 207 URLs takes about five days. Self-chaining
+does not work: a Worker fetching its own routed hostname is refused as a
+loop, and a hop via workers.dev never arrived from a cron context. The
+first sweep, before the pacing, marked 100 live URLs null when the cap
+hit mid-loop; the tick now returns its probe errors so that cannot hide.
+
+**10 ms CPU per invocation.** bcrypt does not fit, so password sign-in is
+retired rather than downgraded to PBKDF2 at 20-80k iterations. WebCrypto
+HMAC and RSA signing are native and do not count in any way that matters.
+
+### Operating it
+
+- `POST /admin/jobs/<name>[?dry_run=1]` runs any scheduled job now. It is
+  the Worker's `python -m jobs.<name>`.
+- `GET /admin/probe?url=` is one link probe with the raw error, for when
+  the sweep reports something odd.
+- Rollback of the whole API: `WRITES_LIVE` to `0` (writes and auth return
+  to Hetzner) or api.cercol.team's DNS record to grey (everything does).
