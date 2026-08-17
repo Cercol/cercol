@@ -1,0 +1,418 @@
+{
+ "footer_received": {
+  "en": "You received this email because you are part of Cèrcol.",
+  "ca": "Has rebut aquest correu perquè formes part de Cèrcol.",
+  "es": "Recibiste este correo porque formas parte de Cèrcol.",
+  "fr": "Vous avez reçu cet e-mail parce que vous faites partie de Cèrcol.",
+  "de": "Du hast diese E-Mail erhalten, weil du Teil von Cèrcol bist.",
+  "da": "Du har modtaget denne e-mail, fordi du er en del af Cèrcol."
+ },
+ "footer_privacy": {
+  "en": "Privacy policy",
+  "ca": "Política de privacitat",
+  "es": "Política de privacidad",
+  "fr": "Politique de confidentialité",
+  "de": "Datenschutzrichtlinie",
+  "da": "Privatlivspolitik"
+ },
+ "magic_subject": {
+  "en": "Sign in to Cèrcol",
+  "ca": "Accedeix a Cèrcol",
+  "es": "Accede a Cèrcol",
+  "fr": "Connectez-vous à Cèrcol",
+  "de": "Bei Cèrcol anmelden",
+  "da": "Log ind på Cèrcol"
+ },
+ "magic_heading": {
+  "en": "Sign in to Cèrcol",
+  "ca": "Accedeix a Cèrcol",
+  "es": "Accede a Cèrcol",
+  "fr": "Connexion à Cèrcol",
+  "de": "Bei Cèrcol anmelden",
+  "da": "Log ind på Cèrcol"
+ },
+ "magic_body": {
+  "en": "Click the button below to sign in. The link is valid for 15 minutes.",
+  "ca": "Fes clic al botó per accedir al teu compte. L'accés és vàlid durant 15 minuts.",
+  "es": "Haz clic en el botón para acceder a tu cuenta. El enlace es válido durante 15 minutos.",
+  "fr": "Cliquez sur le bouton ci-dessous pour vous connecter. Le lien est valide pendant 15 minutes.",
+  "de": "Klicke auf die Schaltfläche unten, um dich anzumelden. Der Link ist 15 Minuten gültig.",
+  "da": "Klik på knappen nedenfor for at logge ind. Linket er gyldigt i 15 minutter."
+ },
+ "magic_button": {
+  "en": "Sign in",
+  "ca": "Accedir",
+  "es": "Acceder",
+  "fr": "Se connecter",
+  "de": "Anmelden",
+  "da": "Log ind"
+ },
+ "magic_ignore": {
+  "en": "If you did not request this link, you can safely ignore this email.",
+  "ca": "Si no has sol·licitat aquest accés, pots ignorar aquest correu.",
+  "es": "Si no has solicitado este enlace, puedes ignorar este correo.",
+  "fr": "Si vous n'avez pas demandé ce lien, vous pouvez ignorer cet e-mail.",
+  "de": "Falls du diesen Link nicht angefordert hast, kannst du diese E-Mail ignorieren.",
+  "da": "Hvis du ikke har anmodet om dette link, kan du roligt ignorere denne e-mail."
+ },
+ "verify_subject": {
+  "en": "Confirm your email — Cèrcol",
+  "ca": "Confirma el teu correu — Cèrcol",
+  "es": "Confirma tu correo — Cèrcol",
+  "fr": "Confirmez votre e-mail — Cèrcol",
+  "de": "Bestätige deine E-Mail — Cèrcol",
+  "da": "Bekræft din e-mail — Cèrcol"
+ },
+ "verify_heading": {
+  "en": "Confirm your email",
+  "ca": "Confirma el teu correu",
+  "es": "Confirma tu correo",
+  "fr": "Confirmez votre e-mail",
+  "de": "Bestätige deine E-Mail",
+  "da": "Bekræft din e-mail"
+ },
+ "verify_body": {
+  "en": "Confirm your email to unlock your free Full Moon assessment. The link is valid for 15 minutes.",
+  "ca": "Confirma el teu correu per desbloquejar la teva avaluació Lluna Plena gratuïta. L'enllaç és vàlid durant 15 minuts.",
+  "es": "Confirma tu correo para desbloquear tu evaluación Luna Llena gratuita. El enlace es válido durante 15 minutos.",
+  "fr": "Confirmez votre e-mail pour débloquer votre évaluation Pleine Lune gratuite. Le lien est valide pendant 15 minutes.",
+  "de": "Bestätige deine E-Mail, um deine kostenlose Vollmond-Auswertung freizuschalten. Der Link ist 15 Minuten gültig.",
+  "da": "Bekræft din e-mail for at låse op for din gratis Fuldmåne-vurdering. Linket er gyldigt i 15 minutter."
+ },
+ "verify_button": {
+  "en": "Confirm email",
+  "ca": "Confirma el correu",
+  "es": "Confirmar correo",
+  "fr": "Confirmer l'e-mail",
+  "de": "E-Mail bestätigen",
+  "da": "Bekræft e-mail"
+ },
+ "verify_ignore": {
+  "en": "If you did not create a Cèrcol account, you can safely ignore this email.",
+  "ca": "Si no has creat un compte a Cèrcol, pots ignorar aquest correu.",
+  "es": "Si no has creado una cuenta en Cèrcol, puedes ignorar este correo.",
+  "fr": "Si vous n'avez pas créé de compte Cèrcol, vous pouvez ignorer cet e-mail.",
+  "de": "Falls du kein Cèrcol-Konto erstellt hast, kannst du diese E-Mail ignorieren.",
+  "da": "Hvis du ikke har oprettet en Cèrcol-konto, kan du roligt ignorere denne e-mail."
+ },
+ "ec_subject": {
+  "en": "Confirm your new email — Cèrcol",
+  "ca": "Confirma el teu nou correu — Cèrcol",
+  "es": "Confirma tu nuevo correo — Cèrcol",
+  "fr": "Confirmez votre nouvel e-mail — Cèrcol",
+  "de": "Bestätige deine neue E-Mail — Cèrcol",
+  "da": "Bekræft din nye e-mail — Cèrcol"
+ },
+ "ec_heading": {
+  "en": "Confirm your new email",
+  "ca": "Confirma el teu nou correu",
+  "es": "Confirma tu nuevo correo",
+  "fr": "Confirmez votre nouvel e-mail",
+  "de": "Bestätige deine neue E-Mail",
+  "da": "Bekræft din nye e-mail"
+ },
+ "ec_body": {
+  "en": "Confirm this address to move your Cèrcol account to it. Your account keeps all its results. The link is valid for 15 minutes.",
+  "ca": "Confirma aquesta adreça per traslladar-hi el teu compte de Cèrcol. El compte conserva tots els resultats. L'enllaç és vàlid durant 15 minuts.",
+  "es": "Confirma esta dirección para trasladar a ella tu cuenta de Cèrcol. La cuenta conserva todos sus resultados. El enlace es válido durante 15 minutos.",
+  "fr": "Confirmez cette adresse pour y transférer votre compte Cèrcol. Le compte conserve tous ses résultats. Le lien est valide pendant 15 minutes.",
+  "de": "Bestätige diese Adresse, um dein Cèrcol-Konto dorthin zu verschieben. Alle Ergebnisse bleiben erhalten. Der Link ist 15 Minuten gültig.",
+  "da": "Bekræft denne adresse for at flytte din Cèrcol-konto hertil. Kontoen beholder alle sine resultater. Linket er gyldigt i 15 minutter."
+ },
+ "ec_button": {
+  "en": "Confirm new email",
+  "ca": "Confirma el nou correu",
+  "es": "Confirmar nuevo correo",
+  "fr": "Confirmer le nouvel e-mail",
+  "de": "Neue E-Mail bestätigen",
+  "da": "Bekræft ny e-mail"
+ },
+ "ec_ignore": {
+  "en": "If you did not ask to change your Cèrcol email, you can safely ignore this email.",
+  "ca": "Si no has demanat canviar el correu de Cèrcol, pots ignorar aquest missatge.",
+  "es": "Si no has pedido cambiar tu correo de Cèrcol, puedes ignorar este mensaje.",
+  "fr": "Si vous n'avez pas demandé à changer votre e-mail Cèrcol, vous pouvez ignorer ce message.",
+  "de": "Falls du keine Änderung deiner Cèrcol-E-Mail angefordert hast, kannst du diese Nachricht ignorieren.",
+  "da": "Hvis du ikke har bedt om at ændre din Cèrcol-e-mail, kan du roligt ignorere denne besked."
+ },
+ "ecn_subject": {
+  "en": "Someone asked to change your Cèrcol email",
+  "ca": "S'ha demanat canviar el correu del teu compte de Cèrcol",
+  "es": "Se ha pedido cambiar el correo de tu cuenta de Cèrcol",
+  "fr": "Une demande de changement d'e-mail a été faite sur votre compte Cèrcol",
+  "de": "Es wurde eine Änderung deiner Cèrcol-E-Mail angefordert",
+  "da": "Der er anmodet om at ændre din Cèrcol-e-mail"
+ },
+ "ecn_heading": {
+  "en": "Email change requested",
+  "ca": "Canvi de correu sol·licitat",
+  "es": "Cambio de correo solicitado",
+  "fr": "Changement d'e-mail demandé",
+  "de": "E-Mail-Änderung angefordert",
+  "da": "Ændring af e-mail anmodet"
+ },
+ "ecn_body": {
+  "en": "A request was made to move your Cèrcol account to {new_email}. The change only takes effect once that address confirms it.",
+  "ca": "S'ha demanat traslladar el teu compte de Cèrcol a {new_email}. El canvi només serà efectiu quan aquella adreça el confirmi.",
+  "es": "Se ha pedido trasladar tu cuenta de Cèrcol a {new_email}. El cambio solo será efectivo cuando esa dirección lo confirme.",
+  "fr": "Une demande de transfert de votre compte Cèrcol vers {new_email} a été faite. Le changement ne prendra effet qu'après confirmation par cette adresse.",
+  "de": "Es wurde angefordert, dein Cèrcol-Konto zu {new_email} zu verschieben. Die Änderung wird erst wirksam, wenn diese Adresse sie bestätigt.",
+  "da": "Der er anmodet om at flytte din Cèrcol-konto til {new_email}. Ændringen træder først i kraft, når den adresse bekræfter den."
+ },
+ "ecn_warning": {
+  "en": "If this was not you, change your password now and write to hello@cercol.team.",
+  "ca": "Si no has estat tu, canvia la contrasenya ara mateix i escriu a hello@cercol.team.",
+  "es": "Si no has sido tú, cambia tu contraseña ahora mismo y escribe a hello@cercol.team.",
+  "fr": "Si ce n'était pas vous, changez votre mot de passe immédiatement et écrivez à hello@cercol.team.",
+  "de": "Falls du das nicht warst, ändere sofort dein Passwort und schreibe an hello@cercol.team.",
+  "da": "Hvis det ikke var dig, så skift din adgangskode med det samme og skriv til hello@cercol.team."
+ },
+ "wa_subject": {
+  "en": "{subject_display} has asked you to evaluate them on Cèrcol",
+  "ca": "{subject_display} t'ha demanat que l'avaluïs a Cèrcol",
+  "es": "{subject_display} te ha pedido que los evalúes en Cèrcol",
+  "fr": "{subject_display} vous a demandé de les évaluer sur Cèrcol",
+  "de": "{subject_display} hat dich gebeten, sie bei Cèrcol zu bewerten",
+  "da": "{subject_display} har bedt dig om at evaluere dem på Cèrcol"
+ },
+ "wa_heading": {
+  "en": "Hi {witness_name} — you've been asked to evaluate someone",
+  "ca": "Hola {witness_name} — t'han demanat que avaluïs algú",
+  "es": "Hola {witness_name} — te han pedido que evalúes a alguien",
+  "fr": "Bonjour {witness_name} — on vous a demandé d'évaluer quelqu'un",
+  "de": "Hallo {witness_name} — du wurdest gebeten, jemanden zu bewerten",
+  "da": "Hej {witness_name} — du er blevet bedt om at evaluere nogen"
+ },
+ "wa_body1": {
+  "en": "<strong>{subject_display}</strong> has asked you to complete a short personality evaluation as part of their Cèrcol profile.",
+  "ca": "<strong>{subject_display}</strong> t'ha demanat que completis una breu avaluació de personalitat com a part del seu perfil de Cèrcol.",
+  "es": "<strong>{subject_display}</strong> te ha pedido que completes una breve evaluación de personalidad como parte de su perfil de Cèrcol.",
+  "fr": "<strong>{subject_display}</strong> vous a demandé de compléter une courte évaluation de personnalité dans le cadre de son profil Cèrcol.",
+  "de": "<strong>{subject_display}</strong> hat dich gebeten, eine kurze Persönlichkeitsbewertung für ihr Cèrcol-Profil auszufüllen.",
+  "da": "<strong>{subject_display}</strong> har bedt dig om at udfylde en kort personlighedsevaluering som en del af deres Cèrcol-profil."
+ },
+ "wa_body2": {
+  "en": "It takes about 5 minutes and your responses help them understand themselves better through trusted perspectives.",
+  "ca": "Triga uns 5 minuts i les teves respostes l'ajuden a entendre's millor a través de perspectives de confiança.",
+  "es": "Se tarda unos 5 minutos y tus respuestas les ayudan a entenderse mejor a través de perspectivas de confianza.",
+  "fr": "Cela prend environ 5 minutes et vos réponses l'aident à mieux se comprendre grâce à des perspectives de confiance.",
+  "de": "Es dauert etwa 5 Minuten und deine Antworten helfen ihr, sich selbst durch vertrauenswürdige Perspektiven besser zu verstehen.",
+  "da": "Det tager cirka 5 minutter, og dine svar hjælper dem med at forstå sig selv bedre gennem betroede perspektiver."
+ },
+ "wa_button": {
+  "en": "Start evaluation",
+  "ca": "Comença l'avaluació",
+  "es": "Iniciar evaluación",
+  "fr": "Commencer l'évaluation",
+  "de": "Bewertung starten",
+  "da": "Start evaluering"
+ },
+ "wa_ignore": {
+  "en": "If you did not expect this email, you can safely ignore it.",
+  "ca": "Si no esperaves aquest correu, pots ignorar-lo.",
+  "es": "Si no esperabas este correo, puedes ignorarlo.",
+  "fr": "Si vous n'attendiez pas cet e-mail, vous pouvez l'ignorer.",
+  "de": "Wenn du diese E-Mail nicht erwartet hast, kannst du sie ignorieren.",
+  "da": "Hvis du ikke forventede denne e-mail, kan du roligt ignorere den."
+ },
+ "wc_subject": {
+  "en": "{witness_name} has completed your Cèrcol evaluation",
+  "ca": "{witness_name} ha completat la teva avaluació de Cèrcol",
+  "es": "{witness_name} ha completado tu evaluación de Cèrcol",
+  "fr": "{witness_name} a complété votre évaluation Cèrcol",
+  "de": "{witness_name} hat deine Cèrcol-Bewertung abgeschlossen",
+  "da": "{witness_name} har gennemført din Cèrcol-evaluering"
+ },
+ "wc_heading": {
+  "en": "Your witness has completed their evaluation",
+  "ca": "El teu testimoni ha completat la seva avaluació",
+  "es": "Tu testigo ha completado su evaluación",
+  "fr": "Votre témoin a complété son évaluation",
+  "de": "Dein Zeuge hat die Bewertung abgeschlossen",
+  "da": "Dit vidne har afsluttet deres evaluering"
+ },
+ "wc_body1": {
+  "en": "<strong>{witness_name}</strong> has just finished evaluating your Cèrcol profile.",
+  "ca": "<strong>{witness_name}</strong> acaba de finalitzar l'avaluació del teu perfil de Cèrcol.",
+  "es": "<strong>{witness_name}</strong> acaba de finalizar la evaluación de tu perfil de Cèrcol.",
+  "fr": "<strong>{witness_name}</strong> vient de terminer l'évaluation de votre profil Cèrcol.",
+  "de": "<strong>{witness_name}</strong> hat gerade die Bewertung deines Cèrcol-Profils abgeschlossen.",
+  "da": "<strong>{witness_name}</strong> har netop afsluttet evalueringen af din Cèrcol-profil."
+ },
+ "wc_body2": {
+  "en": "Head to your results page to see how their perspective compares with your self-assessment.",
+  "ca": "Ves a la pàgina de resultats per veure com la seva perspectiva es compara amb la teva autoavaluació.",
+  "es": "Ve a tu página de resultados para ver cómo su perspectiva se compara con tu autoevaluación.",
+  "fr": "Rendez-vous sur votre page de résultats pour voir comment leur perspective se compare à votre auto-évaluation.",
+  "de": "Gehe zu deiner Ergebnisseite, um zu sehen, wie ihre Perspektive mit deiner Selbsteinschätzung verglichen wird.",
+  "da": "Gå til din resultatside for at se, hvordan deres perspektiv sammenlignes med din selvvurdering."
+ },
+ "wc_button": {
+  "en": "View my results",
+  "ca": "Veure els meus resultats",
+  "es": "Ver mis resultados",
+  "fr": "Voir mes résultats",
+  "de": "Meine Ergebnisse anzeigen",
+  "da": "Se mine resultater"
+ },
+ "gi_subject": {
+  "en": "You've been invited to join {group_name} on Cèrcol",
+  "ca": "T'han convidat a unir-te a {group_name} a Cèrcol",
+  "es": "Te han invitado a unirte a {group_name} en Cèrcol",
+  "fr": "Vous avez été invité(e) à rejoindre {group_name} sur Cèrcol",
+  "de": "Du wurdest eingeladen, {group_name} auf Cèrcol beizutreten",
+  "da": "Du er blevet inviteret til at deltage i {group_name} på Cèrcol"
+ },
+ "gi_heading": {
+  "en": "You've been invited to join a group",
+  "ca": "T'han convidat a unir-te a un grup",
+  "es": "Te han invitado a unirte a un grupo",
+  "fr": "Vous avez été invité(e) à rejoindre un groupe",
+  "de": "Du wurdest eingeladen, einer Gruppe beizutreten",
+  "da": "Du er blevet inviteret til at deltage i en gruppe"
+ },
+ "gi_body1": {
+  "en": "<strong>{inviter_name}</strong> has invited you to join the group <strong>{group_name}</strong> on Cèrcol.",
+  "ca": "<strong>{inviter_name}</strong> t'ha convidat a unir-te al grup <strong>{group_name}</strong> a Cèrcol.",
+  "es": "<strong>{inviter_name}</strong> te ha invitado a unirte al grupo <strong>{group_name}</strong> en Cèrcol.",
+  "fr": "<strong>{inviter_name}</strong> vous a invité(e) à rejoindre le groupe <strong>{group_name}</strong> sur Cèrcol.",
+  "de": "<strong>{inviter_name}</strong> hat dich eingeladen, der Gruppe <strong>{group_name}</strong> auf Cèrcol beizutreten.",
+  "da": "<strong>{inviter_name}</strong> har inviteret dig til at deltage i gruppen <strong>{group_name}</strong> på Cèrcol."
+ },
+ "gi_body2": {
+  "en": "Groups let you explore how your personality profile fits with your team — see complementary strengths and potential blind spots.",
+  "ca": "Els grups et permeten explorar com el teu perfil de personalitat encaixa amb el teu equip — veu fortaleses complementàries i possibles punts cecs.",
+  "es": "Los grupos te permiten explorar cómo tu perfil de personalidad encaja con tu equipo — ve fortalezas complementarias y posibles puntos ciegos.",
+  "fr": "Les groupes vous permettent d'explorer comment votre profil de personnalité s'adapte à votre équipe — voyez les forces complémentaires et les angles morts potentiels.",
+  "de": "Gruppen ermöglichen es dir, zu erkunden, wie dein Persönlichkeitsprofil zu deinem Team passt — sieh komplementäre Stärken und potenzielle blinde Flecken.",
+  "da": "Grupper giver dig mulighed for at udforske, hvordan din personlighedsprofil passer til dit team — se komplementære styrker og potentielle blinde vinkler."
+ },
+ "gi_button": {
+  "en": "Accept invitation",
+  "ca": "Accepta la invitació",
+  "es": "Aceptar invitación",
+  "fr": "Accepter l'invitation",
+  "de": "Einladung annehmen",
+  "da": "Accepter invitation"
+ },
+ "gi_note": {
+  "en": "You'll need a Cèrcol account to accept. It only takes a moment to sign up.",
+  "ca": "Necessites un compte de Cèrcol per acceptar. Registrar-te és molt ràpid.",
+  "es": "Necesitas una cuenta de Cèrcol para aceptar. Registrarte es muy rápido.",
+  "fr": "Vous aurez besoin d'un compte Cèrcol pour accepter. L'inscription ne prend qu'un instant.",
+  "de": "Du benötigst ein Cèrcol-Konto, um anzunehmen. Die Registrierung dauert nur einen Moment.",
+  "da": "Du skal bruge en Cèrcol-konto for at acceptere. Det tager kun et øjeblik at tilmelde sig."
+ },
+ "wr_subject": {
+  "en": "Your team round on Cèrcol: {n} teammates to rate",
+  "ca": "La ronda del teu equip a Cèrcol: {n} companys per valorar",
+  "es": "La ronda de tu equipo en Cèrcol: {n} compañeros por valorar",
+  "fr": "Le tour de votre équipe sur Cèrcol : {n} collègues à évaluer",
+  "de": "Eure Teamrunde bei Cèrcol: {n} Kolleginnen und Kollegen zu bewerten",
+  "da": "Jeres teamrunde på Cèrcol: {n} kolleger at vurdere"
+ },
+ "wr_heading": {
+  "en": "Hello {witness_name}",
+  "ca": "Hola {witness_name}",
+  "es": "Hola {witness_name}",
+  "fr": "Bonjour {witness_name}",
+  "de": "Hallo {witness_name}",
+  "da": "Hej {witness_name}"
+ },
+ "wr_body1": {
+  "en": "{inviter_name} started a team round for {group_name}. Each member rates the others, and each report gets a second point of view alongside the self-assessment.",
+  "ca": "{inviter_name} ha iniciat una ronda d'equip per a {group_name}. Cada membre valora els altres, i cada informe guanya un segon punt de vista al costat de l'autoavaluació.",
+  "es": "{inviter_name} ha iniciado una ronda de equipo para {group_name}. Cada miembro valora a los demás, y cada informe gana un segundo punto de vista junto a la autoevaluación.",
+  "fr": "{inviter_name} a lancé un tour d'équipe pour {group_name}. Chaque membre évalue les autres, et chaque rapport gagne un second point de vue à côté de l'auto-évaluation.",
+  "de": "{inviter_name} hat eine Teamrunde für {group_name} gestartet. Alle bewerten einander, und jeder Bericht bekommt neben der Selbsteinschätzung eine zweite Perspektive.",
+  "da": "{inviter_name} har startet en teamrunde for {group_name}. Hver deltager vurderer de andre, og hver rapport får et andet perspektiv ved siden af selvvurderingen."
+ },
+ "wr_body2": {
+  "en": "Each link takes about two minutes. Your answers are never shown to the person you rate on their own.",
+  "ca": "Cada enllaç et portarà uns dos minuts. Les teues respostes mai no es mostren soles a la persona que valores.",
+  "es": "Cada enlace te llevará unos dos minutos. Tus respuestas nunca se muestran solas a la persona que valoras.",
+  "fr": "Chaque lien prend environ deux minutes. Vos réponses ne sont jamais montrées seules à la personne évaluée.",
+  "de": "Jeder Link dauert etwa zwei Minuten. Deine Antworten werden der bewerteten Person nie einzeln gezeigt.",
+  "da": "Hvert link tager cirka to minutter. Dine svar vises aldrig alene til den, du vurderer."
+ },
+ "wr_ignore": {
+  "en": "If you would rather not take part, ignore this email. Nothing is sent on your behalf.",
+  "ca": "Si prefereixes no participar, ignora aquest correu. No s'envia res en nom teu.",
+  "es": "Si prefieres no participar, ignora este correo. No se envía nada en tu nombre.",
+  "fr": "Si vous préférez ne pas participer, ignorez cet e-mail. Rien n'est envoyé en votre nom.",
+  "de": "Wenn du nicht teilnehmen möchtest, ignoriere diese E-Mail. In deinem Namen wird nichts verschickt.",
+  "da": "Hvis du hellere vil lade være, kan du ignorere denne mail. Der sendes intet i dit navn."
+ },
+ "gn_subject": {
+  "en": "{group_name} is halfway there",
+  "ca": "{group_name} està a mig camí",
+  "es": "{group_name} está a medio camino",
+  "fr": "{group_name} est à mi-chemin",
+  "de": "{group_name} ist auf halbem Weg",
+  "da": "{group_name} er halvvejs"
+ },
+ "gn_heading": {
+  "en": "Hello {name}",
+  "ca": "Hola {name}",
+  "es": "Hola {name}",
+  "fr": "Bonjour {name}",
+  "de": "Hallo {name}",
+  "da": "Hej {name}"
+ },
+ "gn_body1": {
+  "en": "You set up {group_name} {days} days ago and it has not finished. Here is where it stands.",
+  "ca": "Vas crear {group_name} fa {days} dies i encara no està acabat. Este és l'estat.",
+  "es": "Creaste {group_name} hace {days} días y sigue sin terminar. Este es el estado.",
+  "fr": "Vous avez créé {group_name} il y a {days} jours et ce n'est pas terminé. Voici où en est l'équipe.",
+  "de": "Du hast {group_name} vor {days} Tagen angelegt, und es ist noch nicht fertig. So steht es.",
+  "da": "Du oprettede {group_name} for {days} dage siden, og det er ikke færdigt. Sådan ser det ud."
+ },
+ "gn_status": {
+  "en": "{completed} of {members} have taken Full Moon Cèrcol. {no_witnesses} of {members} have nobody rating them yet.",
+  "ca": "{completed} de {members} han fet Cèrcol de Lluna Plena. {no_witnesses} de {members} encara no tenen ningú que els valore.",
+  "es": "{completed} de {members} han hecho Cèrcol de Luna Llena. {no_witnesses} de {members} todavía no tienen a nadie que los valore.",
+  "fr": "{completed} sur {members} ont passé Cèrcol de Pleine Lune. {no_witnesses} sur {members} n'ont encore personne pour les évaluer.",
+  "de": "{completed} von {members} haben Cèrcol des Vollmondes absolviert. {no_witnesses} von {members} haben noch niemanden, der sie einschätzt.",
+  "da": "{completed} af {members} har taget Fuldmåne Cèrcol. {no_witnesses} af {members} har endnu ingen til at vurdere sig."
+ },
+ "gn_pending": {
+  "en": "{pending} invitation(s) are still waiting to be accepted. You can remove or resend them from the team page.",
+  "ca": "Queden {pending} invitacions per acceptar. Les pots eliminar o tornar a enviar des de la pàgina de l'equip.",
+  "es": "Quedan {pending} invitaciones sin aceptar. Puedes eliminarlas o reenviarlas desde la página del equipo.",
+  "fr": "Il reste {pending} invitations en attente. Vous pouvez les retirer ou les renvoyer depuis la page de l'équipe.",
+  "de": "{pending} Einladungen sind noch offen. Du kannst sie auf der Teamseite entfernen oder erneut senden.",
+  "da": "{pending} invitationer venter stadig. Du kan fjerne dem eller sende dem igen fra teamsiden."
+ },
+ "gn_body2": {
+  "en": "The piece most teams miss is the team round: everyone rates everyone else, and each report gains a second point of view next to the self assessment. It is one button on the team page, and each person gets a single email with their own links.",
+  "ca": "El pas que quasi tots els equips es deixen és la ronda d'equip: tothom valora la resta, i cada informe guanya un segon punt de vista al costat de l'autoavaluació. És un botó a la pàgina de l'equip, i cada persona rep un sol correu amb els seus enllaços.",
+  "es": "El paso que casi todos los equipos se saltan es la ronda de equipo: todos valoran a los demás, y cada informe gana un segundo punto de vista junto a la autoevaluación. Es un botón en la página del equipo, y cada persona recibe un solo correo con sus enlaces.",
+  "fr": "L'étape que presque toutes les équipes sautent est le tour d'équipe : chacun évalue les autres, et chaque rapport gagne un second point de vue à côté de l'auto-évaluation. C'est un bouton sur la page de l'équipe, et chaque personne reçoit un seul e-mail avec ses liens.",
+  "de": "Der Schritt, den fast alle Teams auslassen, ist die Teamrunde: Alle bewerten einander, und jeder Bericht bekommt neben der Selbsteinschätzung eine zweite Perspektive. Es ist ein Knopf auf der Teamseite, und jede Person bekommt eine einzige E-Mail mit ihren Links.",
+  "da": "Det trin, næsten alle teams springer over, er teamrunden: alle vurderer hinanden, og hver rapport får et andet perspektiv ved siden af selvvurderingen. Det er én knap på teamsiden, og hver person får én mail med sine egne links."
+ },
+ "gn_body3": {
+  "en": "This is also the part that makes the report worth rereading. A profile you wrote about yourself is one data point. The gap between that and how six colleagues see you is the conversation.",
+  "ca": "És també la part que fa que valga la pena rellegir l'informe. Un perfil que has escrit tu de tu mateix és una dada. La distància entre això i com et veuen sis companys és la conversa.",
+  "es": "Es también la parte que hace que merezca la pena releer el informe. Un perfil que has escrito tú sobre ti mismo es un dato. La distancia entre eso y cómo te ven seis compañeros es la conversación.",
+  "fr": "C'est aussi ce qui rend le rapport digne d'une relecture. Un profil que vous avez écrit sur vous-même est une donnée. L'écart entre cela et la façon dont six collègues vous voient, c'est la conversation.",
+  "de": "Das ist auch der Teil, der den Bericht lesenswert macht. Ein Profil, das du über dich selbst geschrieben hast, ist ein Datenpunkt. Der Abstand dazwischen und dem, wie sechs Kolleginnen und Kollegen dich sehen, ist das Gespräch.",
+  "da": "Det er også det, der gør rapporten værd at læse igen. En profil, du selv har skrevet om dig selv, er ét datapunkt. Afstanden mellem den og hvordan seks kolleger ser dig, er samtalen."
+ },
+ "gn_button": {
+  "en": "Open your team page",
+  "ca": "Obri la pàgina de l'equip",
+  "es": "Abrir la página del equipo",
+  "fr": "Ouvrir la page de l'équipe",
+  "de": "Teamseite öffnen",
+  "da": "Åbn teamsiden"
+ },
+ "gn_note": {
+  "en": "If you would rather not, ignore this. You will not hear from us about this team again.",
+  "ca": "Si prefereixes deixar-ho, ignora este correu. No et tornarem a escriure sobre este equip.",
+  "es": "Si prefieres dejarlo, ignora este correo. No volveremos a escribirte sobre este equipo.",
+  "fr": "Si vous préférez en rester là, ignorez cet e-mail. Nous ne vous réécrirons pas au sujet de cette équipe.",
+  "de": "Wenn du es lieber lässt, ignoriere diese E-Mail. Wegen dieses Teams hörst du nichts mehr von uns.",
+  "da": "Hvis du hellere vil lade være, kan du ignorere denne mail. Du hører ikke mere fra os om dette team."
+ }
+}
