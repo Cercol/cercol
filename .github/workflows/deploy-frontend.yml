@@ -122,10 +122,12 @@ jobs:
           pip install pytest
           python -m pytest api/tests/test_internal_links_integrity.py -v
 
-      # The same dist/ goes to Cloudflare as static assets (web/wrangler.jsonc).
-      # Both targets are published on every run for now: cercol.team still
-      # points at GitHub Pages, and the Cloudflare copy is what the DNS will
-      # move to. When it has, the gh-pages step below goes away, not this one.
+      # cercol.team is served by the cercol-web Worker (web/wrangler.jsonc)
+      # since 2026-08-17. GitHub Pages is still published as a warm fallback:
+      # restoring the nine DNS records saved at
+      # ~/.cercol-migration/dns-github-pages-backup.json puts it back in
+      # front. Drop the gh-pages step once the Worker has served a quiet
+      # fortnight; keep this one.
       - name: Deploy to Cloudflare (static assets)
         run: npx wrangler deploy --config web/wrangler.jsonc
         env:

@@ -587,9 +587,13 @@ verified before the next and each reversible on its own:
    dual-published with GitHub Pages by `deploy-frontend.yml`. SPA routes
    answer 200 with the app instead of GitHub Pages' 404 shim.
 
-Still to do: point cercol.team and www at the `cercol-web` Worker (the
-gh-pages step then goes), then a quiet period, then stop `cercol-api` and
-`cercol-mcp` on Hetzner and drop the Caddy snippet and the database.
+9b. **cercol.team and www on the Worker** (custom domains, 21:15 UTC).
+   The nine GitHub Pages records are saved locally for rollback; the
+   gh-pages publish still runs as a warm fallback. A zone redirect rule
+   sends www to the apex with a 301, as GitHub Pages did.
+
+Still to do: a quiet period, then `scripts/decommission-hetzner.sh`, then
+drop the gh-pages step.
 
 ### Two limits of the free plan that shaped the code
 
