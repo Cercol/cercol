@@ -122,6 +122,16 @@ jobs:
           pip install pytest
           python -m pytest api/tests/test_internal_links_integrity.py -v
 
+      # The same dist/ goes to Cloudflare as static assets (web/wrangler.jsonc).
+      # Both targets are published on every run for now: cercol.team still
+      # points at GitHub Pages, and the Cloudflare copy is what the DNS will
+      # move to. When it has, the gh-pages step below goes away, not this one.
+      - name: Deploy to Cloudflare (static assets)
+        run: npx wrangler deploy --config web/wrangler.jsonc
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
