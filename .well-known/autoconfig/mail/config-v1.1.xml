@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Thunderbird / Mail client autoconfig for cercol.team
+  Mailboxes are hosted at Purelymail since 2026-08-18.
+  Incoming:  IMAP  imap.purelymail.com:993  SSL/TLS
+  Outgoing:  SMTP  smtp.purelymail.com:465  SSL/TLS
+             username: the full address  |  password: the mailbox password
+-->
+<clientConfig version="1.1">
+  <emailProvider id="cercol.team">
+    <domain>cercol.team</domain>
+    <displayName>Cèrcol</displayName>
+    <displayShortName>Cèrcol</displayShortName>
+
+    <incomingServer type="imap">
+      <hostname>imap.purelymail.com</hostname>
+      <port>993</port>
+      <socketType>SSL</socketType>
+      <authentication>password-cleartext</authentication>
+      <username>%EMAILADDRESS%</username>
+    </incomingServer>
+
+    <outgoingServer type="smtp">
+      <hostname>smtp.purelymail.com</hostname>
+      <port>465</port>
+      <socketType>SSL</socketType>
+      <authentication>password-cleartext</authentication>
+      <username>%EMAILADDRESS%</username>
+    </outgoingServer>
+
+  </emailProvider>
+</clientConfig>
