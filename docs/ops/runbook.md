@@ -287,10 +287,10 @@ revocation or expiry) and oauth_states, and events older than 120
 days. `links-tick` probes 15 external URLs per run and keeps its
 cursor in KV; a full sweep of the ~207 URLs takes about five days, and
 the digest reads the latest completed snapshot. `pagespeed-ingest`
-currently gets 403 from Cloudflare because the PSI key is
-IP-restricted to the Hetzner box in the Google Cloud console; until
-that restriction is removed the Hetzner cron does the Sunday run (see
-Legacy).
+runs 20 analyses (10 URLs, mobile and desktop) and takes longer than an
+HTTP client waits, so on demand pass `?urls=https://cercol.team/` to
+limit it; the Sunday cron has the full wall budget. (Its API key was
+IP-restricted to Hetzner until 2026-08-18; it is not any more.)
 
 ### Run a job on demand
 
@@ -512,15 +512,15 @@ their own.
 
 ## Legacy (until decommission)
 
-The Hetzner box `188.245.60.20` still runs, deliberately, four Cèrcol
+The Hetzner box `188.245.60.20` still runs, deliberately, three Cèrcol
 things: `cercol-api` as the origin fallback behind
 `origin.cercol.team` (the Worker proxies any route it does not own,
 and every route when `WRITES_LIVE=0`), `cercol-mcp` (not user-facing),
-the `cercol-pagespeed-ingest` cron (Sunday 04:00 UTC, until the PSI
-key restriction goes), and the frozen Postgres `cercol` database
-(nothing has written to it since `WRITES_LIVE=1` on 2026-08-17).
-Stalwart is stopped and moved to `/root/stalwart-retired-2026-08-18`.
-Seven crons are renamed `*.disabled-migrated-to-cloudflare`.
+and the frozen Postgres `cercol` database (nothing has written to it
+since `WRITES_LIVE=1` on 2026-08-17). Stalwart is stopped and moved to
+`/root/stalwart-retired-2026-08-18`. All eight crons are renamed
+`*.disabled-migrated-to-cloudflare` (the pagespeed one last, on
+2026-08-18, once its API key lost the IP restriction).
 `deploy-backend.yml` still pushes `api/**` there over ssh;
 `apply-migrations.yml` is retired.
 
@@ -530,8 +530,6 @@ The commands that still matter:
 ssh root@188.245.60.20
 systemctl status cercol-api                       # origin fallback
 journalctl -u cercol-api -n 50 --no-pager
-cat /etc/cron.d/cercol-pagespeed-ingest
-sudo -u cercol /home/cercol/api/api/.venv/bin/python -m jobs.pagespeed_ingest   # from /home/cercol/api/api, env from /home/cercol/.env
 sudo -u cercol psql cercol                        # read the frozen Postgres
 ```
 
