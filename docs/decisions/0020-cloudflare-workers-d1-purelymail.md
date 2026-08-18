@@ -73,9 +73,9 @@ Cloudflare migration (Aug 2026)".
   endpoints or `wrangler d1 execute` (supersedes ADR 0011).
 - Backups are `wrangler d1 export`; the two-leg pg_dump strategy of ADR
   0017 no longer applies.
-- The PageSpeed API key is still IP-restricted to Hetzner in Google
-  Cloud, so the `cercol-pagespeed-ingest` cron stays on the box until the
-  restriction is lifted.
+- The PageSpeed API key was IP-restricted to Hetzner in Google Cloud,
+  so its cron stayed on the box one extra day; the restriction was
+  lifted on 2026-08-18 and the Worker runs it since.
 - GitHub Pages remains published as a warm fallback for a fortnight
   from 2026-08-17; the DNS records to restore it are saved locally.
 - Rollback windows: `WRITES_LIVE=0` returns writes and auth to Hetzner;

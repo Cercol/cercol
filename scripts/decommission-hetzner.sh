@@ -7,9 +7,7 @@
 # Preconditions, all true as of 2026-08-17 evening and to be re-checked:
 #   - api.cercol.team is the Worker with WRITES_LIVE=1 (every endpoint on D1)
 #   - cercol.team and www resolve to the cercol-web Worker (frontend moved)
-#   - the seven migrated crons are already disabled on the box; only
-#     cercol-pagespeed-ingest is still there, and it stays until the PSI key
-#     loses its IP restriction (see the note in worker/src/jobs/pagespeed.js)
+#   - all eight migrated crons are already disabled on the box
 #   - the Postgres dump below has been taken and copied off the box
 #
 # What it does NOT do: drop the database. That is a separate, deliberate
@@ -38,4 +36,4 @@ ssh "$S" 'ls /etc/cron.d/ | grep -E "^cercol-[a-z-]+$" || echo "  none"'
 echo
 echo "Done. Left on the box on purpose: the database (drop it yourself once the dump is safe:"
 echo "  ssh $S \"sudo -u postgres dropdb cercol\""
-echo "), the code under /home/cercol (harmless), and cercol-pagespeed-ingest until the PSI key is fixed."
+echo "), and the code under /home/cercol (harmless)."

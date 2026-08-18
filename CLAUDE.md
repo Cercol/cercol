@@ -20,7 +20,7 @@ All scoring algorithms and item sources are documented and citable.
   - Tokens: access token in JS module variable, refresh token in localStorage `cercol_rt`
 - Mail: Resend sends (noreply@cercol.team); Purelymail holds the mailboxes (hello@, miquel@, admin@). See `docs/ops/email.md`
 - SEO data: BigQuery project `cercol` (`worker/src/bigquery.js`, service account, no SDK)
-- Legacy until decommission (`scripts/decommission-hetzner.sh`): the FastAPI in `api/` on the Hetzner box is only the origin fallback (`origin.cercol.team`, unmatched routes proxied by the Worker) plus the pagespeed cron. Postgres there is frozen. See `docs/decisions/0020-cloudflare-workers-d1-purelymail.md`
+- Legacy until decommission (`scripts/decommission-hetzner.sh`): the FastAPI in `api/` on the Hetzner box is only the origin fallback (`origin.cercol.team`, unmatched routes proxied by the Worker) Postgres there is frozen. See `docs/decisions/0020-cloudflare-workers-d1-purelymail.md`
 - Supabase: NO LONGER USED. See `docs/decisions/0001-no-supabase-asyncpg-direct.md` (Accepted).
 - All scoring happens client-side in JavaScript
 
@@ -37,7 +37,7 @@ Push to `main` → GitHub Action (`deploy-worker.yml`) → `vitest run worker/te
 Secrets live on the Worker (`wrangler secret put NAME --config worker/wrangler.jsonc`), never in the repo. GitHub secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`.
 
 ### Legacy backend (api/**)
-`deploy-backend.yml` still pushes `api/**` to Hetzner over ssh; only the origin fallback and the pagespeed cron depend on it. Goes away with the decommission.
+`deploy-backend.yml` still pushes `api/**` to Hetzner over ssh; only the origin fallback depends on it. Goes away with the decommission.
 
 CI (`ci.yml`) runs on every push and PR: build, bundle sanity, frontend + worker tests, backend tests. `ci-docs.yml`: markdownlint, lychee, docs coherence.
 

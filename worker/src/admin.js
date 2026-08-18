@@ -248,10 +248,14 @@ export async function runJob(env, request, name) {
   const a = await requireAdmin(env, request); if (a instanceof Response) return a
   const fn = NAMED[name]
   if (!fn) return httpError(404, `Unknown job. Known: ${Object.keys(NAMED).join(', ')}`)
-  const dry = ['1', 'true'].includes(new URL(request.url).searchParams.get('dry_run') || '')
+  const u = new URL(request.url)
+  const dry = ['1', 'true'].includes(u.searchParams.get('dry_run') || '')
+  // ?urls=a,b limits pagespeed-ingest to a few targets: a full run of 20
+  // analyses is longer than an HTTP client waits, fine for the cron.
+  const urls = u.searchParams.get('urls')?.split(',').filter(Boolean)
   const t0 = Date.now()
   try {
-    const result = await fn(env, ['weekly-digest', 'daily-brief'].includes(name) ? { send: !dry } : { dryRun: dry })
+    const result = await fn(env, ['weekly-digest', 'daily-brief'].includes(name) ? { send: !dry } : { dryRun: dry, urls })
     return Response.json({ job: name, dry_run: dry, ms: Date.now() - t0, result })
   } catch (e) {
     return Response.json({ job: name, dry_run: dry, ms: Date.now() - t0, error: e.message }, { status: 500 })
