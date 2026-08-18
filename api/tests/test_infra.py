@@ -219,7 +219,7 @@ def test_no_embedded_db_credentials_in_scripts():
 # ---------------------------------------------------------------------------
 
 APPLY_SCRIPT = REPO_ROOT / "scripts" / "apply_pg_migrations.sh"
-APPLY_WORKFLOW = REPO_ROOT / ".github" / "workflows" / "apply-migrations.yml"
+# apply-migrations.yml was retired on 2026-08-18 with the frozen Postgres (ADR 0020).
 
 
 def test_apply_script_exists_with_required_modes_and_safety():
@@ -232,21 +232,6 @@ def test_apply_script_exists_with_required_modes_and_safety():
     # Halt-on-failure: psql aborts on the first error and set -e propagates it.
     assert "ON_ERROR_STOP=1" in content, "script must halt on the first migration error"
 
-
-def test_apply_workflow_is_dispatch_only_with_dry_run_default_true():
-    assert APPLY_WORKFLOW.is_file(), f"missing workflow at {APPLY_WORKFLOW}"
-    content = APPLY_WORKFLOW.read_text(encoding="utf-8")
-    assert "workflow_dispatch:" in content, "workflow must be manually dispatchable"
-    # No push/deploy trigger: merging must apply nothing.
-    assert re.search(r"^\s*push\s*:", content, re.MULTILINE) is None, (
-        "apply workflow must NOT have a push trigger"
-    )
-    # dry_run defaults to true so an accidental run previews rather than applies.
-    assert re.search(r"dry_run:.*?default:\s*true", content, re.DOTALL), (
-        "dry_run input must default to true"
-    )
-    # Reuses the existing SSH secret, introduces no new one.
-    assert "secrets.HETZNER_SSH_KEY" in content
 
 
 def test_apply_script_list_orders_numerically(tmp_path):
@@ -293,18 +278,6 @@ def test_dry_run_writes_nothing():
         "dry-run must NOT call ensure_ledger (that would create/write the ledger)"
     )
 
-
-def test_workflow_baseline_only_on_non_dry_run():
-    content = APPLY_WORKFLOW.read_text(encoding="utf-8")
-    # The --baseline invocation must sit inside the non-dry-run branch: it must
-    # appear AFTER the `if DRY_RUN == true` guard (i.e. in the else), so a dry run
-    # never records a baseline.
-    dry_guard = content.find('if [ "${DRY_RUN}" = "true" ]')
-    baseline_call = content.find("--baseline")
-    assert dry_guard != -1 and baseline_call != -1, "expected dry-run guard and baseline call"
-    assert baseline_call > dry_guard, (
-        "--baseline must be gated inside the non-dry-run branch (after the DRY_RUN guard)"
-    )
 
 
 def _apply_body() -> str:
