@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   Thunderbird / Mail client autoconfig for cercol.team
-  Incoming:  Stalwart IMAP  mail.topquaranta.cat:993  SSL/TLS
-  Outgoing:  Stalwart SMTP  mail.topquaranta.cat:465  SSL/TLS
-             username: hello@cercol.team  |  password: Stalwart account password
-             (Stalwart relays outbound cercol.team mail through Resend automatically)
+  Mailboxes are hosted at Purelymail since 2026-08-18.
+  Incoming:  IMAP  imap.purelymail.com:993  SSL/TLS
+  Outgoing:  SMTP  smtp.purelymail.com:465  SSL/TLS
+             username: the full address  |  password: the mailbox password
 -->
 <clientConfig version="1.1">
   <emailProvider id="cercol.team">
@@ -12,18 +12,16 @@
     <displayName>Cèrcol</displayName>
     <displayShortName>Cèrcol</displayShortName>
 
-    <!-- Incoming IMAP — Stalwart Mail Server -->
     <incomingServer type="imap">
-      <hostname>mail.topquaranta.cat</hostname>
+      <hostname>imap.purelymail.com</hostname>
       <port>993</port>
       <socketType>SSL</socketType>
       <authentication>password-cleartext</authentication>
       <username>%EMAILADDRESS%</username>
     </incomingServer>
 
-    <!-- Outgoing SMTP — Stalwart (relays cercol.team mail through Resend) -->
     <outgoingServer type="smtp">
-      <hostname>mail.topquaranta.cat</hostname>
+      <hostname>smtp.purelymail.com</hostname>
       <port>465</port>
       <socketType>SSL</socketType>
       <authentication>password-cleartext</authentication>
