@@ -260,21 +260,13 @@ async function getPost(env, match) {
   ).bind(slug).first()
 
   if (row) {
-    return Response.json({
-      slug: row.slug,
-      status: row.status,
-      title: JSON.parse(row.title),
-      description: JSON.parse(row.description),
-      content: JSON.parse(row.content),
-      coverUrl: row.cover_url,
-      author: row.author,
-      publishedAt: row.published_at,
-      createdAt: row.created_at,
-      updatedAt: row.updated_at,
-      viewCount: row.view_count,
-      category: row.category ?? 'general',
-      complexity: row.complexity ?? 'intermediate',
-    })
+    // The three JSON columns are spliced in as raw text: parsing and
+    // re-serialising six languages of article content cost ~80 ms of CPU
+    // per request, which is what put the prerender's 5k requests per build
+    // at p90 80 ms and got 107 of them killed for exceededResources.
+    const j = JSON.stringify
+    const body = `{"slug":${j(row.slug)},"status":${j(row.status)},"title":${row.title || 'null'},"description":${row.description || 'null'},"content":${row.content || 'null'},"coverUrl":${j(row.cover_url ?? null)},"author":${j(row.author ?? null)},"publishedAt":${j(row.published_at ?? null)},"createdAt":${j(row.created_at ?? null)},"updatedAt":${j(row.updated_at ?? null)},"viewCount":${j(row.view_count ?? null)},"category":${j(row.category ?? 'general')},"complexity":${j(row.complexity ?? 'intermediate')}}`
+    return new Response(body, { headers: { 'content-type': 'application/json' } })
   }
 
   const redirect = await env.DB.prepare(
