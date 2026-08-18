@@ -251,7 +251,7 @@ export async function runJob(env, request, name) {
   const dry = ['1', 'true'].includes(new URL(request.url).searchParams.get('dry_run') || '')
   const t0 = Date.now()
   try {
-    const result = await fn(env, name === 'weekly-digest' ? { send: !dry } : { dryRun: dry })
+    const result = await fn(env, ['weekly-digest', 'daily-brief'].includes(name) ? { send: !dry } : { dryRun: dry })
     return Response.json({ job: name, dry_run: dry, ms: Date.now() - t0, result })
   } catch (e) {
     return Response.json({ job: name, dry_run: dry, ms: Date.now() - t0, error: e.message }, { status: 500 })

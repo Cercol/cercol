@@ -27,6 +27,7 @@ import { runBing } from './jobs/bing.js'
 import { runPagespeed } from './jobs/pagespeed.js'
 import { runLinksTick } from './jobs/links.js'
 import { runDigest } from './jobs/digest.js'
+import { runDaily } from './jobs/daily.js'
 
 async function purgeTokens(env) {
   const ago = (d) => new Date(Date.now() - d * 86400e3).toISOString()
@@ -67,7 +68,7 @@ async function linksTick(env) { return runLinksTick(env) }
 export const linksSweep = linksTick
 
 export const JOBS = {
-  '0 4 * * *': async (env) => { await step('purge-tokens', () => purgeTokens(env)); await step('group-nudge', () => runNudge(env)); await step('links-tick', () => linksTick(env)) },
+  '0 4 * * *': async (env) => { await step('purge-tokens', () => purgeTokens(env)); await step('group-nudge', () => runNudge(env)); await step('links-tick', () => linksTick(env)); await step('daily-brief', () => runDaily(env)) },
   '0 5 * * *': async (env) => { await step('seo-anomalies', () => runAnomalies(env)); await step('links-tick', () => linksTick(env)) },
   '0 3 * * SUN': async (env) => { await step('bing-ingest', () => runBing(env)) },
   '0 4 * * SUN': async (env) => { await step('pagespeed-ingest', () => runPagespeed(env)) },
@@ -83,6 +84,7 @@ export const NAMED = {
   'pagespeed-ingest': (env, opts) => runPagespeed(env, opts),
   'links-tick': (env) => linksTick(env),
   'weekly-digest': (env, opts) => runDigest(env, opts),
+  'daily-brief': (env, opts) => runDaily(env, opts),
 }
 
 export async function scheduled(event, env, ctx) {
