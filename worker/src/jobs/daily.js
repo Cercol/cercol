@@ -1,34 +1,37 @@
 /**
  * Daily brief: what happened yesterday, and whether anything is near a
  * limit. Short on purpose. The weekly digest is the full picture; this is
- * the glance that says "signups, tests, one article moving, and the
- * platform is fine" or flags the one thing that is not.
+ * the glance that says "who arrived, what they did, which article moved,
+ * and the platform is fine" or flags the one thing that is not.
  *
  * # Spec: docs/architecture/seo-pipeline.md
  *
  * Sections, in order of how fast you want to know:
- *   1. Yesterday: signups, tests (by instrument), page views, visitors,
- *      each with the same weekday a week ago for a sense of scale.
- *   2. Articles: top reads yesterday, and any article whose reads jumped
- *      against its own 7-day daily average (an article "taking off").
- *   3. Platform limits: D1 rows read/written vs the free-plan daily caps,
- *      Worker requests and CPU p99, Purelymail credit, cron health (each
- *      job's last run). A line turns into a warning at 70% of a cap.
- *   4. New signups by name/email, if any, because on a project this size
- *      you want to know who arrived.
+ *   1. Warnings, or one green line.
+ *   2. Yesterday: signups, tests, page views, visitors, each against the
+ *      same weekday a week ago; the start-to-finish funnel; language split.
+ *   3. People: new accounts (with whether they already finished a test),
+ *      Witness sessions and groups.
+ *   4. Content: articles taking off, top reads with 7-day average, top
+ *      pages; search clicks and impressions for the latest day Search
+ *      Console has exported (about two days behind).
+ *   5. Platform against the free-plan caps: D1 rows, KV writes, Worker
+ *      requests, CPU p99, errors by status, Purelymail credit.
  *
- * Runs on the 04:00 UTC trigger, after purge-tokens, and reads D1 for the
- * product numbers and Cloudflare GraphQL for the platform numbers. It
- * sends to DIGEST_EMAIL like the weekly one.
+ * Runs on the 04:00 UTC trigger, after purge-tokens, and sends to
+ * DIGEST_EMAIL like the weekly one. Every gatherer degrades to a
+ * placeholder rather than aborting, so the email always sends.
  */
 
+import { query as bq } from '../bigquery.js'
+import { C, fmt, esc, h1, sub, p, section, empty, delta, stat, statRow, table, bar, callout, shell } from '../email-ui.js'
+
 const LABELS = { newMoon: 'New Moon', firstQuarter: 'First Quarter', fullMoon: 'Full Moon' }
-const BLUE = '#0047ba', RED = '#cf3339', DARK = '#111111', GRAY = '#6b7280', LIGHT = '#f9fafb', WHITE = '#ffffff', GREEN = '#16a34a', BORDER = '#e5e7eb', AMBER = '#b45309'
-const fmt = (n) => Number(n || 0).toLocaleString('en-US')
 const iso = (d) => d.toISOString().replace('Z', '+00:00')
+const day = (d) => d.toISOString().slice(0, 10)
 
 // Free-plan caps this deployment lives under (developers.cloudflare.com, Aug 2026).
-export const CAPS = { d1RowsRead: 5_000_000, d1RowsWritten: 100_000, workerRequests: 100_000, workerCpuMs: 10 }
+export const CAPS = { d1RowsRead: 5_000_000, d1RowsWritten: 100_000, kvWrites: 1_000, workerRequests: 100_000, workerCpuMs: 10 }
 const WARN_AT = 0.7
 
 export function dayBounds(now = new Date()) {
@@ -47,9 +50,19 @@ export async function gatherProduct(db, b) {
   const tests = await pair(`SELECT COUNT(*) AS n FROM results WHERE is_seed = 0 AND created_at >= ? AND created_at < ?`)
   const pageViews = await pair(`SELECT COUNT(*) AS n FROM events WHERE name='page_view' AND created_at >= ? AND created_at < ?`)
   const visitors = await pair(`SELECT COUNT(DISTINCT anon_id) AS n FROM events WHERE name='page_view' AND anon_id IS NOT NULL AND created_at >= ? AND created_at < ?`)
+  const starts = await pair(`SELECT COUNT(DISTINCT anon_id) AS n FROM events WHERE name='test_start' AND created_at >= ? AND created_at < ?`)
   const byInstrument = (await q(`SELECT instrument, language, COUNT(*) AS n FROM results WHERE is_seed = 0 AND created_at >= ? AND created_at < ? GROUP BY instrument, language ORDER BY n DESC`, ...Y))
     .map((r) => [LABELS[r.instrument] || r.instrument, r.language || '—', r.n])
-  const newUsers = await q(`SELECT u.email, p.first_name, p.last_name, p.native_language, u.created_at FROM auth_users u LEFT JOIN profiles p ON p.id = u.id WHERE u.created_at >= ? AND u.created_at < ? ORDER BY u.created_at`, ...Y)
+  const byLang = (await q(`SELECT COALESCE(lang,'?') AS lang, COUNT(DISTINCT anon_id) AS n FROM events WHERE name='page_view' AND created_at >= ? AND created_at < ? GROUP BY lang ORDER BY n DESC`, ...Y)).map((r) => [r.lang, r.n])
+  const topPages = (await q(`SELECT path, COUNT(*) AS n FROM events WHERE name='page_view' AND path IS NOT NULL AND created_at >= ? AND created_at < ? GROUP BY path ORDER BY n DESC LIMIT 8`, ...Y)).map((r) => [r.path, r.n])
+  const newUsers = await q(`SELECT u.email, p.first_name, p.last_name, p.native_language, u.created_at,
+      (SELECT COUNT(*) FROM results r WHERE r.user_id = u.id AND r.is_seed = 0) AS tests
+    FROM auth_users u LEFT JOIN profiles p ON p.id = u.id WHERE u.created_at >= ? AND u.created_at < ? ORDER BY u.created_at`, ...Y)
+  const witness = {
+    created: await count(db, `SELECT COUNT(*) AS n FROM witness_sessions WHERE is_seed = 0 AND created_at >= ? AND created_at < ?`, ...Y),
+    completed: await count(db, `SELECT COUNT(*) AS n FROM witness_sessions WHERE is_seed = 0 AND completed_at >= ? AND completed_at < ?`, ...Y),
+    groups: await count(db, `SELECT COUNT(*) AS n FROM groups WHERE is_seed = 0 AND created_at >= ? AND created_at < ?`, ...Y),
+  }
   // Reads yesterday vs the article's own 7-day daily average.
   const reads = await q(`
     SELECT slug,
@@ -58,10 +71,26 @@ export async function gatherProduct(db, b) {
       FROM events WHERE name='article_view' AND slug IS NOT NULL AND created_at >= ?3 AND created_at < ?2
      GROUP BY slug ORDER BY y DESC LIMIT 40`, iso(b.y0), iso(b.y1), iso(b.avg0))
   const titles = Object.fromEntries((await q(`SELECT slug, json_extract(title, '$.en') AS t FROM blog_posts`)).map((r) => [r.slug, r.t]))
-  const top = reads.filter((r) => r.y > 0).slice(0, 8).map((r) => [titles[r.slug] || r.slug, r.y, r.avg7])
-  const takingOff = reads.filter((r) => r.y >= 5 && r.avg7 > 0 && r.y >= 3 * r.avg7).map((r) => [titles[r.slug] || r.slug, r.y, r.avg7])
+  const top = reads.filter((r) => r.y > 0).slice(0, 8).map((r) => [titles[r.slug] || r.slug, r.slug, r.y, r.avg7])
+  const takingOff = reads.filter((r) => r.y >= 5 && r.avg7 > 0 && r.y >= 3 * r.avg7).map((r) => [titles[r.slug] || r.slug, r.slug, r.y, r.avg7])
   const totals = { users: await count(db, `SELECT COUNT(*) AS n FROM auth_users`), tests: await count(db, `SELECT COUNT(*) AS n FROM results WHERE is_seed = 0`) }
-  return { signups, tests, pageViews, visitors, byInstrument, newUsers, top, takingOff, totals }
+  return { signups, tests, pageViews, visitors, starts, byInstrument, byLang, topPages, newUsers, witness, top, takingOff, totals }
+}
+
+/** Latest day Search Console has exported (usually two days behind), and the day before it. */
+export async function gatherSearch(env) {
+  const pr = env.BIGQUERY_PROJECT || 'cercol', sg = env.BIGQUERY_DATASET_GSC || 'searchconsole'
+  const gt = `\`${pr}.${sg}.searchdata_url_impression\``
+  try {
+    const [last] = await bq(env, `SELECT MAX(data_date) AS d FROM ${gt}`)
+    if (!last?.d) return { pending: true }
+    const d = String(last.d).slice(0, 10)
+    const rows = await bq(env, `SELECT data_date, SUM(clicks) AS clicks, SUM(impressions) AS impressions FROM ${gt} WHERE data_date IN ('${d}', DATE_SUB('${d}', INTERVAL 1 DAY)) GROUP BY data_date ORDER BY data_date DESC`)
+    const tq = await bq(env, `SELECT query, SUM(clicks) AS clicks, SUM(impressions) AS impressions, SAFE_DIVIDE(SUM(sum_position), SUM(impressions)) AS pos FROM ${gt} WHERE data_date = '${d}' AND query IS NOT NULL GROUP BY query ORDER BY clicks DESC, impressions DESC LIMIT 6`)
+    const cur = rows[0] || {}, prev = rows[1] || {}
+    return { day: d, clicks: [Number(cur.clicks || 0), Number(prev.clicks || 0)], impressions: [Number(cur.impressions || 0), Number(prev.impressions || 0)],
+      queries: tq.map((r) => [r.query, Number(r.clicks), Number(r.impressions), r.pos == null ? null : Number(r.pos)]) }
+  } catch (e) { return { pending: true, error: e.message } }
 }
 
 async function gql(env, query) {
@@ -74,16 +103,20 @@ async function gql(env, query) {
 export async function gatherPlatform(env, b) {
   const out = { pending: !env.CF_ANALYTICS_TOKEN || !env.CF_ACCOUNT_ID }
   if (out.pending) return out
-  const day = b.y0.toISOString().slice(0, 10)
+  const d = day(b.y0)
   try {
-    const d = await gql(env, `{ viewer { accounts(filter:{accountTag:"${env.CF_ACCOUNT_ID}"}) {
-      d1: d1AnalyticsAdaptiveGroups(limit:1, filter:{date:"${day}"}) { sum { rowsRead rowsWritten } }
-      w: workersInvocationsAdaptive(limit:1, filter:{date:"${day}", scriptName:"cercol-api"}) { sum { requests errors } quantiles { cpuTimeP50 cpuTimeP99 } }
+    const r = await gql(env, `{ viewer { accounts(filter:{accountTag:"${env.CF_ACCOUNT_ID}"}) {
+      d1: d1AnalyticsAdaptiveGroups(limit:1, filter:{date:"${d}"}) { sum { rowsRead rowsWritten readQueries writeQueries } }
+      kv: kvOperationsAdaptiveGroups(limit:10, filter:{date:"${d}"}) { dimensions { actionType } sum { requests } }
+      w: workersInvocationsAdaptive(limit:1, filter:{date:"${d}", scriptName:"cercol-api"}) { sum { requests errors subrequests } quantiles { cpuTimeP50 cpuTimeP99 } }
+      ws: workersInvocationsAdaptive(limit:20, filter:{date:"${d}", scriptName:"cercol-api"}) { dimensions { status } sum { requests } }
     } } }`)
-    const a = d.viewer.accounts[0]
+    const a = r.viewer.accounts[0]
     const d1 = a.d1?.[0]?.sum || {}, w = a.w?.[0] || {}
-    out.d1 = { rowsRead: d1.rowsRead || 0, rowsWritten: d1.rowsWritten || 0 }
-    out.worker = { requests: w.sum?.requests || 0, errors: w.sum?.errors || 0, cpuP50: (w.quantiles?.cpuTimeP50 || 0) / 1000, cpuP99: (w.quantiles?.cpuTimeP99 || 0) / 1000 }
+    out.d1 = { rowsRead: d1.rowsRead || 0, rowsWritten: d1.rowsWritten || 0, queries: (d1.readQueries || 0) + (d1.writeQueries || 0) }
+    out.kv = Object.fromEntries((a.kv || []).map((g) => [g.dimensions.actionType, g.sum.requests]))
+    out.worker = { requests: w.sum?.requests || 0, errors: w.sum?.errors || 0, subrequests: w.sum?.subrequests || 0, cpuP50: (w.quantiles?.cpuTimeP50 || 0) / 1000, cpuP99: (w.quantiles?.cpuTimeP99 || 0) / 1000,
+      byStatus: (a.ws || []).filter((g) => g.dimensions.status !== 'success').map((g) => [g.dimensions.status, g.sum.requests]) }
   } catch (e) { out.error = e.message }
   try {
     const r = await fetch('https://purelymail.com/api/v0/checkAccountCredit', { method: 'POST', headers: { 'Purelymail-Api-Token': env.PURELYMAIL_API_KEY || '', 'content-type': 'application/json' }, body: '{}' })
@@ -97,72 +130,90 @@ export function warnings(pl) {
   const w = []
   if (pl.pending) return ['Platform metrics not configured (CF_ANALYTICS_TOKEN / CF_ACCOUNT_ID).']
   if (pl.error) w.push(`Cloudflare analytics query failed: ${pl.error}`)
+  const pct = (v, cap) => Math.round((v / cap) * 100)
   if (pl.d1) {
-    if (pl.d1.rowsRead >= CAPS.d1RowsRead * WARN_AT) w.push(`D1 rows read yesterday ${fmt(pl.d1.rowsRead)} — ${Math.round(pl.d1.rowsRead / CAPS.d1RowsRead * 100)}% of the 5M/day free cap.`)
-    if (pl.d1.rowsWritten >= CAPS.d1RowsWritten * WARN_AT) w.push(`D1 rows written yesterday ${fmt(pl.d1.rowsWritten)} — ${Math.round(pl.d1.rowsWritten / CAPS.d1RowsWritten * 100)}% of the 100k/day free cap.`)
+    if (pl.d1.rowsRead >= CAPS.d1RowsRead * WARN_AT) w.push(`D1 rows read ${fmt(pl.d1.rowsRead)}, ${pct(pl.d1.rowsRead, CAPS.d1RowsRead)}% of the 5M/day cap.`)
+    if (pl.d1.rowsWritten >= CAPS.d1RowsWritten * WARN_AT) w.push(`D1 rows written ${fmt(pl.d1.rowsWritten)}, ${pct(pl.d1.rowsWritten, CAPS.d1RowsWritten)}% of the 100k/day cap.`)
   }
+  if (pl.kv && (pl.kv.write || 0) >= CAPS.kvWrites * WARN_AT) w.push(`KV writes ${fmt(pl.kv.write)}, ${pct(pl.kv.write, CAPS.kvWrites)}% of the 1k/day cap.`)
   if (pl.worker) {
-    if (pl.worker.requests >= CAPS.workerRequests * WARN_AT) w.push(`Worker requests yesterday ${fmt(pl.worker.requests)} — ${Math.round(pl.worker.requests / CAPS.workerRequests * 100)}% of the 100k/day free cap.`)
-    if (pl.worker.cpuP99 > CAPS.workerCpuMs) w.push(`Worker CPU p99 ${pl.worker.cpuP99.toFixed(1)} ms, above the 10 ms free budget.`)
-    if (pl.worker.errors > 0) w.push(`${fmt(pl.worker.errors)} Worker error(s) yesterday.`)
+    if (pl.worker.requests >= CAPS.workerRequests * WARN_AT) w.push(`API requests ${fmt(pl.worker.requests)}, ${pct(pl.worker.requests, CAPS.workerRequests)}% of the 100k/day cap.`)
+    if (pl.worker.cpuP99 > CAPS.workerCpuMs) w.push(`API CPU p99 ${pl.worker.cpuP99.toFixed(1)} ms, above the 10 ms budget.`)
+    if (pl.worker.errors > 0) w.push(`${fmt(pl.worker.errors)} API error(s): ${pl.worker.byStatus.map(([s, n]) => `${s} ${fmt(n)}`).join(', ') || 'unclassified'}.`)
   }
   if (pl.mailCredit != null && pl.mailCredit < 0.15) w.push(`Purelymail credit is $${pl.mailCredit.toFixed(2)}: top up.`)
   return w
 }
 
 // -- HTML ------------------------------------------------------------------
-const h1 = (t) => `<h1 style="margin:0 0 12px;font-size:20px;font-weight:700;color:${DARK};">${t}</h1>`
-const p = (t, muted = false) => `<p style="margin:0 0 12px;font-size:15px;line-height:1.6;color:${muted ? GRAY : DARK};">${t}</p>`
-const section = (title, body) => `<div style="margin-top:24px;padding-top:16px;border-top:2px solid ${BLUE};"><h2 style="margin:0 0 10px;font-size:16px;font-weight:700;color:${DARK};">${title}</h2>${body}</div>`
-const empty = (t) => `<p style="margin:0;font-size:13px;color:${GRAY};font-style:italic;">${t}</p>`
-function table(headers, rows, aligns) {
-  aligns = aligns || headers.map(() => 'left')
-  const head = headers.map((h, i) => `<th style="padding:6px 10px;text-align:${aligns[i]};font-size:12px;color:${GRAY};background:${LIGHT};border-bottom:1px solid ${BORDER};font-weight:600;">${h}</th>`).join('')
-  const body = rows.map((r) => `<tr>${r.map((c, i) => `<td style="padding:6px 10px;text-align:${aligns[i]};font-size:13px;color:${DARK};border-bottom:1px solid ${BORDER};">${c}</td>`).join('')}</tr>`).join('')
-  return `<table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`
-}
-const card = (label, cur, prev) => {
-  const d = cur - prev, col = d > 0 ? GREEN : d < 0 ? RED : GRAY, arrow = d > 0 ? '&#9650;' : d < 0 ? '&#9660;' : '&#8211;'
-  return `<td style="padding:10px 8px;text-align:center;vertical-align:top;background:${LIGHT};border:1px solid ${BORDER};border-radius:8px;"><div style="font-size:26px;font-weight:700;color:${DARK};line-height:1.1;">${fmt(cur)}</div><div style="font-size:12px;color:${GRAY};margin-top:2px;">${label}</div><div style="font-size:11px;color:${col};margin-top:2px;">${arrow} ${d >= 0 ? '+' : ''}${d} vs same day last week</div></td>`
-}
-const bar = (v, cap) => { const pct = Math.min(100, Math.round(v / cap * 100)); const col = pct >= 70 ? RED : pct >= 40 ? AMBER : GREEN; return `<div style="background:${BORDER};height:6px;border-radius:3px;overflow:hidden;width:120px;display:inline-block;vertical-align:middle;"><div style="width:${pct}%;height:100%;background:${col};"></div></div> <span style="font-size:12px;color:${GRAY};">${pct}%</span>` }
+const vs = (cur, prev) => delta(cur, prev) + `<span style="font-size:11px;color:${C.muted};"> vs last week</span>`
+const pctOf = (a, b) => (b ? `${Math.round((a / b) * 100)}%` : '—')
 
 export function dailyHtml(data, frontendUrl = 'https://cercol.team') {
-  const { day, product: pr, platform: pl, warns } = data
-  const parts = [h1(`Daily brief &mdash; ${day}`)]
-  if (warns.length) parts.push(`<div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:10px 14px;margin:0 0 12px;">${warns.map((w) => `<div style="font-size:13px;color:${RED};">&#9888; ${w}</div>`).join('')}</div>`)
-  else parts.push(p('&#10003; Platform within limits.', true))
-  parts.push(`<table width="100%" cellpadding="0" cellspacing="0" style="margin:8px 0;"><tr>${[card('Signups', ...pr.signups), card('Tests', ...pr.tests), card('Page views', ...pr.pageViews), card('Visitors', ...pr.visitors)].join('<td style="width:8px;"></td>')}</tr></table>`)
-  parts.push(p(`All-time: ${fmt(pr.totals.users)} accounts, ${fmt(pr.totals.tests)} tests.`, true))
-  if (pr.byInstrument.length) parts.push(section('Tests yesterday', table(['Instrument', 'Lang', 'N'], pr.byInstrument.map(([i, l, n]) => [i, l, fmt(n)]), ['left', 'left', 'right'])))
-  if (pr.newUsers.length) parts.push(section('New accounts', table(['Email', 'Name', 'Lang', 'At (UTC)'], pr.newUsers.map((u) => [u.email, `${u.first_name || ''} ${u.last_name || ''}`.trim() || '—', u.native_language || '—', String(u.created_at).slice(11, 16)]))))
-  if (pr.takingOff.length) parts.push(section('&#128293; Taking off', table(['Article', 'Reads', '7-day avg'], pr.takingOff.map(([t, y, a]) => [t, fmt(y), a.toFixed(1)]), ['left', 'right', 'right'])))
-  parts.push(section('Top articles yesterday', pr.top.length ? table(['Article', 'Reads', '7-day avg'], pr.top.map(([t, y, a]) => [t, fmt(y), a.toFixed(1)]), ['left', 'right', 'right']) : empty('No article reads recorded yesterday.')))
+  const { day: d, product: pr, platform: pl, search: se, warns } = data
+  const weekday = new Date(`${d}T00:00:00Z`).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' })
+  const parts = [h1('Daily brief'), sub(`${weekday} &middot; ${fmt(pr.totals.users)} accounts and ${fmt(pr.totals.tests)} tests all-time`)]
+  parts.push(warns.length ? callout(warns.map((w) => `&#9888; ${w}`), 'warn') : callout(['&#10003; Platform within limits.'], 'ok'))
+
+  // 1. Yesterday
+  parts.push(statRow([
+    stat('Signups', fmt(pr.signups[0]), vs(...pr.signups), C.red),
+    stat('Tests', fmt(pr.tests[0]), vs(...pr.tests), C.blue),
+    stat('Page views', fmt(pr.pageViews[0]), vs(...pr.pageViews), C.yellow),
+    stat('Visitors', fmt(pr.visitors[0]), vs(...pr.visitors), C.green),
+  ]))
+  const funnel = `${fmt(pr.visitors[0])} visitors &rarr; ${fmt(pr.starts[0])} started a test &rarr; ${fmt(pr.tests[0])} finished (${pctOf(pr.tests[0], pr.starts[0])} of starters, ${pctOf(pr.tests[0], pr.visitors[0])} of visitors)`
+  const langs = pr.byLang.length ? ` &middot; visitors by language: ${pr.byLang.map(([l, n]) => `${l} ${fmt(n)}`).join(', ')}` : ''
+  parts.push(p(funnel + langs, true))
+  if (pr.byInstrument.length) parts.push(table(['Tests yesterday', 'Lang', 'N'], pr.byInstrument.map(([i, l, n]) => [i, l, fmt(n)]), ['left', 'left', 'right']))
+
+  // 2. People
+  let people = pr.newUsers.length
+    ? table(['New account', 'Name', 'Lang', 'At (UTC)', 'Tests'], pr.newUsers.map((u) => [esc(u.email), esc(`${u.first_name || ''} ${u.last_name || ''}`.trim()) || '—', u.native_language || '—', String(u.created_at).slice(11, 16), u.tests ? `<span style="color:${C.green};">&#10003; ${u.tests}</span>` : '<span style="color:' + C.muted + ';">not yet</span>']), ['left', 'left', 'left', 'right', 'right'])
+    : empty('No new accounts yesterday.')
+  const wt = pr.witness
+  if (wt.created || wt.completed || wt.groups) people += p(`Witness: ${fmt(wt.created)} invited, ${fmt(wt.completed)} completed &middot; ${fmt(wt.groups)} new group${wt.groups === 1 ? '' : 's'}`, true)
+  parts.push(section('People', people, C.red))
+
+  // 3. Content
+  const art = (t, slug) => `<a href="${frontendUrl}/blog/${slug}/" style="color:${C.ink};text-decoration:none;">${esc(t)}</a>`
+  let content = ''
+  if (pr.takingOff.length) content += `<div style="margin-bottom:12px;">${table(['&#128293; Taking off', 'Reads', '7-day avg'], pr.takingOff.map(([t, s, y, a]) => [art(t, s), `<strong>${fmt(y)}</strong>`, a.toFixed(1)]), ['left', 'right', 'right'])}</div>`
+  content += pr.top.length ? table(['Top articles', 'Reads', '7-day avg'], pr.top.map(([t, s, y, a]) => [art(t, s), fmt(y), a.toFixed(1)]), ['left', 'right', 'right']) : empty('No article reads recorded yesterday.')
+  if (pr.topPages.length) content += `<div style="margin-top:12px;">${table(['Top pages', 'Views'], pr.topPages.map(([pth, n]) => [`<span style="font-size:12px;">${esc(pth)}</span>`, fmt(n)]), ['left', 'right'])}</div>`
+  parts.push(section('Content', content, C.yellow))
+
+  // 4. Search
+  if (se && !se.pending) {
+    let s = statRow([stat('Clicks', fmt(se.clicks[0]), delta(se.clicks[0], se.clicks[1]) + `<span style="font-size:11px;color:${C.muted};"> vs day before</span>`, C.blue), stat('Impressions', fmt(se.impressions[0]), delta(se.impressions[0], se.impressions[1]) + `<span style="font-size:11px;color:${C.muted};"> vs day before</span>`, C.green)])
+    if (se.queries.length) s += table(['Query', 'Clicks', 'Impr.', 'Pos.'], se.queries.map(([q, c, i, pos]) => [esc(q), fmt(c), fmt(i), pos != null ? pos.toFixed(1) : '&ndash;']), ['left', 'right', 'right', 'right'])
+    parts.push(section(`Google Search &middot; ${se.day} (latest export)`, s, C.green))
+  }
+
+  // 5. Platform
   if (!pl.pending && !pl.error) {
+    // ponytail: static-asset requests (cercol-web) are free and uncounted; only the API Worker meters.
     const rows = [
+      ['API requests', fmt(pl.worker.requests), bar(pl.worker.requests, CAPS.workerRequests)],
+      ['API CPU p50 / p99', `${pl.worker.cpuP50.toFixed(1)} / ${pl.worker.cpuP99.toFixed(1)} ms`, bar(pl.worker.cpuP99, CAPS.workerCpuMs)],
+      ['API errors', pl.worker.errors ? `<span style="color:${C.red};">${fmt(pl.worker.errors)}</span>` : '0', pl.worker.byStatus.map(([s, n]) => `<span style="font-size:12px;color:${C.muted};">${s} ${fmt(n)}</span>`).join(' ')],
       ['D1 rows read', fmt(pl.d1.rowsRead), bar(pl.d1.rowsRead, CAPS.d1RowsRead)],
       ['D1 rows written', fmt(pl.d1.rowsWritten), bar(pl.d1.rowsWritten, CAPS.d1RowsWritten)],
-      ['Worker requests', fmt(pl.worker.requests), bar(pl.worker.requests, CAPS.workerRequests)],
-      ['Worker CPU p50 / p99', `${pl.worker.cpuP50.toFixed(1)} / ${pl.worker.cpuP99.toFixed(1)} ms`, bar(pl.worker.cpuP99, CAPS.workerCpuMs)],
-      ['Worker errors', fmt(pl.worker.errors), ''],
+      ['KV writes', fmt(pl.kv.write || 0), bar(pl.kv.write || 0, CAPS.kvWrites)],
     ]
-    if (pl.mailCredit != null) rows.push(['Purelymail credit', `$${pl.mailCredit.toFixed(2)}`, ''])
-    parts.push(section('Platform (free-plan caps)', table(['Metric', 'Yesterday', 'Of cap'], rows, ['left', 'right', 'left'])))
+    if (pl.mailCredit != null) rows.push(['Purelymail credit', `$${pl.mailCredit.toFixed(2)}`, `<span style="font-size:12px;color:${C.muted};">pay-as-you-go</span>`])
+    parts.push(section('Platform &middot; free-plan caps', table(['', 'Yesterday', 'Of cap'], rows, ['left', 'right', 'left']), C.blue))
   }
-  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Cèrcol</title></head>
-<body style="margin:0;padding:0;background:${LIGHT};font-family:Arial,Helvetica,sans-serif;color:${DARK};"><table width="100%" cellpadding="0" cellspacing="0" style="background:${LIGHT};padding:32px 16px;"><tr><td align="center"><table width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;">
-<tr><td style="background:${BLUE};border-radius:12px 12px 0 0;padding:20px 32px;"><img src="${frontendUrl}/email-logo.png" alt="Cèrcol" width="160" height="67" style="display:block;border:0;" /></td></tr>
-<tr><td style="background:${WHITE};padding:32px;border-left:1px solid #e5e7eb;border-right:1px solid #e5e7eb;">${parts.join('')}</td></tr>
-<tr><td style="background:${LIGHT};border-radius:0 0 12px 12px;padding:20px 32px;border:1px solid #e5e7eb;border-top:none;"><p style="margin:0;font-size:12px;color:${GRAY};line-height:1.5;">Daily brief from the Cèrcol Worker. The weekly digest on Monday has the full picture.</p></td></tr>
-</table></td></tr></table></body></html>`
+  return shell(parts.join(''), { frontendUrl, footer: 'Daily brief from the Cèrcol Worker, 04:00 UTC. The weekly digest on Monday has the full picture.' })
 }
 
 export async function runDaily(env, { send = true } = {}) {
   const b = dayBounds()
   const product = await gatherProduct(env.DB, b)
   const platform = await gatherPlatform(env, b)
+  const search = await gatherSearch(env)
   const warns = warnings(platform)
-  const data = { day: b.y0.toISOString().slice(0, 10), product, platform, warns }
+  const data = { day: day(b.y0), product, platform, search, warns }
   if (send) {
     const to = env.DIGEST_EMAIL || 'hello@cercol.team'
     const subject = `Cèrcol daily — ${data.day}: ${fmt(product.signups[0])} signups, ${fmt(product.tests[0])} tests${warns.length ? ` · ${warns.length} warning${warns.length > 1 ? 's' : ''}` : ''}`
