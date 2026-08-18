@@ -1,5 +1,7 @@
 # ADR 0013: front the static site with Cloudflare for Brotli, HTTP/3, and long-cache
 
+> **Status note (2026-08-17)**: implemented on 2026-08-17 as a static-assets Worker `cercol-web` (`web/wrangler.jsonc`) on `cercol.team` and `www.cercol.team`, rather than a Pages project; GitHub Pages stays as a warm fallback for a fortnight. See ADR 0020.
+
 - **Number**: 0013
 - **Title**: front the static site with Cloudflare for Brotli, HTTP/3, and long-cache
 - **Status**: Proposed

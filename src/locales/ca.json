@@ -223,7 +223,7 @@
     },
     "thirdParties": {
       "heading": "Serveis de tercers",
-      "hosting": "Les dades del teu compte i els resultats dels tests s'emmagatzemen en un servidor propi allotjat a Hetzner Online GmbH (Alemanya, UE). Els correus transaccionals (enllaços d'accés) s'envien a través de Resend (Resend, Inc.), una empresa nord-americana que opera sota clàusules contractuals estàndard per a transferències de dades de la UE. L'autenticació és completament pròpia, cap proveïdor extern té accés a les teues credencials.",
+      "hosting": "Les dades del teu compte i els resultats dels tests s'emmagatzemen en una base de dades allotjada a Cloudflare, Inc. i ubicada a l'Europa occidental (UE). Els correus transaccionals (enllaços d'accés) s'envien a través de Resend (Resend, Inc.), una empresa nord-americana que opera sota clàusules contractuals estàndard per a transferències de dades de la UE. L'autenticació és completament pròpia, cap proveïdor extern guarda les teues credencials.",
       "stripe": "Els pagaments estan a càrrec de Stripe (Stripe, Inc.), una empresa nord-americana amb compliment de transferència de dades de la UE. Cèrcol no rep dades de targetes de pagament, únicament una confirmació de la transacció.",
       "noTrackers": "Cap altre servei de tercers rep les teues dades personals. No hi ha plataformes analítiques, xarxes publicitàries ni rastrejadors de xarxes socials en aquest lloc."
     },

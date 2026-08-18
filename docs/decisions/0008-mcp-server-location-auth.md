@@ -1,5 +1,7 @@
 # ADR 0008: MCP server location and authentication
 
+> **Status note (2026-08-17)**: the MCP server on Hetzner (`cercol-mcp.service`) is not user-facing and goes away with the decommission (ADR 0020). The Worker `cercol-api` already holds `MCP_API_KEY` as a secret; a Worker-hosted MCP surface, if wanted, is a new decision.
+
 - **Number**: 0008
 - **Title**: MCP server location and authentication
 - **Status**: Accepted

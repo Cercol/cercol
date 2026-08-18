@@ -1,4 +1,6 @@
-# Cèrcol — Cron jobs
+# Cèrcol: Cron jobs
+
+> **Legacy (since 2026-08-17).** Every scheduled job now runs on the Cloudflare Worker's cron triggers (`worker/src/scheduled.js`, ADR 0020); the copies of these crons on the Hetzner box are renamed `*.disabled-migrated-to-cloudflare`. The one exception is `cercol-pagespeed-ingest`, kept alive because the PageSpeed API key is still IP-restricted to Hetzner in Google Cloud. All of this goes away with `scripts/decommission-hetzner.sh`. Operations live in `docs/ops/runbook.md`. The text below describes the pre-migration setup and is left as is.
 
 System-level cron files for the Hetzner VPS. These are NOT applied
 automatically by `deploy-backend.yml`; they require a one-time manual

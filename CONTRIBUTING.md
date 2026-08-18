@@ -42,17 +42,15 @@ code.
 3. Run the gates locally before opening the PR:
 
    ```
-   npm test -- --run            # vitest
-   cd api && python -m pytest -v
+   npm test -- --run            # vitest, includes worker/test
    npm run build                # vite build (sanity)
    ```
 
 4. Fill in the PR template. The checklist is not decorative; the
    reviewer reads it.
 5. Wait for CI to go green. CI runs the same gates plus
-   `markdownlint`, `lychee` (link check), `caddy validate` on the
-   snippet, the spec-path validator, and a soft docs-coherence
-   check.
+   `markdownlint`, `lychee` (link check), the spec-path validator,
+   and a soft docs-coherence check.
 6. Address review. When all conversations are resolved and all
    checks are green, the reviewer or maintainer squash-merges.
 

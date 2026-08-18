@@ -5,16 +5,17 @@
  *
  * # Spec: docs/architecture/seo-pipeline.md
  *
- *   0 4 * * *   daily 04:00   purge tokens, then group nudge
- *   0 5 * * *   daily 05:00   SEO anomaly detector
+ *   0 4 * * *   daily 04:00   purge tokens, group nudge, links tick, daily brief
+ *   0 5 * * *   daily 05:00   SEO anomaly detector, links tick
  *   0 3 * * SUN Sun 03:00     Bing ingest
  *   0 4 * * SUN Sun 04:00     PageSpeed ingest
- *   0 9 * * MON Mon 09:00     external links sweep, then the weekly digest
+ *   0 9 * * MON Mon 09:00     links tick, then the weekly digest
  *
- * The link sweep is paced at 40 probes per invocation; on Monday it runs
- * to completion inside the 15-minute wall budget by looping ticks, then
- * the digest reads the fresh snapshot. If a tick fails midway the cursor
- * in KV lets the next Monday resume rather than restart.
+ * The link sweep is paced at 15 probes per tick (the free plan allows 50
+ * subrequests per invocation and self-chaining does not work), with its
+ * cursor in KV; three ticks a week-day means a full sweep of ~200 URLs
+ * takes about five days, and the digest reads whatever the latest
+ * snapshot is. If a tick fails midway the cursor lets the next resume.
  *
  * Every job is wrapped so one failure never stops the others in the same
  * trigger, and every outcome is logged, which is what the operator reads

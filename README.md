@@ -150,16 +150,16 @@ No account required for any instrument. No personal data collected during assess
 
 Anonymous scores are logged: instrument name, language, five domain z-scores.
 Nothing that identifies you. Account creation is optional (saves result history
-and unlocks Full Moon features). Data is stored on our own servers
-(Hetzner Online GmbH). No third-party analytics.
+and unlocks Full Moon features). Data is stored in a Cloudflare D1 database
+in the EU jurisdiction of the Cloudflare account. No third-party analytics.
 
 ---
 
 ## Stack
 
-- **Frontend**: React + Vite → GitHub Pages (cercol.team)
-- **Backend**: FastAPI + PostgreSQL 14 → Hetzner VPS (api.cercol.team)
-- **Auth**: Self-hosted (magic link via Resend, password/bcrypt, Google OAuth)
+- **Frontend**: React + Vite → Cloudflare static assets (cercol.team)
+- **Backend**: Cloudflare Worker + D1 (SQLite) + KV (api.cercol.team), `worker/`
+- **Auth**: Self-hosted (magic link via Resend, Google OAuth); no passwords
 - **Scoring**: 100% client-side JavaScript (no data sent to server during assessment)
 
 ---
@@ -193,18 +193,13 @@ cd cercol
 npm install
 npm run dev               # frontend on http://localhost:5173
 
-cd api
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-cp .env.example .env      # fill in values
-uvicorn main:app --reload --port 8090
+npx wrangler dev --config worker/wrangler.jsonc   # API on http://localhost:8787
 ```
 
 Run tests:
 
 ```
-npm test -- --run          # vitest
-cd api && python -m pytest -v   # pytest
+npm test -- --run          # vitest, includes worker/test
 ```
 
 ---
