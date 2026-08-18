@@ -1,0 +1,42 @@
+name: Deploy API worker
+
+# api.cercol.team is the Cloudflare Worker in worker/ since 2026-08-17.
+# Until this file existed the Worker was deployed by hand with wrangler,
+# so a change merged to main under worker/ reached nobody until someone
+# remembered. Same gate as the other deploys: the tests run first.
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+    paths:
+      - 'worker/**'
+      - 'src/utils/role-scoring.js'   # imported by the digest job
+      - 'package.json'
+      - 'package-lock.json'
+
+concurrency:
+  group: deploy-worker
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+      - run: npm install
+      - name: Worker unit tests
+        run: npx vitest run worker/test
+      - name: Deploy cercol-api
+        run: npx wrangler deploy --config worker/wrangler.jsonc
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      - name: Smoke test
+        run: |
+          curl -fsS https://api.cercol.team/health
+          test "$(curl -s -o /dev/null -w '%{http_code}' https://api.cercol.team/blog)" = "200"
