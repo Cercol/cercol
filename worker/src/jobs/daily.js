@@ -33,6 +33,9 @@ const day = (d) => d.toISOString().slice(0, 10)
 // Free-plan caps this deployment lives under (developers.cloudflare.com, Aug 2026).
 export const CAPS = { d1RowsRead: 5_000_000, d1RowsWritten: 100_000, kvWrites: 1_000, workerRequests: 100_000, workerCpuMs: 10 }
 const WARN_AT = 0.7
+// Hetzner leaves after a quiet fortnight from the cutover (2026-08-17). From
+// this date the brief nags until HETZNER_DECOMMISSIONED is set on the Worker.
+export const DECOMMISSION_DUE = '2026-08-31'
 
 export function dayBounds(now = new Date()) {
   const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()))
@@ -126,8 +129,9 @@ export async function gatherPlatform(env, b) {
 }
 
 /** Warnings, each a short sentence, from the platform numbers. */
-export function warnings(pl) {
+export function warnings(pl, { today = day(new Date()), decommissioned = false } = {}) {
   const w = []
+  if (!decommissioned && today >= DECOMMISSION_DUE) w.push(`Hetzner decommission is due (quiet fortnight over): run scripts/decommission-hetzner.sh, drop the gh-pages step in deploy-frontend.yml, then set HETZNER_DECOMMISSIONED=1 on the Worker to silence this.`)
   if (pl.pending) return ['Platform metrics not configured (CF_ANALYTICS_TOKEN / CF_ACCOUNT_ID).']
   if (pl.error) w.push(`Cloudflare analytics query failed: ${pl.error}`)
   const pct = (v, cap) => Math.round((v / cap) * 100)
@@ -202,6 +206,7 @@ export function dailyHtml(data, frontendUrl = 'https://cercol.team') {
       ['KV writes', fmt(pl.kv.write || 0), bar(pl.kv.write || 0, CAPS.kvWrites)],
     ]
     if (pl.mailCredit != null) rows.push(['Purelymail credit', `$${pl.mailCredit.toFixed(2)}`, `<span style="font-size:12px;color:${C.muted};">pay-as-you-go</span>`])
+    if (data.decommissionIn > 0) rows.push(['Hetzner decommission', `in ${data.decommissionIn} day${data.decommissionIn === 1 ? '' : 's'}`, `<span style="font-size:12px;color:${C.muted};">${DECOMMISSION_DUE}, then scripts/decommission-hetzner.sh</span>`])
     parts.push(section('Platform &middot; free-plan caps', table(['', 'Yesterday', 'Of cap'], rows, ['left', 'right', 'left']), C.blue))
   }
   return shell(parts.join(''), { frontendUrl, footer: 'Daily brief from the Cèrcol Worker, 04:00 UTC. The weekly digest on Monday has the full picture.' })
@@ -212,8 +217,10 @@ export async function runDaily(env, { send = true } = {}) {
   const product = await gatherProduct(env.DB, b)
   const platform = await gatherPlatform(env, b)
   const search = await gatherSearch(env)
-  const warns = warnings(platform)
-  const data = { day: day(b.y0), product, platform, search, warns }
+  const decommissioned = env.HETZNER_DECOMMISSIONED === '1'
+  const warns = warnings(platform, { today: day(b.y1), decommissioned })
+  const decommissionIn = decommissioned ? 0 : Math.ceil((Date.parse(DECOMMISSION_DUE) - b.y1.getTime()) / 86400e3)
+  const data = { day: day(b.y0), product, platform, search, warns, decommissionIn }
   if (send) {
     const to = env.DIGEST_EMAIL || 'hello@cercol.team'
     const subject = `Cèrcol daily — ${data.day}: ${fmt(product.signups[0])} signups, ${fmt(product.tests[0])} tests${warns.length ? ` · ${warns.length} warning${warns.length > 1 ? 's' : ''}` : ''}`
