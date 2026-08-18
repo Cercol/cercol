@@ -144,3 +144,29 @@ describe('jobs parsing', () => {
     expect(r.fid_ms).toBeNull()
   })
 })
+
+// Font stacks from mm-design carry double quotes; inside style="..." they
+// would end the attribute and drop every rule after them (that shipped once).
+import { DISPLAY, SANS, stat, shell } from '../src/email-ui.js'
+import { warnings, CAPS, dayBounds } from '../src/jobs/daily.js'
+describe('email kit', () => {
+  it('font stacks contain no double quotes', () => {
+    expect(DISPLAY).not.toMatch(/"/); expect(SANS).not.toMatch(/"/)
+    expect(stat('x', '1')).toMatch(/font-family:'Playfair Display'/)
+    expect(shell('hi')).toContain('email-logo.png')
+  })
+})
+describe('daily brief', () => {
+  it('warns at 70% of a cap, on CPU over budget, and on any error', () => {
+    const ok = { d1: { rowsRead: 1, rowsWritten: 1 }, kv: { write: 1 }, worker: { requests: 1, errors: 0, cpuP99: 1, byStatus: [] }, mailCredit: 5 }
+    expect(warnings(ok)).toEqual([])
+    const bad = { ...ok, d1: { rowsRead: CAPS.d1RowsRead * 0.7, rowsWritten: 1 }, worker: { requests: 1, errors: 3, cpuP99: 12, byStatus: [['exceededResources', 3]] }, mailCredit: 0.1 }
+    expect(warnings(bad)).toHaveLength(4)
+    expect(warnings({ pending: true })).toHaveLength(1)
+  })
+  it('dayBounds is yesterday UTC and the same weekday a week earlier', () => {
+    const b = dayBounds(new Date('2026-08-18T04:00:00Z'))
+    expect(b.y0.toISOString()).toBe('2026-08-17T00:00:00.000Z'); expect(b.y1.toISOString()).toBe('2026-08-18T00:00:00.000Z')
+    expect(b.w0.toISOString()).toBe('2026-08-10T00:00:00.000Z'); expect(b.w1.toISOString()).toBe('2026-08-11T00:00:00.000Z')
+  })
+})

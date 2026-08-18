@@ -14,63 +14,22 @@
  */
 
 import STRINGS from './i18n/emails.json' with { type: 'json' }
+import { shell, h1 as kitH1, p as kitP, C, SANS } from './email-ui.js'
 
 const SUPPORTED = new Set(['en', 'ca', 'es', 'fr', 'de', 'da'])
-const BLUE = '#0047ba', DARK = '#111111', GRAY = '#6b7280', LIGHT = '#f9fafb', WHITE = '#ffffff'
+const BLUE = C.blue, WHITE = C.white
 
 export const lang = (l) => (l && SUPPORTED.has(l) ? l : 'en')
 const t = (key, l) => STRINGS[key]?.[l] || STRINGS[key]?.en || key
 const fmt = (s, vars) => s.replace(/\{(\w+)\}/g, (_, k) => (k in vars ? vars[k] : `{${k}}`))
 
 function base(content, l, frontendUrl) {
-  return `<!DOCTYPE html>
-<html lang="${l}">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cèrcol</title>
-</head>
-<body style="margin:0;padding:0;background:${LIGHT};font-family:Arial,Helvetica,sans-serif;color:${DARK};">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:${LIGHT};padding:32px 16px;">
-    <tr><td align="center">
-      <table width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;">
-
-        <!-- Header -->
-        <tr>
-          <td style="background:${BLUE};border-radius:12px 12px 0 0;padding:20px 32px;">
-            <img src="${frontendUrl}/email-logo.png" alt="Cèrcol" width="160" height="67"
-                 style="display:block;border:0;" />
-          </td>
-        </tr>
-
-        <!-- Body -->
-        <tr>
-          <td style="background:${WHITE};padding:32px;border-left:1px solid #e5e7eb;border-right:1px solid #e5e7eb;">
-            ${content}
-          </td>
-        </tr>
-
-        <!-- Footer -->
-        <tr>
-          <td style="background:${LIGHT};border-radius:0 0 12px 12px;padding:20px 32px;border:1px solid #e5e7eb;border-top:none;">
-            <p style="margin:0;font-size:12px;color:${GRAY};line-height:1.5;">
-              ${t('footer_received', l)}<br>
-              <a href="${frontendUrl}/privacy" style="color:${GRAY};">${t('footer_privacy', l)}</a>
-            </p>
-          </td>
-        </tr>
-
-      </table>
-    </td></tr>
-  </table>
-</body>
-</html>`
+  return shell(content, { lang: l, frontendUrl, footer: `${t('footer_received', l)}<br><a href="${frontendUrl}/privacy" style="color:${C.muted};">${t('footer_privacy', l)}</a>` })
 }
 const btn = (url, label) =>
-  `<a href="${url}" style="display:inline-block;background:${BLUE};color:${WHITE};font-size:14px;font-weight:600;text-decoration:none;padding:12px 24px;border-radius:8px;margin-top:24px;">${label}</a>`
-const h1 = (text) => `<h1 style="margin:0 0 12px;font-size:20px;font-weight:700;color:${DARK};">${text}</h1>`
-const p = (text, muted = false) =>
-  `<p style="margin:0 0 12px;font-size:15px;line-height:1.6;color:${muted ? GRAY : DARK};">${text}</p>`
+  `<a href="${url}" style="display:inline-block;background:${BLUE};color:${WHITE};font-family:${SANS};font-size:14px;font-weight:600;text-decoration:none;padding:12px 24px;border-radius:8px;margin-top:24px;">${label}</a>`
+const h1 = kitH1
+const p = kitP
 
 /** POST to Resend. Throws on a non-2xx so callers decide whether to swallow. */
 async function send(env, to, subject, html) {

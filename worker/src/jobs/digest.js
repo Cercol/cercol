@@ -15,11 +15,12 @@ import { query } from '../bigquery.js'
 import { priorFor, DOMAIN_MAP, computeRole } from '../../../src/utils/role-scoring.js'
 import { NORM_MIN_SAMPLE } from '../norms.js'
 import { crawlerHits } from './crawlers.js'
+import { C, DISPLAY, h1, p, label, section, empty, table, delta, stat, statRow, shell } from '../email-ui.js'
 
 const DOMAINS = ['presence', 'bond', 'discipline', 'depth', 'vision']
 const LABELS = { newMoon: 'New Moon', firstQuarter: 'First Quarter', fullMoon: 'Full Moon' }
 const LANG_ORDER = ['en', 'ca', 'es', 'fr', 'de', 'da']
-const BLUE = '#0047ba', RED = '#cf3339', DARK = '#111111', GRAY = '#6b7280', LIGHT = '#f9fafb', WHITE = '#ffffff', GREEN = '#16a34a', BORDER = '#e5e7eb'
+const BLUE = C.blue, RED = C.red, GREEN = C.green, GRAY = C.muted
 const ROLE_DISPLAY = {
   R01: ['\u{1F42C}', 'Dolphin'], R02: ['\u{1F43A}', 'Wolf'], R03: ['\u{1F418}', 'Elephant'], R04: ['\u{1F989}', 'Owl'],
   R05: ['\u{1F985}', 'Eagle'], R06: ['\u{1F985}', 'Falcon'], R07: ['\u{1F419}', 'Octopus'], R08: ['\u{1F422}', 'Tortoise'],
@@ -191,25 +192,10 @@ export async function gatherBigQuery(env, { ws, we, ps, pe }) {
 // HTML (mirrors emails.py helpers)
 // ---------------------------------------------------------------------------
 
-const h1 = (t) => `<h1 style="margin:0 0 12px;font-size:20px;font-weight:700;color:${DARK};">${t}</h1>`
-const p = (t, muted = false) => `<p style="margin:0 0 12px;font-size:15px;line-height:1.6;color:${muted ? GRAY : DARK};">${t}</p>`
-const section = (title, body) => `<div style="margin-top:28px;padding-top:20px;border-top:2px solid ${BLUE};"><h2 style="margin:0 0 12px;font-size:17px;font-weight:700;color:${DARK};">${title}</h2>${body}</div>`
 const pyPct = (x) => { const s = (x * 100).toFixed(0); return `${x >= 0 ? '+' : ''}${s}%` }
-function deltaSpan(cur, prev) {
-  const d = cur - prev
-  const [arrow, color] = d > 0 ? ['&#9650;', GREEN] : d < 0 ? ['&#9660;', RED] : ['&#8211;', GRAY]
-  const pct = prev ? ` (${pyPct(d / prev)})` : ''
-  return `<span style="font-size:12px;color:${color};white-space:nowrap;">${arrow} ${d >= 0 ? '+' : ''}${d}${pct}</span>`
-}
-const statCard = (label, value, delta = '') => `<td style="padding:12px 8px;text-align:center;vertical-align:top;background:${LIGHT};border:1px solid ${BORDER};border-radius:8px;"><div style="font-size:24px;font-weight:700;color:${DARK};line-height:1.2;">${value}</div><div style="font-size:12px;color:${GRAY};margin-top:2px;">${label}</div>${delta ? `<div style="margin-top:2px;">${delta}</div>` : ''}</td>`
-const metricRow = (cards) => `<table width="100%" cellpadding="0" cellspacing="0" style="margin:8px 0;"><tr>${cards.join('<td style="width:10px;"></td>')}</tr></table>`
-function table(headers, rows, aligns) {
-  aligns = aligns || headers.map(() => 'left')
-  const head = headers.map((h, i) => `<th style="padding:8px 10px;text-align:${aligns[i]};font-size:12px;color:${GRAY};background:${LIGHT};border-bottom:1px solid ${BORDER};font-weight:600;">${h}</th>`).join('')
-  const body = rows.map((r) => `<tr>${r.map((c, i) => `<td style="padding:8px 10px;text-align:${aligns[i]};font-size:13px;color:${DARK};border-bottom:1px solid ${BORDER};">${c}</td>`).join('')}</tr>`).join('')
-  return `<table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`
-}
-const empty = (note) => `<p style="margin:0;font-size:13px;color:${GRAY};font-style:italic;">${note}</p>`
+const deltaSpan = (cur, prev) => delta(cur, prev, prev ? ` (${pyPct((cur - prev) / prev)})` : '')
+const statCard = (label, value, d = '') => stat(label, value, d)
+const metricRow = statRow
 function pivotTable(cum) {
   const langs = cum.languages
   const rows = cum.rows.map((r) => [r.instrument, ...langs.map((l) => fmt(r.per_lang[l] || 0)), `<strong>${fmt(r.total)}</strong>`])
@@ -217,62 +203,19 @@ function pivotTable(cum) {
   return table(['Model', ...langs, 'Total'], rows, ['left', ...langs.map(() => 'right'), 'right'])
 }
 function channelSplit(channels) {
-  const heading = `<div style="font-size:12px;font-weight:600;color:${GRAY};text-transform:uppercase;letter-spacing:0.06em;margin-top:18px;">Source / channel split</div>`
+  const heading = `<div style="margin-top:18px;">${label('Source / channel split', C.gray500)}</div>`
   if (!channels.length) return heading + empty('No attributable sessions this week.')
   return heading + table(['Channel', 'Tests'], channels.map(([c, n]) => [c, fmt(n)]), ['left', 'right'])
 }
 function northStar(kpis, weeklyPivot, channels) {
   const [cur, prev] = kpis.tests || [0, 0]
   const [cur4, prev4] = kpis.tests_4w || [cur, prev]
-  let block = `<div style="text-align:center;padding:12px 0 4px;"><div style="font-size:12px;font-weight:600;color:${GRAY};text-transform:uppercase;letter-spacing:0.06em;">Completed tests, last 4 weeks</div><div style="font-size:44px;font-weight:700;color:${BLUE};line-height:1.1;margin:4px 0;">${fmt(cur4)}</div><div style="font-size:13px;color:${GRAY};">${deltaSpan(cur4, prev4)} &nbsp;vs the 4 weeks before (${fmt(prev4)})</div><div style="font-size:12px;color:${GRAY};margin-top:6px;">${fmt(cur)} this week</div></div>`
+  let block = `<div style="text-align:center;padding:12px 0 4px;">${label('Completed tests, last 4 weeks', C.gray500)}<div style="font-family:${DISPLAY};font-size:48px;font-weight:700;color:${BLUE};line-height:1.1;margin:4px 0;">${fmt(cur4)}</div><div style="font-size:13px;color:${GRAY};">${deltaSpan(cur4, prev4)} &nbsp;vs the 4 weeks before (${fmt(prev4)})</div><div style="font-size:12px;color:${GRAY};margin-top:6px;">${fmt(cur)} this week</div></div>`
   block += weeklyPivot?.rows?.length ? pivotTable(weeklyPivot) : empty('No tests completed this week.')
   block += channelSplit(channels || [])
   return block
 }
-function baseEn(content, frontendUrl) {
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cèrcol</title>
-</head>
-<body style="margin:0;padding:0;background:${LIGHT};font-family:Arial,Helvetica,sans-serif;color:${DARK};">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:${LIGHT};padding:32px 16px;">
-    <tr><td align="center">
-      <table width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;">
-
-        <!-- Header -->
-        <tr>
-          <td style="background:${BLUE};border-radius:12px 12px 0 0;padding:20px 32px;">
-            <img src="${frontendUrl}/email-logo.png" alt="Cèrcol" width="160" height="67"
-                 style="display:block;border:0;" />
-          </td>
-        </tr>
-
-        <!-- Body -->
-        <tr>
-          <td style="background:${WHITE};padding:32px;border-left:1px solid #e5e7eb;border-right:1px solid #e5e7eb;">
-            ${content}
-          </td>
-        </tr>
-
-        <!-- Footer -->
-        <tr>
-          <td style="background:${LIGHT};border-radius:0 0 12px 12px;padding:20px 32px;border:1px solid #e5e7eb;border-top:none;">
-            <p style="margin:0;font-size:12px;color:${GRAY};line-height:1.5;">
-              You received this email because you are part of Cèrcol.<br>
-              <a href="${frontendUrl}/privacy" style="color:${GRAY};">Privacy policy</a>
-            </p>
-          </td>
-        </tr>
-
-      </table>
-    </td></tr>
-  </table>
-</body>
-</html>`
-}
+const baseEn = (content, frontendUrl) => shell(content, { frontendUrl, footer: 'Weekly digest from the Cèrcol Worker, Mondays 09:00 UTC.' })
 
 export function weeklyDigestHtml(data, frontendUrl = 'https://cercol.team') {
   const kpis = data.kpis || {}
