@@ -164,6 +164,12 @@ describe('daily brief', () => {
     expect(warnings(bad)).toHaveLength(4)
     expect(warnings({ pending: true })).toHaveLength(1)
   })
+  it('nags about the Hetzner decommission from the due date until silenced', () => {
+    const ok = { d1: { rowsRead: 1, rowsWritten: 1 }, kv: { write: 1 }, worker: { requests: 1, errors: 0, cpuP99: 1, byStatus: [] }, mailCredit: 5 }
+    expect(warnings(ok, { today: '2026-08-30' })).toEqual([])
+    expect(warnings(ok, { today: '2026-08-31' })).toHaveLength(1)
+    expect(warnings(ok, { today: '2026-09-15', decommissioned: true })).toEqual([])
+  })
   it('dayBounds is yesterday UTC and the same weekday a week earlier', () => {
     const b = dayBounds(new Date('2026-08-18T04:00:00Z'))
     expect(b.y0.toISOString()).toBe('2026-08-17T00:00:00.000Z'); expect(b.y1.toISOString()).toBe('2026-08-18T00:00:00.000Z')
