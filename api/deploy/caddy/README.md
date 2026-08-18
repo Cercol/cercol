@@ -1,4 +1,6 @@
-# Cèrcol — Caddy snippet
+# Cèrcol: Caddy snippet
+
+> **Legacy (since 2026-08-17).** The API runs on the Cloudflare Worker `cercol-api` (see `worker/` and ADR 0020); `api.cercol.team` is no longer answered by Caddy. This snippet is kept only for the origin fallback (`origin.cercol.team`, the routes the Worker proxies to Hetzner) until `scripts/decommission-hetzner.sh` runs. Operations live in `docs/ops/runbook.md`. The text below describes the pre-migration setup and is left as is.
 
 Server-level Caddy snippet for `api.cercol.team`. Unlike the cron file
 in `../cron/`, this snippet **is applied automatically** by

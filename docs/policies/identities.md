@@ -13,8 +13,8 @@ External APIs that Cèrcol calls on behalf of itself, not on behalf
 of an end user, must authenticate as a single dedicated identity:
 `hello@cercol.team`.
 
-Current state: `hello@cercol.team` exists as a mail alias but does
-NOT have a Google Workspace account. OAuth flows against Google APIs
+Current state: `hello@cercol.team` is a real mailbox on Purelymail
+(since 2026-08-18, ADR 0020) but does NOT have a Google Workspace account. OAuth flows against Google APIs
 (Search Console, BigQuery, etc.) cannot use this alias until a
 Google account is created and associated with it. Until that
 migration is done, tokens against Google APIs are issued from
@@ -55,11 +55,18 @@ either unit tests with mocks or the deploy-time external probe of
 
 | Token / credential | Owner account | Storage | Rotation |
 |---|---|---|---|
-| Google OAuth (Cèrcol sign-in) | Miquel personal | `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` in `/home/cercol/.env` | When the Workspace migration happens |
-| Resend API key | Miquel personal | `RESEND_API_KEY` in `/home/cercol/.env` | TODO document at runbook |
-| Stripe (test mode) | Miquel personal | `STRIPE_SECRET_KEY` in `/home/cercol/.env` | When moving to live mode |
-| Porkbun DNS API | Miquel personal | `PORKBUN_API_KEY` / `PORKBUN_SECRET_KEY` in `/home/cercol/.env` | TODO document at runbook |
-| Hetzner SSH (cercol deploy) | Project keypair | `HETZNER_SSH_KEY` GitHub Actions secret | When key compromised |
+| Cloudflare account "cercol" (id `04bf08778ace2b87b910fb5ca0be3feb`): zone, Workers, D1, KV | Miquel personal | Console login; `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID` GitHub Actions secrets for deploys | When token compromised; scoped tokens are created per task and revoked after |
+| Worker secrets on `cercol-api` (names only): `BING_WMT_API_KEY`, `CF_ACCOUNT_ID`, `CF_ANALYTICS_TOKEN`, `CF_ZONE_ID`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_SA_JSON`, `JWT_SECRET`, `MCP_API_KEY`, `PAGESPEED_API_KEY`, `PURELYMAIL_API_KEY`, `RESEND_API_KEY`, `STRIPE_PRICE_ID`, `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `WRITES_LIVE` | Miquel personal (each upstream account) | `wrangler secret put` on the Worker; never in the repo | Per upstream vendor; see runbook |
+| Google OAuth (Cèrcol sign-in) | Miquel personal | `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` Worker secrets | When the Workspace migration happens |
+| Google service account (BigQuery, PageSpeed) | Miquel personal (GCP project `cercol`) | `GOOGLE_SA_JSON`, `PAGESPEED_API_KEY` Worker secrets; the PageSpeed key is still IP-restricted to Hetzner in Google Cloud | When the Workspace migration happens |
+| Resend API key | Miquel personal | `RESEND_API_KEY` Worker secret | TODO document at runbook |
+| Purelymail (mailboxes hello@, miquel@, admin@; also topquaranta.cat) | Miquel personal | Console login; `PURELYMAIL_API_KEY` Worker secret | TODO document at runbook |
+| Stripe (test mode) | Miquel personal | `STRIPE_SECRET_KEY` / `STRIPE_WEBHOOK_SECRET` / `STRIPE_PRICE_ID` Worker secrets | When moving to live mode |
+| Hetzner SSH (legacy origin fallback, until decommission) | Project keypair | `HETZNER_SSH_KEY` GitHub Actions secret; `/home/cercol/.env` on the box still holds the pre-migration copies of the secrets above | Retire with `scripts/decommission-hetzner.sh` |
+
+Retired: Porkbun DNS API (`PORKBUN_API_KEY` / `PORKBUN_SECRET_KEY`), DNS
+moved to Cloudflare on 2026-08-17; Stalwart mail server, retired
+2026-08-18; password sign-in (no bcrypt hashes are written any more).
 
 The runbook (`docs/ops/runbook.md`, created in FASE F) is the live
 source of truth; this table is a snapshot at the time of this

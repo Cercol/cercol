@@ -1,122 +1,437 @@
 # Operations runbook
 
-How to operate the Cèrcol Hetzner VPS in the day to day and during
-incidents. The host is `188.245.60.20` (`api.cercol.team`); the
-backend systemd unit is `cercol-api.service`; the project home is
-`/home/cercol/api`.
+How to operate Cèrcol in the day to day and during incidents, on the
+Cloudflare deployment that has been live since 2026-08-17. The
+narrative of how the move was done is in
+`docs/architecture/seo-pipeline.md` § "The Cloudflare migration
+(Aug 2026)"; this file is the "what do I type" companion.
 
-## Routine operations
+## The map
 
-### Deploy the backend
+| Piece | Where | Config |
+|---|---|---|
+| API, `api.cercol.team` | Cloudflare Worker `cercol-api` | `worker/wrangler.jsonc`, code in `worker/src/` |
+| Data | Cloudflare D1 database `cercol` (SQLite), binding `DB` | schema in `worker/schema/` |
+| Caches and cursors | KV namespace `NORMS` | keys `norms:v1`, `seo:*`, `bq:access-token`, `links:sweep` |
+| Frontend, `cercol.team` and `www` | Cloudflare Worker `cercol-web`, static assets only | `web/wrangler.jsonc`, serves `dist/` |
+| DNS | Cloudflare zone `cercol.team` (moved from Porkbun 2026-08-17) | dashboard |
+| Mail out | Resend, `noreply@cercol.team` | `worker/src/emails.js`, secret `RESEND_API_KEY` |
+| Mail in, mailboxes | Purelymail (`hello@`, `miquel@`, `admin@`) | `docs/ops/email.md` |
+| SEO data | BigQuery, project `cercol`, datasets `cercol_seo` and `searchconsole` | `worker/src/bigquery.js`, secret `GOOGLE_SA_JSON` |
+| Payments | Stripe, test mode | `worker/src/stripe.js` |
+| Origin fallback (legacy) | Hetzner `188.245.60.20`, `origin.cercol.team` | see "Legacy" at the end |
 
-Push to `main` with changes under `api/**` triggers
-`.github/workflows/deploy-backend.yml` automatically. The
-workflow:
+Cloudflare account "cercol", id `04bf08778ace2b87b910fb5ca0be3feb`.
+D1 database id `928ddbd6-5fc6-4e2b-9fd1-e7de66435ef6`. KV namespace id
+`34d45ee221ff417d83b2bead1dc20f26`. Both ids are in the wrangler
+configs; they are listed here so a dashboard search finds them.
 
-1. SSH as `root`.
-2. `cd /home/cercol/api && git pull origin main`.
-3. Install Caddy snippet to `/etc/caddy/conf.d/cercol-api.caddy`
-   if it changed (`cmp -s`), validate, roll back on failure,
-   `systemctl reload caddy`.
-4. `systemctl restart cercol-api`.
-5. Smoke test `curl -fsS https://api.cercol.team/blog`, five
-   retries.
+Every `wrangler` command below runs from the repo root and needs
+either a browser login (`npx wrangler login`) or the two env vars
+`CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` (the same two that
+GitHub Actions holds as secrets). Always pass `--config` for the
+Worker you mean; the repo has two.
 
-Manual override: `scripts/deploy-api.sh` from a local checkout
-runs the same logic plus a `pip install` step that the workflow
-omits. Use only when CI is down.
+## Logs and observability
 
-### Restart the backend
-
-```
-ssh root@188.245.60.20
-systemctl restart cercol-api
-systemctl is-active cercol-api
-journalctl -u cercol-api -n 50 --no-pager
-```
-
-### Reload Caddy
-
-After editing `/etc/caddy/conf.d/*.caddy` by hand:
+Live tail of the API Worker (requests, `console.log` lines, cron
+runs, exceptions):
 
 ```
-caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile
-systemctl reload caddy
+npx wrangler tail cercol-api --config worker/wrangler.jsonc
+npx wrangler tail cercol-api --config worker/wrangler.jsonc --status error
+npx wrangler tail cercol-api --config worker/wrangler.jsonc --search "[cron]"
 ```
 
-Validate first. A failed reload keeps the previous config; a failed
-validate stops you from reloading at all.
+`--format json` for machine reading, `--method`, `--header`, `--ip
+self` are the other useful filters (`npx wrangler tail --help`).
 
-### Install a new cron job
+Both Workers have `observability.enabled = true`, so the Cloudflare
+dashboard keeps invocation logs and metrics: Workers & Pages →
+`cercol-api` → Observability (or Logs). That is where to read a cron
+run that happened last night, CPU time percentiles, error counts by
+status, and the `exceededResources` errors that mean an invocation
+went over the 10 ms CPU budget. Scheduled runs log one line per job,
+`[cron] <name> ok <ms> {...}` or `[cron] <name> FAILED <ms> <error>`
+(`worker/src/scheduled.js`).
 
-Pattern from ADR 0006: each cron file lives in `api/deploy/cron/`
-in the repo. Manual install on the server after merge:
+The daily brief (see below) is the summary of all of this; the
+dashboard is for the drill-down.
+
+## Deploy
+
+### API Worker
+
+Push to `main` touching `worker/**`, `src/utils/role-scoring.js`
+(imported by the digest job) or `package*.json` runs
+`.github/workflows/deploy-worker.yml`: `npm install`, the Worker unit
+tests (`npx vitest run worker/test`), `npx wrangler deploy --config
+worker/wrangler.jsonc`, then a smoke test of `/health` and `/blog` on
+`https://api.cercol.team`. The workflow also accepts
+`workflow_dispatch`.
+
+Emergency manual deploy, only when Actions is down:
 
 ```
-sudo cp /home/cercol/api/api/deploy/cron/cercol-<name> /etc/cron.d/
-sudo chmod 644 /etc/cron.d/cercol-<name>
+CLOUDFLARE_API_TOKEN=... CLOUDFLARE_ACCOUNT_ID=... \
+  npx wrangler deploy --config worker/wrangler.jsonc
 ```
 
-Verify:
+Cloudflare keeps previous versions of the Worker; a bad deploy is
+undone with `git revert` and a push, or from the dashboard's
+Deployments tab (rollback to a previous version) if the repo is not
+the problem. Secrets, bindings and cron triggers are not touched by a
+code deploy.
 
-```
-ls -la /etc/cron.d/cercol-<name>
-journalctl -t CRON --since today | grep cercol-<name>
-```
+### Frontend Worker
+
+Push to `main` touching `src/**`, `public/**`, `index.html`,
+`vite.config.js`, `package*.json`, `.env.production`, `scripts/**` or
+`db/migrations/**` runs `.github/workflows/deploy-frontend.yml`, and
+so does the nightly schedule at 03:20 UTC. The job runs the tests,
+`npm run build:full` (Vite plus the puppeteer prerender of about 650
+routes, which reads article bodies from `api.cercol.team`), the
+internal link integrity guard, `npx wrangler deploy --config
+web/wrangler.jsonc`, and still publishes `dist/` to the `gh-pages`
+branch as a warm fallback. Drop the gh-pages step after a quiet
+fortnight from 2026-08-17.
+
+Because the prerender reads the live API, a content change made
+through the blog admin endpoints or `wrangler d1 execute` is not on
+the site until the next frontend build. Dispatch `deploy-frontend` by
+hand after a content change you want visible before 03:20 UTC.
+
+`npm run deploy` (local build, push to gh-pages) is the old manual
+path. Do not use it: it desyncs the fallback from what the Worker
+serves.
 
 ## Secrets
 
-All secrets live in `/home/cercol/.env`, owned by the `cercol`
-user, mode 0600.
+Secrets live on the `cercol-api` Worker, never in the repo, never in
+`wrangler.jsonc`. Names, as of 2026-08-18:
 
-### Current inventory
+```
+BING_WMT_API_KEY        Bing Webmaster Tools, jobs/bing.js
+CF_ACCOUNT_ID           Cloudflare GraphQL analytics (daily brief, crawlers)
+CF_ANALYTICS_TOKEN      Cloudflare API token, Zone Analytics Read
+CF_ZONE_ID              cercol.team zone, for the analytics queries
+GOOGLE_CLIENT_ID        Google OAuth web client
+GOOGLE_CLIENT_SECRET
+GOOGLE_SA_JSON          BigQuery service-account JSON, whole file
+JWT_SECRET              HS256 key for access tokens
+MCP_API_KEY             present, unused by the Worker today
+PAGESPEED_API_KEY       PSI v5, jobs/pagespeed.js
+PURELYMAIL_API_KEY      credit line in the daily brief
+RESEND_API_KEY          transactional email
+STRIPE_PRICE_ID         the one premium price
+STRIPE_SECRET_KEY
+STRIPE_WEBHOOK_SECRET
+WRITES_LIVE             "1"; the strangler switch, see Rollback
+```
 
-See `docs/policies/identities.md` for the policy and the current
-ownership table.
+Plain vars (`FRONTEND_URL`, `BACKEND_URL`) are in `worker/wrangler.jsonc`.
+Optional overrides read by the code but not set (`DIGEST_EMAIL`,
+`BIGQUERY_PROJECT`, `BIGQUERY_DATASET_SEO`, `BIGQUERY_DATASET_GSC`,
+`DOI_CHECK_SKIP`) fall back to defaults in the code.
 
-### How to rotate JWT_SECRET
+Ownership of each credential is in `docs/policies/identities.md`.
 
-1. Generate the new secret:
-   `python -c "import secrets; print(secrets.token_urlsafe(48))"`.
-2. SSH to the server, edit `/home/cercol/.env`, replace the value.
-3. `systemctl restart cercol-api`.
-4. All existing access and refresh tokens are invalidated; users
-   will need to sign in again. Schedule the rotation for low
-   traffic.
+### Listing and setting
 
-### How to rotate Google OAuth client secret
+```
+npx wrangler secret list --config worker/wrangler.jsonc
+npx wrangler secret put NAME --config worker/wrangler.jsonc     # prompts on stdin
+npx wrangler secret delete NAME --config worker/wrangler.jsonc
+```
 
-1. Generate a new secret in Google Cloud Console for the
-   existing OAuth client.
-2. Replace `GOOGLE_CLIENT_SECRET` in `/home/cercol/.env`.
-3. `systemctl restart cercol-api`.
-4. No user impact; ongoing access tokens unaffected.
+`secret put` takes effect on the next request; there is no restart and
+no redeploy. To set a secret without it passing through your terminal
+history, pipe it: `some-command-that-prints-it | npx wrangler secret
+put NAME --config worker/wrangler.jsonc`. During the migration the
+values travelled from the Hetzner box to Cloudflare over ssh stdin
+with a one-hour scoped token, so no one read them; keep that habit.
 
-### How to rotate Resend API key
+### Rotations
 
-1. Generate a new key in Resend dashboard.
-2. Replace `RESEND_API_KEY` in `/home/cercol/.env`.
-3. `systemctl restart cercol-api`.
-4. Revoke the old key in Resend.
+- **JWT_SECRET**: generate 48 random bytes
+  (`openssl rand -base64 48`), `secret put JWT_SECRET`. Every access
+  token in circulation fails verification at once; refresh tokens are
+  D1 rows and are unaffected, so a signed-in browser gets a 401,
+  refreshes, and carries on with a token signed by the new key. Do it
+  at a quiet hour anyway. While the Hetzner fallback exists, its
+  `/home/cercol/.env` must get the same value or a `WRITES_LIVE=0`
+  rollback would reject every session.
+- **GOOGLE_CLIENT_SECRET**: new secret on the same OAuth client in
+  Google Cloud Console, `secret put`, then delete the old one in the
+  console. No user impact.
+- **RESEND_API_KEY**: new key in the Resend dashboard, `secret put`,
+  revoke the old key. Test with a magic link request to yourself.
+- **STRIPE_***: same pattern; the webhook secret changes only if the
+  endpoint is recreated in the Stripe dashboard.
+- **GOOGLE_SA_JSON**: new key on the service account
+  `cercol-seo-ingest@cercol.iam.gserviceaccount.com`, `secret put`
+  with the whole JSON file (`cat key.json | npx wrangler secret put
+  GOOGLE_SA_JSON --config worker/wrangler.jsonc`), delete the old key
+  in IAM. The token cache in KV (`bq:access-token`) expires on its
+  own within the hour.
+- **CLOUDFLARE_API_TOKEN** (GitHub Actions secret, not a Worker
+  secret): rotate in the Cloudflare dashboard (My Profile → API
+  Tokens), then update the repository secret. It has to be allowed to
+  deploy both Workers and to write D1 (the "Edit Cloudflare Workers"
+  template plus D1); check the current token's permissions in the
+  dashboard before creating the new one.
 
-## DNS verification (Porkbun)
+## D1 (the database)
 
-When verifying domain ownership with Google Search Console or other
-services that ask for a TXT record:
+One database, `cercol`, SQLite dialect. Schema in
+`worker/schema/001_blog.sql` (blog_posts, blog_slug_redirects) and
+`worker/schema/002_core.sql` (auth_users, profiles, refresh_tokens,
+magic_tokens, oauth_states, email_change_tokens, results, events,
+groups, group_members, witness_sessions, witness_responses,
+translation_feedback). `db/migrations/001..094` are the Postgres
+history and are frozen; do not add to them.
 
-- API key and secret live in `/home/cercol/.env` as
-  `PORKBUN_API_KEY` and `PORKBUN_SECRET_KEY`.
-- These are NOT consumed by the FastAPI process; they are used by
-  manual scripts that operators run from the server to add or
-  remove TXT records on demand.
-- After verification, remove the TXT record unless the service
-  requires it to persist.
+### Query
 
-The Porkbun API docs are at https://porkbun.com/api/json/v3/documentation .
+```
+npx wrangler d1 execute cercol --remote --config worker/wrangler.jsonc \
+  --command "SELECT COUNT(*) FROM results"
+npx wrangler d1 execute cercol --remote --config worker/wrangler.jsonc \
+  --file path/to/statements.sql
+```
+
+`--remote` is the production database; without it wrangler talks to a
+local copy. Booleans are 0/1, timestamps are ISO strings with `+00:00`.
+
+Per-statement size limit: D1 caps a single SQL statement at 100 KB
+and a longer one fails with `SQLITE_TOOBIG`. Article bodies in six languages exceed that, so a
+large blog write goes as a row insert with a small `content` followed
+by one `UPDATE ... SET content = json_set(content, '$.<lang>', ?)` per
+language. Prefer the blog admin endpoints on the Worker
+(`worker/src/blog-admin.js`, DOI gate included) for content changes,
+and `--file` only for the odd fix.
+
+### Backup and export
+
+```
+npx wrangler d1 export cercol --remote --config worker/wrangler.jsonc \
+  --output backups/cercol-$(date +%F).sql
+```
+
+Full SQL dump, schema and data; `--table`, `--no-schema` and
+`--no-data` narrow it. Cloudflare also keeps D1 Time Travel (point in
+time restore, `npx wrangler d1 time-travel info cercol` and
+`... restore`, see `--help` for the flags and the retention). There is no scheduled export today; take one before any
+hand-run `--file` write and after each blog batch.
+
+The final Postgres dump taken at decommission (see Legacy) is the
+pre-migration baseline; the ADR 0017 Postgres backup legs stop with
+the box.
+
+### Admin bootstrap
+
+`profiles.is_admin` is the gate for every `/admin/*` route
+(`worker/src/admin.js`, `requireAdmin`). Promote by SQL:
+
+```
+npx wrangler d1 execute cercol --remote --config worker/wrangler.jsonc \
+  --command "UPDATE profiles SET is_admin = 1 WHERE email = 'admin@cercol.team'"
+```
+
+### Blog slug redirects
+
+`blog_slug_redirects` (`slug_old` to `slug_new`) is read by
+`GET /blog/<slug>` in `worker/src/index.js`, which answers 308 for a
+dead slug and refuses chains and cycles. Add one:
+
+```
+npx wrangler d1 execute cercol --remote --config worker/wrangler.jsonc \
+  --command "INSERT OR IGNORE INTO blog_slug_redirects (slug_old, slug_new, reason) VALUES ('<old>', '<new>', '<why>')"
+```
+
+## KV
+
+Namespace `NORMS`, four kinds of keys: `norms:v1` (empirical norm
+cache, `worker/src/norms.js`, refreshed by `POST /admin/norms/refresh`
+or on a miss), `seo:*` (BigQuery answers for the admin SEO pages, one
+hour TTL), `bq:access-token` (service-account token, expires with the
+token), `links:sweep` (cursor of the external links sweep). All of it
+is a cache or a cursor and can be deleted; the code recomputes.
+
+```
+npx wrangler kv key list --namespace-id 34d45ee221ff417d83b2bead1dc20f26
+npx wrangler kv key get links:sweep --namespace-id 34d45ee221ff417d83b2bead1dc20f26
+npx wrangler kv key delete links:sweep --namespace-id 34d45ee221ff417d83b2bead1dc20f26
+```
+
+Deleting `links:sweep` restarts the sweep from the first URL on the
+next tick.
+
+## Scheduled jobs
+
+Five cron triggers (the free-plan maximum) carry eight jobs, in
+`worker/src/scheduled.js` and `worker/src/jobs/`:
+
+| Trigger (UTC) | Jobs, in order |
+|---|---|
+| `0 4 * * *` | `purge-tokens`, `group-nudge`, `links-tick`, `daily-brief` |
+| `0 5 * * *` | `seo-anomalies`, `links-tick` |
+| `0 3 * * SUN` | `bing-ingest` |
+| `0 4 * * SUN` | `pagespeed-ingest` |
+| `0 9 * * MON` | `links-tick`, `weekly-digest` |
+
+Each job is wrapped so one failure never stops the next in the same
+trigger. `purge-tokens` deletes used or expired rows from
+magic_tokens, email_change_tokens, refresh_tokens (7 days after
+revocation or expiry) and oauth_states, and events older than 120
+days. `links-tick` probes 15 external URLs per run and keeps its
+cursor in KV; a full sweep of the ~207 URLs takes about five days, and
+the digest reads the latest completed snapshot. `pagespeed-ingest`
+currently gets 403 from Cloudflare because the PSI key is
+IP-restricted to the Hetzner box in the Google Cloud console; until
+that restriction is removed the Hetzner cron does the Sunday run (see
+Legacy).
+
+### Run a job on demand
+
+Every job is callable, with an admin JWT:
+
+```
+curl -X POST "https://api.cercol.team/admin/jobs/<name>?dry_run=1" \
+  -H "Authorization: Bearer $JWT"
+```
+
+Names: `purge-tokens`, `group-nudge`, `seo-anomalies`, `bing-ingest`,
+`pagespeed-ingest`, `links-tick`, `weekly-digest`, `daily-brief`.
+`dry_run=1` (or `true`) is forwarded as `{ send: false }` to
+`weekly-digest` and `daily-brief` and as `{ dryRun: true }` to every
+other job; jobs that do not read it run for real regardless
+(`runJob` in `worker/src/admin.js`, then the job's own signature).
+The response is `{ job, dry_run, ms, result }`, or `error` with a 500
+when the job threw. An unknown name answers 404 with the list.
+`GET /admin/probe?url=<url>` runs one link probe and returns the raw
+result, for when the sweep reports something odd. `GET /admin/bq`
+runs a BigQuery smoke query.
+
+### Getting an admin JWT
+
+Passwords are retired, so the token comes from a magic link:
+
+```
+curl -X POST https://api.cercol.team/auth/magic-link/request \
+  -H 'content-type: application/json' -d '{"email":"admin@cercol.team"}'
+```
+
+Open the `admin@cercol.team` mailbox on Purelymail, copy the `token=`
+value from the link (it points at `cercol.team/auth/callback?type=magic&token=...`),
+then:
+
+```
+curl -X POST https://api.cercol.team/auth/magic-link/verify \
+  -H 'content-type: application/json' -d '{"token":"<token>"}'
+```
+
+The response carries `access_token` (valid 1 hour) and
+`refresh_token`. `admin@cercol.team` must have `is_admin = 1` in
+`profiles` (see Admin bootstrap). Signing in on cercol.team also
+works, but the access token lives in a JS module variable there, so
+curl is the practical path.
+
+## Monitoring: the daily brief and the weekly digest
+
+There is no pager. Two emails are the monitoring surface, and reading
+them is the operator's job:
+
+- **Daily brief** (`worker/src/jobs/daily.js`, 04:00 UTC, to
+  `hello@cercol.team`): warnings first, or one green line. Yesterday's
+  signups, tests, page views and visitors against the same weekday a
+  week earlier; new accounts; content that moved; Search Console
+  clicks for the latest exported day; and the platform against the
+  free-plan caps (D1 rows read and written, KV writes, Worker
+  requests, CPU p99, errors by status, Purelymail credit). Anything
+  above 70% of a cap is a warning line at the top.
+- **Weekly digest** (`worker/src/jobs/digest.js`, Monday 09:00 UTC):
+  the full picture for the prior Monday to Sunday, roles, languages,
+  SEO, PageSpeed, broken links, crawler traffic from Cloudflare
+  analytics.
+
+If the brief does not arrive, that is itself the alert: check the
+04:00 cron run in the dashboard and `wrangler tail --search "[cron]"`
+around 04:00 UTC. Both emails render through `worker/src/email-ui.js`
+(mm-design tokens) and are sent through Resend.
+
+## Free-plan limits
+
+What the code was shaped by, and what the brief watches:
+
+| Resource | Limit | Where it bites |
+|---|---|---|
+| Worker requests | 100,000 per day | API only; static assets on `cercol-web` are free and uncounted |
+| CPU per invocation | 10 ms (soft; over it, `exceededResources` kills the invocation) | JSON-heavy list endpoints, no bcrypt |
+| Subrequests per invocation | 50 | links sweep paced at 15 URLs, PSI capped at 20 URLs x 2 devices |
+| Cron triggers | 5 per account | eight jobs on five triggers |
+| D1 | 5 M rows read per day, 100 k rows written per day, 500 MB | list endpoints, `purge-tokens` |
+| KV | 100 k reads per day, 1 k writes per day | SEO cache TTL of one hour, one norms key |
+
+A Worker fetching its own routed hostname is refused as a loop, so no
+job self-chains; that is why the sweep is a cursor.
+
+## Mail
+
+Sending (Resend) and receiving (Purelymail) are two separate systems
+with separate failure modes. DNS records (MX, SPF, DKIM, DMARC),
+mailbox settings, how to test each direction and what to do when one
+of them fails are in `docs/ops/email.md`. Do not touch the SPF record
+without reading it: it authorises both providers.
+
+## Rollback levers
+
+Both windows close at decommission; until then:
+
+- **`WRITES_LIVE`**: `npx wrangler secret put WRITES_LIVE --config
+  worker/wrangler.jsonc` with value `0` sends every gated route
+  (writes, auth, /me, witness, groups, Stripe, admin) back to the
+  FastAPI on Hetzner through `origin.cercol.team`; the blog reads and
+  `/health` stay on D1. Set it back to `1` to return. No redeploy. Note
+  that D1 and Postgres are not synchronised: rows written on one side
+  while the other is authoritative have to be copied by hand.
+- **DNS**: switching the `api.cercol.team` record from the Worker
+  custom domain to a DNS-only (grey cloud) A record for
+  `188.245.60.20` sends everything, reads included, to Hetzner. For the
+  frontend, the nine GitHub Pages DNS records are saved at
+  `~/.cercol-migration/dns-github-pages-backup.json`; restoring them
+  puts the `gh-pages` branch back in front.
+- **Worker versions**: the Deployments tab in the dashboard rolls back
+  to a previous version of either Worker without a git change.
+
+Verify a rollback the same way the cutover was verified:
+`node scripts/diff-api.mjs` compares Hetzner and Worker responses
+endpoint by endpoint.
+
+## Incident: api.cercol.team is down
+
+1. `curl -sS https://api.cercol.team/health` and `/blog`. A Cloudflare
+   error page (1xxx codes) is a platform or DNS matter; a 5xx with a
+   JSON body or an `exceededResources` in the tail is the Worker.
+2. `npx wrangler tail cercol-api --config worker/wrangler.jsonc
+   --status error` while reproducing.
+3. Cloudflare status page, then the dashboard: Workers & Pages →
+   `cercol-api` → Deployments. If the last deploy is the suspect,
+   roll back there or `git revert` and push.
+4. `dig api.cercol.team +short` should return Cloudflare addresses
+   (orange cloud, Worker custom domain), not `188.245.60.20`.
+5. D1 status: `npx wrangler d1 execute cercol --remote --config
+   worker/wrangler.jsonc --command "SELECT 1"`.
+6. If the Worker is healthy but a gated route fails and Hetzner is
+   still up: `WRITES_LIVE=0` as above buys time.
+
+The Caddy post-mortems (`docs/post-mortems/2026-04-16-*` and
+`2026-05-17-*`) describe the pre-migration failure modes; they apply
+only to the legacy box now.
 
 ## When the beta grant runs out
 
-`BETA_TOTAL` in `api/main.py` is 500 free Full Moon licences, and
+`BETA_TOTAL` in `worker/src/db.js` is 500 free Full Moon licences, and
 `GET /beta` reports what is left. While any remain, Full Moon is free
 to a new account, and the copy says so in several places.
 
@@ -129,410 +444,107 @@ watches for that:
   for a while after it changes.
 - `auth.confirmBody`: "unlock your free Full Moon assessment".
 - Three sentences in the `best-free-personality-tests-for-teams-2026`
-  article, in all six language bodies, added by migration 093: the
-  pricing line, the comparison table row, and the closing section that
-  introduces the Witness assessment. Each says Full Moon is a one-time
-  paid purchase **and** free to new accounts while the open beta lasts,
-  so when the grant ends the fix is to delete the second half of a
-  sentence rather than to rewrite a claim. Grep for `open beta`,
-  `beta oberta`, `beta abierta`, `bêta ouverte`, `offenen Beta` and
-  `åbne beta`.
-
-Migration 093 deliberately bounded the claim ("while the open beta
-lasts") so that at zero these sentences become out of date rather than
-false, which is the failure mode 074 had to clean up.
+  article, in all six language bodies (added by Postgres migration
+  093, now living in D1): the pricing line, the comparison table row,
+  and the closing section that introduces the Witness assessment. Each
+  says Full Moon is a one-time paid purchase **and** free to new
+  accounts while the open beta lasts, so when the grant ends the fix
+  is to delete the second half of a sentence rather than to rewrite a
+  claim. Grep for `open beta`, `beta oberta`, `beta abierta`, `bêta
+  ouverte`, `offenen Beta` and `åbne beta`; edit through the blog
+  admin endpoints.
 
 The FAQ answer at `faq.instruments.a` says Full Moon is paid without
-that qualifier, so it now reads as narrower than the blog rather than
-as a contradiction, and it needs no change when the grant ends.
+that qualifier, so it reads as narrower than the blog rather than as
+a contradiction, and it needs no change when the grant ends. The
+`seo.newMoon`, `seo.firstQuarter` and `seo.fullMoon` descriptions
+deliberately carry **no** beta claim.
 
-Note that `seo.newMoon`, `seo.firstQuarter` and `seo.fullMoon`, added
-when the instrument pages became indexable, deliberately carry **no**
-beta claim. A meta description keeps being served from the index long
-after it changes, so a time-limited offer does not belong in one.
+Check with `curl -s https://api.cercol.team/beta`.
 
-Check with:
+## SEO data and Google Cloud
 
-```
-curl -s https://api.cercol.team/beta
-```
+The SEO jobs write to BigQuery (`docs/architecture/seo-pipeline.md`,
+ADRs 0005 to 0007). From the Worker they authenticate as the service
+account `cercol-seo-ingest@cercol.iam.gserviceaccount.com` with the
+key stored whole in `GOOGLE_SA_JSON`; no SDK, `worker/src/bigquery.js`
+signs the RS256 assertion itself.
 
-## SEO ingest jobs
+Token identity (unchanged, still provisional): the service account
+and the GCP project `cercol` are owned by Miquel's personal Google
+account, because creating a Workspace account on `hello@cercol.team`
+was blocked at Gmail's phone-verification step. Tracked as Phase 17.7
+in `ROADMAP.md`.
 
-Three cron jobs ingest external SEO signals into BigQuery (see
-`docs/architecture/seo-pipeline.md` for the full architecture and
-ADRs 0005 to 0007 for the decisions). The Phase 17.6.1a PR shipped
-the code; Phase 17.6.1b deploys it. Until 17.6.1b, the crons are
-NOT installed on the server.
+The PageSpeed API key (`PAGESPEED_API_KEY`) has an application
+restriction by IP address in the Google Cloud console (APIs &
+Services → Credentials) that only allows the Hetzner box. Removing
+that restriction, or replacing it with none, is what lets
+`pagespeed-ingest` run from the Worker and retires the last Hetzner
+cron. The BigQuery service account cannot change it; it needs the
+project owner in the console.
 
-### One-time server setup (Phase 17.6.1b)
-
-```bash
-# 1. Service account key (download from GCP console first; never
-#    commit). Mode 0400, owner cercol:cercol.
-sudo mkdir -p /home/cercol/.secrets
-sudo install -m 0400 -o cercol -g cercol /path/to/cercol-seo-ingest.json /home/cercol/.secrets/cercol-seo-ingest.json
-
-# 2. Add SEO env vars to /home/cercol/.env (BING_WMT_API_KEY,
-#    PAGESPEED_API_KEY, GOOGLE_APPLICATION_CREDENTIALS).
-sudo -u cercol nano /home/cercol/.env
-
-# 3. State directory for the crawl parser.
-sudo mkdir -p /home/cercol/.state && sudo chown cercol:cercol /home/cercol/.state
-
-# 4. Allow the cercol user to read Caddy access logs (owned caddy:adm 0640).
-sudo usermod -aG adm cercol
-# cercol must log out and back in for the group to apply.
-
-# 5. Apply BigQuery DDL once.
-sudo -u cercol /home/cercol/api/api/.venv/bin/python \
-    /home/cercol/api/scripts/apply_bigquery_ddl.py --apply
-
-# 6. Install the cron files (see api/deploy/cron/README.md for the
-#    full block).
-```
-
-### Token identity (provisional)
-
-The service account `cercol-seo-ingest@cercol.iam.gserviceaccount.com`
-is owned by Miquel's personal Google account because creating a
-Workspace account on `hello@cercol.team` is currently blocked at
-Gmail's phone-verification step. This is conscious technical debt.
-TODO: migrate the GCP project ownership from the personal account
-to a Workspace tenant rooted at `hello@cercol.team` once the phone
-block is resolved. Tracked as Phase 17.7 in `ROADMAP.md`.
-
-### External links check (Phase 17.10)
-
-Cron: `/etc/cron.d/cercol-external-links-check` runs Sunday 05:30 UTC.
-Probes external links in published blog articles and appends a snapshot
-to `cercol_seo.external_links_status` (DDL
-`api/data/bigquery_ddl/07_external_links_status.sql`, applied by
-`apply_bigquery_ddl.py`). When links break that were healthy last week
-it emails a digest. Add `LINKS_ALERT_EMAIL=<recipient>` to
-`/home/cercol/.env` (alongside the existing `RESEND_API_KEY`); if unset
-the digest is logged, not sent, and the job still succeeds. Manual run:
-`sudo -u cercol /home/cercol/api/api/.venv/bin/python -m jobs.external_links_check`.
-
-### Anomaly detector
-
-Cron: `/etc/cron.d/cercol-seo-anomaly` runs daily at 05:00 UTC.
-Reads from `cercol_seo` plus `searchconsole`, writes to
-`cercol_seo.seo_anomalies` (table auto-created on first run).
-Default threshold: 30 percent change in 7-day-vs-prior-7-day
-window.
-
-Force a one-shot run for diagnostics:
-
-```bash
-sudo -u cercol bash -c "set -a && . /home/cercol/.env && set +a && \
-    /home/cercol/api/api/.venv/bin/python -m jobs.seo_anomaly_detect"
-```
-
-### Closed-loop copy_changes
-
-Track a title/description/h1 change manually after merging a PR
-that touched user-facing meta:
-
-```bash
-sudo -u cercol bash -c "set -a && . /home/cercol/.env && set +a && \
-    /home/cercol/api/api/.venv/bin/python \
-      /home/cercol/api/scripts/register_copy_change.py \
-      --route /science/ --field title \
-      --before 'old' --after 'new' \
-      --commit \$(cd /home/cercol/api && git rev-parse HEAD)"
-```
-
-`api/jobs/seo_copy_impact.py` walks the rows whose 14-day window
-has passed and writes the CTR delta back. Not yet scheduled by
-cron; run manually until the cron file is installed in a future
-phase.
-
-### MCP server (cercol-mcp)
-
-Standalone systemd unit binding to `127.0.0.1:8091`. Operator
-reaches it from their Claude Code or Claude Desktop client via
-SSH tunnel; no public subdomain (ADR 0008).
-
-Install the unit and start it (one-time on the server):
-
-```bash
-sudo install -m 0644 /home/cercol/api/api/deploy/systemd/cercol-mcp.service \
-    /etc/systemd/system/cercol-mcp.service
-sudo systemctl daemon-reload
-sudo systemctl enable --now cercol-mcp
-sudo systemctl status cercol-mcp
-```
-
-Add `MCP_API_KEY=<long-random-string>` to `/home/cercol/.env`
-before starting. The service refuses to start without it.
-
-Connect from your laptop:
-
-```bash
-# In one terminal, open the tunnel.
-ssh -N -L 8091:127.0.0.1:8091 root@188.245.60.20
-
-# In your Claude Code or Claude Desktop config, add an MCP server:
-#   command: http
-#   url:     http://127.0.0.1:8091
-#   headers: { "Authorization": "Bearer <MCP_API_KEY>" }
-```
-
-Once connected the six SEO tools are available to the model. SQL
-runs against BigQuery in read-only mode; the server rejects any
-non-SELECT before reaching BigQuery.
-
-### Verifying a fresh deploy
-
-```bash
-# After installing the crons, force one run of each:
-sudo -u cercol /home/cercol/api/api/.venv/bin/python -m jobs.crawl_log_parser
-sudo -u cercol /home/cercol/api/api/.venv/bin/python -m jobs.bing_ingest
-sudo -u cercol /home/cercol/api/api/.venv/bin/python -m jobs.pagespeed_ingest
-
-# Check the BigQuery tables (from anywhere with bq cli + creds):
-bq query --nouse_legacy_sql \
-    'SELECT COUNT(*) FROM `cercol.cercol_seo.crawl_logs` WHERE ts_date = CURRENT_DATE()'
-bq query --nouse_legacy_sql \
-    'SELECT COUNT(*) FROM `cercol.cercol_seo.bing_query_stats`'
-bq query --nouse_legacy_sql \
-    'SELECT COUNT(*) FROM `cercol.cercol_seo.pagespeed_runs` WHERE run_date = CURRENT_DATE()'
-```
-
-## Caddy logs and observability
-
-- Caddy logs to `/var/log/caddy/cercol_api_access.log` (rotated by
-  the system logrotate; see `/etc/logrotate.d/`).
-- `journalctl -u caddy --since today` for runtime events.
-- `journalctl -u cercol-api -f` for live API logs.
-
-There is no centralised log aggregation today. Phase 17.6 will
-ingest the Caddy access log into BigQuery on a daily cron.
-
-## Incident response: api.cercol.team is down
-
-When the public hostname returns TLS internal alert or 502:
-
-1. **Is the backend up?**
-   `systemctl status cercol-api`. If not, restart it. If it
-   crashes on restart, `journalctl -u cercol-api -n 200`.
-
-2. **Is Caddy up?**
-   `systemctl status caddy`. If not, restart it.
-
-3. **Is the snippet in place?**
-   `cat /etc/caddy/conf.d/cercol-api.caddy`. If missing or empty,
-   reinstall from the repo:
-   ```
-   cd /home/cercol/api
-   git pull
-   sudo install -m 0644 api/deploy/caddy/cercol-api.caddy /etc/caddy/conf.d/cercol-api.caddy
-   sudo caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile
-   sudo systemctl reload caddy
-   ```
-
-4. **Has topquaranta's deploy clobbered the main Caddyfile?**
-   `grep "import /etc/caddy/conf.d" /etc/caddy/Caddyfile`. If
-   missing, the multi-tenant boundary defined in ADR 0004 is
-   broken. File an issue on the topquaranta repo and contact the
-   topquaranta operator. Do NOT try to add the import line by
-   hand to `/etc/caddy/Caddyfile`; it will be overwritten at the
-   next topquaranta deploy. The fix has to land in the
-   topquaranta repo.
-
-5. **Has DNS changed?**
-   `dig api.cercol.team A +short`. Should return `188.245.60.20`.
-
-6. **Is the cert valid?**
-   `curl -vI https://api.cercol.team/blog 2>&1 | head -20`.
-
-The relevant post-mortems are
-`docs/post-mortems/2026-04-16-caddy-30day-silent-outage.md` and
-`docs/post-mortems/2026-05-17-caddy-outage-recurrence.md`. Read
-them if the same pattern recurs.
-
-## Database
-
-PostgreSQL runs on the same host. Connect as `cercol` via local
-socket:
+Checking the tables from a machine with the `bq` CLI and credentials:
 
 ```
-sudo -u cercol psql cercol
+bq query --nouse_legacy_sql 'SELECT COUNT(*) FROM `cercol.cercol_seo.bing_query_stats`'
+bq query --nouse_legacy_sql 'SELECT COUNT(*) FROM `cercol.cercol_seo.pagespeed_runs` WHERE run_date = CURRENT_DATE()'
+bq query --nouse_legacy_sql 'SELECT COUNT(*) FROM `cercol.cercol_seo.external_links_status`'
 ```
 
-Migrations are applied through the **Apply migrations** GitHub Actions
-workflow (`.github/workflows/apply-migrations.yml`, `workflow_dispatch`
-only — see ADR 0011). It SSHes to the host over the same channel and
-secret as the backend deploy, `git pull`s, and runs
-`scripts/apply_pg_migrations.sh`, which keeps a `schema_migrations`
-ledger, applies only pending `db/migrations/*.sql` in numeric order,
-and halts on the first failure. There is no apply-on-deploy trigger:
-merging a migration applies nothing until this workflow is run.
+Crawler traffic no longer comes from a log parser: `jobs/crawlers.js`
+reads it from Cloudflare's GraphQL analytics for the whole zone when
+the digest asks, which needs `CF_ANALYTICS_TOKEN`, `CF_ACCOUNT_ID` and
+`CF_ZONE_ID`.
 
-Normal flow:
+Closed-loop copy changes (`register_copy_change.py`,
+`seo_copy_impact.py`) were Python scripts on the box and have not been
+ported; the BigQuery table stays readable.
 
-1. Run the workflow with `dry_run: true` (the default) to preview the
-   pending set. Changes nothing.
-2. Run it again with `dry_run: false` to apply.
+## DNS verification
 
-First-time adoption (the ledger does not exist yet, and 001..NNN were
-already applied by hand): run once with `baseline: <highest-already-applied>`
-(e.g. `016`, confirm against prod first) to record those as applied
-*without* executing them — required because migrations 013 and 014 are
-not idempotent (bare `CREATE TABLE` / `INSERT`) and would error if
-re-run. Then a `dry_run: false` run applies the rest.
+DNS is on Cloudflare. A TXT record for Search Console or any other
+verification is added in the dashboard (DNS → Records) or with the
+Cloudflare API and the same account token. Remove it afterwards
+unless the service requires it to persist. Managed `robots.txt` is
+disabled on the zone on purpose: the Worker and the static site serve
+their own.
 
-The ledger drifted once and was re-adopted, so `baseline` is not only a
-first-run tool. On 2026-08-10 it held 40 entries with a newest of
-`040`, while `041` through `091` had all been applied by hand: the
-dry run listed fifty-one already-live migrations as pending, and a
-plain apply would have re-executed them. It was re-baselined at `091`
-after checking each suspect migration's own assertion against live
-data, `085` included, whose eight surviving uses of *Verbundenheit* are
-deliberate and would otherwise have looked like a migration that never
-ran. **Never baseline on the assumption that a migration ran. Check the
-data it claims to have changed.**
+## Legacy (until decommission)
 
-### Apply migrations before the frontend rebuild, not after
+The Hetzner box `188.245.60.20` still runs, deliberately, four Cèrcol
+things: `cercol-api` as the origin fallback behind
+`origin.cercol.team` (the Worker proxies any route it does not own,
+and every route when `WRITES_LIVE=0`), `cercol-mcp` (not user-facing),
+the `cercol-pagespeed-ingest` cron (Sunday 04:00 UTC, until the PSI
+key restriction goes), and the frozen Postgres `cercol` database
+(nothing has written to it since `WRITES_LIVE=1` on 2026-08-17).
+Stalwart is stopped and moved to `/root/stalwart-retired-2026-08-18`.
+Seven crons are renamed `*.disabled-migrated-to-cloudflare`.
+`deploy-backend.yml` still pushes `api/**` there over ssh;
+`apply-migrations.yml` is retired.
 
-`db/migrations/**` is in the `deploy-frontend.yml` path filter, so
-merging a content migration starts a rebuild immediately, while the
-migration itself needs a separate manual `workflow_dispatch`. The
-prerender reads every article body from `api.cercol.team`, so if the
-build starts first it bakes the pre-migration text.
-
-This is not a clean win or lose. The build takes most of its 35 minute
-budget across 648 routes and fetches bodies as it goes, so a migration
-applied two minutes into a run leaves the site **half updated**: on
-2026-08-10 the rendered English body of the rankings article carried
-the new sentence while the Catalan payload embedded in the same page
-still carried a corrected-away DOI.
-
-Order it: merge, apply the migration, then dispatch `deploy-frontend`
-by hand and let the concurrency group queue it behind the running one.
-The nightly 03:20 UTC rebuild would eventually fix it either way, but
-not before a reader sees the mixture.
-
-Emergency fallback only (if the workflow is unavailable), the manual
-path still works (peer auth as the `postgres` superuser; the `cercol`
-role may prompt for a password). Feed the file via stdin (`<`), not
-`-f`: the file is piped by root, because the `postgres` user cannot
-read files under `/home/cercol/api`.
+The commands that still matter:
 
 ```
-cd /home/cercol/api && sudo -u postgres psql cercol < db/migrations/<NNN>-<name>.sql
+ssh root@188.245.60.20
+systemctl status cercol-api                       # origin fallback
+journalctl -u cercol-api -n 50 --no-pager
+cat /etc/cron.d/cercol-pagespeed-ingest
+sudo -u cercol /home/cercol/api/api/.venv/bin/python -m jobs.pagespeed_ingest   # from /home/cercol/api/api, env from /home/cercol/.env
+sudo -u cercol psql cercol                        # read the frozen Postgres
 ```
 
-### Database backups (ADR 0017)
+Caddy (`/etc/caddy/conf.d/cercol-api.caddy`, shared with topquaranta,
+ADR 0004) and the ADR 0017 backup crons keep working untouched until
+the box is switched off; do not spend time on them.
 
-Two legs, both driven by `api/deploy/backup/cercol-db-backup.sh`
-(root cron, daily 03:15 UTC, `/etc/cron.d/cercol-db-backup`):
-
-- **Leg 1 (on-box)**: `pg_dump -Fc` of the cercol database only, under
-  `/var/backups/cercol/`, 7 most recent dumps kept.
-- **Leg 2 (off-box)**: the same dump gpg-encrypted (AES256 symmetric,
-  passphrase in root-only `/root/.cercol-backup-passphrase`) and pushed
-  via rclone to the `gdrive:cercol-db-backups` Drive folder, 30-day
-  retention.
-
-Health check: `tail /home/cercol/logs/db-backup.log` and confirm
-`/home/cercol/logs/db-backup.FAILED` does NOT exist. The marker is
-written on any failure and removed on the next success.
-
-#### One-time install (as root on the server)
-
-```
-# 1. Passphrase file (fill in a strong passphrase; ALSO store it in the
-#    operator's password manager: without it the off-box copies are
-#    unrecoverable after box loss).
-[ -f /root/.cercol-backup-passphrase ] || \
-    printf '%s' 'REPLACE-WITH-STRONG-PASSPHRASE' > /root/.cercol-backup-passphrase
-chmod 0600 /root/.cercol-backup-passphrase
-
-# 2. rclone + Drive remote named exactly "gdrive" (interactive OAuth:
-#    pick "drive", scope "drive.file" is enough, follow the browser flow).
-command -v rclone > /dev/null || apt-get install -y rclone
-rclone listremotes | grep -q '^gdrive:$' || rclone config
-
-# 3. Log directory.
-install -d -o cercol -g cercol /home/cercol/logs
-
-# 4. Cron.
-install -m 0644 /home/cercol/api/api/deploy/cron/cercol-db-backup /etc/cron.d/
-
-# 5. First run by hand + restore test (next section).
-chmod +x /home/cercol/api/api/deploy/backup/cercol-db-backup.sh
-/home/cercol/api/api/deploy/backup/cercol-db-backup.sh
-tail -1 /home/cercol/logs/db-backup.log   # expect "BACKUP OK: ..."
-```
-
-#### Restore: from an on-box dump (logical errors, bad migration)
-
-```
-# as root
-latest=$(ls -1t /var/backups/cercol/cercol-*.dump | head -1)
-runuser -u postgres -- pg_restore --list "$latest" | head   # sanity: archive readable
-# Full restore into the live database (DESTRUCTIVE, think first;
-# prefer the scratch restore below to inspect data):
-runuser -u postgres -- pg_restore --clean --if-exists --no-owner \
-    --dbname=cercol "$latest"
-```
-
-For a single table, restore into a scratch database (next section) and
-copy the rows across with `psql` instead of touching the live database.
-
-#### Restore: from the off-box copy (box loss)
-
-```
-# on any machine with rclone configured for the same Drive account
-rclone ls gdrive:cercol-db-backups            # pick the newest .dump.gpg
-rclone copy gdrive:cercol-db-backups/cercol-<STAMP>.dump.gpg /tmp/
-gpg --batch --pinentry-mode loopback \
-    --passphrase-file /root/.cercol-backup-passphrase \
-    -o /tmp/cercol-restore.dump -d /tmp/cercol-<STAMP>.dump.gpg
-# then restore as in the on-box section, pointing at /tmp/cercol-restore.dump
-```
-
-The passphrase is NOT in the repo and NOT in Drive. If the box is lost
-the passphrase must come from the operator's password manager; storing
-it there is part of the install step above.
-
-#### Restore test (run once after install, then quarterly)
-
-```
-# as root; restores the newest dump into a scratch DB, checks a core
-# table, drops the scratch DB. Safe to run on the live server.
-latest=$(ls -1t /var/backups/cercol/cercol-*.dump | head -1)
-runuser -u postgres -- createdb cercol_restore_test
-runuser -u postgres -- pg_restore --no-owner --dbname=cercol_restore_test "$latest"
-runuser -u postgres -- psql -d cercol_restore_test -tc "SELECT COUNT(*) FROM results;"
-# expect a plausible row count (compare: same query against cercol)
-runuser -u postgres -- dropdb cercol_restore_test
-```
-
-#### Last resort: Hetzner machine-level backups
-
-Hetzner Cloud automatic backups are enabled on the VPS (whole-VM,
-crash-consistent, 7-day retention, restore from the Hetzner console).
-They roll back the ENTIRE machine including topquaranta, so they are
-the last resort for total box loss, never for cercol-only recovery.
-
-### Blog slug redirects (Phase 17.10)
-
-`db/migrations/016_blog_slug_redirects.sql` creates the
-`blog_slug_redirects` table (`slug_old` -> `slug_new`) and seeds the
-redirects found by `scripts/audit_blog_links.py`. The migration is
-idempotent (`CREATE TABLE IF NOT EXISTS` + `INSERT ... ON CONFLICT DO
-NOTHING`), so re-running it is safe. `GET /blog/<slug>` answers `308`
-to `/blog/<slug_new>` for a dead slug that has a row here; the backend
-degrades to a normal `404` if the table is missing, so applying the
-migration after the code deploy is safe. To add a redirect later:
-
-```
-INSERT INTO blog_slug_redirects (slug_old, slug_new, reason)
-VALUES ('<old>', '<new>', '<why>') ON CONFLICT (slug_old) DO NOTHING;
-```
-
-Re-run `python scripts/audit_blog_links.py` from the repo to refresh
-`docs/seo/links-audit-<date>.md` and find new breakage.
+Decommission is `scripts/decommission-hetzner.sh` ("Phase 10"): a
+final `pg_dump` kept on the box (copy it elsewhere too), stop and
+disable `cercol-api` and `cercol-mcp`, retire the Caddy snippet, list
+what is left. It does not drop the database; that is a separate
+command printed at the end, to run only once the dump is verified.
+Preconditions are in the script header. Run it after a quiet period
+and after the PSI key restriction is lifted; then remove
+`deploy-backend.yml`, `origin.cercol.team` and the DNS rollback
+records, and delete the Legacy section of this file.

@@ -212,7 +212,7 @@ CLAUDE.md during Phase 17.5.
   roughly 2 to 3 seconds regardless of how much you pre-render.
   Lighthouse re-marks the LCP when main-thread tasks settle, and
   React's hydration is a long task. Performance scores in the 75 to
-  85 range for a pre-rendered SPA on GitHub Pages are normal, not a
+  85 range for a pre-rendered SPA on a static edge host are normal, not a
   bug.
 - When Search Console reports "Soft 404" or "Discovered: not
   indexed", use Search Console's live URL inspection as the source
@@ -221,7 +221,7 @@ CLAUDE.md during Phase 17.5.
 
 ### Pre-rendering this stack
 
-- Vite + Puppeteer + GitHub Pages: critical CSS extraction MUST run
+- Vite + Puppeteer + static hosting: critical CSS extraction MUST run
   after Puppeteer captures each route's full DOM (post-prerender,
   Node API). A Vite plugin only sees the empty SPA shell, so the
   critical CSS block it produces is empty or wrong.

@@ -1,5 +1,7 @@
 # ADR 0017: Database backups, two-leg strategy
 
+> **Status note (2026-08-17)**: superseded by ADR 0020. Data now lives in Cloudflare D1; the backup is `wrangler d1 export` (no scheduled off-provider copy exists yet, which is the honest current state). The pg_dump legs below cover only the frozen Postgres on Hetzner until decommission.
+
 - **Number**: 0017
 - **Title**: Two-leg backup strategy for the cercol PostgreSQL database
 - **Status**: Accepted

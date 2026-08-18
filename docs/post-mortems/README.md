@@ -43,3 +43,5 @@ without a prevention link is a regret, not a control.
 | 2026-05-17 | [Caddy outage recurrence](2026-05-17-caddy-outage-recurrence.md) | high | ADR 0004 + `api/tests/test_infra.py` |
 | 2026-05-20 | [H1 tag missing regression](2026-05-20-h1-tag-missing-regression.md) | medium | `api/tests/test_seo.py` + SEO HTML structure rules in `docs/policies/conventions.md` |
 | 2026-05-23 | [Mocks diverged from real APIs](2026-05-23-mock-divergence-bing-caddy.md) | medium | "Real contract smoke" rule in `docs/policies/conventions.md` + regression tests in `api/tests/test_bing_ingest.py` and `api/tests/test_crawl_log_parser.py` |
+
+Note (2026-08-17): the Caddy preventions above describe the legacy Hetzner origin. Since ADR 0020 `api.cercol.team` is a Cloudflare Worker; how to check it lives in `docs/ops/runbook.md`.

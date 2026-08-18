@@ -223,7 +223,7 @@
     },
     "thirdParties": {
       "heading": "Tredjepartstjenester",
-      "hosting": "Dine kontodata og testresultater opbevares på en dedikeret server hostet af Hetzner Online GmbH (Tyskland, EU). Transaktionsmails (login-links) sendes via Resend (Resend, Inc.), et amerikansk selskab der opererer under standardkontraktbestemmelser for EU-dataoverførsler. Autentificering er fuldt selvhostet, ingen tredjepart har adgang til dine loginoplysninger.",
+      "hosting": "Dine kontodata og testresultater opbevares i en database hostet af Cloudflare, Inc. og placeret i Vesteuropa (EU). Transaktionsmails (login-links) sendes via Resend (Resend, Inc.), et amerikansk selskab der opererer under standardkontraktbestemmelser for EU-dataoverførsler. Autentificering er fuldt selvhostet, ingen tredjepart har adgang til dine loginoplysninger.",
       "stripe": "Betalinger håndteres af Stripe (Stripe, Inc.), et amerikansk selskab med EU-dataoverførselsoverholdelse. Cèrcol modtager ingen betalingskortdata, kun en transaktionsbekræftelse.",
       "noTrackers": "Ingen andre tredjepartstjenester modtager dine personoplysninger. Der er ingen analyseplattforme, reklamenetværk eller sociale medie-trackere på dette websted."
     },

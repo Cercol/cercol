@@ -10,35 +10,44 @@ Phase 4+:  team role instrument built on accumulated real data
 
 All scoring algorithms and item sources are documented and citable.
 
-## Stack
-- React + Vite (frontend — GitHub Pages, cercol.team)
+## Stack (since the Cloudflare migration, 2026-08-17)
+- React + Vite (frontend), served as Cloudflare static assets by the Worker `cercol-web` (`web/wrangler.jsonc`) at cercol.team; www 301s to the apex
 - Tailwind CSS
-- FastAPI + uvicorn (backend — Hetzner VPS 188.245.60.20, api.cercol.team, systemd + Caddy) [Phase 4+]
-  - Caddy is shared with the topquaranta project on the same VPS. The `api.cercol.team` site block lives at `/etc/caddy/conf.d/cercol-api.caddy`, with its source of truth in this repo at `api/deploy/caddy/cercol-api.caddy`. Topquaranta's main `/etc/caddy/Caddyfile` imports the whole `conf.d/` directory so each project owns its own Caddy snippet. See `docs/decisions/0004-caddy-multi-tenant-conf-d.md` (Accepted).
-- PostgreSQL 14 (Hetzner — all data, auth tables included since Phase 15)
-- Auth: self-hosted (api/auth.py) — magic link (Resend), password (bcrypt direct, no passlib), Google OAuth (direct)
-  - JWT: HS256 / JWT_SECRET env var (replaces Supabase ES256/JWKS). See `docs/decisions/0003-jwt-hs256-self-hosted.md` (Accepted).
+- API: Cloudflare Worker `cercol-api` (`worker/`, plain JS, no framework) at api.cercol.team. Cloudflare account "cercol". Free plan: 10 ms CPU per invocation, 50 subrequests, 5 cron triggers, 100k requests/day; the daily brief watches these
+- Data: Cloudflare D1 `cercol` (SQLite; schema in `worker/schema/`) and KV `NORMS` (caches, links-sweep cursor). `db/migrations/001..094` are the frozen Postgres history
+- Auth: self-hosted (`worker/src/auth.js`): magic link (Resend) and Google OAuth. Passwords retired (410; bcrypt does not fit the CPU budget)
+  - JWT: HS256 / JWT_SECRET secret, aud `authenticated`, 1 h. See `docs/decisions/0003-jwt-hs256-self-hosted.md` (Accepted)
   - Tokens: access token in JS module variable, refresh token in localStorage `cercol_rt`
+- Mail: Resend sends (noreply@cercol.team); Purelymail holds the mailboxes (hello@, miquel@, admin@). See `docs/ops/email.md`
+- SEO data: BigQuery project `cercol` (`worker/src/bigquery.js`, service account, no SDK)
+- Legacy until decommission (`scripts/decommission-hetzner.sh`): the FastAPI in `api/` on the Hetzner box is only the origin fallback (`origin.cercol.team`, unmatched routes proxied by the Worker) plus the pagespeed cron. Postgres there is frozen. See `docs/decisions/0020-cloudflare-workers-d1-purelymail.md`
 - Supabase: NO LONGER USED. See `docs/decisions/0001-no-supabase-asyncpg-direct.md` (Accepted).
 - All scoring happens client-side in JavaScript
 
 ## Deployment pipeline
 
-### Frontend (src/**, public/**, index.html, vite.config.js)
-Push to `main` → GitHub Action (`deploy-frontend.yml`) → `npm run build` → `gh-pages` → cercol.team
+### Frontend (src/**, public/**, index.html, vite.config.js, scripts/**, db/migrations/**)
+Push to `main` → GitHub Action (`deploy-frontend.yml`) → tests → `npm run build:full` (vite + puppeteer prerender of ~650 routes, reading the API) → internal link integrity guard → `wrangler deploy --config web/wrangler.jsonc` → cercol.team. Also nightly at 03:20 UTC. The gh-pages publish still runs as a warm fallback; drop it after a quiet fortnight.
 
 VITE_API_URL is set in `.env.production` (committed, non-secret — it's just the public API URL).
 
-### Backend (api/**)
-Push to `main` → GitHub Action (`deploy-backend.yml`) → SSH to Hetzner → `git pull origin main` → install `api/deploy/caddy/cercol-api.caddy` into `/etc/caddy/conf.d/` (only when changed) → `caddy validate` (rollback on failure) → `systemctl reload caddy` → `systemctl restart cercol-api` → external smoke test against `https://api.cercol.team/blog`.
+### API (worker/**)
+Push to `main` → GitHub Action (`deploy-worker.yml`) → `vitest run worker/test` → `wrangler deploy --config worker/wrangler.jsonc` → smoke test on `/health` and `/blog`.
 
-Both actions trigger automatically when their respective paths change.
-CI (`ci.yml`) runs on every push and PR: build, bundle sanity, frontend tests, backend tests.
+Secrets live on the Worker (`wrangler secret put NAME --config worker/wrangler.jsonc`), never in the repo. GitHub secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`.
+
+### Legacy backend (api/**)
+`deploy-backend.yml` still pushes `api/**` to Hetzner over ssh; only the origin fallback and the pagespeed cron depend on it. Goes away with the decommission.
+
+CI (`ci.yml`) runs on every push and PR: build, bundle sanity, frontend + worker tests, backend tests. `ci-docs.yml`: markdownlint, lychee, docs coherence.
 
 ### Manual deploy (emergency only)
-Frontend: `npm run deploy` (builds locally and pushes dist/ to gh-pages branch)
-Backend: `scp api/*.py root@188.245.60.20:/home/cercol/api/api/ && ssh root@188.245.60.20 "systemctl restart cercol-api"`
-Avoid manual deploys — they desync local and server state.
+API: `CLOUDFLARE_API_TOKEN=… CLOUDFLARE_ACCOUNT_ID=… npx wrangler deploy --config worker/wrangler.jsonc`
+Frontend: same with `web/wrangler.jsonc` after `npm run build:full`.
+Avoid manual deploys: they desync local and deployed state. Runbook: `docs/ops/runbook.md`.
+
+### Scheduled jobs
+Five cron triggers on `cercol-api` (`worker/src/scheduled.js`): 04:00 daily (purge-tokens, group-nudge, links-tick, daily-brief), 05:00 daily (seo-anomalies), Sun 03:00 (bing-ingest), Sun 04:00 (pagespeed-ingest), Mon 09:00 (weekly-digest). Run any now: `POST /admin/jobs/<name>?dry_run=1` with an admin JWT.
 
 ## Design system (mm-design)
 All design tokens come from **mm-design** (https://github.com/miquelmatoses/mm-design), installed as an npm git dependency.
@@ -137,11 +146,13 @@ When adding a new language to Cèrcol:
 ## File structure
 
 - `src/` - React SPA. `components/` plus `components/ui/` and `components/report/`; `pages/` (route-level, includes `AdminDashboardPage.jsx`); `context/`, `hooks/`, `lib/`, `design/`, `data/`, `utils/` (with `__tests__/`), `locales/` (six languages), `assets/`.
-- `api/` - FastAPI backend. Flat layout, six Python files. See `docs/architecture/backend.md` for the layout rationale and `docs/architecture/auth.md` for the auth surface.
-- `.github/workflows/` - `ci.yml`, `ci-docs.yml`, `deploy-frontend.yml`, `deploy-backend.yml`.
+- `worker/` - the API: `src/` (router `index.js`, `auth`, `jwt`, `db`, `writes`, `emails` + `email-ui` design kit, `witness`, `groups`, `scoring`, `norms`, `stripe`, `admin`, `seo`, `blog-admin`, `links`, `bigquery`, `scheduled`), `src/jobs/`, `src/i18n/`, `schema/`, `test/`, `wrangler.jsonc`. See `docs/architecture/backend.md` and `docs/architecture/auth.md`.
+- `web/` - `wrangler.jsonc` for the static-assets Worker that serves `dist/`.
+- `api/` - legacy FastAPI, origin fallback until decommission.
+- `.github/workflows/` - `ci.yml`, `ci-docs.yml`, `deploy-frontend.yml`, `deploy-worker.yml`, `deploy-backend.yml` (legacy).
 - `docs/` - living docs (`policies/`, `architecture/`, `decisions/`, `post-mortems/`, `ops/`) plus `archive/` for decayed content.
 - `scripts/` - sitemap, prerender, deploy-api, docs-coherence and spec-path validators, blog article updaters.
-- `sql/`, `db/migrations/` - PostgreSQL seeds and migrations (001 through 094).
+- `sql/`, `db/migrations/` - PostgreSQL seeds and migrations (001 through 094), frozen history. New schema goes in `worker/schema/`; content changes go through the blog admin endpoints or `wrangler d1 execute cercol --remote`.
 
 ## SEO conventions
 

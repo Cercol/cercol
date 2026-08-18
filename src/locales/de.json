@@ -223,7 +223,7 @@
     },
     "thirdParties": {
       "heading": "Drittanbieterdienste",
-      "hosting": "Deine Kontodaten und Testergebnisse werden auf einem eigenen Server gespeichert, der von Hetzner Online GmbH (Deutschland, EU) gehostet wird. Transaktions-E-Mails (Anmelde-Links) werden über Resend (Resend, Inc.) versendet, einem in den USA ansässigen Unternehmen, das Standardvertragsklauseln für EU-Datenübertragungen anwendet. Die Authentifizierung ist vollständig selbst gehostet, kein Drittanbieter hat Zugriff auf deine Anmeldedaten.",
+      "hosting": "Deine Kontodaten und Testergebnisse werden in einer Datenbank gespeichert, die von Cloudflare, Inc. gehostet wird und sich in Westeuropa (EU) befindet. Transaktions-E-Mails (Anmelde-Links) werden über Resend (Resend, Inc.) versendet, einem in den USA ansässigen Unternehmen, das Standardvertragsklauseln für EU-Datenübertragungen anwendet. Die Authentifizierung ist vollständig selbst gehostet, kein Drittanbieter besitzt deine Zugangsdaten.",
       "stripe": "Zahlungen werden von Stripe (Stripe, Inc.) abgewickelt, einem in den USA ansässigen Unternehmen mit EU-konformer Datenübertragung. Cèrcol erhält keine Zahlungskartendaten, nur eine Transaktionsbestätigung.",
       "noTrackers": "Keine anderen Drittanbieterdienste erhalten deine personenbezogenen Daten. Auf dieser Website gibt es keine Analyseplattformen, Werbenetzwerke oder Social-Media-Tracker."
     },

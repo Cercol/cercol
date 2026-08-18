@@ -14,7 +14,7 @@ Check the box when each is done and add the date.
 
 ### Search Console & webmaster tools
 
-- [x] **Google Search Console** — verified May 2026. TXT record added via Porkbun API. Sitemap submitted.
+- [x] **Google Search Console**: verified May 2026. TXT record added at the registrar (DNS is at Cloudflare since Aug 2026). Sitemap submitted.
   1. Add property → "URL prefix" → https://cercol.team
   2. Choose verification method "HTML tag" — Google gives you a meta tag like:
      `<meta name="google-site-verification" content="XXXX" />`
@@ -164,7 +164,7 @@ Persönlichkeitstest Team, Big Five Team kostenlos, IPIP Deutsch, Teamrollen Per
 - [x] GitHub repo topics: big-five, ocean-personality, ipip, ab5c, etc. (10 topics)
 - [x] React.lazy() code splitting: 1.37MB → page chunks 1–33 kB + vendor chunks
 - [x] Prerendering: 7 public routes → static HTML (scripts/prerender.mjs, puppeteer-core)
-- [x] deploy:full script: vite build + prerender + gh-pages
+- [x] deploy:full script: vite build + prerender + Cloudflare static assets (gh-pages kept as fallback)
 
 ### Pending
 - [x] /science page enrichment: DOI links for all 9 references, validation plan section (6 languages)

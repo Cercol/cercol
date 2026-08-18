@@ -1,5 +1,7 @@
 # ADR 0011: a tracked, idempotent Postgres migration-apply path through the existing pipeline
 
+> **Status note (2026-08-17)**: superseded by ADR 0020. Postgres is frozen since 2026-08-17; `db/migrations/001..094` are history. The D1 schema lives in `worker/schema/`; content changes go through the blog admin endpoints on the Worker or `wrangler d1 execute` (SQLite dialect). `apply-migrations.yml` is retired.
+
 - **Number**: 0011
 - **Title**: a tracked, idempotent Postgres migration-apply path through the existing pipeline
 - **Status**: Accepted

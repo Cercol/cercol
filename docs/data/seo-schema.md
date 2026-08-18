@@ -88,9 +88,11 @@ Crawler hits parsed from Caddy's JSON access log.
 Written by `api/jobs/crawl_log_parser.py`. Append-only; the
 parser is stateful so each line is written at most once.
 
-LIMITATION: this table covers only `api.cercol.team`. The
-frontend `cercol.team` is on GitHub Pages, no origin logs. See
-the limitations section of `docs/architecture/seo-pipeline.md`.
+RETIRED: this table was fed by the Caddy access log on the Hetzner
+box and stopped filling when the API moved to Cloudflare Workers
+(2026-08-17). Crawler traffic now comes from Cloudflare zone analytics
+(`worker/src/jobs/crawlers.js`) and covers the whole site, frontend
+included. The table stays for its history.
 
 ## external_links_status
 
@@ -111,4 +113,4 @@ Written by `api/jobs/external_links_check.py`. Append-only; each run
 appends a fresh snapshot so "newly broken since last week" diffs are
 derivable. Internal links are not here: they are guarded at build time
 by `api/tests/test_internal_links_integrity.py` and resolved at request
-time by the `blog_slug_redirects` Postgres table.
+time by the `blog_slug_redirects` table in D1.

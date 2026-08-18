@@ -1,5 +1,7 @@
 # ADR 0002: Railway to Hetzner systemd
 
+> **Status note (2026-08-17)**: superseded by ADR 0020 for the API, which now runs on a Cloudflare Worker. Hetzner remains only as the origin fallback (`origin.cercol.team`) until `scripts/decommission-hetzner.sh` runs.
+
 - **Number**: 0002
 - **Title**: Move backend hosting from Railway to Hetzner systemd
 - **Status**: Accepted

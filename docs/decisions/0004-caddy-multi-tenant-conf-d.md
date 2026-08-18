@@ -1,5 +1,7 @@
 # ADR 0004: Caddy multi-tenant via conf.d
 
+> **Status note (2026-08-17)**: superseded by ADR 0020. Caddy on the shared box now serves only `origin.cercol.team` (the Worker's fallback) until decommission; `api.cercol.team` is answered by the Cloudflare Worker.
+
 - **Number**: 0004
 - **Title**: Caddy multi-tenant via conf.d snippets
 - **Status**: Accepted

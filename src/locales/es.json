@@ -223,7 +223,7 @@
     },
     "thirdParties": {
       "heading": "Servicios de terceros",
-      "hosting": "Los datos de tu cuenta y tus resultados se almacenan en un servidor propio alojado por Hetzner Online GmbH (Alemania, UE). Los correos transaccionales (enlaces de acceso) se envían a través de Resend (Resend, Inc.), una empresa con sede en EE. UU. que opera bajo cláusulas contractuales estándar para las transferencias de datos de la UE. La autenticación es completamente propia, ningún proveedor externo tiene acceso a tus credenciales.",
+      "hosting": "Los datos de tu cuenta y tus resultados se almacenan en una base de datos alojada en Cloudflare, Inc. y ubicada en Europa occidental (UE). Los correos transaccionales (enlaces de acceso) se envían a través de Resend (Resend, Inc.), una empresa con sede en EE. UU. que opera bajo cláusulas contractuales estándar para las transferencias de datos de la UE. La autenticación es completamente propia, ningún proveedor externo guarda tus credenciales.",
       "stripe": "Los pagos son gestionados por Stripe (Stripe, Inc.), una empresa con sede en EE. UU. con cumplimiento de transferencia de datos de la UE. Cèrcol no recibe ningún dato de tarjeta de pago, solo una confirmación de transacción.",
       "noTrackers": "Ningún otro servicio de terceros recibe tus datos personales. No hay plataformas de analítica, redes publicitarias ni rastreadores de redes sociales en este sitio."
     },
