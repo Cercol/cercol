@@ -205,12 +205,24 @@ function proxyToOrigin(request, url) {
  * microsecond, so dropping it reshuffles most of the index.
  */
 async function listPosts(env) {
+  // `languages` used to be derived by JSON.parsing every article body in
+  // all six languages on every request (~10 MB of JSON per call), which put
+  // CPU p90 at 69 ms and p99 at 111 ms against a 10 ms free budget. Doing
+  // it in SQLite with json_each fails on one row whose content is not
+  // strictly valid JSON for the engine (SQLITE_ERROR malformed JSON), so
+  // the check is a cheap string test instead: a language key is present
+  // when the JSON object holds it with a non-empty string value. Regex over
+  // the raw column, no parse; the bodies never leave the database.
+  const langs = ['en', 'ca', 'es', 'fr', 'de', 'da']
+  const cases = langs.map((l) =>
+    `CASE WHEN b.content GLOB '*"${l}":"[^"]*' AND b.content NOT GLOB '*"${l}":""*' AND b.content NOT GLOB '*"${l}":" *' THEN '${l}' END AS has_${l}`
+  ).join(', ')
   const { results } = await env.DB.prepare(
-    `SELECT slug, status, title, description, cover_url, author, published_at,
-            view_count, category, complexity, content
-       FROM blog_posts
-      WHERE status = 'published'
-      ORDER BY published_at IS NULL, published_at DESC, id DESC`
+    `SELECT b.slug, b.status, b.title, b.description, b.cover_url, b.author, b.published_at,
+            b.view_count, b.category, b.complexity, ${cases}
+       FROM blog_posts b
+      WHERE b.status = 'published'
+      ORDER BY b.published_at IS NULL, b.published_at DESC, b.id DESC`
   ).all()
 
   const posts = results.map((row) => ({
@@ -224,7 +236,9 @@ async function listPosts(env) {
     viewCount: row.view_count,
     category: row.category ?? 'general',
     complexity: row.complexity ?? 'intermediate',
-    languages: nonEmptyLanguages(row.content),
+    // Alphabetical: Postgres jsonb stores object keys sorted, so the server
+    // always emitted ca, da, de, en, es, fr in that order.
+    languages: langs.filter((l) => row[`has_${l}`]).sort(),
   }))
   return Response.json(posts)
 }
@@ -285,10 +299,3 @@ async function getPost(env, match) {
   })
 }
 
-/** Language keys whose body has something other than whitespace in it. */
-function nonEmptyLanguages(contentJson) {
-  const content = JSON.parse(contentJson || '{}')
-  return Object.keys(content).filter(
-    (k) => typeof content[k] === 'string' && content[k].trim().length > 0
-  )
-}
