@@ -14,6 +14,7 @@
 import { query } from '../bigquery.js'
 import { priorFor, DOMAIN_MAP, computeRole } from '../../../src/utils/role-scoring.js'
 import { NORM_MIN_SAMPLE } from '../norms.js'
+import { crawlerHits } from './crawlers.js'
 
 const DOMAINS = ['presence', 'bond', 'discipline', 'depth', 'vision']
 const LABELS = { newMoon: 'New Moon', firstQuarter: 'First Quarter', fullMoon: 'Full Moon' }
@@ -314,6 +315,13 @@ export function weeklyDigestHtml(data, frontendUrl = 'https://cercol.team') {
     if (seo.movers?.length) body += "<div style='margin-top:12px;'></div>" + table(['Page', 'Was', 'Now', '&Delta;pos'], seo.movers.map(([u, b, n, impr]) => [u, b.toFixed(1), n.toFixed(1), impr === 0 ? deltaSpan(0, 0) : `<span style="color:${impr > 0 ? GREEN : RED};">${impr >= 0 ? '+' : ''}${impr.toFixed(1)}</span>`]), ['left', 'right', 'right', 'right'])
     parts.push(section(`Search (${src})`, body))
   } else parts.push(section('Search', empty('Search data pending (export not yet populated).')))
+  const cr = data.crawlers
+  if (cr && !cr.pending) {
+    parts.push(section('Crawlers (cercol.team, Cloudflare)', cr.byBot.length
+      ? table(['Crawler', 'Requests'], cr.byBot.slice(0, 15).map(([n, h]) => [n, fmt(h)]), ['left', 'right'])
+        + p(`${fmt(cr.total)} crawler requests in the week, across the whole site.`, true)
+      : empty('No crawler traffic recorded this week.')))
+  }
   const ps = data.pagespeed || []
   parts.push(section('PageSpeed (mobile, lowest scores)', ps.length ? table(['URL', 'Score', 'LCP'], ps.map(([u, s, lcp]) => [u, s != null ? String(s) : '&ndash;', lcp != null ? `${fmt(Math.trunc(lcp))} ms` : '&ndash;']), ['left', 'right', 'right']) : empty('No PageSpeed runs.')))
   const bl = data.broken_links || []
@@ -330,12 +338,13 @@ export async function runDigest(env, { send = true } = {}) {
   const b = weekBounds()
   const pg = await gatherD1(env.DB, b)
   const bqd = await gatherBigQuery(env, b)
+  const crawlers = await crawlerHits(env, b.ws.toISOString(), b.we.toISOString()).catch(() => ({ byBot: [], total: 0, pending: true }))
   const data = {
     week_label: weekLabel(b.ws, b.we), kpis: pg.kpis, instruments: pg.instruments,
     weekly_pivot: buildCumulative(pg.weekIl), roles: computeRoleCounts(pg.roleRows),
     funnel: buildFunnel(pg.funnelRaw, pg.testsTotal, pg.people), channels: buildChannels(pg.chanRows),
     top_articles: pg.topArticles, cumulative: buildCumulative(pg.cumRows), norms: buildNorms(pg.normRows),
-    seo: bqd.seo, pagespeed: bqd.pagespeed, broken_links: bqd.broken_links, gsc_lag_note: bqd.seo.source === 'gsc',
+    seo: bqd.seo, pagespeed: bqd.pagespeed, broken_links: bqd.broken_links, gsc_lag_note: bqd.seo.source === 'gsc', crawlers,
   }
   if (send) {
     const to = env.DIGEST_EMAIL || 'hello@cercol.team'
