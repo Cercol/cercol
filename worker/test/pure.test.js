@@ -228,3 +228,16 @@ describe('blog edge cache', () => {
     expect(store.size).toBe(0)
   })
 })
+
+import { isAutomated } from '../src/writes.js'
+describe('automated clients', () => {
+  const ua = (s) => isAutomated(new Request('https://api.cercol.team/events', { headers: { 'user-agent': s } }))
+  it('keeps agents and crawlers out of the funnel, and real browsers in', () => {
+    expect(ua('Mozilla/5.0 (Macintosh) Claude/1.32352.1 Chrome/148.0 Electron/42.9 Safari/537.36')).toBe(true)
+    expect(ua('Mozilla/5.0 (compatible; ClaudeBot/1.0)')).toBe(true)
+    expect(ua('Mozilla/5.0 Chrome-Lighthouse')).toBe(true)
+    expect(ua('Mozilla/5.0 (iPhone; CPU iPhone OS 17_0) Safari/604.1')).toBe(false)
+    // CUBOT is a phone brand: a bare "bot" would have cost us those visitors.
+    expect(ua('Mozilla/5.0 (Linux; Android 13; CUBOT NOTE 30) Chrome/120')).toBe(false)
+  })
+})
