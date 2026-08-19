@@ -19,7 +19,6 @@ narrative of how the move was done is in
 | Mail in, mailboxes | Purelymail (`hello@`, `miquel@`, `admin@`) | `docs/ops/email.md` |
 | SEO data | BigQuery, project `cercol`, datasets `cercol_seo` and `searchconsole` | `worker/src/bigquery.js`, secret `GOOGLE_SA_JSON` |
 | Payments | Stripe, test mode | `worker/src/stripe.js` |
-| Origin fallback (legacy) | Hetzner `188.245.60.20`, `origin.cercol.team` | see "Legacy" at the end |
 
 Cloudflare account "cercol", id `04bf08778ace2b87b910fb5ca0be3feb`.
 D1 database id `928ddbd6-5fc6-4e2b-9fd1-e7de66435ef6`. KV namespace id
@@ -224,9 +223,9 @@ time restore, `npx wrangler d1 time-travel info cercol` and
 `... restore`, see `--help` for the flags and the retention). There is no scheduled export today; take one before any
 hand-run `--file` write and after each blog batch.
 
-The final Postgres dump taken at decommission (see Legacy) is the
-pre-migration baseline; the ADR 0017 Postgres backup legs stop with
-the box.
+The final Postgres dump taken at decommission (2026-08-19, see
+Rollback levers) is the pre-migration baseline; the ADR 0017 Postgres
+backup legs stopped with the box.
 
 ### Admin bootstrap
 
@@ -386,27 +385,19 @@ without reading it: it authorises both providers.
 
 ## Rollback levers
 
-Both windows close at decommission; until then:
-
 - **`WRITES_LIVE`**: `npx wrangler secret put WRITES_LIVE --config
-  worker/wrangler.jsonc` with value `0` sends every gated route
-  (writes, auth, /me, witness, groups, Stripe, admin) back to the
-  FastAPI on Hetzner through `origin.cercol.team`; the blog reads and
-  `/health` stay on D1. Set it back to `1` to return. No redeploy. Note
-  that D1 and Postgres are not synchronised: rows written on one side
-  while the other is authoritative have to be copied by hand.
-- **DNS**: switching the `api.cercol.team` record from the Worker
-  custom domain to a DNS-only (grey cloud) A record for
-  `188.245.60.20` sends everything, reads included, to Hetzner. For the
-  frontend, the nine GitHub Pages DNS records are saved at
-  `~/.cercol-migration/dns-github-pages-backup.json`; restoring them
-  puts the `gh-pages` branch back in front.
+  worker/wrangler.jsonc` with value `0` turns every gated route (writes,
+  auth, /me, witness, groups, Stripe, admin) into a 404 while the blog
+  reads and `/health` keep answering; an emergency brake, not a
+  rollback, since the Hetzner origin is gone (2026-08-19). Set it back
+  to `1` to return. No redeploy.
 - **Worker versions**: the Deployments tab in the dashboard rolls back
-  to a previous version of either Worker without a git change.
-
-Verify a rollback the same way the cutover was verified:
-`node scripts/diff-api.mjs` compares Hetzner and Worker responses
-endpoint by endpoint.
+  to a previous version of either Worker without a git change, and
+  `git revert` + push does the same through CI.
+- **D1**: `wrangler d1 time-travel` restores the database to any point
+  in the last 30 days; the final Postgres dump
+  (`~/.cercol-migration/backups/cercol-final-2026-08-19.dump`, md5
+  `cdeab4643ac4bcdc448061dab446d6ca`) is the pre-migration baseline.
 
 ## Incident: api.cercol.team is down
 
@@ -422,12 +413,12 @@ endpoint by endpoint.
    (orange cloud, Worker custom domain), not `188.245.60.20`.
 5. D1 status: `npx wrangler d1 execute cercol --remote --config
    worker/wrangler.jsonc --command "SELECT 1"`.
-6. If the Worker is healthy but a gated route fails and Hetzner is
-   still up: `WRITES_LIVE=0` as above buys time.
+6. If a gated route misbehaves in a way that damages data,
+   `WRITES_LIVE=0` stops writes and auth while you look.
 
 The Caddy post-mortems (`docs/post-mortems/2026-04-16-*` and
-`2026-05-17-*`) describe the pre-migration failure modes; they apply
-only to the legacy box now.
+`2026-05-17-*`) describe pre-migration failure modes that no longer
+exist on this stack.
 
 ## When the beta grant runs out
 
@@ -510,39 +501,15 @@ unless the service requires it to persist. Managed `robots.txt` is
 disabled on the zone on purpose: the Worker and the static site serve
 their own.
 
-## Legacy (until decommission)
+## The Hetzner box, after decommission
 
-The Hetzner box `188.245.60.20` still runs, deliberately, three Cèrcol
-things: `cercol-api` as the origin fallback behind
-`origin.cercol.team` (the Worker proxies any route it does not own,
-and every route when `WRITES_LIVE=0`), `cercol-mcp` (not user-facing),
-and the frozen Postgres `cercol` database (nothing has written to it
-since `WRITES_LIVE=1` on 2026-08-17). Stalwart is stopped and moved to
-`/root/stalwart-retired-2026-08-18`. All eight crons are renamed
-`*.disabled-migrated-to-cloudflare` (the pagespeed one last, on
-2026-08-18, once its API key lost the IP restriction).
-`deploy-backend.yml` still pushes `api/**` there over ssh;
-`apply-migrations.yml` is retired.
-
-The commands that still matter:
-
-```
-ssh root@188.245.60.20
-systemctl status cercol-api                       # origin fallback
-journalctl -u cercol-api -n 50 --no-pager
-sudo -u cercol psql cercol                        # read the frozen Postgres
-```
-
-Caddy (`/etc/caddy/conf.d/cercol-api.caddy`, shared with topquaranta,
-ADR 0004) and the ADR 0017 backup crons keep working untouched until
-the box is switched off; do not spend time on them.
-
-Decommission is `scripts/decommission-hetzner.sh` ("Phase 10"): a
-final `pg_dump` kept on the box (copy it elsewhere too), stop and
-disable `cercol-api` and `cercol-mcp`, retire the Caddy snippet, list
-what is left. It does not drop the database; that is a separate
-command printed at the end, to run only once the dump is verified.
-Preconditions are in the script header. Run it after a quiet period
-and after the PSI key restriction is lifted; then remove
-`deploy-backend.yml`, `origin.cercol.team` and the DNS rollback
-records, and delete the Legacy section of this file.
+Decommissioned on 2026-08-19 with `scripts/decommission-hetzner.sh`:
+`cercol-api` and `cercol-mcp` stopped and disabled, the Caddy block for
+`api.cercol.team` / `origin.cercol.team` retired, all eight crons
+disabled, Stalwart retired at `/root/stalwart-retired-2026-08-18`, and
+a final `pg_dump` copied off the box. Two things are still there on
+purpose, harmless: the frozen Postgres `cercol` database (drop it with
+`ssh root@188.245.60.20 "sudo -u postgres dropdb cercol"` when you no
+longer want the second copy) and the code under `/home/cercol`. The
+box belongs to topquaranta; nothing of Cèrcol runs, listens or is
+scheduled on it.

@@ -592,8 +592,14 @@ verified before the next and each reversible on its own:
    gh-pages publish still runs as a warm fallback. A zone redirect rule
    sends www to the apex with a 301, as GitHub Pages did.
 
-Still to do: a quiet period, then `scripts/decommission-hetzner.sh`, then
-drop the gh-pages step.
+10. **Decommission (2026-08-19).** The origin's access log showed 2,631
+   requests in 40 hours, every one a scanner or a probe of ours: no real
+   traffic. `scripts/decommission-hetzner.sh` took the final Postgres dump
+   (copied off the box, md5-verified), stopped and disabled cercol-api and
+   cercol-mcp, retired the Caddy block. The Worker's proxy fallback,
+   `deploy-backend.yml` and the gh-pages publish went the same day. The
+   database and `/home/cercol` are still on the box, harmless, for a
+   deliberate `dropdb` later.
 
 ### Two limits of the free plan that shaped the code
 

@@ -1,26 +1,20 @@
 /**
- * Cèrcol API on Workers — the strangler proxy.
+ * Cèrcol API on Workers.
  *
  * # Spec: docs/architecture/seo-pipeline.md
  *
- * Everything in MIGRATED is answered here from D1. Everything else is
- * forwarded, unchanged, to the FastAPI server that still runs on Hetzner.
- * The migration is therefore a list that grows, and rolling any endpoint
- * back is removing it from that list and redeploying.
+ * ROUTES is the whole API, answered from D1. It began as a strangler list
+ * in front of the FastAPI on Hetzner (unmatched routes were proxied to
+ * origin.cercol.team); the origin was decommissioned on 2026-08-19 after
+ * 40 hours in which it received no real request, so an unmatched route is
+ * a 404 now. The `gated` flag and WRITES_LIVE stay as the one switch that
+ * turns writes and auth off in an emergency.
  *
- * The response shapes are not "close enough": they are byte-compared
- * against the live API by scripts/diff-api.mjs, so every projection here
- * mirrors api/blog.py exactly, including the camelCase keys, the null
- * handling and the ordering.
+ * The response shapes were byte-compared against the old API by
+ * scripts/diff-api.mjs (111 endpoints, 0 differences) before the cutover,
+ * so every projection mirrors api/blog.py exactly, including the camelCase
+ * keys, the null handling and the ordering.
  */
-
-// The Hetzner box, by a name of its own. Workers refuse to fetch a bare IP
-// (error 1003), and api.cercol.team is about to be this Worker, so fetching
-// it would be fetching ourselves. origin.cercol.team is DNS-only, points at
-// 188.245.60.20, and Caddy holds a certificate for it (api/deploy/caddy):
-// a plain TLS connection, no header tricks. Requests are proxied with the
-// Host of the origin name, which is in the same Caddy site block as api.
-const ORIGIN = 'https://origin.cercol.team'
 
 import { recordEvent, incrementView, logResult, translationFeedback } from './writes.js'
 import {
@@ -50,7 +44,7 @@ import { emailChangeRequest, emailChangeConfirm } from './auth.js'
 // the server since the last sync. Reads and the view-count write must move
 // together or the counters diverge (see scripts/diff-api.mjs, which caught
 // exactly that drift during the first comparison).
-const MIGRATED = [
+const ROUTES = [
   { method: 'GET', pattern: /^\/blog$/, handler: listPosts },
   { method: 'GET', pattern: /^\/blog\/([^/]+)$/, handler: getPost },
   { method: 'GET', pattern: /^\/health$/, handler: () => health() },
@@ -164,7 +158,7 @@ export default {
   scheduled,
   async fetch(request, env, ctx) {
     const url = new URL(request.url)
-    for (const route of MIGRATED) {
+    for (const route of ROUTES) {
       if (route.gated && env.WRITES_LIVE !== '1') continue
       const m = url.pathname.match(route.pattern)
       if (!m) continue
@@ -172,24 +166,9 @@ export default {
       if (request.method !== route.method) continue
       return withCors(await route.handler(env, m, request, ctx), request)
     }
-    return proxyToOrigin(request, url)
+    if (request.method === 'OPTIONS') return preflight(request)
+    return withCors(Response.json({ detail: 'Not Found' }, { status: 404 }), request)
   },
-}
-
-/**
- * Forward to the Hetzner box, unchanged. Method, headers, body and query
- * pass through; redirects are not followed so a 308 from the origin reaches
- * the client as a 308.
- */
-function proxyToOrigin(request, url) {
-  const target = new URL(url.pathname + url.search, ORIGIN)
-  const headers = new Headers(request.headers)
-  return fetch(target, {
-    method: request.method,
-    headers,
-    body: request.method === 'GET' || request.method === 'HEAD' ? undefined : request.body,
-    redirect: 'manual',
-  })
 }
 
 /**
