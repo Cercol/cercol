@@ -28,7 +28,7 @@ export const h1 = (t) => `<h1 style="margin:0 0 4px;font-family:${DISPLAY};font-
 export const sub = (t) => `<p style="margin:0 0 20px;font-family:${SANS};font-size:14px;line-height:1.5;color:${C.muted};">${t}</p>`
 export const p = (t, muted = false) => `<p style="margin:0 0 10px;font-family:${SANS};font-size:14px;line-height:1.6;color:${muted ? C.muted : C.ink};">${t}</p>`
 export const label = (t, color = C.blue) => `<p style="margin:0 0 8px;font-family:${SANS};font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;line-height:1.4;color:${color};">${t}</p>`
-export const section = (title, body, color) => `<div style="margin-top:28px;">${label(title, color)}${body}</div>`
+export const section = (title, body, color) => `<div style="margin-top:26px;padding-top:18px;border-top:1px solid ${C.gray200};">${label(title, color)}${body}</div>`
 export const empty = (t) => `<p style="margin:0;font-family:${SANS};font-size:13px;color:${C.muted};font-style:italic;">${t}</p>`
 
 /** Delta against a comparison value: arrow + signed number, coloured. */
@@ -59,10 +59,11 @@ export function bar(v, cap, width = 110) {
   return `<span style="display:inline-block;vertical-align:middle;width:${width}px;height:6px;background:${C.track};border-radius:3px;overflow:hidden;"><span style="display:block;width:${pct}%;height:6px;background:${col};"></span></span> <span style="font-family:${SANS};font-size:12px;color:${C.muted};">${pct}%</span>`
 }
 
-/** Callout: red tint for warnings, green tint for all-clear. */
+/** Callout: red tint for warnings, blue for the to-do list, green for all-clear. */
 export const callout = (lines, kind = 'ok') => {
-  const col = kind === 'warn' ? C.red : C.green, bg = kind === 'warn' ? C.tint.red : C.tint.green
-  return `<div style="background:${bg};border-left:3px solid ${col};border-radius:6px;padding:10px 14px;margin:0 0 20px;">${lines.map((l) => `<div style="font-family:${SANS};font-size:13px;line-height:1.5;color:${C.ink};">${l}</div>`).join('')}</div>`
+  const col = kind === 'warn' ? C.red : kind === 'todo' ? C.blue : C.green
+  const bg = kind === 'warn' ? C.tint.red : kind === 'todo' ? C.tint.blue : C.tint.green
+  return `<div style="background:${bg};border-left:3px solid ${col};border-radius:6px;padding:12px 16px;margin:0 0 20px;">${lines.map((l, i) => `<div style="font-family:${SANS};font-size:13px;line-height:1.55;color:${C.ink};${i ? 'margin-top:8px;' : ''}">${l}</div>`).join('')}</div>`
 }
 
 export function shell(content, { frontendUrl = 'https://cercol.team', footer = '', lang = 'en' } = {}) {
