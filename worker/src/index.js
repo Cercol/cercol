@@ -45,8 +45,8 @@ import { emailChangeRequest, emailChangeConfirm } from './auth.js'
 // together or the counters diverge (see scripts/diff-api.mjs, which caught
 // exactly that drift during the first comparison).
 const ROUTES = [
-  { method: 'GET', pattern: /^\/blog$/, handler: listPosts },
-  { method: 'GET', pattern: /^\/blog\/([^/]+)$/, handler: getPost },
+  { method: 'GET', pattern: /^\/blog$/, handler: (env, m, req, ctx) => cached(req, ctx, () => listPosts(env)) },
+  { method: 'GET', pattern: /^\/blog\/([^/]+)$/, handler: (env, m, req, ctx) => cached(req, ctx, () => getPost(env, m)) },
   { method: 'GET', pattern: /^\/health$/, handler: () => health() },
   { method: 'GET', pattern: /^\/robots\.txt$/, handler: () => robots() },
   { method: 'POST', pattern: /^\/blog$/, handler: (env, m, req) => createPost(env, req), gated: true },
@@ -122,6 +122,41 @@ const ROUTES = [
 ]
 
 const JSON_HEADERS = { 'content-type': 'application/json' }
+
+/**
+ * Edge cache for the two blog reads, which are identical for every caller
+ * and only change through the admin endpoints (which purge, see
+ * blog-admin.js).
+ *
+ * They were the whole D1 bill: the prerender pass renders ~650 routes in a
+ * real browser and each rendered page asks the API for the listing again,
+ * which is a full 108-row scan, so one build cost the better part of a
+ * million rows read and about 5k invocations. Same reason 107 of them once
+ * died of exceededResources. Cached, a build touches D1 once a minute.
+ *
+ * Sixty seconds, deliberately short: the deploy pipeline publishes an
+ * article and then prerenders it, and Cache API deletes only reach the colo
+ * that serves them, so the TTL has to be shorter than the gap between a
+ * write and the build that reads it.
+ *
+ * CORS is applied by withCors after this returns, per request, so an
+ * Origin-specific header is never what gets stored.
+ */
+const BLOG_TTL = 60
+
+export async function cached(request, ctx, produce) {
+  const key = new Request(new URL(request.url).toString(), { method: 'GET' })
+  const hit = await caches.default.match(key)
+  if (hit) return hit
+  const res = await produce()
+  if (res.status !== 200) return res
+  const out = new Response(res.body, res)
+  out.headers.set('cache-control', `public, max-age=${BLOG_TTL}`)
+  const put = caches.default.put(key, out.clone())
+  if (ctx?.waitUntil) ctx.waitUntil(put); else await put
+  return out
+}
+
 
 // api/main.py: ALLOWED_ORIGINS. Same three, credentials allowed, any
 // method and header. Applied to every response the Worker produces itself;

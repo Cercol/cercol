@@ -20,7 +20,7 @@ import { FM_ITEMS, FM_SCALE_LABELS } from '../data/full-moon'
 import { INSTRUMENT_DOMAIN_ORDER } from '../data/domains'
 import { computeFMScores } from '../utils/full-moon-scoring'
 import { useScaleLabels } from '../hooks/useScaleLabels'
-import { useTrackTestStart } from '../hooks/useTrackTestStart'
+import { useTrackTestStart, useTrackTestProgress } from '../hooks/useTrackTestStart'
 import { usePageMeta } from '../hooks/usePageMeta'
 import { useInstrumentKeyboard } from '../hooks/useInstrumentKeyboard'
 import { useFeedbackContext } from '../context/FeedbackContext'
@@ -179,6 +179,9 @@ export default function FullMoonPage() {
   const isLastItemOverall  = isLastItemInBlock && isLastBlock
 
   const overallCurrent = blockIdx * ITEMS_PER_BLOCK + itemInBlockIdx + 1
+
+  // Where a leaver stopped: one event per tenth of the instrument.
+  useTrackTestProgress('fullMoon', overallCurrent, TOTAL_ITEMS)
   const domainKey      = DOMAIN_ORDER[blockIdx]
   const nextDomainKey  = DOMAIN_ORDER[blockIdx + 1]
 

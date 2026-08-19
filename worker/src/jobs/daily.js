@@ -78,8 +78,17 @@ export async function gatherProduct(db, b) {
   const titles = Object.fromEntries((await q(`SELECT slug, json_extract(title, '$.en') AS t FROM blog_posts`)).map((r) => [r.slug, r.t]))
   const top = reads.filter((r) => r.y > 0).slice(0, 8).map((r) => [titles[r.slug] || r.slug, r.slug, r.y, r.avg7])
   const takingOff = reads.filter((r) => r.y >= 5 && r.y >= 3 * r.avg7).map((r) => [titles[r.slug] || r.slug, r.slug, r.y, r.avg7])
+  // How far the ones who did not finish got: the deepest tenth each visitor
+  // reached, from the test_progress events the instrument pages emit. The
+  // slug column carries the percentage (see worker/src/writes.js).
+  // ponytail: visitors with no anon_id share one bucket. At this volume that
+  // is one row, and giving them ids is a privacy decision, not a fix.
+  const dropOff = (await q(`SELECT instrument, MAX(CAST(slug AS INTEGER)) AS pct
+      FROM events WHERE name='test_progress' AND created_at >= ? AND created_at < ?
+     GROUP BY anon_id, instrument ORDER BY pct DESC LIMIT 5`, ...Y))
+    .map((r) => [LABELS[r.instrument] || r.instrument, r.pct])
   const totals = { users: await count(db, `SELECT COUNT(*) AS n FROM auth_users`), tests: await count(db, `SELECT COUNT(*) AS n FROM results WHERE is_seed = 0`) }
-  return { signups, tests, pageViews, visitors, starts, byInstrument, byLang, topPages, newUsers, witness, top, takingOff, totals }
+  return { signups, tests, pageViews, visitors, starts, byInstrument, byLang, topPages, newUsers, witness, top, takingOff, dropOff, totals }
 }
 
 /** Latest day Search Console has exported (usually two days behind), and the day before it. */
@@ -179,7 +188,8 @@ export function actions(d, frontendUrl = 'https://cercol.team') {
   // Funnel. Two different failures, never both: nobody starts, or they
   // start and drop out. The second one usually means a broken instrument.
   if (pr.starts[0] > 0 && pr.tests[0] === 0) {
-    out.push(`${fmt(pr.starts[0])} started a test and none finished. Drop-off is inside the instrument, not the landing page: open one and watch the console.`)
+    const where = (pr.dropOff || []).map(([inst, pct]) => `${inst} at ${pct}%`).join(', ')
+    out.push(`${fmt(pr.starts[0])} started a test and none finished${where ? `, getting as far as ${where}` : ' (nobody reached the first tenth)'}. Take that instrument from there and watch the console.`)
   } else if (pr.starts[0] === 0 && pr.visitors[0] >= 10) {
     const [path] = pr.topPages[0] || []
     out.push(`${fmt(pr.visitors[0])} visitors, nobody started a test. Most-visited page: ${path ? link(frontendUrl + path, path) : 'none recorded'} &mdash; check what it asks the reader to do next.`)

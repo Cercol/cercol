@@ -18,7 +18,7 @@ import { useTranslation } from 'react-i18next'
 import { FQ_ITEMS, FQ_SCALE_LABELS } from '../data/first-quarter'
 import { useScaleLabels } from '../hooks/useScaleLabels'
 import { useInstrumentKeyboard } from '../hooks/useInstrumentKeyboard'
-import { useTrackTestStart } from '../hooks/useTrackTestStart'
+import { useTrackTestStart, useTrackTestProgress } from '../hooks/useTrackTestStart'
 import { usePageMeta } from '../hooks/usePageMeta'
 import { INSTRUMENT_DOMAIN_ORDER } from '../data/domains'
 import { computeFQScores } from '../utils/first-quarter-scoring'
@@ -138,6 +138,9 @@ export default function FirstQuarterPage() {
   const isLastItemOverall = isLastItemInBlock && isLastBlock
 
   const overallCurrent = blockIdx * ITEMS_PER_BLOCK + itemInBlockIdx + 1
+
+  // Where a leaver stopped: one event per tenth of the instrument.
+  useTrackTestProgress('firstQuarter', overallCurrent, TOTAL_ITEMS)
   const domainKey = DOMAIN_ORDER[blockIdx]
   const nextDomainKey = DOMAIN_ORDER[blockIdx + 1]
 

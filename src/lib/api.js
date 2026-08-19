@@ -496,7 +496,7 @@ export function getAnonId() {
  * trackEvent — fire-and-forget first-party funnel event POST to /events.
  * Never throws — any error is silently swallowed, so it safely no-ops until
  * the events table and endpoint are live. Skipped during the prerender pass.
- * @param {'article_view'|'cta_click'|'test_start'|'page_view'} name
+ * @param {'article_view'|'cta_click'|'test_start'|'test_progress'|'page_view'} name
  * @param {{slug?, instrument?, lang?, path?, anon_id?}} [payload]
  */
 export async function trackEvent(name, payload = {}) {

@@ -14,6 +14,22 @@ import { requireAdmin } from './admin.js'
 import { httpError, jsonBody, now, uuid } from './db.js'
 import { extractDois, langsWithContent, RESOLVER } from './links.js'
 
+/**
+ * Drop what a write invalidates from the edge cache the two blog reads sit
+ * behind (see `cached` in index.js). Best effort and colo-local: the Cache
+ * API only reaches the colo serving this request, which is why the TTL there
+ * is a minute rather than an hour.
+ */
+async function purgeBlogCache(request, slug) {
+  try {
+    const { origin } = new URL(request.url)
+    await caches.default.delete(`${origin}/blog`)
+    if (slug) await caches.default.delete(`${origin}/blog/${encodeURIComponent(slug)}`)
+  } catch {
+    // A cache miss on delete is not a failed publish.
+  }
+}
+
 const POST_COLS = 'slug, status, title, description, content, cover_url, author, published_at, created_at, updated_at, view_count, category, complexity'
 
 function rowToPost(row) {
@@ -65,6 +81,7 @@ export async function createPost(env, request) {
   ).bind(uuid(), b.slug, status, JSON.stringify(b.title), JSON.stringify(b.description), JSON.stringify(b.content),
          b.cover_url ?? null, b.author ?? null, publishedAt, ts, ts).run()
   const row = await env.DB.prepare(`SELECT ${POST_COLS} FROM blog_posts WHERE slug = ?`).bind(b.slug).first()
+  await purgeBlogCache(request, b.slug)
   return Response.json(rowToPost(row))
 }
 
@@ -85,6 +102,7 @@ export async function updatePost(env, request, slug) {
   await env.DB.prepare(`UPDATE blog_posts SET ${cols.map((c) => `${c} = ?`).join(', ')}, updated_at = ? WHERE slug = ?`)
     .bind(...cols.map((c) => updates[c]), now(), slug).run()
   const row = await env.DB.prepare(`SELECT ${POST_COLS} FROM blog_posts WHERE slug = ?`).bind(slug).first()
+  await purgeBlogCache(request, slug)
   return Response.json(rowToPost(row))
 }
 
@@ -98,6 +116,7 @@ export async function patchStatus(env, request, slug) {
   const publishedAt = b.status === 'published' && existing.published_at == null ? now() : existing.published_at
   await env.DB.prepare(`UPDATE blog_posts SET status = ?, published_at = ?, updated_at = ? WHERE slug = ?`).bind(b.status, publishedAt, now(), slug).run()
   const row = await env.DB.prepare(`SELECT ${POST_COLS} FROM blog_posts WHERE slug = ?`).bind(slug).first()
+  await purgeBlogCache(request, slug)
   return Response.json(rowToPost(row))
 }
 
