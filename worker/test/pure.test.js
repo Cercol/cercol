@@ -148,7 +148,7 @@ describe('jobs parsing', () => {
 // Font stacks from mm-design carry double quotes; inside style="..." they
 // would end the attribute and drop every rule after them (that shipped once).
 import { DISPLAY, SANS, stat, shell } from '../src/email-ui.js'
-import { warnings, CAPS, dayBounds } from '../src/jobs/daily.js'
+import { warnings, actions, CAPS, dayBounds } from '../src/jobs/daily.js'
 describe('email kit', () => {
   it('font stacks contain no double quotes', () => {
     expect(DISPLAY).not.toMatch(/"/); expect(SANS).not.toMatch(/"/)
@@ -157,12 +157,35 @@ describe('email kit', () => {
   })
 })
 describe('daily brief', () => {
-  it('warns at 70% of a cap, on CPU over budget, and on any error', () => {
+  it('warns at 70% of a cap, on killed requests, and on faults', () => {
     const ok = { d1: { rowsRead: 1, rowsWritten: 1 }, kv: { write: 1 }, worker: { requests: 1, errors: 0, cpuP99: 1, byStatus: [] }, mailCredit: 5 }
     expect(warnings(ok)).toEqual([])
-    const bad = { ...ok, d1: { rowsRead: CAPS.d1RowsRead * 0.7, rowsWritten: 1 }, worker: { requests: 1, errors: 3, cpuP99: 12, byStatus: [['exceededResources', 3]] }, mailCredit: 0.1 }
+    const bad = { ...ok, d1: { rowsRead: CAPS.d1RowsRead * 0.7, rowsWritten: 1 }, worker: { requests: 1, errors: 3, cpuP99: 12, byStatus: [['exceededResources', 3], ['scriptThrewException', 3]] }, mailCredit: 0.1 }
     expect(warnings(bad)).toHaveLength(4)
     expect(warnings({ pending: true })).toHaveLength(1)
+  })
+  it('a CPU p99 over budget is not a warning unless requests were actually killed', () => {
+    const hot = { d1: { rowsRead: 1, rowsWritten: 1 }, kv: { write: 1 }, worker: { requests: 1, errors: 0, cpuP99: 85.7, byStatus: [['clientDisconnected', 2]] }, mailCredit: 5 }
+    expect(warnings(hot)).toEqual([])
+  })
+  it('actions lead with the warnings, then the funnel, the hot article and the clickless query', () => {
+    const data = {
+      warns: ['Top up Purelymail.'],
+      product: { signups: [0, 0], tests: [0, 0], visitors: [22, 3], starts: [1, 0], topPages: [['/', 4]],
+        takingOff: [['Limits', 'limits', 8, 0]] },
+      search: { queries: [['facette', 0, 4, 4.5, 'https://cercol.team/blog/facet/']] },
+    }
+    const a = actions(data)
+    expect(a).toHaveLength(4)
+    expect(a[0]).toBe('Top up Purelymail.')
+    expect(a[1]).toContain('none finished')
+    expect(a[2]).toContain('taking off')
+    expect(a[3]).toContain('zero clicks')
+    // Nobody starting is a different failure from starting and dropping out.
+    const cold = { ...data, product: { ...data.product, starts: [0, 0] }, warns: [], search: { queries: [] } }
+    expect(actions(cold)[0]).toContain('nobody started a test')
+    // A quiet, healthy day produces an empty list, and the brief says so.
+    expect(actions({ warns: [], product: { visitors: [3, 1], starts: [0, 0], tests: [0, 0], topPages: [], takingOff: [] }, search: null })).toEqual([])
   })
   it('nags about the Hetzner decommission from the due date until silenced', () => {
     const ok = { d1: { rowsRead: 1, rowsWritten: 1 }, kv: { write: 1 }, worker: { requests: 1, errors: 0, cpuP99: 1, byStatus: [] }, mailCredit: 5 }
