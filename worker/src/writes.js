@@ -28,7 +28,11 @@ const AUTOMATED_UA = [
   'applebot', 'facebookexternalhit', 'twitterbot', 'linkedinbot',
   'slackbot', 'telegrambot', 'discordbot', 'whatsapp', 'petalbot',
   'google-notebooklm', 'gptbot', 'oai-searchbot', 'chatgpt-user',
-  'claudebot', 'claude-web', 'anthropic-ai', 'perplexitybot', 'ccbot',
+  // 'claude/' is the desktop app's in-app browser, which is an agent
+  // session and not a visitor: without it, every time the site is driven
+  // from one it books a page view, a test start and a drop-off the daily
+  // brief then asks somebody to go and investigate.
+  'claudebot', 'claude-web', 'claude/', 'anthropic-ai', 'perplexitybot', 'ccbot',
   'amazonbot', 'bytespider', 'meta-externalagent',
   'semrushbot', 'ahrefsbot', 'mj12bot', 'dotbot', 'screaming frog',
   'curl/', 'wget', 'python-requests', 'go-http-client', 'httpx', 'axios',
