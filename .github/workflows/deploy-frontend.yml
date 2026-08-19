@@ -30,19 +30,14 @@ on:
       - 'scripts/**'        # Build scripts (prerender, sitemap) affect output
 
 permissions:
-  contents: write
+  contents: read
 
 # The build takes most of its 35 minute budget prerendering 648 routes, so
-# two pushes a few minutes apart overlap, and both then push to gh-pages.
-# The loser of that race fails on a non-fast-forward and its content never
-# ships, which looks like a deploy that succeeded and did nothing.
-# cancel-in-progress: false protects the run that is actually building. A
-# run already queued behind it is still superseded by the next one to
-# arrive, because GitHub keeps at most one pending run per group, so those
-# show as "cancelled" in the run list. That is the wanted behaviour: the
-# newer run is a superset, since the prerender reads the whole corpus from
-# the API at build time rather than a diff. What must never be cancelled is
-# a build mid-push, which is how gh-pages ends up half written.
+# two pushes a few minutes apart overlap. cancel-in-progress: false protects
+# the run that is actually building; a run queued behind it is superseded
+# by the next to arrive (GitHub keeps one pending run per group), which is
+# wanted: the newer run is a superset, since the prerender reads the whole
+# corpus from the API at build time rather than a diff.
 concurrency:
   group: deploy-frontend
   cancel-in-progress: false
@@ -82,9 +77,6 @@ jobs:
     timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
-        with:
-          # gh-pages needs full history to push correctly
-          fetch-depth: 0
 
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -123,20 +115,10 @@ jobs:
           python -m pytest api/tests/test_internal_links_integrity.py -v
 
       # cercol.team is served by the cercol-web Worker (web/wrangler.jsonc)
-      # since 2026-08-17. GitHub Pages is still published as a warm fallback:
-      # restoring the nine DNS records saved at
-      # ~/.cercol-migration/dns-github-pages-backup.json puts it back in
-      # front. Drop the gh-pages step once the Worker has served a quiet
-      # fortnight; keep this one.
+      # since 2026-08-17. The GitHub Pages fallback publish was dropped on
+      # 2026-08-19 with the Hetzner decommission.
       - name: Deploy to Cloudflare (static assets)
         run: npx wrangler deploy --config web/wrangler.jsonc
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          publish_branch: gh-pages

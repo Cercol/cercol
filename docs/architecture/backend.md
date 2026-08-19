@@ -163,17 +163,15 @@ worker/wrangler.jsonc` with `CLOUDFLARE_API_TOKEN` and
 Secrets are set with `wrangler secret put` and survive deploys.
 Emergency and rollback procedures are in `docs/ops/runbook.md`.
 
-## Legacy `api/` (FastAPI)
+## Retired `api/` (FastAPI)
 
 `api/` is the FastAPI + asyncpg backend that ran on the Hetzner VPS
-until 2026-08-17. It is still deployed there by `deploy-backend.yml`
-and still answers on `origin.cercol.team`, but only as the origin
-fallback: the Worker proxies to it whatever it does not own, and
-everything when `WRITES_LIVE` is not `"1"`. Its Postgres database is
-frozen. The Worker modules carry `mirrors api/x.py` notes because they
-were written against it line by line, and `scripts/diff-api.mjs`
-compares the two. The whole directory goes with
-`scripts/decommission-hetzner.sh`; until then treat it as read-only
-reference, not as a place to add features.
+until 2026-08-17 and was decommissioned on 2026-08-19. Nothing deploys
+or runs it. It stays in the repo because the Worker modules carry
+`mirrors api/x.py` notes and were written against it line by line, and
+because `api/tests/test_internal_links_integrity.py` still guards the
+prerendered `dist/` in `deploy-frontend.yml`. Read-only reference, not
+a place to add features; deleting the rest of it is a housekeeping
+decision for later.
 
 # Spec: docs/architecture/backend.md

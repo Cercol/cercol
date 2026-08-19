@@ -20,14 +20,14 @@ All scoring algorithms and item sources are documented and citable.
   - Tokens: access token in JS module variable, refresh token in localStorage `cercol_rt`
 - Mail: Resend sends (noreply@cercol.team); Purelymail holds the mailboxes (hello@, miquel@, admin@). See `docs/ops/email.md`
 - SEO data: BigQuery project `cercol` (`worker/src/bigquery.js`, service account, no SDK)
-- Legacy until decommission (`scripts/decommission-hetzner.sh`): the FastAPI in `api/` on the Hetzner box is only the origin fallback (`origin.cercol.team`, unmatched routes proxied by the Worker) Postgres there is frozen. See `docs/decisions/0020-cloudflare-workers-d1-purelymail.md`
+- Hetzner: decommissioned 2026-08-19 (services stopped, Caddy block retired, final Postgres dump at `~/.cercol-migration/backups/`). `api/` is the retired FastAPI, kept in the repo for its tests and history only. See `docs/decisions/0020-cloudflare-workers-d1-purelymail.md`
 - Supabase: NO LONGER USED. See `docs/decisions/0001-no-supabase-asyncpg-direct.md` (Accepted).
 - All scoring happens client-side in JavaScript
 
 ## Deployment pipeline
 
 ### Frontend (src/**, public/**, index.html, vite.config.js, scripts/**, db/migrations/**)
-Push to `main` → GitHub Action (`deploy-frontend.yml`) → tests → `npm run build:full` (vite + puppeteer prerender of ~650 routes, reading the API) → internal link integrity guard → `wrangler deploy --config web/wrangler.jsonc` → cercol.team. Also nightly at 03:20 UTC. The gh-pages publish still runs as a warm fallback; drop it after a quiet fortnight.
+Push to `main` → GitHub Action (`deploy-frontend.yml`) → tests → `npm run build:full` (vite + puppeteer prerender of ~650 routes, reading the API) → internal link integrity guard → `wrangler deploy --config web/wrangler.jsonc` → cercol.team. Also nightly at 03:20 UTC. The GitHub Pages fallback publish was dropped on 2026-08-19.
 
 VITE_API_URL is set in `.env.production` (committed, non-secret — it's just the public API URL).
 
@@ -35,9 +35,6 @@ VITE_API_URL is set in `.env.production` (committed, non-secret — it's just th
 Push to `main` → GitHub Action (`deploy-worker.yml`) → `vitest run worker/test` → `wrangler deploy --config worker/wrangler.jsonc` → smoke test on `/health` and `/blog`.
 
 Secrets live on the Worker (`wrangler secret put NAME --config worker/wrangler.jsonc`), never in the repo. GitHub secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`.
-
-### Legacy backend (api/**)
-`deploy-backend.yml` still pushes `api/**` to Hetzner over ssh; only the origin fallback depends on it. Goes away with the decommission.
 
 CI (`ci.yml`) runs on every push and PR: build, bundle sanity, frontend + worker tests, backend tests. `ci-docs.yml`: markdownlint, lychee, docs coherence.
 
@@ -148,8 +145,8 @@ When adding a new language to Cèrcol:
 - `src/` - React SPA. `components/` plus `components/ui/` and `components/report/`; `pages/` (route-level, includes `AdminDashboardPage.jsx`); `context/`, `hooks/`, `lib/`, `design/`, `data/`, `utils/` (with `__tests__/`), `locales/` (six languages), `assets/`.
 - `worker/` - the API: `src/` (router `index.js`, `auth`, `jwt`, `db`, `writes`, `emails` + `email-ui` design kit, `witness`, `groups`, `scoring`, `norms`, `stripe`, `admin`, `seo`, `blog-admin`, `links`, `bigquery`, `scheduled`), `src/jobs/`, `src/i18n/`, `schema/`, `test/`, `wrangler.jsonc`. See `docs/architecture/backend.md` and `docs/architecture/auth.md`.
 - `web/` - `wrangler.jsonc` for the static-assets Worker that serves `dist/`.
-- `api/` - legacy FastAPI, origin fallback until decommission.
-- `.github/workflows/` - `ci.yml`, `ci-docs.yml`, `deploy-frontend.yml`, `deploy-worker.yml`, `deploy-backend.yml` (legacy).
+- `api/` - the retired FastAPI (Hetzner decommissioned 2026-08-19); `api/tests/test_internal_links_integrity.py` still guards the prerendered dist.
+- `.github/workflows/` - `ci.yml`, `ci-docs.yml`, `deploy-frontend.yml`, `deploy-worker.yml`.
 - `docs/` - living docs (`policies/`, `architecture/`, `decisions/`, `post-mortems/`, `ops/`) plus `archive/` for decayed content.
 - `scripts/` - sitemap, prerender, deploy-api, docs-coherence and spec-path validators, blog article updaters.
 - `sql/`, `db/migrations/` - PostgreSQL seeds and migrations (001 through 094), frozen history. New schema goes in `worker/schema/`; content changes go through the blog admin endpoints or `wrangler d1 execute cercol --remote`.
