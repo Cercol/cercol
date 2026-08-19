@@ -7,7 +7,9 @@
  * # Spec: docs/architecture/seo-pipeline.md
  *
  * Sections, in order of how fast you want to know:
- *   1. Warnings, or one green line.
+ *   1. What to do today: the platform warnings (each carrying its own
+ *      remedy) followed by the growth signals worth a hand, at most five,
+ *      numbered. When nothing crosses a line it says so in one green line.
  *   2. Yesterday: signups, tests, page views, visitors, each against the
  *      same weekday a week ago; the start-to-finish funnel; language split.
  *   3. People: new accounts (with whether they already finished a test),
@@ -75,7 +77,7 @@ export async function gatherProduct(db, b) {
      GROUP BY slug ORDER BY y DESC LIMIT 40`, iso(b.y0), iso(b.y1), iso(b.avg0))
   const titles = Object.fromEntries((await q(`SELECT slug, json_extract(title, '$.en') AS t FROM blog_posts`)).map((r) => [r.slug, r.t]))
   const top = reads.filter((r) => r.y > 0).slice(0, 8).map((r) => [titles[r.slug] || r.slug, r.slug, r.y, r.avg7])
-  const takingOff = reads.filter((r) => r.y >= 5 && r.avg7 > 0 && r.y >= 3 * r.avg7).map((r) => [titles[r.slug] || r.slug, r.slug, r.y, r.avg7])
+  const takingOff = reads.filter((r) => r.y >= 5 && r.y >= 3 * r.avg7).map((r) => [titles[r.slug] || r.slug, r.slug, r.y, r.avg7])
   const totals = { users: await count(db, `SELECT COUNT(*) AS n FROM auth_users`), tests: await count(db, `SELECT COUNT(*) AS n FROM results WHERE is_seed = 0`) }
   return { signups, tests, pageViews, visitors, starts, byInstrument, byLang, topPages, newUsers, witness, top, takingOff, totals }
 }
@@ -89,10 +91,11 @@ export async function gatherSearch(env) {
     if (!last?.d) return { pending: true }
     const d = String(last.d).slice(0, 10)
     const rows = await bq(env, `SELECT data_date, SUM(clicks) AS clicks, SUM(impressions) AS impressions FROM ${gt} WHERE data_date IN ('${d}', DATE_SUB('${d}', INTERVAL 1 DAY)) GROUP BY data_date ORDER BY data_date DESC`)
-    const tq = await bq(env, `SELECT query, SUM(clicks) AS clicks, SUM(impressions) AS impressions, SAFE_DIVIDE(SUM(sum_position), SUM(impressions)) AS pos FROM ${gt} WHERE data_date = '${d}' AND query IS NOT NULL GROUP BY query ORDER BY clicks DESC, impressions DESC LIMIT 6`)
+    const tq = await bq(env, `SELECT query, SUM(clicks) AS clicks, SUM(impressions) AS impressions, SAFE_DIVIDE(SUM(sum_position), SUM(impressions)) AS pos,
+      ARRAY_AGG(url ORDER BY impressions DESC LIMIT 1)[OFFSET(0)] AS url FROM ${gt} WHERE data_date = '${d}' AND query IS NOT NULL GROUP BY query ORDER BY clicks DESC, impressions DESC LIMIT 6`)
     const cur = rows[0] || {}, prev = rows[1] || {}
     return { day: d, clicks: [Number(cur.clicks || 0), Number(prev.clicks || 0)], impressions: [Number(cur.impressions || 0), Number(prev.impressions || 0)],
-      queries: tq.map((r) => [r.query, Number(r.clicks), Number(r.impressions), r.pos == null ? null : Number(r.pos)]) }
+      queries: tq.map((r) => [r.query, Number(r.clicks), Number(r.impressions), r.pos == null ? null : Number(r.pos), r.url || null]) }
   } catch (e) { return { pending: true, error: e.message } }
 }
 
@@ -142,8 +145,15 @@ export function warnings(pl, { today = day(new Date()), decommissioned = false }
   if (pl.kv && (pl.kv.write || 0) >= CAPS.kvWrites * WARN_AT) w.push(`KV writes ${fmt(pl.kv.write)}, ${pct(pl.kv.write, CAPS.kvWrites)}% of the 1k/day cap.`)
   if (pl.worker) {
     if (pl.worker.requests >= CAPS.workerRequests * WARN_AT) w.push(`API requests ${fmt(pl.worker.requests)}, ${pct(pl.worker.requests, CAPS.workerRequests)}% of the 100k/day cap.`)
-    if (pl.worker.cpuP99 > CAPS.workerCpuMs) w.push(`API CPU p99 ${pl.worker.cpuP99.toFixed(1)} ms, above the 10 ms budget.`)
-    if (pl.worker.errors > 0) w.push(`${fmt(pl.worker.errors)} API error(s): ${pl.worker.byStatus.map(([s, n]) => `${s} ${fmt(n)}`).join(', ') || 'unclassified'}.`)
+    // CPU p99 sat above the 10 ms budget every single day without a single
+    // request being killed for it, so the number alone is noise. What matters
+    // is Cloudflare actually terminating requests: that shows up as
+    // exceededResources. The p99 stays visible in the platform table.
+    const killed = pl.worker.byStatus.find(([s]) => s === 'exceededResources')
+    if (killed) w.push(`${fmt(killed[1])} request(s) killed for exceeding the 10 ms CPU budget (p99 ${pl.worker.cpuP99.toFixed(1)} ms).`)
+    // clientDisconnected is a visitor closing the tab, not a fault.
+    const faults = pl.worker.byStatus.filter(([s]) => s !== 'clientDisconnected' && s !== 'exceededResources')
+    if (faults.length) w.push(`${fmt(faults.reduce((n, [, v]) => n + v, 0))} API error(s): ${faults.map(([s, n]) => `${s} ${fmt(n)}`).join(', ')}. Read them with <code>npx wrangler tail cercol-api --status error</code>.`)
   }
   if (pl.mailCredit != null && pl.mailCredit < 0.15) w.push(`Purelymail credit is $${pl.mailCredit.toFixed(2)}: top up.`)
   return w
@@ -152,26 +162,70 @@ export function warnings(pl, { today = day(new Date()), decommissioned = false }
 // -- HTML ------------------------------------------------------------------
 const vs = (cur, prev) => delta(cur, prev) + `<span style="font-size:11px;color:${C.muted};"> vs last week</span>`
 const pctOf = (a, b) => (b ? `${Math.round((a / b) * 100)}%` : '—')
+const link = (href, t) => `<a href="${href}" style="color:${C.blue};text-decoration:underline;">${esc(t)}</a>`
+
+/**
+ * The short list of things worth doing today, most blocking first. Every
+ * line names the number that triggered it and where to go, because a brief
+ * that only reports is a brief you stop opening. The platform warnings come
+ * first (they already carry their own remedy), then the growth signals:
+ * a funnel that broke, an article taking off, a query ranking without
+ * clicks. Capped at five so it stays a list and not a fourth table.
+ */
+export function actions(d, frontendUrl = 'https://cercol.team') {
+  const { product: pr, search: se } = d
+  const out = [...(d.warns || [])]
+
+  // Funnel. Two different failures, never both: nobody starts, or they
+  // start and drop out. The second one usually means a broken instrument.
+  if (pr.starts[0] > 0 && pr.tests[0] === 0) {
+    out.push(`${fmt(pr.starts[0])} started a test and none finished. Drop-off is inside the instrument, not the landing page: open one and watch the console.`)
+  } else if (pr.starts[0] === 0 && pr.visitors[0] >= 10) {
+    const [path] = pr.topPages[0] || []
+    out.push(`${fmt(pr.visitors[0])} visitors, nobody started a test. Most-visited page: ${path ? link(frontendUrl + path, path) : 'none recorded'} &mdash; check what it asks the reader to do next.`)
+  }
+
+  // An article moving three times its own pace is the cheapest lever there is.
+  if (pr.takingOff.length) {
+    const [t, slug, y, avg] = pr.takingOff[0]
+    const pace = avg < 0.1 ? 'in its first week out' : `against ${avg.toFixed(1)}/day`
+    out.push(`${link(`${frontendUrl}/blog/${slug}/`, t)} is taking off: ${fmt(y)} reads ${pace}. Make sure it points at an instrument.`)
+  }
+
+  // Ranking on page one and getting nothing: a title and description problem.
+  const missed = (se?.queries || []).find(([, c, i, pos]) => c === 0 && i >= 3 && pos != null && pos <= 10)
+  if (missed) {
+    const [q, , impr, pos, url] = missed
+    out.push(`Position ${pos.toFixed(1)} for &ldquo;${esc(q)}&rdquo;, ${fmt(impr)} impressions, zero clicks. Rewrite the title and description of ${url ? link(url, new URL(url).pathname) : 'the page that ranks for it'}.`)
+  }
+  return out.slice(0, 5)
+}
 
 export function dailyHtml(data, frontendUrl = 'https://cercol.team') {
-  const { day: d, product: pr, platform: pl, search: se, warns } = data
+  const { day: d, product: pr, platform: pl, search: se } = data
   const weekday = new Date(`${d}T00:00:00Z`).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' })
+  const todo = actions(data, frontendUrl)
   const parts = [h1('Daily brief'), sub(`${weekday} &middot; ${fmt(pr.totals.users)} accounts and ${fmt(pr.totals.tests)} tests all-time`)]
-  parts.push(warns.length ? callout(warns.map((w) => `&#9888; ${w}`), 'warn') : callout(['&#10003; Platform within limits.'], 'ok'))
 
-  // 1. Yesterday
+  // 1. What to do, before any number. Numbered, so "three things" is literal.
+  parts.push(todo.length
+    ? callout(todo.map((t, i) => `<strong style="color:${C.blue};">${i + 1}.</strong> ${t}`), 'todo')
+    : callout(['&#10003; Nothing needs you today: platform within limits, no broken funnel.'], 'ok'))
+
+  // 2. Yesterday. Two by two, so the comparison line fits next to the number.
   parts.push(statRow([
     stat('Signups', fmt(pr.signups[0]), vs(...pr.signups), C.red),
-    stat('Tests', fmt(pr.tests[0]), vs(...pr.tests), C.blue),
-    stat('Page views', fmt(pr.pageViews[0]), vs(...pr.pageViews), C.yellow),
-    stat('Visitors', fmt(pr.visitors[0]), vs(...pr.visitors), C.green),
+    stat('Tests finished', fmt(pr.tests[0]), vs(...pr.tests), C.blue),
   ]))
-  const funnel = `${fmt(pr.visitors[0])} visitors &rarr; ${fmt(pr.starts[0])} started a test &rarr; ${fmt(pr.tests[0])} finished (${pctOf(pr.tests[0], pr.starts[0])} of starters, ${pctOf(pr.tests[0], pr.visitors[0])} of visitors)`
-  const langs = pr.byLang.length ? ` &middot; visitors by language: ${pr.byLang.map(([l, n]) => `${l} ${fmt(n)}`).join(', ')}` : ''
-  parts.push(p(funnel + langs, true))
+  parts.push(statRow([
+    stat('Visitors', fmt(pr.visitors[0]), vs(...pr.visitors), C.green),
+    stat('Page views', fmt(pr.pageViews[0]), vs(...pr.pageViews), C.yellow),
+  ]))
+  parts.push(p(`${fmt(pr.visitors[0])} visitors &rarr; ${fmt(pr.starts[0])} started a test &rarr; ${fmt(pr.tests[0])} finished (${pctOf(pr.tests[0], pr.starts[0])} of starters, ${pctOf(pr.tests[0], pr.visitors[0])} of visitors)`))
+  if (pr.byLang.length) parts.push(p(`Visitors by language: ${pr.byLang.map(([l, n]) => `${l} ${fmt(n)}`).join(' &middot; ')}`, true))
   if (pr.byInstrument.length) parts.push(table(['Tests yesterday', 'Lang', 'N'], pr.byInstrument.map(([i, l, n]) => [i, l, fmt(n)]), ['left', 'left', 'right']))
 
-  // 2. People
+  // 3. People
   let people = pr.newUsers.length
     ? table(['New account', 'Name', 'Lang', 'At (UTC)', 'Tests'], pr.newUsers.map((u) => [esc(u.email), esc(`${u.first_name || ''} ${u.last_name || ''}`.trim()) || '—', u.native_language || '—', String(u.created_at).slice(11, 16), u.tests ? `<span style="color:${C.green};">&#10003; ${u.tests}</span>` : '<span style="color:' + C.muted + ';">not yet</span>']), ['left', 'left', 'left', 'right', 'right'])
     : empty('No new accounts yesterday.')
@@ -179,32 +233,40 @@ export function dailyHtml(data, frontendUrl = 'https://cercol.team') {
   if (wt.created || wt.completed || wt.groups) people += p(`Witness: ${fmt(wt.created)} invited, ${fmt(wt.completed)} completed &middot; ${fmt(wt.groups)} new group${wt.groups === 1 ? '' : 's'}`, true)
   parts.push(section('People', people, C.red))
 
-  // 3. Content
+  // 4. Content. Reads against the article's own pace, so a 1 next to a 2.3
+  // average reads as "cooling", not as a number with no scale.
   const art = (t, slug) => `<a href="${frontendUrl}/blog/${slug}/" style="color:${C.ink};text-decoration:none;">${esc(t)}</a>`
-  let content = ''
-  if (pr.takingOff.length) content += `<div style="margin-bottom:12px;">${table(['&#128293; Taking off', 'Reads', '7-day avg'], pr.takingOff.map(([t, s, y, a]) => [art(t, s), `<strong>${fmt(y)}</strong>`, a.toFixed(1)]), ['left', 'right', 'right'])}</div>`
-  content += pr.top.length ? table(['Top articles', 'Reads', '7-day avg'], pr.top.map(([t, s, y, a]) => [art(t, s), fmt(y), a.toFixed(1)]), ['left', 'right', 'right']) : empty('No article reads recorded yesterday.')
-  if (pr.topPages.length) content += `<div style="margin-top:12px;">${table(['Top pages', 'Views'], pr.topPages.map(([pth, n]) => [`<span style="font-size:12px;">${esc(pth)}</span>`, fmt(n)]), ['left', 'right'])}</div>`
+  // Fewer than three reads says nothing about pace: one read against a 0.1
+  // average is a 10x that means nothing. Show a multiplier only above that.
+  const pace = (y, avg) => (y < 3 ? `<span style="color:${C.muted};">&ndash;</span>` : avg < 0.1 ? '<span style="color:' + C.muted + ';">new</span>' : y >= 2 * avg ? `<span style="color:${C.green};">&#9650; ${(y / avg).toFixed(1)}&times;</span>` : y <= 0.5 * avg ? `<span style="color:${C.muted};">&#9660; ${(y / avg).toFixed(1)}&times;</span>` : `<span style="color:${C.muted};">&asymp;</span>`)
+  let content = pr.top.length
+    ? table(['Top articles', 'Reads', 'vs own pace'], pr.top.map(([t, s, y, a]) => [art(t, s), fmt(y), pace(y, a)]), ['left', 'right', 'right'])
+    : empty('No article reads recorded yesterday.')
+  // Top pages minus the blog ones: those are already the table above.
+  const nonArticle = pr.topPages.filter(([pth]) => !pth.includes('/blog/')).slice(0, 5)
+  if (nonArticle.length) content += `<div style="margin-top:12px;">${table(['Top pages (non-blog)', 'Views'], nonArticle.map(([pth, n]) => [`<span style="font-size:12px;">${esc(pth)}</span>`, fmt(n)]), ['left', 'right'])}</div>`
   parts.push(section('Content', content, C.yellow))
 
-  // 4. Search
+  // 5. Search
   if (se && !se.pending) {
     let s = statRow([stat('Clicks', fmt(se.clicks[0]), delta(se.clicks[0], se.clicks[1]) + `<span style="font-size:11px;color:${C.muted};"> vs day before</span>`, C.blue), stat('Impressions', fmt(se.impressions[0]), delta(se.impressions[0], se.impressions[1]) + `<span style="font-size:11px;color:${C.muted};"> vs day before</span>`, C.green)])
     if (se.queries.length) s += table(['Query', 'Clicks', 'Impr.', 'Pos.'], se.queries.map(([q, c, i, pos]) => [esc(q), fmt(c), fmt(i), pos != null ? pos.toFixed(1) : '&ndash;']), ['left', 'right', 'right', 'right'])
     parts.push(section(`Google Search &middot; ${se.day} (latest export)`, s, C.green))
   }
 
-  // 5. Platform
+  // 6. Platform. Only the meters worth a glance; the rest is in the warnings.
   if (!pl.pending && !pl.error) {
     // ponytail: static-asset requests (cercol-web) are free and uncounted; only the API Worker meters.
     const rows = [
       ['API requests', fmt(pl.worker.requests), bar(pl.worker.requests, CAPS.workerRequests)],
-      ['API CPU p50 / p99', `${pl.worker.cpuP50.toFixed(1)} / ${pl.worker.cpuP99.toFixed(1)} ms`, bar(pl.worker.cpuP99, CAPS.workerCpuMs)],
-      ['API errors', pl.worker.errors ? `<span style="color:${C.red};">${fmt(pl.worker.errors)}</span>` : '0', pl.worker.byStatus.map(([s, n]) => `<span style="font-size:12px;color:${C.muted};">${s} ${fmt(n)}</span>`).join(' ')],
+      ['API CPU p50 / p99', `${pl.worker.cpuP50.toFixed(1)} / ${pl.worker.cpuP99.toFixed(1)} ms`, `<span style="font-size:12px;color:${C.muted};">10 ms budget, nothing killed</span>`],
       ['D1 rows read', fmt(pl.d1.rowsRead), bar(pl.d1.rowsRead, CAPS.d1RowsRead)],
       ['D1 rows written', fmt(pl.d1.rowsWritten), bar(pl.d1.rowsWritten, CAPS.d1RowsWritten)],
       ['KV writes', fmt(pl.kv.write || 0), bar(pl.kv.write || 0, CAPS.kvWrites)],
     ]
+    const killed = pl.worker.byStatus.find(([st]) => st === 'exceededResources')
+    if (killed) rows[1][2] = `<span style="font-size:12px;color:${C.red};">${fmt(killed[1])} killed at the 10 ms budget</span>`
+    if (pl.worker.errors) rows.push(['API errors', `<span style="color:${C.red};">${fmt(pl.worker.errors)}</span>`, pl.worker.byStatus.map(([st, n]) => `<span style="font-size:12px;color:${C.muted};">${st} ${fmt(n)}</span>`).join(' ')])
     if (pl.mailCredit != null) rows.push(['Purelymail credit', `$${pl.mailCredit.toFixed(2)}`, `<span style="font-size:12px;color:${C.muted};">pay-as-you-go</span>`])
     if (data.decommissionIn > 0) rows.push(['Hetzner decommission', `in ${data.decommissionIn} day${data.decommissionIn === 1 ? '' : 's'}`, `<span style="font-size:12px;color:${C.muted};">${DECOMMISSION_DUE}, then scripts/decommission-hetzner.sh</span>`])
     parts.push(section('Platform &middot; free-plan caps', table(['', 'Yesterday', 'Of cap'], rows, ['left', 'right', 'left']), C.blue))
@@ -223,7 +285,8 @@ export async function runDaily(env, { send = true } = {}) {
   const data = { day: day(b.y0), product, platform, search, warns, decommissionIn }
   if (send) {
     const to = env.DIGEST_EMAIL || 'hello@cercol.team'
-    const subject = `Cèrcol daily — ${data.day}: ${fmt(product.signups[0])} signups, ${fmt(product.tests[0])} tests${warns.length ? ` · ${warns.length} warning${warns.length > 1 ? 's' : ''}` : ''}`
+    const todo = actions(data, env.FRONTEND_URL)
+    const subject = `Cèrcol daily — ${data.day}: ${todo.length ? `${todo.length} to do` : 'nothing to do'} · ${fmt(product.signups[0])} signups, ${fmt(product.tests[0])} tests`
     const res = await fetch('https://api.resend.com/emails', { method: 'POST', headers: { authorization: `Bearer ${env.RESEND_API_KEY}`, 'content-type': 'application/json' }, body: JSON.stringify({ from: 'Cèrcol <noreply@cercol.team>', to: [to], subject, html: dailyHtml(data, env.FRONTEND_URL) }) })
     if (!res.ok) throw new Error(`resend ${res.status}: ${await res.text()}`)
   }

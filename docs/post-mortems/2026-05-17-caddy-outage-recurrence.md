@@ -82,9 +82,11 @@ described in
 - Test
   [`api/tests/test_infra.py`](../../api/tests/test_infra.py)
   guards the snippet's existence and content in this repo.
-- Deploy-time smoke test in
-  [`.github/workflows/deploy-backend.yml`](../../.github/workflows/deploy-backend.yml)
-  catches any future recurrence regardless of cause.
+- Deploy-time smoke test in `.github/workflows/deploy-backend.yml`
+  caught any future recurrence regardless of cause. That workflow went
+  with the Hetzner decommission (2026-08-19); the API deploys through
+  `.github/workflows/deploy-worker.yml`, which smoke-tests `/health`
+  and `/blog` after every deploy.
 - Policy
   [`docs/policies/identities.md`](../policies/identities.md) Rule 1
   about ownership boundaries on shared server files generalises the
