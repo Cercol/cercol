@@ -172,16 +172,18 @@ describe('daily brief', () => {
     const data = {
       warns: ['Top up Purelymail.'],
       product: { signups: [0, 0], tests: [0, 0], visitors: [22, 3], starts: [1, 0], topPages: [['/', 4]],
-        takingOff: [['Limits', 'limits', 8, 0]] },
+        takingOff: [['Limits', 'limits', 8, 0]], dropOff: [['First Quarter', 30]] },
       search: { queries: [['facette', 0, 4, 4.5, 'https://cercol.team/blog/facet/']] },
     }
     const a = actions(data)
     expect(a).toHaveLength(4)
     expect(a[0]).toBe('Top up Purelymail.')
-    expect(a[1]).toContain('none finished')
+    expect(a[1]).toContain('none finished, getting as far as First Quarter at 30%')
     expect(a[2]).toContain('taking off')
     expect(a[3]).toContain('zero clicks')
     // Nobody starting is a different failure from starting and dropping out.
+    // No progress events at all: say so rather than implying a known point.
+    expect(actions({ ...data, product: { ...data.product, dropOff: [] }, warns: [], search: { queries: [] } })[0]).toContain('nobody reached the first tenth')
     const cold = { ...data, product: { ...data.product, starts: [0, 0] }, warns: [], search: { queries: [] } }
     expect(actions(cold)[0]).toContain('nobody started a test')
     // A quiet, healthy day produces an empty list, and the brief says so.
@@ -197,5 +199,32 @@ describe('daily brief', () => {
     const b = dayBounds(new Date('2026-08-18T04:00:00Z'))
     expect(b.y0.toISOString()).toBe('2026-08-17T00:00:00.000Z'); expect(b.y1.toISOString()).toBe('2026-08-18T00:00:00.000Z')
     expect(b.w0.toISOString()).toBe('2026-08-10T00:00:00.000Z'); expect(b.w1.toISOString()).toBe('2026-08-11T00:00:00.000Z')
+  })
+})
+
+// The blog reads sit behind the edge cache; a stale or unstored response is
+// the difference between one D1 scan per build and six hundred.
+import { cached } from '../src/index.js'
+describe('blog edge cache', () => {
+  const store = new Map()
+  globalThis.caches = { default: {
+    match: async (k) => store.get(String(k.url || k)),
+    put: async (k, v) => { store.set(String(k.url || k), v) },
+    delete: async (k) => store.delete(String(k)),
+  } }
+  const req = new Request('https://api.cercol.team/blog')
+
+  it('stores a 200, serves the second call from the cache, and never caches an error', async () => {
+    let calls = 0
+    const ok = () => { calls++; return Response.json([{ slug: 'a' }]) }
+    const first = await cached(req, null, ok)
+    expect(first.headers.get('cache-control')).toBe('public, max-age=60')
+    expect(await (await cached(req, null, ok)).json()).toEqual([{ slug: 'a' }])
+    expect(calls).toBe(1)
+
+    store.clear()
+    const boom = () => new Response('nope', { status: 500 })
+    expect((await cached(req, null, boom)).status).toBe(500)
+    expect(store.size).toBe(0)
   })
 })

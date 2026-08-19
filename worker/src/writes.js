@@ -12,8 +12,12 @@
 import { bearerFrom, verifyAccessToken } from './jwt.js'
 import { ensureProfile, httpError, jsonBody, now, uuid } from './db.js'
 
-// api/blog.py: _EVENT_NAMES
-const EVENT_NAMES = new Set(['article_view', 'cta_click', 'test_start', 'page_view'])
+// api/blog.py: _EVENT_NAMES, plus test_progress, which the FastAPI never had.
+// test_progress carries the milestone in `slug` as a bare percentage
+// ('10'..'90'): it is the only free text column on `events`, one number does
+// not earn a D1 migration, and no other event name uses slug for anything but
+// an article. See src/hooks/useTrackTestStart.js.
+const EVENT_NAMES = new Set(['article_view', 'cta_click', 'test_start', 'test_progress', 'page_view'])
 
 // api/blog.py: _AUTOMATED_UA. Every entry is a self-identifying token; a bare
 // "bot" is deliberately absent because it matches the CUBOT phone brand.
