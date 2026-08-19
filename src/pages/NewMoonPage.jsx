@@ -18,7 +18,7 @@ import { computeRadarScores } from '../utils/new-moon-scoring'
 import { useFeedbackContext } from '../context/FeedbackContext'
 import { useAuth } from '../context/AuthContext'
 import { getMyResults, anonymiseResult } from '../lib/api'
-import { useTrackTestStart } from '../hooks/useTrackTestStart'
+import { useTrackTestStart, useTrackTestProgress } from '../hooks/useTrackTestStart'
 import { usePageMeta } from '../hooks/usePageMeta'
 import QuestionCard from '../components/QuestionCard'
 import ProgressBar from '../components/ProgressBar'
@@ -118,6 +118,9 @@ export default function NewMoonPage() {
   const item = TIPI_ITEMS[current]
   const answered = answers[item.id] ?? null
   const isLast = current === TIPI_ITEMS.length - 1
+
+  // Where a leaver stopped: one event per tenth of the instrument.
+  useTrackTestProgress('newMoon', current + 1, TIPI_ITEMS.length)
 
   // Publish current item to FeedbackContext so FeedbackButton can include it
   useEffect(() => {
