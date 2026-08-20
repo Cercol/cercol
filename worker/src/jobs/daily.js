@@ -298,6 +298,55 @@ export function dailyHtml(data, frontendUrl = 'https://cercol.team') {
   return shell(parts.join(''), { frontendUrl, footer: 'Daily brief from the Cèrcol Worker, 04:00 UTC. The weekly digest on Monday has the full picture.' })
 }
 
+/**
+ * Strip the HTML the email markup puts in an action back to plain text, so
+ * the same line reads as well in a GitHub issue as in a mail client.
+ */
+export function plainAction(html) {
+  return String(html)
+    .replace(/<a [^>]*href="([^"]+)"[^>]*>(.*?)<\/a>/g, '[$2]($1)')
+    .replace(/<\/?(code|strong|span|em)[^>]*>/g, '`')
+    .replace(/`{2,}/g, '`')
+    .replace(/<[^>]+>/g, '')
+    .replace(/&mdash;/g, '—').replace(/&ldquo;|&rdquo;/g, '"').replace(/&amp;/g, '&')
+    .replace(/&rarr;/g, '->').replace(/&#10003;/g, 'v').replace(/&middot;/g, '·')
+    .trim()
+}
+
+/**
+ * Leave the day's to-do list where the work actually happens.
+ *
+ * The email renders the list and then it is stuck in a mailbox: nothing can
+ * pick it up, tick items off, or say "that abandoned test was an agent, not
+ * a person". A GitHub issue is the same list somewhere both a human and a
+ * Claude Code session already have the keys to.
+ *
+ * Silent no-op without GITHUB_TOKEN, and a failure here never fails the
+ * brief: the mail is the channel that must go out.
+ */
+export async function fileTasks(env, dayIso, todo) {
+  if (!env.GITHUB_TOKEN || !todo.length) return null
+  const repo = env.GITHUB_REPO || 'Cercol/cercol'
+  const body = [
+    `From the daily brief for ${dayIso}. Each line is what the numbers said, not a verdict:`,
+    '',
+    ...todo.map((t, i) => `${i + 1}. [ ] ${plainAction(t)}`),
+    '',
+    'Close with a reason if an item turns out to be noise; that reason is what tells us which rule to fix.',
+  ].join('\n')
+  try {
+    const res = await fetch(`https://api.github.com/repos/${repo}/issues`, {
+      method: 'POST',
+      headers: { authorization: `Bearer ${env.GITHUB_TOKEN}`, accept: 'application/vnd.github+json', 'user-agent': 'cercol-api', 'content-type': 'application/json' },
+      body: JSON.stringify({ title: `Cèrcol daily — ${dayIso}: ${todo.length} to do`, body }),
+    })
+    if (!res.ok) return { error: `github ${res.status}` }
+    return { number: (await res.json()).number }
+  } catch (e) {
+    return { error: e.message }
+  }
+}
+
 export async function runDaily(env, { send = true } = {}) {
   const b = dayBounds()
   const product = await gatherProduct(env.DB, b)
@@ -307,12 +356,13 @@ export async function runDaily(env, { send = true } = {}) {
   const warns = warnings(platform, { today: day(b.y1), decommissioned })
   const decommissionIn = decommissioned ? 0 : Math.ceil((Date.parse(DECOMMISSION_DUE) - b.y1.getTime()) / 86400e3)
   const data = { day: day(b.y0), product, platform, search, warns, decommissionIn }
+  const todo = actions(data, env.FRONTEND_URL)
+  const issue = send ? await fileTasks(env, data.day, todo) : null
   if (send) {
     const to = env.DIGEST_EMAIL || 'hello@cercol.team'
-    const todo = actions(data, env.FRONTEND_URL)
     const subject = `Cèrcol daily — ${data.day}: ${todo.length ? `${todo.length} to do` : 'nothing to do'} · ${fmt(product.signups[0])} signups, ${fmt(product.tests[0])} tests`
     const res = await fetch('https://api.resend.com/emails', { method: 'POST', headers: { authorization: `Bearer ${env.RESEND_API_KEY}`, 'content-type': 'application/json' }, body: JSON.stringify({ from: 'Cèrcol <noreply@cercol.team>', to: [to], subject, html: dailyHtml(data, env.FRONTEND_URL) }) })
     if (!res.ok) throw new Error(`resend ${res.status}: ${await res.text()}`)
   }
-  return { day: data.day, signups: product.signups[0], tests: product.tests[0], warnings: warns.length, data }
+  return { day: data.day, signups: product.signups[0], tests: product.tests[0], warnings: warns.length, todo: todo.length, issue, data }
 }
