@@ -243,3 +243,19 @@ describe('automated clients', () => {
     expect(ua('Mozilla/5.0 (Linux; Android 13; CUBOT NOTE 30) Chrome/120')).toBe(false)
   })
 })
+
+import { plainAction, fileTasks } from '../src/jobs/daily.js'
+describe('daily tasks as a GitHub issue', () => {
+  it('turns the email markup back into something readable in an issue', () => {
+    expect(plainAction('<a href="https://cercol.team/blog/x/" style="color:#0047ba;">A title</a> is taking off'))
+      .toBe('[A title](https://cercol.team/blog/x/) is taking off')
+    expect(plainAction('3 errors. Read them with <code>npx wrangler tail</code>.'))
+      .toBe('3 errors. Read them with `npx wrangler tail`.')
+    expect(plainAction('Position 4.5 for &ldquo;facette&rdquo; &mdash; rewrite it'))
+      .toBe('Position 4.5 for "facette" — rewrite it')
+  })
+  it('does nothing without a token, and nothing on a quiet day', async () => {
+    expect(await fileTasks({}, '2026-08-20', ['something'])).toBe(null)
+    expect(await fileTasks({ GITHUB_TOKEN: 'x' }, '2026-08-20', [])).toBe(null)
+  })
+})
