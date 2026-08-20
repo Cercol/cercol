@@ -38,6 +38,10 @@ const WARN_AT = 0.7
 // Hetzner leaves after a quiet fortnight from the cutover (2026-08-17). From
 // this date the brief nags until HETZNER_DECOMMISSIONED is set on the Worker.
 export const DECOMMISSION_DUE = '2026-08-31'
+// Impressions a single page needs in one day before "ranking without clicks"
+// says anything. Below this it is noise, and the brief asked for a rewrite on
+// the strength of three impressions.
+export const ZERO_CLICK_MIN_IMPRESSIONS = 10
 
 export function dayBounds(now = new Date()) {
   const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()))
@@ -102,8 +106,19 @@ export async function gatherSearch(env) {
     const rows = await bq(env, `SELECT data_date, SUM(clicks) AS clicks, SUM(impressions) AS impressions FROM ${gt} WHERE data_date IN ('${d}', DATE_SUB('${d}', INTERVAL 1 DAY)) GROUP BY data_date ORDER BY data_date DESC`)
     const tq = await bq(env, `SELECT query, SUM(clicks) AS clicks, SUM(impressions) AS impressions, SAFE_DIVIDE(SUM(sum_position), SUM(impressions)) AS pos,
       ARRAY_AGG(url ORDER BY impressions DESC LIMIT 1)[OFFSET(0)] AS url FROM ${gt} WHERE data_date = '${d}' AND query IS NOT NULL GROUP BY query ORDER BY clicks DESC, impressions DESC LIMIT 6`)
+    // A page with real exposure and no clicks is a title and description
+    // problem. A single query with three impressions is weather: at ~470
+    // impressions a day spread over a hundred articles, every query looks
+    // like that, and the brief was asking for a rewrite on the strength of
+    // three of them.
+    const zc = await bq(env, `SELECT url, SUM(clicks) AS clicks, SUM(impressions) AS impressions,
+      SAFE_DIVIDE(SUM(sum_position), SUM(impressions)) AS pos FROM ${gt}
+      WHERE data_date = '${d}' AND url IS NOT NULL GROUP BY url
+      HAVING clicks = 0 AND impressions >= ${ZERO_CLICK_MIN_IMPRESSIONS} AND pos <= 10
+      ORDER BY impressions DESC LIMIT 1`)
     const cur = rows[0] || {}, prev = rows[1] || {}
-    return { day: d, clicks: [Number(cur.clicks || 0), Number(prev.clicks || 0)], impressions: [Number(cur.impressions || 0), Number(prev.impressions || 0)],
+    return { day: d,
+      zeroClick: zc[0] ? [zc[0].url, Number(zc[0].impressions), Number(zc[0].pos)] : null, clicks: [Number(cur.clicks || 0), Number(prev.clicks || 0)], impressions: [Number(cur.impressions || 0), Number(prev.impressions || 0)],
       queries: tq.map((r) => [r.query, Number(r.clicks), Number(r.impressions), r.pos == null ? null : Number(r.pos), r.url || null]) }
   } catch (e) { return { pending: true, error: e.message } }
 }
@@ -203,10 +218,9 @@ export function actions(d, frontendUrl = 'https://cercol.team') {
   }
 
   // Ranking on page one and getting nothing: a title and description problem.
-  const missed = (se?.queries || []).find(([, c, i, pos]) => c === 0 && i >= 3 && pos != null && pos <= 10)
-  if (missed) {
-    const [q, , impr, pos, url] = missed
-    out.push(`Position ${pos.toFixed(1)} for &ldquo;${esc(q)}&rdquo;, ${fmt(impr)} impressions, zero clicks. Rewrite the title and description of ${url ? link(url, new URL(url).pathname) : 'the page that ranks for it'}.`)
+  if (se?.zeroClick) {
+    const [url, impr, pos] = se.zeroClick
+    out.push(`${link(url, new URL(url).pathname)} took ${fmt(impr)} impressions at position ${pos.toFixed(1)} yesterday and not one click. Its title and description are what a searcher decides on.`)
   }
   return out.slice(0, 5)
 }
