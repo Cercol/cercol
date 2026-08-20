@@ -259,3 +259,31 @@ describe('daily tasks as a GitHub issue', () => {
     expect(await fileTasks({ GITHUB_TOKEN: 'x' }, '2026-08-20', [])).toBe(null)
   })
 })
+
+// Search Console is the only place that says whether Google will index a
+// page at all; the 307 regression went unseen for eleven days without it.
+import { indexingActions, SITEMAP_STALE_DAYS } from '../src/jobs/indexing.js'
+describe('indexing', () => {
+  it('says nothing at all until the service account has access', () => {
+    expect(indexingActions({ pending: true })).toEqual([])
+    expect(indexingActions({ pending: true, error: 'search console 403' })).toEqual([])
+    expect(indexingActions(null)).toEqual([])
+  })
+  it('reports a canonical Google picked over ours, which is what a 307 looks like', () => {
+    const [line] = indexingActions({
+      problems: [{ url: 'https://cercol.team/instruments/', state: 'page with redirect', googleCanonical: 'https://cercol.team/instruments' }],
+      sitemap: null,
+    })
+    expect(line).toContain('indexes https://cercol.team/instruments instead of https://cercol.team/instruments/')
+    expect(line).toContain('page with redirect')
+  })
+  it('flags a sitemap with errors, or one Google has stopped fetching', () => {
+    const stale = { problems: [], sitemap: { path: '/sitemap.xml', errors: 0, warnings: 3, ageDays: SITEMAP_STALE_DAYS } }
+    expect(indexingActions(stale)).toHaveLength(1)
+    expect(indexingActions(stale)[0]).toContain('last downloaded')
+    const broken = { problems: [], sitemap: { path: '/sitemap.xml', errors: 2, warnings: 0, ageDays: 1 } }
+    expect(indexingActions(broken)).toEqual([expect.stringContaining('2 error(s)')])
+    // Warnings alone are not a task, and a fresh clean sitemap is silent.
+    expect(indexingActions({ problems: [], sitemap: { path: '/sitemap.xml', errors: 0, warnings: 9, ageDays: 1 } })).toEqual([])
+  })
+})

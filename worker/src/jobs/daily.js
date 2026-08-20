@@ -20,12 +20,16 @@
  *   5. Platform against the free-plan caps: D1 rows, KV writes, Worker
  *      requests, CPU p99, errors by status, Purelymail credit.
  *
+ * Whether Google will index the pages at all is asked separately, in
+ * jobs/indexing.js, and its answers join the to-do list at the top.
+ *
  * Runs on the 04:00 UTC trigger, after purge-tokens, and sends to
  * DIGEST_EMAIL like the weekly one. Every gatherer degrades to a
  * placeholder rather than aborting, so the email always sends.
  */
 
 import { query as bq } from '../bigquery.js'
+import { gatherIndexing, indexingActions } from './indexing.js'
 import { C, fmt, esc, h1, sub, p, section, empty, delta, stat, statRow, table, bar, callout, shell } from '../email-ui.js'
 
 const LABELS = { newMoon: 'New Moon', firstQuarter: 'First Quarter', fullMoon: 'Full Moon' }
@@ -198,7 +202,7 @@ const link = (href, t) => `<a href="${href}" style="color:${C.blue};text-decorat
  */
 export function actions(d, frontendUrl = 'https://cercol.team') {
   const { product: pr, search: se } = d
-  const out = [...(d.warns || [])]
+  const out = [...(d.warns || []), ...indexingActions(d.indexing)]
 
   // Funnel. Two different failures, never both: nobody starts, or they
   // start and drop out. The second one usually means a broken instrument.
@@ -352,10 +356,14 @@ export async function runDaily(env, { send = true } = {}) {
   const product = await gatherProduct(env.DB, b)
   const platform = await gatherPlatform(env, b)
   const search = await gatherSearch(env)
+  // The pages that had traffic yesterday are the ones an indexing problem
+  // would cost something on. Home first: it is the one page that must never
+  // be wrong.
+  const indexing = await gatherIndexing(env, ['/', ...product.topPages.map(([p]) => p)])
   const decommissioned = env.HETZNER_DECOMMISSIONED === '1'
   const warns = warnings(platform, { today: day(b.y1), decommissioned })
   const decommissionIn = decommissioned ? 0 : Math.ceil((Date.parse(DECOMMISSION_DUE) - b.y1.getTime()) / 86400e3)
-  const data = { day: day(b.y0), product, platform, search, warns, decommissionIn }
+  const data = { day: day(b.y0), product, platform, search, indexing, warns, decommissionIn }
   const todo = actions(data, env.FRONTEND_URL)
   const issue = send ? await fileTasks(env, data.day, todo) : null
   if (send) {
