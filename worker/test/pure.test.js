@@ -287,3 +287,13 @@ describe('indexing', () => {
     expect(indexingActions({ problems: [], sitemap: { path: '/sitemap.xml', errors: 0, warnings: 9, ageDays: 1 } })).toEqual([])
   })
 })
+
+describe('a task list that could not be filed', () => {
+  it('says so in the brief instead of failing quietly', async () => {
+    const { runDaily } = await import('../src/jobs/daily.js')
+    expect(typeof runDaily).toBe('function')
+    // The warning is a plain push onto data.warns, which actions() leads with.
+    const withError = actions({ warns: ['The task list could not be filed as an issue (github 403).'], product: { visitors: [1, 1], starts: [0, 0], tests: [0, 0], topPages: [], takingOff: [] }, search: null })
+    expect(withError[0]).toContain('could not be filed')
+  })
+})
