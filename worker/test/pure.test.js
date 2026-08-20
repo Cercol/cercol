@@ -297,3 +297,33 @@ describe('a task list that could not be filed', () => {
     expect(withError[0]).toContain('could not be filed')
   })
 })
+
+describe('evidence in the filed issue', () => {
+  it('summarises each starter so a reader can tell a person from a crawler', async () => {
+    const { fileTasks } = await import('../src/jobs/daily.js')
+    let sent = null
+    const realFetch = globalThis.fetch
+    globalThis.fetch = async (url, init) => { sent = JSON.parse(init.body); return { ok: true, json: async () => ({ number: 7 }) } }
+    const starters = {
+      a1b2c3d4: [{ name: 'page_view', n: 4, at: '09:12' }, { name: 'article_view', n: 2, at: '09:14' }, { name: 'test_start', n: 1, at: '09:20' }, { name: 'test_progress', n: 3, pct: 30, at: '09:21' }],
+      ffffffff: [{ name: 'test_start', n: 1, at: '03:02' }],
+    }
+    const res = await fileTasks({ GITHUB_TOKEN: 'x' }, '2026-08-20', ['something real'], { starters })
+    globalThis.fetch = realFetch
+    expect(res).toEqual({ number: 7 })
+    expect(sent.body).toContain('`a1b2c3d4`: page_view x4')
+    expect(sent.body).toContain('reached 30%')
+    expect(sent.body).toContain('`ffffffff`: test_start x1')
+    // The full id never leaves the Worker: the issue is public.
+    expect(sent.body).not.toContain('a1b2c3d4-')
+  })
+  it('leaves the section out entirely when nobody started a test', async () => {
+    const { fileTasks } = await import('../src/jobs/daily.js')
+    let sent = null
+    const realFetch = globalThis.fetch
+    globalThis.fetch = async (url, init) => { sent = JSON.parse(init.body); return { ok: true, json: async () => ({ number: 8 }) } }
+    await fileTasks({ GITHUB_TOKEN: 'x' }, '2026-08-20', ['something'], { starters: {} })
+    globalThis.fetch = realFetch
+    expect(sent.body).not.toContain('<details>')
+  })
+})

@@ -95,8 +95,24 @@ export async function gatherProduct(db, b) {
       FROM events WHERE name='test_progress' AND created_at >= ? AND created_at < ?
      GROUP BY anon_id, instrument ORDER BY pct DESC LIMIT 5`, ...Y))
     .map((r) => [LABELS[r.instrument] || r.instrument, r.pct])
+  // What each person who started a test actually did that day, summarised.
+  // "One lone test_start" and "read two articles, then started" are the same
+  // line in the funnel and completely different events; whoever reads the
+  // task list needs to be able to tell them apart without the database.
+  const trails = (await q(`SELECT anon_id, name, COUNT(*) AS n, MAX(CAST(slug AS INTEGER)) AS pct, MIN(created_at) AS t0
+      FROM events
+     WHERE created_at >= ?1 AND created_at < ?2 AND anon_id IN (
+           SELECT anon_id FROM events WHERE name='test_start' AND created_at >= ?1 AND created_at < ?2 AND anon_id IS NOT NULL)
+     GROUP BY anon_id, name ORDER BY anon_id, t0 LIMIT 60`, ...Y))
+  const starters = {}
+  for (const r of trails) {
+    // Short id only: these lines are published to a public issue, and eight
+    // characters are enough to tell two visitors apart for one day.
+    const id = String(r.anon_id).slice(0, 8)
+    ;(starters[id] ||= []).push({ name: r.name, n: r.n, pct: r.name === 'test_progress' ? r.pct : null, at: String(r.t0).slice(11, 16) })
+  }
   const totals = { users: await count(db, `SELECT COUNT(*) AS n FROM auth_users`), tests: await count(db, `SELECT COUNT(*) AS n FROM results WHERE is_seed = 0`) }
-  return { signups, tests, pageViews, visitors, starts, byInstrument, byLang, topPages, newUsers, witness, top, takingOff, dropOff, totals }
+  return { signups, tests, pageViews, visitors, starts, byInstrument, byLang, topPages, newUsers, witness, top, takingOff, dropOff, starters, totals }
 }
 
 /** Latest day Search Console has exported (usually two days behind), and the day before it. */
@@ -318,6 +334,26 @@ export function plainAction(html) {
 }
 
 /**
+ * The facts behind the lines that cannot be checked from outside the
+ * database, so whoever picks the list up does not have to be trusted with a
+ * production credential to tell a person from a crawler.
+ */
+function evidenceSection({ starters = {} } = {}) {
+  const ids = Object.keys(starters)
+  if (!ids.length) return []
+  const out = ['<details><summary>What each person who started a test did that day</summary>', '']
+  for (const id of ids) {
+    const parts = starters[id].map((e) => {
+      if (e.name === 'test_progress') return `reached ${e.pct}%`
+      return `${e.name} x${e.n} (first at ${e.at})`
+    })
+    out.push(`- \`${id}\`: ${parts.join(', ')}`)
+  }
+  out.push('', 'A visitor with nothing but a single test_start is very likely automated.', '</details>', '')
+  return out
+}
+
+/**
  * Leave the day's to-do list where the work actually happens.
  *
  * The email renders the list and then it is stuck in a mailbox: nothing can
@@ -328,7 +364,7 @@ export function plainAction(html) {
  * Silent no-op without GITHUB_TOKEN, and a failure here never fails the
  * brief: the mail is the channel that must go out.
  */
-export async function fileTasks(env, dayIso, todo) {
+export async function fileTasks(env, dayIso, todo, evidence = {}) {
   if (!env.GITHUB_TOKEN || !todo.length) return null
   const repo = env.GITHUB_REPO || 'Cercol/cercol'
   const body = [
@@ -336,6 +372,7 @@ export async function fileTasks(env, dayIso, todo) {
     '',
     ...todo.map((t, i) => `${i + 1}. [ ] ${plainAction(t)}`),
     '',
+    ...evidenceSection(evidence),
     'Close with a reason if an item turns out to be noise; that reason is what tells us which rule to fix.',
   ].join('\n')
   try {
@@ -363,7 +400,7 @@ export async function runDaily(env, { send = true } = {}) {
   const warns = warnings(platform, { today: day(b.y1), decommissioned })
   const decommissionIn = decommissioned ? 0 : Math.ceil((Date.parse(DECOMMISSION_DUE) - b.y1.getTime()) / 86400e3)
   const data = { day: day(b.y0), product, platform, search, indexing, warns, decommissionIn }
-  const issue = send ? await fileTasks(env, data.day, actions(data, env.FRONTEND_URL)) : null
+  const issue = send ? await fileTasks(env, data.day, actions(data, env.FRONTEND_URL), { starters: product.starters }) : null
   // A to-do list that quietly failed to be filed is worse than no list at
   // all: the brief would look normal and the tasks would exist nowhere.
   if (issue?.error) data.warns.push(`The task list could not be filed as an issue (${issue.error}). Check the GITHUB_TOKEN secret on the Worker.`)
