@@ -40,6 +40,11 @@ jobs:
           #   sees 403 / 404 even when the DOI resolves fine in a
           #   browser. Excluded entirely; correctness of DOIs is
           #   checked by humans when adding new references.
+          # - dlc.iec.cat, gencat.cat and avl.gva.es: the Catalan and
+          #   Valencian language authorities. All three answer 503 to
+          #   everyone, browsers included, for stretches at a time; avl
+          #   has been down since 2026-08-20 and turned this job red on
+          #   every PR. The links are correct and stay in the docs.
           # - ipip.ori.org and projects.ori.org: return "Connection
           #   reset by peer" to lychee from a runner. Both are
           #   authoritative Oregon Research Institute hosts, ipip for
@@ -77,6 +82,7 @@ jobs:
             --exclude 'projects\.ori\.org'
             --exclude 'dlc\.iec\.cat'
             --exclude 'gencat\.cat'
+            --exclude 'avl\.gva\.es'
             --exclude-path 'docs/seo/links-audit-*.md'
             --exclude-path 'docs/seo/links-audit-20260528.md'
             './**/*.md'
