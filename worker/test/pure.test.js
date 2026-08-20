@@ -173,21 +173,23 @@ describe('daily brief', () => {
       warns: ['Top up Purelymail.'],
       product: { signups: [0, 0], tests: [0, 0], visitors: [22, 3], starts: [1, 0], topPages: [['/', 4]],
         takingOff: [['Limits', 'limits', 8, 0]], dropOff: [['First Quarter', 30]] },
-      search: { queries: [['facette', 0, 4, 4.5, 'https://cercol.team/blog/facet/']] },
+      search: { zeroClick: ['https://cercol.team/blog/facet/', 24, 4.5] },
     }
     const a = actions(data)
     expect(a).toHaveLength(4)
     expect(a[0]).toBe('Top up Purelymail.')
     expect(a[1]).toContain('none finished, getting as far as First Quarter at 30%')
     expect(a[2]).toContain('taking off')
-    expect(a[3]).toContain('zero clicks')
+    expect(a[3]).toContain('24 impressions at position 4.5')
     // Nobody starting is a different failure from starting and dropping out.
     // No progress events at all: say so rather than implying a known point.
-    expect(actions({ ...data, product: { ...data.product, dropOff: [] }, warns: [], search: { queries: [] } })[0]).toContain('nobody reached the first tenth')
-    const cold = { ...data, product: { ...data.product, starts: [0, 0] }, warns: [], search: { queries: [] } }
+    expect(actions({ ...data, product: { ...data.product, dropOff: [] }, warns: [], search: null })[0]).toContain('nobody reached the first tenth')
+    const cold = { ...data, product: { ...data.product, starts: [0, 0] }, warns: [], search: null }
     expect(actions(cold)[0]).toContain('nobody started a test')
     // A quiet, healthy day produces an empty list, and the brief says so.
     expect(actions({ warns: [], product: { visitors: [3, 1], starts: [0, 0], tests: [0, 0], topPages: [], takingOff: [] }, search: null })).toEqual([])
+    // A page nobody clicked but nobody really saw either is not a task.
+    expect(actions({ warns: [], product: { visitors: [3, 1], starts: [0, 0], tests: [0, 0], topPages: [], takingOff: [] }, search: { zeroClick: null } })).toEqual([])
   })
   it('nags about the Hetzner decommission from the due date until silenced', () => {
     const ok = { d1: { rowsRead: 1, rowsWritten: 1 }, kv: { write: 1 }, worker: { requests: 1, errors: 0, cpuP99: 1, byStatus: [] }, mailCredit: 5 }
