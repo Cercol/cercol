@@ -26,6 +26,14 @@
  * user of the Search Console property (Settings, Users and permissions,
  * Restricted is enough). Until then every call is a 403 and the brief simply
  * says nothing, rather than nagging daily about a permission.
+ *
+ * Runs on the 05:00 trigger and leaves its answer in KV, rather than inside
+ * the 04:00 one that sends the brief. The free plan allows 50 subrequests
+ * per invocation and that trigger already carries four jobs, one of which
+ * (the link sweep) is itself paced at 15 probes for exactly this reason.
+ * Nine more could have taken the brief down with it. The brief reads the
+ * snapshot instead, one KV get, and a verdict from Google a few hours old is
+ * the same verdict.
  */
 
 import { accessToken } from '../bigquery.js'
@@ -101,6 +109,25 @@ export async function gatherIndexing(env, paths = [], { now = Date.now() } = {})
   } catch (e) {
     return { pending: true, error: e.message }
   }
+}
+
+export const KV_KEY = 'seo:indexing'
+
+/**
+ * Gather and leave the snapshot in KV for the next brief to read. The pages
+ * worth inspecting are the ones that had traffic: one D1 query, rather than
+ * making the caller pass them in and pay for it inside its own budget.
+ */
+export async function runIndexing(env) {
+  const since = new Date(Date.now() - 2 * 86400e3).toISOString()
+  const { results } = await env.DB.prepare(
+    `SELECT path, COUNT(*) AS n FROM events
+      WHERE name='page_view' AND path IS NOT NULL AND created_at >= ?
+      GROUP BY path ORDER BY n DESC LIMIT ?`
+  ).bind(since, INSPECT_LIMIT).all()
+  const out = await gatherIndexing(env, ['/', ...results.map((r) => r.path)])
+  if (env.NORMS) await env.NORMS.put(KV_KEY, JSON.stringify({ ...out, at: new Date().toISOString() }), { expirationTtl: 3 * 86400 })
+  return { pending: !!out.pending, error: out.error || null, problems: out.problems?.length || 0 }
 }
 
 /** The lines the brief should act on, most costly first. Empty when healthy. */
