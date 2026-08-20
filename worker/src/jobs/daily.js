@@ -29,7 +29,7 @@
  */
 
 import { query as bq } from '../bigquery.js'
-import { gatherIndexing, indexingActions } from './indexing.js'
+import { KV_KEY as INDEXING_KEY, indexingActions } from './indexing.js'
 import { C, fmt, esc, h1, sub, p, section, empty, delta, stat, statRow, table, bar, callout, shell } from '../email-ui.js'
 
 const LABELS = { newMoon: 'New Moon', firstQuarter: 'First Quarter', fullMoon: 'Full Moon' }
@@ -356,10 +356,9 @@ export async function runDaily(env, { send = true } = {}) {
   const product = await gatherProduct(env.DB, b)
   const platform = await gatherPlatform(env, b)
   const search = await gatherSearch(env)
-  // The pages that had traffic yesterday are the ones an indexing problem
-  // would cost something on. Home first: it is the one page that must never
-  // be wrong.
-  const indexing = await gatherIndexing(env, ['/', ...product.topPages.map(([p]) => p)])
+  // Written by seo-indexing on the 05:00 trigger: asking Google directly
+  // costs nine subrequests and this invocation cannot spare them.
+  const indexing = env.NORMS ? await env.NORMS.get(INDEXING_KEY, 'json') : null
   const decommissioned = env.HETZNER_DECOMMISSIONED === '1'
   const warns = warnings(platform, { today: day(b.y1), decommissioned })
   const decommissionIn = decommissioned ? 0 : Math.ceil((Date.parse(DECOMMISSION_DUE) - b.y1.getTime()) / 86400e3)

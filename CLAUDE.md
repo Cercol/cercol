@@ -44,7 +44,7 @@ Frontend: same with `web/wrangler.jsonc` after `npm run build:full`.
 Avoid manual deploys: they desync local and deployed state. Runbook: `docs/ops/runbook.md`.
 
 ### Scheduled jobs
-Five cron triggers on `cercol-api` (`worker/src/scheduled.js`): 04:00 daily (purge-tokens, group-nudge, links-tick, daily-brief), 05:00 daily (seo-anomalies), Sun 03:00 (bing-ingest), Sun 04:00 (pagespeed-ingest), Mon 09:00 (weekly-digest). Run any now: `POST /admin/jobs/<name>?dry_run=1` with an admin JWT.
+Five cron triggers on `cercol-api` (`worker/src/scheduled.js`): 04:00 daily (purge-tokens, group-nudge, links-tick, daily-brief), 05:00 daily (seo-anomalies, seo-indexing), Sun 03:00 (bing-ingest), Sun 04:00 (pagespeed-ingest), Mon 09:00 (weekly-digest). Run any now: `POST /admin/jobs/<name>?dry_run=1` with an admin JWT.
 
 ## Design system (mm-design)
 All design tokens come from **mm-design** (https://github.com/miquelmatoses/mm-design), installed as an npm git dependency.
