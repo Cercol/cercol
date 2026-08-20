@@ -363,8 +363,11 @@ export async function runDaily(env, { send = true } = {}) {
   const warns = warnings(platform, { today: day(b.y1), decommissioned })
   const decommissionIn = decommissioned ? 0 : Math.ceil((Date.parse(DECOMMISSION_DUE) - b.y1.getTime()) / 86400e3)
   const data = { day: day(b.y0), product, platform, search, indexing, warns, decommissionIn }
+  const issue = send ? await fileTasks(env, data.day, actions(data, env.FRONTEND_URL)) : null
+  // A to-do list that quietly failed to be filed is worse than no list at
+  // all: the brief would look normal and the tasks would exist nowhere.
+  if (issue?.error) data.warns.push(`The task list could not be filed as an issue (${issue.error}). Check the GITHUB_TOKEN secret on the Worker.`)
   const todo = actions(data, env.FRONTEND_URL)
-  const issue = send ? await fileTasks(env, data.day, todo) : null
   if (send) {
     const to = env.DIGEST_EMAIL || 'hello@cercol.team'
     const subject = `Cèrcol daily — ${data.day}: ${todo.length ? `${todo.length} to do` : 'nothing to do'} · ${fmt(product.signups[0])} signups, ${fmt(product.tests[0])} tests`
