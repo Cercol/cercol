@@ -592,6 +592,14 @@ the same signal, and `worker/src/jobs/indexing.js` reads both on the
   yesterday, because an indexing fault only costs something where there
   was traffic to lose.
 
+It runs on the **05:00** trigger and leaves the snapshot in KV
+(`seo:indexing`), not inside the 04:00 one that sends the brief. The free
+plan allows 50 subrequests per invocation, that trigger already carries
+four jobs, and the link sweep is paced at 15 probes for exactly this
+reason: nine more could have taken the brief down with it. The brief
+reads the snapshot with one KV get, a few hours old, which is the same
+verdict Google would give it live.
+
 Both use the BigQuery service account, which is why `accessToken` in
 `worker/src/bigquery.js` takes a scope and caches one token per scope: a
 token minted for BigQuery is refused by searchconsole.googleapis.com.
