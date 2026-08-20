@@ -570,6 +570,37 @@ Cloudflare's limit is 2,000 static rules; the build emits about 730 and
 the script throws if it ever crosses that, at which point the answer is
 one zone-level redirect rule instead of a file.
 
+### Asking Google directly (Aug 2026)
+
+The 307 above was live for eleven days and the first anyone heard of it
+was a validation-failed email. The BigQuery export cannot catch that
+class of fault: it reports how a page performed, not whether Google is
+willing to index it, and a page Google has dropped simply stops
+appearing in the data.
+
+There is no API for the "Page indexing" report itself. Two others carry
+the same signal, and `worker/src/jobs/indexing.js` reads both on the
+04:00 run:
+
+- **Sitemaps** (`/webmasters/v3/sites/{site}/sitemaps`): error and
+  warning counts, and when Google last downloaded it. One request.
+- **URL Inspection** (`/v1/urlInspection/index:inspect`): per URL, the
+  verdict, the coverage state, and the canonical Google chose. A
+  canonical that is not the URL asked about is exactly what a 307 looks
+  like from Google's side. The quota is 2,000 a day; the brief spends
+  `INSPECT_LIMIT` on the home page and the pages that had traffic
+  yesterday, because an indexing fault only costs something where there
+  was traffic to lose.
+
+Both use the BigQuery service account, which is why `accessToken` in
+`worker/src/bigquery.js` takes a scope and caches one token per scope: a
+token minted for BigQuery is refused by searchconsole.googleapis.com.
+
+The account needs to be a user of the property (Search Console,
+Settings, Users and permissions, Restricted). Until it is, every call is
+a 403, `gatherIndexing` returns `{ pending: true }` and the brief says
+nothing: a permission that has not been granted yet is not a daily task.
+
 ## The Cloudflare migration (Aug 2026)
 
 Cèrcol shared seven things with topquaranta on one Hetzner box: Caddy,

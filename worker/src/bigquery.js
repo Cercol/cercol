@@ -22,9 +22,16 @@ async function importRsaKey(pem) {
   return crypto.subtle.importKey('pkcs8', der, { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' }, false, ['sign'])
 }
 
-/** An access token for the BigQuery scope, cached in KV. */
-export async function accessToken(env) {
-  const cacheKey = 'bq:access-token'
+/**
+ * An access token for one Google API scope, cached in KV per scope.
+ *
+ * The same service account signs for BigQuery and, once it is added as a
+ * user of the Search Console property, for the Search Console API. One
+ * cache entry per scope: a token minted for BigQuery is not accepted by
+ * searchconsole.googleapis.com.
+ */
+export async function accessToken(env, scope = 'https://www.googleapis.com/auth/bigquery') {
+  const cacheKey = `bq:access-token:${scope}`
   if (env.NORMS) {
     const hit = await env.NORMS.get(cacheKey, 'json')
     if (hit && hit.exp > Date.now() / 1000 + 60) return hit.token
@@ -33,7 +40,7 @@ export async function accessToken(env) {
   const now = Math.floor(Date.now() / 1000)
   const header = b64url(enc.encode(JSON.stringify({ alg: 'RS256', typ: 'JWT' })))
   const claims = b64url(enc.encode(JSON.stringify({
-    iss: sa.client_email, scope: 'https://www.googleapis.com/auth/bigquery',
+    iss: sa.client_email, scope,
     aud: sa.token_uri || 'https://oauth2.googleapis.com/token', iat: now, exp: now + 3600,
   })))
   const sig = await crypto.subtle.sign('RSASSA-PKCS1-v1_5', await importRsaKey(sa.private_key), enc.encode(`${header}.${claims}`))
