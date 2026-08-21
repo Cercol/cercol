@@ -30,6 +30,7 @@
 
 import { query as bq } from '../bigquery.js'
 import { KV_KEY as INDEXING_KEY, indexingActions } from './indexing.js'
+import { KV_KEY as LANGUAGES_KEY, languageActions } from './languages.js'
 import { C, fmt, esc, h1, sub, p, section, empty, delta, stat, statRow, table, bar, callout, shell } from '../email-ui.js'
 
 const LABELS = { newMoon: 'New Moon', firstQuarter: 'First Quarter', fullMoon: 'Full Moon' }
@@ -225,7 +226,7 @@ const link = (href, t) => `<a href="${href}" style="color:${C.blue};text-decorat
  */
 export function actions(d, frontendUrl = 'https://cercol.team') {
   const { product: pr, search: se } = d
-  const out = [...(d.warns || []), ...indexingActions(d.indexing)]
+  const out = [...(d.warns || []), ...indexingActions(d.indexing), ...languageActions(d.languages, frontendUrl)]
 
   // Funnel. Two different failures, never both: nobody starts, or they
   // start and drop out. The second one usually means a broken instrument.
@@ -411,10 +412,12 @@ export async function runDaily(env, { send = true } = {}) {
   // Written by seo-indexing on the 05:00 trigger: asking Google directly
   // costs nine subrequests and this invocation cannot spare them.
   const indexing = env.NORMS ? await env.NORMS.get(INDEXING_KEY, 'json') : null
+  // Same arrangement: computed at 05:00 over 28 days, read here.
+  const languages = env.NORMS ? await env.NORMS.get(LANGUAGES_KEY, 'json') : null
   const decommissioned = env.HETZNER_DECOMMISSIONED === '1'
   const warns = warnings(platform, { today: day(b.y1), decommissioned })
   const decommissionIn = decommissioned ? 0 : Math.ceil((Date.parse(DECOMMISSION_DUE) - b.y1.getTime()) / 86400e3)
-  const data = { day: day(b.y0), product, platform, search, indexing, warns, decommissionIn }
+  const data = { day: day(b.y0), product, platform, search, indexing, languages, warns, decommissionIn }
   const issue = send ? await fileTasks(env, data.day, actions(data, env.FRONTEND_URL), { starters: product.starters }) : null
   // A to-do list that quietly failed to be filed is worse than no list at
   // all: the brief would look normal and the tasks would exist nowhere.
