@@ -1497,6 +1497,10 @@
       "title": "About Cèrcol: open-source Big Five team assessment",
       "description": "Discover Cèrcol, the open-source Big Five (OCEAN/IPIP) personality test for teams. Free, science-grounded and built on peer-reviewed research."
     },
+    "blog": {
+      "title": "Cèrcol blog: personality science and team assessment",
+      "description": "Research-grounded articles on personality science, the Big Five (OCEAN), IPIP, team composition and peer assessment, by the team behind Cèrcol."
+    },
     "science": {
       "title": "The science behind Cèrcol: Big Five, IPIP, AB5C facets",
       "description": "Explore the peer-reviewed psychometric research behind Cèrcol: the Big Five (OCEAN) model, IPIP public-domain items, and the AB5C facet circumplex."

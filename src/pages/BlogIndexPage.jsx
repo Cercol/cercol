@@ -90,17 +90,22 @@ export default function BlogIndexPage() {
   const [activeCategory,  setActiveCategory]  = useState('all')
   const [activeLevel,     setActiveLevel]     = useState('all')
 
+  // The six blog index URLs used to ship one English title and description
+  // between them: only the canonical, the hreflang set and the body copy
+  // changed per locale, and the two tags a search engine leans on hardest were
+  // identical. Search Console filed /fr/blog/ as "crawled - currently not
+  // indexed", which is what a page that looks like a duplicate of /blog/ gets.
+  // They come from seo.blog.* now, like every other top-level page.
+  //
+  // The effect depends on i18n.language as well as urlLang because the
+  // changeLanguage above lands one render late: without it the French index
+  // would keep whichever language happened to be mounted first.
   useEffect(() => {
     const prev = document.title
-    document.title = 'Blog — Personality science and team assessment · Cèrcol'
+    document.title = t('seo.blog.title')
     const metaDesc = document.querySelector('meta[name="description"]')
     const prevDesc = metaDesc?.getAttribute('content') ?? ''
-    if (metaDesc) {
-      metaDesc.setAttribute(
-        'content',
-        'Research-grounded articles on personality science, the Big Five (OCEAN), IPIP, team composition, and peer assessment — by the team behind Cèrcol.'
-      )
-    }
+    if (metaDesc) metaDesc.setAttribute('content', t('seo.blog.description'))
 
     // Trailing slash required: GitHub Pages 301-redirects /blog → /blog/.
     const BASE = 'https://cercol.team'
@@ -134,7 +139,7 @@ export default function BlogIndexPage() {
       if (metaDesc) metaDesc.setAttribute('content', prevDesc)
       added.forEach(el => el.remove())
     }
-  }, [urlLang])
+  }, [urlLang, i18n.language])
 
   useEffect(() => {
     // Always refresh from the API — the pre-rendered window global may be

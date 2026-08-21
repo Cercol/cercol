@@ -85,7 +85,14 @@ export async function gatherProduct(db, b) {
      GROUP BY slug ORDER BY y DESC LIMIT 40`, iso(b.y0), iso(b.y1), iso(b.avg0))
   const titles = Object.fromEntries((await q(`SELECT slug, json_extract(title, '$.en') AS t FROM blog_posts`)).map((r) => [r.slug, r.t]))
   const top = reads.filter((r) => r.y > 0).slice(0, 8).map((r) => [titles[r.slug] || r.slug, r.slug, r.y, r.avg7])
-  const takingOff = reads.filter((r) => r.y >= 5 && r.y >= 3 * r.avg7).map((r) => [titles[r.slug] || r.slug, r.slug, r.y, r.avg7])
+  // Clicks on the two instrument cards BlogTestCTA renders in every article,
+  // by the article they were clicked from. Every article carries both cards
+  // unconditionally, so "does it point at an instrument" is never the
+  // question; whether anybody took the bridge is.
+  const ctaBySlug = Object.fromEntries((await q(`SELECT slug, COUNT(*) AS n FROM events
+      WHERE name='cta_click' AND slug IS NOT NULL AND created_at >= ? AND created_at < ? GROUP BY slug`, ...Y))
+    .map((r) => [r.slug, Number(r.n)]))
+  const takingOff = reads.filter((r) => r.y >= 5 && r.y >= 3 * r.avg7).map((r) => [titles[r.slug] || r.slug, r.slug, r.y, r.avg7, ctaBySlug[r.slug] || 0])
   // How far the ones who did not finish got: the deepest tenth each visitor
   // reached, from the test_progress events the instrument pages emit. The
   // slug column carries the percentage (see worker/src/writes.js).
@@ -231,10 +238,18 @@ export function actions(d, frontendUrl = 'https://cercol.team') {
   }
 
   // An article moving three times its own pace is the cheapest lever there is.
+  // This line used to end "Make sure it points at an instrument", which was
+  // advice nobody could ever act on: BlogTestCTA renders an instrument card
+  // early and another at the end of every article, with no way to switch them
+  // off, so the answer was always yes. What varies, and what says whether the
+  // extra readers were worth having, is whether either card was clicked.
   if (pr.takingOff.length) {
-    const [t, slug, y, avg] = pr.takingOff[0]
+    const [t, slug, y, avg, cta = 0] = pr.takingOff[0]
     const pace = avg < 0.1 ? 'in its first week out' : `against ${avg.toFixed(1)}/day`
-    out.push(`${link(`${frontendUrl}/blog/${slug}/`, t)} is taking off: ${fmt(y)} reads ${pace}. Make sure it points at an instrument.`)
+    const bridge = cta > 0
+      ? `${fmt(cta)} of them went on to an instrument.`
+      : 'Not one of them went on to an instrument: both cards are on the page, so it is the copy on them that is not landing.'
+    out.push(`${link(`${frontendUrl}/blog/${slug}/`, t)} is taking off: ${fmt(y)} reads ${pace}. ${bridge}`)
   }
 
   // Ranking on page one and getting nothing: a title and description problem.
