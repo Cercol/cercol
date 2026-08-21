@@ -52,6 +52,30 @@ describe('seo.* titles and descriptions', () => {
     }
   })
 
+  // Google truncates around 60 and 155. The nine titles that were here first
+  // sit between 45 and 55, and not one of them appends the brand after a
+  // separator: they weave "Cercol" into the phrase. A run that added
+  // "· Cercol" to six new titles spent nine characters saying what the other
+  // nine say for free, on titles already at the edge.
+  it('keeps titles and descriptions inside what Google shows', () => {
+    for (const [lang, dict] of Object.entries(LOCALES)) {
+      for (const page of PAGES) {
+        expect(dict.seo[page].title.length, `${lang}.seo.${page}.title is too long`).toBeLessThanOrEqual(60)
+        expect(dict.seo[page].description.length, `${lang}.seo.${page}.description is too long`).toBeLessThanOrEqual(155)
+      }
+    }
+  })
+
+  it('weaves the brand into the title instead of appending it', () => {
+    for (const [lang, dict] of Object.entries(LOCALES)) {
+      for (const page of PAGES) {
+        const title = dict.seo[page].title
+        expect(title, `${lang}.seo.${page}.title appends the brand after a separator`)
+          .not.toMatch(/[·|–-]\s*C[eè]rcol\s*$/)
+      }
+    }
+  })
+
   it('keeps em dashes out of the copy', () => {
     for (const [lang, dict] of Object.entries(LOCALES)) {
       for (const page of PAGES) {
