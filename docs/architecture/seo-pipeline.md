@@ -609,6 +609,42 @@ Settings, Users and permissions, Restricted). Until it is, every call is
 a 403, `gatherIndexing` returns `{ pending: true }` and the brief says
 nothing: a permission that has not been granted yet is not a daily task.
 
+### An article against itself (Aug 2026)
+
+"This article is weak" is a judgement. "This article is invisible in
+German while its Spanish and French versions do their normal numbers"
+is a defect with a short list of causes: that version is not indexed,
+its title and description do not match what a German searcher types, or
+the translation reads badly. `worker/src/jobs/languages.js` looks for
+the second kind.
+
+First-party reads cannot answer it. 108 articles in six languages is 648
+pages taking about 0.76 reads each per month; every comparison would be
+noise. Search Console impressions are roughly twenty times richer and
+exist even where nobody clicked, which is the case worth catching.
+
+The comparison is against the blog's own language mix rather than
+between versions raw. German pages are some share of all blog
+impressions; an article whose German version is far under that share,
+while its other versions sit at theirs, has something wrong with the
+version rather than with the German market. An article needs
+`MIN_ARTICLE_IMPRESSIONS` (50) across all versions in 28 days before its
+split is allowed to mean anything, and a gap is only a gap when the
+version took **none** of the `MIN_EXPECTED` (5) impressions predicted
+for it: a version at half its share is a copy question, one at zero is
+usually broken.
+
+It runs at 05:00 with the indexing check and leaves its answer in KV,
+because the 04:00 invocation that sends the brief has no subrequests to
+spare.
+
+The hazard of a daily job on a 28-day window is repetition: the same gap
+every morning until it is fixed. Each one is reported once and then held
+for `RENOTIFY_DAYS` (30), and a gap that closes is forgotten so that a
+recurrence reads as news. The brief carries the single worst unreported
+gap, not the list: a list of nine translations to look at is a list
+nobody starts.
+
 ## The Cloudflare migration (Aug 2026)
 
 Cèrcol shared seven things with topquaranta on one Hetzner box: Caddy,
