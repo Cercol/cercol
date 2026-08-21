@@ -180,7 +180,14 @@ describe('daily brief', () => {
     expect(a[0]).toBe('Top up Purelymail.')
     expect(a[1]).toContain('none finished, getting as far as First Quarter at 30%')
     expect(a[2]).toContain('taking off')
+    // The old line ended "Make sure it points at an instrument", which every
+    // article already does. What the line reports now is whether anyone took
+    // the bridge, which is the half that can actually come out either way.
+    expect(a[2]).toContain('Not one of them went on to an instrument')
     expect(a[3]).toContain('24 impressions at position 4.5')
+    const clicked = actions({ ...data, warns: [], search: null,
+      product: { ...data.product, takingOff: [['Limits', 'limits', 8, 0, 2]] } })
+    expect(clicked[1]).toContain('2 of them went on to an instrument.')
     // Nobody starting is a different failure from starting and dropping out.
     // No progress events at all: say so rather than implying a known point.
     expect(actions({ ...data, product: { ...data.product, dropOff: [] }, warns: [], search: null })[0]).toContain('nobody reached the first tenth')
