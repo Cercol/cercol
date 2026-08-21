@@ -446,6 +446,12 @@ export async function getBlogPost(slug) {
   return publicFetch(`/blog/${slug}`)
 }
 
+/** The locale a blog path belongs to. Unprefixed paths are English. */
+export function langFromPath(path) {
+  const m = /^\/(ca|es|fr|de|da)(\/|$)/.exec(path || '')
+  return m ? m[1] : 'en'
+}
+
 /**
  * trackBlogView — fire-and-forget POST to record a view on a blog post.
  * Never throws — any error is silently swallowed.
@@ -463,10 +469,12 @@ export async function trackBlogView(slug) {
   }
   // First-party funnel signal (real human article view). After the prerender
   // guard so bots/prerender are excluded. Fire-and-forget.
-  trackEvent('article_view', {
-    slug,
-    path: typeof window !== 'undefined' ? (window.location?.pathname ?? null) : null,
-  })
+  // lang travels with the event the way page_view already sends it. It is
+  // recoverable from the path prefix, but only by a query that has to know
+  // that /blog/ means English and /fr/blog/ does not, which is the kind of
+  // thing that is wrong in one of the four places it gets rewritten.
+  const path = typeof window !== 'undefined' ? (window.location?.pathname ?? null) : null
+  trackEvent('article_view', { slug, path, lang: langFromPath(path) })
 }
 
 /**
