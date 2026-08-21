@@ -122,25 +122,31 @@ async function main() {
   }
 
   // ── Blog post URLs re-enabled 2026-05-16 ────────────────────────────────────
-  // scripts/prerender.mjs now generates a static dist/blog/<slug>/index.html
-  // (and dist/<lang>/blog/<slug>/index.html for non-English) for every slug,
-  // so GitHub Pages serves HTTP 200 instead of the SPA 404 redirect.
-  // All language variants are included with hreflang alternates.
-  // Backlog (Phase 17.11): blog articles still emit a single <loc> (EN) with
-  // path-based hreflang alternates, not one <loc> per language. Promoting
-  // them to per-language <loc> like the top-level pages above is deferred to
-  // keep this sprint scoped; the hreflang alternates already point Google at
-  // every localized article path.
+  // scripts/prerender.mjs generates a static dist/blog/<slug>/index.html and
+  // a dist/<lang>/blog/<slug>/index.html for every slug and language, so all
+  // 648 pages are served with HTTP 200.
+  //
+  // Until 2026-08-21 only the English <loc> was emitted, on the assumption,
+  // written into this file, that "the hreflang alternates already point
+  // Google at every localized article path". They do not. The URL Inspection
+  // API answered "URL is unknown to Google" for three of the five worst
+  // language gaps the seo-languages job found, including pages that are 200,
+  // self-canonical, in real German and carrying a full body. An alternate is
+  // a hint about a page Google has already found; it is not a submission.
+  //
+  // One <loc> per language, like the top-level pages above.
   if (posts.length > 0) {
-    parts.push('', '  <!-- Blog articles -->')
+    parts.push('', '  <!-- Blog articles, one entry per language -->')
     for (const { slug, lastmod } of posts) {
-      parts.push(urlEntry(`/blog/${slug}`, { priority: '0.7', changefreq: 'monthly', lastmod }))
+      for (const lang of LANGS) {
+        parts.push(urlEntry(`/blog/${slug}`, { priority: '0.7', changefreq: 'monthly', lastmod, loc: langUrl(`/blog/${slug}`, lang) }))
+      }
     }
   }
 
   parts.push('', '</urlset>', '')
 
-  const total = STATIC_PAGES.length * LANGS.length + LANGS.length + posts.length
+  const total = (STATIC_PAGES.length + 1 + posts.length) * LANGS.length
   writeFileSync(OUT, parts.join('\n'), 'utf8')
   console.log(`[sitemap] written to ${OUT} — ${total} entries`)
 }
