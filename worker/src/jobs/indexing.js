@@ -37,6 +37,7 @@
  */
 
 import { accessToken } from '../bigquery.js'
+import { KV_KEY as LANGUAGES_KEY } from './languages.js'
 
 const SCOPE = 'https://www.googleapis.com/auth/webmasters.readonly'
 const API = 'https://searchconsole.googleapis.com'
@@ -119,13 +120,20 @@ export const KV_KEY = 'seo:indexing'
  * making the caller pass them in and pay for it inside its own budget.
  */
 export async function runIndexing(env) {
+  // The language-gap job runs first and leaves the versions that took no
+  // impressions at all. Those are where "is this even indexed" is an open
+  // question, so they go to the front: a page with traffic is plainly
+  // indexed, and asking Google about it confirms what we already know. Half
+  // the budget at most, so a long gap list cannot crowd out the home page.
+  const gaps = env.NORMS ? await env.NORMS.get(LANGUAGES_KEY, 'json') : null
+  const gapPaths = (gaps?.gaps || []).slice(0, Math.floor(INSPECT_LIMIT / 2)).map((g) => `/${g.lang}/blog/${g.slug}/`)
   const since = new Date(Date.now() - 2 * 86400e3).toISOString()
   const { results } = await env.DB.prepare(
     `SELECT path, COUNT(*) AS n FROM events
       WHERE name='page_view' AND path IS NOT NULL AND created_at >= ?
       GROUP BY path ORDER BY n DESC LIMIT ?`
   ).bind(since, INSPECT_LIMIT).all()
-  const out = await gatherIndexing(env, ['/', ...results.map((r) => r.path)])
+  const out = await gatherIndexing(env, ['/', ...gapPaths, ...results.map((r) => r.path)])
   if (env.NORMS) await env.NORMS.put(KV_KEY, JSON.stringify({ ...out, at: new Date().toISOString() }), { expirationTtl: 3 * 86400 })
   return { pending: !!out.pending, error: out.error || null, problems: out.problems?.length || 0 }
 }
