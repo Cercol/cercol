@@ -52,3 +52,21 @@ describe('trackEvent', () => {
     await expect(trackEvent('cta_click', { slug: 'x' })).resolves.toBeUndefined()
   })
 })
+
+// article_view used to send only slug and path, so "how does this article do
+// in German" meant re-deriving the locale from the path prefix in every query.
+import { langFromPath } from '../api'
+describe('langFromPath', () => {
+  it('reads the locale off a blog path, defaulting to English', () => {
+    expect(langFromPath('/blog/what-is-a-facet/')).toBe('en')
+    expect(langFromPath('/fr/blog/what-is-a-facet/')).toBe('fr')
+    expect(langFromPath('/da/blog/')).toBe('da')
+    expect(langFromPath('/de')).toBe('de')
+  })
+  it('does not mistake an article slug for a locale', () => {
+    // /es-ES/ is not a locale we serve, and a slug can start with two letters.
+    expect(langFromPath('/blog/de-facto-leadership/')).toBe('en')
+    expect(langFromPath('/es-ES/blog/x/')).toBe('en')
+    expect(langFromPath(null)).toBe('en')
+  })
+})
