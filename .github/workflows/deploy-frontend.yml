@@ -114,6 +114,12 @@ jobs:
           pip install pytest
           python -m pytest api/tests/test_internal_links_integrity.py -v
 
+      # Every <loc> must have a page behind it, and every page must be
+      # advertised in all six languages. 540 article URLs were missing from
+      # the sitemap for months and Google had never heard of them.
+      - name: Sitemap covers every prerendered page
+        run: node scripts/validate_sitemap.mjs
+
       # cercol.team is served by the cercol-web Worker (web/wrangler.jsonc)
       # since 2026-08-17. The GitHub Pages fallback publish was dropped on
       # 2026-08-19 with the Hetzner decommission.
