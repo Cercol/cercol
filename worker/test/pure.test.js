@@ -334,3 +334,62 @@ describe('evidence in the filed issue', () => {
     expect(sent.body).not.toContain('<details>')
   })
 })
+
+// An article compared against itself: the one content signal that is a
+// defect rather than an opinion.
+import { languageGaps, freshGaps, languageActions, MIN_ARTICLE_IMPRESSIONS } from '../src/jobs/languages.js'
+describe('language gaps', () => {
+  // A blog whose impressions run 60% English, 20% Spanish, 20% German.
+  const site = [
+    { slug: 'a', lang: 'en', impressions: 60 }, { slug: 'a', lang: 'es', impressions: 20 }, { slug: 'a', lang: 'de', impressions: 20 },
+    { slug: 'b', lang: 'en', impressions: 60 }, { slug: 'b', lang: 'es', impressions: 40 }, { slug: 'b', lang: 'de', impressions: 0 },
+  ]
+  it('flags the version that took none of what its own article predicts', () => {
+    const gaps = languageGaps(site)
+    expect(gaps).toHaveLength(1)
+    expect(gaps[0]).toMatchObject({ slug: 'b', lang: 'de', impressions: 0 })
+    // 100 impressions on b, German is 20/200 of the blog, so ~10 expected.
+    expect(gaps[0].expected).toBe(10)
+  })
+  it('says nothing about an article too small to have a shape', () => {
+    const small = site.map((r) => ({ ...r, impressions: Math.floor(r.impressions / 10) }))
+    expect(languageGaps(small)).toEqual([])
+    expect(languageGaps([])).toEqual([])
+    // Right at the line, an article still counts.
+    expect(MIN_ARTICLE_IMPRESSIONS).toBe(50)
+  })
+  it('does not flag a language the whole blog barely has', () => {
+    // Danish is one impression across the blog: expecting none of it on any
+    // single article is correct, not a defect.
+    const withDa = [...site, { slug: 'a', lang: 'da', impressions: 1 }]
+    expect(languageGaps(withDa).filter((g) => g.lang === 'da')).toEqual([])
+  })
+
+  const gap = { slug: 'b', lang: 'de', impressions: 0, expected: 10, total: 100 }
+  it('reports a gap once, then holds it', () => {
+    const now = Date.parse('2026-09-01T05:00:00Z')
+    const first = freshGaps([gap], {}, { now })
+    expect(first.fresh).toHaveLength(1)
+    // Tomorrow, same gap, nothing new to say.
+    const second = freshGaps([gap], first.reported, { now: now + 86400e3 })
+    expect(second.fresh).toEqual([])
+    // A month later it is still broken, so it is worth saying again.
+    const later = freshGaps([gap], first.reported, { now: now + 31 * 86400e3 })
+    expect(later.fresh).toHaveLength(1)
+  })
+  it('forgets a gap that closed, so a recurrence reads as news', () => {
+    const now = Date.parse('2026-09-01T05:00:00Z')
+    const { reported } = freshGaps([gap], {}, { now })
+    const closed = freshGaps([], reported, { now: now + 86400e3 })
+    expect(closed.reported).toEqual({})
+    expect(freshGaps([gap], closed.reported, { now: now + 2 * 86400e3 }).fresh).toHaveLength(1)
+  })
+  it('writes one line, for the worst gap only', () => {
+    const [line] = languageActions({ fresh: [gap, { ...gap, lang: 'fr', expected: 6 }] })
+    expect(line).toContain('German version of b')
+    expect(line).toContain('predict about 10')
+    expect(line).toContain('https://cercol.team/de/blog/b/')
+    expect(languageActions({ fresh: [] })).toEqual([])
+    expect(languageActions(null)).toEqual([])
+  })
+})

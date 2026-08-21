@@ -6,7 +6,7 @@
  * # Spec: docs/architecture/seo-pipeline.md
  *
  *   0 4 * * *   daily 04:00   purge tokens, group nudge, links tick, daily brief
- *   0 5 * * *   daily 05:00   SEO anomaly detector, indexing check, links tick
+ *   0 5 * * *   daily 05:00   SEO anomalies, indexing, language gaps, links tick
  *   0 3 * * SUN Sun 03:00     Bing ingest
  *   0 4 * * SUN Sun 04:00     PageSpeed ingest
  *   0 9 * * MON Mon 09:00     links tick, then the weekly digest
@@ -30,6 +30,7 @@ import { runLinksTick } from './jobs/links.js'
 import { runDigest } from './jobs/digest.js'
 import { runDaily } from './jobs/daily.js'
 import { runIndexing } from './jobs/indexing.js'
+import { runLanguages } from './jobs/languages.js'
 
 async function purgeTokens(env) {
   const ago = (d) => new Date(Date.now() - d * 86400e3).toISOString()
@@ -71,7 +72,7 @@ export const linksSweep = linksTick
 
 export const JOBS = {
   '0 4 * * *': async (env) => { await step('purge-tokens', () => purgeTokens(env)); await step('group-nudge', () => runNudge(env)); await step('links-tick', () => linksTick(env)); await step('daily-brief', () => runDaily(env)) },
-  '0 5 * * *': async (env) => { await step('seo-anomalies', () => runAnomalies(env)); await step('seo-indexing', () => runIndexing(env)); await step('links-tick', () => linksTick(env)) },
+  '0 5 * * *': async (env) => { await step('seo-anomalies', () => runAnomalies(env)); await step('seo-indexing', () => runIndexing(env)); await step('seo-languages', () => runLanguages(env)); await step('links-tick', () => linksTick(env)) },
   '0 3 * * SUN': async (env) => { await step('bing-ingest', () => runBing(env)) },
   '0 4 * * SUN': async (env) => { await step('pagespeed-ingest', () => runPagespeed(env)) },
   '0 9 * * MON': async (env) => { await step('links-tick', () => linksTick(env)); await step('weekly-digest', () => runDigest(env)) },
@@ -83,6 +84,7 @@ export const NAMED = {
   'group-nudge': (env, opts) => runNudge(env, opts),
   'seo-anomalies': (env) => runAnomalies(env),
   'seo-indexing': (env) => runIndexing(env),
+  'seo-languages': (env) => runLanguages(env),
   'bing-ingest': (env) => runBing(env),
   'pagespeed-ingest': (env, opts) => runPagespeed(env, opts),
   'links-tick': (env) => linksTick(env),
