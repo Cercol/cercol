@@ -6,7 +6,7 @@
  * # Spec: docs/architecture/seo-pipeline.md
  *
  *   0 4 * * *   daily 04:00   purge tokens, group nudge, links tick, daily brief
- *   0 5 * * *   daily 05:00   SEO anomalies, indexing, language gaps, links tick
+ *   0 5 * * *   daily 05:00   SEO anomalies, language gaps, indexing, links tick
  *   0 3 * * SUN Sun 03:00     Bing ingest
  *   0 4 * * SUN Sun 04:00     PageSpeed ingest
  *   0 9 * * MON Mon 09:00     links tick, then the weekly digest
@@ -72,7 +72,7 @@ export const linksSweep = linksTick
 
 export const JOBS = {
   '0 4 * * *': async (env) => { await step('purge-tokens', () => purgeTokens(env)); await step('group-nudge', () => runNudge(env)); await step('links-tick', () => linksTick(env)); await step('daily-brief', () => runDaily(env)) },
-  '0 5 * * *': async (env) => { await step('seo-anomalies', () => runAnomalies(env)); await step('seo-indexing', () => runIndexing(env)); await step('seo-languages', () => runLanguages(env)); await step('links-tick', () => linksTick(env)) },
+  '0 5 * * *': async (env) => { await step('seo-anomalies', () => runAnomalies(env)); await step('seo-languages', () => runLanguages(env)); await step('seo-indexing', () => runIndexing(env)); await step('links-tick', () => linksTick(env)) },
   '0 3 * * SUN': async (env) => { await step('bing-ingest', () => runBing(env)) },
   '0 4 * * SUN': async (env) => { await step('pagespeed-ingest', () => runPagespeed(env)) },
   '0 9 * * MON': async (env) => { await step('links-tick', () => linksTick(env)); await step('weekly-digest', () => runDigest(env)) },
