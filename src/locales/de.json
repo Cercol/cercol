@@ -13,9 +13,10 @@
     "blog": "Blog",
     "faq": "FAQ",
     "admin": "Admin",
-    "menuLearn": "Lernen",
-    "menuCompany": "Unternehmen",
-    "privacy": "Datenschutz"
+    "menuLearn": "Wissen",
+    "menuCompany": "Projekt",
+    "privacy": "Datenschutz",
+    "menuAssess": "Analyse"
   },
   "myResults": {
     "link": "Meine Ergebnisse",
@@ -339,7 +340,7 @@
       "description": "Das Rollenprofil Ihres Teams: Balance, Narrativ und gemeinsame blinde Flecken."
     },
     "footnote": "Open Source · ",
-    "viewOnGitHub": "Auf GitHub ansehen",
+    "viewOnGitHub": "Quellcode auf GitHub",
     "h1": "Cèrcol: Open-Source-Persönlichkeitsbewertung für Teams",
     "witness": {
       "name": "Cèrcol des Zeugen"
@@ -1563,8 +1564,8 @@
   },
   "footer": {
     "label": "Fußzeile",
-    "sections": "Bereiche der Fußzeile",
-    "tagline": "Open-Source-Persönlichkeitsdiagnostik für Teams, auf Basis peer-reviewter Forschung.",
-    "rights": "Cèrcol. Open Source, frei nutzbar."
+    "sections": "Fußzeilennavigation",
+    "tagline": "Finde heraus, wie du im Team arbeitest. Die Fragen, die Bewertung und die Forschung dahinter sind öffentlich.",
+    "rights": "Cèrcol ist Open Source. Nur Vollmond ist kostenpflichtig."
   }
 }

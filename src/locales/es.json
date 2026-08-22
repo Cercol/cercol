@@ -6,16 +6,17 @@
   },
   "nav": {
     "brand": "Cèrcol",
-    "about": "Acerca de",
+    "about": "Sobre Cèrcol",
     "instruments": "Instrumentos",
     "roles": "Roles",
     "science": "Ciencia",
     "blog": "Blog",
-    "faq": "FAQ",
+    "faq": "Preguntas",
     "admin": "Admin",
     "menuLearn": "Aprender",
-    "menuCompany": "Empresa",
-    "privacy": "Privacidad"
+    "menuCompany": "Proyecto",
+    "privacy": "Privacidad",
+    "menuAssess": "Evaluaciones"
   },
   "myResults": {
     "link": "Mis resultados",
@@ -582,7 +583,7 @@
     }
   },
   "feedback": {
-    "reportIssue": "Reportar problema",
+    "reportIssue": "Informar de un problema",
     "suggestTranslation": "Sugerir traducción",
     "panel": {
       "title": "Sugerir una traducción",
@@ -1124,7 +1125,7 @@
     "definedBy": "Definido por"
   },
   "about": {
-    "title": "Acerca de",
+    "title": "Sobre Cèrcol",
     "intro": {
       "eyebrow": "Evaluación de personalidad de código abierto",
       "heading": "Mírate con más claridad.",
@@ -1563,8 +1564,8 @@
   },
   "footer": {
     "label": "Pie de página",
-    "sections": "Secciones del pie",
-    "tagline": "Evaluación de personalidad de código abierto para equipos, basada en investigación revisada por pares.",
-    "rights": "Cèrcol. Código abierto, de uso libre."
+    "sections": "Secciones del pie de página",
+    "tagline": "Descubre cómo trabajas en equipo. Las preguntas, la puntuación y la investigación que las sostiene son públicas.",
+    "rights": "Cèrcol es de código abierto. Solo Luna Llena es de pago."
   }
 }

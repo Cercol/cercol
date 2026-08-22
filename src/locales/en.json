@@ -14,8 +14,9 @@
     "faq": "FAQ",
     "admin": "Admin",
     "menuLearn": "Learn",
-    "menuCompany": "Company",
-    "privacy": "Privacy"
+    "menuCompany": "Project",
+    "privacy": "Privacy",
+    "menuAssess": "Assessments"
   },
   "myResults": {
     "link": "My results",
@@ -582,7 +583,7 @@
     }
   },
   "feedback": {
-    "reportIssue": "Report issue",
+    "reportIssue": "Report a problem",
     "suggestTranslation": "Suggest translation",
     "panel": {
       "title": "Suggest a translation",
@@ -1563,8 +1564,8 @@
   },
   "footer": {
     "label": "Site footer",
-    "sections": "Footer sections",
-    "tagline": "Open-source personality assessment for teams, built on peer-reviewed research.",
-    "rights": "Cèrcol. Open source, free to use."
+    "sections": "Footer links",
+    "tagline": "See how you work in a team. The questions, the scoring and the research behind them are all public.",
+    "rights": "Cèrcol is open source. Only Full Moon is paid."
   }
 }
