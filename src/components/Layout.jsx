@@ -28,7 +28,7 @@ import CercolLogo from './CercolLogo'
 import BetaBanner from './BetaBanner'
 import { colors } from '../design/tokens'
 import Footer from './Footer'
-import { NAV, navHref, isEntryActive } from '../lib/navigation'
+import { NAV, navHref, isEntryActive, isHomePath } from '../lib/navigation'
 import { HamburgerIcon, CloseIcon } from './MoonIcons'
 import { useAuth } from '../context/AuthContext'
 
@@ -126,7 +126,7 @@ export default function Layout({ children }) {
   const { t, i18n }  = useTranslation()
   const { pathname } = useLocation()
   const { profile }  = useAuth()
-  const isHome       = pathname === '/'
+  const isHome       = isHomePath(pathname)
   const [menuOpen, setMenuOpen]     = useState(false)
   // One entry per open group, keyed by nav key: a boolean per group meant a
   // new group needed a new useState, which is how the list drifts.
