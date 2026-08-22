@@ -47,6 +47,15 @@ export const DECOMMISSION_DUE = '2026-08-31'
 // says anything. Below this it is noise, and the brief asked for a rewrite on
 // the strength of three impressions.
 export const ZERO_CLICK_MIN_IMPRESSIONS = 10
+// Reads one article needs in one day before "nobody clicked through" says
+// anything about the cards on it. Cèrcol converts an article read to a
+// cta_click about 0.5% of the time (6 clicks in 1,299 reads, all time to
+// 2026-08-22), so twelve reads expect 0.06 of a click: a silent day is the
+// prediction, not a finding, and the brief spent 2026-08-21 asking for a
+// copy rewrite on the strength of it. At that rate 150 reads is where a day
+// with no click stops being the likeliest outcome; below it the line reports
+// the reads and keeps its opinion to itself.
+export const CTA_CLAIM_MIN_READS = 150
 
 export function dayBounds(now = new Date()) {
   const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()))
@@ -244,13 +253,19 @@ export function actions(d, frontendUrl = 'https://cercol.team') {
   // early and another at the end of every article, with no way to switch them
   // off, so the answer was always yes. What varies, and what says whether the
   // extra readers were worth having, is whether either card was clicked.
+  //
+  // A click is worth reporting whenever it happens. The absence of one is
+  // only worth reporting once there were enough reads for a click to have
+  // been expected at all: see CTA_CLAIM_MIN_READS.
   if (pr.takingOff.length) {
     const [t, slug, y, avg, cta = 0] = pr.takingOff[0]
     const pace = avg < 0.1 ? 'in its first week out' : `against ${avg.toFixed(1)}/day`
     const bridge = cta > 0
-      ? `${fmt(cta)} of them went on to an instrument.`
-      : 'Not one of them went on to an instrument: both cards are on the page, so it is the copy on them that is not landing.'
-    out.push(`${link(`${frontendUrl}/blog/${slug}/`, t)} is taking off: ${fmt(y)} reads ${pace}. ${bridge}`)
+      ? ` ${fmt(cta)} of them went on to an instrument.`
+      : y >= CTA_CLAIM_MIN_READS
+        ? ' Not one of them went on to an instrument: both cards are on the page, so it is the copy on them that is not landing.'
+        : ''
+    out.push(`${link(`${frontendUrl}/blog/${slug}/`, t)} is taking off: ${fmt(y)} reads ${pace}.${bridge}`)
   }
 
   // Ranking on page one and getting nothing: a title and description problem.
