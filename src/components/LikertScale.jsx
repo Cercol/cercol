@@ -77,10 +77,22 @@ export default function LikertScale({ value, onChange, scalePoints = 5, scaleLab
             )
           })}
         </div>
-        {/* Anchor labels: first (left) and last (right) only, always visible */}
-        <div className="flex justify-between mt-2 text-xs text-gray-400 px-0.5">
-          <span className="max-w-[40%] leading-snug">{scaleLabels[1]}</span>
-          <span className="max-w-[40%] text-right leading-snug">{scaleLabels[scalePoints]}</span>
+        {/* Every point labelled, on both viewports. This showed anchors 1 and
+            scalePoints only and left the interior as bare numerals, but the
+            IPIP-NEO norms were collected on a fully verbalised scale, and a
+            fully labelled scale and an endpoint-labelled one do not produce
+            the same distribution. The interior labels are the ones the
+            philologists were asked to make equidistant; hiding them wasted
+            that and scored the result against norms it no longer matched. */}
+        <div className="flex mt-2 text-xs text-gray-400">
+          {Array.from({ length: scalePoints }, (_, i) => i + 1).map((point) => (
+            <span
+              key={point}
+              className={`flex-1 leading-snug px-0.5 ${point === 1 ? 'text-left' : point === scalePoints ? 'text-right' : 'text-center'}`}
+            >
+              {scaleLabels[point]}
+            </span>
+          ))}
         </div>
       </div>
     </div>

@@ -391,8 +391,8 @@
     "blockProgress": "{{current}} of {{total}} in this block",
     "blockLabel": "Block {{current}} of {{total}}",
     "overallProgress": "{{current}} of {{total}} overall",
-    "instructions": "Rate the extent to which each statement applies to you.",
-    "itemPrefix": "I see myself as someone who",
+    "instructions": "Describe yourself as you generally are now, not as you wish to be in the future. Describe yourself as you honestly see yourself, in relation to other people you know of the same sex as you are, and roughly your same age. So that you can describe yourself in an honest manner, your responses will be kept in absolute confidence. Indicate the accuracy of each statement as it applies to you.",
+    "itemPrefix": "Statement",
     "back": "Back",
     "next": "Next",
     "seeResults": "See my results",
@@ -404,7 +404,7 @@
     "intro": {
       "heading": "First Quarter Cèrcol",
       "meta": "60 questions · ~10 min",
-      "scale": "1–5 · Disagree strongly → Agree strongly",
+      "scale": "1–5 · Very inaccurate → Very accurate",
       "guidance": "No right answers. Go with what's true for you right now.",
       "cta": "Begin"
     },
@@ -463,8 +463,8 @@
     "blockProgress": "{{current}} of {{total}} in this block",
     "blockLabel": "Block {{current}} of {{total}}",
     "overallProgress": "{{current}} of {{total}} overall",
-    "instructions": "Rate the extent to which each statement applies to you.",
-    "itemPrefix": "I see myself as someone who",
+    "instructions": "Describe yourself as you generally are now, not as you wish to be in the future. Describe yourself as you honestly see yourself, in relation to other people you know of the same sex as you are, and roughly your same age. So that you can describe yourself in an honest manner, your responses will be kept in absolute confidence. Indicate the accuracy of each statement as it applies to you.",
+    "itemPrefix": "Statement",
     "back": "Back",
     "next": "Next",
     "seeResults": "See my results",
@@ -476,7 +476,7 @@
     "intro": {
       "heading": "Full Moon Cèrcol",
       "meta": "120 questions · ~20 min",
-      "scale": "1–5 · Disagree strongly → Agree strongly",
+      "scale": "1–5 · Very inaccurate → Very accurate",
       "guidance": "You know yourself. Trust that.",
       "partNote": "This is Part 1 of a two-part instrument. Witness Cèrcol follows after your results.",
       "cta": "Begin"
@@ -539,11 +539,11 @@
     }
   },
   "scale": {
-    "1": "Disagree strongly",
-    "2": "Disagree a little",
-    "3": "Neither agree nor disagree",
-    "4": "Agree a little",
-    "5": "Agree strongly"
+    "1": "Very inaccurate",
+    "2": "Moderately inaccurate",
+    "3": "Neither accurate nor inaccurate",
+    "4": "Moderately accurate",
+    "5": "Very accurate"
   },
   "scale7": {
     "1": "Disagree strongly",
@@ -1351,7 +1351,7 @@
   "instruments": {
     "title": "Instruments",
     "intro": {
-      "heading": "Three instruments. One scale.",
+      "heading": "Three instruments. Five dimensions.",
       "body": "Each instrument measures the same five dimensions, at different depth and resolution. They are designed to be used in sequence, but each stands alone."
     },
     "freeLabel": "Free",
@@ -1375,7 +1375,7 @@
       "heading": "First Quarter Cèrcol",
       "eyebrow": "Full portrait",
       "meta": "60 questions · ~10 min",
-      "scaleNote": "5-point scale: 'Disagree strongly' to 'Agree strongly'. Five-point scales are standard for facet-level personality measurement.",
+      "scaleNote": "5-point scale: 'Very inaccurate' to 'Very accurate'. Five-point scales are standard for facet-level personality measurement.",
       "measures": "Five dimensions, each broken into 6 facets, 30 data points. Two items per facet.",
       "get": "Domain chart, 30-facet breakdown, and a first beta read on your role. The facet breakdown is where the useful information lives, the domain totals are just the headline.",
       "items": [
@@ -1383,7 +1383,7 @@
         "Worry about things.",
         "Have a vivid imagination."
       ],
-      "itemPrefix": "I see myself as someone who:"
+      "itemPrefix": "Statement:"
     },
     "fullMoon": {
       "heading": "Full Moon Cèrcol",
@@ -1399,7 +1399,7 @@
           "Anticipate the needs of others.",
           "Get chores done right away."
         ],
-        "itemPrefix": "I see myself as someone who:"
+        "itemPrefix": "Statement:"
       },
       "part2": {
         "label": "Part 2",
@@ -1454,7 +1454,7 @@
   },
   "onboarding": {
     "heading": "Welcome to Cèrcol",
-    "intro": "Three instruments. One scale. Start anywhere: each stands alone.",
+    "intro": "Three instruments. Five dimensions. Start anywhere: each stands alone.",
     "newMoon": {
       "desc": "10 questions. A quick look at your five dimensions."
     },
@@ -1574,5 +1574,8 @@
     "sections": "Footer links",
     "tagline": "See how you work in a team. The questions, the scoring and the research behind them are all public.",
     "rights": "Cèrcol is open source. Only Full Moon is paid."
+  },
+  "common": {
+    "scaleLabel": "Scale"
   }
 }

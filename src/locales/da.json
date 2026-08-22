@@ -391,8 +391,8 @@
     "blockProgress": "{{current}} af {{total}} i denne blok",
     "blockLabel": "Blok {{current}} af {{total}}",
     "overallProgress": "{{current}} af {{total}} i alt",
-    "instructions": "Vurder i hvilken grad hver påstand gælder for dig.",
-    "itemPrefix": "Jeg ser mig selv som én, der",
+    "instructions": "Beskriv dig selv, som du generelt er nu; ikke som du ønsker at være fremover. Beskriv dig selv, sådan som du ærligt ser dig selv, i forhold til andre du kender af samme køn og på nogenlunde samme alder. For at du kan beskrive dig selv på en ærlig måde, vil dine svar være fuldstændigt fortrolige. Angiv for hvert udsagn, hvorvidt det som beskrivelse af dig er nøjagtigt.",
+    "itemPrefix": "Udsagn",
     "back": "Tilbage",
     "next": "Næste",
     "seeResults": "Se mine resultater",
@@ -404,7 +404,7 @@
     "intro": {
       "heading": "Første Kvarter Cèrcol",
       "meta": "60 spørgsmål · ~10 min",
-      "scale": "1–5 · Meget uenig → Meget enig",
+      "scale": "1–5 · Meget unøjagtigt → Meget nøjagtigt",
       "guidance": "Ingen rigtige svar. Gå med det, der er sandt for dig lige nu.",
       "cta": "Begynd"
     },
@@ -463,8 +463,8 @@
     "blockProgress": "{{current}} af {{total}} i denne blok",
     "blockLabel": "Blok {{current}} af {{total}}",
     "overallProgress": "{{current}} af {{total}} i alt",
-    "instructions": "Vurder i hvilken grad hver påstand gælder for dig.",
-    "itemPrefix": "Jeg ser mig selv som én, der",
+    "instructions": "Beskriv dig selv, som du generelt er nu; ikke som du ønsker at være fremover. Beskriv dig selv, sådan som du ærligt ser dig selv, i forhold til andre du kender af samme køn og på nogenlunde samme alder. For at du kan beskrive dig selv på en ærlig måde, vil dine svar være fuldstændigt fortrolige. Angiv for hvert udsagn, hvorvidt det som beskrivelse af dig er nøjagtigt.",
+    "itemPrefix": "Udsagn",
     "back": "Tilbage",
     "next": "Næste",
     "seeResults": "Se mine resultater",
@@ -476,7 +476,7 @@
     "intro": {
       "heading": "Fuldmåne Cèrcol",
       "meta": "120 spørgsmål · ~20 min",
-      "scale": "1–5 · Meget uenig → Meget enig",
+      "scale": "1–5 · Meget unøjagtigt → Meget nøjagtigt",
       "guidance": "Du kender dig selv. Stol på det.",
       "partNote": "Dette er Del 1 af et tofaset instrument. Vidne Cèrcol følger efter dine resultater.",
       "cta": "Begynd"
@@ -539,11 +539,11 @@
     }
   },
   "scale": {
-    "1": "Meget uenig",
-    "2": "Lidt uenig",
-    "3": "Hverken enig eller uenig",
-    "4": "Lidt enig",
-    "5": "Meget enig"
+    "1": "Meget unøjagtigt",
+    "2": "Lidt unøjagtigt",
+    "3": "Hverken nøjagtigt eller unøjagtigt",
+    "4": "Lidt nøjagtigt",
+    "5": "Meget nøjagtigt"
   },
   "scale7": {
     "1": "Meget uenig",
@@ -1351,7 +1351,7 @@
   "instruments": {
     "title": "Instrumenter",
     "intro": {
-      "heading": "Tre instrumenter. Én skala.",
+      "heading": "Tre instrumenter. Fem dimensioner.",
       "body": "Hvert instrument måler de samme fem dimensioner, ved forskellig dybde og opløsning. De er designet til at bruges i rækkefølge, men hvert stå alene."
     },
     "freeLabel": "Gratis",
@@ -1375,7 +1375,7 @@
       "heading": "Første Kvarter Cèrcol",
       "eyebrow": "Fuldt portræt",
       "meta": "60 spørgsmål · ~10 min",
-      "scaleNote": "5-punkts skala: 'Meget uenig' til 'Meget enig'. Fem-punkts skalaer er standard for facet-niveau personlighedsmåling.",
+      "scaleNote": "5-punkts skala: 'Meget unøjagtigt' til 'Meget nøjagtigt'. Fem-punkts skalaer er standard for facet-niveau personlighedsmåling.",
       "measures": "Fem dimensioner, hver opdelt i 6 facetter, 30 datapunkter. To elementer pr. facet.",
       "get": "Domænediagram, 30-facet-opdeling og et første beta-kig på din rolle. Facet-opdelingen er der, den nyttige information befinder sig, domænetotalerne er bare overskriften.",
       "items": [
@@ -1383,7 +1383,7 @@
         "Bekymrer mig om ting.",
         "Har en levende fantasi."
       ],
-      "itemPrefix": "Jeg ser mig selv som én, der:"
+      "itemPrefix": "Udsagn:"
     },
     "fullMoon": {
       "heading": "Fuldmåne Cèrcol",
@@ -1399,7 +1399,7 @@
           "Forudser andres behov.",
           "Får opgaver gjort med det samme."
         ],
-        "itemPrefix": "Jeg ser mig selv som én, der:"
+        "itemPrefix": "Udsagn:"
       },
       "part2": {
         "label": "Del 2",
@@ -1454,7 +1454,7 @@
   },
   "onboarding": {
     "heading": "Velkommen til Cèrcol",
-    "intro": "Tre instrumenter. Én skala. Start hvor du vil: hvert enkelt står alene.",
+    "intro": "Tre instrumenter. Fem dimensioner. Start hvor du vil: hvert enkelt står alene.",
     "newMoon": {
       "desc": "10 spørgsmål. Et hurtigt blik på dine fem dimensioner."
     },
@@ -1574,5 +1574,8 @@
     "sections": "Sidefodens sektioner",
     "tagline": "Se, hvordan du fungerer i et team. Spørgsmålene, scoringen og forskningen bag dem er offentligt tilgængelige.",
     "rights": "Cèrcol er open source. Kun Fuldmåne koster noget."
+  },
+  "common": {
+    "scaleLabel": "Skala"
   }
 }

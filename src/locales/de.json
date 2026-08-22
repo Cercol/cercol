@@ -391,8 +391,8 @@
     "blockProgress": "{{current}} von {{total}} in diesem Block",
     "blockLabel": "Block {{current}} von {{total}}",
     "overallProgress": "{{current}} von {{total}} insgesamt",
-    "instructions": "Bewerte, inwieweit jede Aussage auf dich zutrifft.",
-    "itemPrefix": "Ich sehe mich als jemanden, der/die",
+    "instructions": "Beschreibe dich so, wie du jetzt im Allgemeinen bist, nicht so, wie du in Zukunft sein möchtest. Beschreibe dich so, wie du dich selbst ehrlich siehst, im Vergleich zu anderen dir bekannten Menschen desselben Geschlechts und ungefähr gleichen Alters. Damit du dich ehrlich beschreiben kannst, werden deine Antworten streng vertraulich behandelt. Gib für jede Aussage an, wie zutreffend sie für dich ist.",
+    "itemPrefix": "Aussage",
     "back": "Zurück",
     "next": "Weiter",
     "seeResults": "Meine Ergebnisse sehen",
@@ -404,7 +404,7 @@
     "intro": {
       "heading": "Cèrcol des Ersten Viertels",
       "meta": "60 Fragen · ~10 Min.",
-      "scale": "1–5 · Stimme überhaupt nicht zu → Stimme vollständig zu",
+      "scale": "1–5 · Sehr unzutreffend → Sehr zutreffend",
       "guidance": "Keine richtigen Antworten. Geh mit dem, was jetzt für dich wahr ist.",
       "cta": "Beginnen"
     },
@@ -463,8 +463,8 @@
     "blockProgress": "{{current}} von {{total}} in diesem Block",
     "blockLabel": "Block {{current}} von {{total}}",
     "overallProgress": "{{current}} von {{total}} insgesamt",
-    "instructions": "Bewerte, inwieweit jede Aussage auf dich zutrifft.",
-    "itemPrefix": "Ich sehe mich als jemanden, der/die",
+    "instructions": "Beschreibe dich so, wie du jetzt im Allgemeinen bist, nicht so, wie du in Zukunft sein möchtest. Beschreibe dich so, wie du dich selbst ehrlich siehst, im Vergleich zu anderen dir bekannten Menschen desselben Geschlechts und ungefähr gleichen Alters. Damit du dich ehrlich beschreiben kannst, werden deine Antworten streng vertraulich behandelt. Gib für jede Aussage an, wie zutreffend sie für dich ist.",
+    "itemPrefix": "Aussage",
     "back": "Zurück",
     "next": "Weiter",
     "seeResults": "Meine Ergebnisse sehen",
@@ -476,7 +476,7 @@
     "intro": {
       "heading": "Cèrcol des Vollmondes",
       "meta": "120 Fragen · ~20 Min.",
-      "scale": "1–5 · Stimme überhaupt nicht zu → Stimme vollständig zu",
+      "scale": "1–5 · Sehr unzutreffend → Sehr zutreffend",
       "guidance": "Du kennst dich selbst. Vertrau darauf.",
       "partNote": "Dies ist Teil 1 eines zweiteiligen Instruments. Zeuge Cèrcol folgt nach deinen Ergebnissen.",
       "cta": "Beginnen"
@@ -539,19 +539,19 @@
     }
   },
   "scale": {
-    "1": "Stimme überhaupt nicht zu",
-    "2": "Stimme etwas nicht zu",
-    "3": "Weder noch",
-    "4": "Stimme etwas zu",
-    "5": "Stimme vollständig zu"
+    "1": "Sehr unzutreffend",
+    "2": "Eher unzutreffend",
+    "3": "Weder zutreffend noch unzutreffend",
+    "4": "Eher zutreffend",
+    "5": "Sehr zutreffend"
   },
   "scale7": {
     "1": "Stimme überhaupt nicht zu",
-    "2": "Stimme mäßig nicht zu",
+    "2": "Stimme eher nicht zu",
     "3": "Stimme etwas nicht zu",
     "4": "Weder noch",
     "5": "Stimme etwas zu",
-    "6": "Stimme mäßig zu",
+    "6": "Stimme eher zu",
     "7": "Stimme vollständig zu"
   },
   "keyboard": {
@@ -1351,7 +1351,7 @@
   "instruments": {
     "title": "Instrumente",
     "intro": {
-      "heading": "Drei Instrumente. Eine Skala.",
+      "heading": "Drei Instrumente. Fünf Dimensionen.",
       "body": "Jedes Instrument misst dieselben fünf Dimensionen, bei unterschiedlicher Tiefe und Auflösung. Sie sind für die sequentielle Verwendung konzipiert, aber jedes steht für sich allein."
     },
     "freeLabel": "Kostenlos",
@@ -1375,7 +1375,7 @@
       "heading": "Cèrcol des Ersten Viertels",
       "eyebrow": "Vollständiges Porträt",
       "meta": "60 Fragen · ~10 Min.",
-      "scaleNote": "5-Punkte-Skala: 'Stimme überhaupt nicht zu' bis 'Stimme vollständig zu'. Fünf-Punkte-Skalen sind Standard für Facetten-Persönlichkeitsmessungen.",
+      "scaleNote": "5-Punkte-Skala: 'Sehr unzutreffend' bis 'Sehr zutreffend'. Fünf-Punkte-Skalen sind Standard für Facetten-Persönlichkeitsmessungen.",
       "measures": "Fünf Dimensionen, jede aufgeteilt in 6 Facetten, 30 Datenpunkte. Zwei Items pro Facette.",
       "get": "Domänendiagramm, 30-Facetten-Aufschlüsselung und einen ersten Beta-Blick auf deine Rolle. Die Facettenaufschlüsselung ist der Ort, wo die nützlichen Informationen liegen, die Domänensummen sind nur die Überschrift.",
       "items": [
@@ -1383,7 +1383,7 @@
         "Mir Sorgen mache.",
         "Eine lebhafte Vorstellungskraft habe."
       ],
-      "itemPrefix": "Ich sehe mich als jemanden, der/die:"
+      "itemPrefix": "Aussage:"
     },
     "fullMoon": {
       "heading": "Cèrcol des Vollmondes",
@@ -1399,7 +1399,7 @@
           "Die Bedürfnisse anderer vorhersehe.",
           "Aufgaben sofort erledige."
         ],
-        "itemPrefix": "Ich sehe mich als jemanden, der/die:"
+        "itemPrefix": "Aussage:"
       },
       "part2": {
         "label": "Teil 2",
@@ -1454,7 +1454,7 @@
   },
   "onboarding": {
     "heading": "Willkommen bei Cèrcol",
-    "intro": "Drei Instrumente. Eine Skala. Beginne, wo du möchtest: jedes steht für sich.",
+    "intro": "Drei Instrumente. Fünf Dimensionen. Beginne, wo du möchtest: jedes steht für sich.",
     "newMoon": {
       "desc": "10 Fragen. Ein schneller Blick auf deine fünf Dimensionen."
     },
@@ -1574,5 +1574,8 @@
     "sections": "Fußzeilennavigation",
     "tagline": "Finde heraus, wie du im Team arbeitest. Die Fragen, die Bewertung und die Forschung dahinter sind öffentlich.",
     "rights": "Cèrcol ist Open Source. Nur Vollmond ist kostenpflichtig."
+  },
+  "common": {
+    "scaleLabel": "Skala"
   }
 }

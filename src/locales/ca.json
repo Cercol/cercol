@@ -391,8 +391,8 @@
     "blockProgress": "{{current}} de {{total}} en aquest bloc",
     "blockLabel": "Bloc {{current}} de {{total}}",
     "overallProgress": "{{current}} de {{total}} en total",
-    "instructions": "Indica en quina mesura cada afirmació s'aplica a tu.",
-    "itemPrefix": "Em veig com algú que",
+    "instructions": "Descriu-te tal com ets en general ara, no com voldries ser en el futur. Descriu-te tal com et veus sincerament, en relació amb altres persones del mateix sexe i aproximadament de la teva edat que coneguis. Perquè et puguis descriure amb sinceritat, les teves respostes es mantindran en absoluta confidencialitat. Indica fins a quin punt és exacte el que diu de tu cada enunciat.",
+    "itemPrefix": "Enunciat",
     "back": "Anterior",
     "next": "Següent",
     "seeResults": "Veure els meus resultats",
@@ -404,7 +404,7 @@
     "intro": {
       "heading": "Cèrcol de Quart Creixent",
       "meta": "60 preguntes · ~10 min",
-      "scale": "1–5 · Totalment en desacord → Totalment d'acord",
+      "scale": "1–5 · Molt inexacte → Molt exacte",
       "guidance": "No hi ha respostes correctes. Tria el que és cert per a tu ara mateix.",
       "cta": "Comença"
     },
@@ -463,8 +463,8 @@
     "blockProgress": "{{current}} de {{total}} en aquest bloc",
     "blockLabel": "Bloc {{current}} de {{total}}",
     "overallProgress": "{{current}} de {{total}} en total",
-    "instructions": "Indica en quina mesura cada afirmació s'aplica a tu.",
-    "itemPrefix": "Em veig com algú que",
+    "instructions": "Descriu-te tal com ets en general ara, no com voldries ser en el futur. Descriu-te tal com et veus sincerament, en relació amb altres persones del mateix sexe i aproximadament de la teva edat que coneguis. Perquè et puguis descriure amb sinceritat, les teves respostes es mantindran en absoluta confidencialitat. Indica fins a quin punt és exacte el que diu de tu cada enunciat.",
+    "itemPrefix": "Enunciat",
     "back": "Anterior",
     "next": "Següent",
     "seeResults": "Veure els meus resultats",
@@ -476,7 +476,7 @@
     "intro": {
       "heading": "Cèrcol de Lluna Plena",
       "meta": "120 preguntes · ~20 min",
-      "scale": "1–5 · Totalment en desacord → Totalment d'acord",
+      "scale": "1–5 · Molt inexacte → Molt exacte",
       "guidance": "Tu et coneixes. Fes-te'n cas.",
       "partNote": "Aquesta és la Part 1 d'un instrument de dues parts. El Testimoni Cèrcol seguirà als teus resultats.",
       "cta": "Comença"
@@ -539,11 +539,11 @@
     }
   },
   "scale": {
-    "1": "Totalment en desacord",
-    "2": "Una mica en desacord",
-    "3": "Ni d'acord ni en desacord",
-    "4": "Una mica d'acord",
-    "5": "Totalment d'acord"
+    "1": "Molt inexacte",
+    "2": "Moderadament inexacte",
+    "3": "Ni exacte ni inexacte",
+    "4": "Moderadament exacte",
+    "5": "Molt exacte"
   },
   "scale7": {
     "1": "Totalment en desacord",
@@ -1351,7 +1351,7 @@
   "instruments": {
     "title": "Instruments",
     "intro": {
-      "heading": "Tres instruments. Una escala.",
+      "heading": "Tres instruments. Cinc dimensions.",
       "body": "Cada instrument mesura les mateixes cinc dimensions, a diferent profunditat i resolució. Estan dissenyats per usar-se en seqüència, però cadascun és autònom."
     },
     "freeLabel": "Gratuït",
@@ -1375,7 +1375,7 @@
       "heading": "Cèrcol de Quart Creixent",
       "eyebrow": "Retrat complet",
       "meta": "60 preguntes · ~10 min",
-      "scaleNote": "Escala de 5 punts: «Totalment en desacord» fins a «Totalment d'acord». Les escales de cinc punts són estàndard per a la mesura de personalitat a nivell de facetes.",
+      "scaleNote": "Escala de 5 punts: «Molt inexacte» fins a «Molt exacte». Les escales de cinc punts són estàndard per a la mesura de personalitat a nivell de facetes.",
       "measures": "Cinc dimensions, cadascuna dividida en 6 facetes, 30 punts de dades. Dos ítems per faceta.",
       "get": "Gràfic de dominis, desglossament de 30 facetes i una primera lectura beta del teu rol. El desglossament de facetes és on viu la informació útil, els totals de domini són només el titular.",
       "items": [
@@ -1383,7 +1383,7 @@
         "Em preocupe per les coses.",
         "Tinc una imaginació vívida."
       ],
-      "itemPrefix": "Em veig com algú que:"
+      "itemPrefix": "Enunciat:"
     },
     "fullMoon": {
       "heading": "Cèrcol de Lluna Plena",
@@ -1399,7 +1399,7 @@
           "Anticipe les necessitats dels altres.",
           "Faig les tasques de seguida."
         ],
-        "itemPrefix": "Em veig com algú que:"
+        "itemPrefix": "Enunciat:"
       },
       "part2": {
         "label": "Part 2",
@@ -1454,7 +1454,7 @@
   },
   "onboarding": {
     "heading": "Benvingut a Cèrcol",
-    "intro": "Tres instruments. Una escala. Comença on vulgues: cadascun s'aguanta sol.",
+    "intro": "Tres instruments. Cinc dimensions. Comença on vulgues: cadascun s'aguanta sol.",
     "newMoon": {
       "desc": "10 preguntes. Una mirada ràpida a les teues cinc dimensions."
     },
@@ -1574,5 +1574,8 @@
     "sections": "Seccions del peu de pàgina",
     "tagline": "Descobreix com treballes en equip. Les preguntes, la puntuació i la investigació que hi ha al darrere són públiques.",
     "rights": "Cèrcol és de codi obert. Només la Lluna Plena és de pagament."
+  },
+  "common": {
+    "scaleLabel": "Escala"
   }
 }
