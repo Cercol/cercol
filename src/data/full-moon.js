@@ -12,7 +12,7 @@
  * https://ipip.ori.org
  *
  * 120 items · 5 domains · 30 facets · 4 items per facet
- * Scale: 1 (Disagree strongly) → 5 (Agree strongly)
+ * Scale: 1 (Very inaccurate) → 5 (Very accurate), the IPIP-NEO accuracy anchors
  * Reverse items: score = 6 - rawValue
  *
  * All IPIP items are in the public domain with no restrictions on use.
