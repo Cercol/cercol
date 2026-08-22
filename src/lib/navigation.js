@@ -62,14 +62,16 @@ export const NAV_LINKS = NAV.flatMap((entry) => entry.items)
 export const GITHUB_URL = 'https://github.com/cercol/cercol'
 export const ISSUES_URL = `${GITHUB_URL}/issues`
 export const ISSUE_URL = `${ISSUES_URL}/new?title=Bug+report&labels=bug`
-export const AUTHOR_URL = 'https://miquelmatoses.github.io/portfolio/'
+// The credit is for the design system, not a byline: mm-design is where every
+// token, icon and type choice on this site comes from.
+export const DESIGN_URL = 'https://github.com/miquelmatoses/mm-design'
 
 export const META_LINKS = [
   { key: 'privacy', to: '/privacy', labelKey: 'nav.privacy' },
   { key: 'sample', to: '/sample', labelKey: 'sample.eyebrow' },
   { key: 'github', href: GITHUB_URL, labelKey: 'home.viewOnGitHub' },
   { key: 'issues', href: ISSUE_URL, labelKey: 'feedback.reportIssue' },
-  { key: 'author', href: AUTHOR_URL, label: 'Miquel Matoses', rel: 'noreferrer author' },
+  { key: 'design', href: DESIGN_URL, label: 'mm-design' },
 ]
 
 /**
