@@ -183,7 +183,7 @@
   "privacy": {
     "eyebrow": "Mentions légales",
     "title": "Politique de confidentialité",
-    "lastUpdated": "Dernière mise à jour : mai 2026",
+    "lastUpdated": "Dernière mise à jour : août 2026",
     "intro": "Cette politique explique quelles données Cèrcol collecte, pourquoi, et ce que vous pouvez en faire. Elle est rédigée en langage clair, si quelque chose n'est pas clair, écrivez-nous.",
     "collected": {
       "heading": "Ce que nous collectons",
@@ -199,7 +199,7 @@
       "heading": "Pourquoi nous les collectons",
       "body": "Nous collectons des données à trois fins uniquement :",
       "function": "Pour fournir le service : votre e-mail est nécessaire pour vous authentifier ; vos résultats sont stockés pour que vous puissiez consulter votre historique.",
-      "research": "Recherche anonymisée : des scores agrégés et dé-identifiés sont utilisés pour améliorer le modèle de personnalité et valider les normes entre les populations. Les résultats individuels ne sont jamais publiés.",
+      "research": "Recherche anonymisée : les scores dépersonnalisés servent à améliorer le modèle de personnalité et à valider les normes entre populations, et sont publiés sous forme de jeu de données ouvert pour que d'autres chercheurs puissent les exploiter. Les données publiées comportent le score, l'instrument, la langue et la date, et jamais votre adresse e-mail, votre compte ni quoi que ce soit qui puisse vous identifier.",
       "payment": "Pour traiter votre paiement : Stripe a besoin des détails de votre carte pour vous facturer Cèrcol de Pleine Lune. Nous ne recevons qu'une confirmation.",
       "noAds": "Nous ne vendons pas de données. Nous n'utilisons pas les données à des fins publicitaires. Nous ne partageons pas les données avec des tiers sauf tel que décrit ci-dessus."
     },

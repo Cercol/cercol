@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+title: Cèrcol
+message: If you use this software or its dataset, please cite it as below.
+type: software
+authors:
+  - family-names: Matoses
+    given-names: Miquel
+repository-code: "https://github.com/cercol/cercol"
+url: "https://cercol.team"
+abstract: >-
+  An open-source personality assessment platform built on the public-domain
+  IPIP item pool, implementing the IPIP-NEO in six languages with client-side
+  scoring, a peer-rating instrument, and a documented, citable scoring
+  pipeline.
+keywords:
+  - personality assessment
+  - Big Five
+  - IPIP
+  - IPIP-NEO
+  - psychometrics
+  - open science
+  - peer report
+license: MIT

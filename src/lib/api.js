@@ -9,6 +9,7 @@ import {
   getRefreshToken, setRefreshToken, clearRefreshToken,
 } from './tokens'
 import { getFirstTouch } from '../utils/attribution'
+import { INSTRUMENT_VERSION } from '../data/instrument-version'
 
 const API_URL = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '')
 
@@ -370,6 +371,8 @@ export async function logResult({
     method: 'POST',
     body: JSON.stringify({
       instrument, language, presence, bond, discipline, depth, vision, facets,
+      // What this respondent actually answered. See docs/policies/dataset-versions.md.
+      instrument_version: INSTRUMENT_VERSION,
       anon_id: getAnonId(),
       utm_source: ft.utm_source,
       utm_medium: ft.utm_medium,

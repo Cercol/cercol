@@ -82,7 +82,7 @@ const DOMAINS = ['presence', 'bond', 'discipline', 'depth', 'vision']
  * (New Moon is a 1..7 scale, the other two are 1..5). Returns an error
  * string or null.
  */
-function validateResult(b) {
+export function validateResult(b) {
   if (!b || !INSTRUMENTS.has(b.instrument)) return 'instrument'
   if (b.language != null && !LANGS.has(b.language)) return 'language'
   const hi = b.instrument === 'newMoon' ? 7 : 5
@@ -92,6 +92,10 @@ function validateResult(b) {
     if (typeof v !== 'number' || Number.isNaN(v) || v < 1 || v > hi) return d
   }
   if (b.facets != null && (typeof b.facets !== 'object' || Array.isArray(b.facets))) return 'facets'
+  // A version is a small positive integer or nothing. Nothing is not an error:
+  // a visitor on a bundle older than versioning cannot send one, and a row with
+  // no version is still a real answer. See docs/policies/dataset-versions.md.
+  if (b.instrument_version != null && (!Number.isInteger(b.instrument_version) || b.instrument_version < 1)) return 'instrument_version'
   return null
 }
 
@@ -135,13 +139,15 @@ export async function logResult(env, request) {
   const id = uuid()
   await db.prepare(
     `INSERT INTO results (id, created_at, instrument, language, presence, bond, discipline, depth,
-                          vision, facets, user_id, anon_id, utm_source, utm_medium, utm_campaign, referrer)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+                          vision, facets, user_id, anon_id, utm_source, utm_medium, utm_campaign, referrer,
+                          instrument_version)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
   ).bind(id, now(), body.instrument, body.language ?? null,
          body.presence ?? null, body.bond ?? null, body.discipline ?? null, body.depth ?? null,
          body.vision ?? null, body.facets == null ? null : JSON.stringify(body.facets),
          userId, body.anon_id ?? null, body.utm_source ?? null, body.utm_medium ?? null,
-         body.utm_campaign ?? null, body.referrer ?? null).run()
+         body.utm_campaign ?? null, body.referrer ?? null,
+         body.instrument_version ?? null).run()
   return Response.json({ id })
 }
 

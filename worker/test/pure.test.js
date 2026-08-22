@@ -9,6 +9,7 @@ import { describe, it, expect } from 'vitest'
 import { issueAccessToken, verifyAccessToken, bearerFrom } from '../src/jwt.js'
 import { extractLinkTargets, extractDois, isInternal, langsWithContent, doiUrl } from '../src/links.js'
 import { scoreForReport, zscoresFor } from '../src/scoring.js'
+import { validateResult } from '../src/writes.js'
 import { classifyChannel, buildChannels, buildFunnel, buildCumulative, weekBounds, weekLabel } from '../src/jobs/digest.js'
 import { choosePerOwner } from '../src/jobs/nudge.js'
 import { classifyBroken } from '../src/jobs/links.js'
@@ -404,5 +405,18 @@ describe('language gaps', () => {
     expect(line).toContain('https://cercol.team/de/blog/b/')
     expect(languageActions({ fresh: [] })).toEqual([])
     expect(languageActions(null)).toEqual([])
+  })
+})
+
+describe('instrument version', () => {
+  it('rejects a version that is not a small positive integer', () => {
+    const base = { instrument: 'newMoon', presence: 4 }
+    expect(validateResult({ ...base, instrument_version: 1 })).toBeNull()
+    expect(validateResult({ ...base })).toBeNull()
+    expect(validateResult({ ...base, instrument_version: null })).toBeNull()
+    expect(validateResult({ ...base, instrument_version: 0 })).toBe('instrument_version')
+    expect(validateResult({ ...base, instrument_version: -1 })).toBe('instrument_version')
+    expect(validateResult({ ...base, instrument_version: 1.5 })).toBe('instrument_version')
+    expect(validateResult({ ...base, instrument_version: '1' })).toBe('instrument_version')
   })
 })

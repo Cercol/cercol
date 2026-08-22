@@ -183,7 +183,7 @@
   "privacy": {
     "eyebrow": "Legal",
     "title": "Política de privacitat",
-    "lastUpdated": "Última actualització: maig de 2026",
+    "lastUpdated": "Última actualització: agost de 2026",
     "intro": "Aquesta política explica quines dades recull Cèrcol, per què, i quines opcions tens. Està escrita en llenguatge clar, si alguna cosa no queda clara, envia'ns un correu.",
     "collected": {
       "heading": "Què recopilem",
@@ -199,7 +199,7 @@
       "heading": "Per què les recopilem",
       "body": "Recopilem dades amb tres finalitats úniques:",
       "function": "Per proporcionar el servei: el teu correu és necessari per autenticar-te; els teus resultats s'emmagatzemen perquè pugues veure el teu historial.",
-      "research": "Recerca anonimitzada: les puntuacions agregades i desidentificades s'utilitzen per millorar el model de personalitat i validar normes entre poblacions. Els resultats individuals mai es publiquen.",
+      "research": "Recerca anonimitzada: les puntuacions desidentificades serveixen per millorar el model de personalitat i validar els barems entre poblacions, i es publiquen com a conjunt de dades obert perquè altres investigadors hi puguen treballar. Les dades publicades porten la puntuació, l'instrument, la llengua i la data, i mai el teu correu, el teu compte ni res que et puga identificar.",
       "payment": "Per processar el teu pagament: Stripe necessita les dades de la teua targeta per cobrar-te el Cèrcol de Lluna Plena. Nosaltres només rebem una confirmació.",
       "noAds": "No venem dades. No les fem servir per a publicitat. No les compartim amb tercers excepte com es descriu més amunt."
     },

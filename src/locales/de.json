@@ -183,7 +183,7 @@
   "privacy": {
     "eyebrow": "Rechtliches",
     "title": "Datenschutzrichtlinie",
-    "lastUpdated": "Zuletzt aktualisiert: Mai 2026",
+    "lastUpdated": "Zuletzt aktualisiert: August 2026",
     "intro": "Diese Richtlinie erklärt, welche Daten Cèrcol erhebt, warum und was du damit tun kannst. Sie ist in einfacher Sprache verfasst, falls etwas unklar ist, schreib uns.",
     "collected": {
       "heading": "Was wir erheben",
@@ -199,7 +199,7 @@
       "heading": "Warum wir es erheben",
       "body": "Wir erheben Daten ausschließlich für drei Zwecke:",
       "function": "Um den Dienst bereitzustellen: deine E-Mail-Adresse wird benötigt, um dich zu authentifizieren; deine Ergebnisse werden gespeichert, damit du deine Historie einsehen kannst.",
-      "research": "Anonymisierte Forschung: aggregierte, de-identifizierte Punkte werden verwendet, um das Persönlichkeitsmodell zu verbessern und Normen populationsübergreifend zu validieren. Individuelle Ergebnisse werden niemals veröffentlicht.",
+      "research": "Anonymisierte Forschung: Die de-identifizierten Werte dienen dazu, das Persönlichkeitsmodell zu verbessern und Normen über Populationen hinweg zu validieren, und werden als offener Datensatz veröffentlicht, damit andere Forschende damit arbeiten können. Die veröffentlichten Daten enthalten den Wert, das Instrument, die Sprache und das Datum, niemals Ihre E-Mail-Adresse, Ihr Konto oder etwas, das Sie identifizieren könnte.",
       "payment": "Um deine Zahlung zu verarbeiten, Stripe benötigt deine Kartendaten, um dir den Cèrcol des Vollmondes in Rechnung zu stellen. Wir erhalten nur eine Bestätigung.",
       "noAds": "Wir verkaufen keine Daten. Wir nutzen keine Daten für Werbung. Wir teilen keine Daten mit Dritten, außer wie oben beschrieben."
     },
