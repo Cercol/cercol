@@ -72,7 +72,7 @@ export const PLAN_SECTIONS = [
       {
         "id": "s3",
         "title": "Substituir la Lluna Plena pels 120 reals",
-        "why": "Canvien 63 ítems. A partir d'ací el test és l'IPIP-NEO-120 i no una cosa que se li assembla, i els barems de Kajonius & Johnson (N = 320.128) passen a descriure el nostre instrument de veres en comptes d'aproximar-lo. També desapareixen els 21 ítems que no existeixen a cap banc. Context complet a docs/post-mortems/2026-08-22-instruments-written-from-memory.md.",
+        "why": "Canvien 63 ítems. A partir d'ací el test és l'IPIP-NEO-120 i no una cosa que se li assembla, i els barems de Kajonius & Johnson (N = 320.128) passen a descriure el nostre instrument de veres en comptes d'aproximar-lo. També desapareixen els 21 ítems que no existeixen a cap banc. Context complet a docs/post-mortems/2026-08-22-instruments-written-from-memory.md. FETA el 22/08/2026: 59 ítems canviats, els tres mal col·locats corregits, versió 4.",
         "aud": [
           "U",
           "A"
@@ -86,7 +86,7 @@ export const PLAN_SECTIONS = [
           "type": "prompt",
           "text": "Replace the Full Moon item set with the canonical IPIP-NEO-120 in src/data/reference/ipip-neo-120.js.\n\nThis is not a text change. Every item carries a facet, a domain and a keying direction, and all of them move with it. An audit on 2026-08-22 found that even among the 61 items we already share with the published instrument, three sit in the wrong facet and one is keyed the wrong way:\n\n- \"Act without thinking.\" is in Immoderation (n5) keyed forward. Published, it is in Cautiousness (c6) keyed reverse. It crosses domain AND sign, so today it adds to Depth where it should subtract from Discipline. The same error is in First Quarter, where a facet is two items rather than four and it therefore weighs more.\n- \"Tell the truth.\" is in Morality (a2). Published, Dutifulness (c3).\n- \"Take advantage of others.\" is in Cooperation (a4). Published, Morality (a2).\n\nTake facet, domain and keying from the reference file for every item. Do not carry any of ours across, including for the items that stay: that is exactly how those three survived.\n\nThen, in order, and report each one in the pull request:\n\n1. Assert every facet ends with exactly four items. A facet with three or five silently skews its own mean.\n2. Verify the facet-to-domain map against the reference rather than against the previous file.\n3. Confirm the norms are looked up per facet code and not by position in an array. If anything indexes by position, the item replacement will silently misalign it.\n4. Run the role-stability simulation and report how far the role boundary moves under the new item set. It reads domain z-scores, so it moves when the domains do.\n5. Carry the other-language strings ONLY where the English item is unchanged. Where the English is new, leave the language absent and let the loader fall back to English. Do not invent a translation to fill a gap.\n6. Bump INSTRUMENT_VERSION and write the changelog entry.\n\nFull test suite must pass. Open as its own pull request and do not merge: the operator reviews an instrument change.\n\nRead docs/post-mortems/2026-08-22-instruments-written-from-memory.md before you start. It carries the measurements this step is built on and the three items that are in the wrong facet today."
         },
-        "done": false
+        "done": true
       },
       {
         "id": "s4",
@@ -109,7 +109,7 @@ export const PLAN_SECTIONS = [
       {
         "id": "s5",
         "title": "Substituir el Primer Quart pels 60 reals",
-        "why": "Depèn de la passa s1. El nostre Primer Quart és un subconjunt perfecte de la nostra Lluna Plena (60 de 60), però només 36 dels seus ítems són a la llista de Johnson. Hi ha un problema obert que cal resoldre en aquesta passa: la taula de barems de Kajonius & Johnson és sobre la mètrica de quatre ítems per faceta, i el Primer Quart en té dos, així que eixos barems no li serveixen tal com estan. Context complet a docs/post-mortems/2026-08-22-instruments-written-from-memory.md.",
+        "why": "Depèn de la passa s1. El nostre Primer Quart és un subconjunt perfecte de la nostra Lluna Plena (60 de 60), però només 36 dels seus ítems són a la llista de Johnson. Hi ha un problema obert que cal resoldre en aquesta passa: la taula de barems de Kajonius & Johnson és sobre la mètrica de quatre ítems per faceta, i el Primer Quart en té dos, així que eixos barems no li serveixen tal com estan. Context complet a docs/post-mortems/2026-08-22-instruments-written-from-memory.md. FETA el 22/08/2026: 37 ítems canviats. Els barems de la Taula A1 continuen sent per a quatre ítems per faceta i el Primer Quart en té dos: continua sent un problema obert, ara a la passa s11.",
         "aud": [
           "U",
           "A"
@@ -123,12 +123,12 @@ export const PLAN_SECTIONS = [
           "type": "prompt",
           "text": "Blocked until the step 's1' has an answer. Do not start this without the published IPIP-NEO-60 item list in hand.\n\nWhen it is available: replace the First Quarter items with the published 60, keeping two items per facet and the published keying, the same way the Full Moon replacement was done.\n\nThen resolve the norms problem, which is the harder half of this step. Kajonius & Johnson (2019) Table A1 gives facet statistics on the 4-to-20 metric, meaning four items answered 1 to 5. First Quarter has two items per facet. Using the same table for both instruments without adjustment is wrong. Find out what the IPIP-NEO-60 paper itself publishes, and if it publishes nothing usable, say so and propose the honest alternative rather than rescaling by assumption.\n\nOpen as its own pull request and do not merge.\n\nRead docs/post-mortems/2026-08-22-instruments-written-from-memory.md first."
         },
-        "done": false
+        "done": true
       },
       {
         "id": "s6",
         "title": "Danés: el de Vedel, sencer i literal",
-        "why": "El primer cas on deixem de traduir i comencem a copiar. La seua pàgina té els 120, humans, validats en població danesa i publicats per Johnson. Quan la Lluna Plena siga l'IPIP-NEO-120, la seua traducció encaixa ítem a ítem sense cap forat. Context complet a docs/post-mortems/2026-08-22-instruments-written-from-memory.md.",
+        "why": "El primer cas on deixem de traduir i comencem a copiar. La seua pàgina té els 120, humans, validats en població danesa i publicats per Johnson. Quan la Lluna Plena siga l'IPIP-NEO-120, la seua traducció encaixa ítem a ítem sense cap forat. Context complet a docs/post-mortems/2026-08-22-instruments-written-from-memory.md. FETA el 22/08/2026: els 120 de la Lluna Plena i 51 dels 60 del Primer Quart porten el danés de Vedel tal com el va publicar. Els altres nou no els va traduir mai perquè no són al 120.",
         "aud": [
           "U",
           "A"
@@ -142,7 +142,7 @@ export const PLAN_SECTIONS = [
           "type": "prompt",
           "text": "Replace every Danish string in the Full Moon items with Anna Vedel's published translation, taken from src/data/reference/ipip-neo-120.json.\n\nThis is a copy, not a translation. Do not improve, modernise or correct any of it. If a string looks wrong to you, leave it and note it in the pull request: the value of a validated instrument is that it is the instrument that was validated, and its imperfections are part of what the validation measured.\n\nUpdate SCIENCE.md and the FAQ to say what is then true: the Danish items are Vedel, Gotzsche-Astrup and Holm's published translation, used verbatim, with the citation. That claim is currently false and this step is what makes it true.\n\nThe same for the Danish response anchors if step 's4' has not already taken them.\n\nRead docs/post-mortems/2026-08-22-instruments-written-from-memory.md first, in particular the section on how we know the current Danish is not Vedel's."
         },
-        "done": false
+        "done": true
       },
       {
         "id": "s7",
@@ -213,6 +213,24 @@ export const PLAN_SECTIONS = [
         "action": {
           "type": "do",
           "html": "<ul class=\"ulist\"><li>Reescriure les dues cartes dient el que aleshores serà cert, i llevar el bloqueig de les incidències.</li><li>La de Vedel canvia de to sencer: passa de \"seguim la teua metodologia\" a \"fem servir la teua traducció tal com la vas publicar\".</li><li>La de Thiry i Piolti depèn de si el francés acaba copiat d'OpenScales o traduït per nosaltres. Si és traduït, la carta ha de dir-ho.</li><li><b>Cap de les dues ix sense la revisió filològica de la llengua corresponent.</b></li></ul>"
+        },
+        "done": false
+      },
+      {
+        "id": "s11",
+        "title": "Els barems del Primer Quart no són els seus",
+        "why": "La taula A1 de Kajonius & Johnson dona estadístiques per faceta sobre la mètrica de quatre ítems, i el Primer Quart en té dos. Fem servir la mateixa taula per als dos instruments sense ajustar res, i això no és correcte. Amb la Lluna Plena ja resolt, aquest és l'únic lloc on encara heretem una xifra d'un instrument que no és el nostre.",
+        "aud": [
+          "A"
+        ],
+        "pay": [
+          "Base",
+          "Autoritat"
+        ],
+        "eff": "Mitjà",
+        "action": {
+          "type": "prompt",
+          "text": "First Quarter and Full Moon both read their norms from NORM_MEAN and NORM_SD in src/utils/role-scoring.js, sourced from Kajonius & Johnson (2019) Table A1. That table is on the 4-to-20 facet metric: four items answered 1 to 5. Full Moon has four items per facet, so the table describes it. First Quarter has two, so it does not.\n\nFind out what the IPIP-NEO-60 paper itself publishes for its own scales. Maples-Keller et al. (2019), Journal of Personality Assessment 101(1), 4-15. The scoring-keys page at ipip.ori.org/IPIP-NEO-60ScoringKeys.htm publishes alphas from the Eugene-Springfield community sample, N = 757, which is a different and far smaller sample than the 320,128 behind the 120's norms; do not mix them.\n\nIf the paper publishes usable domain statistics, use them and say where they came from. If it does not, say so and propose the honest alternative rather than rescaling by assumption: two items and four items drawn from the same facet do not have the same mean or the same spread, and treating them as if they did is the same class of error as everything else fixed on 2026-08-22.\n\nThis is research plus a small change. Do not touch item files."
         },
         "done": false
       }
