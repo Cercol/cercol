@@ -16,6 +16,25 @@
  * so changing that policy later is one function rather than a search.
  */
 
+/** The locales that own a URL prefix. English is unprefixed. */
+export const LOCALES = ['ca', 'es', 'fr', 'de', 'da']
+
+/**
+ * True for the home page in any language.
+ *
+ * Layout used `pathname === '/'`, so /ca/, /es/, /fr/, /de/ and /da/ were
+ * treated as internal pages and rendered inside the 896px max-w-4xl column
+ * meant for articles. The home manages its own full-bleed background, so
+ * every non-English visitor got the instrument cards crushed into a narrow
+ * band with white either side. It shipped in Phase 10.2 and nobody caught it
+ * because the English home, the one anybody developing this site loads, is
+ * the single URL where the bug does not appear.
+ */
+export function isHomePath(pathname) {
+  const p = String(pathname || '').replace(/\/+$/, '')
+  return p === '' || LOCALES.includes(p.slice(1))
+}
+
 /**
  * Top-level entries, in header order.
  *
@@ -84,7 +103,7 @@ export const META_LINKS = [
  */
 export function navHref({ to, localised }, lang = 'en') {
   const code = String(lang || 'en').slice(0, 2)
-  return localised && code !== 'en' ? `/${code}${to}` : to
+  return localised && LOCALES.includes(code) ? `/${code}${to}` : to
 }
 
 /** True when `pathname` is inside this entry, for the active state. */
