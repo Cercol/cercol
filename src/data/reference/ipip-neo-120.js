@@ -362,7 +362,7 @@ export const IPIP_NEO_120 = [
   "domain": "extraversion",
   "keyed": 1,
   "en": "Am always on the go.",
-  "da": "Er altid i gang m ed noget."
+  "da": "Er altid i gang med noget."
  },
  {
   "code": "ipip_H79",
@@ -893,7 +893,7 @@ export const IPIP_NEO_120 = [
   "domain": "conscientiousness",
   "keyed": 1,
   "en": "Complete tasks successfully.",
-  "da": "Fuldfører opgaver med success."
+  "da": "Fuldfører opgaver med succes."
  },
  {
   "code": "ipip_H1174",

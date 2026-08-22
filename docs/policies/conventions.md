@@ -318,3 +318,10 @@ So:
   cannot be repaired afterwards.
 - A citation states an intention. It is not evidence that the intention was
   carried out; only a comparison with the source is.
+- A published translation is used as published, in its **wording**: which word,
+  which construction, which intensity, which item a string sits beside. Those
+  are what was validated. **Orthography is corrected**: a missing full stop, a
+  doubled space, a word split by a markup tag, a word spelled the wrong
+  language's way. None of those were validated and none of them change what an
+  item measures. Record each correction, and never let the second rule be used
+  to reach the first.

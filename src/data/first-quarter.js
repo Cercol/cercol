@@ -25,7 +25,7 @@ export const FQ_ITEMS = [
   // Vigil (Anxiety) — n1
   { id: 1,   text: { en: 'Worry about things.', ca: 'Em preocupo per les coses.', 'es-MX': 'Me preocupo por las cosas.', 'fr-CA': "Je m'inquiète à propos de choses.", de: 'Mache mir Sorgen um Dinge.', da: 'Bekymrer mig om mange ting.' },
     domain: 'depth', facet: 'vigil', reverse: false },
-  { id: 2,   text: { en: 'Get stressed out easily.', 'es-MX': 'Me estreso fácilmente.', 'fr-CA': 'Je deviens stressé facilement.', 'fr-FR': 'Je deviens stressé·e facilement.', da: 'Bliver let stresset.' },
+  { id: 2,   text: { en: 'Get stressed out easily.', de: 'Bin schnell gestresst.', ca: "M'estresso amb facilitat.", 'es-MX': 'Me estreso fácilmente.', 'fr-CA': 'Je deviens stressé facilement.', 'fr-FR': 'Je deviens stressé·e facilement.', da: 'Bliver let stresset.' },
     domain: 'depth', facet: 'vigil', reverse: false },
   // Blaze (Anger) — n2
   { id: 3,   text: { en: 'Get angry easily.', ca: "M'enfado amb facilitat.", 'es-MX': 'Me enojo fácilmente.', 'fr-CA': 'Je me mets en colère facilement.', de: 'Werde leicht wütend.', da: 'Bliver let vred.' },
@@ -40,29 +40,29 @@ export const FQ_ITEMS = [
   // Veil (Self-Consciousness) — n4
   { id: 7,   text: { en: 'Find it difficult to approach others.', ca: 'Em costa apropar-me als altres.', 'es-MX': 'Me resulta difícil acercarme a otros.', 'fr-CA': "J'éprouve de la difficulté à aborder les autres.", de: 'Finde es schwierig, auf andere zuzugehen.', da: 'Har svært ved at indlede en samtale.' },
     domain: 'depth', facet: 'veil', reverse: false },
-  { id: 8,   text: { en: 'Am easily intimidated.', 'fr-CA': 'Je suis facilement intimidé.', 'fr-FR': 'Je suis facilement intimidé·e.' },
+  { id: 8,   text: { en: 'Am easily intimidated.', 'es-MX': 'Me intimidan fácilmente.', da: 'Bliver let intimideret.', de: 'Lasse mich leicht einschüchtern.', ca: "M'intimido amb facilitat.", 'fr-CA': 'Je suis facilement intimidé.', 'fr-FR': 'Je suis facilement intimidé·e.' },
     domain: 'depth', facet: 'veil', reverse: false },
   // Surge (Immoderation) — n5
   { id: 9,   text: { en: 'Rarely overindulge.', ca: 'Rarament em passo de la ratlla.', 'es-MX': 'Rara vez cedo a los excesos.', 'fr-CA': 'Je fais rarement des excès.', de: 'Übertreibe selten.', da: 'Spiser og drikker sjældent for meget.' },
     domain: 'depth', facet: 'surge', reverse: true  },
-  { id: 10,  text: { en: 'Am able to control my cravings.', 'es-MX': 'Soy capaz de controlar mis antojos.', 'fr-CA': 'Je suis capable de contrôler mes envies.', da: 'Kan styre mine behov' },
+  { id: 10,  text: { en: 'Am able to control my cravings.', de: 'Kann meine Gelüste kontrollieren.', ca: 'Soc capaç de controlar les meves ganes.', 'es-MX': 'Soy capaz de controlar mis antojos.', 'fr-CA': 'Je suis capable de contrôler mes envies.', da: 'Kan styre mine behov.' },
     domain: 'depth', facet: 'surge', reverse: true  },
   // Fracture (Vulnerability) — n6
   { id: 11,  text: { en: 'Remain calm under pressure.', ca: 'Em mantinc tranquil/il·la sota pressió.', 'es-MX': 'Mantengo la calma bajo presión.', 'fr-CA': 'Je demeure calme sous pression.', de: 'Bleibe unter Druck ruhig.', da: 'Bevarer roen i pressede situationer.' },
     domain: 'depth', facet: 'fracture', reverse: true  },
-  { id: 12,  text: { en: 'Am calm even in tense situations.', 'fr-CA': 'Je suis calme, même dans les situations tendues.' },
+  { id: 12,  text: { en: 'Am calm even in tense situations.', 'es-MX': 'Estoy tranquilo incluso en situaciones tensas.', da: 'Er rolig selv i anspændte situationer.', de: 'Bleibe auch in angespannten Situationen ruhig.', ca: 'Estic tranquil/il·la fins i tot en situacions tenses.', 'fr-CA': 'Je suis calme, même dans les situations tendues.' },
     domain: 'depth', facet: 'fracture', reverse: true  },
 
   // ── PRESENCE (Extraversion) ─────────────────────
   // Hearth (Friendliness) — e1
   { id: 13,  text: { en: 'Make friends easily.', ca: 'Faig amics amb facilitat.', 'es-MX': 'Hago amigos fácilmente.', 'fr-CA': 'Je me fais des amis facilement.', de: 'Schließe leicht Freundschaften.', da: 'Har let ved at få venner.' },
     domain: 'presence', facet: 'hearth', reverse: false },
-  { id: 14,  text: { en: 'Act comfortably with others.', 'fr-CA': "J'agis aisément avec les autres." },
+  { id: 14,  text: { en: 'Act comfortably with others.', 'es-MX': 'Me comporto con naturalidad con los demás.', da: 'Opfører mig afslappet sammen med andre.', de: 'Gehe unbefangen mit anderen um.', ca: 'Actuo amb naturalitat amb els altres.', 'fr-CA': "J'agis aisément avec les autres." },
     domain: 'presence', facet: 'hearth', reverse: false },
   // Gather (Gregariousness) — e2
-  { id: 15,  text: { en: 'Love large parties.', 'es-MX': 'Me encantan las fiestas grandes.', 'fr-CA': "J'adore les grandes fêtes.", da: 'Elsker store fester.' },
+  { id: 15,  text: { en: 'Love large parties.', de: 'Liebe große Partys.', ca: "M'encanten les festes amb molta gent.", 'es-MX': 'Me encantan las fiestas grandes.', 'fr-CA': "J'adore les grandes fêtes.", da: 'Elsker store fester.' },
     domain: 'presence', facet: 'gather', reverse: false },
-  { id: 16,  text: { en: 'Avoid crowds.', 'es-MX': 'Evito las multitudes.', 'fr-CA': "J'évite les foules.", da: 'Undgår folkemængder.' },
+  { id: 16,  text: { en: 'Avoid crowds.', de: 'Vermeide Menschenmengen.', ca: 'Evito les multituds.', 'es-MX': 'Evito las multitudes.', 'fr-CA': "J'évite les foules.", da: 'Undgår folkemængder.' },
     domain: 'presence', facet: 'gather', reverse: true  },
   // Command (Assertiveness) — e3
   { id: 17,  text: { en: 'Take charge.', ca: 'Prenc les regnes.', 'es-MX': 'Tomo el mando.', 'fr-CA': "J'aime prendre en charge.", 'fr-FR': 'Je prends les choses en main.', de: 'Übernehme die Führung.', da: 'Tager føringen.' },
@@ -72,7 +72,7 @@ export const FQ_ITEMS = [
   // Drive (Activity Level) — e4
   { id: 19,  text: { en: 'Am always busy.', ca: 'Sempre estic ocupat/da.', 'es-MX': 'Siempre estoy ocupado.', 'fr-CA': 'Je suis toujours occupé.', 'fr-FR': 'Je suis toujours occupé·e.', de: 'Bin immer beschäftigt.', da: 'Har altid travlt.' },
     domain: 'presence', facet: 'drive', reverse: false },
-  { id: 20,  text: { en: 'Am always on the go.', ca: 'Sempre estic en moviment.', 'es-MX': 'Siempre estoy activo.', 'fr-CA': 'Je suis toujours en mouvement.', de: 'Bin immer unterwegs.', da: 'Er altid i gang m ed noget.' },
+  { id: 20,  text: { en: 'Am always on the go.', ca: 'Sempre estic en moviment.', 'es-MX': 'Siempre estoy activo.', 'fr-CA': 'Je suis toujours en mouvement.', de: 'Bin immer unterwegs.', da: 'Er altid i gang med noget.' },
     domain: 'presence', facet: 'drive', reverse: false },
   // Thrill (Excitement-Seeking) — e5
   { id: 21,  text: { en: 'Love excitement.', ca: "M'encanta l'emoció.", 'es-MX': 'Me encanta la emoción.', 'fr-CA': "J'adore les sensations fortes.", de: 'Liebe Aufregung.', da: 'Elsker spænding.' },
@@ -82,14 +82,14 @@ export const FQ_ITEMS = [
   // Radiance (Cheerfulness) — e6
   { id: 23,  text: { en: 'Have a lot of fun.', ca: "M'ho passo molt bé.", 'es-MX': 'Me divierto mucho.', 'fr-CA': "J'ai beaucoup de plaisir.", 'fr-FR': "Je m'amuse beaucoup.", de: 'Habe sehr viel Spaß.', da: 'Har det ofte sjovt.' },
     domain: 'presence', facet: 'radiance', reverse: false },
-  { id: 24,  text: { en: 'Love life.', 'es-MX': 'Amo la vida.', 'fr-CA': "J'adore la vie.", da: 'Elsker livet.' },
+  { id: 24,  text: { en: 'Love life.', de: 'Liebe das Leben.', ca: "M'encanta la vida.", 'es-MX': 'Amo la vida.', 'fr-CA': "J'adore la vie.", da: 'Elsker livet.' },
     domain: 'presence', facet: 'radiance', reverse: false },
 
   // ── VISION (Openness) ───────────────────────────
   // Dream (Imagination) — o1
   { id: 25,  text: { en: 'Have a vivid imagination.', ca: 'Tinc una imaginació molt viva.', 'es-MX': 'Tengo una imaginación vivida.', 'fr-CA': "J'ai une imagination débordante.", de: 'Habe eine lebhafte Fantasie.', da: 'Har en livlig fantasi.' },
     domain: 'vision', facet: 'dream', reverse: false },
-  { id: 26,  text: { en: 'Love to daydream.', 'es-MX': 'Me gusta soñar despierto.', 'fr-CA': "J'adore rêvasser.", da: 'Elsker at dagdrømme.' },
+  { id: 26,  text: { en: 'Love to daydream.', de: 'Liebe es, vor mich hin zu träumen.', ca: "M'encanta somiar despert/a.", 'es-MX': 'Me gusta soñar despierto.', 'fr-CA': "J'adore rêvasser.", da: 'Elsker at dagdrømme.' },
     domain: 'vision', facet: 'dream', reverse: false },
   // Craft (Artistic Interests) — o2
   { id: 27,  text: { en: 'Believe in the importance of art.', ca: "Crec en la importància de l'art.", 'es-MX': 'Creo en la importancia del arte.', 'fr-CA': "Je crois en l'importance de l'art.", de: 'Glaube an die Bedeutung von Kunst.', da: 'Tror på betydningen af kunst.' },
@@ -99,22 +99,22 @@ export const FQ_ITEMS = [
   // Resonance (Emotionality) — o3
   { id: 29,  text: { en: 'Experience my emotions intensely.', ca: 'Visc les meves emocions amb intensitat.', 'es-MX': 'Experimento mis emociones intensamente.', 'fr-CA': 'Je vis mes émotions intensément.', de: 'Erlebe meine Gefühle intensiv.', da: 'Oplever mine følelser intenst.' },
     domain: 'vision', facet: 'resonance', reverse: false },
-  { id: 30,  text: { en: 'Am not easily affected by my emotions.', 'fr-CA': 'Je ne suis pas facilement affecté par mes émotions.', 'fr-FR': 'Je ne suis pas facilement affecté·e par mes émotions.' },
+  { id: 30,  text: { en: 'Am not easily affected by my emotions.', 'es-MX': 'Mis emociones no me afectan fácilmente.', da: 'Bliver sjældent påvirket af mine følelser.', de: 'Lasse mich von meinen Gefühlen nicht leicht beeinflussen.', ca: "Les meves emocions no m'afecten amb facilitat.", 'fr-CA': 'Je ne suis pas facilement affecté par mes émotions.', 'fr-FR': 'Je ne suis pas facilement affecté·e par mes émotions.' },
     domain: 'vision', facet: 'resonance', reverse: true  },
   // Drift (Adventurousness) — o4
   { id: 31,  text: { en: 'Prefer to stick with things that I know.', ca: 'Prefereixo quedar-me amb el que conec.', 'es-MX': 'Prefiero apegarme a las cosas que sé.', 'fr-CA': "Je préfère m'en tenir aux choses connues.", de: 'Bleibe lieber bei dem, was ich kenne.', da: 'Foretrækker at holde mig til det, jeg kender.' },
     domain: 'vision', facet: 'drift', reverse: true  },
-  { id: 32,  text: { en: 'Don’t like the idea of change.', 'fr-CA': "Je n'aime pas l'idée de changer." },
+  { id: 32,  text: { en: 'Don’t like the idea of change.', 'es-MX': 'No me agrada la idea del cambio.', da: 'Bryder mig ikke om tanken om forandring.', de: 'Mag den Gedanken an Veränderung nicht.', ca: "No m'agrada la idea de canviar.", 'fr-CA': "Je n'aime pas l'idée de changer." },
     domain: 'vision', facet: 'drift', reverse: true  },
   // Prism (Intellect) — o5
   { id: 33,  text: { en: 'Avoid philosophical discussions.', ca: 'Evito les discussions filosòfiques.', 'es-MX': 'Evito discusiones filosóficas.', 'fr-CA': "J'évite les discussions philosophiques.", de: 'Vermeide philosophische Diskussionen.', da: 'Undgår filosofiske diskussioner.' },
     domain: 'vision', facet: 'prism', reverse: true  },
-  { id: 34,  text: { en: 'Am not interested in theoretical discussions.', 'es-MX': 'No tengo interés en las discusiones teóricas o hipotéticas.', 'fr-CA': 'Je ne suis pas intéressé par les discussions théoriques.', 'fr-FR': 'Je ne suis pas intéressé·e par les discussions théoriques.', da: 'Er ikke interesseret i teoretiske diskussioner.' },
+  { id: 34,  text: { en: 'Am not interested in theoretical discussions.', de: 'Interessiere mich nicht für theoretische Diskussionen.', ca: "No m'interessen les discussions teòriques.", 'es-MX': 'No tengo interés en las discusiones teóricas o hipotéticas.', 'fr-CA': 'Je ne suis pas intéressé par les discussions théoriques.', 'fr-FR': 'Je ne suis pas intéressé·e par les discussions théoriques.', da: 'Er ikke interesseret i teoretiske diskussioner.' },
     domain: 'vision', facet: 'prism', reverse: true  },
   // Compass (Liberalism) — o6
-  { id: 35,  text: { en: 'Tend to vote for liberal political candidates.', 'es-MX': 'Tiendo a votar por políticos liberales.', 'fr-CA': 'J’ai tendance à promouvoir des valeurs sociales libérales.', 'fr-FR': "J'ai tendance à promouvoir des valeurs sociales progressistes.", da: 'Ser mig selv som mest venstreorienteret.' },
+  { id: 35,  text: { en: 'Tend to vote for liberal political candidates.', de: 'Neige dazu, für progressive politische Kandidat*innen zu stimmen.', ca: 'Solc votar candidatures polítiques progressistes.', 'es-MX': 'Tiendo a votar por políticos liberales.', 'fr-CA': 'J’ai tendance à promouvoir des valeurs sociales libérales.', 'fr-FR': "J'ai tendance à promouvoir des valeurs sociales progressistes.", da: 'Ser mig selv som mest venstreorienteret.' },
     domain: 'vision', facet: 'compass', reverse: false },
-  { id: 36,  text: { en: 'Believe in one true religion.', 'fr-CA': 'Je crois en une seule vraie religion.' },
+  { id: 36,  text: { en: 'Believe in one true religion.', 'es-MX': 'Creo que solo existe una religión verdadera.', da: 'Tror på, at der kun findes én sand religion.', de: 'Glaube an eine einzige wahre Religion.', ca: 'Crec que només hi ha una religió veritable.', 'fr-CA': 'Je crois en une seule vraie religion.' },
     domain: 'vision', facet: 'compass', reverse: true  },
 
   // ── BOND (Agreeableness) ────────────────────────
@@ -124,36 +124,36 @@ export const FQ_ITEMS = [
   { id: 38,  text: { en: 'Believe that others have good intentions.', ca: 'Crec que els altres tenen bones intencions.', 'es-MX': 'Creo que los demás tienen buenas intenciones.', 'fr-CA': 'Je crois que les autres ont de bonnes intentions.', de: 'Glaube, dass andere gute Absichten haben.', da: 'Tror generelt, andre vil mig det bedste.' },
     domain: 'bond', facet: 'faith', reverse: false },
   // Edge (Morality) — a2
-  { id: 39,  text: { en: 'Cheat to get ahead.', 'es-MX': 'Hago trampa para avanzar.', 'fr-CA': 'Je triche pour avancer.', da: 'Snyder for at få et forspring.' },
+  { id: 39,  text: { en: 'Cheat to get ahead.', de: 'Betrüge, um weiterzukommen.', ca: 'Faig trampes per arribar més lluny.', 'es-MX': 'Hago trampa para avanzar.', 'fr-CA': 'Je triche pour avancer.', da: 'Snyder for at få et forspring.' },
     domain: 'bond', facet: 'edge', reverse: true  },
   { id: 40,  text: { en: 'Take advantage of others.', ca: "M'aprofito dels altres.", 'es-MX': 'Tomo ventaja de los demás.', 'fr-CA': 'Je profite des autres.', de: 'Nutze andere aus.', da: 'Udnytter andre.' },
     domain: 'bond', facet: 'edge', reverse: true  },
   // Gift (Altruism) — a3
-  { id: 41,  text: { en: 'Love to help others.', 'es-MX': 'Me gusta ayudar a otros.', 'fr-CA': "J'adore aider les autres.", da: 'Elsker at hjælpe andre.' },
+  { id: 41,  text: { en: 'Love to help others.', de: 'Liebe es, anderen zu helfen.', ca: "M'encanta ajudar els altres.", 'es-MX': 'Me gusta ayudar a otros.', 'fr-CA': "J'adore aider les autres.", da: 'Elsker at hjælpe andre.' },
     domain: 'bond', facet: 'gift', reverse: false },
-  { id: 42,  text: { en: 'Am concerned about others.', 'es-MX': 'Me preocupo por los demás.', 'fr-CA': 'Je me préoccupe des autres.', da: 'Bekymrer mig om andre.' },
+  { id: 42,  text: { en: 'Am concerned about others.', de: 'Kümmere mich um andere.', ca: 'Em preocupo pels altres.', 'es-MX': 'Me preocupo por los demás.', 'fr-CA': 'Je me préoccupe des autres.', da: 'Bekymrer mig om andre.' },
     domain: 'bond', facet: 'gift', reverse: false },
   // Yield (Cooperation) — a4
   { id: 43,  text: { en: 'Insult people.', ca: 'Insulto les persones.', 'es-MX': 'Insulto a las personas.', 'fr-CA': "J'insulte les gens.", de: 'Beleidige Menschen.', da: 'Fornærmer folk.' },
     domain: 'bond', facet: 'yield', reverse: true  },
-  { id: 44,  text: { en: 'Get back at others.', 'es-MX': 'Cuando me la hacen me la pagan.', 'fr-CA': "Je m'en prends aux autres.", da: 'Tager hævn over andre.' },
+  { id: 44,  text: { en: 'Get back at others.', de: 'Zahle es anderen heim.', ca: 'Em venjo dels altres.', 'es-MX': 'Cuando me la hacen me la pagan.', 'fr-CA': "Je m'en prends aux autres.", da: 'Tager hævn over andre.' },
     domain: 'bond', facet: 'yield', reverse: true  },
   // Shadow (Modesty) — a5
-  { id: 45,  text: { en: 'Believe that I am better than others.', 'es-MX': 'Creo que soy mejor que otros.', 'fr-CA': 'Je crois être meilleur que les autres.', 'fr-FR': 'Je crois être meilleur·e que les autres.', da: 'Mener, jeg er bedre end andre.' },
+  { id: 45,  text: { en: 'Believe that I am better than others.', de: 'Glaube, dass ich besser bin als andere.', ca: 'Crec que soc millor que els altres.', 'es-MX': 'Creo que soy mejor que otros.', 'fr-CA': 'Je crois être meilleur que les autres.', 'fr-FR': 'Je crois être meilleur·e que les autres.', da: 'Mener, jeg er bedre end andre.' },
     domain: 'bond', facet: 'shadow', reverse: true  },
   { id: 46,  text: { en: 'Think highly of myself.', ca: 'Tinc un alt concepte de mi mateix/a.', 'es-MX': 'Pienso muy bien de mí mismo.', 'fr-CA': "J'ai une très grande estime de moi-même.", de: 'Habe eine hohe Meinung von mir selbst.', da: 'Har høje tanker om mig selv.' },
     domain: 'bond', facet: 'shadow', reverse: true  },
   // Shield (Sympathy) — a6
   { id: 47,  text: { en: 'Sympathize with the homeless.', ca: 'Em compadeixo de les persones sense llar.', 'es-MX': 'Tengo empatía por las personas sin hogar.', 'fr-CA': 'Je sympathise avec les sans-abri.', 'fr-FR': "J'ai de la sympathie pour les sans-abri.", de: 'Habe Mitgefühl mit obdachlosen Menschen.', da: 'Har sympati for de hjemløse.' },
     domain: 'bond', facet: 'shield', reverse: false },
-  { id: 48,  text: { en: 'Feel sympathy for those who are worse off than myself.', 'es-MX': 'Siento empatía por aquellos que están más necesitados que yo.', 'fr-CA': "J'ai de la sympathie pour les gens plus démunis que moi.", da: 'Føler sympati for dem, der har det værre end mig selv.' },
+  { id: 48,  text: { en: 'Feel sympathy for those who are worse off than myself.', de: 'Habe Mitgefühl mit Menschen, denen es schlechter geht als mir.', ca: 'Em compadeixo dels qui estan pitjor que jo.', 'es-MX': 'Siento empatía por aquellos que están más necesitados que yo.', 'fr-CA': "J'ai de la sympathie pour les gens plus démunis que moi.", da: 'Føler sympati for dem, der har det værre end mig selv.' },
     domain: 'bond', facet: 'shield', reverse: false },
 
   // ── DISCIPLINE (Conscientiousness) ──────────────
   // Mastery (Self-Efficacy) — c1
-  { id: 49,  text: { en: 'Handle tasks smoothly.', 'es-MX': 'Realizo las tareas sin problemas.', 'fr-CA': 'Je gère les tâches facilement.', da: 'Håndterer opgaver med lethed.' },
+  { id: 49,  text: { en: 'Handle tasks smoothly.', de: 'Bewältige Aufgaben mühelos.', ca: 'Faig les tasques sense entrebancs.', 'es-MX': 'Realizo las tareas sin problemas.', 'fr-CA': 'Je gère les tâches facilement.', da: 'Håndterer opgaver med lethed.' },
     domain: 'discipline', facet: 'mastery', reverse: false },
-  { id: 50,  text: { en: 'Know how to get things done.', 'es-MX': 'Se cómo hacer las cosas.', 'fr-CA': 'Je sais comment faire avancer les choses.', da: 'Ved, hvordan man får tingene gjort.' },
+  { id: 50,  text: { en: 'Know how to get things done.', de: 'Weiß, wie man Dinge erledigt.', ca: 'Sé com treure la feina endavant.', 'es-MX': 'Se cómo hacer las cosas.', 'fr-CA': 'Je sais comment faire avancer les choses.', da: 'Ved, hvordan man får tingene gjort.' },
     domain: 'discipline', facet: 'mastery', reverse: false },
   // Structure (Orderliness) — c2
   { id: 51,  text: { en: 'Like order.', ca: "M'agrada l'ordre.", 'es-MX': 'Me gusta el orden.', 'fr-CA': "J'aime l'ordre.", de: 'Mag Ordnung.', da: 'Kan godt lide orden.' },
@@ -163,20 +163,20 @@ export const FQ_ITEMS = [
   // Oath (Dutifulness) — c3
   { id: 53,  text: { en: 'Tell the truth.', ca: 'Dic la veritat.', 'es-MX': 'Digo la verdad.', 'fr-CA': 'Je dis la vérité.', de: 'Sage die Wahrheit.', da: 'Fortæller sandheden.' },
     domain: 'discipline', facet: 'oath', reverse: false },
-  { id: 54,  text: { en: 'Break my promises.', 'es-MX': 'Rompo mis promesas.', 'fr-CA': 'Je ne tiens pas mes promesses.', da: 'Bryder mine løfter.' },
+  { id: 54,  text: { en: 'Break my promises.', de: 'Breche meine Versprechen.', ca: 'Trenco les meves promeses.', 'es-MX': 'Rompo mis promesas.', 'fr-CA': 'Je ne tiens pas mes promesses.', da: 'Bryder mine løfter.' },
     domain: 'discipline', facet: 'oath', reverse: true  },
   // Quest (Achievement-Striving) — c4
   { id: 55,  text: { en: 'Work hard.', ca: 'Treballo dur.', 'es-MX': 'Trabajo duro.', 'fr-CA': 'Je travaille fort.', 'fr-FR': 'Je travaille dur.', de: 'Arbeite hart.', da: 'Arbejder hårdt.' },
     domain: 'discipline', facet: 'quest', reverse: false },
-  { id: 56,  text: { en: 'Set high standards for myself and others.', 'fr-CA': 'Je me fixe des standards élevés pour moi-même et les autres.', 'fr-FR': 'Je me fixe des exigences élevées pour moi-même et les autres.' },
+  { id: 56,  text: { en: 'Set high standards for myself and others.', 'es-MX': 'Establezco altos estándares para mí mismo y para los demás.', da: 'Stiller høje krav til mig selv og andre.', de: 'Lege hohe Maßstäbe an mich und andere an.', ca: 'Poso el llistó alt per a mi i per als altres.', 'fr-CA': 'Je me fixe des standards élevés pour moi-même et les autres.', 'fr-FR': 'Je me fixe des exigences élevées pour moi-même et les autres.' },
     domain: 'discipline', facet: 'quest', reverse: false },
   // Will (Self-Discipline) — c5
-  { id: 57,  text: { en: 'Carry out my plans.', 'es-MX': 'Llevo a cabo mis planes.', 'fr-CA': 'Je réalise mes objectifs.', da: 'Fører mine planer ud i livet.' },
+  { id: 57,  text: { en: 'Carry out my plans.', de: 'Setze meine Pläne um.', ca: 'Duc a terme els meus plans.', 'es-MX': 'Llevo a cabo mis planes.', 'fr-CA': 'Je réalise mes objectifs.', da: 'Fører mine planer ud i livet.' },
     domain: 'discipline', facet: 'will', reverse: false },
   { id: 58,  text: { en: 'Have difficulty starting tasks.', ca: 'Em costa començar les tasques.', 'es-MX': 'Dificultad para comenzar tareas.', 'fr-CA': "J'ai de la difficulté à commencer les tâches.", de: 'Habe Schwierigkeiten, Aufgaben zu beginnen.', da: 'Har svært ved at gå i gang med opgaver.' },
     domain: 'discipline', facet: 'will', reverse: true  },
   // Counsel (Cautiousness) — c6
-  { id: 59,  text: { en: 'Make rash decisions.', 'fr-CA': 'Je prends des décisions impulsives.', da: 'Tager forhastede beslutninger.' },
+  { id: 59,  text: { en: 'Make rash decisions.', 'es-MX': 'Tomo decisiones precipitadas.', de: 'Treffe voreilige Entscheidungen.', ca: 'Prenc decisions precipitades.', 'fr-CA': 'Je prends des décisions impulsives.', da: 'Tager forhastede beslutninger.' },
     domain: 'discipline', facet: 'counsel', reverse: true  },
   { id: 60,  text: { en: 'Act without thinking.', ca: 'Actuo sense pensar.', 'es-MX': 'Actúo sin pensar.', 'fr-CA': "J'agis sans penser.", de: 'Handle ohne nachzudenken.', da: 'Handler uden at tænke.' },
     domain: 'discipline', facet: 'counsel', reverse: true  },

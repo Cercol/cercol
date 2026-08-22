@@ -8,8 +8,9 @@
  * strings it changes, so the file shows the difference.
  */
 import { describe, it, expect } from 'vitest'
-import { VARIANTS, variantsFor, activeVariant, itemText, answeredIn } from '../instrument-variants'
+import { VARIANTS, variantsFor, activeVariant, itemText, answeredIn, CERCOL_SUPPLIED } from '../instrument-variants'
 import { FM_ITEMS } from '../full-moon'
+import { FQ_ITEMS } from '../first-quarter'
 import { FQ_ITEMS } from '../first-quarter'
 
 describe('the variant registry', () => {
@@ -90,5 +91,89 @@ describe('what gets recorded', () => {
     expect(answeredIn('fr', 'fr-CA')).toBe('fr-CA')
     expect(answeredIn('es', null)).toBe('es-MX')
     expect(answeredIn('ca', null)).toBe('ca')
+  })
+})
+
+describe('the political item, in every language that has one', () => {
+  it('never calls the reader liberal where the English means progressive', () => {
+    // Four philologists, working separately on Catalan, French, German and
+    // the European French adaptation, all reached this independently: in
+    // Catalan, French and German "liberal" names the pro-market centre-right,
+    // the opposite of the sense this positively keyed Liberalism item has.
+    // Left literal it would attract exactly the respondents it scores low.
+    const it_ = FM_ITEMS.find((i) => i.text.en === 'Tend to vote for liberal political candidates.')
+    expect(it_.text.ca).toContain('progressistes')
+    expect(it_.text['fr-FR']).toContain('progressistes')
+    expect(it_.text.de).toContain('progressive')
+    // Gravel's Canadian keeps his wording: it is a published translation and
+    // "libéral" carries the Canadian party sense he was writing for.
+    expect(it_.text['fr-CA']).toContain('libérales')
+  })
+
+  it('leaves the conservative partner alone, because it needed nothing', () => {
+    const it_ = FM_ITEMS.find((i) => i.text.en === 'Tend to vote for conservative political candidates.')
+    expect(it_.text['fr-FR']).toBeUndefined()   // no override: Gravel's reads correctly in Europe
+    expect(it_.text['fr-CA']).toContain('traditionnelles')
+  })
+})
+
+describe('no language is half in English any more', () => {
+  it('has every item in Catalan, French and German', () => {
+    for (const items of [FM_ITEMS, FQ_ITEMS])
+      for (const key of ['ca', 'de', 'fr-CA'])
+        expect(items.filter((i) => i.text[key]).length, key).toBe(items.length)
+  })
+
+  it('has every item in every language, with nothing falling back to English', () => {
+    for (const items of [FM_ITEMS, FQ_ITEMS])
+      for (const key of ['ca', 'de', 'da', 'es-MX', 'fr-CA'])
+        expect(items.filter((i) => i.text[key]).length, key).toBe(items.length)
+  })
+
+  it('knows exactly which strings are ours rather than the publishers', () => {
+    // "Danish is Vedel's" has to stay a true sentence. It does, with a known
+    // exception: seven items live in the IPIP-NEO-60 and not the 120, so she
+    // never translated them. Nine for Spanish, for the same reason plus one
+    // item their page renders differently and one construct error we declined
+    // to copy.
+    expect(CERCOL_SUPPLIED.da).toHaveLength(7)
+    expect(CERCOL_SUPPLIED['es-MX']).toHaveLength(9)
+    // Every one of them must name a real item, or the list has drifted from
+    // the instrument and stops being an audit trail.
+    const all = [...FM_ITEMS, ...FQ_ITEMS].map((i) => i.text.en)
+    for (const [lang, list] of Object.entries(CERCOL_SUPPLIED))
+      for (const en of list) expect(all, `${lang}: ${en}`).toContain(en)
+  })
+
+  it('supplies no Danish or Spanish string that the publisher already covers', () => {
+    // The seven Danish gaps are all in First Quarter, because Vedel's
+    // translation covers the whole of Full Moon.
+    for (const en of CERCOL_SUPPLIED.da)
+      expect(FM_ITEMS.some((i) => i.text.en === en), en).toBe(false)
+  })
+})
+
+describe('surface, as distinct from wording', () => {
+  it('ends every string in every language with a full stop', () => {
+    // Orthography is corrected in a published translation; wording is not.
+    // Vedel's text reached us with two items missing their full stop and one
+    // spelling the Danish "succes" the English way. None of that is a word
+    // choice, a construction or an intensity, so none of it is part of what
+    // was validated.
+    for (const items of [FM_ITEMS, FQ_ITEMS])
+      for (const i of items)
+        for (const [lang, text] of Object.entries(i.text))
+          expect(text.endsWith('.'), `${lang}: ${text}`).toBe(true)
+  })
+
+  it('has no doubled or stray whitespace', () => {
+    // "Er altid i gang m ed noget." came from a font tag splitting a word and
+    // an extractor that put a space where every tag had been.
+    for (const items of [FM_ITEMS, FQ_ITEMS])
+      for (const i of items)
+        for (const [lang, text] of Object.entries(i.text)) {
+          expect(text, `${lang}: ${text}`).not.toMatch(/ {2}/)
+          expect(text, `${lang}: ${text}`).toBe(text.trim())
+        }
   })
 })

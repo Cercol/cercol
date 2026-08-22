@@ -94,3 +94,45 @@ export function itemText(text, language, chosen) {
 export function answeredIn(language, chosen) {
   return activeVariant(language, chosen)
 }
+
+/**
+ * The strings that are Cèrcol's rather than the publisher's.
+ *
+ * Danish is Vedel's and Spanish is Frez Puente and Ortega Luque's, both used
+ * as published. But both translated the IPIP-NEO-120, and Cèrcol's short form
+ * is the IPIP-NEO-60, which contains items the 120 does not. Nobody ever
+ * translated those, so they are written here, to match each publisher's hand,
+ * and listed so that "this is Vedel's Danish" stays a true sentence with a
+ * known exception rather than a slightly false one.
+ *
+ * They are the first thing to replace if either publisher supplies them, and
+ * the letters in the plan ask.
+ */
+export const CERCOL_SUPPLIED = {
+  da: [
+    'Am easily intimidated.',
+    'Am calm even in tense situations.',
+    'Act comfortably with others.',
+    'Am not easily affected by my emotions.',
+    'Don\u2019t like the idea of change.',
+    'Believe in one true religion.',
+    'Set high standards for myself and others.',
+  ],
+  'es-MX': [
+    'Am easily intimidated.',
+    'Am calm even in tense situations.',
+    'Act comfortably with others.',
+    'Am not easily affected by my emotions.',
+    'Don\u2019t like the idea of change.',
+    'Believe in one true religion.',
+    'Set high standards for myself and others.',
+    // Not in the 120 either, but for a different reason: their page carries a
+    // different item at that position, "feel others' concerns".
+    "Feel others' emotions.",
+    // And this one is a correction, not a gap. Their English reads "Make rush
+    // decisions", a typo for "rash", and their Spanish follows it: "Tomo
+    // decisiones rápidas" is fast, not rash. Copying a published string is the
+    // rule; copying a construct error because it is published is not.
+    'Make rash decisions.',
+  ],
+}

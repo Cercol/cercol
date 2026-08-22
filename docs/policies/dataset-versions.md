@@ -30,6 +30,85 @@ recomputed from the stored scores rather than stored themselves.
 
 ## Versions
 
+### Version 7 — from 2026-08-22
+
+**Every item exists in every language.** No reader meets an English sentence
+in a test they chose in another language, which had been true for Danish on
+seven items and Spanish on ten.
+
+Those seventeen are not the publishers'. Vedel translated the IPIP-NEO-120 and
+Frez Puente and Ortega Luque translated the IPIP-NEO-120, and Cèrcol's short
+form is the IPIP-NEO-60, which holds items the 120 does not. Nobody had ever
+translated them. They were written to match each publisher's hand and are
+listed in `CERCOL_SUPPLIED` in `src/data/instrument-variants.js`, so that
+"Cèrcol's Danish is Vedel's" stays a true sentence with a known exception
+instead of a slightly false one. They are the first thing to replace if either
+publisher supplies them, and the letters in the plan ask.
+
+Two of the Spanish are a different case. Their page carries a different item
+where ours has "Feel others' emotions", so there was nothing of theirs to take.
+And "Make rash decisions" is a correction rather than a gap: their English
+reads "Make **rush** decisions", a typo, and their Spanish follows it with
+*decisiones rápidas*, which is fast rather than rash. A fast decision can be a
+well-deliberated one, and the facet measures deliberation.
+
+**Four surface defects, corrected, and the line they establish.** Vedel's "Am
+always on the go" shipped as `Er altid i gang m ed noget.` with a space inside
+*med*: her page splits that word across two `<font>` tags and the extractor put
+a space where every tag had been. Checked across all 120 of her strings, it is
+the only one affected. Her published text also has two items with no final full
+stop and one spelling the Danish *succes* the English way, *success*. All four
+are fixed.
+
+So the rule needs its line drawn precisely, because "use it as published" and
+"do not ship a misspelling" both sound obvious and pull opposite ways:
+
+**Wording is the publisher's and is never touched. Orthography is corrected.**
+
+Which word, which construction, which intensity, which item a string sits
+beside: those are what was validated, and changing any of them quietly makes it
+a different instrument. A missing full stop, a doubled space, a word split by a
+markup tag, a word spelled the wrong language's way: none of those were
+validated, none of them change what an item measures, and leaving them in makes
+the set read as sloppy to the only people who would notice — native speakers of
+that language.
+
+Two tests hold the line: every string in every language ends in a full stop and
+carries no stray whitespace.
+
+### Version 6 — from 2026-08-22
+
+**No language is half in English any more.** The 59 Full Moon and 26 First
+Quarter items that arrived with the canonical item sets now have Catalan and
+German. Both were written by a philologist against the English and against the
+existing set, and both languages are complete at 120 and 60.
+
+Catalan is the one language where translating was unavoidable: no published
+translation exists anywhere and none is coming. German is scaffolding with a
+known replacement, since Thunsdorff and Treiber's validated translation exists
+and a letter asking for it is queued; it gets a reader out of English while
+that is answered.
+
+Spanish and Danish stay short where their published sources are short: 118 and
+52 for Spanish, 120 and 53 for Danish. Those gaps fall back to English rather
+than to something invented, and the counts are pinned by a test so a gap that
+grows is noticed.
+
+**Three philologists reached the same conclusion separately.** In Catalan,
+French and German, *liberal* names the pro-market centre-right, which is close
+to the opposite of the sense "Tend to vote for liberal political candidates"
+carries. Left literal, a positively keyed Liberalism item would have attracted
+exactly the respondents it is meant to score low. All three say *progressive*.
+Gravel's Canadian keeps *libérales*, because there the word carries the party
+sense he was writing for.
+
+Four defects in the existing German were found while translating around them:
+`Kandidaten*innen` is a malformed gender star, `Nehme es gerne ruhig an` is the
+idiom *es ruhig angehen lassen* torn apart and is not German, `Fühle, dass ich`
+is an anglicism where German takes *Habe das Gefühl, dass*, and "getting
+emotional" had become "letting themselves be guided by feelings", a different
+and more judgemental claim.
+
 ### Version 5 — from 2026-08-22
 
 **A language can now have more than one variety, and the instrument says which
