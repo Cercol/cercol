@@ -18,7 +18,7 @@
  */
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { PLAN_SECTIONS, PLAN_TASKS, AUDIENCE, nextTask, taskStatus } from '../data/distribution-plan'
-import { getAuthorityStatus, setAuthorityStatus, fileAuthorityIssue } from '../lib/api'
+import { getAuthorityStatus, setAuthorityStatus, fileAuthorityIssue, sendPlanEmail } from '../lib/api'
 import { Badge, Button, SectionLabel } from './ui'
 import {
   CheckIcon, ChevronRightIcon, ExternalLinkIcon,
@@ -99,7 +99,7 @@ function mailto({ to, subject, body }) {
 }
 
 /** One block per action type. This is the part that makes the plan a panel. */
-function Action({ action }) {
+function Action({ action, taskId, sent, onSend, busy }) {
   if (!action) return null
 
   if (action.type === 'prompt') {
@@ -129,13 +129,20 @@ function Action({ action }) {
         <p className="mb-2 text-xs font-medium text-gray-700">{action.subject}</p>
         <pre className="max-h-56 overflow-auto whitespace-pre-wrap rounded bg-gray-50 p-3 text-xs leading-relaxed text-gray-700">{action.body}</pre>
         <div className="mt-2 flex flex-wrap items-center gap-2">
+          {sent ? (
+            <span className="text-xs text-[var(--mm-color-green)]">{sent}</span>
+          ) : (
+            <Button size="sm" disabled={busy} onClick={() => onSend(taskId, action)}>
+              {busy ? 'enviant…' : 'Envia des de miquel@cercol.team'}
+            </Button>
+          )}
           <a
             href={mailto(action)}
-            className="inline-flex items-center justify-center rounded bg-[var(--mm-color-blue)] px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:opacity-90"
+            className="text-xs text-[var(--mm-color-blue)] hover:underline"
           >
-            Obri al client de correu
+            o obri al client de correu
           </a>
-          <CopyButton text={action.body} label="Copia el cos" />
+          <CopyButton text={action.body} label="Copia el cos" variant="ghost" />
         </div>
       </div>
     )
@@ -163,7 +170,7 @@ function Action({ action }) {
   return null
 }
 
-function TaskRow({ task, row, status, busy, open, onToggleOpen, onCycle, onFile }) {
+function TaskRow({ task, row, status, busy, open, onToggleOpen, onCycle, onFile, onSend }) {
   return (
     <li id={`plan-${task.id}`} className={status === 'done' ? 'opacity-60' : ''}>
       <div className="flex flex-col gap-2 py-3 sm:flex-row sm:items-start sm:gap-4">
@@ -218,7 +225,13 @@ function TaskRow({ task, row, status, busy, open, onToggleOpen, onCycle, onFile 
       {open && (
         <div className="pb-4 pl-6">
           <p className="max-w-3xl text-xs leading-relaxed text-gray-600">{task.why}</p>
-          <Action action={task.action} />
+          <Action
+            action={task.action}
+            taskId={task.id}
+            sent={row.notes?.startsWith('sent ') ? row.notes : null}
+            busy={busy}
+            onSend={onSend}
+          />
         </div>
       )}
     </li>
@@ -289,6 +302,18 @@ export default function PlanPanel() {
       setError(err.message)
     } finally {
       setBusy((b) => ({ ...b, [task.id]: false }))
+    }
+  }
+
+  const send = async (taskId, action) => {
+    setBusy((b) => ({ ...b, [taskId]: true }))
+    try {
+      const res = await sendPlanEmail(taskId, { to: action.to, subject: action.subject, text: action.body })
+      setState((s) => ({ ...s, [taskId]: { ...(s[taskId] || {}), notes: res.notes, status: 'doing' } }))
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setBusy((b) => ({ ...b, [taskId]: false }))
     }
   }
 
@@ -377,6 +402,7 @@ export default function PlanPanel() {
                     onToggleOpen={() => setOpen((o) => ({ ...o, [task.id]: !o[task.id] }))}
                     onCycle={() => cycle(task)}
                     onFile={() => fileIt(task)}
+                    onSend={send}
                   />
                 ))}
               </ul>

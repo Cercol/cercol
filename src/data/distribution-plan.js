@@ -1347,7 +1347,7 @@ export const PLAN_SECTIONS = [
   {
     "id": "a10",
     "title": "Citable",
-    "sub": "Investigat el 22/08/2026 per quatre agents, un per àmbit, verificant cada pàgina obrint-la. La troballa que ho ordena tot: quasi res d'ací espera més respostes.",
+    "sub": "Investigat el 22/08/2026 per quatre agents, un per àmbit. Reverificat a mà després, i dues troballes van caure: que el nom eixia trencat a l'IPIP (no, la pàgina declara windows-1252 i el byte és correcte) i la URL de la pàgina de traduccions (era un 404). La troballa que ho ordena tot: quasi res d'ací espera més respostes.",
     "tasks": [
       {
         "id": "ct1",
@@ -1363,25 +1363,6 @@ export const PLAN_SECTIONS = [
         "action": {
           "type": "do",
           "html": "<ul class=\"ulist\"><li>Una casella que diga clarament que les respostes es podran publicar com a conjunt de dades obert i anonimitzat, CC0 o CC BY.</li><li>Nota de protecció de dades per als visitants de la UE.</li><li>A partir d'ahí, comptar dues xifres, no una: respostes completes, i parelles completes jo+Testimoni. Les parelles són l'actiu rar.</li></ul>"
-        },
-        "done": false
-      },
-      {
-        "id": "ct2",
-        "title": "Arreglar el nom trencat a l'IPIP",
-        "why": "L'única citació d'autoritat que tens mostra C¿rcol. El byte és un è correcte en Latin-1, però eixa pàgina no declara joc de caràcters i els navegadors assumeixen UTF-8. La pàgina germana que Johnson va escriure el mateix dia declara iso-8859-1 i es veu bé.",
-        "aud": [
-          "A"
-        ],
-        "pay": [
-          "Autoritat"
-        ],
-        "eff": "Baix",
-        "action": {
-          "type": "email",
-          "to": "j5j@psu.edu",
-          "subject": "Re: Cèrcol: an open-source team assessment built on your IPIP-NEO",
-          "body": "Dear Professor Johnson,\n\nThank you again for adding Cèrcol to both pages. The programming-tools listing has already brought people to the repository.\n\nOne small thing you may want to know: on IPIPImplementationsAroundTheWeb.htm the name renders as a replacement character in modern browsers. The byte is correct, it is è in Latin-1, but that page declares no character set, so browsers now default to UTF-8 and reject it. Your Programming Tools page declares charset=iso-8859-1 and displays it correctly. Writing it as C&egrave;rcol would fix it without touching the page's encoding, and would also repair the ÷ and the ™ further down the same page.\n\nWith thanks,\nMiquel"
         },
         "done": false
       },
@@ -1452,7 +1433,7 @@ export const PLAN_SECTIONS = [
       {
         "id": "ct6",
         "title": "Afegir el català a la pàgina de traduccions de l'IPIP",
-        "why": "43 llengües llistades, de l'àrab al gal·lés, cadascuna acreditada a qui la va aportar. El castellà hi surt quatre vegades. El català no hi és. L'única mesura Big Five validada en català que s'ha trobat és el TIPI de 10 ítems (Renau et al. 2013), que al seu propi resum es diu la primera.",
+        "why": "Quaranta llengües llistades a newItemTranslations.htm, de l'àrab al gal·lés, cadascuna acreditada a qui la va aportar. El català no hi és, i el francés tampoc. La pàgina demana explícitament que qui haja traduït ítems escriga a Johnson, així que el correu és l'acció que ells conviden a fer. L'única mesura Big Five validada en català que s'ha trobat és el TIPI de 10 ítems (Renau et al. 2013), que al seu propi resum es diu la primera.",
         "aud": [
           "A"
         ],
@@ -1464,7 +1445,7 @@ export const PLAN_SECTIONS = [
           "type": "email",
           "to": "j5j@psu.edu",
           "subject": "Catalan translation of the IPIP-NEO items",
-          "body": "Dear Professor Johnson,\n\nThe translations page lists 43 languages and Catalan is not among them. Cèrcol runs a full Catalan/Valencian translation of the IPIP-NEO items, and I would be glad to contribute it in whatever format is most useful to you.\n\nTo be precise about what it is: an open item set with a documented translation methodology, not a validated instrument. Validation is in progress and I would not want the page to claim otherwise. The only validated Catalan Big Five measure I can find is the 10-item TIPI (Renau et al., 2013), so a 120-item set may be the largest open one in the language, which is exactly why I would rather it were findable from your page than from mine.\n\nWith thanks,\nMiquel"
+          "body": "Dear Professor Johnson,\n\nThank you again for the two listings in July. People have arrived at the repository through them.\n\nI am writing about a different page. newItemTranslations.htm asks anyone who has translated IPIP items to get in touch, so: Cèrcol runs a full Catalan/Valencian translation of the IPIP-NEO items, and Catalan is not among the languages listed there. I would be glad to contribute it in whatever form is most useful to you.\n\nTo be precise about what it is, since the page rightly notes that accuracy is not verified: an open item set with a documented translation methodology, not a validated instrument. Validation is in progress and I would not want the entry to claim otherwise. The only validated Catalan Big Five measure I can find is the 10-item TIPI (Renau et al., 2013), which describes itself as the first, so a 120-item set may be the largest open one in the language. That is exactly why I would rather it were findable from your page than only from mine.\n\nThe items, the mapping and the method are here: https://github.com/cercol/cercol/blob/main/SCIENCE.md\n\nWith thanks,\nMiquel"
         },
         "done": false
       },
@@ -1522,7 +1503,7 @@ export const PLAN_SECTIONS = [
           "type": "email",
           "to": "revelle@northwestern.edu",
           "subject": "An open IPIP-NEO implementation in six languages",
-          "body": "Dear Professor Revelle,\n\nYour site invites suggestions for links, so here is one you may or may not want.\n\nCèrcol (https://cercol.team) is an open-source implementation of the IPIP-NEO-60 and 120, scored client-side with the published keys, in six languages. The item sourcing and the scoring pipeline are public and citable, including the limitations not yet solved: https://github.com/cercol/cercol/blob/main/SCIENCE.md\n\nJohn Johnson added it to ipip.ori.org earlier this year. If your non-academic list is still open to additions, it may be a more useful destination for a student than some of what is currently there.\n\nWith respect,\nMiquel Matoses"
+          "body": "Dear Professor Revelle,\n\nYour site says suggestions for links and corrections are always welcome, so here is one you may or may not want.\n\nCèrcol (https://cercol.team) is an open-source implementation of the IPIP-NEO, 60 and 120 items, scored in the browser with the published keys, in six languages. The item sourcing and the scoring pipeline are public and citable, including the limitations not yet solved: https://github.com/cercol/cercol/blob/main/SCIENCE.md\n\nJohn Johnson added it to two pages on ipip.ori.org in July. If your non-academic list is still open to additions, an open IPIP-sourced instrument may be a more useful destination for a student than some of what is currently linked there.\n\nWith respect,\nMiquel Matoses"
         },
         "done": false
       },
