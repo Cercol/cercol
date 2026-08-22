@@ -189,3 +189,27 @@ describe('facet articles', () => {
     expect(out).toContain('See yourself in five dimensions.')
   })
 })
+
+describe('the destination keeps the promise', () => {
+  it('never offers facets on a card that goes to New Moon', () => {
+    // New Moon reports five dimension scores and no facet breakdown. The
+    // compact card on a facet article was promising thirty of them.
+    const out = htmlWith({
+      lang: 'en',
+      compact: true,
+      slug: 'what-is-a-facet-in-personality-psychology',
+    })
+    expect(out).toContain('See your own 30 facets.')
+    expect(out).toContain('/first-quarter')
+    expect(out).not.toContain('/new-moon')
+  })
+
+  it('still sends an ordinary compact card to the two-minute test', () => {
+    const out = htmlWith({
+      lang: 'en',
+      compact: true,
+      slug: 'gender-and-personality-what-big-five-research-says',
+    })
+    expect(out).toContain('/new-moon')
+  })
+})

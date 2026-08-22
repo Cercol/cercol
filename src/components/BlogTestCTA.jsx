@@ -154,7 +154,16 @@ export default function BlogTestCTA({ slug, lang = 'en', category, compact = fal
   // early one keeps the two-minute promise it makes. Both in the language the
   // article is in: a French reader who reached the end of a French article was
   // being handed an English test, and /fr/first-quarter/ has existed all along.
-  const to = navHref({ to: compact ? '/new-moon' : '/first-quarter' }, l)
+  //
+  // Except when the heading promises facets. New Moon reports five dimension
+  // scores and no facet breakdown, so a compact card on a facet article was
+  // offering thirty facets and sending the reader to the one instrument that
+  // cannot produce a single one. The destination follows the promise: the
+  // dimension headings are still honest on New Moon, the facet one is not.
+  const to = navHref(
+    { to: compact && !facetHeading ? '/new-moon' : '/first-quarter' },
+    l,
+  )
 
   // Fire the funnel cta_click event, then let navigation proceed (no
   // preventDefault). Fire-and-forget: trackEvent swallows errors.
