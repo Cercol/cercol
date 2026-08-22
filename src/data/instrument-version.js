@@ -26,4 +26,4 @@
  *   - the response scale or its labels
  *   - the number or structure of Witness rounds
  */
-export const INSTRUMENT_VERSION = 2
+export const INSTRUMENT_VERSION = 3

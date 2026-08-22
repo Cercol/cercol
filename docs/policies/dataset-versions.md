@@ -30,6 +30,35 @@ recomputed from the stored scores rather than stored themselves.
 
 ## Versions
 
+### Version 3 — from 2026-08-22
+
+The French and Danish items, corrected. English, Catalan, Spanish and German are
+untouched. Same day as version 2, because the Catalan review made it obvious the
+other machine-translated sets needed reading too.
+
+**Danish**, reviewed against the English by a philologist: fifty-nine strings with
+a defect. `Angstelig` is not a Danish word, the diacritic having been dropped from
+`ængstelig`. One item carried a third-person reflexive under a first-person subject.
+Several changed the construct: "down in the dumps" had become irritability rather
+than low mood, "rarely overindulge" read as *rarely exaggerate*, and two
+reverse-keyed items used bare `lidt`, which means *some* rather than *little* and
+let a diligent respondent honestly agree with them.
+
+**French**: fifty-nine strings. Two were conjugated in the third person,
+`Compatit` and `Ne remet pas`, which no French speaker writes for *I sympathize*
+and *I fail to put back*. `M'abandonne à mes fantasmes` renders a daydreaming item
+with a word that is sexual by default in French. `Suis une créature d'habitudes`
+and `Fais sentir les gens bienvenus` are English constructions with French words.
+
+**The French response scale was not the English one.** Points 2 and 4 read
+`Pas d'accord` and `D'accord`, dropping the *a little* the English carries, so the
+intermediate points were stronger and the scale was no longer equidistant. Fixed to
+`Plutôt pas d'accord` and `Plutôt d'accord`. This changes what a French response
+means, which is exactly what a version boundary is for.
+
+The Danish shared-item divergence went from 22 of 60 to zero. **German is still at
+18 of 60 and nobody has reviewed it.**
+
 ### Version 2 — from 2026-08-22
 
 The Catalan items, corrected. English, Spanish, French, German and Danish are

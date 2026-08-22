@@ -724,12 +724,13 @@ of each item. Neutral European French is used, no regional variants (not Québé
 no register elevation that would affect construct measurement. Gender-inclusive forms
 (e.g. the mid-dot notation -·e) are used where the source item's meaning requires it.
 
-**Scientific basis:** The French adaptation of the IPIP is the adaptation by Thiry, B.,
-& Piolti, M. (2023), University of Mons, a documented European-French IPIP adaptation
-listed on ipip.ori.org. The item-level translation methodology is documented, and
-Cèrcol's translation follows the same item-level approach.
-This is not a formally validated translation: it is a principled open-source translation
-of public-domain items, documented as such.
+**Scientific basis:** Thiry, B., & Piolti, M. (2023), University of Mons, published a
+documented European-French IPIP adaptation, listed on ipip.ori.org, itself an adaptation
+of Gravel's French-Canadian IPIP-NEO-300 with items re-reviewed by native-speaker
+translation students. Cèrcol's French is **not derived from it**: it is an independent
+direct translation of the public-domain English items, following the same European-French
+principles. Their work is the reference point, not the source. This is not a formally
+validated translation and it has not had the native-speaker review theirs had.
 
 **Ongoing correction (planned):** A translation feedback mechanism is planned but not yet
 implemented. When it ships, suggestions will be stored with the `language` field set to

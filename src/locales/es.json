@@ -1333,7 +1333,7 @@
     },
     "q10": {
       "q": "¿En qué idiomas está disponible Cèrcol?",
-      "a": "Cèrcol está disponible en inglés, catalán/valenciano, español, francés, alemán y danés. Los seis idiomas cubren la evaluación completa, preguntas del instrumento, resultados y todo el contenido. La traducción danesa se basa en la adaptación validada de Vedel, Gøtzsche-Astrup y Holm (2018, Nordic Psychology). La traducción francesa sigue la adaptación europea-francesa del IPIP documentada por Thiry y Piolti (2023, Universidad de Mons), publicada en ipip.ori.org."
+      "a": "Cèrcol está disponible en inglés, catalán/valenciano, español, francés, alemán y danés. Los seis idiomas cubren la evaluación completa, preguntas del instrumento, resultados y todo el contenido. Los conjuntos de ítems danés y francés son traducciones independientes de los ítems ingleses del IPIP, que son de dominio público, siguiendo la metodología y las modificaciones de ítems documentadas por Vedel, Gøtzsche-Astrup y Holm (2018) para el danés y por Thiry y Piolti (2023) para el francés. No derivan de esos instrumentos y no están validadas formalmente."
     },
     "q11": {
       "q": "¿Cómo funciona exactamente el Testigo?",

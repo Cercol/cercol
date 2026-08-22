@@ -125,8 +125,8 @@ Full scientific documentation: [SCIENCE.md](./SCIENCE.md)
 | Language | Scientific basis |
 |----------|-----------------|
 | English | IPIP source items (ipip.ori.org) |
-| Danish | Vedel, Gøtzsche-Astrup & Holm (2018) — peer-reviewed IPIP-NEO-120 validation, *Nordic Psychology* |
-| French | Thiry & Piolti (2023) — documented European-French IPIP adaptation listed on ipip.ori.org, University of Mons |
+| Danish | Independent translation of the public-domain English items, following the methodology and item alterations documented by Vedel, Gøtzsche-Astrup & Holm (2018) |
+| French | Independent translation of the public-domain English items, following the European-French approach documented by Thiry & Piolti (2023), University of Mons |
 | Spanish | Cupani et al. (2014) precedent — IPIP-NEO-60 validation in Spanish-speaking populations |
 | German | Ostendorf & Angleitner (1994) — five-factor replication in German-speaking populations |
 | Catalan | Direct translation following IPIP methodology; no published CA validation exists |

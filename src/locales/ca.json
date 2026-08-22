@@ -1333,7 +1333,7 @@
     },
     "q10": {
       "q": "En quins idiomes està disponible Cèrcol?",
-      "a": "Cèrcol està disponible en anglès, català/valencià, espanyol, francès, alemany i danès. Els sis idiomes cobreixen l'avaluació completa, preguntes de l'instrument, resultats i tot el contingut. La traducció danesa es basa en l'adaptació validada de Vedel, Gøtzsche-Astrup i Holm (2018, Nordic Psychology). La traducció francesa segueix l'adaptació europea-francesa de l'IPIP documentada per Thiry i Piolti (2023, Universitat de Mons), publicada a ipip.ori.org."
+      "a": "Cèrcol està disponible en anglès, català/valencià, espanyol, francès, alemany i danès. Els sis idiomes cobreixen l'avaluació completa, preguntes de l'instrument, resultats i tot el contingut. Els jocs d'ítems danés i francés són traduccions independents dels ítems anglesos de l'IPIP, que són de domini públic, seguint la metodologia i les modificacions d'ítems documentades per Vedel, Gøtzsche-Astrup i Holm (2018) per al danés i per Thiry i Piolti (2023) per al francés. No en deriven i no estan validades formalment."
     },
     "q11": {
       "q": "Com funciona exactament el Testimoni?",
