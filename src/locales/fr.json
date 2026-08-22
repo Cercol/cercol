@@ -904,9 +904,11 @@
     "title": "Un profil Cèrcol d'exemple",
     "subtitle": "Ceci est un exemple synthétique, pas une vraie personne. Faites le test pour obtenir le vôtre.",
     "domainSection": "Les cinq dimensions",
-    "cta_note": "Votre propre profil est à deux minutes, gratuit et sans compte.",
+    "cta_note": "Nouvelle Lune, c'est 10 questions · ~2 min. Gratuit, sans compte.",
     "cta": "Faire le test gratuit",
-    "synthetic": "Un profil synthétique, pas une personne réelle, avec {{count}} évaluations de Témoin pour comparer le regard de soi et celui des autres. Calculé par le même code qu’un vrai résultat Pleine Lune."
+    "synthetic": "Un profil synthétique, pas une personne réelle, avec {{count}} évaluations de Témoin pour comparer le regard de soi et celui des autres. Calculé par le même code qu’un vrai résultat Pleine Lune.",
+    "whatThisIs": "Vous avez sous les yeux un rapport Pleine Lune. 120 questions · ~20 min, paiement unique, et les évaluations de Témoin viennent de quatre personnes que vous invitez.",
+    "seeAll": "Comparer les quatre instruments"
   },
   "share": {
     "title": "Mon rôle Cèrcol : {{role}}",

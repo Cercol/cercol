@@ -904,9 +904,11 @@
     "title": "En Cèrcol-eksempelprofil",
     "subtitle": "Dette er et syntetisk eksempel, ikke en rigtig person. Tag testen for at få din egen.",
     "domainSection": "De fem dimensioner",
-    "cta_note": "Din egen profil er to minutter væk, gratis og uden konto.",
+    "cta_note": "Nymåne er 10 spørgsmål · ~2 min. Gratis, uden konto.",
     "cta": "Tag den gratis test",
-    "synthetic": "En syntetisk profil, ikke en rigtig person, med {{count}} Vidne-vurderinger, så selv- og andresyn kan sammenlignes. Beregnet med samme kode som et rigtigt Fuldmåne-resultat."
+    "synthetic": "En syntetisk profil, ikke en rigtig person, med {{count}} Vidne-vurderinger, så selv- og andresyn kan sammenlignes. Beregnet med samme kode som et rigtigt Fuldmåne-resultat.",
+    "whatThisIs": "Det, du ser her, er en Fuldmåne-rapport: 120 spørgsmål · ~20 min, engangsbetaling, og Vidne-vurderingerne kommer fra fire personer, du inviterer.",
+    "seeAll": "Sammenlign alle fire instrumenter"
   },
   "share": {
     "title": "Min Cèrcol-rolle: {{role}}",

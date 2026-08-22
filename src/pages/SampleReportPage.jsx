@@ -151,14 +151,29 @@ export default function SampleReportPage() {
 
         <MethodologyNote>{t('sample.synthetic', { count: SAMPLE_WITNESS_COUNT })}</MethodologyNote>
 
+        {/* What the reader is looking at, before what they can do about it.
+            This report is the 120-item instrument with Witness ratings on top;
+            the page used to offer it under "your own profile is two minutes
+            away", which promised something the two-minute test cannot give.
+            The easy entry stays the primary action, it just stops pretending
+            to be the same thing. /full-moon is not linked: it bounces an
+            anonymous visitor to /auth, so /instruments carries it publicly. */}
         <div className="text-center">
-          <p className="text-sm text-gray-500 mb-4">{t('sample.cta_note')}</p>
+          <p className="mx-auto mb-5 max-w-lg text-sm leading-relaxed text-gray-500">
+            {t('sample.whatThisIs')}
+          </p>
           <Link
             to="/new-moon"
             className="font-semibold inline-flex items-center justify-center transition-colors rounded text-sm px-5 py-2.5 bg-[var(--mm-color-blue)] text-white hover:opacity-90"
           >
             {t('sample.cta')}
           </Link>
+          <p className="mt-3 text-xs text-gray-500">{t('sample.cta_note')}</p>
+          <p className="mt-5 text-xs">
+            <Link to="/instruments" className="text-[var(--mm-color-blue)] hover:underline">
+              {t('sample.seeAll')}
+            </Link>
+          </p>
         </div>
       </div>
     </main>

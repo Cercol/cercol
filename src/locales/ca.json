@@ -904,9 +904,11 @@
     "title": "Un perfil Cèrcol d'exemple",
     "subtitle": "Aquest és un exemple sintètic, no una persona real. Fes el test per obtenir el teu.",
     "domainSection": "Les cinc dimensions",
-    "cta_note": "El teu perfil és a dos minuts, gratis i sense compte.",
+    "cta_note": "La Lluna Nova: 10 preguntes · ~2 min. Gratis i sense compte.",
     "cta": "Fes el test gratuït",
-    "synthetic": "Un perfil sintètic, no una persona real, amb {{count}} valoracions de Testimoni perquè es puguen comparar la mirada pròpia i la de fora. Puntuat amb el mateix codi que un resultat real de Lluna Plena."
+    "synthetic": "Un perfil sintètic, no una persona real, amb {{count}} valoracions de Testimoni perquè es puguen comparar la mirada pròpia i la de fora. Puntuat amb el mateix codi que un resultat real de Lluna Plena.",
+    "whatThisIs": "Això és un informe de Lluna Plena: 120 preguntes · ~20 min, un sol pagament i les valoracions les fan quatre Testimonis que convides tu.",
+    "seeAll": "Compara els quatre instruments"
   },
   "share": {
     "title": "El meu rol Cèrcol: {{role}}",
