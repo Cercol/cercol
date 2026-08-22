@@ -148,7 +148,7 @@ describe('jobs parsing', () => {
 // Font stacks from mm-design carry double quotes; inside style="..." they
 // would end the attribute and drop every rule after them (that shipped once).
 import { DISPLAY, SANS, stat, shell } from '../src/email-ui.js'
-import { warnings, actions, CAPS, dayBounds } from '../src/jobs/daily.js'
+import { warnings, actions, CAPS, dayBounds, CTA_CLAIM_MIN_READS } from '../src/jobs/daily.js'
 describe('email kit', () => {
   it('font stacks contain no double quotes', () => {
     expect(DISPLAY).not.toMatch(/"/); expect(SANS).not.toMatch(/"/)
@@ -183,11 +183,24 @@ describe('daily brief', () => {
     // The old line ended "Make sure it points at an instrument", which every
     // article already does. What the line reports now is whether anyone took
     // the bridge, which is the half that can actually come out either way.
-    expect(a[2]).toContain('Not one of them went on to an instrument')
+    //
+    // Eight reads cannot answer it either way: at the ~0.5% this site converts
+    // at, a day with no click is what eight reads predict. The line reports
+    // the reads and stops rather than blaming the copy.
+    expect(a[2]).not.toContain('Not one of them went on to an instrument')
+    expect(a[2]).toBe(a[2].trimEnd())
     expect(a[3]).toContain('24 impressions at position 4.5')
     const clicked = actions({ ...data, warns: [], search: null,
       product: { ...data.product, takingOff: [['Limits', 'limits', 8, 0, 2]] } })
     expect(clicked[1]).toContain('2 of them went on to an instrument.')
+    // Above CTA_CLAIM_MIN_READS a silent day stops being the likeliest
+    // outcome, and the copy is a fair thing to point at.
+    const loud = actions({ ...data, warns: [], search: null,
+      product: { ...data.product, takingOff: [['Limits', 'limits', CTA_CLAIM_MIN_READS, 0, 0]] } })
+    expect(loud[1]).toContain('Not one of them went on to an instrument')
+    const quiet = actions({ ...data, warns: [], search: null,
+      product: { ...data.product, takingOff: [['Limits', 'limits', CTA_CLAIM_MIN_READS - 1, 0, 0]] } })
+    expect(quiet[1]).not.toContain('Not one of them')
     // Nobody starting is a different failure from starting and dropping out.
     // No progress events at all: say so rather than implying a known point.
     expect(actions({ ...data, product: { ...data.product, dropOff: [] }, warns: [], search: null })[0]).toContain('nobody reached the first tenth')

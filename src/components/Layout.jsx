@@ -38,8 +38,25 @@ function Chevron({ open }) {
   )
 }
 
-/** Desktop dropdown group with click-to-open panel */
-function DropdownGroup({ label, children, isAnyChildActive }) {
+/**
+ * Desktop dropdown group with click-to-open panel.
+ *
+ * The panel is always in the DOM and hidden with a class, rather than mounted
+ * only once open. Prerendering serialises the page exactly as it renders with
+ * no interaction, so `{open && ...}` meant the Science, Blog, About and FAQ
+ * links appeared in no prerendered page at all: the only header links a
+ * crawler ever saw were the two direct ones, Instruments and Roles. That left
+ * every blog index reachable only from the articles it itself links to, a
+ * closed loop with no entry point from the pages that carry the site's
+ * authority, which is what "crawled, currently not indexed" looks like from
+ * Google's side.
+ *
+ * `hidden` is display:none, so a closed panel stays out of the tab order and
+ * out of the accessibility tree exactly as before.
+ *
+ * Exported for the test that asserts the children survive a closed render.
+ */
+export function DropdownGroup({ label, children, isAnyChildActive }) {
   const [open, setOpen] = useState(false)
   const ref = useRef(null)
 
@@ -67,11 +84,13 @@ function DropdownGroup({ label, children, isAnyChildActive }) {
         <Chevron open={open} />
       </button>
 
-      {open && (
-        <div className="absolute top-full left-0 mt-1 w-44 bg-white rounded-lg shadow-lg border border-gray-100 py-1 z-50">
-          {children}
-        </div>
-      )}
+      <div
+        className={`absolute top-full left-0 mt-1 w-44 bg-white rounded-lg shadow-lg border border-gray-100 py-1 z-50 ${
+          open ? '' : 'hidden'
+        }`}
+      >
+        {children}
+      </div>
     </div>
   )
 }
