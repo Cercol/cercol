@@ -293,3 +293,28 @@ order that maximises signal-to-effort:
 
 Doing them in a different order tends to produce fixes that don't
 move the metric.
+
+## Instruments, scales and norms are transcribed, never recalled
+
+An item, a facet assignment, a keying direction, a response anchor or a table
+of norms is arbitrary information: there is no internal logic to reconstruct it
+from, so a model asked to produce one reproduces the structure and loses the
+selection. That is not a hypothetical. It is how the Full Moon item set came to
+share 61 of its 120 items with the instrument it cites, with 21 items that
+appear in no IPIP list at all, for four months. See
+[2026-08-22](../post-mortems/2026-08-22-instruments-written-from-memory.md).
+
+So:
+
+- Anything of that kind is transcribed from the publisher into
+  `src/data/reference/` and read from there. Two independent sources where two
+  exist, compared against each other, and the comparison recorded.
+- If the source cannot be obtained, that is a finding to report. It is never a
+  gap to fill in from memory, and never a thing to infer from a neighbouring
+  instrument.
+- Changing an item means bumping `INSTRUMENT_VERSION` with an entry in
+  [dataset-versions.md](dataset-versions.md). Old and new answers stop being
+  comparable at that point, and an unrecorded change is the one defect that
+  cannot be repaired afterwards.
+- A citation states an intention. It is not evidence that the intention was
+  carried out; only a comparison with the source is.
