@@ -43,10 +43,28 @@ const WARN_AT = 0.7
 // Hetzner leaves after a quiet fortnight from the cutover (2026-08-17). From
 // this date the brief nags until HETZNER_DECOMMISSIONED is set on the Worker.
 export const DECOMMISSION_DUE = '2026-08-31'
-// Impressions a single page needs in one day before "ranking without clicks"
-// says anything. Below this it is noise, and the brief asked for a rewrite on
-// the strength of three impressions.
-export const ZERO_CLICK_MIN_IMPRESSIONS = 10
+/**
+ * Impressions a page needs, at its position, before "ranking without clicks"
+ * says anything.
+ *
+ * A flat floor cannot work, because what zero clicks means depends entirely on
+ * where the page sits. At position 2 a handful of impressions with no click is
+ * odd; at position 9 it is the expected outcome. The old floor of ten treated
+ * them the same and produced items nobody could act on: the brief asked for a
+ * rewrite of a good title on 168 impressions at position 8.0, where zero
+ * clicks has about an 8% chance of happening on any given day.
+ *
+ * So the floor is the number of impressions at which zero clicks drops below a
+ * one-in-twenty chance, given the click-through rate typical of that position:
+ * n > ln(0.05) / ln(1 - ctr). Under that, silence is what the maths predicts
+ * and the brief has nothing to report.
+ */
+const POSITION_CTR = [[3, 0.10], [7, 0.04], [10, 0.015]]
+
+export function zeroClickFloor(pos) {
+  const ctr = (POSITION_CTR.find(([p]) => pos <= p) || [null, 0.005])[1]
+  return Math.ceil(Math.log(0.05) / Math.log(1 - ctr))
+}
 // Reads one article needs in one day before "nobody clicked through" says
 // anything about the cards on it. Cèrcol converts an article read to a
 // cta_click about 0.5% of the time (6 clicks in 1,299 reads, all time to
@@ -144,15 +162,15 @@ export async function gatherSearch(env) {
     const tq = await bq(env, `SELECT query, SUM(clicks) AS clicks, SUM(impressions) AS impressions, SAFE_DIVIDE(SUM(sum_position), SUM(impressions)) AS pos,
       ARRAY_AGG(url ORDER BY impressions DESC LIMIT 1)[OFFSET(0)] AS url FROM ${gt} WHERE data_date = '${d}' AND query IS NOT NULL GROUP BY query ORDER BY clicks DESC, impressions DESC LIMIT 6`)
     // A page with real exposure and no clicks is a title and description
-    // problem. A single query with three impressions is weather: at ~470
-    // impressions a day spread over a hundred articles, every query looks
-    // like that, and the brief was asking for a rewrite on the strength of
-    // three of them.
-    const zc = await bq(env, `SELECT url, SUM(clicks) AS clicks, SUM(impressions) AS impressions,
+    // problem, but only once there has been enough exposure that silence is
+    // surprising. The floor is computed per position by zeroClickFloor, so
+    // the query fetches candidates and the filter is applied here.
+    const zcRows = await bq(env, `SELECT url, SUM(clicks) AS clicks, SUM(impressions) AS impressions,
       SAFE_DIVIDE(SUM(sum_position), SUM(impressions)) AS pos FROM ${gt}
       WHERE data_date = '${d}' AND url IS NOT NULL GROUP BY url
-      HAVING clicks = 0 AND impressions >= ${ZERO_CLICK_MIN_IMPRESSIONS} AND pos <= 10
-      ORDER BY impressions DESC LIMIT 1`)
+      HAVING clicks = 0 AND pos <= 10
+      ORDER BY impressions DESC LIMIT 20`)
+    const zc = zcRows.filter((r) => Number(r.impressions) >= zeroClickFloor(Number(r.pos))).slice(0, 1)
     const cur = rows[0] || {}, prev = rows[1] || {}
     return { day: d,
       zeroClick: zc[0] ? [zc[0].url, Number(zc[0].impressions), Number(zc[0].pos)] : null, clicks: [Number(cur.clicks || 0), Number(prev.clicks || 0)], impressions: [Number(cur.impressions || 0), Number(prev.impressions || 0)],

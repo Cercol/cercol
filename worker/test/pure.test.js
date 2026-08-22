@@ -11,6 +11,7 @@ import { extractLinkTargets, extractDois, isInternal, langsWithContent, doiUrl }
 import { scoreForReport, zscoresFor } from '../src/scoring.js'
 import { validateResult } from '../src/writes.js'
 import { classifyChannel, buildChannels, buildFunnel, buildCumulative, weekBounds, weekLabel } from '../src/jobs/digest.js'
+import { zeroClickFloor } from '../src/jobs/daily.js'
 import { choosePerOwner } from '../src/jobs/nudge.js'
 import { classifyBroken } from '../src/jobs/links.js'
 import { normaliseDate, parseQueryStats } from '../src/jobs/bing.js'
@@ -418,5 +419,28 @@ describe('instrument version', () => {
     expect(validateResult({ ...base, instrument_version: -1 })).toBe('instrument_version')
     expect(validateResult({ ...base, instrument_version: 1.5 })).toBe('instrument_version')
     expect(validateResult({ ...base, instrument_version: '1' })).toBe('instrument_version')
+  })
+})
+
+describe('zero-click floor', () => {
+  it('scales the evidence needed with how far down the page sits', () => {
+    // Zero clicks at position 2 is odd; at position 9 it is what the maths
+    // predicts. A flat floor treated them the same.
+    expect(zeroClickFloor(2)).toBeLessThan(zeroClickFloor(5))
+    expect(zeroClickFloor(5)).toBeLessThan(zeroClickFloor(9))
+    expect(zeroClickFloor(9)).toBeLessThan(zeroClickFloor(15))
+  })
+
+  it('would not have reported the item that started this', () => {
+    // 168 impressions at position 8.0, which is an 8% chance of happening.
+    expect(168).toBeLessThan(zeroClickFloor(8.0))
+  })
+
+  it('still reports a page with real exposure near the top', () => {
+    expect(60).toBeGreaterThan(zeroClickFloor(2.0))
+  })
+
+  it('never asks for fewer than the old flat floor', () => {
+    for (const pos of [1, 2, 3, 5, 7, 8, 10]) expect(zeroClickFloor(pos)).toBeGreaterThanOrEqual(10)
   })
 })
