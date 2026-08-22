@@ -905,7 +905,8 @@
     "subtitle": "Dies ist ein synthetisches Beispiel, keine echte Person. Mach den Test für dein eigenes.",
     "domainSection": "Die fünf Dimensionen",
     "cta_note": "Dein eigenes Profil ist zwei Minuten entfernt, kostenlos und ohne Konto.",
-    "cta": "Kostenlosen Test machen"
+    "cta": "Kostenlosen Test machen",
+    "synthetic": "Ein synthetisches Profil, keine reale Person, mit {{count}} Zeugen-Bewertungen, damit sich Selbst- und Fremdbild vergleichen lassen. Berechnet mit demselben Code wie ein echtes Vollmond-Ergebnis."
   },
   "share": {
     "title": "Meine Cèrcol-Rolle: {{role}}",

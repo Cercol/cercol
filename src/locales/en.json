@@ -905,7 +905,8 @@
     "subtitle": "This is a synthetic example, not a real person. Take the test to get your own.",
     "domainSection": "The five dimensions",
     "cta_note": "Your own profile is two minutes away, free and without an account.",
-    "cta": "Take the free test"
+    "cta": "Take the free test",
+    "synthetic": "A synthetic profile, not a real person, shown with {{count}} Witness ratings so the self and peer views can be compared. Scored by the same code as a real Full Moon result."
   },
   "share": {
     "title": "My Cèrcol role: {{role}}",
@@ -1113,7 +1114,7 @@
     "witnessSessionsSection": "Witnesses",
     "statusDone": "Done",
     "statusWaiting": "Waiting",
-    "witnessRoleDisclaimer": "The witness role is a signal, not a verdict. Different Witnesses may perceive the same person differently.",
+    "witnessRoleDisclaimer": "The Witness role is a signal, not a verdict. Different Witnesses may perceive the same person differently.",
     "roleViewSection": "How you and your witnesses see you",
     "selfViewLabel": "You see yourself as",
     "witnessViewLabel": "Witnesses see you as",
