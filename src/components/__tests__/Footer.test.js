@@ -20,7 +20,7 @@ import { describe, expect, it } from 'vitest'
 import en from '../../locales/en.json'
 import fr from '../../locales/fr.json'
 import Footer from '../Footer.jsx'
-import { NAV, NAV_LINKS, META_LINKS, navHref, isEntryActive } from '../../lib/navigation'
+import { NAV, NAV_LINKS, META_LINKS, navHref, isEntryActive, isHomePath } from '../../lib/navigation'
 
 // A bare instance: src/i18n.js reads navigator.language at import time, and
 // the language under test is the point of the second case anyway.
@@ -75,5 +75,23 @@ describe('navigation is defined once', () => {
     expect(isEntryActive(learn, '/science')).toBe(true)
     expect(isEntryActive(learn, '/fr/blog/what-is-a-facet/')).toBe(true)
     expect(isEntryActive(learn, '/roles')).toBe(false)
+  })
+})
+
+// The home page manages its own full-bleed background; Layout only wraps
+// internal pages in the 896px column. isHome matched '/' alone, so every
+// locale home was rendered as an internal page and the instrument cards were
+// crushed into a narrow band with white either side. Live for five languages
+// out of six, and invisible to anyone loading the English home.
+describe('isHomePath', () => {
+  it('is the home in every language, with or without the trailing slash', () => {
+    for (const p of ['/', '/ca', '/ca/', '/es/', '/fr/', '/de/', '/da/']) {
+      expect(isHomePath(p), `${p} should be the home`).toBe(true)
+    }
+  })
+  it('is not an internal page, in any language', () => {
+    for (const p of ['/instruments/', '/blog/', '/ca/blog/', '/de/science/', '/ca/blog/what-is-a-facet/']) {
+      expect(isHomePath(p), `${p} should not be the home`).toBe(false)
+    }
   })
 })

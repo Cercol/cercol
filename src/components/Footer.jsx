@@ -13,6 +13,11 @@
  * of its own: privacy, the sample report, the repository, the issue form and
  * the author. Those existed on the home page and nowhere else.
  *
+ * Same horizontal padding as the header (px-6 lg:px-12, no max width), so on
+ * a wide screen the logo at the top and the logo at the bottom sit on the
+ * same line rather than one being inset by a container the other does not
+ * have.
+ *
  * Tokens only, no literal colours: brand blue ground like the header, with
  * the white/70 to white treatment the header nav already uses, so the two
  * ends of the page read as the same object.
@@ -44,7 +49,7 @@ export default function Footer() {
 
   return (
     <footer style={{ backgroundColor: colors.blue }} aria-label={t('footer.label')}>
-      <div className="max-w-4xl mx-auto px-6 lg:px-12 py-10">
+      <div className="px-6 lg:px-12 py-10">
         <div className="flex flex-col gap-8 sm:flex-row sm:justify-between">
 
           <div className="shrink-0">
