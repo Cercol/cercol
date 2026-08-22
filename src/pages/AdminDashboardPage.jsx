@@ -35,7 +35,7 @@ import {
 } from 'recharts'
 import { Card, StatCard, Sparkline } from '../components/ui'
 import { colors } from '../design/tokens'
-import AuthorityPanel from '../components/AuthorityPanel'
+import PlanPanel from '../components/PlanPanel'
 
 // ---------------------------------------------------------------------------
 // Shared helpers
@@ -1286,7 +1286,7 @@ const TABS = [
   { id: 'results',  label: 'Results'  },
   { id: 'norms',    label: 'Norms'    },
   { id: 'blog',     label: 'Blog'     },
-  { id: 'authority', label: 'Authority' },
+  { id: 'authority', label: 'Pla' },
   { id: 'seo',      label: 'SEO'      },
 ]
 
@@ -1318,7 +1318,7 @@ export default function AdminDashboardPage() {
       {activeTab === 'results'  && <ResultsTab />}
       {activeTab === 'norms'    && <NormsTab />}
       {activeTab === 'blog'     && <BlogTab />}
-      {activeTab === 'authority' && <AuthorityPanel />}
+      {activeTab === 'authority' && <PlanPanel />}
       {activeTab === 'seo'      && <SeoTab />}
     </div>
   )
