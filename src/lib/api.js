@@ -675,3 +675,25 @@ export async function patchAdminUser(userId, fields) {
 export async function getAdminActivity({ days = 30 } = {}) {
   return authFetch(`/admin/activity?days=${days}`)
 }
+
+/**
+ * Authority panel — progress against the target catalogue.
+ *
+ * The catalogue itself never leaves the bundle (src/data/authority-targets.js);
+ * only the state travels. `fileAuthorityIssue` posts the target's own text so
+ * the Worker never needs a second copy of it.
+ */
+export async function getAuthorityStatus() {
+  return authFetch('/admin/authority')
+}
+
+export async function setAuthorityStatus(id, patch) {
+  return authFetch(`/admin/authority/${id}`, { method: 'PATCH', body: JSON.stringify(patch) })
+}
+
+export async function fileAuthorityIssue(target) {
+  return authFetch(`/admin/authority/${target.id}/issue`, {
+    method: 'POST',
+    body: JSON.stringify({ name: target.name, why: target.why, ask: target.ask, url: target.url, contact: target.contact }),
+  })
+}

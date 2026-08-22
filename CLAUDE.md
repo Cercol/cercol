@@ -154,6 +154,10 @@ When adding a new language to Cèrcol:
 - `.github/workflows/` - `ci.yml`, `ci-docs.yml`, `deploy-frontend.yml`, `deploy-worker.yml`.
 - `docs/` - living docs (`policies/`, `architecture/`, `decisions/`, `post-mortems/`, `ops/`) plus `archive/` for decayed content.
 - `scripts/` - sitemap, prerender, deploy-api, docs-coherence and spec-path validators, blog article updaters.
+- Authority roadmap: the catalogue of where Cèrcol should appear lives in
+  `src/data/authority-targets.js` (research, reviewable in a PR); progress
+  lives in D1 `authority_status` and is edited from Admin → Authority. Filing
+  a target opens a GitHub issue, the same queue the daily brief writes to.
 - `sql/`, `db/migrations/` - PostgreSQL seeds and migrations (001 through 094), frozen history. New schema goes in `worker/schema/`; content changes go through the blog admin endpoints or `wrangler d1 execute cercol --remote`.
 
 ## SEO conventions
