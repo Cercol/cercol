@@ -290,7 +290,7 @@ export async function myResults(env, request) {
   const user = await requireUser(env, request)
   if (user instanceof Response) return user
   const { results } = await env.DB.prepare(
-    `SELECT id, created_at, instrument, language, presence, bond, discipline, depth, vision, facets
+    `SELECT id, created_at, instrument, language, presence, bond, discipline, depth, vision, facets, instrument_version
        FROM results WHERE user_id = ? ORDER BY created_at DESC`
   ).bind(user.sub).all()
   return Response.json(results.map((r) => ({ ...r, facets: r.facets == null ? null : JSON.parse(r.facets) })))

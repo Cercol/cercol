@@ -22,6 +22,7 @@ import InstrumentNudge from '../components/InstrumentNudge'
 import { DOMAIN_BG_CLASSES, DOMAIN_ICON_CLASSES } from '../design/tokens'
 import { radarScoreToPercent } from '../utils/new-moon-scoring'
 import { scoreToPercent5 } from '../utils/scoring-utils'
+import { INSTRUMENT_VERSION } from '../data/instrument-version'
 
 /** Map a domain score to 0–100% for progress bars. */
 function scorePercent(score, instrument) {
@@ -171,6 +172,22 @@ function InstrumentSection({ instrumentKey, label, results, t, language, navigat
             </button>
           ) : (
             <ScoreBars result={latest} />
+          )}
+
+          {/* The instruments change. A result answered under an older version
+              of the items is not comparable with one answered now, and the
+              owner is the only person who can do anything about that. So the
+              offer appears here and only here: no email, no banner, no nag.
+              A row with no version predates versioning and counts as older. */}
+          {(latest.instrument_version ?? 0) < INSTRUMENT_VERSION && (
+            <div className="mt-4 pt-4 border-t border-gray-100 flex flex-wrap items-center justify-between gap-3">
+              <p className="text-xs text-gray-500 max-w-md leading-relaxed">
+                {t('myResults.newVersion.body')}
+              </p>
+              <Button variant="secondary" size="sm" onClick={() => navigate(RETAKE_PATHS[instrumentKey])}>
+                {t('myResults.newVersion.cta')}
+              </Button>
+            </div>
           )}
 
           {deleteErr && (

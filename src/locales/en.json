@@ -48,7 +48,11 @@
       "cancel": "Cancel"
     },
     "contributionsEmpty": "You haven't completed any witness sessions yet.",
-    "contributionItem": "Described {{name}}"
+    "contributionItem": "Described {{name}}",
+    "newVersion": {
+      "body": "This result was taken with an earlier version of the instrument. The questions have changed since, so it cannot be compared with a result taken now.",
+      "cta": "Take it again"
+    }
   },
   "account": {
     "profile": "Profile",
