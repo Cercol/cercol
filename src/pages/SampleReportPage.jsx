@@ -1,28 +1,52 @@
 /**
  * SampleReportPage — public, prerendered example report at /sample.
  *
- * A no-account, no-API, no-state view that shows what a Cèrcol result looks
+ * A no-account, no-API, no-state view showing what a Cèrcol result looks
  * like, built entirely from a fixed synthetic profile (src/data/sample-profile).
- * Prerendered to static HTML (path-based in the six languages) so crawlers and
- * cold visitors can see "what do I get" without taking the test. Reuses the
- * report components and the per-role OG image from the share loop (E1).
+ * Prerendered to static HTML in the six languages so crawlers and cold
+ * visitors can see "what do I get" without taking the test.
+ *
+ * It renders the **Full Moon** report, because that is what it claims to be
+ * and what a visitor is deciding whether to spend twenty minutes on. Until
+ * 2026-08-22 it showed four of that report's eight sections from a New Moon
+ * profile, so the example of the long instrument was shorter than the result
+ * of the short one.
+ *
+ * Everything here is computed from the sample profile by the same functions
+ * the real report uses: the role from computeRole, the facet rollup from the
+ * scorer's own mean, the self-versus-peer comparison from compareRoleViews.
+ * Nothing is hardcoded prose. If the scoring changes, this page changes with
+ * it, which is the only way an example stays honest.
  */
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import usePageMeta from '../hooks/usePageMeta'
-import { DimensionRow, ReportPageHeader, RadarDataCard, RoleCard } from '../components/report'
+import {
+  DimensionRow, FacetAccordion, MethodologyNote, RadarDataCard,
+  ReportPageHeader, RoleCard, RoleComparisonView, SurprisesPanel,
+} from '../components/report'
+import RoleProbabilityBars from '../components/RoleProbabilityBars'
 import { SectionLabel } from '../components/ui'
-import { DOMAIN_KEYS } from '../data/domains'
-import { SAMPLE_SCORES, SAMPLE_MAX_SCORE } from '../data/sample-profile'
+import { FM_DOMAIN_META } from '../data/full-moon'
+import {
+  SAMPLE_FM_DOMAINS, SAMPLE_FM_FACETS, SAMPLE_WITNESS_COUNT, SAMPLE_WITNESS_DOMAINS,
+} from '../data/sample-profile'
 import { computeRole } from '../utils/role-scoring'
+import { compareRoleViews } from '../utils/witness-scoring'
 import { roleOgImage } from '../utils/role-share'
-import { radarScoreToPercent, radarScoreLabel } from '../utils/new-moon-scoring'
-import { NewMoonIcon } from '../components/MoonIcons'
+import { fmScoreLabel, fmScoreToPercent } from '../utils/full-moon-scoring'
+import { FullMoonIcon } from '../components/MoonIcons'
 import { colors } from '../design/tokens'
+
+const DOMAIN_KEYS = Object.keys(FM_DOMAIN_META)
 
 export default function SampleReportPage() {
   const { t } = useTranslation()
-  const { role } = computeRole(SAMPLE_SCORES, 'fullMoon')
+
+  const selfResult = computeRole(SAMPLE_FM_DOMAINS, 'fullMoon')
+  const witnessResult = computeRole(SAMPLE_WITNESS_DOMAINS, 'fullMoon')
+  const roleComparison = compareRoleViews(selfResult, witnessResult)
+  const { role } = selfResult
 
   usePageMeta({
     title: t('sample.title'),
@@ -35,7 +59,7 @@ export default function SampleReportPage() {
     <main className="py-10 sm:py-16">
       <div className="flex flex-col gap-8 max-w-3xl mx-auto px-4">
         <ReportPageHeader
-          icon={<NewMoonIcon size={18} style={{ color: colors.textMuted }} />}
+          icon={<FullMoonIcon size={18} style={{ color: colors.textMuted }} />}
           eyebrow={t('sample.eyebrow')}
           title={t('sample.title')}
           subtitle={t('sample.subtitle')}
@@ -47,37 +71,85 @@ export default function SampleReportPage() {
           roleEssence={t(`roles.${role}.essence`)}
         />
 
+        {/* Radar, the five dimensions with the peer view beside them, and the
+            role probabilities: the same three-column card the real report uses. */}
         <section>
           <RadarDataCard
-            scores={SAMPLE_SCORES}
-            maxScore={SAMPLE_MAX_SCORE}
+            scores={SAMPLE_FM_DOMAINS}
             domainKeys={DOMAIN_KEYS}
-            labelFn={(key) => t(`fqDomains.${key}.name`)}
+            labelFn={(key) => t(`fmDomains.${key}.name`)}
           >
             <div>
               <SectionLabel color="gray" className="mb-3">{t('sample.domainSection')}</SectionLabel>
+              <div className="flex items-center gap-4 text-xs font-medium mb-3" style={{ color: colors.textMuted }}>
+                <span className="flex items-center gap-1.5">
+                  <span className="w-3 h-1.5 rounded-sm inline-block" style={{ backgroundColor: colors.selfBar }} />
+                  {t('witnessResults.selfLabel')}
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <span className="inline-block w-0.5 h-3 rounded-sm" style={{ backgroundColor: colors.blue }} />
+                  {t('witnessResults.witnessLabel')}
+                </span>
+              </div>
               <div className="flex flex-col divide-y divide-gray-100">
                 {DOMAIN_KEYS.map((key) => {
-                  const score = SAMPLE_SCORES[key]
-                  const tier = radarScoreLabel(score)
+                  const score = SAMPLE_FM_DOMAINS[key]
+                  const witnessScore = SAMPLE_WITNESS_DOMAINS[key]
+                  const tier = fmScoreLabel(score)
                   return (
                     <div key={key} className="py-3 first:pt-0 last:pb-0">
                       <DimensionRow
                         domainKey={key}
-                        domainName={t(`fqDomains.${key}.name`)}
+                        domainName={t(`fmDomains.${key}.name`)}
                         score={score}
-                        pct={radarScoreToPercent(score)}
+                        pct={fmScoreToPercent(score)}
                         labelTier={tier}
-                        labelText={t(`results.scoreLabels.${tier}`)}
-                        maxScore={SAMPLE_MAX_SCORE}
+                        labelText={t(`fmResults.scoreLabels.${tier}`)}
+                        witnessScore={witnessScore}
+                        witnessPct={fmScoreToPercent(witnessScore)}
                       />
                     </div>
                   )
                 })}
               </div>
             </div>
+            <RoleProbabilityBars result={selfResult} bare />
           </RadarDataCard>
         </section>
+
+        {/* The thirty facets. This is the section that makes the difference
+            between the long instrument and the short one visible. */}
+        <section>
+          <SectionLabel color="gray" className="mb-4">{t('fmResults.facetSection')}</SectionLabel>
+          <FacetAccordion
+            domainKeys={DOMAIN_KEYS}
+            domainMeta={FM_DOMAIN_META}
+            facets={SAMPLE_FM_FACETS}
+            scoreToPercent={fmScoreToPercent}
+            scoreLabel={fmScoreLabel}
+            domainNs="fmDomains"
+            labelNs="fmResults"
+            facetCountLabel={t('fqResults.facetsCount')}
+            t={t}
+          />
+        </section>
+
+        {roleComparison && (
+          <section>
+            <SectionLabel color="gray" className="mb-4">{t('witnessResults.roleViewSection')}</SectionLabel>
+            <RoleComparisonView roleComparison={roleComparison} t={t} />
+          </section>
+        )}
+
+        {roleComparison?.surprises.length > 0 && (
+          <section>
+            <SectionLabel color="gray" className="mb-1">{t('witnessResults.surprisesSection')}</SectionLabel>
+            <p className="text-xs mb-4" style={{ color: colors.textMuted }}>{t('witnessResults.surprisesNote')}</p>
+            <SurprisesPanel surprises={roleComparison.surprises} t={t} />
+          </section>
+        )}
+
+        <MethodologyNote>{t('sample.synthetic', { count: SAMPLE_WITNESS_COUNT })}</MethodologyNote>
 
         <div className="text-center">
           <p className="text-sm text-gray-500 mb-4">{t('sample.cta_note')}</p>

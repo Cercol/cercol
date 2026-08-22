@@ -905,7 +905,8 @@
     "subtitle": "Este es un ejemplo sintético, no una persona real. Haz el test para obtener el tuyo.",
     "domainSection": "Las cinco dimensiones",
     "cta_note": "Tu propio perfil está a dos minutos, gratis y sin cuenta.",
-    "cta": "Haz el test gratis"
+    "cta": "Haz el test gratis",
+    "synthetic": "Un perfil sintético, no una persona real, con {{count}} valoraciones de Testigo para poder comparar la mirada propia y la ajena. Puntuado con el mismo código que un resultado real de Luna Llena."
   },
   "share": {
     "title": "Mi rol Cèrcol: {{role}}",
@@ -1113,7 +1114,7 @@
     "witnessSessionsSection": "Testigos",
     "statusDone": "Completado",
     "statusWaiting": "Pendiente",
-    "witnessRoleDisclaimer": "El rol del testigo es una señal, no un veredicto. Diferentes observadores pueden percibir a la misma persona de manera diferente.",
+    "witnessRoleDisclaimer": "El rol del Testigo es una señal, no un veredicto. Diferentes testigos pueden percibir a la misma persona de manera diferente.",
     "roleViewSection": "Cómo te veis tú y tus testigos",
     "selfViewLabel": "Te ves como",
     "witnessViewLabel": "Los testigos te ven como",

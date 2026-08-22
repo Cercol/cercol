@@ -905,7 +905,8 @@
     "subtitle": "Dette er et syntetisk eksempel, ikke en rigtig person. Tag testen for at få din egen.",
     "domainSection": "De fem dimensioner",
     "cta_note": "Din egen profil er to minutter væk, gratis og uden konto.",
-    "cta": "Tag den gratis test"
+    "cta": "Tag den gratis test",
+    "synthetic": "En syntetisk profil, ikke en rigtig person, med {{count}} Vidne-vurderinger, så selv- og andresyn kan sammenlignes. Beregnet med samme kode som et rigtigt Fuldmåne-resultat."
   },
   "share": {
     "title": "Min Cèrcol-rolle: {{role}}",
