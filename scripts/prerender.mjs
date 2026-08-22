@@ -65,13 +65,19 @@ import Beasties from 'beasties'
 import { createServer } from 'http'
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from 'fs'
 import { join, resolve } from 'path'
-import { fileURLToPath } from 'url'
+import { fileURLToPath, pathToFileURL } from 'url'
 import { normalizeUnsplashUrl } from '../src/utils/unsplash.js'
 import { canonicaliseInternalHrefs } from './lib/canonical-links.mjs'
+import { apiResponseFor } from './lib/prerender-api-cache.mjs'
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url))
 const DIST_DIR   = resolve(__dirname, '../dist')
 const BASE_URL   = 'http://localhost:4173'
+const API_ORIGIN = 'https://api.cercol.team'
+
+// API paths a rendering page asked for that the build had not already
+// fetched. Reported at the end: an empty set is the whole point.
+const apiMisses = new Set()
 
 // Parallel Chrome pages for blog article rendering.
 // 4 tabs share one browser instance — low memory, fast enough.
@@ -424,6 +430,40 @@ async function renderOneRoute(browser, { route, lang }, { articles, articlesBySl
   page.on('pageerror', () => {})
   page.on('requestfailed', () => {})
 
+  // Serve every API call from the data this build already fetched once.
+  //
+  // window.__BETA__ and window.__ARTICLE__ are injected into the SAVED html,
+  // after the render has happened, so during the render itself BetaBanner
+  // still called /beta and BlogArticlePage still called /blog/<slug>: once
+  // per route, across ~730 routes, on every build. Eleven deploys in one day
+  // took the account to 76% of the free plan's 100k daily Worker requests,
+  // and every one of those requests was ours.
+  //
+  // evaluateOnNewDocument cannot fix this by itself. A component that fetches
+  // unconditionally fetches whatever the global says, and the next component
+  // someone adds will not know about the global at all. Interception is the
+  // one place that covers every caller, including the ones not written yet.
+  await page.setRequestInterception(true)
+  page.on('request', (req) => {
+    const url = req.url()
+    if (!url.startsWith(API_ORIGIN)) { req.continue(); return }
+    const { pathname } = new URL(url)
+    const body = apiResponseFor(pathname, { articles, articlesBySlug, betaStatus })
+    if (body === undefined) {
+      // Let it through rather than guess: a wrong body bakes wrong HTML,
+      // which is worse than a request. The miss is reported at the end.
+      apiMisses.add(pathname)
+      req.continue()
+      return
+    }
+    req.respond({
+      status: 200,
+      contentType: 'application/json',
+      headers: { 'access-control-allow-origin': '*' },
+      body: JSON.stringify(body),
+    })
+  })
+
   // Article routes (/blog/<slug>, /<lang>/blog/<slug>) only consume
   // {slug, languages} from __BLOG_ARTICLES__ (localizeBlogLinks). The blog
   // INDEX needs the full list (titles, descriptions, covers). Slimming the
@@ -706,10 +746,25 @@ async function main() {
   await browser.close()
   server.close()
 
+  // An empty set means the build's API cost is the ~110 fetches at the top
+  // and nothing else. A non-empty one names the endpoint to add to
+  // apiResponseFor, and is multiplied by every route that renders.
+  if (apiMisses.size > 0) {
+    console.warn(`[prerender] ! ${apiMisses.size} API path(s) not served from cache, one request per route each:`)
+    for (const p of apiMisses) console.warn(`[prerender]   ! ${p}`)
+  } else {
+    console.log('[prerender] every API call served from the fetch-once cache')
+  }
+
   console.log(`[prerender] done — ${total} routes prerendered ✓`)
 }
 
-main().catch((err) => {
-  console.error('[prerender] fatal:', err)
-  process.exit(1)
-})
+// Only when run as a script. Importing this module used to start the whole
+// prerender: a test that imported it for one pure function launched Chrome
+// and bound the preview port.
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main().catch((err) => {
+    console.error('[prerender] fatal:', err)
+    process.exit(1)
+  })
+}
