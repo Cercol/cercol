@@ -43,6 +43,33 @@ async function send(env, to, subject, html) {
 
 const F = (env) => env.FRONTEND_URL || 'https://cercol.team'
 
+/**
+ * A plain message from the person behind the project, not from the product.
+ *
+ * Everything else here is transactional and goes out as noreply@. This one is
+ * correspondence: it must come from the address the recipient already has a
+ * thread with, and a reply must reach a mailbox a human reads. Same verified
+ * domain, so Resend needs nothing new.
+ *
+ * Plain text on purpose. The design kit would wrap a note to a professor in a
+ * product template, which is the wrong register and looks like marketing.
+ */
+export async function sendAsMiquel(env, { to, subject, text, replyTo }) {
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { authorization: `Bearer ${env.RESEND_API_KEY}`, 'content-type': 'application/json' },
+    body: JSON.stringify({
+      from: 'Miquel Matoses <miquel@cercol.team>',
+      to: Array.isArray(to) ? to : [to],
+      reply_to: replyTo || 'miquel@cercol.team',
+      subject,
+      text,
+    }),
+  })
+  if (!res.ok) throw new Error(`resend ${res.status}: ${await res.text()}`)
+  return res.json()
+}
+
 export function sendMagicLink(env, to, link, l = 'en') {
   const L = lang(l)
   return send(env, to, t('magic_subject', L), base(
