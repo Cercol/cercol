@@ -30,6 +30,43 @@ recomputed from the stored scores rather than stored themselves.
 
 ## Versions
 
+### Version 3 — from 2026-08-22
+
+**The instruments became the ones they cite, and the response scale became
+theirs too.** Two changes, one version, because no response was recorded
+between them.
+
+Full Moon is Johnson's IPIP-NEO-120 and First Quarter is Maples-Keller et
+al.'s IPIP-NEO-60, item for item, read from `src/data/reference/`. 59 Full Moon
+items and 37 First Quarter items changed, and the 21 Full Moon items that
+existed in no IPIP list are gone. Facet and keying come from the reference for
+every item, which is what fixed three that were already correct and in the
+wrong place: `Act without thinking.` moved from Immoderation forward to
+Cautiousness reverse, crossing domain and sign at once.
+
+The scale moved from agreement to the IPIP-NEO's own accuracy format, because
+that is what the norms were collected on. Asking whether someone *agrees* and
+scoring them against norms collected by asking how *accurately* a statement
+describes them is a mismatch no wording fixes. All five points are verbalised
+on both viewports now; the desktop layout had shown only the two poles, and a
+fully labelled scale and an endpoint-labelled one do not produce the same
+distribution.
+
+Danish is no longer a translation: all 120 Full Moon items, 51 of the 60 First
+Quarter items, and the scale anchors are Anna Vedel's published Danish, used as
+published. The other four languages carry a gap where the English is new and
+fall back to English rather than shipping an invented translation.
+
+New Moon is untouched. It is the TIPI, genuinely an agreement instrument,
+scored against different norms, and it keeps its 7-point agreement scale.
+
+Nothing crosses this boundary. A version 1 answer and a version 3 answer are
+answers to different questions on a different scale, and no rescoring recovers
+one from the other.
+
+*Version 2 was reserved for a French and Danish correction that was superseded
+by this rebuild and never shipped.*
+
 ### Version 2 — from 2026-08-22
 
 The Catalan items, corrected. English, Spanish, French, German and Danish are
