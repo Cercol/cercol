@@ -712,15 +712,6 @@ users to suggest corrections to individual items is planned but not yet implemen
 it ships, suggestions will be stored with the `language` field set to `'es'` and reviewed
 by maintainers before any item text is updated in the source files.
 
-> **Correction in progress (2026-08-22).** An audit found that the First
-> Quarter and Full Moon item sets are not the published IPIP-NEO-60 and
-> IPIP-NEO-120 they are described as: roughly half the items differ, and
-> twenty-one Full Moon items are not IPIP items at all. The norms and
-> reliabilities cited on this page were measured on the published instruments,
-> so they are approximate here rather than exact. The replacement is under way;
-> the full measurement is in
-> [docs/post-mortems/2026-08-22-instruments-written-from-memory.md](docs/post-mortems/2026-08-22-instruments-written-from-memory.md).
-
 ### French (FR) test items
 
 The French translation of IPIP items used in Cèrcol follows the same direct translation
