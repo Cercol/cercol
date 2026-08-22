@@ -49,12 +49,24 @@ describe('Footer', () => {
     }
   })
 
-  it('follows the reader locale where the destination has one', async () => {
+  it('keeps a French reader in French on every internal link', async () => {
     await i18n.changeLanguage('fr')
     const html = render()
-    // The blog is the one locale-prefixed entry today; see navHref.
-    expect(html).toContain('href="/fr/blog"')
-    expect(html).not.toContain('href="/blog"')
+    // The footer used to prefix the blog and nothing else, so /fr/instruments/
+    // linked to /instruments/, /roles/, /science/, /about/, /faq/, /privacy/
+    // and /sample/ in English. Every one of those exists under /fr/.
+    for (const link of NAV_LINKS) {
+      expect(html, `footer sends a French reader to ${link.key} in English`).toContain(`href="/fr${link.to}"`)
+    }
+    for (const entry of META_LINKS.filter((e) => e.to)) {
+      expect(html, `footer sends a French reader to ${entry.key} in English`).toContain(`href="/fr${entry.to}"`)
+    }
+    // The wordmark goes home, and home in French is /fr/.
+    expect(html).toContain('href="/fr/"')
+    // Nothing internal escapes the prefix.
+    for (const link of [...NAV_LINKS, ...META_LINKS.filter((e) => e.to)]) {
+      expect(html, `${link.key} still has a bare English href`).not.toContain(`href="${link.to}"`)
+    }
     await i18n.changeLanguage('en')
   })
 })
@@ -65,9 +77,16 @@ describe('navigation is defined once', () => {
     expect(NAV_LINKS.every((l) => l.to)).toBe(true)
   })
   it('prefixes only what is marked, and never English', () => {
-    expect(navHref({ to: '/blog', localised: true }, 'de')).toBe('/de/blog')
-    expect(navHref({ to: '/blog', localised: true }, 'en')).toBe('/blog')
-    expect(navHref({ to: '/science' }, 'de')).toBe('/science')
+    expect(navHref({ to: '/blog' }, 'de')).toBe('/de/blog')
+    expect(navHref({ to: '/blog' }, 'en')).toBe('/blog')
+    // Until 2026-08-22 these three returned the English path, so a French
+    // reader's footer sent them out of French on every link but the blog.
+    expect(navHref({ to: '/science' }, 'de')).toBe('/de/science')
+    expect(navHref({ to: '/instruments' }, 'fr')).toBe('/fr/instruments')
+    expect(navHref({ to: '/privacy' }, 'ca')).toBe('/ca/privacy')
+    // The wordmark links home, which in a locale is the locale's home.
+    expect(navHref({ to: '/' }, 'fr')).toBe('/fr/')
+    expect(navHref({ to: '/' }, 'en')).toBe('/')
     expect(navHref({ to: '/faq' }, undefined)).toBe('/faq')
   })
   it('marks a group active from any of its children', () => {

@@ -53,7 +53,7 @@ export default function Footer() {
         <div className="flex flex-col gap-8 sm:flex-row sm:justify-between">
 
           <div className="shrink-0">
-            <Link to="/" style={{ color: colors.white }} className="inline-block">
+            <Link to={navHref({ to: '/' }, lang)} style={{ color: colors.white }} className="inline-block">
               <CercolLogo className="h-6 w-auto" />
             </Link>
             <p className="mt-3 max-w-xs text-xs leading-relaxed text-white/70">

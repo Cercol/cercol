@@ -156,7 +156,7 @@ export default function Layout({ children }) {
         <div className="h-16 flex items-center gap-6 px-6 lg:px-12">
 
           {/* Logo — left */}
-          <Link to="/" className="shrink-0" style={{ color: colors.white }}>
+          <Link to={navHref({ to: '/' }, i18n.language)} className="shrink-0" style={{ color: colors.white }}>
             <CercolLogo className="h-7 w-auto" />
           </Link>
 
