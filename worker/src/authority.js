@@ -1,17 +1,17 @@
 /**
- * Progress against the authority catalogue, and the one button that files it.
+ * Progress through the distribution plan, and the one button that files a step.
  *
  * # Spec: docs/architecture/seo-pipeline.md
  *
- * The catalogue of targets lives in the frontend bundle
- * (src/data/authority-targets.js) because it is research and belongs under
- * review. This module owns only the parts that change: what state each target
- * is in, and whether it has been filed as a GitHub issue.
+ * The plan itself lives in the frontend bundle (src/data/distribution-plan.js)
+ * because it is content and belongs under review. This module owns only the
+ * parts that change: what state each step is in, and whether it has been filed
+ * as a GitHub issue.
  *
- * Filing reuses the queue the daily brief already writes to, so a target sent
- * to be done arrives in the same place as everything else the routine works
- * from. That is the whole point of the button: the panel does not become a
- * second to-do list nobody reads.
+ * Filing reuses the queue the daily brief already writes to, so a step sent to
+ * be done arrives in the same place as everything else the routine works from.
+ * That is the whole point of the button: the panel does not become a second
+ * to-do list nobody reads.
  */
 
 import { requireAdmin } from './admin.js'
@@ -73,14 +73,14 @@ export async function file(env, request, id) {
     b.url ? `**Where:** ${b.url}` : '',
     b.contact ? `**Who:** ${b.contact}` : '',
     '',
-    `Filed from the authority panel. Catalogue entry \`${id}\` in \`src/data/authority-targets.js\`.`,
+    `Filed from the plan panel. Plan step \`${id}\` in \`src/data/distribution-plan.js\`.`,
   ].filter(Boolean).join('\n')
 
   const repo = env.GITHUB_REPO || 'Cercol/cercol'
   const res = await fetch(`https://api.github.com/repos/${repo}/issues`, {
     method: 'POST',
     headers: { authorization: `Bearer ${env.GITHUB_TOKEN}`, accept: 'application/vnd.github+json', 'user-agent': 'cercol-api', 'content-type': 'application/json' },
-    body: JSON.stringify({ title: `Authority: ${b.name}`, body }),
+    body: JSON.stringify({ title: `Pla: ${b.name}`, body }),
   })
   if (!res.ok) return httpError(502, `github ${res.status}`)
   const { number } = await res.json()
