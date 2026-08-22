@@ -1098,10 +1098,10 @@ function BlogTab() {
                     </Badge>
                   </Td>
                   <Td>
-                    <span className="text-xs text-gray-500">👁 {post.view_count ?? 0}</span>
+                    <span className="text-xs text-gray-500">👁 {post.viewCount ?? 0}</span>
                   </Td>
                   <Td className="whitespace-nowrap text-xs text-gray-400">
-                    {post.published_at ? fmt(post.published_at) : '—'}
+                    {post.publishedAt ? fmt(post.publishedAt) : '—'}
                   </Td>
                   <Td>
                     <div className="flex items-center gap-1.5 flex-wrap">
