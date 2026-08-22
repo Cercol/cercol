@@ -1576,6 +1576,11 @@
     "rights": "Cèrcol er open source. Kun Fuldmåne koster noget."
   },
   "common": {
-    "scaleLabel": "Skala"
+    "scaleLabel": "Skala",
+    "variantLabel": "Sprogvariant",
+    "variantNote": {
+      "published": "Disse udsagn er en offentliggjort oversættelse, brugt præcis som forfatterne udgav den.",
+      "adapted": "Disse udsagn er tilpasset fra en offentliggjort oversættelse til læsere af denne variant. Kilden vises, når du holder markøren over en mulighed."
+    }
   }
 }

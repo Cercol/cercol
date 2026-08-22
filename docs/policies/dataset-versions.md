@@ -30,6 +30,82 @@ recomputed from the stored scores rather than stored themselves.
 
 ## Versions
 
+### Version 5 — from 2026-08-22
+
+**A language can now have more than one variety, and the instrument says which
+one was answered.**
+
+The published translations are not written in one variety per language.
+Gravel's French is Canadian; the Spanish IPIP-NEO-120 is Mexican. Both are the
+real thing and both were taken verbatim, which is exactly why they are worth
+having. The choice between publishing someone else's dialect to every reader
+and editing a published instrument until it stops being one is a false choice:
+keep the source intact and declare the variety.
+
+So the interface stays one language per reader, and the instrument carries a
+variety. French offers two:
+
+- **fr-CA**, Gravel as published, unchanged.
+- **fr-FR**, an adaptation of it for European readers, which is what Thiry and
+  Piolti describe doing and never published. It stores only the strings it
+  changes, forty of a hundred and eighty, so the file shows the difference
+  instead of a second copy.
+
+Eighteen of those forty are the point médian, which Gravel's masculine-only
+text lacks and the other five languages have. Twenty-two are substantive, and
+one of them matters more than the rest: in European French *libéral* reads as
+pro-market and right-leaning, so Gravel's "valeurs sociales libérales" on a
+positively keyed Liberalism item would have attracted exactly the respondents
+it is meant to score low. fr-FR says *progressistes*. The conservative item
+needed no change, because *traditionnelles* reads the same on both sides of the
+Atlantic.
+
+The review also caught one the earlier pass had missed: *sympathiser avec* in
+European French means to strike up a friendship, so "Sympathize with the
+homeless" read as getting on well with them rather than feeling for them.
+
+Spanish carries es-MX and no choice, because only one variety exists. The
+result records the variety it was answered in rather than the bare language,
+because two people answering "in French" may not have answered the same
+sentences.
+
+### Version 4 — from 2026-08-22
+
+**French and Spanish stop being translations.** Every French string is Mathew
+Gravel's published French translation of the IPIP-NEO-300, hosted by the IPIP
+itself, 180 of 180 items. Every Spanish string is the Mexican translation of
+the IPIP-NEO-120 by David R. Frez Puente and Leticia Ortega Luque, also hosted
+by the IPIP: 118 of 120 Full Moon items and 52 of 60 First Quarter items. Both
+verbatim, matched on the English source string.
+
+With Danish already Vedel's, three of the five non-English languages now carry
+a published translation rather than one of ours.
+
+One Spanish item was deliberately not taken. Their English reads "Make rush
+decisions", a typo for "rash", and their Spanish follows it: "Tomo decisiones
+rápidas" is *fast*, not *rash*. Copying a published string is right; copying a
+construct error because it is published is not.
+
+Three French items were transposed and are now swapped back. Gravel's own
+table pairs "Tend to vote for liberal political candidates" with *valeurs
+sociales traditionnelles* and the conservative item with *libérales*, and his
+key column is corrupt in the same neighbourhood, so those rows are damaged in
+his source rather than a choice. Taken verbatim they scored a socially
+conservative French respondent as high-Liberalism and the reverse, on two of
+the four Full Moon compass items and half of First Quarter's. Swapping them
+puts each beside the English it translates and every word remains his.
+
+That is the second published defect this version declines to copy, after the
+Spanish "rush/rash". The rule that a published string is taken as published
+holds for wording. It does not hold for a string that is demonstrably beside
+the wrong item.
+
+What is left: Catalan, where no translation exists anywhere and never will, and
+German, where one exists and cannot be downloaded. Thunsdorff and Treiber at
+Koblenz-Landau translated and back-translated the 300 IPIP items and validated
+them against the German NEO-PI-R, but the items are held by them rather than
+published. That is step s12: a letter, not a translation.
+
 ### Version 3 — from 2026-08-22
 
 **The instruments became the ones they cite, and the response scale became

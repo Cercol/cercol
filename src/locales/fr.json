@@ -1576,6 +1576,11 @@
     "rights": "Cèrcol est open source. Seule Pleine Lune est payante."
   },
   "common": {
-    "scaleLabel": "Échelle"
+    "scaleLabel": "Échelle",
+    "variantLabel": "Variété de la langue",
+    "variantNote": {
+      "published": "Ces énoncés sont une traduction publiée, reprise telle que ses auteurs l'ont publiée.",
+      "adapted": "Ces énoncés sont adaptés d'une traduction publiée pour les lecteurs de cette variété. La source s'affiche au survol de chaque option."
+    }
   }
 }

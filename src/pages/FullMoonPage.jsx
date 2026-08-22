@@ -27,9 +27,11 @@ import { useFeedbackContext } from '../context/FeedbackContext'
 import { useAuth } from '../context/AuthContext'
 import { createCheckoutSession, getMyProfile, getMyResults, anonymiseResult } from '../lib/api'
 import QuestionCard from '../components/QuestionCard'
+import VariantPicker from '../components/VariantPicker'
 import ProgressBar from '../components/ProgressBar'
 import { Card, Button, SectionLabel } from '../components/ui'
 import { colors, DOMAIN_BG_CLASSES, DOMAIN_ICON_CLASSES } from '../design/tokens'
+import { answeredIn } from '../data/instrument-variants'
 import { FullMoonIcon, ArrowLeftIcon, ArrowRightIcon, DimensionIcon } from '../components/MoonIcons'
 
 const DOMAIN_ORDER = INSTRUMENT_DOMAIN_ORDER
@@ -73,6 +75,9 @@ export default function FullMoonPage() {
   // 'completed'  — premium, but user already has a fullMoon result
   // 'ready'      — premium confirmed, no prior result, show test
   const [gateState,       setGateState]       = useState('checking')
+  // The language variety the items are read in. Chosen before starting,
+  // because it changes every item and cannot be switched halfway.
+  const [variant, setVariant] = useState(null)
   const [checkoutLoading, setCheckoutLoading] = useState(false)
   const [checkoutError,   setCheckoutError]   = useState(null)
   const [pollTimedOut,    setPollTimedOut]     = useState(false)
@@ -208,7 +213,7 @@ export default function FullMoonPage() {
 
     if (isLastItemOverall) {
       const { domains, facets } = computeFMScores(updatedAnswers)
-      navigate('/full-moon/results', { state: { domains, facets, fromTest: true } })
+      navigate('/full-moon/results', { state: { domains, facets, fromTest: true, variant } })
       return
     }
 
@@ -397,6 +402,7 @@ export default function FullMoonPage() {
               <SectionLabel color="gray" className="mb-1">{t('common.scaleLabel')}</SectionLabel>
               <p className="text-sm text-gray-700">{t('fm.intro.scale')}</p>
             </div>
+            <VariantPicker value={variant} onChange={setVariant} />
             <p className="text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-3">
               {t('fm.intro.guidance')}
             </p>
@@ -490,6 +496,7 @@ export default function FullMoonPage() {
           scalePoints={SCALE_POINTS}
           scaleLabels={scaleLabels}
           prefixKey="fm.itemPrefix"
+          variant={variant}
         />
 
         {/* Navigation */}

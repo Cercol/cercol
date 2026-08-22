@@ -1576,6 +1576,11 @@
     "rights": "Cèrcol és de codi obert. Només la Lluna Plena és de pagament."
   },
   "common": {
-    "scaleLabel": "Escala"
+    "scaleLabel": "Escala",
+    "variantLabel": "Varietat de la llengua",
+    "variantNote": {
+      "published": "Aquests ítems són una traducció publicada, utilitzada tal com la van publicar els seus autors.",
+      "adapted": "Aquests ítems estan adaptats d'una traducció publicada per als lectors d'aquesta varietat. La font apareix en passar el ratolí per damunt de cada opció."
+    }
   }
 }
