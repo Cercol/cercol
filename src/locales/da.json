@@ -1241,7 +1241,7 @@
       "eyebrow": "Rolletaxonomi",
       "heading": "Tolv roller. Afledt fra forskningen, ikke opfundet.",
       "body": "Rolletaxonomien er forankret i AB5C-cirkumplekset (Hofstee, De Raad & Goldberg, 1992) og teamkompositionslitteraturen (Bell, 2007). Tre OCEAN-dimensioner: Tilstedeværelse, Tilknytning og Vision, kræver balance i teams. De tolv roller dækker de seks skæringspunkter af disse tre dimensioner på begge poler. Disciplin og Dybde modulerer, hvordan hver rolle udtrykkes.",
-      "beta": "Nuværende rolletildelinger bruger teoretiske centroider afledt fra publiceret forskning. Efterhånden som reelle data akkumuleres, mål: 300 Fuldmåne-gennemførelser, vil centroider blive erstattet med empiriske værdier fra faktiske profiler.",
+      "beta": "Nuværende rolletildelinger bruger teoretiske centroider afledt fra publiceret forskning. Efterhånden som reelle data akkumuleres, mål: 300 Fuldmåne-gennemførelser, vil centroider blive erstattet med empiriske værdier fra faktiske profiler. Tællingen begynder forfra, hver gang instrumentet ændrer sig, fordi svar på forskellige spørgsmål ikke kan lægges sammen; det ændrede sig den 22. august 2026, så tællingen startede der.",
       "betaNote": "Rolle-scoring er markeret beta i grænsefladen. Det er illustrativt, ikke diagnostisk."
     },
     "fullMoon": {
@@ -1267,13 +1267,13 @@
       "cta": "Se på GitHub"
     },
     "validation": {
-      "milestonesDetail": "Valideringsmilepæle. Cèrcols model er en arbejdshypotese, der forfines, efterhånden som rigtige data samles. Planen er eksplicit om, hvad der ændrer sig ved hver stikprøvestørrelse. Ved N ≥ 100 gennemgår vi rollefordelingen og markerer enhver arketype, der tiltrækker en usædvanlig andel af profiler. Ved N ≥ 200 erstatter vi de publicerede normative priors med Cèrcols egne stikprøvestatistikker, herunder vidnespecifikke normer. Ved N ≥ 300 kører vi k-means (k = 12) for at sammenligne de empiriske centroider med de teoretiske og tester, om kognitiv evne forudsiger rolletildeling ud over Big Five. Intet af dette validerer modellen som prædiktor for teampræstation, hvilket kræver eksterne data om reel teamadfærd. Milepælene forfiner modellens interne geometri, ikke dens eksterne påstande.",
+      "milestonesDetail": "Valideringsmilepæle. Cèrcols model er en arbejdshypotese, der forfines, efterhånden som rigtige data samles. Planen er eksplicit om, hvad der ændrer sig ved hver stikprøvestørrelse. Ved N ≥ 100 gennemgår vi rollefordelingen og markerer enhver arketype, der tiltrækker en usædvanlig andel af profiler. Ved N ≥ 200 erstatter vi de publicerede normative priors med Cèrcols egne stikprøvestatistikker, herunder vidnespecifikke normer. Ved N ≥ 300 kører vi k-means (k = 12) for at sammenligne de empiriske centroider med de teoretiske og tester, om kognitiv evne forudsiger rolletildeling ud over Big Five. Intet af dette validerer modellen som prædiktor for teampræstation, hvilket kræver eksterne data om reel teamadfærd. Milepælene forfiner modellens interne geometri, ikke dens eksterne påstande. Tællingen begynder forfra, hver gang instrumentet ændrer sig, fordi svar på forskellige spørgsmål ikke kan lægges sammen; det ændrede sig den 22. august 2026, så tællingen startede der.",
       "eyebrow": "Valideringsplan",
       "heading": "En arbejdshypotese, ikke et færdigt produkt.",
       "body": "Cèrcols rollesystem bruger teoretiske centroider afledt af publiceret AB5C-forskning. Rolletildelinger er illustrative, de er endnu ikke empirisk valideret mod reelle teamresultater. Validering er planlagt i tre faser.",
       "milestones": {
         "n300": {
-          "label": "N ≥ 300",
+          "label": "N ≥ 300 Tællingen begynder forfra, hver gang instrumentet ændrer sig, fordi svar på forskellige spørgsmål ikke kan lægges sammen; det ændrede sig den 22. august 2026, så tællingen startede der.",
           "desc": "Bekræft intern konsistens af rolletildelinger og sammenlign selv vs. Vidne-konvergens."
         },
         "n1000": {
@@ -1337,7 +1337,7 @@
     },
     "q10": {
       "q": "Hvilke sprog er Cèrcol tilgængeligt på?",
-      "a": "Cèrcol er tilgængeligt på engelsk, catalansk/valenciansk, spansk, fransk, tysk og dansk. Alle seks sprog dækker den fulde vurdering, instrumentspørgsmål, resultater og alt indhold. Den danske oversættelse er baseret på den validerede tilpasning af Vedel, Gøtzsche-Astrup og Holm (2018, Nordic Psychology). Den franske oversættelse følger Thiry og Pioltis (2023) dokumenterede europæisk-franske IPIP-tilpasning (Université de Mons), opført på ipip.ori.org."
+      "a": "Cèrcol findes på engelsk, catalansk, spansk, fransk, tysk og dansk, og hvert udsagn findes på alle sprogene. De har ikke samme status, og videnskabssiden fortæller hvilken. Dansk er Vedel, Gøtzsche-Astrup og Holms offentliggjorte oversættelse, fransk er Gravels, og spansk er Frez Puente og Ortega Luques, alle tre brugt som de blev udgivet. Catalansk og tysk er vores egne. Fransk tilbyder en europæisk tilpasning ved siden af den offentliggjorte canadiske tekst, og du vælger, før du går i gang."
     },
     "q11": {
       "q": "Hvordan fungerer Vidnet-vurderingen præcist?",
@@ -1426,7 +1426,7 @@
     },
     "beta": {
       "heading": "Dette er en starthypotese, ikke et valideret instrument.",
-      "body": "Nuværende rolletildelinger bruger teoretiske centroider afledt fra publiceret forskning. Efterhånden som reelle data akkumuleres, mål: 300 Fuldmåne-gennemførelser, vil centroider blive erstattet med empiriske værdier fra faktiske profiler. Rolle-scoring er markeret beta i grænsefladen af netop denne grund."
+      "body": "Nuværende rolletildelinger bruger teoretiske centroider afledt fra publiceret forskning. Efterhånden som reelle data akkumuleres, mål: 300 Fuldmåne-gennemførelser, vil centroider blive erstattet med empiriske værdier fra faktiske profiler. Rolle-scoring er markeret beta i grænsefladen af netop denne grund. Tællingen begynder forfra, hver gang instrumentet ændrer sig, fordi svar på forskellige spørgsmål ikke kan lægges sammen; det ændrede sig den 22. august 2026, så tællingen startede der."
     },
     "critique": {
       "heading": "Ser du et problem med denne model?",

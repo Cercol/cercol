@@ -122,14 +122,15 @@ and Neuman & Wright (1999).
 Full scientific documentation: [SCIENCE.md](./SCIENCE.md)
 
 ### Language validation
-| Language | Scientific basis |
-|----------|-----------------|
-| English | IPIP source items (ipip.ori.org) |
-| Danish | Vedel, Gøtzsche-Astrup & Holm (2018) — peer-reviewed IPIP-NEO-120 validation, *Nordic Psychology* |
-| French | Thiry & Piolti (2023) — documented European-French IPIP adaptation listed on ipip.ori.org, University of Mons |
-| Spanish | Cupani et al. (2014) precedent — IPIP-NEO-60 validation in Spanish-speaking populations |
-| German | Ostendorf & Angleitner (1994) — five-factor replication in German-speaking populations |
-| Catalan | Direct translation following IPIP methodology; no published CA validation exists |
+| Language | Items | Standing |
+|----------|-------|----------|
+| English | Johnson (2014), Maples-Keller et al. (2019) | The instruments themselves, item for item |
+| Danish | Vedel, Gøtzsche-Astrup & Holm (2018) | Published translation, used as published. Seven items are Cèrcol's |
+| French (Canada) | Gravel, IPIP-NEO-300, on ipip.ori.org | Published translation, used as published |
+| French (Europe) | Adapted from Gravel by Cèrcol | 40 of 180 strings changed. Not published, not validated |
+| Spanish (Mexico) | Frez Puente & Ortega Luque, on ipip.ori.org | Published translation, used as published. Nine items are Cèrcol's |
+| German | Cèrcol | A validated translation exists and is not distributed; a request is pending |
+| Catalan | Cèrcol | No published translation exists anywhere |
 
 ### References
 - Barrick, M. R., & Mount, M. K. (1991). The Big Five personality dimensions and job performance. *Personnel Psychology, 44*(1), 1–26. https://doi.org/10.1111/j.1744-6570.1991.tb00688.x

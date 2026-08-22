@@ -5,6 +5,7 @@
  * in docs/architecture/seo-pipeline.md; this file is what CI can hold.
  */
 import { describe, it, expect } from 'vitest'
+import { readFileSync } from 'node:fs'
 
 import { issueAccessToken, verifyAccessToken, bearerFrom } from '../src/jwt.js'
 import { extractLinkTargets, extractDois, isInternal, langsWithContent, doiUrl } from '../src/links.js'
@@ -472,5 +473,27 @@ describe('export gaps', () => {
   it('leads with it, because it is the only line with a deadline', () => {
     const out = actions({ ...base, warns: [], search: { exportGaps: ['2026-08-16'], queries: [], zeroClick: null } })
     expect(out[0]).toContain('never exported')
+  })
+})
+
+describe('what counts toward a norm', () => {
+  it('is one version only, and the SQL says so', () => {
+    // A norm is a mean and a spread over answers to the same questions.
+    // Pooling answers given to two different item sets, or on two different
+    // response scales, produces a number that describes neither. The stamp
+    // exists for this and the query has to use it.
+    const src = readFileSync('worker/src/norms.js', 'utf8')
+    expect(src).toMatch(/instrument_version = \?/)
+    expect(src).toMatch(/COALESCE\(is_seed, 0\) = 0/)
+  })
+
+  it('has exactly one definition of it', () => {
+    // If a counter reports progress toward a threshold using different
+    // arithmetic from the norm computation, it reports a number the norms
+    // will not use, which is worse than reporting nothing.
+    const norms = readFileSync('worker/src/norms.js', 'utf8')
+    const admin = readFileSync('worker/src/admin.js', 'utf8')
+    expect(norms).toContain('export async function usableCorpus')
+    expect(admin).toContain('usableCorpus(env.DB)')
   })
 })

@@ -1241,7 +1241,7 @@
       "eyebrow": "Rollentaxonomie",
       "heading": "Zwölf Rollen. Aus der Forschung abgeleitet, nicht erfunden.",
       "body": "Die Rollentaxonomie ist im AB5C-Circumplex (Hofstee, De Raad & Goldberg, 1992) und der Teamzusammensetzungsliteratur (Bell, 2007) verankert. Drei OCEAN-Dimensionen: Präsenz, Bindung und Vision, erfordern Balance in Teams. Die zwölf Rollen decken die sechs Kreuzungen dieser drei Dimensionen auf beiden Polen ab. Disziplin und Tiefe modulieren, wie jede Rolle ausgedrückt wird.",
-      "beta": "Aktuelle Rollenzuweisungen verwenden theoretische Zentroide aus veröffentlichter Forschung. Wenn reale Daten akkumulieren: Ziel: 300 vollständige Full Moon-Abschlüsse, werden Zentroide durch empirische Werte aus tatsächlichen Profilen ersetzt.",
+      "beta": "Aktuelle Rollenzuweisungen verwenden theoretische Zentroide aus veröffentlichter Forschung. Wenn reale Daten akkumulieren: Ziel: 300 vollständige Full Moon-Abschlüsse, werden Zentroide durch empirische Werte aus tatsächlichen Profilen ersetzt. Die Zählung beginnt von vorn, sobald sich das Instrument ändert, denn Antworten auf verschiedene Fragen lassen sich nicht zusammenzählen; am 22. August 2026 hat es sich geändert, also begann die Zählung dort neu.",
       "betaNote": "Die Rollenbewertung ist in der Benutzeroberfläche als Beta gekennzeichnet. Sie ist illustrativ, nicht diagnostisch."
     },
     "fullMoon": {
@@ -1267,13 +1267,13 @@
       "cta": "Auf GitHub ansehen"
     },
     "validation": {
-      "milestonesDetail": "Validierungs-Meilensteine. Das Modell von Cèrcol ist eine Arbeitshypothese, die verfeinert wird, sobald echte Daten zusammenkommen. Der Plan benennt klar, was sich bei jeder Stichprobengröße ändert. Bei N ≥ 100 prüfen wir die Rollenverteilung und markieren jeden Archetyp, der einen ungewöhnlichen Anteil an Profilen anzieht. Bei N ≥ 200 ersetzen wir die veröffentlichten normativen Priors durch Cèrcols eigene Stichprobenstatistiken, einschließlich zeugenspezifischer Normen. Bei N ≥ 300 führen wir k-means (k = 12) aus, um die empirischen Zentroide mit den theoretischen zu vergleichen, und testen, ob kognitive Fähigkeit die Rollenzuordnung über die Big Five hinaus vorhersagt. Nichts davon validiert das Modell als Prädiktor der Teamleistung, wofür externe Daten zum tatsächlichen Teamverhalten nötig sind. Die Meilensteine verfeinern die interne Geometrie des Modells, nicht seine externen Aussagen.",
+      "milestonesDetail": "Validierungs-Meilensteine. Das Modell von Cèrcol ist eine Arbeitshypothese, die verfeinert wird, sobald echte Daten zusammenkommen. Der Plan benennt klar, was sich bei jeder Stichprobengröße ändert. Bei N ≥ 100 prüfen wir die Rollenverteilung und markieren jeden Archetyp, der einen ungewöhnlichen Anteil an Profilen anzieht. Bei N ≥ 200 ersetzen wir die veröffentlichten normativen Priors durch Cèrcols eigene Stichprobenstatistiken, einschließlich zeugenspezifischer Normen. Bei N ≥ 300 führen wir k-means (k = 12) aus, um die empirischen Zentroide mit den theoretischen zu vergleichen, und testen, ob kognitive Fähigkeit die Rollenzuordnung über die Big Five hinaus vorhersagt. Nichts davon validiert das Modell als Prädiktor der Teamleistung, wofür externe Daten zum tatsächlichen Teamverhalten nötig sind. Die Meilensteine verfeinern die interne Geometrie des Modells, nicht seine externen Aussagen. Die Zählung beginnt von vorn, sobald sich das Instrument ändert, denn Antworten auf verschiedene Fragen lassen sich nicht zusammenzählen; am 22. August 2026 hat es sich geändert, also begann die Zählung dort neu.",
       "eyebrow": "Validierungsplan",
       "heading": "Eine Arbeitshypothese, kein fertiges Produkt.",
       "body": "Das Rollensystem von Cèrcol verwendet theoretische Zentroide, die aus veröffentlichter AB5C-Forschung abgeleitet wurden. Rollenzuweisungen sind illustrativ, sie wurden noch nicht empirisch gegen reale Teamergebnisse validiert. Die Validierung ist in drei Phasen geplant.",
       "milestones": {
         "n300": {
-          "label": "N ≥ 300",
+          "label": "N ≥ 300 Die Zählung beginnt von vorn, sobald sich das Instrument ändert, denn Antworten auf verschiedene Fragen lassen sich nicht zusammenzählen; am 22. August 2026 hat es sich geändert, also begann die Zählung dort neu.",
           "desc": "Interne Konsistenz der Rollenzuweisungen bestätigen und Selbst- vs. Zeuge-Konvergenz vergleichen."
         },
         "n1000": {
@@ -1337,7 +1337,7 @@
     },
     "q10": {
       "q": "In welchen Sprachen ist Cèrcol verfügbar?",
-      "a": "Cèrcol ist auf Englisch, Katalanisch/Valencianisch, Spanisch, Französisch, Deutsch und Dänisch verfügbar. Alle sechs Sprachen decken die vollständige Bewertung ab, Instrumentenfragen, Ergebnisse und alle Inhalte. Die dänische Übersetzung basiert auf der validierten Adaption von Vedel, Gøtzsche-Astrup und Holm (2018, Nordic Psychology). Die französische Übersetzung folgt der dokumentierten europäisch-französischen IPIP-Adaption von Thiry und Piolti (2023, Universität Mons), gelistet auf ipip.ori.org."
+      "a": "Cèrcol gibt es auf Englisch, Katalanisch, Spanisch, Französisch, Deutsch und Dänisch, und jede Aussage existiert in jeder Sprache. Sie haben nicht alle denselben Status, und die Wissenschaftsseite sagt, welchen jeweils. Dänisch ist die veröffentlichte Übersetzung von Vedel, Gøtzsche-Astrup und Holm, Französisch die von Gravel, Spanisch die von Frez Puente und Ortega Luque, alle drei unverändert übernommen. Katalanisch und Deutsch sind unsere eigenen. Französisch bietet neben dem veröffentlichten kanadischen Text eine europäische Anpassung, und du wählst vor dem Start."
     },
     "q11": {
       "q": "Wie funktioniert die Zeuge/Zeugin-Bewertung genau?",
@@ -1426,7 +1426,7 @@
     },
     "beta": {
       "heading": "Dies ist eine Ausgangshypothese, kein validiertes Instrument.",
-      "body": "Aktuelle Rollenzuweisungen verwenden theoretische Zentroide aus veröffentlichter Forschung. Wenn reale Daten akkumulieren: Ziel: 300 vollständige Full Moon-Abschlüsse, werden Zentroide durch empirische Werte aus tatsächlichen Profilen ersetzt. Die Rollenbewertung ist in der Benutzeroberfläche genau aus diesem Grund als Beta gekennzeichnet."
+      "body": "Aktuelle Rollenzuweisungen verwenden theoretische Zentroide aus veröffentlichter Forschung. Wenn reale Daten akkumulieren: Ziel: 300 vollständige Full Moon-Abschlüsse, werden Zentroide durch empirische Werte aus tatsächlichen Profilen ersetzt. Die Rollenbewertung ist in der Benutzeroberfläche genau aus diesem Grund als Beta gekennzeichnet. Die Zählung beginnt von vorn, sobald sich das Instrument ändert, denn Antworten auf verschiedene Fragen lassen sich nicht zusammenzählen; am 22. August 2026 hat es sich geändert, also begann die Zählung dort neu."
     },
     "critique": {
       "heading": "Siehst du ein Problem mit diesem Modell?",

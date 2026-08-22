@@ -655,6 +655,15 @@ when both have identical fit scores).
   Until this calibration is in place, witness/self comparisons
   remain structural (rank-based or set-based), not quantitative
   (z-score based).
+**N counts one version only.** A norm or a centroid is computed over answers
+to the same questions, so responses given under a different item set or a
+different response scale cannot be pooled into it. The instruments changed on
+2026-08-22 and the count restarted there; `usableCorpus` in
+`worker/src/norms.js` is the single definition of what counts, and the norm
+computation itself filters the same way. The 68 responses recorded before that
+date remain real data about the instrument that collected them, and are
+excluded from every threshold below.
+
 - N≥300: run k-means (k=12) in 5D space; compare empirical vs theoretical
   centroids; adjust if divergence is systematic
 - N≥300: regression g ~ assigned_role; if g has significant predictive power
@@ -670,144 +679,89 @@ the project.
 
 ---
 
-## Translation methodology
+## Where each language comes from
 
-### Catalan/Valencian (CA) test items
+Every item in every language is present: no reader meets an English sentence
+inside a test they chose in another language. But the six languages do not have
+the same standing, and the difference is the point of this section.
 
-The Catalan/Valencian translation of IPIP items in Cèrcol is in partial progress.
+Three languages are somebody else's published translation, used as published.
+Two are Cèrcol's own. Nothing in between is claimed.
 
-**Current state:**
-All 190 items (10 TIPI + 60 IPIP-NEO-60 + 120 IPIP-NEO-120) are translated into Catalan/Valencian
-and in production.
+| Language | Items | Standing |
+| --- | --- | --- |
+| English | Johnson (2014) and Maples-Keller et al. (2019) | The instruments themselves, item for item |
+| Danish | Vedel, Gøtzsche-Astrup & Holm (2018) | Published translation, used as published. Seven items are Cèrcol's |
+| French (Canada) | Gravel, IPIP-NEO-300 | Published translation, used as published |
+| French (Europe) | Adapted from Gravel by Cèrcol | 40 strings of 180 changed. Not published, not validated |
+| Spanish (Mexico) | Frez Puente & Ortega Luque | Published translation, used as published. Nine items are Cèrcol's |
+| German | Cèrcol | A validated translation exists and is not distributed. A request is pending |
+| Catalan | Cèrcol | No published translation exists anywhere, and none is coming |
 
-**Translation approach (when applied):** Same direct translation methodology as all other
-languages: exact psychological meaning preserved, Valencian orthographic standard
-(normativa de l'Acadèmia Valenciana de la Llengua), no regional softening or register
-elevation that would affect construct measurement. Gender-inclusive Catalan forms
-(e.g. -at/ada contracted as -at/da) used where the source item requires it.
+### What "used as published" means, exactly
 
-**No published IPIP-CA validation study exists** at the time of writing. The translation
-methodology follows the same principled approach as the other languages and is documented
-here for transparency. Human review by a translator with psychometric context is required
-before any item text enters the source files.
+The wording is the publisher's and is never touched: which word, which
+construction, which intensity, which item a string sits beside. Those are what
+was validated, and changing any of them quietly makes it a different
+instrument. Orthography is corrected — a missing full stop, a doubled space, a
+word split by a markup tag, a word spelled the wrong language's way — because
+none of that was validated either way and leaving it in reads as carelessness
+to the only people who would notice.
 
-**Ongoing correction (planned):** A translation feedback mechanism for Catalan-speaking
-users to suggest corrections is planned but not yet implemented. When it ships, suggestions
-will be stored with `language: 'ca'` and reviewed by maintainers before any item text is
-updated in the source files.
+Three corrections were made against that rule, each recorded in
+[dataset-versions.md](docs/policies/dataset-versions.md):
 
-### Spanish (ES) test items
+- Two French strings are transposed in Gravel's own table: his row 28 pairs the
+  liberal-voting item with *valeurs sociales traditionnelles* and his row 148
+  pairs the conservative one with *libérales*. His key column is corrupt in the
+  same neighbourhood. Taken verbatim they inverted the Liberalism facet for
+  every French respondent, so they were swapped back. Every word is still his.
+- The Mexican page's English reads "Make **rush** decisions", a typo for
+  "rash", and its Spanish follows it with *decisiones rápidas*, which is fast
+  rather than rash. That item is Cèrcol's.
+- Three surface defects in Vedel's text: two missing full stops and the English
+  spelling *success* for Danish *succes*.
 
-The Spanish translation of IPIP items used in Cèrcol follows a direct translation
-approach from the English source items. IPIP items are in the public domain
-(Goldberg et al. 2006), and Spanish adaptations are supported by published precedent.
+### Where Cèrcol's own translations stand
 
-**Source language:** English (ipip.ori.org public domain corpus)
+**Catalan** has no published translation and will not get one, so translating
+was unavoidable. All 180 items were written or corrected against the English by
+a philologist with psychometric training, in Central Catalan, and a native
+read-through is still outstanding.
 
-**Translation approach:** Direct translation by a human translator with knowledge of
-both the source language and the psychometric context of each item. The translation
-preserves the precise psychological meaning of each item without softening, strengthening,
-or reframing the construct being measured. Neutral international Spanish is used, neither
-localised regionalisms nor formal register that would increase perceived test-taking
-difficulty. Gender-inclusive forms (e.g. the slash notation -o/a) are used where the
-source item's meaning requires it.
+**German** is interim. Thunsdorff and Treiber at Koblenz-Landau translated and
+back-translated the 300 IPIP items and validated them against the German
+NEO-PI-R with 102 participants; ipip.ori.org documents this and says to write
+to them, which is a step in the plan. If they agree, the German is replaced
+wholesale.
 
-**Precedent:** Cupani, M., Pilatti, A., Urrizaga, A., Chincolla, A., &
-Richaud de Minzi, M. C. (2014). Inventario de Personalidad IPIP-NEO: estudios
-preliminares de adaptación al español en estudiantes argentinos.
-*Revista Mexicana de Investigación en Psicología, 6*(1), 55–73. A Spanish
-adaptation of the IPIP-NEO for Argentine students, following the same
-item-level translation approach. Note what it does and does not establish: it
-covers the 300-item IPIP-NEO rather than the 60-item version Cèrcol uses, its
-authors describe it as preliminary, and several scales are flagged there for
-revision. It is a precedent for the method, not evidence that the structure
-replicates.
-This is not a formally validated translation: it is a principled open-source translation
-of public-domain items, documented as such.
+**European French** is an adaptation rather than a translation, and it is the
+same thing Thiry and Piolti (2023) describe doing to Gravel's text for European
+readers. They published their method and not their items, so this is Cèrcol's
+until they answer. Where their adaptation changed nothing, the reader gets
+Gravel's published words.
 
-**Ongoing correction (planned):** A translation feedback mechanism for Spanish-speaking
-users to suggest corrections to individual items is planned but not yet implemented. When
-it ships, suggestions will be stored with the `language` field set to `'es'` and reviewed
-by maintainers before any item text is updated in the source files.
+A reader whose language offers more than one variety chooses before starting,
+and the result records the variety rather than the bare language. Two people
+answering "in French" may not have answered the same sentences.
 
-### French (FR) test items
+### One judgement three philologists made separately
 
-The French translation of IPIP items used in Cèrcol follows the same direct translation
-methodology as the Spanish adaptation.
+Working on Catalan, European French and German without seeing each other's
+work, all three declined to translate "Tend to vote for liberal political
+candidates" literally. In all three languages *liberal* names the pro-market
+centre-right, close to the opposite of the sense the English item carries, so a
+positively keyed Liberalism item would have attracted exactly the respondents
+it is meant to score low. All three chose *progressive*. Gravel's Canadian
+keeps *libérales*, because there the word carries the party sense he wrote it
+for.
 
-**Source language:** English (ipip.ori.org public domain corpus)
+### How the item sets were audited
 
-**Translation approach:** Direct translation preserving the precise psychological meaning
-of each item. Neutral European French is used, no regional variants (not Québécois),
-no register elevation that would affect construct measurement. Gender-inclusive forms
-(e.g. the mid-dot notation -·e) are used where the source item's meaning requires it.
-
-**Scientific basis:** The French adaptation of the IPIP is the adaptation by Thiry, B.,
-& Piolti, M. (2023), University of Mons, a documented European-French IPIP adaptation
-listed on ipip.ori.org. The item-level translation methodology is documented, and
-Cèrcol's translation follows the same item-level approach.
-This is not a formally validated translation: it is a principled open-source translation
-of public-domain items, documented as such.
-
-**Ongoing correction (planned):** A translation feedback mechanism is planned but not yet
-implemented. When it ships, suggestions will be stored with the `language` field set to
-`'fr'` and reviewed by maintainers before any item text is updated in the source files.
-
-### German (DE) test items
-
-The German translation of IPIP items used in Cèrcol follows the same direct translation
-methodology as the Spanish and French adaptations.
-
-**Source language:** English (ipip.ori.org public domain corpus)
-
-**Translation approach:** Direct translation preserving the precise psychological meaning
-of each item. Standard High German (Hochdeutsch) is used, no regional variants (not
-Austrian, not Swiss German), neutral register. Gender-inclusive forms are used where
-the source item's meaning requires it.
-
-**Scientific basis:** German adaptations of the IPIP are listed on ipip.ori.org:
-the 50-item Big-Five factor markers were translated at Bielefeld, and the 300
-items measuring NEO-PI-R constructs at Koblenz-Landau. The five-factor structure
-itself replicates in German, established by the German NEO-PI-R manual
-(Ostendorf & Angleitner 2004) rather than by their 1994 instrument comparison,
-which is what this document previously cited for it. Cèrcol's translation
-follows the same item-level direct translation methodology. It is not a formally
-validated translation: it is a principled open-source translation of
-public-domain items, documented as such.
-
-**Ongoing correction (planned):** A translation feedback mechanism is planned but not yet
-implemented. When it ships, suggestions will be stored with the `language` field set to
-`'de'` and reviewed by maintainers before any item text is updated in the source files.
-
-### Danish (DA) test items
-
-The Danish translation of IPIP items used in Cèrcol is based on the Vedel, Gøtzsche-Astrup
-& Holm (2018) validated Danish IPIP-NEO-120 adaptation, published in *Nordic Psychology* and
-listed on ipip.ori.org. This is the strongest scientific basis of any Cèrcol language after
-English: the full five-factor structure has been validated in a Danish population with the
-specific IPIP-NEO-120 item set.
-
-**Source language:** English (ipip.ori.org public domain corpus)
-
-**Translation approach:** Direct translation following the Vedel et al. (2018) methodology.
-Standard Danish (Rigsdansk) is used, no regional variants (not Faroese, not Greenlandic).
-Gender-neutral or inclusive forms are used where the source item requires it.
-
-**Altered items (Vedel et al. 2018):** Two items in the Values/Compass facet were altered
-for legal reasons related to Danish voting behaviour context. For the item originally reading
-"Tend to vote for conservative political candidates.", the Danish translation uses the source
-"View myself as predominantly conservative politically." (Vedel formulation) rather than the
-original voting formulation. If a liberal item is added in a future update, the same alteration
-applies: "View myself as predominantly liberal politically."
-
-This is not a formally validated translation: it is a principled open-source translation
-of public-domain items, following the Vedel et al. methodology, documented as such.
-
-**Ongoing correction (planned):** A translation feedback mechanism is planned but not yet
-implemented. When it ships, suggestions will be stored with the `language` field set to
-`'da'` and reviewed by maintainers before any item text is updated in the source files.
-
----
+Not by reading them. Every string was matched against the publisher's own
+table, and the discrepancies above are what that surfaced. The audit that
+started it is in
+[docs/post-mortems/2026-08-22-instruments-written-from-memory.md](docs/post-mortems/2026-08-22-instruments-written-from-memory.md).
 
 ## References
 

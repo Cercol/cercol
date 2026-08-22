@@ -1241,7 +1241,7 @@
       "eyebrow": "Taxonomía de roles",
       "heading": "Doce roles. Derivados de la investigación, no inventados.",
       "body": "La taxonomía de roles está fundamentada en el circumplex AB5C (Hofstee, De Raad & Goldberg, 1992) y la literatura sobre composición de equipos (Bell, 2007). Tres dimensiones OCEAN: Presencia, Vínculo y Visión, requieren equilibrio en los equipos. Los doce roles cubren las seis intersecciones de estas tres dimensiones en ambos polos. La Disciplina y la Profundidad modulan cómo se expresa cada rol.",
-      "beta": "Las asignaciones de roles actuales usan centroides teóricos derivados de investigación publicada. A medida que se acumulen datos reales, objetivo: 300 completaciones de Full Moon, los centroides serán reemplazados por valores empíricos de perfiles reales.",
+      "beta": "Las asignaciones de roles actuales usan centroides teóricos derivados de investigación publicada. A medida que se acumulen datos reales, objetivo: 300 completaciones de Full Moon, los centroides serán reemplazados por valores empíricos de perfiles reales. La cuenta vuelve a empezar cada vez que cambia el instrumento, porque respuestas a preguntas distintas no se pueden sumar; cambió el 22 de agosto de 2026, así que la cuenta empezó de nuevo ahí.",
       "betaNote": "La puntuación de roles está etiquetada como beta en la interfaz. Es ilustrativa, no diagnóstica."
     },
     "fullMoon": {
@@ -1267,13 +1267,13 @@
       "cta": "Ver en GitHub"
     },
     "validation": {
-      "milestonesDetail": "Hitos de validación. El modelo de Cèrcol es una hipótesis de trabajo que se refina a medida que se acumulan datos reales. El plan es explícito sobre qué cambia en cada tamaño de muestra. Con N ≥ 100 revisamos la distribución de roles y señalamos cualquier arquetipo que atraiga una proporción inusual de perfiles. Con N ≥ 200 sustituimos los priores normativos publicados por las estadísticas de la propia muestra de Cèrcol, incluidas normas específicas de Testigo. Con N ≥ 300 ejecutamos k-means (k = 12) para comparar los centroides empíricos con los teóricos, y comprobamos si la capacidad cognitiva predice la asignación de rol más allá del Big Five. Nada de esto valida el modelo como predictor del rendimiento de equipo, lo que requiere datos externos sobre el comportamiento real de los equipos. Los hitos refinan la geometría interna del modelo, no sus afirmaciones externas.",
+      "milestonesDetail": "Hitos de validación. El modelo de Cèrcol es una hipótesis de trabajo que se refina a medida que se acumulan datos reales. El plan es explícito sobre qué cambia en cada tamaño de muestra. Con N ≥ 100 revisamos la distribución de roles y señalamos cualquier arquetipo que atraiga una proporción inusual de perfiles. Con N ≥ 200 sustituimos los priores normativos publicados por las estadísticas de la propia muestra de Cèrcol, incluidas normas específicas de Testigo. Con N ≥ 300 ejecutamos k-means (k = 12) para comparar los centroides empíricos con los teóricos, y comprobamos si la capacidad cognitiva predice la asignación de rol más allá del Big Five. Nada de esto valida el modelo como predictor del rendimiento de equipo, lo que requiere datos externos sobre el comportamiento real de los equipos. Los hitos refinan la geometría interna del modelo, no sus afirmaciones externas. La cuenta vuelve a empezar cada vez que cambia el instrumento, porque respuestas a preguntas distintas no se pueden sumar; cambió el 22 de agosto de 2026, así que la cuenta empezó de nuevo ahí.",
       "eyebrow": "Plan de validación",
       "heading": "Una hipótesis de trabajo, no un producto terminado.",
       "body": "El sistema de roles de Cèrcol utiliza centroides teóricos derivados de la investigación publicada sobre el AB5C. Las asignaciones de roles son ilustrativas, aún no se han validado empíricamente contra resultados reales de equipos. La validación está planificada en tres etapas.",
       "milestones": {
         "n300": {
-          "label": "N ≥ 300",
+          "label": "N ≥ 300 La cuenta vuelve a empezar cada vez que cambia el instrumento, porque respuestas a preguntas distintas no se pueden sumar; cambió el 22 de agosto de 2026, así que la cuenta empezó de nuevo ahí.",
           "desc": "Confirmar la consistencia interna de las asignaciones de roles y comparar la convergencia self vs. Testigo."
         },
         "n1000": {
@@ -1337,7 +1337,7 @@
     },
     "q10": {
       "q": "¿En qué idiomas está disponible Cèrcol?",
-      "a": "Cèrcol está disponible en inglés, catalán/valenciano, español, francés, alemán y danés. Los seis idiomas cubren la evaluación completa, preguntas del instrumento, resultados y todo el contenido. La traducción danesa se basa en la adaptación validada de Vedel, Gøtzsche-Astrup y Holm (2018, Nordic Psychology). La traducción francesa sigue la adaptación europea-francesa del IPIP documentada por Thiry y Piolti (2023, Universidad de Mons), publicada en ipip.ori.org."
+      "a": "Cèrcol está en inglés, catalán, español, francés, alemán y danés, y cada ítem existe en todos los idiomas. No todos tienen la misma condición, y la página de ciencia dice cuál es cada uno. El danés es la traducción publicada de Vedel, Gøtzsche-Astrup y Holm; el francés, la de Gravel; el español, la de Frez Puente y Ortega Luque, y las tres se usan tal como se publicaron. El catalán y el alemán son nuestros. El francés ofrece una adaptación europea junto al texto canadiense publicado, y eliges antes de empezar."
     },
     "q11": {
       "q": "¿Cómo funciona exactamente el Testigo?",
@@ -1426,7 +1426,7 @@
     },
     "beta": {
       "heading": "Esta es una hipótesis de partida, no un instrumento validado.",
-      "body": "Las asignaciones de roles actuales usan centroides teóricos derivados de investigación publicada. A medida que se acumulen datos reales, objetivo: 300 completaciones de Full Moon, los centroides serán reemplazados por valores empíricos de perfiles reales. La puntuación de roles está etiquetada como beta en la interfaz exactamente por esta razón."
+      "body": "Las asignaciones de roles actuales usan centroides teóricos derivados de investigación publicada. A medida que se acumulen datos reales, objetivo: 300 completaciones de Full Moon, los centroides serán reemplazados por valores empíricos de perfiles reales. La puntuación de roles está etiquetada como beta en la interfaz exactamente por esta razón. La cuenta vuelve a empezar cada vez que cambia el instrumento, porque respuestas a preguntas distintas no se pueden sumar; cambió el 22 de agosto de 2026, así que la cuenta empezó de nuevo ahí."
     },
     "critique": {
       "heading": "¿Ves un problema con este modelo?",

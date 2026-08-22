@@ -1241,7 +1241,7 @@
       "eyebrow": "Taxonomia de rols",
       "heading": "Dotze rols. Derivats de la investigació, no inventats.",
       "body": "La taxonomia de rols s'arela en el circumplexe AB5C (Hofstee, De Raad & Goldberg, 1992) i la literatura de composició d'equips (Bell, 2007). Tres dimensions OCEAN: Presència, Vincle i Visió, requereixen equilibri en els equips. Els dotze rols cobreixen les sis interseccions d'aquestes dimensions en tots dos pols. La Disciplina i la Profunditat modulen com s'expressa cada rol.",
-      "beta": "Les assignacions de rols actuals utilitzen centroides teòrics derivats de la investigació publicada. A mesura que s'acumulin dades reals, objectiu: 300 completaments de Lluna Plena, els centroides seran substituïts per valors empírics de perfils reals.",
+      "beta": "Les assignacions de rols actuals utilitzen centroides teòrics derivats de la investigació publicada. A mesura que s'acumulin dades reals, objectiu: 300 completaments de Lluna Plena, els centroides seran substituïts per valors empírics de perfils reals. El compte torna a començar cada vegada que canvia l'instrument, perquè respostes a preguntes diferents no es poden sumar; va canviar el 22 d'agost de 2026, així que el compte va tornar a començar ahí.",
       "betaNote": "La puntuació de rols és beta. És il·lustrativa, no diagnòstica."
     },
     "fullMoon": {
@@ -1267,13 +1267,13 @@
       "cta": "Veure a GitHub"
     },
     "validation": {
-      "milestonesDetail": "Fites de validació. El model de Cèrcol és una hipòtesi de treball que es refina a mesura que s'acumulen dades reals. El pla és explícit sobre què canvia a cada mida de mostra. A N ≥ 100 revisem la distribució de rols i marquem qualsevol arquetip que atraga una proporció inusual de perfils. A N ≥ 200 substituïm els priors normatius publicats per les estadístiques de la mostra pròpia de Cèrcol, incloent normes específiques de Testimoni. A N ≥ 300 executem k-means (k = 12) per comparar els centroides empírics amb els teòrics, i comprovem si la capacitat cognitiva prediu l'assignació de rol més enllà del Big Five. Res d'això no valida el model com a predictor del rendiment d'equip, cosa que requereix dades externes sobre el comportament real dels equips. Les fites refinen la geometria interna del model, no les seues afirmacions externes.",
+      "milestonesDetail": "Fites de validació. El model de Cèrcol és una hipòtesi de treball que es refina a mesura que s'acumulen dades reals. El pla és explícit sobre què canvia a cada mida de mostra. A N ≥ 100 revisem la distribució de rols i marquem qualsevol arquetip que atraga una proporció inusual de perfils. A N ≥ 200 substituïm els priors normatius publicats per les estadístiques de la mostra pròpia de Cèrcol, incloent normes específiques de Testimoni. A N ≥ 300 executem k-means (k = 12) per comparar els centroides empírics amb els teòrics, i comprovem si la capacitat cognitiva prediu l'assignació de rol més enllà del Big Five. Res d'això no valida el model com a predictor del rendiment d'equip, cosa que requereix dades externes sobre el comportament real dels equips. Les fites refinen la geometria interna del model, no les seues afirmacions externes. El compte torna a començar cada vegada que canvia l'instrument, perquè respostes a preguntes diferents no es poden sumar; va canviar el 22 d'agost de 2026, així que el compte va tornar a començar ahí.",
       "eyebrow": "Pla de validació",
       "heading": "Una hipòtesi de treball, no un producte acabat.",
       "body": "El sistema de rols de Cèrcol utilitza centroides teòrics derivats de la recerca publicada sobre l'AB5C. Les assignacions de rols són il·lustratives, encara no s'han validat empíricament contra resultats reals d'equips. La validació està planificada en tres etapes.",
       "milestones": {
         "n300": {
-          "label": "N ≥ 300",
+          "label": "N ≥ 300 El compte torna a començar cada vegada que canvia l'instrument, perquè respostes a preguntes diferents no es poden sumar; va canviar el 22 d'agost de 2026, així que el compte va tornar a començar ahí.",
           "desc": "Confirmar la consistència interna de les assignacions de rols i comparar la convergència self vs. Testimoni."
         },
         "n1000": {
@@ -1337,7 +1337,7 @@
     },
     "q10": {
       "q": "En quins idiomes està disponible Cèrcol?",
-      "a": "Cèrcol està disponible en anglès, català/valencià, espanyol, francès, alemany i danès. Els sis idiomes cobreixen l'avaluació completa, preguntes de l'instrument, resultats i tot el contingut. La traducció danesa es basa en l'adaptació validada de Vedel, Gøtzsche-Astrup i Holm (2018, Nordic Psychology). La traducció francesa segueix l'adaptació europea-francesa de l'IPIP documentada per Thiry i Piolti (2023, Universitat de Mons), publicada a ipip.ori.org."
+      "a": "Cèrcol està en anglés, català, castellà, francés, alemany i danés, i cada ítem existeix en totes les llengües. No totes tenen la mateixa condició, i la pàgina de ciència diu quina és cada una. El danés és la traducció publicada de Vedel, Gøtzsche-Astrup i Holm; el francés, la de Gravel; el castellà, la de Frez Puente i Ortega Luque, i les tres s'usen tal com es van publicar. El català i l'alemany són nostres. El francés ofereix una adaptació europea al costat del text canadenc publicat, i tries abans de començar."
     },
     "q11": {
       "q": "Com funciona exactament el Testimoni?",
@@ -1426,7 +1426,7 @@
     },
     "beta": {
       "heading": "Aquesta és una hipòtesi inicial, no un instrument validat.",
-      "body": "Les assignacions de rols actuals utilitzen centroides teòrics derivats de la investigació publicada. A mesura que s'acumulin dades reals, objectiu: 300 completaments de Lluna Plena, els centroides seran substituïts per valors empírics de perfils reals. La puntuació de rols és beta per exactament aquesta raó."
+      "body": "Les assignacions de rols actuals utilitzen centroides teòrics derivats de la investigació publicada. A mesura que s'acumulin dades reals, objectiu: 300 completaments de Lluna Plena, els centroides seran substituïts per valors empírics de perfils reals. La puntuació de rols és beta per exactament aquesta raó. El compte torna a començar cada vegada que canvia l'instrument, perquè respostes a preguntes diferents no es poden sumar; va canviar el 22 d'agost de 2026, així que el compte va tornar a començar ahí."
     },
     "critique": {
       "heading": "Veus un problema en aquest model?",

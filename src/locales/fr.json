@@ -1241,7 +1241,7 @@
       "eyebrow": "Taxonomie des rôles",
       "heading": "Douze rôles. Dérivés de la recherche, pas inventés.",
       "body": "La taxonomie des rôles est fondée sur le circumplex AB5C (Hofstee, De Raad & Goldberg, 1992) et la littérature sur la composition des équipes (Bell, 2007). Trois dimensions OCEAN : Présence, Lien et Vision, nécessitent un équilibre dans les équipes. Les douze rôles couvrent les six intersections de ces trois dimensions aux deux pôles. La Discipline et la Profondeur modulent comment chaque rôle est exprimé.",
-      "beta": "Les attributions de rôles actuelles utilisent des centroïdes théoriques dérivés de recherches publiées. À mesure que les données réelles s'accumulent, objectif : 300 complétions de Pleine Lune, les centroïdes seront remplacés par des valeurs empiriques issues de profils réels.",
+      "beta": "Les attributions de rôles actuelles utilisent des centroïdes théoriques dérivés de recherches publiées. À mesure que les données réelles s'accumulent, objectif : 300 complétions de Pleine Lune, les centroïdes seront remplacés par des valeurs empiriques issues de profils réels. Le décompte repart à zéro chaque fois que l'instrument change, car des réponses à des questions différentes ne peuvent pas être additionnées ; il a changé le 22 août 2026, et le décompte a donc recommencé.",
       "betaNote": "La notation des rôles est étiquetée bêta dans l'interface. Elle est illustrative, pas diagnostique."
     },
     "fullMoon": {
@@ -1267,13 +1267,13 @@
       "cta": "Voir sur GitHub"
     },
     "validation": {
-      "milestonesDetail": "Jalons de validation. Le modèle de Cèrcol est une hypothèse de travail, affinée à mesure que des données réelles s'accumulent. Le plan précise ce qui change à chaque taille d'échantillon. À N ≥ 100, nous examinons la distribution des rôles et signalons tout archétype qui attire une part inhabituelle de profils. À N ≥ 200, nous remplaçons les a priori normatifs publiés par les statistiques de l'échantillon propre de Cèrcol, y compris des normes spécifiques au Témoin. À N ≥ 300, nous exécutons k-means (k = 12) pour comparer les centroïdes empiriques aux centroïdes théoriques, et testons si la capacité cognitive prédit l'attribution de rôle au-delà du Big Five. Rien de tout cela ne valide le modèle comme prédicteur de la performance d'équipe, ce qui exige des données externes sur le comportement réel des équipes. Les jalons affinent la géométrie interne du modèle, pas ses affirmations externes.",
+      "milestonesDetail": "Jalons de validation. Le modèle de Cèrcol est une hypothèse de travail, affinée à mesure que des données réelles s'accumulent. Le plan précise ce qui change à chaque taille d'échantillon. À N ≥ 100, nous examinons la distribution des rôles et signalons tout archétype qui attire une part inhabituelle de profils. À N ≥ 200, nous remplaçons les a priori normatifs publiés par les statistiques de l'échantillon propre de Cèrcol, y compris des normes spécifiques au Témoin. À N ≥ 300, nous exécutons k-means (k = 12) pour comparer les centroïdes empiriques aux centroïdes théoriques, et testons si la capacité cognitive prédit l'attribution de rôle au-delà du Big Five. Rien de tout cela ne valide le modèle comme prédicteur de la performance d'équipe, ce qui exige des données externes sur le comportement réel des équipes. Les jalons affinent la géométrie interne du modèle, pas ses affirmations externes. Le décompte repart à zéro chaque fois que l'instrument change, car des réponses à des questions différentes ne peuvent pas être additionnées ; il a changé le 22 août 2026, et le décompte a donc recommencé.",
       "eyebrow": "Plan de validation",
       "heading": "Une hypothèse de travail, pas un produit fini.",
       "body": "Le système de rôles de Cèrcol utilise des centroïdes théoriques dérivés de la recherche publiée sur l'AB5C. Les attributions de rôles sont illustratives, elles n'ont pas encore été validées empiriquement par rapport à des résultats d'équipes réels. La validation est planifiée en trois étapes.",
       "milestones": {
         "n300": {
-          "label": "N ≥ 300",
+          "label": "N ≥ 300 Le décompte repart à zéro chaque fois que l'instrument change, car des réponses à des questions différentes ne peuvent pas être additionnées ; il a changé le 22 août 2026, et le décompte a donc recommencé.",
           "desc": "Confirmer la cohérence interne des attributions de rôles et comparer la convergence self vs. Témoin."
         },
         "n1000": {
@@ -1337,7 +1337,7 @@
     },
     "q10": {
       "q": "Dans quelles langues Cèrcol est-il disponible ?",
-      "a": "Cèrcol est disponible en anglais, catalan/valencien, espagnol, français, allemand et danois. Les six langues couvrent l'évaluation complète, questions de l'instrument, résultats et tout le contenu. La traduction danoise est basée sur l'adaptation validée de Vedel, Gøtzsche-Astrup et Holm (2018, Nordic Psychology). La traduction française suit l'adaptation européenne-française de l'IPIP documentée par Thiry et Piolti (2023, Université de Mons), répertoriée sur ipip.ori.org."
+      "a": "Cèrcol existe en anglais, catalan, espagnol, français, allemand et danois, et chaque énoncé existe dans toutes les langues. Elles n'ont pas toutes le même statut, et la page scientifique précise lequel. Le danois est la traduction publiée de Vedel, Gøtzsche-Astrup et Holm, le français celle de Gravel, l'espagnol celle de Frez Puente et Ortega Luque, toutes trois reprises telles qu'elles ont été publiées. Le catalan et l'allemand sont les nôtres. Le français propose une adaptation européenne à côté du texte canadien publié, et vous choisissez avant de commencer."
     },
     "q11": {
       "q": "Comment fonctionne exactement l'évaluation par le·la Témoin ?",
@@ -1426,7 +1426,7 @@
     },
     "beta": {
       "heading": "Il s'agit d'une hypothèse de départ, pas d'un instrument validé.",
-      "body": "Les attributions de rôles actuelles utilisent des centroïdes théoriques dérivés de recherches publiées. À mesure que les données réelles s'accumulent, objectif : 300 complétions de Pleine Lune, les centroïdes seront remplacés par des valeurs empiriques issues de profils réels. La notation des rôles est étiquetée bêta dans l'interface exactement pour cette raison."
+      "body": "Les attributions de rôles actuelles utilisent des centroïdes théoriques dérivés de recherches publiées. À mesure que les données réelles s'accumulent, objectif : 300 complétions de Pleine Lune, les centroïdes seront remplacés par des valeurs empiriques issues de profils réels. La notation des rôles est étiquetée bêta dans l'interface exactement pour cette raison. Le décompte repart à zéro chaque fois que l'instrument change, car des réponses à des questions différentes ne peuvent pas être additionnées ; il a changé le 22 août 2026, et le décompte a donc recommencé."
     },
     "critique": {
       "heading": "Vous voyez un problème avec ce modèle ?",

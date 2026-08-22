@@ -55,6 +55,7 @@ function roleFor(row, normCache) {
 }
 // priorFor keyed by domain rather than factor letter, for the transform above.
 import { priorFor, DOMAIN_MAP } from '../../src/utils/role-scoring.js'
+import { usableCorpus } from './norms.js'
 function priorForFlat(instrument) {
   const p = priorFor(instrument)
   const mean = {}, sd = {}
@@ -71,8 +72,15 @@ export async function stats(env, request) {
     `SELECT COUNT(*) AS total, SUM(user_id IS NULL) AS anonymous,
             SUM(instrument = 'newMoon') AS new_moon, SUM(instrument = 'firstQuarter') AS first_quarter,
             SUM(instrument = 'fullMoon') AS full_moon FROM results`).first()
+  // Rows ever recorded, and rows that count toward norming. They are not the
+  // same number and have not been since the instruments changed: a response
+  // to a different item set on a different scale is real data about a
+  // different instrument. Reporting only the first would overstate how close
+  // the project is to every threshold in the plan.
+  const usable = await usableCorpus(env.DB)
   return Response.json({
     users: { total: p.total, premium: p.premium || 0, admins: p.admins || 0 },
+    usable,
     results: { total: r.total, anonymous: r.anonymous || 0,
       by_instrument: { newMoon: r.new_moon || 0, firstQuarter: r.first_quarter || 0, fullMoon: r.full_moon || 0 } },
   })
