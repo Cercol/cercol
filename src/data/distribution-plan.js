@@ -29,6 +29,214 @@
 
 export const PLAN_SECTIONS = [
   {
+    "id": "a11",
+    "title": "L'instrument de veres",
+    "sub": "Auditat el 22/08/2026 contra les fonts. La Lluna Nova és el TIPI literal, 10 de 10. El Testimoni ja declara honestament què és. Però la Lluna Plena comparteix només 57 dels 120 ítems amb l'IPIP-NEO-120 de Johnson, i 21 dels seus ítems no existeixen enlloc del banc IPIP de 3.320. L'ordre d'aquesta secció importa: primer les fonts, després els instruments, després les llengües, i la documentació l'última, escrita una sola vegada sobre el que aleshores serà cert. Va primera al pla a propòsit: mentre l'instrument no siga el que diu que és, tota la resta val menys.",
+    "tasks": [
+      {
+        "id": "s1",
+        "title": "Aconseguir la llista dels 60 de Maples-Keller",
+        "why": "La porta de tota la secció. Els 120 de Johnson ja els tenim (columna anglesa de la pàgina danesa de l'IPIP) i el danés de Vedel també. Falta l'IPIP-NEO-60 publicat, que és una selecció per TRI feta sobre el banc de l'IPIP-NEO-120. Si és obtenible, el Primer Quart s'arregla igual que la Lluna Plena. Si no ho és, el Primer Quart necessita una decisió a banda i cal saber-ho abans de tocar res. RESOLTA el 22/08/2026: sí que és obtenible, a ipip.ori.org/IPIP-NEO-60ScoringKeys.htm, arribant-hi des de l'índex de constructes múltiples.",
+        "aud": [
+          "A"
+        ],
+        "pay": [
+          "Base",
+          "Autoritat"
+        ],
+        "eff": "Baix",
+        "action": {
+          "type": "prompt",
+          "text": "Find whether the IPIP-NEO-60 item list is publicly obtainable.\n\nSource: Maples-Keller, J. L., Williamson, R. L., Sleep, C. E., Carter, N. T., Campbell, W. K., & Miller, J. D. (2019). Using item response theory to develop a 60-item representation of the NEO PI-R using the International Personality Item Pool: Development of the IPIP-NEO-60. Journal of Personality Assessment, 101(1), 4-15. doi:10.1080/00223891.2017.1381968\n\nCheck, in this order:\n1. ipip.ori.org, which hosts several derived scales as their own pages.\n2. The article's supplementary material, and any preprint or accepted manuscript (PsyArXiv, ResearchGate, an author page).\n3. https://github.com/stmueller/OpenScales, which indexes IPIP items by code and may carry the scale assignment.\n4. The R psych package and the psychTools datasets, which ship several IPIP keys.\n\nWhat counts as success: the 60 item texts, which facet each belongs to, and the keying direction. Anything less is not enough to rebuild the instrument.\n\nReport what you found and where, with URLs. If it is behind a paywall with no open copy, say so plainly: that is a real answer and it changes the plan. Do not reconstruct the list from memory or infer it from the 120. That is exactly how this problem was created.",
+          "note": "Si no és obtenible, digues-ho i para. No l'aproximes."
+        },
+        "done": true
+      },
+      {
+        "id": "s2",
+        "title": "Portar els 120 de Johnson al repositori com a referència",
+        "why": "Un fitxer de referència amb els 120 ítems canònics, la seua faceta i la seua direcció, extret de la font i no de memòria. És el que després permet comparar, substituir i verificar sense tornar a descarregar res. També deixa la comparació auditable: qualsevol pot obrir el fitxer i contrastar-lo amb la pàgina de l'IPIP. FETA el 22/08/2026: src/data/reference/ipip-neo-120.js i ipip-neo-60.js, de dues fonts independents que coincideixen en 115 de 120.",
+        "aud": [
+          "A"
+        ],
+        "pay": [
+          "Base"
+        ],
+        "eff": "Baix",
+        "action": {
+          "type": "prompt",
+          "text": "Build a reference file of the canonical IPIP-NEO-120, extracted from source, not written from memory.\n\nSource: https://ipip.ori.org/DanishIPIP-NEO-120.htm . Despite the name it is a two-column table: Johnson's English item on the left, Anna Vedel's Danish on the right, grouped under the 30 facet headings (N1..N6, E1..E6, O1..O6, A1..A6, C1..C6) with '+ keyed' and '- keyed' markers. Fetch it and parse it; the page is Word-exported HTML, so parse the <tr>/<td> structure rather than the raw text, and decode it as UTF-8.\n\nWrite src/data/reference/ipip-neo-120.json with one entry per item: facet code, facet name, English text, keyed direction, and the Danish text. All 120. Add a header comment naming the URL and the date fetched.\n\nThen write a test that fails if the file does not contain exactly 30 facets with exactly 4 items each, and that every English string is non-empty and ends in a full stop.\n\nDo not modify src/data/full-moon.js in this step. This is only the reference."
+        },
+        "done": true
+      },
+      {
+        "id": "s3",
+        "title": "Substituir la Lluna Plena pels 120 reals",
+        "why": "Canvien 63 ítems. A partir d'ací el test és l'IPIP-NEO-120 i no una cosa que se li assembla, i els barems de Kajonius & Johnson (N = 320.128) passen a descriure el nostre instrument de veres en comptes d'aproximar-lo. També desapareixen els 21 ítems que no existeixen a cap banc. Context complet a docs/post-mortems/2026-08-22-instruments-written-from-memory.md. FETA el 22/08/2026: 59 ítems canviats, els tres mal col·locats corregits, versió 4.",
+        "aud": [
+          "U",
+          "A"
+        ],
+        "pay": [
+          "Base",
+          "Autoritat"
+        ],
+        "eff": "Alt",
+        "action": {
+          "type": "prompt",
+          "text": "Replace the Full Moon item set with the canonical IPIP-NEO-120 in src/data/reference/ipip-neo-120.js.\n\nThis is not a text change. Every item carries a facet, a domain and a keying direction, and all of them move with it. An audit on 2026-08-22 found that even among the 61 items we already share with the published instrument, three sit in the wrong facet and one is keyed the wrong way:\n\n- \"Act without thinking.\" is in Immoderation (n5) keyed forward. Published, it is in Cautiousness (c6) keyed reverse. It crosses domain AND sign, so today it adds to Depth where it should subtract from Discipline. The same error is in First Quarter, where a facet is two items rather than four and it therefore weighs more.\n- \"Tell the truth.\" is in Morality (a2). Published, Dutifulness (c3).\n- \"Take advantage of others.\" is in Cooperation (a4). Published, Morality (a2).\n\nTake facet, domain and keying from the reference file for every item. Do not carry any of ours across, including for the items that stay: that is exactly how those three survived.\n\nThen, in order, and report each one in the pull request:\n\n1. Assert every facet ends with exactly four items. A facet with three or five silently skews its own mean.\n2. Verify the facet-to-domain map against the reference rather than against the previous file.\n3. Confirm the norms are looked up per facet code and not by position in an array. If anything indexes by position, the item replacement will silently misalign it.\n4. Run the role-stability simulation and report how far the role boundary moves under the new item set. It reads domain z-scores, so it moves when the domains do.\n5. Carry the other-language strings ONLY where the English item is unchanged. Where the English is new, leave the language absent and let the loader fall back to English. Do not invent a translation to fill a gap.\n6. Bump INSTRUMENT_VERSION and write the changelog entry.\n\nFull test suite must pass. Open as its own pull request and do not merge: the operator reviews an instrument change.\n\nRead docs/post-mortems/2026-08-22-instruments-written-from-memory.md before you start. It carries the measurements this step is built on and the three items that are in the wrong facet today."
+        },
+        "done": true
+      },
+      {
+        "id": "s4",
+        "title": "Canviar l'escala de resposta a la de l'IPIP-NEO",
+        "why": "L'IPIP-NEO no pregunta si estàs d'acord: pregunta com d'exacta és la descripció, de molt inexacta a molt exacta. Els barems que fem servir es van recollir amb eixe format. Mentre preguntem una altra cosa, la comparació amb els barems té una costura que no es veu enlloc. A més, el francés havia perdut el matís als punts 2 i 4, cosa que ja feia que l'escala francesa no fora la mateixa que l'anglesa. Context complet a docs/post-mortems/2026-08-22-instruments-written-from-memory.md.",
+        "aud": [
+          "U",
+          "A"
+        ],
+        "pay": [
+          "Base"
+        ],
+        "eff": "Mitjà",
+        "action": {
+          "type": "prompt",
+          "text": "Move the First Quarter and Full Moon response scale from agree/disagree to the IPIP-NEO's own accuracy anchors.\n\nThe canonical English anchors are: Very Inaccurate, Moderately Inaccurate, Neither Accurate Nor Inaccurate, Moderately Accurate, Very Accurate.\n\nThe Danish ones, from Anna Vedel via ipip.ori.org/DanishIPIP-NEO-120.htm, are: Meget Unojagtigt, Lidt Unojagtigt, Hverken Nojagtigt Eller Unojagtigt, Lidt Nojagtigt, Meget Nojagtigt. Take them from the page with their correct diacritics rather than retyping them.\n\nFor Catalan, Spanish, French and German, write the equivalents and get each reviewed by a native-speaker subagent before opening the PR. The French anchors currently drop the intensity qualifier at points 2 and 4, so the French scale is not equidistant with the English one; do not repeat that.\n\nAlso review the item carrier stem ('I see myself as someone who' / 'Je me percois comme quelqu'un qui'). With accuracy anchors the stem may no longer be the right frame, and in French it governs a third-person clause while the items are first person.\n\nThe scale change alters what a stored response means, so bump INSTRUMENT_VERSION with a changelog entry."
+        },
+        "done": false
+      },
+      {
+        "id": "s5",
+        "title": "Substituir el Primer Quart pels 60 reals",
+        "why": "Depèn de la passa s1. El nostre Primer Quart és un subconjunt perfecte de la nostra Lluna Plena (60 de 60), però només 36 dels seus ítems són a la llista de Johnson. Hi ha un problema obert que cal resoldre en aquesta passa: la taula de barems de Kajonius & Johnson és sobre la mètrica de quatre ítems per faceta, i el Primer Quart en té dos, així que eixos barems no li serveixen tal com estan. Context complet a docs/post-mortems/2026-08-22-instruments-written-from-memory.md. FETA el 22/08/2026: 37 ítems canviats. Els barems de la Taula A1 continuen sent per a quatre ítems per faceta i el Primer Quart en té dos: continua sent un problema obert, ara a la passa s11.",
+        "aud": [
+          "U",
+          "A"
+        ],
+        "pay": [
+          "Base",
+          "Autoritat"
+        ],
+        "eff": "Alt",
+        "action": {
+          "type": "prompt",
+          "text": "Blocked until the step 's1' has an answer. Do not start this without the published IPIP-NEO-60 item list in hand.\n\nWhen it is available: replace the First Quarter items with the published 60, keeping two items per facet and the published keying, the same way the Full Moon replacement was done.\n\nThen resolve the norms problem, which is the harder half of this step. Kajonius & Johnson (2019) Table A1 gives facet statistics on the 4-to-20 metric, meaning four items answered 1 to 5. First Quarter has two items per facet. Using the same table for both instruments without adjustment is wrong. Find out what the IPIP-NEO-60 paper itself publishes, and if it publishes nothing usable, say so and propose the honest alternative rather than rescaling by assumption.\n\nOpen as its own pull request and do not merge.\n\nRead docs/post-mortems/2026-08-22-instruments-written-from-memory.md first."
+        },
+        "done": true
+      },
+      {
+        "id": "s6",
+        "title": "Danés: el de Vedel, sencer i literal",
+        "why": "El primer cas on deixem de traduir i comencem a copiar. La seua pàgina té els 120, humans, validats en població danesa i publicats per Johnson. Quan la Lluna Plena siga l'IPIP-NEO-120, la seua traducció encaixa ítem a ítem sense cap forat. Context complet a docs/post-mortems/2026-08-22-instruments-written-from-memory.md. FETA el 22/08/2026: els 120 de la Lluna Plena i 51 dels 60 del Primer Quart porten el danés de Vedel tal com el va publicar. Els altres nou no els va traduir mai perquè no són al 120.",
+        "aud": [
+          "U",
+          "A"
+        ],
+        "pay": [
+          "Base",
+          "Autoritat"
+        ],
+        "eff": "Baix",
+        "action": {
+          "type": "prompt",
+          "text": "Replace every Danish string in the Full Moon items with Anna Vedel's published translation, taken from src/data/reference/ipip-neo-120.json.\n\nThis is a copy, not a translation. Do not improve, modernise or correct any of it. If a string looks wrong to you, leave it and note it in the pull request: the value of a validated instrument is that it is the instrument that was validated, and its imperfections are part of what the validation measured.\n\nUpdate SCIENCE.md and the FAQ to say what is then true: the Danish items are Vedel, Gotzsche-Astrup and Holm's published translation, used verbatim, with the citation. That claim is currently false and this step is what makes it true.\n\nThe same for the Danish response anchors if step 's4' has not already taken them.\n\nRead docs/post-mortems/2026-08-22-instruments-written-from-memory.md first, in particular the section on how we know the current Danish is not Vedel's."
+        },
+        "done": true
+      },
+      {
+        "id": "s7",
+        "title": "Recalcular la cobertura de les 27 llengües sobre el joc nou",
+        "why": "OpenScales té 27 llengües indexades pels codis d'ítem de l'IPIP, i la cobertura que vam mesurar (francés 93, danés 61, alemany 22, castellà 11 sobre 99) era contra el joc vell. Amb els 120 canònics canviarà, i probablement a millor, perquè són els ítems més usats del banc. És el que decideix quines llengües es copien i quines es tradueixen. Context complet a docs/post-mortems/2026-08-22-instruments-written-from-memory.md.",
+        "aud": [
+          "A"
+        ],
+        "pay": [
+          "Base"
+        ],
+        "eff": "Mitjà",
+        "action": {
+          "type": "prompt",
+          "text": "Recompute, for the canonical IPIP-NEO-120 item set, how many items each language in https://github.com/stmueller/OpenScales/tree/main/scales/ipip/translations actually covers.\n\nMethod: map each canonical English item to its IPIP code using ipip_master_en.json, then count hits per language file. Report a table of language, items covered out of 120, and the _translator field verbatim.\n\nTwo things to say plainly in the report. First, nearly every file lists a named human translator AND 'machine translation' in the same provenance string, with no per-item marking, so you cannot take only the human-translated items. Second, name the languages with full or near-full coverage, because those are the ones where Cercol could stop translating and start copying.\n\nThis is research. Change no item files."
+        },
+        "done": false
+      },
+      {
+        "id": "s8",
+        "title": "Català: el nostre, perquè no n'hi ha cap altre",
+        "why": "El català no és a cap font externa i no hi serà. És l'única llengua on traduir és inevitable, i per això és on la revisió importa més. Part de la feina del 22/08 sobreviu: els ítems que continuen al joc nou ja estan corregits i unificats en central. Context complet a docs/post-mortems/2026-08-22-instruments-written-from-memory.md.",
+        "aud": [
+          "U",
+          "A"
+        ],
+        "pay": [
+          "Base"
+        ],
+        "eff": "Mitjà",
+        "action": {
+          "type": "prompt",
+          "text": "After the Full Moon item replacement, fill the Catalan for every item whose English is new.\n\nCarry across the existing Catalan for items that survive the replacement: they were reviewed and corrected on 2026-08-22 and unified on Central Catalan, which is the variety this item bank uses.\n\nFor the new items, translate directly from the English, preserving the construct exactly, in the plain everyday first-person register the existing items use. Then have a native-speaker Catalan philologist subagent with psychometric training review all of them against the English before the pull request is opened, and act on what comes back.\n\nDo not offer the Catalan set to anyone outside the project until that review passes and the step 'ct21' has happened."
+        },
+        "done": false
+      },
+      {
+        "id": "s9",
+        "title": "Escriure la documentació una vegada, sobre el que aleshores serà cert",
+        "why": "L'última passa a propòsit. Ara mateix SCIENCE.md, el README i les preguntes freqüents diuen coses que no són certes, i el pla és fer-les certes en comptes d'anar-les canviant. Quan les passes anteriors estiguen fetes, aquesta és una escriptura, no una esmena. Context complet a docs/post-mortems/2026-08-22-instruments-written-from-memory.md.",
+        "aud": [
+          "U",
+          "A"
+        ],
+        "pay": [
+          "Base",
+          "Autoritat",
+          "GEO"
+        ],
+        "eff": "Mitjà",
+        "action": {
+          "type": "prompt",
+          "text": "Rewrite the provenance sections of SCIENCE.md, README.md and the faq entries in all six locale files to describe what the instruments then are.\n\nBy this point the claims should be true rather than corrected: Full Moon is the IPIP-NEO-120 (Johnson, 2014) verbatim, First Quarter is the IPIP-NEO-60 (Maples-Keller et al., 2019) verbatim or else honestly described as something else, New Moon is the TIPI (Gosling et al., 2003) verbatim, and the Danish is Vedel, Gotzsche-Astrup and Holm's published translation used as published.\n\nTwo things must be stated and not glossed. The twelve roles are Cercol's own: no published model of twelve roles exists to inherit, so that part is original research and the page should say the evidence for it will come from Cercol's own data or not at all. And the audit of 2026-08-22 belongs in the record, not buried: what the instrument was before, how it was found, and what changed. A science page that hides its own correction history is worth less than one that carries it.\n\nRead the neighbouring entries in each locale before writing, and have each non-English version reviewed by a native-speaker subagent.\n\nRead docs/post-mortems/2026-08-22-instruments-written-from-memory.md first, and link it from the science page. A correction history that is only in a pull request body is a correction history nobody finds."
+        },
+        "done": false
+      },
+      {
+        "id": "s10",
+        "title": "Desbloquejar les cartes a Vedel i a Thiry & Piolti",
+        "why": "Les dues estan aturades des del 22/08 perquè afirmaven que els nostres ítems seguien la seua feina, i era fals. Quan el danés siga literalment el seu, la carta a Vedel deixa de ser una afirmació dubtosa i passa a ser un agraïment exacte, amb una petició que té sentit: que li pegue una ullada a com l'hem posada. Context complet a docs/post-mortems/2026-08-22-instruments-written-from-memory.md.",
+        "aud": [
+          "A"
+        ],
+        "pay": [
+          "Autoritat"
+        ],
+        "eff": "Baix",
+        "action": {
+          "type": "do",
+          "html": "<ul class=\"ulist\"><li>Reescriure les dues cartes dient el que aleshores serà cert, i llevar el bloqueig de les incidències.</li><li>La de Vedel canvia de to sencer: passa de \"seguim la teua metodologia\" a \"fem servir la teua traducció tal com la vas publicar\".</li><li>La de Thiry i Piolti depèn de si el francés acaba copiat d'OpenScales o traduït per nosaltres. Si és traduït, la carta ha de dir-ho.</li><li><b>Cap de les dues ix sense la revisió filològica de la llengua corresponent.</b></li></ul>"
+        },
+        "done": false
+      },
+      {
+        "id": "s11",
+        "title": "Els barems del Primer Quart no són els seus",
+        "why": "La taula A1 de Kajonius & Johnson dona estadístiques per faceta sobre la mètrica de quatre ítems, i el Primer Quart en té dos. Fem servir la mateixa taula per als dos instruments sense ajustar res, i això no és correcte. Amb la Lluna Plena ja resolt, aquest és l'únic lloc on encara heretem una xifra d'un instrument que no és el nostre.",
+        "aud": [
+          "A"
+        ],
+        "pay": [
+          "Base",
+          "Autoritat"
+        ],
+        "eff": "Mitjà",
+        "action": {
+          "type": "prompt",
+          "text": "First Quarter and Full Moon both read their norms from NORM_MEAN and NORM_SD in src/utils/role-scoring.js, sourced from Kajonius & Johnson (2019) Table A1. That table is on the 4-to-20 facet metric: four items answered 1 to 5. Full Moon has four items per facet, so the table describes it. First Quarter has two, so it does not.\n\nFind out what the IPIP-NEO-60 paper itself publishes for its own scales. Maples-Keller et al. (2019), Journal of Personality Assessment 101(1), 4-15. The scoring-keys page at ipip.ori.org/IPIP-NEO-60ScoringKeys.htm publishes alphas from the Eugene-Springfield community sample, N = 757, which is a different and far smaller sample than the 320,128 behind the 120's norms; do not mix them.\n\nIf the paper publishes usable domain statistics, use them and say where they came from. If it does not, say so and propose the honest alternative rather than rescaling by assumption: two items and four items drawn from the same facet do not have the same mean or the same spread, and treating them as if they did is the same class of error as everything else fixed on 2026-08-22.\n\nThis is research plus a small change. Do not touch item files."
+        },
+        "done": false
+      }
+    ]
+  },
+  {
     "id": "a1",
     "title": "Arrencada",
     "sub": "Barat, urgent, i desbloqueja la resta. Comença ací.",
@@ -1749,196 +1957,6 @@ export const PLAN_SECTIONS = [
           "to": "llopisdepau2023@gmail.com",
           "subject": "Un favor de filòleg: els ítems catalans de Cèrcol",
           "body": "Sandre,\n\nEt volia demanar un favor de la teua especialitat.\n\nCèrcol és un test de personalitat de codi obert que estic fent, basat en el banc d'ítems IPIP, que és de domini públic i el que fa servir la recerca de veres. Va en sis llengües, i el català és una d'elles.\n\nEls ítems catalans els vam passar per una revisió a fons i van eixir prou tocats: formes que no existien, un parell de castellanismes amb terminació catalana, i un ítem que directament mesurava una altra cosa que l'original. Ja està tot corregit i unificat en català central. Però abans d'oferir el joc a l'IPIP perquè el llisten, m'agradaria que li pegara una ullada algú que sap de veres, i eixe eres tu.\n\nEl que et demanaria és el que jo no puc fer: llegir-los com a text, no com a taula de correccions. Són 190 frases curtes en primera persona, del tipus \"Em preocupo per les coses\" o \"No m'agrada cridar l'atenció\". El que busque és si alguna sona a traducció, si hi ha res que un parlant no diria, i si el registre és el que toca: han de ser frases planeres, no literàries.\n\nLa manera més còmoda de veure'ls en context és fent el test llarg, que en són 120. Entres amb aquest mateix correu i ja tens accés complet: en som en fase beta i les llicències de la Lluna Plena van soltes. https://cercol.team/full-moon\n\nI si de pas et ve de gust el resultat, és teu. El càlcul és obert i està documentat, per si el vols mirar per dins.\n\nSense presses i sense compromís. Si no et ve bé, m'ho dius i ja està.\n\nUna abraçada,\nMiquel"
-        },
-        "done": false
-      }
-    ]
-  },
-  {
-    "id": "a11",
-    "title": "L'instrument de veres",
-    "sub": "Auditat el 22/08/2026 contra les fonts. La Lluna Nova és el TIPI literal, 10 de 10. El Testimoni ja declara honestament què és. Però la Lluna Plena comparteix només 57 dels 120 ítems amb l'IPIP-NEO-120 de Johnson, i 21 dels seus ítems no existeixen enlloc del banc IPIP de 3.320. L'ordre d'aquesta secció importa: primer les fonts, després els instruments, després les llengües, i la documentació l'última, escrita una sola vegada sobre el que aleshores serà cert.",
-    "tasks": [
-      {
-        "id": "s1",
-        "title": "Aconseguir la llista dels 60 de Maples-Keller",
-        "why": "La porta de tota la secció. Els 120 de Johnson ja els tenim (columna anglesa de la pàgina danesa de l'IPIP) i el danés de Vedel també. Falta l'IPIP-NEO-60 publicat, que és una selecció per TRI feta sobre el banc de l'IPIP-NEO-120. Si és obtenible, el Primer Quart s'arregla igual que la Lluna Plena. Si no ho és, el Primer Quart necessita una decisió a banda i cal saber-ho abans de tocar res. RESOLTA el 22/08/2026: sí que és obtenible, a ipip.ori.org/IPIP-NEO-60ScoringKeys.htm, arribant-hi des de l'índex de constructes múltiples.",
-        "aud": [
-          "A"
-        ],
-        "pay": [
-          "Base",
-          "Autoritat"
-        ],
-        "eff": "Baix",
-        "action": {
-          "type": "prompt",
-          "text": "Find whether the IPIP-NEO-60 item list is publicly obtainable.\n\nSource: Maples-Keller, J. L., Williamson, R. L., Sleep, C. E., Carter, N. T., Campbell, W. K., & Miller, J. D. (2019). Using item response theory to develop a 60-item representation of the NEO PI-R using the International Personality Item Pool: Development of the IPIP-NEO-60. Journal of Personality Assessment, 101(1), 4-15. doi:10.1080/00223891.2017.1381968\n\nCheck, in this order:\n1. ipip.ori.org, which hosts several derived scales as their own pages.\n2. The article's supplementary material, and any preprint or accepted manuscript (PsyArXiv, ResearchGate, an author page).\n3. https://github.com/stmueller/OpenScales, which indexes IPIP items by code and may carry the scale assignment.\n4. The R psych package and the psychTools datasets, which ship several IPIP keys.\n\nWhat counts as success: the 60 item texts, which facet each belongs to, and the keying direction. Anything less is not enough to rebuild the instrument.\n\nReport what you found and where, with URLs. If it is behind a paywall with no open copy, say so plainly: that is a real answer and it changes the plan. Do not reconstruct the list from memory or infer it from the 120. That is exactly how this problem was created.",
-          "note": "Si no és obtenible, digues-ho i para. No l'aproximes."
-        },
-        "done": true
-      },
-      {
-        "id": "s2",
-        "title": "Portar els 120 de Johnson al repositori com a referència",
-        "why": "Un fitxer de referència amb els 120 ítems canònics, la seua faceta i la seua direcció, extret de la font i no de memòria. És el que després permet comparar, substituir i verificar sense tornar a descarregar res. També deixa la comparació auditable: qualsevol pot obrir el fitxer i contrastar-lo amb la pàgina de l'IPIP. FETA el 22/08/2026: src/data/reference/ipip-neo-120.js i ipip-neo-60.js, de dues fonts independents que coincideixen en 115 de 120.",
-        "aud": [
-          "A"
-        ],
-        "pay": [
-          "Base"
-        ],
-        "eff": "Baix",
-        "action": {
-          "type": "prompt",
-          "text": "Build a reference file of the canonical IPIP-NEO-120, extracted from source, not written from memory.\n\nSource: https://ipip.ori.org/DanishIPIP-NEO-120.htm . Despite the name it is a two-column table: Johnson's English item on the left, Anna Vedel's Danish on the right, grouped under the 30 facet headings (N1..N6, E1..E6, O1..O6, A1..A6, C1..C6) with '+ keyed' and '- keyed' markers. Fetch it and parse it; the page is Word-exported HTML, so parse the <tr>/<td> structure rather than the raw text, and decode it as UTF-8.\n\nWrite src/data/reference/ipip-neo-120.json with one entry per item: facet code, facet name, English text, keyed direction, and the Danish text. All 120. Add a header comment naming the URL and the date fetched.\n\nThen write a test that fails if the file does not contain exactly 30 facets with exactly 4 items each, and that every English string is non-empty and ends in a full stop.\n\nDo not modify src/data/full-moon.js in this step. This is only the reference."
-        },
-        "done": true
-      },
-      {
-        "id": "s3",
-        "title": "Substituir la Lluna Plena pels 120 reals",
-        "why": "Canvien 63 ítems. A partir d'ací el test és l'IPIP-NEO-120 i no una cosa que se li assembla, i els barems de Kajonius & Johnson (N = 320.128) passen a descriure el nostre instrument de veres en comptes d'aproximar-lo. També desapareixen els 21 ítems que no existeixen a cap banc.",
-        "aud": [
-          "U",
-          "A"
-        ],
-        "pay": [
-          "Base",
-          "Autoritat"
-        ],
-        "eff": "Alt",
-        "action": {
-          "type": "prompt",
-          "text": "Replace the Full Moon item set with the canonical IPIP-NEO-120 in src/data/reference/ipip-neo-120.js.\n\nThis is not a text change. Every item carries a facet, a domain and a keying direction, and all of them move with it. An audit on 2026-08-22 found that even among the 61 items we already share with the published instrument, three sit in the wrong facet and one is keyed the wrong way:\n\n- \"Act without thinking.\" is in Immoderation (n5) keyed forward. Published, it is in Cautiousness (c6) keyed reverse. It crosses domain AND sign, so today it adds to Depth where it should subtract from Discipline. The same error is in First Quarter, where a facet is two items rather than four and it therefore weighs more.\n- \"Tell the truth.\" is in Morality (a2). Published, Dutifulness (c3).\n- \"Take advantage of others.\" is in Cooperation (a4). Published, Morality (a2).\n\nTake facet, domain and keying from the reference file for every item. Do not carry any of ours across, including for the items that stay: that is exactly how those three survived.\n\nThen, in order, and report each one in the pull request:\n\n1. Assert every facet ends with exactly four items. A facet with three or five silently skews its own mean.\n2. Verify the facet-to-domain map against the reference rather than against the previous file.\n3. Confirm the norms are looked up per facet code and not by position in an array. If anything indexes by position, the item replacement will silently misalign it.\n4. Run the role-stability simulation and report how far the role boundary moves under the new item set. It reads domain z-scores, so it moves when the domains do.\n5. Carry the other-language strings ONLY where the English item is unchanged. Where the English is new, leave the language absent and let the loader fall back to English. Do not invent a translation to fill a gap.\n6. Bump INSTRUMENT_VERSION and write the changelog entry.\n\nFull test suite must pass. Open as its own pull request and do not merge: the operator reviews an instrument change."
-        },
-        "done": false
-      },
-      {
-        "id": "s4",
-        "title": "Canviar l'escala de resposta a la de l'IPIP-NEO",
-        "why": "L'IPIP-NEO no pregunta si estàs d'acord: pregunta com d'exacta és la descripció, de molt inexacta a molt exacta. Els barems que fem servir es van recollir amb eixe format. Mentre preguntem una altra cosa, la comparació amb els barems té una costura que no es veu enlloc. A més, el francés havia perdut el matís als punts 2 i 4, cosa que ja feia que l'escala francesa no fora la mateixa que l'anglesa.",
-        "aud": [
-          "U",
-          "A"
-        ],
-        "pay": [
-          "Base"
-        ],
-        "eff": "Mitjà",
-        "action": {
-          "type": "prompt",
-          "text": "Move the First Quarter and Full Moon response scale from agree/disagree to the IPIP-NEO's own accuracy anchors.\n\nThe canonical English anchors are: Very Inaccurate, Moderately Inaccurate, Neither Accurate Nor Inaccurate, Moderately Accurate, Very Accurate.\n\nThe Danish ones, from Anna Vedel via ipip.ori.org/DanishIPIP-NEO-120.htm, are: Meget Unojagtigt, Lidt Unojagtigt, Hverken Nojagtigt Eller Unojagtigt, Lidt Nojagtigt, Meget Nojagtigt. Take them from the page with their correct diacritics rather than retyping them.\n\nFor Catalan, Spanish, French and German, write the equivalents and get each reviewed by a native-speaker subagent before opening the PR. The French anchors currently drop the intensity qualifier at points 2 and 4, so the French scale is not equidistant with the English one; do not repeat that.\n\nAlso review the item carrier stem ('I see myself as someone who' / 'Je me percois comme quelqu'un qui'). With accuracy anchors the stem may no longer be the right frame, and in French it governs a third-person clause while the items are first person.\n\nThe scale change alters what a stored response means, so bump INSTRUMENT_VERSION with a changelog entry."
-        },
-        "done": false
-      },
-      {
-        "id": "s5",
-        "title": "Substituir el Primer Quart pels 60 reals",
-        "why": "Depèn de la passa s1. El nostre Primer Quart és un subconjunt perfecte de la nostra Lluna Plena (60 de 60), però només 36 dels seus ítems són a la llista de Johnson. Hi ha un problema obert que cal resoldre en aquesta passa: la taula de barems de Kajonius & Johnson és sobre la mètrica de quatre ítems per faceta, i el Primer Quart en té dos, així que eixos barems no li serveixen tal com estan.",
-        "aud": [
-          "U",
-          "A"
-        ],
-        "pay": [
-          "Base",
-          "Autoritat"
-        ],
-        "eff": "Alt",
-        "action": {
-          "type": "prompt",
-          "text": "Blocked until the step 's1' has an answer. Do not start this without the published IPIP-NEO-60 item list in hand.\n\nWhen it is available: replace the First Quarter items with the published 60, keeping two items per facet and the published keying, the same way the Full Moon replacement was done.\n\nThen resolve the norms problem, which is the harder half of this step. Kajonius & Johnson (2019) Table A1 gives facet statistics on the 4-to-20 metric, meaning four items answered 1 to 5. First Quarter has two items per facet. Using the same table for both instruments without adjustment is wrong. Find out what the IPIP-NEO-60 paper itself publishes, and if it publishes nothing usable, say so and propose the honest alternative rather than rescaling by assumption.\n\nOpen as its own pull request and do not merge."
-        },
-        "done": false
-      },
-      {
-        "id": "s6",
-        "title": "Danés: el de Vedel, sencer i literal",
-        "why": "El primer cas on deixem de traduir i comencem a copiar. La seua pàgina té els 120, humans, validats en població danesa i publicats per Johnson. Quan la Lluna Plena siga l'IPIP-NEO-120, la seua traducció encaixa ítem a ítem sense cap forat.",
-        "aud": [
-          "U",
-          "A"
-        ],
-        "pay": [
-          "Base",
-          "Autoritat"
-        ],
-        "eff": "Baix",
-        "action": {
-          "type": "prompt",
-          "text": "Replace every Danish string in the Full Moon items with Anna Vedel's published translation, taken from src/data/reference/ipip-neo-120.json.\n\nThis is a copy, not a translation. Do not improve, modernise or correct any of it. If a string looks wrong to you, leave it and note it in the pull request: the value of a validated instrument is that it is the instrument that was validated, and its imperfections are part of what the validation measured.\n\nUpdate SCIENCE.md and the FAQ to say what is then true: the Danish items are Vedel, Gotzsche-Astrup and Holm's published translation, used verbatim, with the citation. That claim is currently false and this step is what makes it true.\n\nThe same for the Danish response anchors if step 's4' has not already taken them."
-        },
-        "done": false
-      },
-      {
-        "id": "s7",
-        "title": "Recalcular la cobertura de les 27 llengües sobre el joc nou",
-        "why": "OpenScales té 27 llengües indexades pels codis d'ítem de l'IPIP, i la cobertura que vam mesurar (francés 93, danés 61, alemany 22, castellà 11 sobre 99) era contra el joc vell. Amb els 120 canònics canviarà, i probablement a millor, perquè són els ítems més usats del banc. És el que decideix quines llengües es copien i quines es tradueixen.",
-        "aud": [
-          "A"
-        ],
-        "pay": [
-          "Base"
-        ],
-        "eff": "Mitjà",
-        "action": {
-          "type": "prompt",
-          "text": "Recompute, for the canonical IPIP-NEO-120 item set, how many items each language in https://github.com/stmueller/OpenScales/tree/main/scales/ipip/translations actually covers.\n\nMethod: map each canonical English item to its IPIP code using ipip_master_en.json, then count hits per language file. Report a table of language, items covered out of 120, and the _translator field verbatim.\n\nTwo things to say plainly in the report. First, nearly every file lists a named human translator AND 'machine translation' in the same provenance string, with no per-item marking, so you cannot take only the human-translated items. Second, name the languages with full or near-full coverage, because those are the ones where Cercol could stop translating and start copying.\n\nThis is research. Change no item files."
-        },
-        "done": false
-      },
-      {
-        "id": "s8",
-        "title": "Català: el nostre, perquè no n'hi ha cap altre",
-        "why": "El català no és a cap font externa i no hi serà. És l'única llengua on traduir és inevitable, i per això és on la revisió importa més. Part de la feina del 22/08 sobreviu: els ítems que continuen al joc nou ja estan corregits i unificats en central.",
-        "aud": [
-          "U",
-          "A"
-        ],
-        "pay": [
-          "Base"
-        ],
-        "eff": "Mitjà",
-        "action": {
-          "type": "prompt",
-          "text": "After the Full Moon item replacement, fill the Catalan for every item whose English is new.\n\nCarry across the existing Catalan for items that survive the replacement: they were reviewed and corrected on 2026-08-22 and unified on Central Catalan, which is the variety this item bank uses.\n\nFor the new items, translate directly from the English, preserving the construct exactly, in the plain everyday first-person register the existing items use. Then have a native-speaker Catalan philologist subagent with psychometric training review all of them against the English before the pull request is opened, and act on what comes back.\n\nDo not offer the Catalan set to anyone outside the project until that review passes and the step 'ct21' has happened."
-        },
-        "done": false
-      },
-      {
-        "id": "s9",
-        "title": "Escriure la documentació una vegada, sobre el que aleshores serà cert",
-        "why": "L'última passa a propòsit. Ara mateix SCIENCE.md, el README i les preguntes freqüents diuen coses que no són certes, i el pla és fer-les certes en comptes d'anar-les canviant. Quan les passes anteriors estiguen fetes, aquesta és una escriptura, no una esmena.",
-        "aud": [
-          "U",
-          "A"
-        ],
-        "pay": [
-          "Base",
-          "Autoritat",
-          "GEO"
-        ],
-        "eff": "Mitjà",
-        "action": {
-          "type": "prompt",
-          "text": "Rewrite the provenance sections of SCIENCE.md, README.md and the faq entries in all six locale files to describe what the instruments then are.\n\nBy this point the claims should be true rather than corrected: Full Moon is the IPIP-NEO-120 (Johnson, 2014) verbatim, First Quarter is the IPIP-NEO-60 (Maples-Keller et al., 2019) verbatim or else honestly described as something else, New Moon is the TIPI (Gosling et al., 2003) verbatim, and the Danish is Vedel, Gotzsche-Astrup and Holm's published translation used as published.\n\nTwo things must be stated and not glossed. The twelve roles are Cercol's own: no published model of twelve roles exists to inherit, so that part is original research and the page should say the evidence for it will come from Cercol's own data or not at all. And the audit of 2026-08-22 belongs in the record, not buried: what the instrument was before, how it was found, and what changed. A science page that hides its own correction history is worth less than one that carries it.\n\nRead the neighbouring entries in each locale before writing, and have each non-English version reviewed by a native-speaker subagent."
-        },
-        "done": false
-      },
-      {
-        "id": "s10",
-        "title": "Desbloquejar les cartes a Vedel i a Thiry & Piolti",
-        "why": "Les dues estan aturades des del 22/08 perquè afirmaven que els nostres ítems seguien la seua feina, i era fals. Quan el danés siga literalment el seu, la carta a Vedel deixa de ser una afirmació dubtosa i passa a ser un agraïment exacte, amb una petició que té sentit: que li pegue una ullada a com l'hem posada.",
-        "aud": [
-          "A"
-        ],
-        "pay": [
-          "Autoritat"
-        ],
-        "eff": "Baix",
-        "action": {
-          "type": "do",
-          "html": "<ul class=\"ulist\"><li>Reescriure les dues cartes dient el que aleshores serà cert, i llevar el bloqueig de les incidències.</li><li>La de Vedel canvia de to sencer: passa de \"seguim la teua metodologia\" a \"fem servir la teua traducció tal com la vas publicar\".</li><li>La de Thiry i Piolti depèn de si el francés acaba copiat d'OpenScales o traduït per nosaltres. Si és traduït, la carta ha de dir-ho.</li><li><b>Cap de les dues ix sense la revisió filològica de la llengua corresponent.</b></li></ul>"
         },
         "done": false
       }
