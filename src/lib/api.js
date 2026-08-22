@@ -677,10 +677,10 @@ export async function getAdminActivity({ days = 30 } = {}) {
 }
 
 /**
- * Authority panel — progress against the target catalogue.
+ * Plan panel — progress through the distribution plan.
  *
- * The catalogue itself never leaves the bundle (src/data/authority-targets.js);
- * only the state travels. `fileAuthorityIssue` posts the target's own text so
+ * The plan itself never leaves the bundle (src/data/distribution-plan.js);
+ * only the state travels. `fileAuthorityIssue` posts the step's own text so
  * the Worker never needs a second copy of it.
  */
 export async function getAuthorityStatus() {
