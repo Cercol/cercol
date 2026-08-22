@@ -8,10 +8,12 @@
  *   scalePoints {number}                 — passed through to LikertScale (default 5)
  *   scaleLabels {Record<number, string>} — passed through to LikertScale
  *   prefixKey   {string}                 — i18n key for the item prefix (default 'test.itemPrefix')
+ *   variant     {string}                 — chosen language variety, e.g. 'fr-CA'
  */
 import { useTranslation } from 'react-i18next'
 import { colors } from '../design/tokens'
 import LikertScale from './LikertScale'
+import { itemText as resolveItemText } from '../data/instrument-variants'
 import { KeyboardIcon } from './MoonIcons'
 
 export default function QuestionCard({
@@ -22,13 +24,15 @@ export default function QuestionCard({
   scalePoints = 5,
   scaleLabels = {},
   prefixKey = 'test.itemPrefix',
+  variant,
 }) {
   const { t, i18n } = useTranslation()
 
-  // item.text is { en, ca } — fall back to English if translation missing
-  const itemText = typeof item.text === 'object'
-    ? (item.text[i18n.language] ?? item.text.en)
-    : item.text
+  // Variant first, then the bare language, then English. A language whose
+  // published translation exists in more than one variety (French: Gravel's
+  // Canadian and the European adaptation of it) keys its items by variant,
+  // so the reader's choice decides which text they answer.
+  const itemText = resolveItemText(item.text, i18n.language, variant)
 
   return (
     <div className="bg-white rounded border border-gray-200 p-6 sm:p-8">

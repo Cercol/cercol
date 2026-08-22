@@ -1576,6 +1576,11 @@
     "rights": "Cèrcol is open source. Only Full Moon is paid."
   },
   "common": {
-    "scaleLabel": "Scale"
+    "scaleLabel": "Scale",
+    "variantLabel": "Language variety",
+    "variantNote": {
+      "published": "These items are a published translation, used exactly as its authors published it.",
+      "adapted": "These items are adapted from a published translation for readers of this variety. The source is named when you hover an option."
+    }
   }
 }

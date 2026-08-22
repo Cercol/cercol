@@ -30,6 +30,45 @@ recomputed from the stored scores rather than stored themselves.
 
 ## Versions
 
+### Version 5 — from 2026-08-22
+
+**A language can now have more than one variety, and the instrument says which
+one was answered.**
+
+The published translations are not written in one variety per language.
+Gravel's French is Canadian; the Spanish IPIP-NEO-120 is Mexican. Both are the
+real thing and both were taken verbatim, which is exactly why they are worth
+having. The choice between publishing someone else's dialect to every reader
+and editing a published instrument until it stops being one is a false choice:
+keep the source intact and declare the variety.
+
+So the interface stays one language per reader, and the instrument carries a
+variety. French offers two:
+
+- **fr-CA**, Gravel as published, unchanged.
+- **fr-FR**, an adaptation of it for European readers, which is what Thiry and
+  Piolti describe doing and never published. It stores only the strings it
+  changes, forty of a hundred and eighty, so the file shows the difference
+  instead of a second copy.
+
+Eighteen of those forty are the point médian, which Gravel's masculine-only
+text lacks and the other five languages have. Twenty-two are substantive, and
+one of them matters more than the rest: in European French *libéral* reads as
+pro-market and right-leaning, so Gravel's "valeurs sociales libérales" on a
+positively keyed Liberalism item would have attracted exactly the respondents
+it is meant to score low. fr-FR says *progressistes*. The conservative item
+needed no change, because *traditionnelles* reads the same on both sides of the
+Atlantic.
+
+The review also caught one the earlier pass had missed: *sympathiser avec* in
+European French means to strike up a friendship, so "Sympathize with the
+homeless" read as getting on well with them rather than feeling for them.
+
+Spanish carries es-MX and no choice, because only one variety exists. The
+result records the variety it was answered in rather than the bare language,
+because two people answering "in French" may not have answered the same
+sentences.
+
 ### Version 4 — from 2026-08-22
 
 **French and Spanish stop being translations.** Every French string is Mathew

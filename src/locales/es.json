@@ -1576,6 +1576,11 @@
     "rights": "Cèrcol es de código abierto. Solo Luna Llena es de pago."
   },
   "common": {
-    "scaleLabel": "Escala"
+    "scaleLabel": "Escala",
+    "variantLabel": "Variedad del idioma",
+    "variantNote": {
+      "published": "Estos ítems son una traducción publicada, utilizada tal como la publicaron sus autores.",
+      "adapted": "Estos ítems están adaptados de una traducción publicada para los lectores de esta variedad. La fuente aparece al pasar el ratón por encima de cada opción."
+    }
   }
 }
