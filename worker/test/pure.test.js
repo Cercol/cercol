@@ -11,7 +11,7 @@ import { extractLinkTargets, extractDois, isInternal, langsWithContent, doiUrl }
 import { scoreForReport, zscoresFor } from '../src/scoring.js'
 import { validateResult } from '../src/writes.js'
 import { classifyChannel, buildChannels, buildFunnel, buildCumulative, weekBounds, weekLabel } from '../src/jobs/digest.js'
-import { zeroClickFloor } from '../src/jobs/daily.js'
+import { zeroClickFloor, actions } from '../src/jobs/daily.js'
 import { choosePerOwner } from '../src/jobs/nudge.js'
 import { classifyBroken } from '../src/jobs/links.js'
 import { normaliseDate, parseQueryStats } from '../src/jobs/bing.js'
@@ -442,5 +442,35 @@ describe('zero-click floor', () => {
 
   it('never asks for fewer than the old flat floor', () => {
     for (const pos of [1, 2, 3, 5, 7, 8, 10]) expect(zeroClickFloor(pos)).toBeGreaterThanOrEqual(10)
+  })
+})
+
+describe('export gaps', () => {
+  const base = {
+    warns: [], indexing: null, languages: null,
+    product: {
+      starts: [0, 0], tests: [0, 0], visitors: [0, 0], topPages: [], dropOff: [],
+      takingOff: [], byInstrument: [], byLang: [], newUsers: [0, 0], pageViews: [0, 0],
+      signups: [0, 0], top: [], totals: {}, witness: [0, 0],
+    },
+  }
+
+  it('says nothing when every day arrived', () => {
+    const out = actions({ ...base, search: { exportGaps: [], queries: [], zeroClick: null } })
+    expect(out.join(' ')).not.toContain('never exported')
+  })
+
+  it('names the day and the deadline when one is missing', () => {
+    const out = actions({ ...base, search: { exportGaps: ['2026-08-16'], queries: [], zeroClick: null } })
+    const line = out.find((l) => l.includes('never exported'))
+    expect(line).toContain('2026-08-16')
+    expect(line).toContain('retries for about a week')
+    // The point a reader needs: the day still exists in Search Console.
+    expect(line).toContain('not lost from Search Console')
+  })
+
+  it('leads with it, because it is the only line with a deadline', () => {
+    const out = actions({ ...base, warns: [], search: { exportGaps: ['2026-08-16'], queries: [], zeroClick: null } })
+    expect(out[0]).toContain('never exported')
   })
 })
