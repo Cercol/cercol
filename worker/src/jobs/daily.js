@@ -61,6 +61,14 @@ export const DECOMMISSION_DUE = '2026-08-31'
  */
 const POSITION_CTR = [[3, 0.10], [7, 0.04], [10, 0.015]]
 
+/**
+ * How far back to look for days the Search Console bulk export never
+ * delivered. Two weeks: Google retries a failed day for about one, so
+ * anything older is already lost and reporting it every morning forever
+ * would be noise rather than a task.
+ */
+export const EXPORT_WINDOW_DAYS = 14
+
 export function zeroClickFloor(pos) {
   const ctr = (POSITION_CTR.find(([p]) => pos <= p) || [null, 0.005])[1]
   return Math.ceil(Math.log(0.05) / Math.log(1 - ctr))
@@ -158,6 +166,16 @@ export async function gatherSearch(env) {
     const [last] = await bq(env, `SELECT MAX(data_date) AS d FROM ${gt}`)
     if (!last?.d) return { pending: true }
     const d = String(last.d).slice(0, 10)
+
+    // Days the bulk export never delivered. Google emails about a failure and
+    // then retries for about a week; after that the day is gone from BigQuery
+    // for good. On 2026-08-16 both tables failed with "unknown error" and the
+    // only warning was that email, because nothing here was watching. The
+    // Search Console UI keeps the day for sixteen months either way, so a gap
+    // is a mirror to repair, not data destroyed.
+    const gaps = await bq(env, `SELECT day FROM UNNEST(GENERATE_DATE_ARRAY(DATE_SUB('${d}', INTERVAL ${EXPORT_WINDOW_DAYS} DAY), '${d}')) AS day
+      WHERE day NOT IN (SELECT DISTINCT data_date FROM ${gt} WHERE data_date >= DATE_SUB('${d}', INTERVAL ${EXPORT_WINDOW_DAYS} DAY))
+      ORDER BY day`)
     const rows = await bq(env, `SELECT data_date, SUM(clicks) AS clicks, SUM(impressions) AS impressions FROM ${gt} WHERE data_date IN ('${d}', DATE_SUB('${d}', INTERVAL 1 DAY)) GROUP BY data_date ORDER BY data_date DESC`)
     const tq = await bq(env, `SELECT query, SUM(clicks) AS clicks, SUM(impressions) AS impressions, SAFE_DIVIDE(SUM(sum_position), SUM(impressions)) AS pos,
       ARRAY_AGG(url ORDER BY impressions DESC LIMIT 1)[OFFSET(0)] AS url FROM ${gt} WHERE data_date = '${d}' AND query IS NOT NULL GROUP BY query ORDER BY clicks DESC, impressions DESC LIMIT 6`)
@@ -173,6 +191,7 @@ export async function gatherSearch(env) {
     const zc = zcRows.filter((r) => Number(r.impressions) >= zeroClickFloor(Number(r.pos))).slice(0, 1)
     const cur = rows[0] || {}, prev = rows[1] || {}
     return { day: d,
+      exportGaps: gaps.map((g) => String(g.day).slice(0, 10)),
       zeroClick: zc[0] ? [zc[0].url, Number(zc[0].impressions), Number(zc[0].pos)] : null, clicks: [Number(cur.clicks || 0), Number(prev.clicks || 0)], impressions: [Number(cur.impressions || 0), Number(prev.impressions || 0)],
       queries: tq.map((r) => [r.query, Number(r.clicks), Number(r.impressions), r.pos == null ? null : Number(r.pos), r.url || null]) }
   } catch (e) { return { pending: true, error: e.message } }
@@ -254,6 +273,16 @@ const link = (href, t) => `<a href="${href}" style="color:${C.blue};text-decorat
 export function actions(d, frontendUrl = 'https://cercol.team') {
   const { product: pr, search: se } = d
   const out = [...(d.warns || []), ...indexingActions(d.indexing), ...languageActions(d.languages, frontendUrl)]
+
+  // A day the bulk export never delivered. This goes first because it is the
+  // only line in the brief with a deadline: Google retries for about a week
+  // and then stops, and the BigQuery copy of that day is gone. Everything
+  // else here can wait a day without getting worse.
+  if (se?.exportGaps?.length) {
+    const days = se.exportGaps
+    const last = days[days.length - 1]
+    out.push(`Search Console never exported ${days.length === 1 ? days[0] : `${days.length} days (${days.join(', ')})`} to BigQuery. Google retries for about a week from each date and then gives up, so ${last} is the one still worth saving. Check that billing is active on the Cloud project and that search-console-data-export@system.gserviceaccount.com still has BigQuery Job User on it and Data Editor on the dataset. The days are not lost from Search Console itself, only from the mirror the brief reads.`)
+  }
 
   // Funnel. Two different failures, never both: nobody starts, or they
   // start and drop out. The second one usually means a broken instrument.
