@@ -1576,6 +1576,11 @@
     "rights": "Cèrcol ist Open Source. Nur Vollmond ist kostenpflichtig."
   },
   "common": {
-    "scaleLabel": "Skala"
+    "scaleLabel": "Skala",
+    "variantLabel": "Sprachvariante",
+    "variantNote": {
+      "published": "Diese Aussagen sind eine veröffentlichte Übersetzung, unverändert übernommen.",
+      "adapted": "Diese Aussagen sind aus einer veröffentlichten Übersetzung für Leserinnen und Leser dieser Variante angepasst. Die Quelle erscheint, wenn du eine Option überfährst."
+    }
   }
 }

@@ -33,6 +33,7 @@ import { colors } from '../design/tokens'
 import RoleProbabilityBars from '../components/RoleProbabilityBars'
 import { Card, Button, Badge, SectionLabel } from '../components/ui'
 import { DimensionRow, FacetAccordion, ReportPageHeader, RoleCard, RadarDataCard, RoleComparisonView, SurprisesPanel, MethodologyNote } from '../components/report'
+import { answeredIn } from '../data/instrument-variants'
 
 const MIN_WITNESSES_FOR_REPORT = 2
 
@@ -103,7 +104,7 @@ export default function FullMoonResultsPage() {
   useEffect(() => {
     if (fromTest && domains && !loggedRef.current) {
       loggedRef.current = true
-      logResult(domains, i18n.language, 'fullMoon', user?.id ?? null, stateFacets).then(setResultId)
+      logResult(domains, answeredIn(i18n.language, stateScores?.variant), 'fullMoon', user?.id ?? null, stateFacets).then(setResultId)
     }
   }, [domains]) // eslint-disable-line react-hooks/exhaustive-deps
 

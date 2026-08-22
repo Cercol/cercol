@@ -26,9 +26,11 @@ import { useFeedbackContext } from '../context/FeedbackContext'
 import { useAuth } from '../context/AuthContext'
 import { getMyResults, anonymiseResult } from '../lib/api'
 import QuestionCard from '../components/QuestionCard'
+import VariantPicker from '../components/VariantPicker'
 import ProgressBar from '../components/ProgressBar'
 import { Button, Card, SectionLabel } from '../components/ui'
 import { colors, DOMAIN_BG_CLASSES, DOMAIN_ICON_CLASSES } from '../design/tokens'
+import { answeredIn } from '../data/instrument-variants'
 import { FirstQuarterIcon, ArrowLeftIcon, ArrowRightIcon, DimensionIcon } from '../components/MoonIcons'
 
 /** Redo confirmation modal — warns user their previous result will be anonymised */
@@ -123,6 +125,9 @@ export default function FirstQuarterPage() {
   }
 
   // ── Test state ─────────────────────────────────────────────────
+  // The language variety the items are read in. Chosen before starting,
+  // because it changes every item and cannot be switched halfway.
+  const [variant, setVariant] = useState(null)
   const [showIntro, setShowIntro] = useState(true)
   const [blockIdx, setBlockIdx] = useState(0)
   const [itemInBlockIdx, setItemInBlockIdx] = useState(0)
@@ -167,7 +172,7 @@ export default function FirstQuarterPage() {
 
     if (isLastItemOverall) {
       const { domains, facets } = computeFQScores(updatedAnswers)
-      navigate('/first-quarter/results', { state: { domains, facets, fromTest: true } })
+      navigate('/first-quarter/results', { state: { domains, facets, fromTest: true, variant } })
       return
     }
 
@@ -299,6 +304,7 @@ export default function FirstQuarterPage() {
               <SectionLabel color="gray" className="mb-1">{t('common.scaleLabel')}</SectionLabel>
               <p className="text-sm text-gray-700">{t('fq.intro.scale')}</p>
             </div>
+            <VariantPicker value={variant} onChange={setVariant} />
             <p className="text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-3">
               {t('fq.intro.guidance')}
             </p>
@@ -389,6 +395,7 @@ export default function FirstQuarterPage() {
           scalePoints={SCALE_POINTS}
           scaleLabels={scaleLabels}
           prefixKey="fq.itemPrefix"
+          variant={variant}
         />
 
         {/* Navigation */}

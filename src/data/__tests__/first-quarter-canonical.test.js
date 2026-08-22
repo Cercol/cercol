@@ -47,3 +47,10 @@ describe('First Quarter is the IPIP-NEO-60', () => {
     expect(it_.reverse).toBe(true)
   })
 })
+
+describe('the French political item', () => {
+  it('is not transposed, as it is in the published table it came from', () => {
+    const it_ = FQ_ITEMS.find((i) => i.text.en === 'Tend to vote for liberal political candidates.')
+    expect(it_.text['fr-CA']).toContain('libérales')
+  })
+})

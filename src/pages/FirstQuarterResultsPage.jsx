@@ -27,6 +27,7 @@ import RoleProbabilityBars from '../components/RoleProbabilityBars'
 import { Card, Button, Badge, SectionLabel } from '../components/ui'
 import { DimensionRow, FacetAccordion, ReportPageHeader, RoleCard, RadarDataCard, MethodologyNote } from '../components/report'
 import InstrumentNudge from '../components/InstrumentNudge'
+import { answeredIn } from '../data/instrument-variants'
 
 
 export default function FirstQuarterResultsPage() {
@@ -64,7 +65,7 @@ export default function FirstQuarterResultsPage() {
   useEffect(() => {
     if (fromTest && !loggedRef.current) {
       loggedRef.current = true
-      logResult(domains, i18n.language, 'firstQuarter', user?.id ?? null, facets).then(setResultId)
+      logResult(domains, answeredIn(i18n.language, stateScores?.variant), 'firstQuarter', user?.id ?? null, facets).then(setResultId)
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
