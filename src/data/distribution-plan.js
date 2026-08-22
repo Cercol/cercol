@@ -1731,6 +1731,26 @@ export const PLAN_SECTIONS = [
           "html": "<p class=\"meta\">Espera els DOI. Un element creat per un mateix atrau peticions d'esborrat, així que que siga escarit i factual.</p>"
         },
         "done": false
+      },
+      {
+        "id": "ct21",
+        "title": "Revisió final de Sandre Llopis",
+        "why": "L'últim filtre abans de parlar amb cap investigador, i el que cap agent pot substituir: una persona nativa amb formació filològica llegint els ítems sencers. Va després d'haver corregit tot el que sabíem corregir, no abans, perquè el seu temps val i no s'ha de gastar en el que ja hem detectat nosaltres. Convidar-lo a fer la Lluna Plena no és cortesia: 120 ítems llegits mentre s'hi respon és la lectura que troba el que una taula de correccions no ensenya. El compte no cal preparar-lo a mà: qui entra i verifica el correu rep la llicència beta automàticament mentre en queden.",
+        "aud": [
+          "A"
+        ],
+        "pay": [
+          "Base",
+          "Autoritat"
+        ],
+        "eff": "Baix",
+        "action": {
+          "type": "email",
+          "to": "llopisdepau2023@gmail.com",
+          "subject": "Un favor de filòleg: els ítems catalans de Cèrcol",
+          "body": "Sandre,\n\nEt volia demanar un favor de la teua especialitat.\n\nCèrcol és un test de personalitat de codi obert que estic fent, basat en el banc d'ítems IPIP, que és de domini públic i el que fa servir la recerca de veres. Va en sis llengües, i el català és una d'elles.\n\nEls ítems catalans els vam passar per una revisió a fons i van eixir prou tocats: formes que no existien, un parell de castellanismes amb terminació catalana, i un ítem que directament mesurava una altra cosa que l'original. Ja està tot corregit i unificat en català central. Però abans d'oferir el joc a l'IPIP perquè el llisten, m'agradaria que li pegara una ullada algú que sap de veres, i eixe eres tu.\n\nEl que et demanaria és el que jo no puc fer: llegir-los com a text, no com a taula de correccions. Són 190 frases curtes en primera persona, del tipus \"Em preocupo per les coses\" o \"No m'agrada cridar l'atenció\". El que busque és si alguna sona a traducció, si hi ha res que un parlant no diria, i si el registre és el que toca: han de ser frases planeres, no literàries.\n\nLa manera més còmoda de veure'ls en context és fent el test llarg, que en són 120. Entres amb aquest mateix correu i ja tens accés complet: en som en fase beta i les llicències de la Lluna Plena van soltes. https://cercol.team/full-moon\n\nI si de pas et ve de gust el resultat, és teu. El càlcul és obert i està documentat, per si el vols mirar per dins.\n\nSense presses i sense compromís. Si no et ve bé, m'ho dius i ja està.\n\nUna abraçada,\nMiquel"
+        },
+        "done": false
       }
     ]
   }
