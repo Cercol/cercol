@@ -48,7 +48,11 @@
     },
     "contributionsHeading": "Vidnebidrag",
     "contributionsEmpty": "Du har endnu ikke gennemført nogen vidnesessioner.",
-    "contributionItem": "Beskrev {{name}}"
+    "contributionItem": "Beskrev {{name}}",
+    "newVersion": {
+      "body": "Dette resultat blev lavet med en tidligere version af instrumentet. Spørgsmålene er ændret siden, så det kan ikke sammenlignes med et resultat lavet nu.",
+      "cta": "Tag den igen"
+    }
   },
   "account": {
     "profile": "Profil",

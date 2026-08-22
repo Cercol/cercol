@@ -48,7 +48,11 @@
     },
     "contributionsHeading": "Participación como testigo",
     "contributionsEmpty": "Todavía no has completado ninguna sesión de testigo.",
-    "contributionItem": "Describiste a {{name}}"
+    "contributionItem": "Describiste a {{name}}",
+    "newVersion": {
+      "body": "Este resultado se hizo con una versión anterior del instrumento. Las preguntas han cambiado desde entonces, así que no se puede comparar con un resultado hecho ahora.",
+      "cta": "Vuelve a hacerlo"
+    }
   },
   "account": {
     "profile": "Perfil",

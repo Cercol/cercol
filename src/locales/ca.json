@@ -48,7 +48,11 @@
     },
     "contributionsHeading": "Participació com a testimoni",
     "contributionsEmpty": "Encara no has completat cap sessió de testimoni.",
-    "contributionItem": "Has descrit {{name}}"
+    "contributionItem": "Has descrit {{name}}",
+    "newVersion": {
+      "body": "Aquest resultat es va fer amb una versió anterior de l'instrument. Les preguntes han canviat des de llavors, així que no es pot comparar amb un resultat fet ara.",
+      "cta": "Torna a fer-lo"
+    }
   },
   "account": {
     "profile": "Perfil",

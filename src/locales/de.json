@@ -48,7 +48,11 @@
     },
     "contributionsHeading": "Beiträge als Zeuge/Zeugin",
     "contributionsEmpty": "Du hast noch keine Zeugensitzungen abgeschlossen.",
-    "contributionItem": "{{name}} beschrieben"
+    "contributionItem": "{{name}} beschrieben",
+    "newVersion": {
+      "body": "Dieses Ergebnis stammt aus einer früheren Version des Instruments. Die Fragen haben sich seitdem geändert, daher ist es mit einem heutigen Ergebnis nicht vergleichbar.",
+      "cta": "Erneut ausfüllen"
+    }
   },
   "account": {
     "profile": "Profil",
