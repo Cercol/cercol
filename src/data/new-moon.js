@@ -56,7 +56,7 @@ export const TIPI_ITEMS = [
     id: 4,
     text: {
       en: 'Anxious, easily upset.',
-      ca: "Ansiós/a, que s'altera fàcilment.",
+      ca: "Ansiós/osa, que s'altera fàcilment.",
       es: 'Ansioso/a, que se altera fácilmente.',
       fr: 'Anxieux·se, facilement perturbé·e.',
       de: 'Ängstlich, leicht aufzuregen.',
