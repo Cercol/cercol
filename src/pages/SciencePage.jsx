@@ -11,6 +11,7 @@ import { Card, SectionLabel } from '../components/ui'
 import { DimensionIcon, ExternalLinkIcon } from '../components/MoonIcons'
 import { colors, DOMAIN_COLORS } from '../design/tokens'
 import { usePageMeta } from '../hooks/usePageMeta'
+import { GITHUB_URL } from '../lib/navigation'
 
 const DIMENSION_KEYS = ['presence', 'bond', 'vision', 'discipline', 'depth']
 
@@ -326,7 +327,7 @@ export default function SciencePage() {
             {t('science.openSource.body')}
           </p>
           <a
-            href="https://github.com/cercol/cercol"
+            href={GITHUB_URL}
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-700 hover:text-gray-900 underline transition-colors"

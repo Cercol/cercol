@@ -14,7 +14,8 @@
     "faq": "FAQ",
     "admin": "Admin",
     "menuLearn": "Lernen",
-    "menuCompany": "Unternehmen"
+    "menuCompany": "Unternehmen",
+    "privacy": "Datenschutz"
   },
   "myResults": {
     "link": "Meine Ergebnisse",
@@ -1559,5 +1560,11 @@
     "low": "Gar nicht ich",
     "high": "Genau ich",
     "thanks": "Danke. Das hilft uns zu prüfen, ob die Profile tragen."
+  },
+  "footer": {
+    "label": "Fußzeile",
+    "sections": "Bereiche der Fußzeile",
+    "tagline": "Open-Source-Persönlichkeitsdiagnostik für Teams, auf Basis peer-reviewter Forschung.",
+    "rights": "Cèrcol. Open Source, frei nutzbar."
   }
 }

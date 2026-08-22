@@ -3,8 +3,10 @@
  *
  * Header: single row on brand blue (#0047ba).
  *   Left:   Cèrcol logo (white SVG)
- *   Center: four nav items — two direct links + two dropdown groups:
- *             Instruments · Roles · Learn ▾ (Science, Blog) · Company ▾ (About, FAQ)
+ *   Center: the entries in src/lib/navigation.js — two direct links and two
+ *           dropdown groups. That file is the only list; this component, the
+ *           mobile menu below and the footer all render from it, so they
+ *           cannot drift apart. Adding a page is one line there.
  *   Right:  AccountButton + LanguageToggle + hamburger (mobile)
  *
  * Mobile nav: hamburger opens a full-width blue dropdown below the header.
@@ -12,6 +14,10 @@
  *
  * Content wrapper: white background, centered max-w-4xl column.
  * Exception: homepage ("/") opts out — manages its own full-bleed background.
+ *
+ * Footer: on every page. Until 2026-08-22 there was none, and the header's
+ * Science, Blog, About and FAQ links sat inside dropdown panels that the
+ * prerender never opened, so no prerendered page linked to them at all.
  */
 import { useState, useRef, useEffect } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
@@ -21,6 +27,8 @@ import LanguageToggle from './LanguageToggle'
 import CercolLogo from './CercolLogo'
 import BetaBanner from './BetaBanner'
 import { colors } from '../design/tokens'
+import Footer from './Footer'
+import { NAV, navHref, isEntryActive } from '../lib/navigation'
 import { HamburgerIcon, CloseIcon } from './MoonIcons'
 import { useAuth } from '../context/AuthContext'
 
@@ -120,14 +128,19 @@ export default function Layout({ children }) {
   const { profile }  = useAuth()
   const isHome       = pathname === '/'
   const [menuOpen, setMenuOpen]     = useState(false)
-  const [mobileLearnOpen, setMobileLearnOpen]   = useState(false)
-  const [mobileCompanyOpen, setMobileCompanyOpen] = useState(false)
+  // One entry per open group, keyed by nav key: a boolean per group meant a
+  // new group needed a new useState, which is how the list drifts.
+  const [mobileOpen, setMobileOpen] = useState({})
 
-  const blogTo = i18n.language === 'en' ? '/blog' : `/${i18n.language}/blog`
+  const mobileLinkClass = ({ isActive }) =>
+    `text-sm font-medium px-3 py-2.5 rounded transition-colors ${
+      isActive ? 'text-white bg-white/20' : 'text-white/70 hover:text-white hover:bg-white/10'
+    }`
 
-  // Derived: is any child of a group currently active?
-  const learnActive   = pathname === '/science' || pathname.includes('/blog')
-  const companyActive = pathname === '/about' || pathname === '/faq'
+  const mobileSubLinkClass = ({ isActive }) =>
+    `text-sm font-medium px-3 py-2 rounded transition-colors ${
+      isActive ? 'text-white bg-white/20' : 'text-white/60 hover:text-white hover:bg-white/10'
+    }`
 
   const navLinkClass = ({ isActive }) =>
     `shrink-0 text-xs font-medium px-2.5 py-1.5 rounded transition-colors whitespace-nowrap ${
@@ -152,25 +165,23 @@ export default function Layout({ children }) {
             className="hidden md:flex flex-1 items-center gap-1"
             aria-label="Main navigation"
           >
-            {/* Direct links */}
-            <NavLink to="/instruments" className={navLinkClass}>
-              {t('nav.instruments')}
-            </NavLink>
-            <NavLink to="/roles" className={navLinkClass}>
-              {t('nav.roles')}
-            </NavLink>
-
-            {/* Learn group: Science + Blog */}
-            <DropdownGroup label={t('nav.menuLearn')} isAnyChildActive={learnActive}>
-              <DropdownItem to="/science"  label={t('nav.science')} />
-              <DropdownItem to={blogTo}    label={t('nav.blog')}    />
-            </DropdownGroup>
-
-            {/* Company group: About + FAQ */}
-            <DropdownGroup label={t('nav.menuCompany')} isAnyChildActive={companyActive}>
-              <DropdownItem to="/about" label={t('nav.about')} />
-              <DropdownItem to="/faq"   label={t('nav.faq')}   />
-            </DropdownGroup>
+            {NAV.map((entry) => (entry.direct ? (
+              entry.items.map((item) => (
+                <NavLink key={item.key} to={navHref(item, i18n.language)} className={navLinkClass}>
+                  {t(`nav.${item.key}`)}
+                </NavLink>
+              ))
+            ) : (
+              <DropdownGroup
+                key={entry.key}
+                label={t(`nav.${entry.key}`)}
+                isAnyChildActive={isEntryActive(entry, pathname)}
+              >
+                {entry.items.map((item) => (
+                  <DropdownItem key={item.key} to={navHref(item, i18n.language)} label={t(`nav.${item.key}`)} />
+                ))}
+              </DropdownGroup>
+            )))}
 
             {profile?.is_admin && (
               <NavLink to="/admin" className={navLinkClass}>
@@ -208,89 +219,46 @@ export default function Layout({ children }) {
         <div className="md:hidden" style={{ backgroundColor: colors.blue }}>
           <nav className="flex flex-col px-4 py-3 gap-0.5" aria-label="Mobile navigation">
 
-            <NavLink
-              to="/instruments"
-              onClick={() => setMenuOpen(false)}
-              className={({ isActive }) =>
-                `text-sm font-medium px-3 py-2.5 rounded transition-colors ${
-                  isActive ? 'text-white bg-white/20' : 'text-white/70 hover:text-white hover:bg-white/10'
-                }`
-              }
-            >
-              {t('nav.instruments')}
-            </NavLink>
-
-            <NavLink
-              to="/roles"
-              onClick={() => setMenuOpen(false)}
-              className={({ isActive }) =>
-                `text-sm font-medium px-3 py-2.5 rounded transition-colors ${
-                  isActive ? 'text-white bg-white/20' : 'text-white/70 hover:text-white hover:bg-white/10'
-                }`
-              }
-            >
-              {t('nav.roles')}
-            </NavLink>
-
-            {/* Learn group */}
-            <button
-              type="button"
-              onClick={() => setMobileLearnOpen(o => !o)}
-              className="flex items-center justify-between text-sm font-medium px-3 py-2.5 rounded text-white/70 hover:text-white hover:bg-white/10 transition-colors"
-            >
-              {t('nav.menuLearn')}
-              <Chevron open={mobileLearnOpen} />
-            </button>
-            {mobileLearnOpen && (
-              <div className="ml-4 flex flex-col gap-0.5">
-                {[
-                  { to: '/science', label: t('nav.science') },
-                  { to: blogTo,     label: t('nav.blog')    },
-                ].map(({ to, label }) => (
-                  <NavLink
-                    key={to} to={to}
-                    onClick={() => setMenuOpen(false)}
-                    className={({ isActive }) =>
-                      `text-sm font-medium px-3 py-2 rounded transition-colors ${
-                        isActive ? 'text-white bg-white/20' : 'text-white/60 hover:text-white hover:bg-white/10'
-                      }`
-                    }
+            {NAV.map((entry) => {
+              const open = mobileOpen[entry.key]
+              if (entry.direct) return entry.items.map((item) => (
+                <NavLink
+                  key={item.key}
+                  to={navHref(item, i18n.language)}
+                  onClick={() => setMenuOpen(false)}
+                  className={mobileLinkClass}
+                >
+                  {t(`nav.${item.key}`)}
+                </NavLink>
+              ))
+              return (
+                <div key={entry.key} className="contents">
+                  <button
+                    type="button"
+                    onClick={() => setMobileOpen((o) => ({ ...o, [entry.key]: !o[entry.key] }))}
+                    aria-expanded={!!open}
+                    className="flex items-center justify-between text-sm font-medium px-3 py-2.5 rounded text-white/70 hover:text-white hover:bg-white/10 transition-colors"
                   >
-                    {label}
-                  </NavLink>
-                ))}
-              </div>
-            )}
-
-            {/* Company group */}
-            <button
-              type="button"
-              onClick={() => setMobileCompanyOpen(o => !o)}
-              className="flex items-center justify-between text-sm font-medium px-3 py-2.5 rounded text-white/70 hover:text-white hover:bg-white/10 transition-colors"
-            >
-              {t('nav.menuCompany')}
-              <Chevron open={mobileCompanyOpen} />
-            </button>
-            {mobileCompanyOpen && (
-              <div className="ml-4 flex flex-col gap-0.5">
-                {[
-                  { to: '/about', label: t('nav.about') },
-                  { to: '/faq',   label: t('nav.faq')   },
-                ].map(({ to, label }) => (
-                  <NavLink
-                    key={to} to={to}
-                    onClick={() => setMenuOpen(false)}
-                    className={({ isActive }) =>
-                      `text-sm font-medium px-3 py-2 rounded transition-colors ${
-                        isActive ? 'text-white bg-white/20' : 'text-white/60 hover:text-white hover:bg-white/10'
-                      }`
-                    }
-                  >
-                    {label}
-                  </NavLink>
-                ))}
-              </div>
-            )}
+                    {t(`nav.${entry.key}`)}
+                    <Chevron open={!!open} />
+                  </button>
+                  {open && (
+                    <div className="ml-4 flex flex-col gap-0.5">
+                      {entry.items.map((item) => (
+                        <NavLink
+                          key={item.key}
+                          to={navHref(item, i18n.language)}
+                          onClick={() => setMenuOpen(false)}
+                          className={mobileSubLinkClass}
+                        >
+                          {t(`nav.${item.key}`)}
+                        </NavLink>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )
+            })}
 
             {profile?.is_admin && (
               <NavLink
@@ -318,6 +286,8 @@ export default function Layout({ children }) {
           </div>
         </div>
       )}
+
+      <Footer />
     </>
   )
 }
