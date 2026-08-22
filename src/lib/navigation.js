@@ -46,7 +46,10 @@ export function isHomePath(pathname) {
  */
 export const NAV = [
   {
-    key: 'brand',
+    // The footer heads this column with nav.menuAssess: the wordmark used to
+    // sit here and told the reader nothing about what Instruments and Roles
+    // are. The header shows the two as flat links and never renders the key.
+    key: 'menuAssess',
     direct: true,
     items: [
       { key: 'instruments', to: '/instruments' },
