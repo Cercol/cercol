@@ -183,7 +183,7 @@
   "privacy": {
     "eyebrow": "Legal",
     "title": "Política de privacidad",
-    "lastUpdated": "Última actualización: mayo de 2026",
+    "lastUpdated": "Última actualización: agosto de 2026",
     "intro": "Esta política explica qué datos recopila Cèrcol, por qué y qué puedes hacer con ellos. Está escrita en lenguaje claro: si algo no queda claro, escríbenos.",
     "collected": {
       "heading": "Qué recopilamos",
@@ -199,7 +199,7 @@
       "heading": "Por qué lo recopilamos",
       "body": "Recopilamos datos con tres fines únicamente:",
       "function": "Para ofrecer el servicio: tu correo electrónico es necesario para autenticarte; tus resultados se almacenan para que puedas consultar tu historial.",
-      "research": "Investigación anonimizada: las puntuaciones agregadas y anonimizadas se utilizan para mejorar el modelo de personalidad y validar normas entre poblaciones. Los resultados individuales nunca se publican.",
+      "research": "Investigación anonimizada: las puntuaciones desidentificadas sirven para mejorar el modelo de personalidad y validar los baremos entre poblaciones, y se publican como conjunto de datos abierto para que otros investigadores puedan trabajar con ellas. Los datos publicados llevan la puntuación, el instrumento, el idioma y la fecha, y nunca tu correo, tu cuenta ni nada que pueda identificarte.",
       "payment": "Para procesar tu pago: Stripe necesita los datos de tu tarjeta para cobrarte por Cèrcol de Luna Llena. Solo recibimos una confirmación.",
       "noAds": "No vendemos datos. No usamos datos para publicidad. No compartimos datos con terceros salvo lo descrito anteriormente."
     },

@@ -183,7 +183,7 @@
   "privacy": {
     "eyebrow": "Juridisk",
     "title": "Privatlivspolitik",
-    "lastUpdated": "Sidst opdateret: maj 2026",
+    "lastUpdated": "Sidst opdateret: august 2026",
     "intro": "Denne politik forklarer, hvilke data Cèrcol indsamler, hvorfor og hvad du kan gøre ved det. Den er skrevet i et klart sprog, hvis noget er uklart, så send os en e-mail.",
     "collected": {
       "heading": "Hvad vi indsamler",
@@ -199,7 +199,7 @@
       "heading": "Hvorfor vi indsamler det",
       "body": "Vi indsamler kun data til tre formål:",
       "function": "For at levere tjenesten: din e-mailadresse er nødvendig for at godkende dig; dine resultater gemmes, så du kan se din historik.",
-      "research": "Anonymiseret forskning: aggregerede, de-identificerede point bruges til at forbedre personlighedsmodellen og validere normer på tværs af befolkningsgrupper. Individuelle resultater offentliggøres aldrig.",
+      "research": "Anonymiseret forskning: De afidentificerede scorer bruges til at forbedre personlighedsmodellen og validere normer på tværs af populationer, og de offentliggøres som et åbent datasæt, så andre forskere kan arbejde med dem. De offentliggjorte data indeholder scoren, instrumentet, sproget og datoen, og aldrig din e-mail, din konto eller noget, der kan identificere dig.",
       "payment": "For at behandle din betaling: Stripe har brug for dine kortoplysninger for at opkræve dig for Fuldmåne Cèrcol. Vi modtager kun en bekræftelse.",
       "noAds": "Vi sælger ikke data. Vi bruger ikke data til reklame. Vi deler ikke data med tredjeparter undtagen som beskrevet ovenfor."
     },
