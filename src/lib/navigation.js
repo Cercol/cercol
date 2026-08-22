@@ -84,9 +84,10 @@ export const NAV_LINKS = NAV.flatMap((entry) => entry.items)
 export const GITHUB_URL = 'https://github.com/cercol/cercol'
 export const ISSUES_URL = `${GITHUB_URL}/issues`
 export const ISSUE_URL = `${ISSUES_URL}/new?title=Bug+report&labels=bug`
-// The credit is for the design system, not a byline: mm-design is where every
-// token, icon and type choice on this site comes from.
-export const DESIGN_URL = 'https://github.com/miquelmatoses/mm-design'
+// The label names the design system, which is what the credit is for; the
+// link goes to its author's portfolio, which is where a reader who clicks a
+// design credit is actually trying to get to.
+export const DESIGN_URL = 'https://miquelmatoses.github.io/portfolio/'
 
 export const META_LINKS = [
   { key: 'privacy', to: '/privacy', labelKey: 'nav.privacy' },
