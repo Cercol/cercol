@@ -11,6 +11,7 @@ import { describe, it, expect } from 'vitest'
 import { VARIANTS, variantsFor, activeVariant, itemText, answeredIn } from '../instrument-variants'
 import { FM_ITEMS } from '../full-moon'
 import { FQ_ITEMS } from '../first-quarter'
+import { FQ_ITEMS } from '../first-quarter'
 
 describe('the variant registry', () => {
   it('says where every variant text comes from', () => {
@@ -90,5 +91,47 @@ describe('what gets recorded', () => {
     expect(answeredIn('fr', 'fr-CA')).toBe('fr-CA')
     expect(answeredIn('es', null)).toBe('es-MX')
     expect(answeredIn('ca', null)).toBe('ca')
+  })
+})
+
+describe('the political item, in every language that has one', () => {
+  it('never calls the reader liberal where the English means progressive', () => {
+    // Four philologists, working separately on Catalan, French, German and
+    // the European French adaptation, all reached this independently: in
+    // Catalan, French and German "liberal" names the pro-market centre-right,
+    // the opposite of the sense this positively keyed Liberalism item has.
+    // Left literal it would attract exactly the respondents it scores low.
+    const it_ = FM_ITEMS.find((i) => i.text.en === 'Tend to vote for liberal political candidates.')
+    expect(it_.text.ca).toContain('progressistes')
+    expect(it_.text['fr-FR']).toContain('progressistes')
+    expect(it_.text.de).toContain('progressive')
+    // Gravel's Canadian keeps his wording: it is a published translation and
+    // "libéral" carries the Canadian party sense he was writing for.
+    expect(it_.text['fr-CA']).toContain('libérales')
+  })
+
+  it('leaves the conservative partner alone, because it needed nothing', () => {
+    const it_ = FM_ITEMS.find((i) => i.text.en === 'Tend to vote for conservative political candidates.')
+    expect(it_.text['fr-FR']).toBeUndefined()   // no override: Gravel's reads correctly in Europe
+    expect(it_.text['fr-CA']).toContain('traditionnelles')
+  })
+})
+
+describe('no language is half in English any more', () => {
+  it('has every item in Catalan, French and German', () => {
+    for (const items of [FM_ITEMS, FQ_ITEMS])
+      for (const key of ['ca', 'de', 'fr-CA'])
+        expect(items.filter((i) => i.text[key]).length, key).toBe(items.length)
+  })
+
+  it('is short only where the published source is short, and by how much', () => {
+    // Spanish and Danish come from published translations that do not cover
+    // every item of both instruments. Those gaps fall back to English rather
+    // than to something invented, and the counts are pinned so a gap that
+    // grows is noticed.
+    expect(FM_ITEMS.filter((i) => i.text['es-MX']).length).toBe(118)
+    expect(FQ_ITEMS.filter((i) => i.text['es-MX']).length).toBe(52)
+    expect(FM_ITEMS.filter((i) => i.text.da).length).toBe(120)
+    expect(FQ_ITEMS.filter((i) => i.text.da).length).toBe(53)
   })
 })
