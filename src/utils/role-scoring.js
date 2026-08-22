@@ -115,6 +115,45 @@ const NORM_WITNESS = {
   sd:   Object.fromEntries(Object.keys(NORM_SD).map(k => [k, 1.03])),
 }
 
+/**
+ * Published internal consistency, per instrument and per domain.
+ *
+ * These are not interchangeable and were being treated as if they were.
+ * SCIENCE.md cited Kajonius & Johnson's .82 to .90 for both instruments; that
+ * figure is the IPIP-NEO-120's. The IPIP-NEO-60 publishes its own, and they
+ * are higher, which is not a mistake: Maples-Keller et al. selected those
+ * sixty items by item response theory, optimising domain information, while
+ * the 120 spends its length on covering thirty facets evenly. A shorter
+ * instrument can be the more internally consistent one at domain level and
+ * still tell you far less about the facets underneath.
+ *
+ * Sources differ in sample as well as in instrument, so they are not a
+ * like-for-like comparison and should not be reported as one:
+ *   fullMoon      Kajonius & Johnson (2019), N = 320,128
+ *   firstQuarter  ipip.ori.org/IPIP-NEO-60ScoringKeys.htm, Eugene-Springfield,
+ *                 N = 757 (Maples-Keller et al., 2019)
+ */
+export const DOMAIN_ALPHA = {
+  fullMoon:     { min: 0.82, max: 0.90, source: 'Kajonius & Johnson (2019), Table A1, N = 320,128' },
+  firstQuarter: { min: 0.90, max: 0.95, source: 'IPIP-NEO-60 scoring keys, Eugene-Springfield, N = 757' },
+}
+
+/**
+ * Norms. First Quarter borrows Full Moon's, and that is an approximation
+ * rather than its own figure.
+ *
+ * Kajonius & Johnson's Table A1 is on the four-items-per-facet metric. First
+ * Quarter has two. The domain *mean* survives the difference, since both
+ * estimate the same construct on the same 1-to-5 scale, but the *spread* need
+ * not: a domain built from two-item facets carries more measurement error
+ * than one built from four, and the published norms for the sixty-item form
+ * are not available to check it against. What is published for the 60 is
+ * reliability, above, not means and standard deviations.
+ *
+ * So this is knowingly borrowed. It is the last place in the project where a
+ * number from one instrument stands in for another, and the honest fix is
+ * Cèrcol's own First Quarter data rather than a better guess.
+ */
 const PRIORS = {
   newMoon:      NORM_SEVEN_POINT,
   firstQuarter: { mean: NORM_MEAN, sd: NORM_SD },
