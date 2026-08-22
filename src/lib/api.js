@@ -143,8 +143,25 @@ async function publicFetch(path, options = {}) {
  * getBetaStatus — public endpoint, no auth required.
  * @returns {Promise<{remaining: number, total: number, active: boolean}>}
  */
+/**
+ * What the prerender build already injected on window for this endpoint, or
+ * undefined when we are not in a prerender pass (which is always, for a real
+ * user: prerender.mjs sets __PRERENDER__ at runtime and never serializes it).
+ *
+ * Components refresh from the API on mount by design, which is right in a
+ * browser and wrong in the build: /beta alone was called once per route,
+ * 726 times per build, against our own Worker. Eleven deploys in one day took
+ * the account to 76% of the free plan's 100k daily requests. Injecting the
+ * globals earlier does not fix it, because the fetch does not consult them.
+ * The fetch has to not happen.
+ */
+function prerenderedValue(read) {
+  if (typeof window === 'undefined' || !window.__PRERENDER__) return undefined
+  return read()
+}
+
 export async function getBetaStatus() {
-  return publicFetch('/beta')
+  return prerenderedValue(() => window.__BETA__) ?? publicFetch('/beta')
 }
 
 // ── Password management ───────────────────────────────────────────────────────
@@ -437,7 +454,7 @@ export async function getLatestFullMoonResult() {
  * @returns {Promise<Array<{slug, title, description, published_at, view_count, author, cover_url}>>}
  */
 export async function getBlogPosts() {
-  return publicFetch('/blog')
+  return prerenderedValue(() => window.__BLOG_ARTICLES__) ?? publicFetch('/blog')
 }
 
 /**
@@ -446,6 +463,10 @@ export async function getBlogPosts() {
  * @returns {Promise<{slug, title, description, content, published_at, view_count, author, cover_url, status}>}
  */
 export async function getBlogPost(slug) {
+  // Only the article this route is rendering. A different slug (a related
+  // link being prefetched, say) still goes to the network.
+  const injected = prerenderedValue(() => window.__ARTICLE__)
+  if (injected?.slug === slug) return injected
   return publicFetch(`/blog/${slug}`)
 }
 
