@@ -30,6 +30,7 @@ import { createCheckout, stripeWebhook } from './stripe.js'
 import * as admin from './admin.js'
 import * as seo from './seo.js'
 import { createPost, updatePost, patchStatus, health, robots } from './blog-admin.js'
+import * as authority from './authority.js'
 import { scheduled } from './scheduled.js'
 import { rateAccuracy } from './writes.js'
 import { emailChangeRequest, emailChangeConfirm } from './auth.js'
@@ -110,6 +111,9 @@ const ROUTES = [
   { method: 'POST', pattern: /^\/admin\/translation-feedback\/([^/]+)\/resolve$/, handler: (env, m, req) => admin.feedbackResolve(env, req, m[1]), gated: true },
   { method: 'POST', pattern: /^\/admin\/maintenance\/purge-tokens$/, handler: (env, m, req) => admin.purgeTokens(env, req), gated: true },
   { method: 'POST', pattern: /^\/admin\/jobs\/([a-z-]+)$/, handler: (env, m, req) => admin.runJob(env, req, m[1]), gated: true },
+  { method: 'GET', pattern: /^\/admin\/authority$/, handler: (env, m, req) => authority.list(env, req), gated: true },
+  { method: 'PATCH', pattern: /^\/admin\/authority\/([a-z0-9-]+)$/, handler: (env, m, req) => authority.patch(env, req, m[1]), gated: true },
+  { method: 'POST', pattern: /^\/admin\/authority\/([a-z0-9-]+)\/issue$/, handler: (env, m, req) => authority.file(env, req, m[1]), gated: true },
   { method: 'GET', pattern: /^\/admin\/probe$/, handler: (env, m, req) => admin.probeUrl(env, req), gated: true },
   { method: 'GET', pattern: /^\/admin\/bq$/, handler: (env, m, req) => admin.bqDebug(env, req), gated: true },
   // Admin SEO (api/seo.py).
