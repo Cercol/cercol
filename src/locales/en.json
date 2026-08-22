@@ -183,7 +183,7 @@
   "privacy": {
     "eyebrow": "Legal",
     "title": "Privacy policy",
-    "lastUpdated": "Last updated: May 2026",
+    "lastUpdated": "Last updated: August 2026",
     "intro": "This policy explains what data Cèrcol collects, why, and what you can do with it. It is written in plain language, if anything is unclear, email us.",
     "collected": {
       "heading": "What we collect",
@@ -199,7 +199,7 @@
       "heading": "Why we collect it",
       "body": "We collect data for three purposes only:",
       "function": "To provide the service: your email is needed to authenticate you; your results are stored so you can view your history.",
-      "research": "Anonymised research: aggregated, de-identified scores are used to improve the personality model and validate norms across populations. Individual results are never published.",
+      "research": "Anonymised research: de-identified scores are used to improve the personality model and validate norms across populations, and are published as an open dataset for other researchers. The published data carries the scores, the instrument, the language and the date, and never your email, your account, or anything that could identify you.",
       "payment": "To process your payment: Stripe needs your card details to charge you for Full Moon Cèrcol. We receive only a confirmation.",
       "noAds": "We do not sell data. We do not use data for advertising. We do not share data with third parties except as described above."
     },
