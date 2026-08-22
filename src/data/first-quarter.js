@@ -112,7 +112,7 @@ export const FQ_ITEMS = [
   { id: 34,  text: { en: 'Am not interested in theoretical discussions.', es: 'No tengo interés en las discusiones teóricas o hipotéticas.', fr: 'Je ne suis pas intéressé par les discussions théoriques.', da: 'Er ikke interesseret i teoretiske diskussioner.' },
     domain: 'vision', facet: 'prism', reverse: true  },
   // Compass (Liberalism) — o6
-  { id: 35,  text: { en: 'Tend to vote for liberal political candidates.', es: 'Tiendo a votar por políticos liberales.', fr: 'J’ai tendance à promouvoir des valeurs sociales traditionnelles.', da: 'Ser mig selv som mest venstreorienteret.' },
+  { id: 35,  text: { en: 'Tend to vote for liberal political candidates.', es: 'Tiendo a votar por políticos liberales.', fr: 'J’ai tendance à promouvoir des valeurs sociales libérales.', da: 'Ser mig selv som mest venstreorienteret.' },
     domain: 'vision', facet: 'compass', reverse: false },
   { id: 36,  text: { en: 'Believe in one true religion.', fr: 'Je crois en une seule vraie religion.' },
     domain: 'vision', facet: 'compass', reverse: true  },

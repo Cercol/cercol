@@ -47,6 +47,20 @@ decisions", a typo for "rash", and their Spanish follows it: "Tomo decisiones
 rápidas" is *fast*, not *rash*. Copying a published string is right; copying a
 construct error because it is published is not.
 
+Three French items were transposed and are now swapped back. Gravel's own
+table pairs "Tend to vote for liberal political candidates" with *valeurs
+sociales traditionnelles* and the conservative item with *libérales*, and his
+key column is corrupt in the same neighbourhood, so those rows are damaged in
+his source rather than a choice. Taken verbatim they scored a socially
+conservative French respondent as high-Liberalism and the reverse, on two of
+the four Full Moon compass items and half of First Quarter's. Swapping them
+puts each beside the English it translates and every word remains his.
+
+That is the second published defect this version declines to copy, after the
+Spanish "rush/rash". The rule that a published string is taken as published
+holds for wording. It does not hold for a string that is demonstrably beside
+the wrong item.
+
 What is left: Catalan, where no translation exists anywhere and never will, and
 German, where one exists and cannot be downloaded. Thunsdorff and Treiber at
 Koblenz-Landau translated and back-translated the 300 IPIP items and validated

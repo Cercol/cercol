@@ -64,3 +64,16 @@ describe('the version stamp', () => {
     expect(CHANGELOG).toContain(`### Version ${INSTRUMENT_VERSION} —`)
   })
 })
+
+describe('the French political items', () => {
+  it('does not score a French respondent backwards on Liberalism', () => {
+    // Gravel's published table has these two French strings transposed (his
+    // rows 28 and 148), and his key column is corrupt in the same
+    // neighbourhood. Taken verbatim, they scored a socially conservative
+    // French reader as high-Liberalism and the reverse. Two of the four Full
+    // Moon compass items, and half of First Quarter's.
+    const at = (en) => FM_ITEMS.find((i) => i.text.en === en)
+    expect(at('Tend to vote for liberal political candidates.').text.fr).toContain('libérales')
+    expect(at('Tend to vote for conservative political candidates.').text.fr).toContain('traditionnelles')
+  })
+})
