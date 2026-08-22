@@ -904,9 +904,11 @@
     "title": "Un perfil Cèrcol de ejemplo",
     "subtitle": "Este es un ejemplo sintético, no una persona real. Haz el test para obtener el tuyo.",
     "domainSection": "Las cinco dimensiones",
-    "cta_note": "Tu propio perfil está a dos minutos, gratis y sin cuenta.",
+    "cta_note": "Luna Nueva son 10 preguntas · ~2 min. Gratis y sin cuenta.",
     "cta": "Haz el test gratis",
-    "synthetic": "Un perfil sintético, no una persona real, con {{count}} valoraciones de Testigo para poder comparar la mirada propia y la ajena. Puntuado con el mismo código que un resultado real de Luna Llena."
+    "synthetic": "Un perfil sintético, no una persona real, con {{count}} valoraciones de Testigo para poder comparar la mirada propia y la ajena. Puntuado con el mismo código que un resultado real de Luna Llena.",
+    "whatThisIs": "Esto es un informe de Luna Llena: 120 preguntas · ~20 min, un pago único, y las valoraciones las hacen cuatro testigos a los que invitas tú.",
+    "seeAll": "Compara los cuatro instrumentos"
   },
   "share": {
     "title": "Mi rol Cèrcol: {{role}}",
