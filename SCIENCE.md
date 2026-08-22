@@ -385,8 +385,26 @@ the same person two independent administrations:
 
 | Instrument | Reliability used | Different role on retest |
 |---|---|---|
-| Full Moon, First Quarter | domain α .82–.90 (Kajonius & Johnson 2019, Table A1) | **47%** |
+| Full Moon | domain α .82–.90 (Kajonius & Johnson 2019, Table A1, *N* = 320,128) | **47%** |
+| First Quarter | domain α .90–.95 (IPIP-NEO-60 scoring keys, Eugene-Springfield, *N* = 757) | see note |
 | New Moon | six-week test-retest r = .72 (Gosling et al. 2003) | **62%** |
+
+**On First Quarter.** Its reliability figure was previously given as Full
+Moon's; the two instruments publish their own and they are not the same. The
+sixty-item form's are higher, which is not an error: Maples-Keller et al.
+selected its items by item response theory, optimising information at domain
+level, while the 120 spends its length covering thirty facets evenly. A
+shorter instrument can be more internally consistent at domain level and still
+say far less about the facets underneath. The two figures also come from
+different samples and are not a like-for-like comparison.
+
+Its **norms**, as opposed to its reliability, are still Full Moon's. Kajonius &
+Johnson's table is on the four-items-per-facet metric and First Quarter has
+two: the domain mean survives that, since both estimate the same construct on
+the same scale, but the spread need not, and no published means or standard
+deviations for the sixty-item form are available to check against. This is the
+last place in Cèrcol where a number from one instrument stands in for another,
+and the fix is Cèrcol's own data rather than a better guess.
 
 A sanity check at near-perfect reliability gives 5%, so essentially all of it
 is measurement error crossing a centroid boundary rather than an artefact of

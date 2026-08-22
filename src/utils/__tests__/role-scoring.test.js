@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import {
   computeRole,
+  DOMAIN_ALPHA,
   NORM_MEAN,
   NORM_SD,
   ARC_PROBABILITY_THRESHOLD,
@@ -209,5 +210,24 @@ describe('DOMAIN_MAP', () => {
     expect(DOMAIN_MAP.O).toBe('vision')
     expect(DOMAIN_MAP.C).toBe('discipline')
     expect(DOMAIN_MAP.N).toBe('depth')
+  })
+})
+
+describe('the two instruments do not share a reliability', () => {
+  it('gives each its own published alpha and its own source', () => {
+    // SCIENCE.md cited Kajonius & Johnson's .82-.90 for both. That figure is
+    // the IPIP-NEO-120's; the 60 publishes its own, from a different sample.
+    expect(DOMAIN_ALPHA.fullMoon.min).not.toBe(DOMAIN_ALPHA.firstQuarter.min)
+    for (const k of ['fullMoon', 'firstQuarter']) {
+      expect(DOMAIN_ALPHA[k].source, k).toMatch(/N = [\d,]+/)
+      expect(DOMAIN_ALPHA[k].min, k).toBeLessThan(DOMAIN_ALPHA[k].max)
+    }
+  })
+
+  it('records that the shorter form is the more internally consistent one', () => {
+    // Counter-intuitive and deliberate: its sixty items were selected by IRT
+    // to optimise domain information, where the 120 spends its length on
+    // facet coverage. Pinned so nobody "corrects" it back.
+    expect(DOMAIN_ALPHA.firstQuarter.min).toBeGreaterThan(DOMAIN_ALPHA.fullMoon.min)
   })
 })

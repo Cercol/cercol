@@ -219,7 +219,7 @@ export const PLAN_SECTIONS = [
       {
         "id": "s11",
         "title": "Els barems del Primer Quart no són els seus",
-        "why": "La taula A1 de Kajonius & Johnson dona estadístiques per faceta sobre la mètrica de quatre ítems, i el Primer Quart en té dos. Fem servir la mateixa taula per als dos instruments sense ajustar res, i això no és correcte. Amb la Lluna Plena ja resolt, aquest és l'únic lloc on encara heretem una xifra d'un instrument que no és el nostre.",
+        "why": "La taula A1 de Kajonius & Johnson dona estadístiques per faceta sobre la mètrica de quatre ítems, i el Primer Quart en té dos. Fem servir la mateixa taula per als dos instruments sense ajustar res, i això no és correcte. Amb la Lluna Plena ja resolt, aquest és l'únic lloc on encara heretem una xifra d'un instrument que no és el nostre. RESOLTA en part el 22/08/2026: la fiabilitat sí que està publicada per separat i estava mal citada — el 60 té alfes .90 a .95 (Eugene-Springfield, N=757), més altes que les .82 a .90 del 120, perquè els seus ítems es van triar per TRI optimitzant informació de domini. Els barems (mitjanes i desviacions) del 60 no estan publicats enlloc, així que continuen sent els del 120, ara documentat com a préstec. La solució de veres són dades pròpies.",
         "aud": [
           "A"
         ],
@@ -232,7 +232,7 @@ export const PLAN_SECTIONS = [
           "type": "prompt",
           "text": "First Quarter and Full Moon both read their norms from NORM_MEAN and NORM_SD in src/utils/role-scoring.js, sourced from Kajonius & Johnson (2019) Table A1. That table is on the 4-to-20 facet metric: four items answered 1 to 5. Full Moon has four items per facet, so the table describes it. First Quarter has two, so it does not.\n\nFind out what the IPIP-NEO-60 paper itself publishes for its own scales. Maples-Keller et al. (2019), Journal of Personality Assessment 101(1), 4-15. The scoring-keys page at ipip.ori.org/IPIP-NEO-60ScoringKeys.htm publishes alphas from the Eugene-Springfield community sample, N = 757, which is a different and far smaller sample than the 320,128 behind the 120's norms; do not mix them.\n\nIf the paper publishes usable domain statistics, use them and say where they came from. If it does not, say so and propose the honest alternative rather than rescaling by assumption: two items and four items drawn from the same facet do not have the same mean or the same spread, and treating them as if they did is the same class of error as everything else fixed on 2026-08-22.\n\nThis is research plus a small change. Do not touch item files."
         },
-        "done": false
+        "done": true
       },
       {
         "id": "s12",
