@@ -346,6 +346,26 @@ function getMime(path) {
   return 'text/html'
 }
 
+/**
+ * Make every absolute URL pointing at this build's own machine relative, and
+ * refuse to write the file if one survives.
+ *
+ * Exported for the test: the assertion is the point, not the replacement. A
+ * future change that renders on a different port would silently reintroduce
+ * the defect, and a build that fails is how it gets noticed.
+ */
+export function stripPreviewOrigin(html, baseUrl = BASE_URL) {
+  const cleaned = html.split(baseUrl).join('')
+  const leftover = cleaned.match(/https?:\/\/(localhost|127\.0\.0\.1|\[::1\])(:\d+)?/i)
+  if (leftover) {
+    throw new Error(
+      `prerendered HTML still points at ${leftover[0]}. A visitor's browser would try to reach it, ` +
+      'and Chrome asks them for local network access before it fails. Add the origin to stripPreviewOrigin.',
+    )
+  }
+  return cleaned
+}
+
 function startServer(originalIndexHtml) {
   // originalIndexHtml is the raw Vite-built index.html content captured before
   // any route is processed. We always serve THIS as the SPA shell fallback so
@@ -544,6 +564,25 @@ async function renderOneRoute(browser, { route, lang }, { articles, articlesBySl
   // scripts/lib/canonical-links.mjs for why the slash is added here and not
   // at each <Link>.
   finalHtml = canonicaliseInternalHrefs(finalHtml)
+
+  // --- Step 2c: strip the preview origin -----------------------------------
+  //
+  // Vite's router-aware preloading injects <link rel="modulepreload"> tags at
+  // runtime, and the DOM serialises their hrefs absolute, against whatever
+  // origin the page was rendered on. That origin is this script's own
+  // preview server, so every prerendered page shipped with up to nine links
+  // to http://localhost:4173.
+  //
+  // A visitor's browser really does try to fetch them. Chrome now gates
+  // requests to a private address behind a permission prompt, so cercol.team
+  // was asking real people for access to other applications on their device
+  // before showing them a personality report. They fail, the chunks are
+  // refetched from the right origin, and nothing breaks except the trust of
+  // anyone who read the prompt.
+  //
+  // Stripping the origin leaves them root-relative, which is what they should
+  // always have been.
+  finalHtml = stripPreviewOrigin(finalHtml)
 
   // --- Step 3: write to dist -----------------------------------------------
   if (route === '/') {

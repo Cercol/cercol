@@ -904,9 +904,11 @@
     "title": "A sample Cèrcol profile",
     "subtitle": "This is a synthetic example, not a real person. Take the test to get your own.",
     "domainSection": "The five dimensions",
-    "cta_note": "Your own profile is two minutes away, free and without an account.",
+    "cta_note": "New Moon is 10 questions and about 2 minutes. Free, no account.",
     "cta": "Take the free test",
-    "synthetic": "A synthetic profile, not a real person, shown with {{count}} Witness ratings so the self and peer views can be compared. Scored by the same code as a real Full Moon result."
+    "synthetic": "A synthetic profile, not a real person, shown with {{count}} Witness ratings so the self and peer views can be compared. Scored by the same code as a real Full Moon result.",
+    "whatThisIs": "What you are looking at is a Full Moon report: 120 questions, about 20 minutes, one payment, and the peer ratings come from four people you invite.",
+    "seeAll": "Compare all four instruments"
   },
   "share": {
     "title": "My Cèrcol role: {{role}}",
