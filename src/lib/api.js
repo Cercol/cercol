@@ -694,6 +694,20 @@ export async function setAuthorityStatus(id, patch) {
   return authFetch(`/admin/authority/${id}`, { method: 'PATCH', body: JSON.stringify(patch) })
 }
 
+/**
+ * Send a step's drafted letter from miquel@cercol.team.
+ *
+ * The mailto button sends from whatever the reader's mail client is set to,
+ * which for correspondence the recipient already has a thread with is the
+ * wrong address. This goes out from the Worker through Resend instead.
+ */
+export async function sendPlanEmail(id, { to, subject, text }) {
+  return authFetch(`/admin/authority/${id}/email`, {
+    method: 'POST',
+    body: JSON.stringify({ to, subject, text }),
+  })
+}
+
 export async function fileAuthorityIssue(target) {
   return authFetch(`/admin/authority/${target.id}/issue`, {
     method: 'POST',

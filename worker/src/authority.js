@@ -16,6 +16,7 @@
 
 import { requireAdmin } from './admin.js'
 import { httpError, jsonBody, now } from './db.js'
+import { sendAsMiquel } from './emails.js'
 
 export const STATUSES = ['todo', 'doing', 'done', 'dropped']
 
@@ -90,4 +91,37 @@ export async function file(env, request, id) {
      ON CONFLICT(id) DO UPDATE SET issue_number = ?2, status = CASE WHEN status = 'todo' THEN 'doing' ELSE status END, updated_at = ?3`
   ).bind(id, number, ts).run()
   return Response.json({ number })
+}
+
+/**
+ * POST /admin/plan/<id>/email — send a step's drafted message.
+ *
+ * The plan holds several steps whose action is a letter to a named person.
+ * Until now the panel could only hand them to a mail client, which meant they
+ * left from whatever address that client happened to be configured with. This
+ * sends them from miquel@cercol.team, the address the recipients already have
+ * a thread with.
+ *
+ * The body travels in the request rather than living here, same as filing an
+ * issue: one copy of the plan, in the repository, and the Worker stays
+ * ignorant of what it says. Admin-gated, and the send is recorded on the step
+ * so the panel can show it went and never offers to send it twice.
+ */
+export async function email(env, request, id) {
+  const a = await requireAdmin(env, request); if (a instanceof Response) return a
+  if (!env.RESEND_API_KEY) return httpError(503, 'No RESEND_API_KEY on the Worker')
+  const b = (await jsonBody(request)) || {}
+  if (!b.to || !b.subject || !b.text) return httpError(422, 'Invalid body')
+
+  const row = await env.DB.prepare(`SELECT notes FROM authority_status WHERE id = ?`).bind(id).first()
+  if (row?.notes?.startsWith('sent ')) return Response.json({ alreadySent: true, notes: row.notes })
+
+  await sendAsMiquel(env, { to: b.to, subject: b.subject, text: b.text })
+  const ts = now()
+  const note = `sent ${ts} to ${Array.isArray(b.to) ? b.to.join(', ') : b.to}`
+  await env.DB.prepare(
+    `INSERT INTO authority_status (id, status, notes, updated_at) VALUES (?1, 'doing', ?2, ?3)
+     ON CONFLICT(id) DO UPDATE SET notes = ?2, status = CASE WHEN status = 'todo' THEN 'doing' ELSE status END, updated_at = ?3`
+  ).bind(id, note, ts).run()
+  return Response.json({ sent: true, notes: note })
 }

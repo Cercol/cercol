@@ -11,9 +11,9 @@
  * Labels are i18n keys under `nav.*`, not strings: the six locales already
  * carry them and a new language needs no change here.
  *
- * `to` is the English path. Only the blog is locale-prefixed today, which is
- * what the header has always done; `navHref` is the one place that decides,
- * so changing that policy later is one function rather than a search.
+ * `to` is the English path. `navHref` turns it into the path for the reader's
+ * language, which is the one place that decides, so the policy is one function
+ * rather than a search.
  */
 
 /** The locales that own a URL prefix. English is unprefixed. */
@@ -60,7 +60,7 @@ export const NAV = [
     key: 'menuLearn',
     items: [
       { key: 'science', to: '/science' },
-      { key: 'blog', to: '/blog', localised: true },
+      { key: 'blog', to: '/blog' },
     ],
   },
   {
@@ -100,14 +100,21 @@ export const META_LINKS = [
 /**
  * The path to link to, for a reader currently in `lang`.
  *
- * Only entries marked `localised` get a prefix. Every top-level page has a
- * real locale-prefixed URL that is prerendered and in the sitemap, so more of
- * them could be prefixed; that is a behaviour change and belongs in its own
- * commit, not in the one that centralises the list.
+ * Every internal destination gets the prefix. Until 2026-08-22 only the blog
+ * did, and the result was a footer that dropped a French reader back into
+ * English on every link but one: /fr/instruments/ pointed at /instruments/,
+ * /roles/, /science/, /about/, /faq/, /privacy/ and /sample/. All five locales
+ * have all eight of those pages, prerendered and in the sitemap, so the
+ * prefixed link was always the right one; the flag was a deferral, not a
+ * policy.
+ *
+ * It also starved the non-English clusters of internal links, which is the
+ * one lever that moves a page out of "crawled, currently not indexed". That
+ * verdict on /fr/blog/ is what sent us looking.
  */
-export function navHref({ to, localised }, lang = 'en') {
+export function navHref({ to }, lang = 'en') {
   const code = String(lang || 'en').slice(0, 2)
-  return localised && LOCALES.includes(code) ? `/${code}${to}` : to
+  return LOCALES.includes(code) ? `/${code}${to}` : to
 }
 
 /** True when `pathname` is inside this entry, for the active state. */

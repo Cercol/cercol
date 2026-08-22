@@ -36,6 +36,19 @@ describe('BlogTestCTA', () => {
     expect(html('en')).not.toContain('href="/new-moon"')
   })
 
+  it('keeps a non-English reader in their language', () => {
+    // A French reader who reached the end of a French article was handed an
+    // English test, and /fr/first-quarter/ has existed all along.
+    for (const lang of ['ca', 'es', 'fr', 'de', 'da']) {
+      expect(htmlWith({ lang }), lang).toContain(`href="/${lang}/first-quarter"`)
+      expect(htmlWith({ lang }), lang).toContain(`href="/${lang}/sample"`)
+      expect(htmlWith({ lang, compact: true }), lang).toContain(`href="/${lang}/new-moon"`)
+    }
+    // English keeps the bare path, and an unknown language falls back to it.
+    expect(htmlWith({ lang: 'en' })).toContain('href="/first-quarter"')
+    expect(htmlWith({ lang: 'pt' })).toContain('href="/first-quarter"')
+  })
+
   it('overrides the heading for a matching category (teams, en)', () => {
     const out = htmlWith({ lang: 'en', category: 'teams' })
     // Apostrophe is HTML-escaped in static markup; match around it.
@@ -145,5 +158,34 @@ describe('dimension headings', () => {
         expect(found[1], `${key}.${lang} drifted from locales/${lang}.json`).toBe(expected)
       }
     }
+  })
+})
+
+describe('facet articles', () => {
+  it('promises facets to a facet reader, in every language', () => {
+    const expected = {
+      en: 'See your own 30 facets.', ca: 'Mira les teues 30 facetes.',
+      es: 'Mira tus propias 30 facetas.', fr: 'D', de: 'Sieh deine eigenen 30 Facetten.',
+      da: 'Se dine egne 30 facetter.',
+    }
+    for (const [lang, text] of Object.entries(expected)) {
+      const out = htmlWith({ lang, slug: 'what-is-a-facet-in-personality-psychology' })
+      expect(out, lang).toContain(text)
+      expect(out, lang).toContain('30')
+    }
+  })
+
+  it('lets a dimension match win over the facet pattern', () => {
+    // An article about one dimension's facets is still best answered with
+    // that dimension's score.
+    const out = htmlWith({ lang: 'en', slug: 'conscientiousness-facets-explained' })
+    expect(out).toContain('See your own Discipline score.')
+    // "30 facets" also appears in the body copy, so assert on the heading.
+    expect(out).not.toContain('See your own 30 facets.')
+  })
+
+  it('leaves an unrelated article on the generic heading', () => {
+    const out = htmlWith({ lang: 'en', slug: 'gender-and-personality-what-big-five-research-says' })
+    expect(out).toContain('See yourself in five dimensions.')
   })
 })

@@ -29,6 +29,7 @@
  */
 import { Link } from 'react-router-dom'
 import { Card, SectionLabel, DisplayHeading } from './ui'
+import { navHref } from '../lib/navigation'
 import { trackEvent } from '../lib/api'
 
 // Localized copy. es/fr/de/da are flagged for human review in the PR.
@@ -93,6 +94,27 @@ const DIMENSION_LABEL = {
   vision:     { en: 'Vision',     ca: 'Visió',       es: 'Visión',     fr: 'Vision',    de: 'Vision',   da: 'Vision' },
 }
 
+/**
+ * Articles about facets rather than about one dimension.
+ *
+ * "What is a facet?" took twelve reads in a day and sent nobody to an
+ * instrument. No dimension pattern matches its slug, so the card offered
+ * "See yourself in five dimensions" to a reader who had just finished
+ * learning that facets are the finer grain underneath those five: strictly
+ * less than what they came for. First Quarter returns exactly thirty of
+ * them, so the card can promise the thing by name.
+ */
+const FACET_SLUG = /facet|aspect-scales|nuance/
+
+const FACET_H = {
+  en: 'See your own 30 facets.',
+  ca: 'Mira les teues 30 facetes.',
+  es: 'Mira tus propias 30 facetas.',
+  fr: 'Découvrez vos 30 facettes.',
+  de: 'Sieh deine eigenen 30 Facetten.',
+  da: 'Se dine egne 30 facetter.',
+}
+
 // Heading template per language. {d} is the localized dimension name.
 const DIMENSION_H = {
   en: 'See your own {d} score.',
@@ -123,11 +145,16 @@ export default function BlogTestCTA({ slug, lang = 'en', category, compact = fal
   const dimensionHeading = dimension
     ? DIMENSION_H[l].replace('{d}', DIMENSION_LABEL[dimension][l])
     : null
-  const heading = dimensionHeading || CATEGORY_H[category]?.[l] || c.h
+  // A dimension match wins: an article about one dimension's facets is still
+  // best answered with that dimension's score.
+  const facetHeading = !dimension && slug && FACET_SLUG.test(slug) ? FACET_H[l] : null
+  const heading = dimensionHeading || facetHeading || CATEGORY_H[category]?.[l] || c.h
 
   // The end-of-article card sends the reader to the longer instrument; the
-  // early one keeps the two-minute promise it makes.
-  const to = compact ? '/new-moon' : '/first-quarter'
+  // early one keeps the two-minute promise it makes. Both in the language the
+  // article is in: a French reader who reached the end of a French article was
+  // being handed an English test, and /fr/first-quarter/ has existed all along.
+  const to = navHref({ to: compact ? '/new-moon' : '/first-quarter' }, l)
 
   // Fire the funnel cta_click event, then let navigation proceed (no
   // preventDefault). Fire-and-forget: trackEvent swallows errors.
@@ -162,7 +189,7 @@ export default function BlogTestCTA({ slug, lang = 'en', category, compact = fal
         {compact ? c.b : c.deepB}
       </Link>
       {!compact && (
-        <Link to="/sample" className="block mt-3 text-xs text-gray-500 underline hover:text-gray-700 transition-colors">
+        <Link to={navHref({ to: '/sample' }, l)} className="block mt-3 text-xs text-gray-500 underline hover:text-gray-700 transition-colors">
           {c.s}
         </Link>
       )}

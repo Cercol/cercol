@@ -114,6 +114,7 @@ const ROUTES = [
   { method: 'GET', pattern: /^\/admin\/authority$/, handler: (env, m, req) => authority.list(env, req), gated: true },
   { method: 'PATCH', pattern: /^\/admin\/authority\/([a-z0-9-]+)$/, handler: (env, m, req) => authority.patch(env, req, m[1]), gated: true },
   { method: 'POST', pattern: /^\/admin\/authority\/([a-z0-9-]+)\/issue$/, handler: (env, m, req) => authority.file(env, req, m[1]), gated: true },
+  { method: 'POST', pattern: /^\/admin\/authority\/([a-z0-9-]+)\/email$/, handler: (env, m, req) => authority.email(env, req, m[1]), gated: true },
   { method: 'GET', pattern: /^\/admin\/probe$/, handler: (env, m, req) => admin.probeUrl(env, req), gated: true },
   { method: 'GET', pattern: /^\/admin\/bq$/, handler: (env, m, req) => admin.bqDebug(env, req), gated: true },
   // Admin SEO (api/seo.py).
