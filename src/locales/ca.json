@@ -6,16 +6,17 @@
   },
   "nav": {
     "brand": "Cèrcol",
-    "about": "Sobre",
+    "about": "Qui som",
     "instruments": "Instruments",
     "roles": "Rols",
     "science": "Ciència",
     "blog": "Blog",
-    "faq": "Preguntes",
-    "menuLearn": "Aprendre",
-    "menuCompany": "Empresa",
+    "faq": "Preguntes freqüents",
+    "menuLearn": "Recursos",
+    "menuCompany": "Projecte",
     "admin": "Admin",
-    "privacy": "Privadesa"
+    "privacy": "Privadesa",
+    "menuAssess": "Avaluacions"
   },
   "myResults": {
     "link": "Els meus resultats",
@@ -339,7 +340,7 @@
       "description": "El perfil de rols del teu equip, equilibri, narrativa i punts cecs compartits."
     },
     "footnote": "Codi obert · ",
-    "viewOnGitHub": "Veure a GitHub",
+    "viewOnGitHub": "Codi a GitHub",
     "h1": "Cèrcol: avaluació de personalitat d'equips de codi obert",
     "witness": {
       "name": "Cèrcol de Testimoni"
@@ -582,7 +583,7 @@
     }
   },
   "feedback": {
-    "reportIssue": "Informar d'un problema",
+    "reportIssue": "Obre una incidència",
     "suggestTranslation": "Suggerir traducció",
     "panel": {
       "title": "Suggerir una traducció",
@@ -899,7 +900,7 @@
     }
   },
   "sample": {
-    "eyebrow": "Informe d'exemple",
+    "eyebrow": "Exemple d'informe",
     "title": "Un perfil Cèrcol d'exemple",
     "subtitle": "Aquest és un exemple sintètic, no una persona real. Fes el test per obtenir el teu.",
     "domainSection": "Les cinc dimensions",
@@ -1124,7 +1125,7 @@
     "definedBy": "Definit per"
   },
   "about": {
-    "title": "Sobre",
+    "title": "Qui som",
     "intro": {
       "eyebrow": "Avaluació de personalitat de codi obert",
       "heading": "Coneix-te millor.",
@@ -1563,8 +1564,8 @@
   },
   "footer": {
     "label": "Peu de pàgina",
-    "sections": "Seccions del peu",
-    "tagline": "Avaluació de personalitat de codi obert per a equips, basada en recerca revisada per parells.",
-    "rights": "Cèrcol. Codi obert, d'ús lliure."
+    "sections": "Seccions del peu de pàgina",
+    "tagline": "Descobreix com treballes en equip. Les preguntes, la puntuació i la investigació que hi ha al darrere són públiques.",
+    "rights": "Cèrcol és de codi obert. Només la Lluna Plena és de pagament."
   }
 }

@@ -13,9 +13,10 @@
     "blog": "Blog",
     "faq": "FAQ",
     "admin": "Admin",
-    "menuLearn": "Apprendre",
-    "menuCompany": "Entreprise",
-    "privacy": "Confidentialité"
+    "menuLearn": "Comprendre",
+    "menuCompany": "Le projet",
+    "privacy": "Confidentialité",
+    "menuAssess": "Évaluations"
   },
   "myResults": {
     "link": "Mes résultats",
@@ -899,7 +900,7 @@
     }
   },
   "sample": {
-    "eyebrow": "Rapport d'exemple",
+    "eyebrow": "Exemple de rapport",
     "title": "Un profil Cèrcol d'exemple",
     "subtitle": "Ceci est un exemple synthétique, pas une vraie personne. Faites le test pour obtenir le vôtre.",
     "domainSection": "Les cinq dimensions",
@@ -1564,7 +1565,7 @@
   "footer": {
     "label": "Pied de page",
     "sections": "Sections du pied de page",
-    "tagline": "Évaluation de personnalité open source pour équipes, fondée sur la recherche évaluée par les pairs.",
-    "rights": "Cèrcol. Open source, libre d'utilisation."
+    "tagline": "Découvrez comment vous fonctionnez en équipe. Les questions, la notation et les recherches qui les fondent sont publiques.",
+    "rights": "Cèrcol est open source. Seule Pleine Lune est payante."
   }
 }

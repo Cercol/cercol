@@ -9,7 +9,7 @@ import { useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { colors } from '../design/tokens'
 import { sendTranslationFeedback } from '../utils/translationFeedback'
-import { TranslationIcon } from './MoonIcons'
+import { BugIcon } from './MoonIcons'
 import { ISSUE_URL } from '../lib/navigation'
 
 
@@ -164,15 +164,20 @@ export default function FeedbackButton({ itemId = null, itemText = null }) {
         </div>
       )}
 
-      {/* Suggest translation button — only when not English */}
+      {/* Report a problem with the wording — only when not English.
+          Icon only, and a bug rather than a translation glyph: a floating
+          control labelled "suggest a translation" reads as a machine
+          translation widget, which tells every visitor the copy they are
+          reading was produced by one. The panel behind it is unchanged. */}
       {isNonEnglish && (
         <button
           onClick={openPanel}
+          aria-label={t('feedback.suggestTranslation')}
+          title={t('feedback.suggestTranslation')}
           style={{ color: colors.textMuted, borderColor: colors.border }}
-          className="flex items-center gap-1.5 px-3 py-2 rounded border bg-white text-xs font-medium shadow-sm hover:shadow-md transition-all"
+          className="flex items-center justify-center w-9 h-9 rounded-full border bg-white shadow-sm hover:shadow-md transition-all"
         >
-          <TranslationIcon size={13} />
-          {t('feedback.suggestTranslation')}
+          <BugIcon size={16} />
         </button>
       )}
     </div>

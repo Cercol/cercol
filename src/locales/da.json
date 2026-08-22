@@ -6,16 +6,17 @@
   },
   "nav": {
     "brand": "Cèrcol",
-    "about": "Om",
+    "about": "Om Cèrcol",
     "instruments": "Instrumenter",
     "roles": "Roller",
     "science": "Videnskab",
     "blog": "Blog",
     "faq": "FAQ",
     "admin": "Admin",
-    "menuLearn": "Lær",
-    "menuCompany": "Virksomhed",
-    "privacy": "Privatliv"
+    "menuLearn": "Ressourcer",
+    "menuCompany": "Projektet",
+    "privacy": "Privatlivspolitik",
+    "menuAssess": "Test"
   },
   "myResults": {
     "link": "Mine resultater",
@@ -339,7 +340,7 @@
       "description": "Dit teams rollerprofil: balance, fortælling og fælles blinde vinkler."
     },
     "footnote": "Open source · ",
-    "viewOnGitHub": "Se på GitHub",
+    "viewOnGitHub": "Se koden på GitHub",
     "h1": "Cèrcol: open source-personlighedsvurdering for teams",
     "witness": {
       "name": "Vidne Cèrcol"
@@ -582,7 +583,7 @@
     }
   },
   "feedback": {
-    "reportIssue": "Rapportér problem",
+    "reportIssue": "Rapportér en fejl",
     "suggestTranslation": "Foreslå oversættelse",
     "panel": {
       "title": "Foreslå en oversættelse",
@@ -1112,7 +1113,7 @@
     "witnessSessionsSection": "Vidner",
     "statusDone": "Udført",
     "statusWaiting": "Afventer",
-    "witnessRoleDisclaimer": "Vidnets rolle er et signal, ikke en dom. Forskellige observatører kan opfatte den samme person forskelligt.",
+    "witnessRoleDisclaimer": "Vidnets rolle er et signal, ikke en dom. Forskellige vidner kan opfatte den samme person forskelligt.",
     "roleViewSection": "Hvordan du og dine vidner ser dig",
     "selfViewLabel": "Du ser dig selv som",
     "witnessViewLabel": "Vidner ser dig som",
@@ -1563,8 +1564,8 @@
   },
   "footer": {
     "label": "Sidefod",
-    "sections": "Sektioner i sidefoden",
-    "tagline": "Open source-personlighedsvurdering til teams, bygget på peer-reviewed forskning.",
-    "rights": "Cèrcol. Open source, gratis at bruge."
+    "sections": "Sidefodens sektioner",
+    "tagline": "Se, hvordan du fungerer i et team. Spørgsmålene, scoringen og forskningen bag dem er offentligt tilgængelige.",
+    "rights": "Cèrcol er open source. Kun Fuldmåne koster noget."
   }
 }
