@@ -30,7 +30,7 @@ export const TIPI_ITEMS = [
     id: 2,
     text: {
       en: 'Critical, quarrelsome.',
-      ca: 'Crític/a, conflictiu/va.',
+      ca: 'Crític/a, discutidor/a.',
       es: 'Crítico/a, pendenciero/a.',
       fr: 'Critique, querelleur·se.',
       de: 'Kritisch, streitsüchtig.',
@@ -82,7 +82,7 @@ export const TIPI_ITEMS = [
     id: 6,
     text: {
       en: 'Reserved, quiet.',
-      ca: 'Reservat/da, tranquil·la.',
+      ca: 'Reservat/da, callat/da.',
       es: 'Reservado/a, tranquilo/a.',
       fr: 'Réservé·e, silencieux·se.',
       de: 'Reserviert, ruhig.',
@@ -95,7 +95,7 @@ export const TIPI_ITEMS = [
     id: 7,
     text: {
       en: 'Sympathetic, warm.',
-      ca: 'Empàtic/a, càlid/a.',
+      ca: 'Compassiu/iva, càlid/a.',
       es: 'Empático/a, cálido/a.',
       fr: 'Compatissant·e, chaleureux·se.',
       de: 'Einfühlsam, warmherzig.',
@@ -121,7 +121,7 @@ export const TIPI_ITEMS = [
     id: 9,
     text: {
       en: 'Calm, emotionally stable.',
-      ca: 'Calmat/da, emocionalment estable.',
+      ca: 'Tranquil/il·la, emocionalment estable.',
       es: 'Tranquilo/a, emocionalmente estable.',
       fr: 'Calme, émotionnellement stable.',
       de: 'Ruhig, emotional stabil.',

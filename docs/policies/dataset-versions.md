@@ -30,13 +30,48 @@ recomputed from the stored scores rather than stored themselves.
 
 ## Versions
 
+### Version 2 — from 2026-08-22
+
+The Catalan items, corrected. English, Spanish, French, German and Danish are
+untouched, so a row in any of those languages is comparable across this
+boundary; only Catalan rows are not. Two Catalan rows existed at the time.
+
+A philologist review of all 190 Catalan items against their English source
+found seventy with a defect and fourteen blocking, and judged the set to be
+unreviewed machine output. What changed:
+
+- **One item measured the wrong construct.** "Don't beat around the bush" read
+  `No m'embarbusso`, which means "I don't get tongue-tied". Straightforwardness
+  had become speech fluency.
+- **Words that do not exist in Catalan**, formed by attaching Catalan endings
+  to Spanish stems: `Em panique`, `No m'ande amb rodeos`, `Em rende`.
+- **Grammatical impossibilities**: `Prenga decisions` (subjunctive for
+  indicative), `Treball dur` (the noun for the verb), `Em pose a les coses`
+  (the construction requires an infinitive).
+- **Invented feminine forms** on invariable adjectives, from applying the
+  gender-slash template mechanically: `incapaça`, `indiferenta`, and
+  `incapaç/incapaç` where the template fired twice on the same word.
+- **Typos in production**: `aggrade`, `pendre`.
+- **Two varieties in one item bank.** `full-moon.js` was Central Catalan to
+  item 86 and Valencian after, with three sentences mixing both inside a single
+  clause. Unified to the Valencian used throughout `first-quarter.js`.
+- **Forty of the sixty shared items** rendered differently in the two
+  instruments. Collapsed to one string each, taken from First Quarter.
+- Softenings that changed intensity (`Em molesta` for *Hate to*), calques
+  (`cridar l'atenció sobre mi mateix`, `trencar les normes`, `imaginació
+  vívida`), and register that was too literary for a spoken-register item.
+
+The English is not touched anywhere, so the constructs are unchanged and the
+scoring keys still apply. What changed is which Catalan sentence a respondent
+reads.
+
 ### Version 1 — from 2026-06-01
 
 The four instruments as launched: New Moon (10 items, 1 to 7), First Quarter
 (60 items, 1 to 5), Full Moon (120 items, 1 to 5), Witness (13 rounds of 3
 picks). All items from the public-domain IPIP pool, in six languages.
 
-Every row collected up to 2026-08-22 carries this version, backfilled by
+Every row collected before 2026-08-22 carries this version, backfilled by
 `worker/schema/004_instrument_version.sql`. That backfill is a statement of
 fact rather than an assumption: the item files have not changed since
 collection began. The only commit touching them since 2026-06-01 corrected
