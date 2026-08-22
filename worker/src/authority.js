@@ -81,7 +81,7 @@ export async function file(env, request, id) {
   const res = await fetch(`https://api.github.com/repos/${repo}/issues`, {
     method: 'POST',
     headers: { authorization: `Bearer ${env.GITHUB_TOKEN}`, accept: 'application/vnd.github+json', 'user-agent': 'cercol-api', 'content-type': 'application/json' },
-    body: JSON.stringify({ title: `Pla: ${b.name}`, body }),
+    body: JSON.stringify({ title: `Pla: ${b.name}`, body, labels: ['pla'] }),
   })
   if (!res.ok) return httpError(502, `github ${res.status}`)
   const { number } = await res.json()
@@ -124,4 +124,43 @@ export async function email(env, request, id) {
      ON CONFLICT(id) DO UPDATE SET notes = ?2, status = CASE WHEN status = 'todo' THEN 'doing' ELSE status END, updated_at = ?3`
   ).bind(id, note, ts).run()
   return Response.json({ sent: true, notes: note })
+}
+
+/**
+ * Close the loop: a filed step whose issue is closed becomes done.
+ *
+ * Filing a step opened an issue and then nothing ever read it back, so the
+ * panel's count only moved when a human clicked. The work would be finished,
+ * the issue closed, and the plan would still say "en marxa".
+ *
+ * One request, not one per step: ask GitHub for the closed issues carrying the
+ * label and match them against the numbers already stored. The Worker has 50
+ * subrequests per invocation and 90 steps, so per-step polling was never an
+ * option.
+ *
+ * Only 'doing' rows advance. A step someone deliberately dropped, or already
+ * marked done, is left alone.
+ */
+export async function syncFiledIssues(env) {
+  if (!env.GITHUB_TOKEN) return { skipped: 'no token' }
+  const { results } = await env.DB.prepare(
+    `SELECT id, issue_number FROM authority_status WHERE issue_number IS NOT NULL AND status = 'doing'`
+  ).all()
+  if (!results.length) return { checked: 0, closed: 0 }
+
+  const repo = env.GITHUB_REPO || 'Cercol/cercol'
+  const res = await fetch(`https://api.github.com/repos/${repo}/issues?state=closed&labels=pla&per_page=100`, {
+    headers: { authorization: `Bearer ${env.GITHUB_TOKEN}`, accept: 'application/vnd.github+json', 'user-agent': 'cercol-api' },
+  })
+  if (!res.ok) return { error: `github ${res.status}` }
+  const closed = new Set((await res.json()).map((i) => i.number))
+
+  const done = results.filter((r) => closed.has(r.issue_number))
+  if (done.length) {
+    const ts = now()
+    await env.DB.batch(done.map((r) => env.DB.prepare(
+      `UPDATE authority_status SET status = 'done', updated_at = ?2 WHERE id = ?1 AND status = 'doing'`
+    ).bind(r.id, ts)))
+  }
+  return { checked: results.length, closed: done.length, ids: done.map((r) => r.id) }
 }
