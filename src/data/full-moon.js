@@ -184,11 +184,11 @@ export const FM_ITEMS = [
 ]
 
 export const FM_SCALE_LABELS = {
-  1: 'Disagree strongly',
-  2: 'Disagree a little',
-  3: 'Neither agree nor disagree',
-  4: 'Agree a little',
-  5: 'Agree strongly',
+  1: 'Very inaccurate',
+  2: 'Moderately inaccurate',
+  3: 'Neither accurate nor inaccurate',
+  4: 'Moderately accurate',
+  5: 'Very accurate',
 }
 
 export const FM_DOMAIN_META = {

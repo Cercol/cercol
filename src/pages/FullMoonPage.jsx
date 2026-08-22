@@ -394,7 +394,7 @@ export default function FullMoonPage() {
           </div>
           <div className="bg-white rounded border border-gray-200 px-5 py-4 w-full text-left flex flex-col gap-3">
             <div>
-              <SectionLabel color="gray" className="mb-1">Scale</SectionLabel>
+              <SectionLabel color="gray" className="mb-1">{t('common.scaleLabel')}</SectionLabel>
               <p className="text-sm text-gray-700">{t('fm.intro.scale')}</p>
             </div>
             <p className="text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-3">

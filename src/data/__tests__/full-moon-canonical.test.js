@@ -1,6 +1,10 @@
 import { describe, it, expect } from 'vitest'
 import { FM_ITEMS, FM_DOMAIN_META } from '../full-moon'
 import { IPIP_NEO_120 } from '../reference/ipip-neo-120'
+import { INSTRUMENT_VERSION } from '../instrument-version'
+import { readFileSync } from 'node:fs'
+
+const CHANGELOG = readFileSync('docs/policies/dataset-versions.md', 'utf8')
 
 describe('Full Moon is now the IPIP-NEO-120', () => {
   it('has 120 items in 30 facets of 4', () => {
@@ -44,5 +48,19 @@ describe('Full Moon is now the IPIP-NEO-120', () => {
 
   it('ids are 1..120 with no gap', () => {
     expect(FM_ITEMS.map(i => i.id)).toEqual([...Array(120)].map((_, i) => i + 1))
+  })
+})
+
+describe('the version stamp', () => {
+  it('is ahead of the last version the old item set shipped under', () => {
+    // The item replacement nearly went out at version 2, because the bump
+    // was written as a string replace whose anchor did not match and which
+    // failed silently. An unversioned item change is the one defect that
+    // cannot be repaired afterwards, so it gets a test rather than care.
+    expect(INSTRUMENT_VERSION).toBeGreaterThanOrEqual(3)
+  })
+
+  it('is recorded in the changelog', () => {
+    expect(CHANGELOG).toContain(`### Version ${INSTRUMENT_VERSION} —`)
   })
 })

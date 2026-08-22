@@ -391,8 +391,8 @@
     "blockProgress": "{{current}} sur {{total}} dans ce bloc",
     "blockLabel": "Bloc {{current}} sur {{total}}",
     "overallProgress": "{{current}} sur {{total}} au total",
-    "instructions": "Évaluez dans quelle mesure chaque affirmation vous correspond.",
-    "itemPrefix": "Je me perçois comme quelqu'un qui",
+    "instructions": "Décrivez-vous comme vous êtes généralement aujourd'hui, et non comme vous souhaiteriez être à l'avenir. Décrivez-vous comme vous vous voyez honnêtement, par rapport à d'autres personnes que vous connaissez, du même sexe que vous et à peu près du même âge. Afin que vous puissiez le faire en toute honnêteté, vos réponses sont conservées de façon strictement confidentielle. Indiquez avec quelle exactitude chaque énoncé vous décrit.",
+    "itemPrefix": "Énoncé",
     "back": "Retour",
     "next": "Suivant",
     "seeResults": "Voir mes résultats",
@@ -404,7 +404,7 @@
     "intro": {
       "heading": "Cèrcol de Premier Quartier",
       "meta": "60 questions · ~10 min",
-      "scale": "1–5 · Pas du tout d'accord → Tout à fait d'accord",
+      "scale": "1–5 · Tout à fait inexact → Tout à fait exact",
       "guidance": "Pas de bonnes réponses. Allez avec ce qui est vrai pour vous maintenant.",
       "cta": "Commencer"
     },
@@ -463,8 +463,8 @@
     "blockProgress": "{{current}} sur {{total}} dans ce bloc",
     "blockLabel": "Bloc {{current}} sur {{total}}",
     "overallProgress": "{{current}} sur {{total}} au total",
-    "instructions": "Évaluez dans quelle mesure chaque affirmation vous correspond.",
-    "itemPrefix": "Je me perçois comme quelqu'un qui",
+    "instructions": "Décrivez-vous comme vous êtes généralement aujourd'hui, et non comme vous souhaiteriez être à l'avenir. Décrivez-vous comme vous vous voyez honnêtement, par rapport à d'autres personnes que vous connaissez, du même sexe que vous et à peu près du même âge. Afin que vous puissiez le faire en toute honnêteté, vos réponses sont conservées de façon strictement confidentielle. Indiquez avec quelle exactitude chaque énoncé vous décrit.",
+    "itemPrefix": "Énoncé",
     "back": "Retour",
     "next": "Suivant",
     "seeResults": "Voir mes résultats",
@@ -476,7 +476,7 @@
     "intro": {
       "heading": "Cèrcol de Pleine Lune",
       "meta": "120 questions · ~20 min",
-      "scale": "1–5 · Pas du tout d'accord → Tout à fait d'accord",
+      "scale": "1–5 · Tout à fait inexact → Tout à fait exact",
       "guidance": "Vous vous connaissez. Faites-vous confiance.",
       "partNote": "Ceci est la Partie 1 d'un instrument en deux parties. Témoin Cèrcol suit après vos résultats.",
       "cta": "Commencer"
@@ -539,11 +539,11 @@
     }
   },
   "scale": {
-    "1": "Pas du tout d'accord",
-    "2": "Pas d'accord",
-    "3": "Ni d'accord ni en désaccord",
-    "4": "D'accord",
-    "5": "Tout à fait d'accord"
+    "1": "Tout à fait inexact",
+    "2": "Plutôt inexact",
+    "3": "Ni exact ni inexact",
+    "4": "Plutôt exact",
+    "5": "Tout à fait exact"
   },
   "scale7": {
     "1": "Pas du tout d'accord",
@@ -1351,7 +1351,7 @@
   "instruments": {
     "title": "Instruments",
     "intro": {
-      "heading": "Trois instruments. Une échelle.",
+      "heading": "Trois instruments. Cinq dimensions.",
       "body": "Chaque instrument mesure les mêmes cinq dimensions, à différentes profondeurs et résolutions. Ils sont conçus pour être utilisés en séquence, mais chacun se tient seul."
     },
     "freeLabel": "Gratuit",
@@ -1375,7 +1375,7 @@
       "heading": "Cèrcol de Premier Quartier",
       "eyebrow": "Portrait complet",
       "meta": "60 questions · ~10 min",
-      "scaleNote": "Échelle à 5 points : 'Pas du tout d'accord' à 'Tout à fait d'accord'. Les échelles à cinq points sont standard pour la mesure de personnalité au niveau des facettes.",
+      "scaleNote": "Échelle à 5 points : 'Tout à fait inexact' à 'Tout à fait exact'. Les échelles à cinq points sont standard pour la mesure de personnalité au niveau des facettes.",
       "measures": "Cinq dimensions, chacune décomposée en 6 facettes, 30 points de données. Deux éléments par facette.",
       "get": "Graphique de domaine, détail de 30 facettes et une première lecture bêta de votre rôle. Le détail des facettes est là où réside l'information utile, les totaux de domaine ne sont que le titre.",
       "items": [
@@ -1383,7 +1383,7 @@
         "Me préoccupe des choses.",
         "Ai une imagination vive."
       ],
-      "itemPrefix": "Je me perçois comme quelqu'un qui :"
+      "itemPrefix": "Énoncé:"
     },
     "fullMoon": {
       "heading": "Cèrcol de Pleine Lune",
@@ -1399,7 +1399,7 @@
           "Anticipe les besoins des autres.",
           "Me mets au travail tout de suite."
         ],
-        "itemPrefix": "Je me perçois comme quelqu'un qui :"
+        "itemPrefix": "Énoncé:"
       },
       "part2": {
         "label": "Partie 2",
@@ -1454,7 +1454,7 @@
   },
   "onboarding": {
     "heading": "Bienvenue sur Cèrcol",
-    "intro": "Trois instruments. Une échelle. Commencez où vous voulez : chacun se suffit à lui-même.",
+    "intro": "Trois instruments. Cinq dimensions. Commencez où vous voulez : chacun se suffit à lui-même.",
     "newMoon": {
       "desc": "10 questions. Un aperçu rapide de vos cinq dimensions."
     },
@@ -1574,5 +1574,8 @@
     "sections": "Sections du pied de page",
     "tagline": "Découvrez comment vous fonctionnez en équipe. Les questions, la notation et les recherches qui les fondent sont publiques.",
     "rights": "Cèrcol est open source. Seule Pleine Lune est payante."
+  },
+  "common": {
+    "scaleLabel": "Échelle"
   }
 }

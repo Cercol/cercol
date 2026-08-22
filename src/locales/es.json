@@ -391,8 +391,8 @@
     "blockProgress": "{{current}} de {{total}} en este bloque",
     "blockLabel": "Bloque {{current}} de {{total}}",
     "overallProgress": "{{current}} de {{total}} en total",
-    "instructions": "Valora en qué medida cada afirmación te describe.",
-    "itemPrefix": "Me veo a mí mismo/a como alguien que",
+    "instructions": "Descríbete tal como eres generalmente ahora, no como te gustaría ser en el futuro. Descríbete tal como te ves con sinceridad, en comparación con otras personas que conoces, del mismo sexo que tú y de una edad parecida a la tuya. Para que puedas describirte con sinceridad, tus respuestas son totalmente confidenciales. Indica con qué exactitud te describe cada afirmación.",
+    "itemPrefix": "Afirmación",
     "back": "Atrás",
     "next": "Siguiente",
     "seeResults": "Ver mis resultados",
@@ -404,8 +404,8 @@
     "intro": {
       "heading": "Cèrcol de Cuarto Creciente",
       "meta": "60 preguntas · ~10 min",
-      "scale": "1–5 · Totalmente en desacuerdo → Totalmente de acuerdo",
-      "guidance": "No hay respuestas correctes. Ve con lo que sea verdad para ti ahora mismo.",
+      "scale": "1–5 · Muy inexacto → Muy exacto",
+      "guidance": "No hay respuestas correctas. Ve con lo que sea verdad para ti ahora mismo.",
       "cta": "Comenzar"
     },
     "alreadyCompleted": {
@@ -463,8 +463,8 @@
     "blockProgress": "{{current}} de {{total}} en este bloque",
     "blockLabel": "Bloque {{current}} de {{total}}",
     "overallProgress": "{{current}} de {{total}} en total",
-    "instructions": "Valora en qué medida cada afirmación te describe.",
-    "itemPrefix": "Me veo a mí mismo/a como alguien que",
+    "instructions": "Descríbete tal como eres generalmente ahora, no como te gustaría ser en el futuro. Descríbete tal como te ves con sinceridad, en comparación con otras personas que conoces, del mismo sexo que tú y de una edad parecida a la tuya. Para que puedas describirte con sinceridad, tus respuestas son totalmente confidenciales. Indica con qué exactitud te describe cada afirmación.",
+    "itemPrefix": "Afirmación",
     "back": "Atrás",
     "next": "Siguiente",
     "seeResults": "Ver mis resultados",
@@ -476,7 +476,7 @@
     "intro": {
       "heading": "Cèrcol de Luna Llena",
       "meta": "120 preguntas · ~20 min",
-      "scale": "1–5 · Totalmente en desacuerdo → Totalmente de acuerdo",
+      "scale": "1–5 · Muy inexacto → Muy exacto",
       "guidance": "Te conoces a ti mismo/a. Confía en ello.",
       "partNote": "Esta es la Parte 1 de un instrumento en dos partes. Testigo Cèrcol viene después de tus resultados.",
       "cta": "Comenzar"
@@ -539,11 +539,11 @@
     }
   },
   "scale": {
-    "1": "Totalmente en desacuerdo",
-    "2": "Algo en desacuerdo",
-    "3": "Ni de acuerdo ni en desacuerdo",
-    "4": "Algo de acuerdo",
-    "5": "Totalmente de acuerdo"
+    "1": "Muy inexacto",
+    "2": "Moderadamente inexacto",
+    "3": "Ni exacto ni inexacto",
+    "4": "Moderadamente exacto",
+    "5": "Muy exacto"
   },
   "scale7": {
     "1": "Totalmente en desacuerdo",
@@ -1351,7 +1351,7 @@
   "instruments": {
     "title": "Instrumentos",
     "intro": {
-      "heading": "Tres instrumentos. Una escala.",
+      "heading": "Tres instrumentos. Cinco dimensiones.",
       "body": "Cada instrumento mide las mismas cinco dimensiones, a diferente profundidad y resolución. Están diseñados para usarse en secuencia, pero cada uno se sostiene solo."
     },
     "freeLabel": "Gratis",
@@ -1375,7 +1375,7 @@
       "heading": "Cèrcol de Cuarto Creciente",
       "eyebrow": "Retrato completo",
       "meta": "60 preguntas · ~10 min",
-      "scaleNote": "Escala de 5 puntos: 'Totalmente en desacuerdo' a 'Totalmente de acuerdo'. Las escalas de cinco puntos son estándar para la medición de personalidad a nivel de faceta.",
+      "scaleNote": "Escala de 5 puntos: 'Muy inexacto' a 'Muy exacto'. Las escalas de cinco puntos son estándar para la medición de personalidad a nivel de faceta.",
       "measures": "Cinco dimensiones, cada una dividida en 6 facetas, 30 puntos de datos. Dos ítems por faceta.",
       "get": "Gráfico de dominios, desglose de 30 facetas y una primera lectura beta de tu rol. El desglose de facetas es donde vive la información útil, los totales de dominio son solo el titular.",
       "items": [
@@ -1383,7 +1383,7 @@
         "Me preocupo por las cosas.",
         "Tengo una imaginación vívida."
       ],
-      "itemPrefix": "Me veo a mí mismo/a como alguien que:"
+      "itemPrefix": "Afirmación:"
     },
     "fullMoon": {
       "heading": "Cèrcol de Luna Llena",
@@ -1399,7 +1399,7 @@
           "Me anticipo a las necesidades de los demás.",
           "Me pongo con las tareas de inmediato."
         ],
-        "itemPrefix": "Me veo a mí mismo/a como alguien que:"
+        "itemPrefix": "Afirmación:"
       },
       "part2": {
         "label": "Parte 2",
@@ -1454,7 +1454,7 @@
   },
   "onboarding": {
     "heading": "Bienvenido a Cèrcol",
-    "intro": "Tres instrumentos. Una escala. Empieza donde quieras: cada uno se sostiene solo.",
+    "intro": "Tres instrumentos. Cinco dimensiones. Empieza donde quieras: cada uno se sostiene solo.",
     "newMoon": {
       "desc": "10 preguntas. Una mirada rápida a tus cinco dimensiones."
     },
@@ -1574,5 +1574,8 @@
     "sections": "Secciones del pie de página",
     "tagline": "Descubre cómo trabajas en equipo. Las preguntas, la puntuación y la investigación que las sostiene son públicas.",
     "rights": "Cèrcol es de código abierto. Solo Luna Llena es de pago."
+  },
+  "common": {
+    "scaleLabel": "Escala"
   }
 }
