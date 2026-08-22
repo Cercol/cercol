@@ -817,7 +817,7 @@ export const PLAN_SECTIONS = [
       {
         "id": "t11",
         "title": "Escriure a Anna Vedel (instrument danés)",
-        "why": "El danés és la teua base científica més forta. Avisar-la és cortesia i pot obrir endós i porta als mitjans danesos. Fidelitat danesa verificada (Vedel ok): pots enviar.",
+        "why": "El danés és la teua base científica més forta. Avisar-la és cortesia i pot obrir endós i porta als mitjans danesos. Fidelitat danesa verificada (Vedel ok): pots enviar. La carta afirma que els nostres ítems segueixen la seua versió validada; això s'ha de comprovar abans d'enviar-la, perquè ella és exactament la persona que ho notaria.",
         "aud": [
           "A"
         ],
@@ -828,7 +828,7 @@ export const PLAN_SECTIONS = [
         "action": {
           "type": "email",
           "to": "avedel@psy.au.dk",
-          "subject": "Cercol - an open-source team assessment using your Danish IPIP-NEO-120",
+          "subject": "Cèrcol: an open-source team assessment built on the Danish IPIP-NEO",
           "body": "Dear Dr Vedel,\n\nI am Miquel Matoses, the developer of Cercol (https://cercol.team), a free, open-source team personality assessment built on the public-domain IPIP item pool.\n\nThe Danish version of our instruments follows your validated Danish IPIP-NEO-120 (Vedel, Gotzsche-Astrup & Holm, 2018). I wanted to let you know, and to thank you: of the six languages we offer, the Danish instrument has the strongest scientific basis, precisely because of your validation work.\n\nThe full scoring pipeline and our language methodology are documented openly here: https://cercol.team/science\n\nIf you ever spot something that should be corrected, or have any feedback, it would be very welcome.\n\nKind regards,\nMiquel Matoses\ncercol.team"
         }
       },
@@ -846,8 +846,8 @@ export const PLAN_SECTIONS = [
         "action": {
           "type": "email",
           "to": "benjaminthiry@hotmail.com, maeva.piolti@gmail.com",
-          "subject": "Cercol - un test d'equipe open-source qui suit votre adaptation francaise de l'IPIP",
-          "body": "Bonjour Dr Thiry, bonjour Mme Piolti,\n\nJe suis Miquel Matoses, developpeur de Cercol (https://cercol.team), un test de personnalite d'equipe libre et open-source fonde sur le pool d'items IPIP (domaine public).\n\nLes items francais de Cercol suivent votre approche d'adaptation europeenne de l'IPIP (Thiry & Piolti, 2023). Je tenais a vous en informer et a vous remercier.\n\nL'ensemble du pipeline de calcul et notre methodologie de traduction sont documentes ouvertement ici : https://cercol.team/science\n\nSi vous reperez quoi que ce soit a corriger, ou si vous avez des retours, ils seront les bienvenus.\n\nCordialement,\nMiquel Matoses\ncercol.team"
+          "subject": "Cèrcol : un test d'équipe open source qui suit votre adaptation française de l'IPIP",
+          "body": "Bonjour Monsieur Thiry, bonjour Madame Piolti,\n\nJe suis Miquel Matoses, développeur de Cèrcol (https://cercol.team), un test de personnalité d'équipe libre et open source fondé sur le pool d'items IPIP, qui est dans le domaine public.\n\nLes items français de Cèrcol s'appuient sur votre adaptation européenne de l'IPIP (Thiry & Piolti, 2023). Je tenais à vous en informer et à vous en remercier.\n\nPour être précis sur ce que c'est : un jeu d'items ouvert avec une méthodologie de traduction documentée, et non un instrument validé. Votre propre adaptation indique que la validation reste à faire, et je ne voudrais pas laisser entendre autre chose de la nôtre.\n\nL'ensemble du calcul et la méthodologie de traduction sont documentés ici : https://github.com/cercol/cercol/blob/main/SCIENCE.md\n\nSi vous repérez quoi que ce soit à corriger, vos retours seront les bienvenus.\n\nCordialement,\nMiquel Matoses\ncercol.team"
         }
       },
       {
