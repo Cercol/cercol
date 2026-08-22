@@ -70,6 +70,11 @@ tied to the instrument vocabulary and assets.
 - User-facing text in six languages: English, Catalan/Valencian, Spanish, French, German, Danish (via react-i18next)
 - No inline styles, always Tailwind classes
 - Keep components small and single-responsibility
+- Site navigation lives once, in `src/lib/navigation.js`. The header, the
+  mobile menu and the footer all render from it. Never write a list of links
+  inline in a component: the same four groups were written out three times
+  inside `Layout.jsx`, and the home page had a footer of its own that no
+  other page had. Adding a page is one entry there.
 - NEVER use academic instrument names in user-facing text or comments:
   use "New Moon Cèrcol", "First Quarter Cèrcol", "Full Moon Cèrcol", never "TIPI", "IPIP", "Big Five", "NEO"
 - NEVER use "observer" anywhere — always "Witness" (EN) / "Testimoni" (CA) / "Testigo" (ES) / "Témoin" (FR) / "Zeuge/Zeugin" (DE) / "Vidne" (DA) — see PRODUCT.md

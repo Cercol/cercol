@@ -17,8 +17,6 @@ import { colors } from '../design/tokens'
 import { NewMoonIcon, FirstQuarterIcon, FullMoonIcon, LastQuarterIcon, RoleIcon } from '../components/MoonIcons'
 import { usePageMeta } from '../hooks/usePageMeta'
 
-const GITHUB_URL = 'https://github.com/cercol/cercol'
-const ISSUE_URL  = 'https://github.com/cercol/cercol/issues/new?title=Bug+report&labels=bug'
 
 /** Fixed icon size for the wallpaper — all animals the same scale. */
 const ICON_SIZE = 80
@@ -232,52 +230,6 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Footer */}
-      <footer className="px-8 lg:px-16 pt-10 pb-8">
-        <p className="text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>
-          {t('home.footnote')}
-          <a
-            href={GITHUB_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="underline hover:text-white transition-colors"
-          >
-            {t('home.viewOnGitHub')}
-          </a>
-          {' · '}
-          <a
-            href={ISSUE_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="underline hover:text-white transition-colors"
-          >
-            {t('feedback.reportIssue')}
-          </a>
-          {' · '}
-          <Link
-            to="/privacy"
-            className="underline hover:text-white transition-colors"
-          >
-            {t('home.privacy')}
-          </Link>
-          {' · '}
-          <Link
-            to="/sample"
-            className="underline hover:text-white transition-colors"
-          >
-            {t('sample.eyebrow')}
-          </Link>
-          {' · '}
-          <a
-            href="https://miquelmatoses.github.io/portfolio/"
-            target="_blank"
-            rel="noreferrer author"
-            className="underline hover:text-white transition-colors"
-          >
-            Miquel Matoses
-          </a>
-        </p>
-      </footer>
     </main>
   )
 }

@@ -14,7 +14,8 @@
     "faq": "FAQ",
     "admin": "Admin",
     "menuLearn": "Learn",
-    "menuCompany": "Company"
+    "menuCompany": "Company",
+    "privacy": "Privacy"
   },
   "myResults": {
     "link": "My results",
@@ -1559,5 +1560,11 @@
     "low": "Not me at all",
     "high": "That is me",
     "thanks": "Thank you. This helps us check whether the profiles hold up."
+  },
+  "footer": {
+    "label": "Site footer",
+    "sections": "Footer sections",
+    "tagline": "Open-source personality assessment for teams, built on peer-reviewed research.",
+    "rights": "Cèrcol. Open source, free to use."
   }
 }

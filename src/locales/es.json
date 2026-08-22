@@ -14,7 +14,8 @@
     "faq": "FAQ",
     "admin": "Admin",
     "menuLearn": "Aprender",
-    "menuCompany": "Empresa"
+    "menuCompany": "Empresa",
+    "privacy": "Privacidad"
   },
   "myResults": {
     "link": "Mis resultados",
@@ -1559,5 +1560,11 @@
     "low": "No soy yo",
     "high": "Soy yo",
     "thanks": "Gracias. Esto nos ayuda a comprobar si los perfiles funcionan."
+  },
+  "footer": {
+    "label": "Pie de página",
+    "sections": "Secciones del pie",
+    "tagline": "Evaluación de personalidad de código abierto para equipos, basada en investigación revisada por pares.",
+    "rights": "Cèrcol. Código abierto, de uso libre."
   }
 }

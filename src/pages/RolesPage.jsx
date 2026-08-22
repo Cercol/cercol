@@ -9,6 +9,7 @@ import { RoleIcon, ArrowRightIcon } from '../components/MoonIcons'
 import { usePageMeta } from '../hooks/usePageMeta'
 import { ROLE_IDS } from '../data/roles'
 import { ROLE_COLORS } from '../design/tokens'
+import { ISSUES_URL } from '../lib/navigation'
 
 function RoleSummaryCard({ roleKey, t }) {
   const name = t(`roles.${roleKey}.name`)
@@ -144,7 +145,7 @@ export default function RolesPage() {
             {t('rolesPage.critique.body')}
           </p>
           <a
-            href="https://github.com/cercol/cercol/issues"
+            href={ISSUES_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors flex items-center gap-1.5"
