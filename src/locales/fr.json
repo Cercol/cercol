@@ -905,7 +905,8 @@
     "subtitle": "Ceci est un exemple synthétique, pas une vraie personne. Faites le test pour obtenir le vôtre.",
     "domainSection": "Les cinq dimensions",
     "cta_note": "Votre propre profil est à deux minutes, gratuit et sans compte.",
-    "cta": "Faire le test gratuit"
+    "cta": "Faire le test gratuit",
+    "synthetic": "Un profil synthétique, pas une personne réelle, avec {{count}} évaluations de Témoin pour comparer le regard de soi et celui des autres. Calculé par le même code qu’un vrai résultat Pleine Lune."
   },
   "share": {
     "title": "Mon rôle Cèrcol : {{role}}",
@@ -1113,7 +1114,7 @@
     "witnessSessionsSection": "Témoins",
     "statusDone": "Terminé",
     "statusWaiting": "En attente",
-    "witnessRoleDisclaimer": "Le rôle du témoin est un signal, pas un verdict. Différents observateurs peuvent percevoir la même personne différemment.",
+    "witnessRoleDisclaimer": "Le rôle du Témoin est un signal, pas un verdict. Différents témoins peuvent percevoir la même personne différemment.",
     "roleViewSection": "Comment vous vous voyez, vous et vos témoins",
     "selfViewLabel": "Vous vous voyez comme",
     "witnessViewLabel": "Les témoins vous voient comme",

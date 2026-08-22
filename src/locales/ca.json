@@ -905,7 +905,8 @@
     "subtitle": "Aquest és un exemple sintètic, no una persona real. Fes el test per obtenir el teu.",
     "domainSection": "Les cinc dimensions",
     "cta_note": "El teu perfil és a dos minuts, gratis i sense compte.",
-    "cta": "Fes el test gratuït"
+    "cta": "Fes el test gratuït",
+    "synthetic": "Un perfil sintètic, no una persona real, amb {{count}} valoracions de Testimoni perquè es puguen comparar la mirada pròpia i la de fora. Puntuat amb el mateix codi que un resultat real de Lluna Plena."
   },
   "share": {
     "title": "El meu rol Cèrcol: {{role}}",
@@ -1113,15 +1114,15 @@
     "witnessSessionsSection": "Testimonis",
     "statusDone": "Completat",
     "statusWaiting": "Pendent",
-    "witnessRoleDisclaimer": "El rol del Witness és un senyal, no un veredicte. Diferents observadors poden percebre la mateixa persona de manera diferent.",
-    "roleViewSection": "Com et veieu tu i els teus witnesses",
+    "witnessRoleDisclaimer": "El rol del Testimoni és un senyal, no un veredicte. Diferents testimonis poden percebre la mateixa persona de manera diferent.",
+    "roleViewSection": "Com et veieu tu i els teus testimonis",
     "selfViewLabel": "Et veus com",
-    "witnessViewLabel": "Els witnesses et veuen com",
+    "witnessViewLabel": "Els testimonis et veuen com",
     "matchLabel": "També vist per l'altra part",
     "surprisesSection": "Sorpreses",
     "surprisesNote": "Rols que apareixen en una part però no en l'altra.",
-    "witnessOnlyNote": "Els witnesses veuen aquest rol; tu no.",
-    "selfOnlyNote": "Tu veus aquest rol; els witnesses no.",
+    "witnessOnlyNote": "Els testimonis veuen aquest rol; tu no.",
+    "selfOnlyNote": "Tu veus aquest rol; els testimonis no.",
     "definedBy": "Definit per"
   },
   "about": {
