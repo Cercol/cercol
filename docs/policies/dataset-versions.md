@@ -30,6 +30,29 @@ recomputed from the stored scores rather than stored themselves.
 
 ## Versions
 
+### Version 4 — from 2026-08-22
+
+**French and Spanish stop being translations.** Every French string is Mathew
+Gravel's published French translation of the IPIP-NEO-300, hosted by the IPIP
+itself, 180 of 180 items. Every Spanish string is the Mexican translation of
+the IPIP-NEO-120 by David R. Frez Puente and Leticia Ortega Luque, also hosted
+by the IPIP: 118 of 120 Full Moon items and 52 of 60 First Quarter items. Both
+verbatim, matched on the English source string.
+
+With Danish already Vedel's, three of the five non-English languages now carry
+a published translation rather than one of ours.
+
+One Spanish item was deliberately not taken. Their English reads "Make rush
+decisions", a typo for "rash", and their Spanish follows it: "Tomo decisiones
+rápidas" is *fast*, not *rash*. Copying a published string is right; copying a
+construct error because it is published is not.
+
+What is left: Catalan, where no translation exists anywhere and never will, and
+German, where one exists and cannot be downloaded. Thunsdorff and Treiber at
+Koblenz-Landau translated and back-translated the 300 IPIP items and validated
+them against the German NEO-PI-R, but the items are held by them rather than
+published. That is step s12: a letter, not a translation.
+
 ### Version 3 — from 2026-08-22
 
 **The instruments became the ones they cite, and the response scale became

@@ -147,7 +147,7 @@ export const PLAN_SECTIONS = [
       {
         "id": "s7",
         "title": "Recalcular la cobertura de les 27 llengües sobre el joc nou",
-        "why": "OpenScales té 27 llengües indexades pels codis d'ítem de l'IPIP, i la cobertura que vam mesurar (francés 93, danés 61, alemany 22, castellà 11 sobre 99) era contra el joc vell. Amb els 120 canònics canviarà, i probablement a millor, perquè són els ítems més usats del banc. És el que decideix quines llengües es copien i quines es tradueixen. Context complet a docs/post-mortems/2026-08-22-instruments-written-from-memory.md.",
+        "why": "OpenScales té 27 llengües indexades pels codis d'ítem de l'IPIP, i la cobertura que vam mesurar (francés 93, danés 61, alemany 22, castellà 11 sobre 99) era contra el joc vell. Amb els 120 canònics canviarà, i probablement a millor, perquè són els ítems més usats del banc. És el que decideix quines llengües es copien i quines es tradueixen. Context complet a docs/post-mortems/2026-08-22-instruments-written-from-memory.md. FETA el 22/08/2026: francés de Gravel (120/120 i 60/60), castellà de Frez Puente i Ortega Luque (118/120 i 52/60), danés de Vedel. L'alemany existeix però no està distribuït i el català no existeix.",
         "aud": [
           "A"
         ],
@@ -159,7 +159,7 @@ export const PLAN_SECTIONS = [
           "type": "prompt",
           "text": "Recompute, for the canonical IPIP-NEO-120 item set, how many items each language in https://github.com/stmueller/OpenScales/tree/main/scales/ipip/translations actually covers.\n\nMethod: map each canonical English item to its IPIP code using ipip_master_en.json, then count hits per language file. Report a table of language, items covered out of 120, and the _translator field verbatim.\n\nTwo things to say plainly in the report. First, nearly every file lists a named human translator AND 'machine translation' in the same provenance string, with no per-item marking, so you cannot take only the human-translated items. Second, name the languages with full or near-full coverage, because those are the ones where Cercol could stop translating and start copying.\n\nThis is research. Change no item files."
         },
-        "done": false
+        "done": true
       },
       {
         "id": "s8",
@@ -231,6 +231,26 @@ export const PLAN_SECTIONS = [
         "action": {
           "type": "prompt",
           "text": "First Quarter and Full Moon both read their norms from NORM_MEAN and NORM_SD in src/utils/role-scoring.js, sourced from Kajonius & Johnson (2019) Table A1. That table is on the 4-to-20 facet metric: four items answered 1 to 5. Full Moon has four items per facet, so the table describes it. First Quarter has two, so it does not.\n\nFind out what the IPIP-NEO-60 paper itself publishes for its own scales. Maples-Keller et al. (2019), Journal of Personality Assessment 101(1), 4-15. The scoring-keys page at ipip.ori.org/IPIP-NEO-60ScoringKeys.htm publishes alphas from the Eugene-Springfield community sample, N = 757, which is a different and far smaller sample than the 320,128 behind the 120's norms; do not mix them.\n\nIf the paper publishes usable domain statistics, use them and say where they came from. If it does not, say so and propose the honest alternative rather than rescaling by assumption: two items and four items drawn from the same facet do not have the same mean or the same spread, and treating them as if they did is the same class of error as everything else fixed on 2026-08-22.\n\nThis is research plus a small change. Do not touch item files."
+        },
+        "done": false
+      },
+      {
+        "id": "s12",
+        "title": "Demanar l'IPIP-NEO alemany a Thunsdorff i Treiber",
+        "why": "L'alemany és l'única llengua on hi ha una traducció validada que no es pot descarregar. Claudio Thunsdorff i Lisa Treiber, de la Universitat de Koblenz-Landau, van traduir els 300 ítems de l'IPIP amb traducció i retrotraducció, i els van validar contra el NEO-PI-R alemany amb 102 persones i alta validesa convergent. La pàgina de traduccions de l'IPIP ho documenta i diu que cal escriure'ls. Amb això l'alemany passaria de ser traducció automàtica nostra a ser una traducció publicada i validada, com ja ho són el francés, el castellà i el danés.",
+        "aud": [
+          "A"
+        ],
+        "pay": [
+          "Base",
+          "Autoritat"
+        ],
+        "eff": "Baix",
+        "action": {
+          "type": "email",
+          "to": "thunsdorff@uni-landau.de",
+          "subject": "Die deutsche IPIP-NEO-Übersetzung: eine Bitte",
+          "body": "Sehr geehrter Herr Thunsdorff, sehr geehrte Frau Treiber,\n\nauf der Übersetzungsseite des IPIP steht, dass Sie die 300 IPIP-Items ins Deutsche übersetzt und rückübersetzt haben und dass Sie die Übersetzung an 102 Personen gegen die deutsche Fassung des NEO-PI-R geprüft haben. Die Items selbst sind dort nicht hinterlegt, deshalb schreibe ich Ihnen.\n\nIch entwickle Cèrcol (https://cercol.team), ein quelloffenes Persönlichkeitsverfahren auf Basis des gemeinfreien IPIP-Itempools, in sechs Sprachen. Der IPIP-NEO-120 und der IPIP-NEO-60 laufen dort unverändert.\n\nMein Anliegen ist einfach: Würden Sie uns Ihre deutschen Items zur Verfügung stellen?\n\nWarum ich frage statt selbst zu übersetzen: das deutsche Itemset war bis vor Kurzem maschinell übersetzt und ungeprüft. Wir haben das dokumentiert, statt es zu verschweigen, und für Dänisch, Französisch und Spanisch inzwischen die publizierten Übersetzungen von Vedel, Gravel sowie Frez Puente und Ortega Luque übernommen, wortgetreu und ohne Änderungen. Deutsch ist die einzige der vier Sprachen, in der eine geprüfte Übersetzung existiert, die sich nicht herunterladen lässt.\n\nSelbstverständlich mit voller Namensnennung an der Stelle, an der die Items stehen, und mit Zitation Ihrer Arbeit auf unserer Wissenschaftsseite. Wenn Sie Bedingungen an die Nutzung knüpfen möchten, halten wir uns daran.\n\nDie Items, die Berechnung und auch die offenen Schwächen sind öffentlich einsehbar: https://github.com/cercol/cercol/blob/main/SCIENCE.md\n\nWenn es Ihnen nicht passt, ist das ebenfalls in Ordnung; dann sagen Sie es einfach.\n\nMit freundlichen Grüßen\nMiquel Matoses\ncercol.team"
         },
         "done": false
       }
