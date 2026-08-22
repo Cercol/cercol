@@ -72,8 +72,8 @@ describe('the French political items', () => {
     // neighbourhood. Taken verbatim, they scored a socially conservative
     // French reader as high-Liberalism and the reverse. Two of the four Full
     // Moon compass items, and half of First Quarter's.
-    const at = (en) => FM_ITEMS.find((i) => i.text.en === en)
-    expect(at('Tend to vote for liberal political candidates.').text.fr).toContain('libérales')
-    expect(at('Tend to vote for conservative political candidates.').text.fr).toContain('traditionnelles')
+    const at = (en) => FM_ITEMS.find((i) => i.text.en === en)['text']['fr-CA']
+    expect(at('Tend to vote for liberal political candidates.')).toContain('libérales')
+    expect(at('Tend to vote for conservative political candidates.')).toContain('traditionnelles')
   })
 })
