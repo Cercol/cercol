@@ -14,7 +14,8 @@
     "faq": "FAQ",
     "admin": "Admin",
     "menuLearn": "Apprendre",
-    "menuCompany": "Entreprise"
+    "menuCompany": "Entreprise",
+    "privacy": "Confidentialité"
   },
   "myResults": {
     "link": "Mes résultats",
@@ -1559,5 +1560,11 @@
     "low": "Pas du tout moi",
     "high": "C'est moi",
     "thanks": "Merci. Cela nous aide à vérifier si les profils tiennent la route."
+  },
+  "footer": {
+    "label": "Pied de page",
+    "sections": "Sections du pied de page",
+    "tagline": "Évaluation de personnalité open source pour équipes, fondée sur la recherche évaluée par les pairs.",
+    "rights": "Cèrcol. Open source, libre d'utilisation."
   }
 }

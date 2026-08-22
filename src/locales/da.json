@@ -14,7 +14,8 @@
     "faq": "FAQ",
     "admin": "Admin",
     "menuLearn": "Lær",
-    "menuCompany": "Virksomhed"
+    "menuCompany": "Virksomhed",
+    "privacy": "Privatliv"
   },
   "myResults": {
     "link": "Mine resultater",
@@ -1559,5 +1560,11 @@
     "low": "Slet ikke mig",
     "high": "Det er mig",
     "thanks": "Tak. Det hjælper os med at tjekke, om profilerne holder."
+  },
+  "footer": {
+    "label": "Sidefod",
+    "sections": "Sektioner i sidefoden",
+    "tagline": "Open source-personlighedsvurdering til teams, bygget på peer-reviewed forskning.",
+    "rights": "Cèrcol. Open source, gratis at bruge."
   }
 }

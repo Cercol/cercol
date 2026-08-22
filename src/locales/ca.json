@@ -14,7 +14,8 @@
     "faq": "Preguntes",
     "menuLearn": "Aprendre",
     "menuCompany": "Empresa",
-    "admin": "Admin"
+    "admin": "Admin",
+    "privacy": "Privadesa"
   },
   "myResults": {
     "link": "Els meus resultats",
@@ -1559,5 +1560,11 @@
     "low": "No sóc jo",
     "high": "Sóc jo",
     "thanks": "Gràcies. Això ens ajuda a comprovar si els perfils funcionen."
+  },
+  "footer": {
+    "label": "Peu de pàgina",
+    "sections": "Seccions del peu",
+    "tagline": "Avaluació de personalitat de codi obert per a equips, basada en recerca revisada per parells.",
+    "rights": "Cèrcol. Codi obert, d'ús lliure."
   }
 }

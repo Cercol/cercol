@@ -10,9 +10,8 @@ import { useTranslation } from 'react-i18next'
 import { colors } from '../design/tokens'
 import { sendTranslationFeedback } from '../utils/translationFeedback'
 import { TranslationIcon } from './MoonIcons'
+import { ISSUE_URL } from '../lib/navigation'
 
-const ISSUE_URL =
-  'https://github.com/cercol/cercol/issues/new?title=Bug+report&labels=bug'
 
 /** Derive instrument from current route pathname */
 function getInstrument(pathname) {
