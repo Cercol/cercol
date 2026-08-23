@@ -121,12 +121,23 @@ export function resolveNorm(instrument, language, cache) {
  * version the count belongs to rather than implying it is all-time.
  */
 export async function usableCorpus(db) {
+  // Grouped by language as well as instrument, because that is the grain
+  // computeNorms gates on: NORM_MIN_SAMPLE is required per instrument AND
+  // language, not across the corpus. A total that ignores language counts
+  // something broader than the threshold it is displayed against, which is
+  // how a public meter ends up overstating how close the project is.
   const { results } = await db.prepare(
-    `SELECT instrument, COUNT(*) AS n FROM results
+    `SELECT instrument, language, COUNT(*) AS n FROM results
       WHERE COALESCE(is_seed, 0) = 0 AND instrument_version = ?1
-      GROUP BY instrument`
+      GROUP BY instrument, language`
   ).bind(INSTRUMENT_VERSION).all()
-  const out = { version: INSTRUMENT_VERSION, threshold: NORM_MIN_SAMPLE, total: 0 }
-  for (const r of results) { out[r.instrument] = r.n; out.total += r.n }
+  const out = { version: INSTRUMENT_VERSION, threshold: NORM_MIN_SAMPLE, total: 0, byLanguage: {} }
+  for (const r of results) {
+    const lang = r.language || '__unknown__'
+    out[r.instrument] = (out[r.instrument] || 0) + r.n
+    out.byLanguage[r.instrument] ||= {}
+    out.byLanguage[r.instrument][lang] = r.n
+    out.total += r.n
+  }
   return out
 }

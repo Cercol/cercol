@@ -1,7 +1,7 @@
 {
   "beta": {
-    "banner": "Lanzamiento beta: quedan {{remaining}} licencias gratuitas de Full Moon. Ayúdanos a detectar errores.",
-    "cta": "Reclama tu acceso gratuito",
+    "banner": "{{n}} de {{threshold}} respuestas. Por debajo, las puntuaciones se comparan con normas publicadas, no con quienes han hecho el test.",
+    "cta": "Añade la tuya",
     "badge": "Beta tester"
   },
   "nav": {
@@ -914,7 +914,14 @@
     "cta": "Haz el test gratis",
     "synthetic": "Un perfil sintético, no una persona real, con {{count}} valoraciones de Testigo para poder comparar la mirada propia y la ajena. Puntuado con el mismo código que un resultado real de Luna Llena.",
     "whatThisIs": "Esto es un informe de Luna Llena: 120 preguntas · ~20 min, un pago único, y las valoraciones las hacen cuatro testigos a los que invitas tú.",
-    "seeAll": "Compara los cuatro instrumentos"
+    "seeAll": "Compara los cuatro instrumentos",
+    "fq": {
+      "title": "Un informe de Cuarto Creciente",
+      "subtitle": "Un informe real de una persona sintética. Sesenta preguntas, unos diez minutos.",
+      "closing": "Esto es lo que da la versión gratuita. No hace falta cuenta para leer el tuyo.",
+      "cta": "Hazlo tú",
+      "seeFullMoon": "O mira el informe de Luna Llena, con valoraciones de Testigo"
+    }
   },
   "share": {
     "title": "Mi rol Cèrcol: {{role}}",

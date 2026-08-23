@@ -212,7 +212,7 @@ export default function Layout({ children }) {
       </header>
 
       {/* ── Beta launch banner ── */}
-      <BetaBanner userIsPremium={!!profile?.premium} />
+      <BetaBanner />
 
       {/* ── Mobile dropdown nav ── */}
       {menuOpen && (

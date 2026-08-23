@@ -1,7 +1,7 @@
 {
   "beta": {
-    "banner": "Llançament beta: queden {{remaining}} llicències gratuïtes de Lluna Plena. Ajuda'ns a detectar errors.",
-    "cta": "Reclama el teu accés gratuït",
+    "banner": "{{n}} de {{threshold}} respostes. Per sota, les puntuacions es comparen amb normes publicades, no amb qui ha fet el test.",
+    "cta": "Afegeix la teva",
     "badge": "Beta tester"
   },
   "nav": {
@@ -914,7 +914,14 @@
     "cta": "Fes el test gratuït",
     "synthetic": "Un perfil sintètic, no una persona real, amb {{count}} valoracions de Testimoni perquè es puguen comparar la mirada pròpia i la de fora. Puntuat amb el mateix codi que un resultat real de Lluna Plena.",
     "whatThisIs": "Això és un informe de Lluna Plena: 120 preguntes · ~20 min, un sol pagament i les valoracions les fan quatre Testimonis que convides tu.",
-    "seeAll": "Compara els quatre instruments"
+    "seeAll": "Compara els quatre instruments",
+    "fq": {
+      "title": "Un informe de Quart Creixent",
+      "subtitle": "Un informe real d'una persona sintètica. Seixanta preguntes, uns deu minuts.",
+      "closing": "Això és el que dona la versió gratuïta. No cal compte per llegir el teu.",
+      "cta": "Fes-lo tu",
+      "seeFullMoon": "O mira l'informe de Lluna Plena, amb valoracions de Testimoni"
+    }
   },
   "share": {
     "title": "El meu rol Cèrcol: {{role}}",

@@ -1,7 +1,7 @@
 {
   "beta": {
-    "banner": "Beta-lancering: {{remaining}} gratis Fuldmåne-licenser tilbage. Hjælp os med at finde fejl.",
-    "cta": "Få gratis adgang",
+    "banner": "{{n}} af {{threshold}} svar. Indtil da sammenlignes resultaterne med publicerede normer, ikke med dem, der har taget testen.",
+    "cta": "Tilføj dit svar",
     "badge": "Beta-tester"
   },
   "nav": {
@@ -914,7 +914,14 @@
     "cta": "Tag den gratis test",
     "synthetic": "En syntetisk profil, ikke en rigtig person, med {{count}} Vidne-vurderinger, så selv- og andresyn kan sammenlignes. Beregnet med samme kode som et rigtigt Fuldmåne-resultat.",
     "whatThisIs": "Det, du ser her, er en Fuldmåne-rapport: 120 spørgsmål · ~20 min, engangsbetaling, og Vidne-vurderingerne kommer fra fire personer, du inviterer.",
-    "seeAll": "Sammenlign alle fire instrumenter"
+    "seeAll": "Sammenlign alle fire instrumenter",
+    "fq": {
+      "title": "En Første Kvarter-rapport",
+      "subtitle": "En rigtig rapport fra en syntetisk person. Tres spørgsmål, cirka ti minutter.",
+      "closing": "Det er, hvad gratisversionen giver. Du behøver ikke en konto for at læse din egen.",
+      "cta": "Tag testen selv",
+      "seeFullMoon": "Eller se Fuldmåne-rapporten, med Vidne-vurderinger"
+    }
   },
   "share": {
     "title": "Min Cèrcol-rolle: {{role}}",

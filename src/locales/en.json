@@ -1,7 +1,7 @@
 {
   "beta": {
-    "banner": "Beta launch: {{remaining}} free Full Moon licences remaining. Help us find bugs.",
-    "cta": "Claim free access",
+    "banner": "{{n}} of {{threshold}} responses. Below that, scores are compared with published norms rather than with people who took this.",
+    "cta": "Add yours",
     "badge": "Beta tester"
   },
   "nav": {
@@ -914,7 +914,14 @@
     "cta": "Take the free test",
     "synthetic": "A synthetic profile, not a real person, shown with {{count}} Witness ratings so the self and peer views can be compared. Scored by the same code as a real Full Moon result.",
     "whatThisIs": "What you are looking at is a Full Moon report: 120 questions, about 20 minutes, one payment, and the peer ratings come from four people you invite.",
-    "seeAll": "Compare all four instruments"
+    "seeAll": "Compare all four instruments",
+    "fq": {
+      "title": "A First Quarter report",
+      "subtitle": "A real report from a synthetic person. Sixty questions, about ten minutes.",
+      "closing": "This is what the free version returns. No account is needed to read your own.",
+      "cta": "Take it yourself",
+      "seeFullMoon": "Or see the Full Moon report, with Witness ratings"
+    }
   },
   "share": {
     "title": "My Cèrcol role: {{role}}",

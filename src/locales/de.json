@@ -1,7 +1,7 @@
 {
   "beta": {
-    "banner": "Beta-Launch: noch {{remaining}} kostenlose Vollmond-Lizenzen verfügbar. Hilf uns, Fehler zu finden.",
-    "cta": "Kostenlosen Zugang sichern",
+    "banner": "{{n}} von {{threshold}} Antworten. Bis dahin werden die Ergebnisse mit veröffentlichten Normen verglichen, nicht mit anderen Testpersonen.",
+    "cta": "Deine Antwort hinzufügen",
     "badge": "Beta-Tester"
   },
   "nav": {
@@ -914,7 +914,14 @@
     "cta": "Kostenlosen Test machen",
     "synthetic": "Ein synthetisches Profil, keine reale Person, mit {{count}} Zeugen-Bewertungen, damit sich Selbst- und Fremdbild vergleichen lassen. Berechnet mit demselben Code wie ein echtes Vollmond-Ergebnis.",
     "whatThisIs": "Das hier ist ein Vollmond-Bericht: 120 Fragen, etwa 20 Minuten, eine einmalige Zahlung, und die Zeugenbewertung kommt von vier Personen, die du einlädst.",
-    "seeAll": "Alle vier Instrumente vergleichen"
+    "seeAll": "Alle vier Instrumente vergleichen",
+    "fq": {
+      "title": "Ein Bericht des Ersten Viertels",
+      "subtitle": "Ein echter Bericht einer synthetischen Person. Sechzig Fragen, etwa zehn Minuten.",
+      "closing": "Das ist, was die kostenlose Version liefert. Für deinen eigenen brauchst du kein Konto.",
+      "cta": "Mach den Test selbst",
+      "seeFullMoon": "Oder den Vollmond-Bericht ansehen, mit Zeugenbewertungen"
+    }
   },
   "share": {
     "title": "Meine Cèrcol-Rolle: {{role}}",

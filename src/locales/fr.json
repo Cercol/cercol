@@ -1,7 +1,7 @@
 {
   "beta": {
-    "banner": "Lancement bêta : {{remaining}} licences Full Moon gratuites restantes. Aidez-nous à trouver des bugs.",
-    "cta": "Réclamez votre accès gratuit",
+    "banner": "{{n}} réponses sur {{threshold}}. En dessous, les scores sont comparés à des normes publiées, pas aux personnes qui ont passé le test.",
+    "cta": "Ajoutez la vôtre",
     "badge": "Beta tester"
   },
   "nav": {
@@ -914,7 +914,14 @@
     "cta": "Faire le test gratuit",
     "synthetic": "Un profil synthétique, pas une personne réelle, avec {{count}} évaluations de Témoin pour comparer le regard de soi et celui des autres. Calculé par le même code qu’un vrai résultat Pleine Lune.",
     "whatThisIs": "Vous avez sous les yeux un rapport Pleine Lune. 120 questions · ~20 min, paiement unique, et les évaluations de Témoin viennent de quatre personnes que vous invitez.",
-    "seeAll": "Comparer les quatre instruments"
+    "seeAll": "Comparer les quatre instruments",
+    "fq": {
+      "title": "Un rapport Premier Quartier",
+      "subtitle": "Un vrai rapport d'une personne synthétique. Soixante questions, environ dix minutes.",
+      "closing": "Voilà ce que donne la version gratuite. Aucun compte n'est nécessaire pour lire le vôtre.",
+      "cta": "Faites-le vous-même",
+      "seeFullMoon": "Ou voir le rapport Pleine Lune, avec les évaluations de Témoin"
+    }
   },
   "share": {
     "title": "Mon rôle Cèrcol : {{role}}",

@@ -117,6 +117,36 @@
 | 20 | ✅ COMPLETE: Emancipation from the shared Hetzner box (2026-08-17/18). The whole of Cèrcol moved to Cloudflare free tier and Purelymail, ADR 0020. API as the Worker `cercol-api` (`worker/`) with D1 + KV, strangler pattern behind `WRITES_LIVE` and `origin.cercol.team`; 111 endpoints diffed against Hetzner with 0 differences; passwords retired (410), magic link + Google only. Seven scheduled jobs on five cron triggers, plus `POST /admin/jobs/<name>` to run any on demand. Frontend as Cloudflare static assets (`cercol-web`), cercol.team and www on the Worker, gh-pages kept as warm fallback. DNS moved from Porkbun to Cloudflare. Mail: Stalwart retired, six mailboxes (cercol.team and topquaranta.cat, 651 messages) copied to Purelymail, MX/SPF/DKIM/DMARC repointed. New: daily brief email at 04:00 UTC (`worker/src/jobs/daily.js`) with product numbers, search, and the free-plan caps with warnings at 70%; email design kit from mm-design tokens (`worker/src/email-ui.js`) shared by every email; crawler analytics from Cloudflare replacing the dead `crawl_logs`. `deploy-worker.yml` deploys the Worker on push. Decommissioned on 2026-08-19 after 40 hours with zero real requests at the origin: services stopped, Caddy block retired, final Postgres dump copied off the box and md5-verified, the Worker's proxy fallback and `deploy-backend.yml` removed, gh-pages fallback dropped. Closes "Cloudflare Pages migration" below and 17.9(b). | |
 ---
 
+## Publishing freeze (2026-08-23, in force)
+
+The blog is frozen at 108 published articles. Nothing new is written
+until the bridge from an article to an instrument works.
+
+**Why.** Counted against D1 on 2026-08-23: 53 of the 108 articles have
+two views or fewer and 20 have none, while the seven most-read carry
+775 of 1,343 reads. Article 109 has a coin-flip chance of reaching more
+than two people. Meanwhile the bodies of those 108 articles contain
+1,345 in-body links to another blog article and 7 to a test page, and
+102 of the 108 have none at all. Writing was never the constraint.
+Where the readers go is.
+
+**What the freeze buys.** The hours it frees go to the steps that fix
+the destination: the prose CTA of the seven articles with traffic, the
+prose-link instrumentation that says whether the bridge is used at all,
+and the register and calque defects in the non-English corpus. Those
+are steps tc6, tc7, tl6 and tl7 in `src/data/distribution-plan.js`.
+
+**How it ends.** When the seven articles with traffic have been
+rewritten and a month of prose-click data exists, the decision to
+publish again is made on that data. Not before, and not by writing
+something in the meantime.
+
+**What it does not cover.** Corrections to published articles, and the
+Aina Albaida trend drafts, which are a separate experiment with its own
+question. This freezes new evergreen articles.
+
+---
+
 ## Pending phases
 
 ### Cloudflare Pages migration (done in Phase 20 as static-assets Worker, 2026-08-17)

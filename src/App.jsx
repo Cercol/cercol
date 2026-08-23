@@ -48,6 +48,7 @@ const SciencePage     = lazy(() => import('./pages/SciencePage'))
 const FaqPage         = lazy(() => import('./pages/FaqPage'))
 const PrivacyPage     = lazy(() => import('./pages/PrivacyPage'))
 const SampleReportPage = lazy(() => import('./pages/SampleReportPage'))
+const SampleFirstQuarterPage = lazy(() => import('./pages/SampleFirstQuarterPage'))
 
 // ── Blog (dynamic — fetches from backend API) ─────────────────────────────────
 const BlogIndexPage   = lazy(() => import('./pages/BlogIndexPage'))
@@ -105,7 +106,8 @@ const TOP_LEVEL_PAGES = [
   { path: '/science',     element: <SciencePage /> },
   { path: '/faq',         element: <FaqPage /> },
   { path: '/privacy',     element: <PrivacyPage /> },
-  { path: '/sample',      element: <SampleReportPage /> },
+  { path: '/sample',      element: <SampleFirstQuarterPage /> },
+  { path: '/sample/full-moon', element: <SampleReportPage /> },
 ]
 
 /**
@@ -221,7 +223,8 @@ function AppContent() {
           <Route path="/roles"       element={<RolesPage />} />
           <Route path="/science"     element={<SciencePage />} />
           <Route path="/faq"         element={<FaqPage />} />
-          <Route path="/sample"      element={<SampleReportPage />} />
+          <Route path="/sample"      element={<SampleFirstQuarterPage />} />
+          <Route path="/sample/full-moon" element={<SampleReportPage />} />
 
           {/* Blog */}
           <Route path="/blog"       element={<BlogIndexPage />} />

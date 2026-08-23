@@ -6,6 +6,14 @@
  *   - The visitor is not yet premium (either not logged in, or logged in without premium)
  *
  * Fetched once on mount. Hidden silently on error (never blocks the page).
+ *
+ * It used to count free Full Moon licences: "488 remaining, help us find
+ * bugs". Three things wrong at once. It asked a stranger for quality
+ * assurance before giving them anything, it said it in enterprise-software
+ * words, and at twelve claimed of five hundred it announced to every visitor
+ * that nobody was here. It now counts the number the project actually needs,
+ * which goes up when someone helps, and says plainly what is missing without
+ * it.
  */
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
@@ -19,8 +27,8 @@ import { colors } from '../design/tokens'
 // the three, so the banner yields on exactly these two routes.
 const SUPPRESSED_PATH = /^\/(?:(?:ca|es|fr|de|da)\/)?(?:new-moon|first-quarter)\/?$/
 
-export default function BetaBanner({ userIsPremium }) {
-  const { t } = useTranslation()
+export default function BetaBanner() {
+  const { t, i18n } = useTranslation()
   const { pathname } = useLocation()
 
   // Read from window.__BETA__ injected by prerender.mjs into every pre-rendered
@@ -39,11 +47,18 @@ export default function BetaBanner({ userIsPremium }) {
       .catch(() => {/* silently ignore — banner is best-effort */})
   }, [])
 
-  // Hide when: on a free-instrument page, no data yet, slots exhausted, or
-  // user already has premium
-  if (SUPPRESSED_PATH.test(pathname) || !beta || beta.remaining <= 0 || userIsPremium) return null
+  // Hide when: on a free-instrument page, no data yet, or the corpus has
+  // reached the threshold and there is nothing left to recruit for. Premium
+  // no longer hides it: the ask is a response, and someone who paid can still
+  // give one. What premium used to hide was a sales pitch.
+  // The reader's own language, because that is the grain the norms are
+  // computed at: an English answer does nothing for a Danish reader's norms.
+  const v = beta?.validation
+  const lang = (i18n.language || 'en').split('-')[0]
+  const n = v?.byLanguage?.[lang] ?? 0
+  if (SUPPRESSED_PATH.test(pathname) || !v?.threshold || n >= v.threshold) return null
 
-  const pct = Math.round(((beta.total - beta.remaining) / beta.total) * 100)
+  const pct = Math.round((n / v.threshold) * 100)
 
   return (
     <div style={{ backgroundColor: colors.yellow }}>
@@ -52,7 +67,7 @@ export default function BetaBanner({ userIsPremium }) {
         {/* Left: text + progress */}
         <div className="flex items-center gap-3 flex-wrap">
           <span className="text-sm font-semibold text-gray-900">
-            {t('beta.banner', { remaining: beta.remaining })}
+            {t('beta.banner', { n, threshold: v.threshold })}
           </span>
           {/* Progress bar: how many slots have been claimed */}
           <div className="hidden sm:flex items-center gap-1.5">
@@ -63,7 +78,7 @@ export default function BetaBanner({ userIsPremium }) {
               />
             </div>
             <span className="text-xs text-gray-700 font-medium">
-              {beta.total - beta.remaining}/{beta.total}
+              {n}/{v.threshold}
             </span>
           </div>
         </div>
@@ -72,8 +87,11 @@ export default function BetaBanner({ userIsPremium }) {
         {/* nofollow: /auth is not pre-rendered, so GitHub Pages answers it
             404 to a crawler. The banner sits on all 168 pre-rendered pages,
             which made it the single largest source of crawled 404s. */}
+        {/* Was /auth: the banner asked a stranger to make an account before
+            it had given them anything. The ask is the test itself, and
+            First Quarter is the one whose responses the norms are built on. */}
         <Link
-          to="/auth"
+          to="/first-quarter"
           rel="nofollow"
           className="shrink-0 text-xs font-bold text-gray-900 underline hover:no-underline"
         >
