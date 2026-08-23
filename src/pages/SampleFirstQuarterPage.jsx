@@ -32,17 +32,24 @@ import { DOMAIN_KEYS } from '../data/domains'
 import { SAMPLE_FM_DOMAINS, SAMPLE_FM_FACETS } from '../data/sample-profile'
 import { computeRole } from '../utils/role-scoring'
 import { fqScoreLabel, fqScoreToPercent } from '../utils/first-quarter-scoring'
+import { roleOgImage } from '../utils/role-share'
 import { FirstQuarterIcon } from '../components/MoonIcons'
 import { colors } from '../design/tokens'
 
 export default function SampleFirstQuarterPage() {
   const { t } = useTranslation()
-  usePageMeta({ titleKey: 'seo.sample.title', descKey: 'seo.sample.description' })
 
   const domains = SAMPLE_FM_DOMAINS
   const facets = SAMPLE_FM_FACETS
   const domainKeys = DOMAIN_KEYS
   const roleResult = computeRole(domains, 'firstQuarter')
+
+  usePageMeta({
+    title: t('sample.fq.title'),
+    description: t('sample.fq.subtitle'),
+    image: roleOgImage(roleResult.role),
+    path: '/sample/',
+  })
 
   return (
     <main className="py-10 sm:py-16">

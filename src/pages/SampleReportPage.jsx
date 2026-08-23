@@ -52,7 +52,10 @@ export default function SampleReportPage() {
     title: t('sample.title'),
     description: t('sample.subtitle'),
     image: roleOgImage(role),
-    path: '/sample/',
+    // The Full Moon sample moved here when /sample became the First Quarter
+    // one. Left pointing at /sample/ this would have declared the other page
+    // as its canonical, and told a crawler these two are the same document.
+    path: '/sample/full-moon/',
   })
 
   return (
