@@ -361,6 +361,7 @@
     "intro": {
       "heading": "New Moon Cèrcol",
       "meta": "10 questions · ~2 min",
+      "get": "A radar chart of your position on all five dimensions. Good for a quick orientation. Not precise enough for fine-grained claims about facets, that's what First Quarter is for.",
       "scale": "1–7 · Disagree strongly → Agree strongly",
       "guidance": "Go with your first instinct. There are no right answers.",
       "cta": "Begin"
@@ -404,6 +405,7 @@
     "intro": {
       "heading": "First Quarter Cèrcol",
       "meta": "60 questions · ~10 min",
+      "get": "Domain chart, 30-facet breakdown, and a first beta read on your role. The facet breakdown is where the useful information lives, the domain totals are just the headline.",
       "scale": "1–5 · Very inaccurate → Very accurate",
       "guidance": "No right answers. Go with what's true for you right now.",
       "cta": "Begin"

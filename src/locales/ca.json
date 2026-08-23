@@ -361,6 +361,7 @@
     "intro": {
       "heading": "Cèrcol de Lluna Nova",
       "meta": "10 preguntes · ~2 min",
+      "get": "Un gràfic de radar de la teua posició en les cinc dimensions. Útil per a una orientació ràpida. No és prou precís per a afirmacions detallades sobre facetes, per a això serveix el Quart Creixent.",
       "scale": "1–7 · Totalment en desacord → Totalment d'acord",
       "guidance": "Ves amb el primer instint. No hi ha respostes correctes.",
       "cta": "Comença"
@@ -404,6 +405,7 @@
     "intro": {
       "heading": "Cèrcol de Quart Creixent",
       "meta": "60 preguntes · ~10 min",
+      "get": "Gràfic de dominis, desglossament de 30 facetes i una primera lectura beta del teu rol. El desglossament de facetes és on viu la informació útil, els totals de domini són només el titular.",
       "scale": "1–5 · Molt inexacte → Molt exacte",
       "guidance": "No hi ha respostes correctes. Tria el que és cert per a tu ara mateix.",
       "cta": "Comença"

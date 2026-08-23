@@ -361,6 +361,7 @@
     "intro": {
       "heading": "Nymåne Cèrcol",
       "meta": "10 spørgsmål · ~2 min",
+      "get": "Et radardiagram over din position på alle fem dimensioner. Godt til en hurtig orientering. Ikke præcist nok til finmaskede påstande om facetter, det er hvad Første Kvarter er til.",
       "scale": "1–7 · Meget uenig → Meget enig",
       "guidance": "Gå med din første indskydelse. Der er ingen rigtige svar.",
       "cta": "Begynd"
@@ -404,6 +405,7 @@
     "intro": {
       "heading": "Første Kvarter Cèrcol",
       "meta": "60 spørgsmål · ~10 min",
+      "get": "Domænediagram, 30-facet-opdeling og et første beta-kig på din rolle. Facet-opdelingen er der, den nyttige information befinder sig, domænetotalerne er bare overskriften.",
       "scale": "1–5 · Meget unøjagtigt → Meget nøjagtigt",
       "guidance": "Ingen rigtige svar. Gå med det, der er sandt for dig lige nu.",
       "cta": "Begynd"

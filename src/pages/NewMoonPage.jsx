@@ -242,6 +242,11 @@ export default function NewMoonPage() {
             <h1 className="text-2xl font-bold text-gray-900 mb-1">{t('newMoon.intro.heading')}</h1>
             <p className="text-sm text-gray-400">{t('newMoon.intro.meta')}</p>
           </div>
+          {/* What the reader gets for their two minutes. The rest of this
+              screen states only the cost (10 questions, a scale); the product
+              was described on /instruments, which the reader arriving from an
+              article CTA has never seen. */}
+          <p className="text-sm text-gray-600 leading-relaxed">{t('newMoon.intro.get')}</p>
           <div className="bg-white rounded border border-gray-200 px-5 py-4 w-full text-left flex flex-col gap-3">
             <div>
               <SectionLabel color="gray" className="mb-1">{t('common.scaleLabel')}</SectionLabel>

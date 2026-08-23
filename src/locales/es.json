@@ -361,6 +361,7 @@
     "intro": {
       "heading": "Cèrcol de Luna Nueva",
       "meta": "10 preguntas · ~2 min",
+      "get": "Un gráfico radar de tu posición en las cinco dimensiones. Bueno para una orientación rápida. No es lo suficientemente preciso para afirmaciones detalladas sobre facetas, para eso sirve el Cuarto Creciente.",
       "scale": "1–7 · Totalmente en desacuerdo → Totalmente de acuerdo",
       "guidance": "Ve con tu primer instinto. No hay respuestas correctas.",
       "cta": "Comenzar"
@@ -404,6 +405,7 @@
     "intro": {
       "heading": "Cèrcol de Cuarto Creciente",
       "meta": "60 preguntas · ~10 min",
+      "get": "Gráfico de dominios, desglose de 30 facetas y una primera lectura beta de tu rol. El desglose de facetas es donde vive la información útil, los totales de dominio son solo el titular.",
       "scale": "1–5 · Muy inexacto → Muy exacto",
       "guidance": "No hay respuestas correctas. Ve con lo que sea verdad para ti ahora mismo.",
       "cta": "Comenzar"
@@ -1363,7 +1365,7 @@
       "meta": "10 preguntas · ~2 min",
       "scaleNote": "Escala de 7 puntos: 'Totalmente en desacuerdo' a 'Totalmente de acuerdo'. Cada punto tiene significado: no solo dos extremos con números en medio.",
       "measures": "Cinco dimensiones. Una puntuación por dimensión. Sin desglose de facetas.",
-      "get": "Un gráfico radar de tu posición en las cinco dimensiones. Bueno para una orientación rápida. No es suficientemente preciso para afirmaciones detalladas sobre facetas, para eso es First Quarter.",
+      "get": "Un gráfico radar de tu posición en las cinco dimensiones. Bueno para una orientación rápida. No es lo suficientemente preciso para afirmaciones detalladas sobre facetas, para eso sirve el Cuarto Creciente.",
       "items": [
         "Extravertido/a, entusiasta.",
         "Responsable, autodisciplinado/a.",

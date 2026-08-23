@@ -8,13 +8,20 @@
  * Fetched once on mount. Hidden silently on error (never blocks the page).
  */
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { getBetaStatus } from '../lib/api'
 import { colors } from '../design/tokens'
 
+// The free-instrument pages, in any of the six languages. The banner is a
+// third ask on a screen that already asks the reader to begin a test and to
+// accept cookies, and the one the reader came for is the least legible of
+// the three, so the banner yields on exactly these two routes.
+const SUPPRESSED_PATH = /^\/(?:(?:ca|es|fr|de|da)\/)?(?:new-moon|first-quarter)\/?$/
+
 export default function BetaBanner({ userIsPremium }) {
   const { t } = useTranslation()
+  const { pathname } = useLocation()
 
   // Read from window.__BETA__ injected by prerender.mjs into every pre-rendered
   // HTML. This eliminates the hydration flash: the pre-rendered banner is
@@ -32,8 +39,9 @@ export default function BetaBanner({ userIsPremium }) {
       .catch(() => {/* silently ignore — banner is best-effort */})
   }, [])
 
-  // Hide when: no data yet, slots exhausted, or user already has premium
-  if (!beta || beta.remaining <= 0 || userIsPremium) return null
+  // Hide when: on a free-instrument page, no data yet, slots exhausted, or
+  // user already has premium
+  if (SUPPRESSED_PATH.test(pathname) || !beta || beta.remaining <= 0 || userIsPremium) return null
 
   const pct = Math.round(((beta.total - beta.remaining) / beta.total) * 100)
 

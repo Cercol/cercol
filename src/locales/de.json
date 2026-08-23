@@ -361,6 +361,7 @@
     "intro": {
       "heading": "Cèrcol des Neumondes",
       "meta": "10 Fragen · ~2 Min.",
+      "get": "Ein Radardiagramm deiner Position auf allen fünf Dimensionen. Gut für eine schnelle Orientierung. Nicht präzise genug für differenzierte Aussagen über Facetten, das ist, wofür Erstes Viertel ist.",
       "scale": "1–7 · Stimme überhaupt nicht zu → Stimme vollständig zu",
       "guidance": "Folge deinem ersten Instinkt. Es gibt keine richtigen Antworten.",
       "cta": "Beginnen"
@@ -404,6 +405,7 @@
     "intro": {
       "heading": "Cèrcol des Ersten Viertels",
       "meta": "60 Fragen · ~10 Min.",
+      "get": "Domänendiagramm, 30-Facetten-Aufschlüsselung und einen ersten Beta-Blick auf deine Rolle. Die Facettenaufschlüsselung ist der Ort, wo die nützlichen Informationen liegen, die Domänensummen sind nur die Überschrift.",
       "scale": "1–5 · Sehr unzutreffend → Sehr zutreffend",
       "guidance": "Keine richtigen Antworten. Geh mit dem, was jetzt für dich wahr ist.",
       "cta": "Beginnen"

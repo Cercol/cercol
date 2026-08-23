@@ -8,7 +8,7 @@ import { useEffect, useState, useRef } from 'react'
 import { useParams, useNavigate, Link, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { marked } from 'marked'
-import { getBlogPost, getBlogPosts, trackBlogView } from '../../lib/api'
+import { getBlogPost, getBlogPosts, trackBlogView, trackEvent } from '../../lib/api'
 import { normalizeUnsplashUrl } from '../../utils/unsplash'
 import BlogTestCTA from '../../components/BlogTestCTA'
 import { DisplayHeading } from '../../components/ui'
@@ -189,6 +189,68 @@ export function localizeBlogLinks(html, lang, articles) {
   })
 }
 
+/**
+ * Classify an in-body link as a prose bridge out of the blog, or null.
+ *
+ * The article bodies hold 116 links to the bare homepage, 75 to
+ * /instruments and 7 to a test page (counted in D1 on 2026-08-22), and
+ * none of them fired a funnel event: only the BlogTestCTA cards did. So
+ * "897 reads gave 6 clicks" counted the cards and was blind to every
+ * bridge the authors actually wrote. This classifier is the seeing half
+ * of that fix; proseClickHandler below is the firing half.
+ *
+ * Accepts the forms the bodies actually contain: absolute cercol.team
+ * URLs, root-relative paths, and either with a /ca|es|fr|de|da language
+ * prefix. Anchors, other-article links and external links return null.
+ *
+ * Exported for unit testing (see __tests__/proseClickHandler.test.js).
+ */
+export function proseDestination(href) {
+  if (!href) return null
+  let path = href
+  const abs = href.match(/^https?:\/\/([^/?#]+)([/?#].*)?$/)
+  if (abs) {
+    if (abs[1] !== 'cercol.team' && abs[1] !== 'www.cercol.team') return null
+    path = abs[2] || '/'
+  }
+  if (!path.startsWith('/')) return null
+  path = path.split(/[?#]/)[0]
+  path = path.replace(/^\/(?:ca|es|fr|de|da)(?=\/|$)/, '') || '/'
+  if (path === '/') return 'home'
+  const m = path.match(/^\/(new-moon|first-quarter|full-moon|last-quarter|instruments)\/?$/)
+  return m ? m[1] : null
+}
+
+/**
+ * Delegated click handler for the rendered article body.
+ *
+ * Fires the existing cta_click funnel event for any in-body link that
+ * leads to an instrument page, /instruments or the bare homepage. The
+ * destination travels inside `instrument` as 'prose:<destination>'
+ * ('prose:home', 'prose:instruments', 'prose:first-quarter', ...):
+ * every prose value shares the 'prose:' prefix so one LIKE separates
+ * prose clicks from the card ones, and `slug` keeps carrying the
+ * article slug, which the daily brief's per-article click count groups
+ * by and must keep matching.
+ *
+ * No preventDefault: navigation proceeds and trackEvent's keepalive
+ * lets the POST outlive the page, same as the BlogTestCTA handler.
+ */
+export function proseClickHandler(slug, lang) {
+  return (event) => {
+    const link = event.target?.closest?.('a[href]')
+    if (!link) return
+    const destination = proseDestination(link.getAttribute('href'))
+    if (!destination) return
+    trackEvent('cta_click', {
+      slug,
+      lang,
+      instrument: `prose:${destination}`,
+      path: typeof window !== 'undefined' ? (window.location?.pathname ?? null) : null,
+    })
+  }
+}
+
 /** Parse ## and ### headings from markdown content for ToC. */
 function extractHeadings(markdown) {
   if (!markdown) return []
@@ -244,6 +306,9 @@ export default function BlogArticlePage() {
   const [relatedPosts, setRelatedPosts] = useState([])
   const [tocOpen,      setTocOpen]      = useState(false)
   const articleRef = useRef(null)
+  // One delegated handler for every body container, so the in-prose
+  // bridges to the instruments count in the funnel like the cards do.
+  const onProseClick = proseClickHandler(slug, urlLang)
 
   // Sync i18n to URL language
   useEffect(() => {
@@ -661,11 +726,12 @@ export default function BlogArticlePage() {
 
           {introHtml ? (
             <>
-              <div className="prose-article" dangerouslySetInnerHTML={{ __html: introHtml }} />
+              <div className="prose-article" onClick={onProseClick} dangerouslySetInnerHTML={{ __html: introHtml }} />
               <BlogTestCTA slug={slug} lang={urlLang} category={post.category} compact />
               <article
                 ref={articleRef}
                 className="prose-article"
+                onClick={onProseClick}
                 dangerouslySetInnerHTML={{ __html: restHtml }}
               />
             </>
@@ -673,6 +739,7 @@ export default function BlogArticlePage() {
             <article
               ref={articleRef}
               className="prose-article"
+              onClick={onProseClick}
               dangerouslySetInnerHTML={{ __html: htmlContent }}
             />
           )}

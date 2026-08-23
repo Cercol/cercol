@@ -361,6 +361,7 @@
     "intro": {
       "heading": "Cèrcol de Nouvelle Lune",
       "meta": "10 questions · ~2 min",
+      "get": "Un graphique radar de votre position sur les cinq dimensions. Bon pour une orientation rapide. Pas assez précis pour des affirmations détaillées sur les facettes, c'est à ça que sert Premier Quartier.",
       "scale": "1–7 · Pas du tout d'accord → Tout à fait d'accord",
       "guidance": "Suivez votre première intuition. Il n'y a pas de bonnes réponses.",
       "cta": "Commencer"
@@ -404,6 +405,7 @@
     "intro": {
       "heading": "Cèrcol de Premier Quartier",
       "meta": "60 questions · ~10 min",
+      "get": "Graphique de domaine, détail de 30 facettes et une première lecture bêta de votre rôle. Le détail des facettes est là où réside l'information utile, les totaux de domaine ne sont que le titre.",
       "scale": "1–5 · Tout à fait inexact → Tout à fait exact",
       "guidance": "Pas de bonnes réponses. Allez avec ce qui est vrai pour vous maintenant.",
       "cta": "Commencer"
