@@ -336,7 +336,7 @@
       "tagline": "Retrat definitiu",
       "meta": "120 preguntes · ~20 min",
       "description": "L'autoinforme més complet: les 30 facetes a resolució completa.",
-      "paid": "Pagament únic"
+      "paid": "Gratuït durant el llançament"
     },
     "lastQuarter": {
       "name": "Cèrcol de Quart Minvant",
@@ -913,7 +913,7 @@
     "cta_note": "La Lluna Nova: 10 preguntes · ~2 min. Gratis i sense compte.",
     "cta": "Fes el test gratuït",
     "synthetic": "Un perfil sintètic, no una persona real, amb {{count}} valoracions de Testimoni perquè es puguen comparar la mirada pròpia i la de fora. Puntuat amb el mateix codi que un resultat real de Lluna Plena.",
-    "whatThisIs": "Això és un informe de Lluna Plena: 120 preguntes · ~20 min, un sol pagament i les valoracions les fan quatre Testimonis que convides tu.",
+    "whatThisIs": "Això és un informe de Lluna Plena: 120 preguntes · ~20 min i les valoracions les fan quatre Testimonis que convides tu.",
     "seeAll": "Compara els quatre instruments",
     "fq": {
       "title": "Un informe de Quart Creixent",
@@ -1333,7 +1333,7 @@
     },
     "q4": {
       "q": "Quina és la diferència entre els tres instruments?",
-      "a": "La Lluna Nova són 10 preguntes i dura 2 minuts, una orientació ràpida. El Quart Creixent són 60 preguntes i dura 10 minuts, una imatge més completa amb 30 facetes i una primera mirada al teu rol. La Lluna Plena és 120 preguntes, inclou l'avaluació del Testimoni, i és de pagament, és el resultat definitiu. Cada instrument és independent; pots començar des de qualsevol punt."
+      "a": "La Lluna Nova són 10 preguntes i dura 2 minuts, una orientació ràpida. El Quart Creixent són 60 preguntes i dura 10 minuts, una imatge més completa amb 30 facetes i una primera mirada al teu rol. La Lluna Plena és 120 preguntes, inclou l'avaluació del Testimoni, és el resultat definitiu. Cada instrument és independent; pots començar des de qualsevol punt."
     },
     "q5": {
       "q": "Val la pena pagar per la Lluna Plena?",
@@ -1375,7 +1375,7 @@
       "body": "Cada instrument mesura les mateixes cinc dimensions, a diferent profunditat i resolució. Estan dissenyats per usar-se en seqüència, però cadascun és autònom."
     },
     "freeLabel": "Gratuït",
-    "paidLabel": "Pagament únic · No és una subscripció",
+    "paidLabel": "Gratuït durant el llançament",
     "sampleHeading": "Preguntes de mostra",
     "newMoon": {
       "heading": "Cèrcol de Lluna Nova",
@@ -1593,7 +1593,7 @@
     "label": "Peu de pàgina",
     "sections": "Seccions del peu de pàgina",
     "tagline": "Descobreix com treballes en equip. Les preguntes, la puntuació i la investigació que hi ha al darrere són públiques.",
-    "rights": "Cèrcol és de codi obert. Només la Lluna Plena és de pagament."
+    "rights": "Cèrcol és de codi obert."
   },
   "common": {
     "scaleLabel": "Escala",

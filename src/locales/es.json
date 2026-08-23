@@ -336,7 +336,7 @@
       "tagline": "Retrato definitivo",
       "meta": "120 preguntas · ~20 min",
       "description": "El autoinforme más profundo: las 30 facetas a plena resolución.",
-      "paid": "Pago único"
+      "paid": "Gratis durante el lanzamiento"
     },
     "lastQuarter": {
       "name": "Cèrcol de Cuarto Menguante",
@@ -913,7 +913,7 @@
     "cta_note": "Luna Nueva son 10 preguntas · ~2 min. Gratis y sin cuenta.",
     "cta": "Haz el test gratis",
     "synthetic": "Un perfil sintético, no una persona real, con {{count}} valoraciones de Testigo para poder comparar la mirada propia y la ajena. Puntuado con el mismo código que un resultado real de Luna Llena.",
-    "whatThisIs": "Esto es un informe de Luna Llena: 120 preguntas · ~20 min, un pago único, y las valoraciones las hacen cuatro testigos a los que invitas tú.",
+    "whatThisIs": "Esto es un informe de Luna Llena: 120 preguntas · ~20 min y las valoraciones las hacen cuatro testigos a los que invitas tú.",
     "seeAll": "Compara los cuatro instrumentos",
     "fq": {
       "title": "Un informe de Cuarto Creciente",
@@ -1333,7 +1333,7 @@
     },
     "q4": {
       "q": "¿Cuál es la diferencia entre los tres instrumentos?",
-      "a": "New Moon tiene 10 preguntas y lleva 2 minutos, una orientación rápida. First Quarter tiene 60 preguntas y lleva 10 minutos, una imagen más completa con 30 facetas y una primera lectura de tu rol. Full Moon tiene 120 preguntas, incluye la evaluación del testigo y es de pago, es el resultado definitivo. Cada instrumento es independiente; puedes empezar por cualquiera."
+      "a": "New Moon tiene 10 preguntas y lleva 2 minutos, una orientación rápida. First Quarter tiene 60 preguntas y lleva 10 minutos, una imagen más completa con 30 facetas y una primera lectura de tu rol. Full Moon tiene 120 preguntas, incluye la evaluación del Testigo y es el resultado definitivo. Cada instrumento es independiente; puedes empezar por cualquiera."
     },
     "q5": {
       "q": "¿Vale la pena pagar por Full Moon?",
@@ -1375,7 +1375,7 @@
       "body": "Cada instrumento mide las mismas cinco dimensiones, a diferente profundidad y resolución. Están diseñados para usarse en secuencia, pero cada uno se sostiene solo."
     },
     "freeLabel": "Gratis",
-    "paidLabel": "Pago único · No es una suscripción",
+    "paidLabel": "Gratis durante el lanzamiento",
     "sampleHeading": "Preguntas de muestra",
     "newMoon": {
       "heading": "Cèrcol de Luna Nueva",
@@ -1593,7 +1593,7 @@
     "label": "Pie de página",
     "sections": "Secciones del pie de página",
     "tagline": "Descubre cómo trabajas en equipo. Las preguntas, la puntuación y la investigación que las sostiene son públicas.",
-    "rights": "Cèrcol es de código abierto. Solo Luna Llena es de pago."
+    "rights": "Cèrcol es de código abierto."
   },
   "common": {
     "scaleLabel": "Escala",

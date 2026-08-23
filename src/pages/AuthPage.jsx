@@ -1,17 +1,12 @@
 /**
- * AuthPage — three sign-in methods:
- *   1. Google OAuth (button)
- *   2. Email + password (sign in / sign up)
- *   3. Magic link (email only, no password)
+ * AuthPage — two sign-in methods: Google, and a magic link by email.
  *
- * Layout:
- *   [Google button]
- *   — or —
- *   [email field]
- *   [Password] [Magic link]   ← method tabs
- *   [password field]          ← password method only
- *   [Sign in / Create account toggle] ← password method only
- *   [Submit button]
+ * Passwords were retired on the server (410, see worker/src/auth.js
+ * passwordGone) because bcrypt does not fit the Worker CPU budget. The form
+ * kept offering them, and kept defaulting to them, so the first thing a
+ * visitor met was a password field whose submit answered "Password sign-in
+ * has been retired". That is the screen every account starts on, and the
+ * launch promotion is an account.
  */
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -26,19 +21,14 @@ const INPUT_CLASS =
 export default function AuthPage() {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const { user, signIn, signInWithPassword, signUp, signInWithGoogle } = useAuth()
+  const { user, signIn, signInWithGoogle } = useAuth()
 
   const [email,    setEmail]    = useState('')
-  const [password, setPassword] = useState('')
-  const [method,   setMethod]   = useState('password')   // 'password' | 'magic'
-  const [mode,     setMode]     = useState('signin')      // 'signin' | 'signup'  (password only)
   const [status,   setStatus]   = useState('idle')        // 'idle' | 'busy' | 'sent' | 'confirmed'
   const [errorMsg, setErrorMsg] = useState('')
 
-  // Redirect home once signed in, EXCEPT right after a password signup: there we
-  // hold on the "check your email" card (status 'sent') so the user learns they
-  // must verify to unlock the free Full Moon slot. The account is already signed
-  // in and can use the free instruments meanwhile.
+  // Redirect home once signed in. 'sent' holds on the "check your email" card
+  // because the magic link has not been clicked yet.
   useEffect(() => {
     if (user && status !== 'sent') navigate('/', { replace: true })
   }, [user, status, navigate])
@@ -56,19 +46,8 @@ export default function AuthPage() {
     e.preventDefault()
     setBusy()
     try {
-      if (method === 'magic') {
-        await signIn(email)
-        setStatus('sent')
-      } else if (mode === 'signin') {
-        await signInWithPassword(email, password)
-        // onAuthStateChange handles redirect; just stay busy
-      } else {
-        await signUp(email, password)
-        // Signup succeeded — the account is signed in, but its email is not yet
-        // verified. Hold on the confirm-email card (the redirect effect skips
-        // 'sent') so the user knows to click the link to unlock the free slot.
-        setStatus('sent')
-      }
+      await signIn(email)
+      setStatus('sent')
     } catch (e) {
       setError(e.message ?? t('auth.error'))
     }
@@ -76,16 +55,15 @@ export default function AuthPage() {
 
   // ── Sent / confirmed state ──────────────────────────────────────────────
   if (status === 'sent') {
-    const isMagic = method === 'magic'
     return (
       <main className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] py-16">
         <Card className="w-full max-w-sm p-8 shadow-sm text-center">
           <p className="text-2xl mb-2">✉️</p>
           <h1 className="text-lg font-bold text-gray-900 mb-2">
-            {isMagic ? t('auth.sentHeading') : t('auth.confirmHeading')}
+            {t('auth.sentHeading')}
           </h1>
           <p className="text-sm text-gray-500 mb-1">
-            {isMagic ? t('auth.sentBody', { email }) : t('auth.confirmBody', { email })}
+            {t('auth.sentBody', { email })}
           </p>
           <p className="text-xs text-gray-400 mt-4">{t('auth.sentNote')}</p>
           <button
@@ -100,12 +78,7 @@ export default function AuthPage() {
   }
 
   // ── Main form ───────────────────────────────────────────────────────────
-  const isPasswordMode = method === 'password'
-  const submitLabel = status === 'busy'
-    ? t('auth.sending')
-    : isPasswordMode
-      ? (mode === 'signup' ? t('auth.createAccount') : t('auth.signInCta'))
-      : t('auth.sendLink')
+  const submitLabel = status === 'busy' ? t('auth.sending') : t('auth.sendLink')
 
   return (
     <main className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] px-4 py-16">
@@ -159,44 +132,6 @@ export default function AuthPage() {
               />
             </div>
 
-            {/* Method tabs */}
-            <div className="flex rounded border border-gray-200 overflow-hidden text-xs font-semibold">
-              {['password', 'magic'].map((m) => (
-                <button
-                  key={m}
-                  type="button"
-                  onClick={() => setMethod(m)}
-                  className={[
-                    'flex-1 py-2 transition-colors',
-                    method === m
-                      ? 'bg-[var(--mm-color-blue)] text-white'
-                      : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50',
-                  ].join(' ')}
-                >
-                  {m === 'password' ? t('auth.methodPassword') : t('auth.methodMagic')}
-                </button>
-              ))}
-            </div>
-
-            {/* Password field */}
-            {isPasswordMode && (
-              <div className="flex flex-col gap-1">
-                <label htmlFor="password" className="text-xs font-semibold uppercase tracking-widest text-gray-500">
-                  {t('auth.passwordLabel')}
-                </label>
-                <input
-                  id="password"
-                  type="password"
-                  required={isPasswordMode}
-                  autoComplete={mode === 'signup' ? 'new-password' : 'current-password'}
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
-                  placeholder={mode === 'signup' ? t('auth.passwordNewPlaceholder') : t('auth.passwordPlaceholder')}
-                  className={INPUT_CLASS}
-                />
-              </div>
-            )}
-
             {/* Error */}
             {errorMsg && (
               <p className="text-xs text-red-500">{errorMsg}</p>
@@ -206,33 +141,6 @@ export default function AuthPage() {
             <Button type="submit" variant="primary" disabled={status === 'busy'} className="w-full">
               {submitLabel}
             </Button>
-
-            {/* Sign-in / Sign-up toggle (password only) */}
-            {isPasswordMode && (
-              <p className="text-center text-xs text-gray-400">
-                {mode === 'signin' ? t('auth.noAccount') : t('auth.haveAccount')}{' '}
-                <button
-                  type="button"
-                  onClick={() => { setMode(mode === 'signin' ? 'signup' : 'signin'); setErrorMsg('') }}
-                  className="text-[var(--mm-color-blue)] hover:underline font-semibold"
-                >
-                  {mode === 'signin' ? t('auth.createAccount') : t('auth.signInCta')}
-                </button>
-              </p>
-            )}
-
-            {/* Forgot password — password + signin mode only */}
-            {isPasswordMode && mode === 'signin' && (
-              <p className="text-center text-xs text-gray-400">
-                <button
-                  type="button"
-                  onClick={() => { setMethod('magic'); setErrorMsg('') }}
-                  className="text-[var(--mm-color-blue)] hover:underline"
-                >
-                  {t('auth.forgotPassword')}
-                </button>
-              </p>
-            )}
 
           </form>
         </Card>

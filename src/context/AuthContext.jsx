@@ -17,8 +17,6 @@
  *   refreshProfile()            — re-fetches profile from the API
  *   markOnboardingSeen()        — sets onboarding_seen=true locally + persists to API
  *   signIn(email)               — sends a magic link; throws on error
- *   signInWithPassword(e, p)    — email + password sign-in; throws on error
- *   signUp(email, password)     — creates account; throws on error
  *   signInWithGoogle()          — redirects to Google OAuth flow
  *   signOut()                   — clears tokens and session state
  */
@@ -146,35 +144,7 @@ export function AuthProvider({ children }) {
     }
   }
 
-  async function signInWithPassword(email, password) {
-    const res = await fetch(`${API_URL}/auth/password/signin`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    })
-    if (!res.ok) {
-      const body = await res.json().catch(() => ({}))
-      throw new Error(body.detail ?? 'Invalid credentials')
-    }
-    const data = await res.json()
-    _applyTokens(data.access_token, data.refresh_token)
-    await fetchProfile()
-  }
 
-  async function signUp(email, password) {
-    const res = await fetch(`${API_URL}/auth/password/signup`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    })
-    if (!res.ok) {
-      const body = await res.json().catch(() => ({}))
-      throw new Error(body.detail ?? 'Signup failed')
-    }
-    const data = await res.json()
-    _applyTokens(data.access_token, data.refresh_token)
-    await fetchProfile()
-  }
 
   function signInWithGoogle() {
     // Navigate directly — Google OAuth is a full-page redirect flow.
@@ -201,7 +171,7 @@ export function AuthProvider({ children }) {
     <AuthContext.Provider value={{
       user, profile, loading,
       applySession, refreshProfile, markOnboardingSeen,
-      signIn, signInWithPassword, signUp, signInWithGoogle, signOut,
+      signIn, signInWithGoogle, signOut,
     }}>
       {children}
     </AuthContext.Provider>

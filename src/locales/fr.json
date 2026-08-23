@@ -336,7 +336,7 @@
       "tagline": "Portrait définitif",
       "meta": "120 questions · ~20 min",
       "description": "L'auto-évaluation la plus approfondie, les 30 facettes en pleine résolution.",
-      "paid": "Paiement unique"
+      "paid": "Gratuit pendant le lancement"
     },
     "lastQuarter": {
       "name": "Cèrcol de Dernier Quartier",
@@ -913,7 +913,7 @@
     "cta_note": "Nouvelle Lune, c'est 10 questions · ~2 min. Gratuit, sans compte.",
     "cta": "Faire le test gratuit",
     "synthetic": "Un profil synthétique, pas une personne réelle, avec {{count}} évaluations de Témoin pour comparer le regard de soi et celui des autres. Calculé par le même code qu’un vrai résultat Pleine Lune.",
-    "whatThisIs": "Vous avez sous les yeux un rapport Pleine Lune. 120 questions · ~20 min, paiement unique, et les évaluations de Témoin viennent de quatre personnes que vous invitez.",
+    "whatThisIs": "Vous avez sous les yeux un rapport Pleine Lune. 120 questions · ~20 min et les évaluations de Témoin viennent de quatre personnes que vous invitez.",
     "seeAll": "Comparer les quatre instruments",
     "fq": {
       "title": "Un rapport Premier Quartier",
@@ -1333,7 +1333,7 @@
     },
     "q4": {
       "q": "Quelle est la différence entre les trois instruments ?",
-      "a": "Nouvelle Lune comporte 10 questions et prend 2 minutes, une orientation rapide. Premier Quartier comporte 60 questions et prend 10 minutes, une image plus complète avec 30 facettes et un premier aperçu de votre rôle. Pleine Lune comporte 120 questions, inclut l'évaluation du·de la témoin et est payant, c'est le résultat définitif. Chaque instrument est autonome ; vous pouvez commencer n'importe lequel."
+      "a": "Nouvelle Lune comporte 10 questions et prend 2 minutes, une orientation rapide. Premier Quartier comporte 60 questions et prend 10 minutes, une image plus complète avec 30 facettes et un premier aperçu de votre rôle. Pleine Lune comporte 120 questions, inclut l'évaluation du·de la Témoin et c'est le résultat définitif. Chaque instrument est autonome ; vous pouvez commencer n'importe lequel."
     },
     "q5": {
       "q": "Cèrcol de Pleine Lune vaut-il le coup de payer ?",
@@ -1375,7 +1375,7 @@
       "body": "Chaque instrument mesure les mêmes cinq dimensions, à différentes profondeurs et résolutions. Ils sont conçus pour être utilisés en séquence, mais chacun se tient seul."
     },
     "freeLabel": "Gratuit",
-    "paidLabel": "Paiement unique · Pas un abonnement",
+    "paidLabel": "Gratuit pendant le lancement",
     "sampleHeading": "Questions exemples",
     "newMoon": {
       "heading": "Cèrcol de Nouvelle Lune",
@@ -1593,7 +1593,7 @@
     "label": "Pied de page",
     "sections": "Sections du pied de page",
     "tagline": "Découvrez comment vous fonctionnez en équipe. Les questions, la notation et les recherches qui les fondent sont publiques.",
-    "rights": "Cèrcol est open source. Seule Pleine Lune est payante."
+    "rights": "Cèrcol est open source."
   },
   "common": {
     "scaleLabel": "Échelle",

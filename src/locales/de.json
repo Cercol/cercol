@@ -336,7 +336,7 @@
       "tagline": "Vollständiges Porträt",
       "meta": "120 Fragen · ~20 Min.",
       "description": "Der tiefste Selbstbericht: alle 30 Facetten in voller Auflösung.",
-      "paid": "Einmalige Zahlung"
+      "paid": "Kostenlos zum Start"
     },
     "lastQuarter": {
       "name": "Cèrcol des Letzten Viertels",
@@ -913,7 +913,7 @@
     "cta_note": "Neumond hat 10 Fragen und dauert etwa 2 Minuten. Kostenlos, ohne Konto.",
     "cta": "Kostenlosen Test machen",
     "synthetic": "Ein synthetisches Profil, keine reale Person, mit {{count}} Zeugen-Bewertungen, damit sich Selbst- und Fremdbild vergleichen lassen. Berechnet mit demselben Code wie ein echtes Vollmond-Ergebnis.",
-    "whatThisIs": "Das hier ist ein Vollmond-Bericht: 120 Fragen, etwa 20 Minuten, eine einmalige Zahlung, und die Zeugenbewertung kommt von vier Personen, die du einlädst.",
+    "whatThisIs": "Das hier ist ein Vollmond-Bericht: 120 Fragen, etwa 20 Minuten und die Zeugenbewertung kommt von vier Personen, die du einlädst.",
     "seeAll": "Alle vier Instrumente vergleichen",
     "fq": {
       "title": "Ein Bericht des Ersten Viertels",
@@ -1333,7 +1333,7 @@
     },
     "q4": {
       "q": "Was ist der Unterschied zwischen den drei Instrumenten?",
-      "a": "Neumond hat 10 Fragen und dauert 2 Minuten, eine schnelle Orientierung. Erstes Viertel hat 60 Fragen und dauert 10 Minuten, ein vollständigeres Bild mit 30 Facetten und einem ersten Blick auf deine Rolle. Vollmond hat 120 Fragen, umfasst die Zeugenbewertung und ist kostenpflichtig, es ist das definitive Ergebnis. Jedes Instrument ist eigenständig; du kannst überall beginnen."
+      "a": "Neumond hat 10 Fragen und dauert 2 Minuten, eine schnelle Orientierung. Erstes Viertel hat 60 Fragen und dauert 10 Minuten, ein vollständigeres Bild mit 30 Facetten und einem ersten Blick auf deine Rolle. Vollmond hat 120 Fragen, umfasst die Zeugenbewertung und ist das definitive Ergebnis. Jedes Instrument ist eigenständig; du kannst überall beginnen."
     },
     "q5": {
       "q": "Lohnt es sich, für den Vollmond zu zahlen?",
@@ -1375,7 +1375,7 @@
       "body": "Jedes Instrument misst dieselben fünf Dimensionen, bei unterschiedlicher Tiefe und Auflösung. Sie sind für die sequentielle Verwendung konzipiert, aber jedes steht für sich allein."
     },
     "freeLabel": "Kostenlos",
-    "paidLabel": "Einmalige Zahlung · Kein Abonnement",
+    "paidLabel": "Kostenlos zum Start",
     "sampleHeading": "Beispielfragen",
     "newMoon": {
       "heading": "Cèrcol des Neumondes",
@@ -1593,7 +1593,7 @@
     "label": "Fußzeile",
     "sections": "Fußzeilennavigation",
     "tagline": "Finde heraus, wie du im Team arbeitest. Die Fragen, die Bewertung und die Forschung dahinter sind öffentlich.",
-    "rights": "Cèrcol ist Open Source. Nur Vollmond ist kostenpflichtig."
+    "rights": "Cèrcol ist quelloffen."
   },
   "common": {
     "scaleLabel": "Skala",

@@ -177,7 +177,7 @@ export default function InstrumentsPage() {
                   </SectionLabel>
                   <h2 className="text-lg font-bold text-gray-900">{t('instruments.fullMoon.heading')}</h2>
                 </div>
-                <Badge variant="paid">{t('instruments.paidLabel')}</Badge>
+                <Badge variant="free">{t('instruments.paidLabel')}</Badge>
               </div>
               <p className="text-sm text-gray-500 leading-relaxed">{t('instruments.fullMoon.system')}</p>
             </div>

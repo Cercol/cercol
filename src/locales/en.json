@@ -336,7 +336,7 @@
       "tagline": "Complete portrait",
       "meta": "120 questions · ~20 min",
       "description": "The deepest self-report: all 30 facets at full resolution.",
-      "paid": "One-time payment"
+      "paid": "Free during launch"
     },
     "lastQuarter": {
       "name": "Last Quarter Cèrcol",
@@ -913,7 +913,7 @@
     "cta_note": "New Moon is 10 questions and about 2 minutes. Free, no account.",
     "cta": "Take the free test",
     "synthetic": "A synthetic profile, not a real person, shown with {{count}} Witness ratings so the self and peer views can be compared. Scored by the same code as a real Full Moon result.",
-    "whatThisIs": "What you are looking at is a Full Moon report: 120 questions, about 20 minutes, one payment, and the peer ratings come from four people you invite.",
+    "whatThisIs": "What you are looking at is a Full Moon report: 120 questions, about 20 minutes, and the peer ratings come from four people you invite.",
     "seeAll": "Compare all four instruments",
     "fq": {
       "title": "A First Quarter report",
@@ -1333,7 +1333,7 @@
     },
     "q4": {
       "q": "What is the difference between the three instruments?",
-      "a": "New Moon is 10 questions and takes 2 minutes, a quick orientation. First Quarter is 60 questions and takes 10 minutes, a fuller picture with 30 facets and a first look at your role. Full Moon is 120 questions, includes the Witness assessment, and is paid, it is the definitive result. Each instrument is standalone; you can start anywhere."
+      "a": "New Moon is 10 questions and takes 2 minutes, a quick orientation. First Quarter is 60 questions and takes 10 minutes, a fuller picture with 30 facets and a first look at your role. Full Moon is 120 questions, includes the Witness assessment, it is the definitive result. Each instrument is standalone; you can start anywhere."
     },
     "q5": {
       "q": "Is Full Moon worth paying for?",
@@ -1375,7 +1375,7 @@
       "body": "Each instrument measures the same five dimensions, at different depth and resolution. They are designed to be used in sequence, but each stands alone."
     },
     "freeLabel": "Free",
-    "paidLabel": "One-time payment · Not a subscription",
+    "paidLabel": "Free during launch",
     "sampleHeading": "Sample questions",
     "newMoon": {
       "heading": "New Moon Cèrcol",
@@ -1593,7 +1593,7 @@
     "label": "Site footer",
     "sections": "Footer links",
     "tagline": "See how you work in a team. The questions, the scoring and the research behind them are all public.",
-    "rights": "Cèrcol is open source. Only Full Moon is paid."
+    "rights": "Cèrcol is open source."
   },
   "common": {
     "scaleLabel": "Scale",

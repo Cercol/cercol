@@ -336,7 +336,7 @@
       "tagline": "Komplet portræt",
       "meta": "120 spørgsmål · ~20 min",
       "description": "Den dybeste selvrapport: alle 30 facetter i fuld opløsning.",
-      "paid": "Engangsbetaling"
+      "paid": "Gratis ved lancering"
     },
     "lastQuarter": {
       "name": "Sidste Kvarter Cèrcol",
@@ -913,7 +913,7 @@
     "cta_note": "Nymåne er 10 spørgsmål · ~2 min. Gratis, uden konto.",
     "cta": "Tag den gratis test",
     "synthetic": "En syntetisk profil, ikke en rigtig person, med {{count}} Vidne-vurderinger, så selv- og andresyn kan sammenlignes. Beregnet med samme kode som et rigtigt Fuldmåne-resultat.",
-    "whatThisIs": "Det, du ser her, er en Fuldmåne-rapport: 120 spørgsmål · ~20 min, engangsbetaling, og Vidne-vurderingerne kommer fra fire personer, du inviterer.",
+    "whatThisIs": "Det, du ser her, er en Fuldmåne-rapport: 120 spørgsmål · ~20 min og Vidne-vurderingerne kommer fra fire personer, du inviterer.",
     "seeAll": "Sammenlign alle fire instrumenter",
     "fq": {
       "title": "En Første Kvarter-rapport",
@@ -1333,7 +1333,7 @@
     },
     "q4": {
       "q": "Hvad er forskellen mellem de tre instrumenter?",
-      "a": "Nymåne er 10 spørgsmål og tager 2 minutter, en hurtig orientering. Første Kvarter er 60 spørgsmål og tager 10 minutter, et mere fuldstændigt billede med 30 facetter og et første blik på din rolle. Fuldmåne er 120 spørgsmål, inkluderer vidnevurderingen og er betalt, det er det definitive resultat. Hvert instrument er selvstændigt; du kan starte hvor som helst."
+      "a": "Nymåne er 10 spørgsmål og tager 2 minutter, en hurtig orientering. Første Kvarter er 60 spørgsmål og tager 10 minutter, et mere fuldstændigt billede med 30 facetter og et første blik på din rolle. Fuldmåne er 120 spørgsmål, inkluderer Vidne-vurderingen og er det definitive resultat. Hvert instrument er selvstændigt; du kan starte hvor som helst."
     },
     "q5": {
       "q": "Er Fuldmåne værd at betale for?",
@@ -1375,7 +1375,7 @@
       "body": "Hvert instrument måler de samme fem dimensioner, ved forskellig dybde og opløsning. De er designet til at bruges i rækkefølge, men hvert stå alene."
     },
     "freeLabel": "Gratis",
-    "paidLabel": "Engangsbetaling · Ikke et abonnement",
+    "paidLabel": "Gratis ved lancering",
     "sampleHeading": "Eksempelspørgsmål",
     "newMoon": {
       "heading": "Nymåne Cèrcol",
@@ -1593,7 +1593,7 @@
     "label": "Sidefod",
     "sections": "Sidefodens sektioner",
     "tagline": "Se, hvordan du fungerer i et team. Spørgsmålene, scoringen og forskningen bag dem er offentligt tilgængelige.",
-    "rights": "Cèrcol er open source. Kun Fuldmåne koster noget."
+    "rights": "Cèrcol er open source."
   },
   "common": {
     "scaleLabel": "Skala",
