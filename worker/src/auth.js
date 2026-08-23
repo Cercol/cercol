@@ -16,8 +16,7 @@
  */
 
 import { issueAccessToken, verifyAccessToken, bearerFrom, randomToken } from './jwt.js'
-import { usableCorpus } from './norms.js'
-import { ensureProfile, httpError, jsonBody, now, uuid, bool } from './db.js'
+import { BETA_TOTAL, ensureProfile, httpError, jsonBody, now, uuid, bool } from './db.js'
 import { sendMagicLink } from './emails.js'
 
 const MAGIC_TTL_MS = 15 * 60 * 1000               // api/auth.py: _MAGIC_TTL
@@ -310,32 +309,8 @@ export async function anonymiseResult(env, request, resultId) {
 /** GET /beta — public, drives the launch banner. */
 export async function betaStatus(env) {
   const { n } = await env.DB.prepare(`SELECT COUNT(*) AS n FROM profiles WHERE is_beta = 1`).first()
-  const remaining = Math.max(0, 500 - n)
-  // What the banner now counts. The licence counter measured the wrong thing
-  // and announced the wrong thing: at twelve claimed of five hundred it told
-  // a stranger that nobody was here, and it asked them to do quality
-  // assurance before it had given them anything. This number is the one the
-  // project actually needs, and it goes up when someone helps.
-  //
-  // Read through usableCorpus so the banner and the norms cannot disagree
-  // about what counts: same instrument version, seeds excluded.
-  const corpus = await usableCorpus(env.DB)
-  return Response.json({
-    remaining,
-    total: 500,
-    active: remaining > 0,
-    // Per language, for the instrument the banner sends people to. The
-    // threshold gates per instrument and language, so a meter that summed
-    // the whole corpus would show a Danish reader a number that includes
-    // every English answer and none of it counts towards the norms they
-    // will be scored against.
-    validation: {
-      threshold: corpus.threshold,
-      version: corpus.version,
-      instrument: 'firstQuarter',
-      byLanguage: corpus.byLanguage.firstQuarter || {},
-    },
-  })
+  const remaining = Math.max(0, BETA_TOTAL - n)
+  return Response.json({ remaining, total: BETA_TOTAL, active: remaining > 0 })
 }
 
 /** The retired password endpoints. 410 says "gone on purpose", not "broken". */

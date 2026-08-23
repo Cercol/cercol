@@ -227,6 +227,21 @@ export async function getWitnessSession(token) {
 }
 
 /**
+ * submitWitnessRoleCheck — what the Witness said about the role their own
+ * answers produced. Measures the instrument, never the person: the server
+ * stores it in its own table and nothing in scoring reads it.
+ *
+ * Always public: a Witness need not have an account, and attaching a token
+ * here would tie a research answer to an identity for no gain.
+ */
+export async function submitWitnessRoleCheck(token, payload) {
+  return publicFetch(`/witness/session/${token}/role-check`, {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  })
+}
+
+/**
  * completeWitnessSession — submit domain scores for a witness session.
  * @param {string} token
  * @param {{presence, bond, discipline, depth, vision}} scores

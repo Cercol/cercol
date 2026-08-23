@@ -21,7 +21,7 @@ import {
   magicLinkRequest, magicLinkVerify, refresh, signout, googleStart, googleCallback,
   me, getProfile, patchProfile, myResults, anonymiseResult, betaStatus, passwordGone,
 } from './auth.js'
-import { createSessions, getSession, completeSession, mySessions, myContributions } from './witness.js'
+import { createSessions, getSession, completeSession, roleCheck, mySessions, myContributions } from './witness.js'
 import {
   createGroup, inviteToGroup, removeMember, startWitnessRound, myGroups, pendingInvitations,
   acceptInvitation, declineInvitation, reportData,
@@ -77,6 +77,7 @@ const ROUTES = [
   { method: 'POST', pattern: /^\/witness\/sessions$/, handler: (env, m, req, ctx) => createSessions(env, req, ctx), gated: true },
   { method: 'GET', pattern: /^\/witness\/session\/([^/]+)$/, handler: (env, m) => getSession(env, m[1]), gated: true },
   { method: 'POST', pattern: /^\/witness\/session\/([^/]+)\/complete$/, handler: (env, m, req, ctx) => completeSession(env, req, m[1], ctx), gated: true },
+  { method: 'POST', pattern: /^\/witness\/session\/([^/]+)\/role-check$/, handler: (env, m, req) => roleCheck(env, req, m[1]), gated: true },
   { method: 'GET', pattern: /^\/witness\/my-sessions$/, handler: (env, m, req) => mySessions(env, req), gated: true },
   { method: 'GET', pattern: /^\/witness\/my-contributions$/, handler: (env, m, req) => myContributions(env, req), gated: true },
   // Groups. /mine and /pending must precede the /<id>/... matchers only in

@@ -1,7 +1,7 @@
 {
   "beta": {
-    "banner": "{{n}} de {{threshold}} respuestas. Por debajo, las puntuaciones se comparan con normas publicadas, no con quienes han hecho el test.",
-    "cta": "Añade la tuya",
+    "banner": "Promoción de lanzamiento: Luna Llena gratis durante la beta.",
+    "cta": "Consigue acceso gratuito",
     "badge": "Beta tester"
   },
   "nav": {
@@ -1101,7 +1101,18 @@
       "secondLabel": "Segunda mejor"
     },
     "term": "Testigo",
-    "termPlural": "Testigos"
+    "termPlural": "Testigos",
+    "roleCheck": {
+      "heading": "Una última pregunta. Es sobre nosotros, no sobre {{name}}.",
+      "body": "Tus respuestas sitúan a {{name}} en uno de doce roles. ¿Cuál de estos tres se parece más a la persona que acabas de describir?",
+      "note": "Esto viene solo de tus respuestas, no del resultado de esa persona. Nos dice si nuestros roles significan algo. No le cambia la puntuación.",
+      "agreement": "¿Y hasta qué punto encaja?",
+      "scaleLow": "Nada",
+      "scaleHigh": "Del todo",
+      "cta": "Enviar",
+      "sending": "Enviando…",
+      "skip": "Saltar esto"
+    }
   },
   "witnessResults": {
     "title": "Informe Full Moon",
@@ -1310,7 +1321,7 @@
     },
     "q1": {
       "q": "¿Son privados mis datos?",
-      "a": "Los instrumentos gratuitos registran puntuaciones anónimas sin información personal, sin nombre, sin correo electrónico, sin dirección IP. Si creas una cuenta, tu correo electrónico se almacena en nuestros propios servidores y tus resultados quedan vinculados a tu cuenta. Puedes eliminar tu cuenta en cualquier momento. No se venden ni se comparten datos con terceros."
+      "a": "Los instrumentos gratuitos registran puntuaciones anónimas sin información personal, sin nombre, sin correo electrónico, sin dirección IP. Si creas una cuenta, tu correo electrónico se almacena en nuestros propios servidores y tus resultados quedan vinculados a tu cuenta. Puedes eliminar tu cuenta en cualquier momento. Los datos no se venden, no se usan para publicidad y no se comparten con terceros. Lo único que se publica son las puntuaciones anonimizadas, como conjunto de datos abierto para la investigación."
     },
     "q2": {
       "q": "¿Son precisos los resultados?",

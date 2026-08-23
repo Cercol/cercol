@@ -1,7 +1,7 @@
 {
   "beta": {
-    "banner": "{{n}} af {{threshold}} svar. Indtil da sammenlignes resultaterne med publicerede normer, ikke med dem, der har taget testen.",
-    "cta": "Tilføj dit svar",
+    "banner": "Lanceringstilbud: Fuldmåne gratis under betaen.",
+    "cta": "Få gratis adgang",
     "badge": "Beta-tester"
   },
   "nav": {
@@ -341,7 +341,7 @@
     "lastQuarter": {
       "name": "Sidste Kvarter Cèrcol",
       "meta": "Teamrapport",
-      "description": "Dit teams rollerprofil: balance, fortælling og fælles blinde vinkler."
+      "description": "Dit teams rolleprofil: balance, fortælling og fælles blinde vinkler."
     },
     "footnote": "Open source · ",
     "viewOnGitHub": "Se koden på GitHub",
@@ -453,7 +453,7 @@
     "paywall": {
       "heading": "Fuldmåne Cèrcol",
       "body": "Det samme portræt, bygget fra 120 spørgsmål i stedet for 60. Hver facet målt i fuld opløsning.",
-      "includes": "30 facetter · Rollresultat · Dit for altid",
+      "includes": "30 facetter · Rolleresultat · Dit for altid",
       "cta": "Lås Fuldmåne Cèrcol op",
       "loading": "Tager dig til betaling…",
       "processing": "Betaling modtaget. Opsætter din adgang…",
@@ -1101,7 +1101,18 @@
       "secondLabel": "Næstbedste"
     },
     "term": "Vidne",
-    "termPlural": "Vidner"
+    "termPlural": "Vidner",
+    "roleCheck": {
+      "heading": "Et sidste spørgsmål. Det handler om os, ikke om {{name}}.",
+      "body": "Dine svar placerer {{name}} i en af tolv roller. Hvilken af disse tre lyder mest som den person, du lige har beskrevet?",
+      "note": "Det bygger kun på dine svar, ikke på personens eget resultat. Det fortæller os, om vores roller overhovedet betyder noget. Det ændrer ikke personens score.",
+      "agreement": "Og hvor godt passer den?",
+      "scaleLow": "Slet ikke",
+      "scaleHigh": "Helt præcist",
+      "cta": "Send",
+      "sending": "Sender…",
+      "skip": "Spring over"
+    }
   },
   "witnessResults": {
     "title": "Fuldmåne-rapport",
@@ -1310,7 +1321,7 @@
     },
     "q1": {
       "q": "Er mine data private?",
-      "a": "De gratis instrumenter logger anonyme scorer uden personlige oplysninger, intet navn, ingen e-mail, ingen IP-adresse. Hvis du opretter en konto, gemmes din e-mail på vores egne servere, og dine resultater knyttes til din konto. Du kan slette din konto til enhver tid. Ingen data sælges eller deles med tredjeparter."
+      "a": "De gratis instrumenter logger anonyme scorer uden personlige oplysninger, intet navn, ingen e-mail, ingen IP-adresse. Hvis du opretter en konto, gemmes din e-mail på vores egne servere, og dine resultater knyttes til din konto. Du kan slette din konto til enhver tid. Data sælges aldrig, bruges aldrig til reklame og deles aldrig med tredjeparter. Det eneste, der offentliggøres, er de anonymiserede scorer, som et åbent datasæt til forskning."
     },
     "q2": {
       "q": "Er resultaterne nøjagtige?",

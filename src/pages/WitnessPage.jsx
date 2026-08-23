@@ -22,6 +22,8 @@ import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
 import { getWitnessSession, completeWitnessSession, trackEvent } from '../lib/api'
 import { TOTAL_ROUNDS as WITNESS_ROUNDS, buildRounds, computeWitnessScores } from '../utils/witness-scoring'
+import { computeRole } from '../utils/role-scoring'
+import WitnessRoleCheck from '../components/WitnessRoleCheck'
 import { Card, Button, SectionLabel } from '../components/ui'
 import { CheckIcon, InfoCircleIcon, XIcon } from '../components/MoonIcons'
 import { colors } from '../design/tokens'
@@ -92,6 +94,8 @@ export default function WitnessPage() {
   const [linkAsUser,     setLinkAsUser]     = useState(false) // opt-in: link session to profile
   const [rounds,         setRounds]         = useState([])
   const [currentRound,   setCurrentRound]   = useState(0)
+  // Kept so the role check can be computed from this Witness's own answers.
+  const [roleResult,     setRoleResult]     = useState(null)
 
   // Load session on mount
   useEffect(() => {
@@ -172,7 +176,10 @@ export default function WitnessPage() {
     try {
       const scores = computeWitnessScores(rounds)
       await completeWitnessSession(token, scores, linkAsUser)
-      setPhase('complete')
+      // The role check comes before the thank-you: it is about the person
+      // they just described, which is the thing they are still thinking about.
+      setRoleResult(computeRole(scores, 'fullMoon'))
+      setPhase('roleCheck')
     } catch {
       setPhase('error')
     }
@@ -206,6 +213,19 @@ export default function WitnessPage() {
   // Just finished: warmest acquisition moment. Nudge the Witness to take the
   // free, no-account test themselves (curiosity + reciprocity), with a quiet
   // secondary exit. Fires a cta_click so the witness -> test loop is in the funnel.
+  if (phase === 'roleCheck' && roleResult) {
+    return (
+      <main className="flex items-center justify-center min-h-[calc(100vh-4rem)] px-4 py-10">
+        <WitnessRoleCheck
+          token={token}
+          roleResult={roleResult}
+          subjectName={subjectDisplay}
+          onDone={() => setPhase('complete')}
+        />
+      </main>
+    )
+  }
+
   if (phase === 'complete') {
     function handleTakeTest() {
       trackEvent('cta_click', { path: '/witness/complete' })

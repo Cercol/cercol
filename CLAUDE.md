@@ -192,6 +192,7 @@ Full SEO and LLM visibility strategy: SEO.md
 - Operations runbook: docs/ops/runbook.md
 - Email, Resend and Stalwart: docs/ops/email.md
 - Code conventions and patterns: docs/policies/conventions.md
+- What the research data is, and why it needs no consent flow: docs/policies/research-data.md
 - Architecture decisions: docs/decisions/
 - Post-mortems: docs/post-mortems/
 

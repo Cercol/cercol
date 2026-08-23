@@ -118,6 +118,62 @@ export async function completeSession(env, request, token, ctx) {
   return Response.json({ ok: true })
 }
 
+const ROLE_RE = /^R(0[1-9]|1[0-2])$/
+
+/**
+ * POST /witness/session/<token>/role-check
+ *
+ * After finishing, the Witness is shown three role descriptions, one of them
+ * the role their own answers produced, and asked which sounds most like the
+ * person they just described. This records the answer.
+ *
+ * It measures the instrument, not the person. Nothing in scoring, in the
+ * norms or in any report reads this table, and it is deliberately not a
+ * column on witness_responses so that staying true is the path of least
+ * resistance.
+ *
+ * Why three options rather than two: the two nearest roles are neighbours on
+ * the circumplex by construction, so a witness failing to separate them is
+ * not evidence the instrument is broken, and detecting a real 60% against a
+ * 50% chance line needs about 153 completed sessions. With a distant third
+ * option the chance line is 33%, the question becomes the one that cannot be
+ * answered today (is this better than random at all), and about 22 sessions
+ * settle it.
+ *
+ * computed_role is what the client reports its own answers produced. The
+ * server keeps witness_responses.domain_scores, so it is recorded rather than
+ * trusted: a disagreement can be found later by recomputing.
+ */
+export async function roleCheck(env, request, token) {
+  const body = await jsonBody(request)
+  const roles = ['computed_role', 'rival_role', 'distant_role', 'chosen_role']
+  for (const k of roles) {
+    if (typeof body?.[k] !== 'string' || !ROLE_RE.test(body[k])) return httpError(422, `Invalid ${k}`)
+  }
+  const shown = [body.computed_role, body.rival_role, body.distant_role]
+  if (new Set(shown).size !== 3) return httpError(422, 'The three roles shown must differ')
+  if (!shown.includes(body.chosen_role)) return httpError(422, 'chosen_role was not one of the three shown')
+  const agreement = body.agreement
+  if (agreement != null && !(Number.isInteger(agreement) && agreement >= 1 && agreement <= 7)) {
+    return httpError(422, 'Invalid agreement')
+  }
+
+  const db = env.DB
+  const row = await db.prepare(`SELECT id, completed_at FROM witness_sessions WHERE token = ?`).bind(token).first()
+  if (!row) return httpError(404, 'Session not found')
+  if (row.completed_at == null) return httpError(409, 'Session is not complete')
+
+  // One per session. A reload must not become a second data point.
+  await db.prepare(
+    `INSERT INTO witness_role_checks
+       (id, session_id, computed_role, rival_role, distant_role, chosen_role, agreement, created_at)
+     VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)
+     ON CONFLICT (session_id) DO NOTHING`
+  ).bind(uuid(), row.id, body.computed_role, body.rival_role, body.distant_role,
+         body.chosen_role, agreement ?? null, now()).run()
+  return Response.json({ ok: true })
+}
+
 /** GET /witness/my-sessions — the subject's sessions plus the guarded aggregate. */
 export async function mySessions(env, request) {
   const user = await requirePremium(env, request)

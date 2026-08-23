@@ -1,7 +1,7 @@
 {
   "beta": {
-    "banner": "{{n}} of {{threshold}} responses. Below that, scores are compared with published norms rather than with people who took this.",
-    "cta": "Add yours",
+    "banner": "Launch promotion: Full Moon free while the beta lasts.",
+    "cta": "Get free access",
     "badge": "Beta tester"
   },
   "nav": {
@@ -1101,7 +1101,18 @@
       "secondLabel": "Second best"
     },
     "term": "Witness",
-    "termPlural": "Witnesses"
+    "termPlural": "Witnesses",
+    "roleCheck": {
+      "heading": "One last question. It is about us, not about {{name}}.",
+      "body": "Your answers put {{name}} in one of twelve roles. Which of these three sounds most like the person you just described?",
+      "note": "This comes from your answers alone, not from their own result. It tells us whether our roles mean anything. It does not change their score.",
+      "agreement": "And how well does that one fit?",
+      "scaleLow": "Not at all",
+      "scaleHigh": "Exactly right",
+      "cta": "Send",
+      "sending": "Sending…",
+      "skip": "Skip this"
+    }
   },
   "witnessResults": {
     "title": "Full Moon report",
@@ -1310,7 +1321,7 @@
     },
     "q1": {
       "q": "Is my data private?",
-      "a": "The free instruments log anonymous scores with no personal information, no name, no email, no IP address. If you create an account, your email is stored on our own servers and your results are linked to your account. You can delete your account at any time. No data is sold or shared with third parties."
+      "a": "The free instruments log anonymous scores with no personal information, no name, no email, no IP address. If you create an account, your email is stored on our own servers and your results are linked to your account. You can delete your account at any time. Data is never sold, never used for advertising, and never shared with third parties. The only thing that is ever published is the anonymised scores, as an open dataset for research."
     },
     "q2": {
       "q": "Are the results accurate?",

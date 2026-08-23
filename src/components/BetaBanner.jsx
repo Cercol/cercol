@@ -7,13 +7,15 @@
  *
  * Fetched once on mount. Hidden silently on error (never blocks the page).
  *
- * It used to count free Full Moon licences: "488 remaining, help us find
- * bugs". Three things wrong at once. It asked a stranger for quality
- * assurance before giving them anything, it said it in enterprise-software
- * words, and at twelve claimed of five hundred it announced to every visitor
- * that nobody was here. It now counts the number the project actually needs,
- * which goes up when someone helps, and says plainly what is missing without
- * it.
+ * It is a launch promotion and says so. It briefly counted responses towards
+ * the norms threshold instead, which was wrong three ways: 200 is
+ * NORM_MIN_SAMPLE, an internal number with nothing to do with the promotion,
+ * while the promotion is BETA_TOTAL = 500; "0 of 200" told every visitor that
+ * nobody had taken the test; and it implied the free instruments stop being
+ * free, which they do not. The earlier "488 licences remaining, help us find
+ * bugs" was also wrong, for announcing emptiness and asking a stranger for
+ * quality assurance. A promotion states the offer and keeps its own numbers
+ * to itself.
  */
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
@@ -48,57 +50,28 @@ export default function BetaBanner() {
       .catch(() => {/* silently ignore — banner is best-effort */})
   }, [])
 
-  // Hide when: on a free-instrument page, no data yet, or the corpus has
-  // reached the threshold and there is nothing left to recruit for. Premium
-  // no longer hides it: the ask is a response, and someone who paid can still
-  // give one. What premium used to hide was a sales pitch.
-  // The reader's own language, because that is the grain the norms are
-  // computed at: an English answer does nothing for a Danish reader's norms.
-  const v = beta?.validation
+  // Hide on the free-instrument pages, before the status has loaded, and once
+  // the promotion is over. userIsPremium is gone from the condition: it was
+  // hiding a sales pitch, and this is an offer a paying account has already
+  // taken.
   const lang = (i18n.language || 'en').split('-')[0]
-  const n = v?.byLanguage?.[lang] ?? 0
-  if (SUPPRESSED_PATH.test(pathname) || !v?.threshold || n >= v.threshold) return null
-
-  const pct = Math.round((n / v.threshold) * 100)
+  if (SUPPRESSED_PATH.test(pathname) || !beta || beta.remaining <= 0) return null
 
   return (
     <div style={{ backgroundColor: colors.yellow }}>
       <div className="max-w-5xl mx-auto px-4 sm:px-8 py-2.5 flex items-center justify-between gap-4 flex-wrap">
+        <span className="text-sm font-semibold text-gray-900">{t('beta.banner')}</span>
 
-        {/* Left: text + progress */}
-        <div className="flex items-center gap-3 flex-wrap">
-          <span className="text-sm font-semibold text-gray-900">
-            {t('beta.banner', { n, threshold: v.threshold })}
-          </span>
-          {/* Progress bar: how many slots have been claimed */}
-          <div className="hidden sm:flex items-center gap-1.5">
-            <div className="w-20 h-1.5 bg-black/20 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-black/50 rounded-full transition-all"
-                style={{ width: `${pct}%` }}
-              />
-            </div>
-            <span className="text-xs text-gray-700 font-medium">
-              {n}/{v.threshold}
-            </span>
-          </div>
-        </div>
-
-        {/* Right: CTA */}
-        {/* nofollow: /auth is not pre-rendered, so GitHub Pages answers it
-            404 to a crawler. The banner sits on all 168 pre-rendered pages,
-            which made it the single largest source of crawled 404s. */}
-        {/* Was /auth: the banner asked a stranger to make an account before
-            it had given them anything. The ask is the test itself, and
-            First Quarter is the one whose responses the norms are built on. */}
+        {/* nofollow: /auth is not prerendered, and the banner sits on every
+            prerendered page, which once made it the largest single source of
+            crawled 404s. */}
         <Link
-          to={navHref({ to: '/first-quarter' }, lang)}
+          to={navHref({ to: '/auth' }, lang)}
           rel="nofollow"
           className="shrink-0 text-xs font-bold text-gray-900 underline hover:no-underline"
         >
           {t('beta.cta')}
         </Link>
-
       </div>
     </div>
   )

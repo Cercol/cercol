@@ -1,7 +1,7 @@
 {
   "beta": {
-    "banner": "{{n}} von {{threshold}} Antworten. Bis dahin werden die Ergebnisse mit veröffentlichten Normen verglichen, nicht mit anderen Testpersonen.",
-    "cta": "Deine Antwort hinzufügen",
+    "banner": "Launch-Aktion: Vollmond während der Beta kostenlos.",
+    "cta": "Kostenlosen Zugang holen",
     "badge": "Beta-Tester"
   },
   "nav": {
@@ -1101,7 +1101,18 @@
       "secondLabel": "Zweitbeste"
     },
     "term": "Zeuge",
-    "termPlural": "Zeugen"
+    "termPlural": "Zeugen",
+    "roleCheck": {
+      "heading": "Eine letzte Frage. Dabei geht es um uns, nicht um {{name}}.",
+      "body": "Deine Antworten ordnen {{name}} einer von zwölf Rollen zu. Welche dieser drei klingt am ehesten nach der Person, die du gerade beschrieben hast?",
+      "note": "Das ergibt sich allein aus deinen Antworten, nicht aus dem Ergebnis dieser Person. Es sagt uns, ob unsere Rollen überhaupt etwas bedeuten. An ihren Werten ändert es nichts.",
+      "agreement": "Und wie gut passt sie?",
+      "scaleLow": "Gar nicht",
+      "scaleHigh": "Genau so",
+      "cta": "Senden",
+      "sending": "Wird gesendet…",
+      "skip": "Überspringen"
+    }
   },
   "witnessResults": {
     "title": "Full Moon Bericht",
@@ -1310,7 +1321,7 @@
     },
     "q1": {
       "q": "Sind meine Daten privat?",
-      "a": "Die kostenlosen Instrumente speichern anonyme Ergebnisse ohne persönliche Informationen, kein Name, keine E-Mail, keine IP-Adresse. Wenn du ein Konto erstellst, wird deine E-Mail auf unseren eigenen Servern gespeichert und deine Ergebnisse werden mit deinem Konto verknüpft. Du kannst dein Konto jederzeit löschen. Keine Daten werden an Dritte verkauft oder weitergegeben."
+      "a": "Die kostenlosen Instrumente speichern anonyme Ergebnisse ohne persönliche Informationen, kein Name, keine E-Mail, keine IP-Adresse. Wenn du ein Konto erstellst, wird deine E-Mail auf unseren eigenen Servern gespeichert und deine Ergebnisse werden mit deinem Konto verknüpft. Du kannst dein Konto jederzeit löschen. Daten werden nie verkauft, nie für Werbung genutzt und nie an Dritte weitergegeben. Veröffentlicht werden ausschließlich die anonymisierten Werte, als offener Datensatz für die Forschung."
     },
     "q2": {
       "q": "Sind die Ergebnisse genau?",

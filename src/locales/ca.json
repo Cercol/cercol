@@ -1,7 +1,7 @@
 {
   "beta": {
-    "banner": "{{n}} de {{threshold}} respostes. Per sota, les puntuacions es comparen amb normes publicades, no amb qui ha fet el test.",
-    "cta": "Afegeix la teva",
+    "banner": "Promoció de llançament: la Lluna Plena és gratuïta durant la beta.",
+    "cta": "Aconsegueix accés gratuït",
     "badge": "Beta tester"
   },
   "nav": {
@@ -1101,7 +1101,18 @@
       "secondLabel": "Segon millor"
     },
     "term": "Testimoni",
-    "termPlural": "Testimonis"
+    "termPlural": "Testimonis",
+    "roleCheck": {
+      "heading": "Una última pregunta. És sobre nosaltres, no sobre {{name}}.",
+      "body": "Les teves respostes situen {{name}} en un de dotze rols. Quin d'aquests tres s'assembla més a la persona que acabes de descriure?",
+      "note": "Surt només de les teves respostes, no del resultat d'aquesta persona. Ens serveix per saber si els nostres rols volen dir alguna cosa. No li canvia la puntuació.",
+      "agreement": "I com de bé encaixa?",
+      "scaleLow": "Gens",
+      "scaleHigh": "Del tot",
+      "cta": "Enviar",
+      "sending": "Enviant…",
+      "skip": "Salta-ho"
+    }
   },
   "witnessResults": {
     "title": "Informe de Lluna Plena",
@@ -1310,7 +1321,7 @@
     },
     "q1": {
       "q": "Les meues dades són privades?",
-      "a": "Els instruments gratuïts registren puntuacions anònimes sense informació personal, sense nom, sense correu, sense adreça IP. Si crees un compte, el teu correu s'emmagatzema als nostres propis servidors i els teus resultats es vinculen al teu compte. Pots eliminar el compte en qualsevol moment. Cap dada es ven ni es comparteix amb tercers."
+      "a": "Els instruments gratuïts registren puntuacions anònimes sense informació personal, sense nom, sense correu, sense adreça IP. Si crees un compte, el teu correu s'emmagatzema als nostres propis servidors i els teus resultats es vinculen al teu compte. Pots eliminar el compte en qualsevol moment. Cap dada es ven, ni es fa servir per a publicitat, ni es comparteix amb tercers. L'única cosa que es publica són les puntuacions anonimitzades, com a conjunt de dades obert per a la recerca."
     },
     "q2": {
       "q": "Són precisos els resultats?",

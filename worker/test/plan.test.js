@@ -53,10 +53,15 @@ describe('distribution plan', () => {
     expect(nextTask(Object.fromEntries(PLAN_TASKS.map((t) => [t.id, { status: 'done' }])))).toBeNull()
   })
 
-  it('keeps the consent notice in the plan, because it expires value daily', () => {
+  // Was: "keeps the consent notice in the plan, because it expires value
+  // daily". That premise was wrong and the step is closed. A response is five
+  // ordinal scores, an instrument, a language and a date; no IP, no free text,
+  // no email in the published table. It is an anonymous survey and publishing
+  // it infringes nobody. See docs/policies/research-data.md.
+  it('keeps the settled consent position pointing at the document that settles it', () => {
     const gate = PLAN_TASKS.find((t) => t.id === 'ct1')
-    expect(gate.done).toBe(false)
-    expect(gate.title.toLowerCase()).toContain('consentiment')
+    expect(gate.done).toBe(true)
+    expect(gate.action.url).toContain('research-data.md')
   })
 
   it('describes every section it renders', () => {
