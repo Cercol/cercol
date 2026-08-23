@@ -580,7 +580,7 @@ appearing in the data.
 
 There is no API for the "Page indexing" report itself. Two others carry
 the same signal, and `worker/src/jobs/indexing.js` reads both on the
-04:00 run:
+05:00 run:
 
 - **Sitemaps** (`/webmasters/v3/sites/{site}/sitemaps`): error and
   warning counts, and when Google last downloaded it. One request.
@@ -599,6 +599,20 @@ four jobs, and the link sweep is paced at 15 probes for exactly this
 reason: nine more could have taken the brief down with it. The brief
 reads the snapshot with one KV get, a few hours old, which is the same
 verdict Google would give it live.
+
+Asking daily has the same hazard the language job below names: Google
+sits on a fix for days or weeks, and the identical verdict would come
+back every morning until it moves: `/fr/blog/` was diagnosed and fixed
+on 2026-08-22, and the 2026-08-23 brief asked for it again unchanged. So
+a problem is reported once and then held for `RENOTIFY_DAYS` (14). It is
+said again at once when its coverage state or the canonical Google chose
+changes, and a page is only marked healed on a run that actually
+inspected it: the inspection budget rotates with traffic, and a page
+merely not asked about today has not been fixed. The memory lives in
+its own KV key, not in the snapshot: the snapshot expires after three
+days so that a job that stops running makes the brief go quiet rather
+than repeat an old verdict as this morning's, and a fourteen-day hold
+kept in a three-day key stops holding on the fourth day.
 
 Both use the BigQuery service account, which is why `accessToken` in
 `worker/src/bigquery.js` takes a scope and caches one token per scope: a

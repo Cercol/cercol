@@ -285,7 +285,7 @@ describe('daily tasks as a GitHub issue', () => {
 
 // Search Console is the only place that says whether Google will index a
 // page at all; the 307 regression went unseen for eleven days without it.
-import { indexingActions, SITEMAP_STALE_DAYS } from '../src/jobs/indexing.js'
+import { indexingActions, freshProblems, SITEMAP_STALE_DAYS, RENOTIFY_DAYS, REPORTED_TTL_DAYS } from '../src/jobs/indexing.js'
 describe('indexing', () => {
   it('says nothing at all until the service account has access', () => {
     expect(indexingActions({ pending: true })).toEqual([])
@@ -308,6 +308,50 @@ describe('indexing', () => {
     expect(indexingActions(broken)).toEqual([expect.stringContaining('2 error(s)')])
     // Warnings alone are not a task, and a fresh clean sitemap is silent.
     expect(indexingActions({ problems: [], sitemap: { path: '/sitemap.xml', errors: 0, warnings: 9, ageDays: 1 } })).toEqual([])
+  })
+
+  // /fr/blog/ was diagnosed and fixed on 2026-08-22, and the next morning's
+  // brief asked for it again with the identical verdict: Google sits on a
+  // fix for weeks, and re-asking daily is noise. Same memory as freshGaps.
+  const prob = { url: 'https://cercol.team/fr/blog/', state: 'crawled - currently not indexed', googleCanonical: null }
+  const now = Date.parse('2026-09-01T05:00:00Z')
+  it('reports a problem once, then holds it while the verdict is unchanged', () => {
+    const first = freshProblems([prob], {}, { now, inspected: [prob.url] })
+    expect(first.fresh).toHaveLength(1)
+    // Tomorrow, same verdict, nothing new to say.
+    const second = freshProblems([prob], first.reported, { now: now + 86400e3, inspected: [prob.url] })
+    expect(second.fresh).toEqual([])
+    // Still stuck after the hold: worth saying again.
+    const later = freshProblems([prob], first.reported, { now: now + (RENOTIFY_DAYS + 1) * 86400e3, inspected: [prob.url] })
+    expect(later.fresh).toHaveLength(1)
+  })
+  it('keeps the memory alive longer than the hold it implements', () => {
+    // The snapshot expires in three days so a dead job goes quiet instead of
+    // repeating an old verdict. The memory lives in its own key for exactly
+    // this reason: sharing that key would have expired the hold at day three
+    // and re-reported everything as news on day four.
+    expect(REPORTED_TTL_DAYS).toBeGreaterThan(RENOTIFY_DAYS)
+  })
+
+  it('says a page again the moment its verdict moves', () => {
+    const { reported } = freshProblems([prob], {}, { now, inspected: [prob.url] })
+    const moved = freshProblems([{ ...prob, state: 'discovered - currently not indexed' }], reported, { now: now + 86400e3, inspected: [prob.url] })
+    expect(moved.fresh).toHaveLength(1)
+    // The stale verdict is forgotten with the move.
+    expect(Object.keys(moved.reported)).toHaveLength(1)
+  })
+  it('forgets only a page that was inspected: budget rotating away is not a fix', () => {
+    const { reported } = freshProblems([prob], {}, { now, inspected: [prob.url] })
+    // Next day the inspection budget went elsewhere: the page keeps its hold.
+    const skipped = freshProblems([], reported, { now: now + 86400e3, inspected: ['https://cercol.team/'] })
+    expect(skipped.reported).toEqual(reported)
+    // Inspected and healthy: forgotten, so a recurrence reads as news.
+    const healed = freshProblems([], reported, { now: now + 2 * 86400e3, inspected: [prob.url] })
+    expect(healed.reported).toEqual({})
+  })
+  it('the brief reads fresh when the snapshot carries it, problems when it predates the memory', () => {
+    expect(indexingActions({ problems: [prob], fresh: [], sitemap: null })).toEqual([])
+    expect(indexingActions({ problems: [prob], sitemap: null })).toHaveLength(1)
   })
 })
 

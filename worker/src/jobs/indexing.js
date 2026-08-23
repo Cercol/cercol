@@ -46,6 +46,13 @@ export const INSPECT_LIMIT = 6
 // A sitemap Google has not fetched in this long is a sitemap it has lost
 // interest in, or one that started answering something other than 200.
 export const SITEMAP_STALE_DAYS = 7
+// A problem already reported is held this long, then said again if still
+// there. Google sits on a fix for days or weeks, and the brief re-reporting
+// the same URL every morning until the verdict moves is noise, not a task:
+// /fr/blog/ was diagnosed and fixed on 2026-08-22 and the 2026-08-23 brief
+// asked for it again unchanged. A page is said again the moment its state
+// changes, so this holds only the identical verdict.
+export const RENOTIFY_DAYS = 14
 
 /** Google's verdict strings, shortened for a line in an email. */
 const clean = (s) => String(s || '').replace(/_/g, ' ').toLowerCase()
@@ -70,7 +77,7 @@ export async function gatherIndexing(env, paths = [], { now = Date.now() } = {})
   const origin = env.FRONTEND_URL || 'https://cercol.team'
   try {
     const tok = await accessToken(env, SCOPE)
-    const out = { site, problems: [], sitemap: null }
+    const out = { site, problems: [], sitemap: null, inspected: [] }
 
     const list = await scFetch(tok, `/webmasters/v3/sites/${encodeURIComponent(site)}/sitemaps`)
     const sm = (list.sitemap || [])[0]
@@ -89,6 +96,7 @@ export async function gatherIndexing(env, paths = [], { now = Date.now() } = {})
       urls.push(url)
       if (urls.length >= INSPECT_LIMIT) break
     }
+    out.inspected = urls
 
     for (const url of urls) {
       const r = await scFetch(tok, '/v1/urlInspection/index:inspect', {
@@ -113,6 +121,43 @@ export async function gatherIndexing(env, paths = [], { now = Date.now() } = {})
 }
 
 export const KV_KEY = 'seo:indexing'
+// The memory of what has already been reported, kept apart from the snapshot
+// on purpose. The snapshot expires in three days so that a dead job makes the
+// brief say nothing rather than repeat a three-week-old verdict as if it were
+// this morning's; the memory has to outlive RENOTIFY_DAYS or the hold it
+// implements quietly stops holding. One key cannot have both lifetimes.
+export const REPORTED_KEY = 'seo:indexing:reported'
+export const REPORTED_TTL_DAYS = RENOTIFY_DAYS + 7
+
+/**
+ * The problems not reported recently, and the reported-set to store back.
+ * Same arrangement as freshGaps in jobs/languages.js: report once, hold for
+ * RENOTIFY_DAYS, forget what resolved so a recurrence reads as news.
+ *
+ * The key carries the state and the canonical, so a page whose verdict moves
+ * (discovered to crawled, or a canonical Google changed its mind about) is
+ * news and is said again at once. Only a page that was actually inspected
+ * this run can be forgotten: the inspection budget rotates with traffic, and
+ * a page merely not asked about today has not been fixed.
+ */
+export function freshProblems(problems, reported = {}, { now = Date.now(), renotifyDays = RENOTIFY_DAYS, inspected = [] } = {}) {
+  const key = (p) => `${p.url}|${p.state}|${p.googleCanonical || ''}`
+  const next = { ...reported }
+  const fresh = []
+  for (const p of problems) {
+    const k = key(p)
+    const last = next[k] ? Date.parse(next[k]) : 0
+    if (now - last < renotifyDays * 86400e3) continue
+    next[k] = new Date(now).toISOString()
+    fresh.push(p)
+  }
+  const live = new Set(problems.map(key))
+  const asked = new Set(inspected)
+  for (const k of Object.keys(next)) {
+    if (asked.has(k.slice(0, k.indexOf('|'))) && !live.has(k)) delete next[k]
+  }
+  return { fresh, reported: next }
+}
 
 /**
  * Gather and leave the snapshot in KV for the next brief to read. The pages
@@ -134,15 +179,26 @@ export async function runIndexing(env) {
       GROUP BY path ORDER BY n DESC LIMIT ?`
   ).bind(since, INSPECT_LIMIT).all()
   const out = await gatherIndexing(env, ['/', ...gapPaths, ...results.map((r) => r.path)])
-  if (env.NORMS) await env.NORMS.put(KV_KEY, JSON.stringify({ ...out, at: new Date().toISOString() }), { expirationTtl: 3 * 86400 })
-  return { pending: !!out.pending, error: out.error || null, problems: out.problems?.length || 0 }
+  // A pending run (permission missing, API down) keeps yesterday's memory:
+  // wiping it would make the next good run re-report everything as news.
+  const prev = env.NORMS ? await env.NORMS.get(REPORTED_KEY, 'json') : null
+  const { fresh, reported } = out.pending
+    ? { fresh: [], reported: prev || {} }
+    : freshProblems(out.problems, prev, { inspected: out.inspected })
+  if (env.NORMS) {
+    await env.NORMS.put(KV_KEY, JSON.stringify({ ...out, fresh, at: new Date().toISOString() }), { expirationTtl: 3 * 86400 })
+    await env.NORMS.put(REPORTED_KEY, JSON.stringify(reported), { expirationTtl: REPORTED_TTL_DAYS * 86400 })
+  }
+  return { pending: !!out.pending, error: out.error || null, problems: out.problems?.length || 0, fresh: fresh.length }
 }
 
 /** The lines the brief should act on, most costly first. Empty when healthy. */
 export function indexingActions(ix) {
   if (!ix || ix.pending) return []
   const out = []
-  for (const p of ix.problems) {
+  // fresh is the problems not already reported in the last RENOTIFY_DAYS;
+  // a snapshot from before the memory existed carries only problems.
+  for (const p of ix.fresh || ix.problems) {
     out.push(p.googleCanonical
       ? `Google indexes ${p.googleCanonical} instead of ${p.url} (${p.state}). Whatever points at the second one is spending its authority on a URL that is not in the index.`
       : `${p.url} is not indexed: ${p.state}.`)
