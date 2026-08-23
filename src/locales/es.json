@@ -316,7 +316,7 @@
     "forgotPassword": "¿Olvidaste la contraseña? Usa el enlace mágico."
   },
   "home": {
-    "subtitle": "Conócete mejor.",
+    "subtitle": "Seis idiomas. Decimos de dónde viene cada pregunta.",
     "headline": "Elige tu evaluación",
     "privacy": "Privacidad",
     "newMoon": {
@@ -345,7 +345,7 @@
     },
     "footnote": "Código abierto · ",
     "viewOnGitHub": "Ver en GitHub",
-    "h1": "Cèrcol: evaluación de personalidad de equipos de código abierto",
+    "h1": "Cèrcol: un test de personalidad para equipos, en seis idiomas, con preguntas publicadas y de procedencia documentada.",
     "witness": {
       "name": "Cèrcol de Testigo"
     }

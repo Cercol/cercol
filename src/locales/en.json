@@ -316,7 +316,7 @@
     "forgotPassword": "Forgot password? Use magic link to sign in."
   },
   "home": {
-    "subtitle": "Know yourself better.",
+    "subtitle": "Six languages. Every question has a named source.",
     "headline": "Choose your assessment",
     "privacy": "Privacy",
     "newMoon": {
@@ -345,7 +345,7 @@
     },
     "footnote": "Open source · ",
     "viewOnGitHub": "View on GitHub",
-    "h1": "Cèrcol: open-source team personality assessment",
+    "h1": "Cèrcol: a team personality test in six languages, built from published questions that name their source.",
     "witness": {
       "name": "Witness Cèrcol"
     }

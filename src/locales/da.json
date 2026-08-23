@@ -316,7 +316,7 @@
     "forgotPassword": "Glemt adgangskode? Brug magic link."
   },
   "home": {
-    "subtitle": "Kend dig selv bedre.",
+    "subtitle": "Seks sprog. Vi oplyser kilden til hvert spørgsmål.",
     "headline": "Vælg din vurdering",
     "privacy": "Privatliv",
     "newMoon": {
@@ -345,7 +345,7 @@
     },
     "footnote": "Open source · ",
     "viewOnGitHub": "Se koden på GitHub",
-    "h1": "Cèrcol: open source-personlighedsvurdering for teams",
+    "h1": "Cèrcol: en personlighedstest til teams på seks sprog, bygget på offentliggjorte spørgsmål, hvis kilde vi oplyser.",
     "witness": {
       "name": "Vidne Cèrcol"
     }

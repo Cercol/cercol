@@ -316,7 +316,7 @@
     "forgotPassword": "Has oblidat la contrasenya? Utilitza l'enllaç màgic."
   },
   "home": {
-    "subtitle": "Coneix-te millor.",
+    "subtitle": "Sis llengües. Diem d'on ve cada pregunta.",
     "headline": "Tria la teua avaluació",
     "privacy": "Privacitat",
     "newMoon": {
@@ -345,7 +345,7 @@
     },
     "footnote": "Codi obert · ",
     "viewOnGitHub": "Codi a GitHub",
-    "h1": "Cèrcol: avaluació de personalitat d'equips de codi obert",
+    "h1": "Cèrcol: un test de personalitat per a equips, en sis llengües, amb preguntes publicades i de procedència documentada.",
     "witness": {
       "name": "Cèrcol de Testimoni"
     }

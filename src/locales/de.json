@@ -316,7 +316,7 @@
     "forgotPassword": "Passwort vergessen? Nutze den Magic Link."
   },
   "home": {
-    "subtitle": "Kenne dich besser.",
+    "subtitle": "Sechs Sprachen. Bei jeder Frage nennen wir die Quelle.",
     "headline": "Wähle deine Auswertung",
     "privacy": "Datenschutz",
     "newMoon": {
@@ -345,7 +345,7 @@
     },
     "footnote": "Open Source · ",
     "viewOnGitHub": "Quellcode auf GitHub",
-    "h1": "Cèrcol: Open-Source-Persönlichkeitsbewertung für Teams",
+    "h1": "Cèrcol: ein Persönlichkeitstest für Teams in sechs Sprachen, aufgebaut aus veröffentlichten Fragen, deren Quelle wir nennen.",
     "witness": {
       "name": "Cèrcol des Zeugen"
     }
