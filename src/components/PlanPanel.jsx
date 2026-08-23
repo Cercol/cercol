@@ -17,7 +17,7 @@
  * lists. The progress moon is the product's own metaphor, not a new one.
  */
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { PLAN_SECTIONS, PLAN_TASKS, AUDIENCE, nextTask, taskStatus } from '../data/distribution-plan'
+import { PLAN_SECTIONS, PLAN_TASKS, AUDIENCE, nextTask, taskStatus, mineReason, minePending } from '../data/distribution-plan'
 import { getAuthorityStatus, setAuthorityStatus, fileAuthorityIssue, sendPlanEmail } from '../lib/api'
 import { Badge, Button, SectionLabel } from './ui'
 import {
@@ -170,6 +170,22 @@ function Action({ action, taskId, sent, onSend, busy }) {
   return null
 }
 
+/**
+ * The step the daily routine will never take. Deliberately unlike the payoff
+ * badges beside it: those say what a step is worth, this says who has to be
+ * at the keyboard, so it reads as a different kind of fact and not as one
+ * more attribute. It carries the reason inline rather than in a tooltip,
+ * because most of the plan is read on a phone and there is no hover there.
+ */
+function MinePill({ reason }) {
+  return (
+    <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--mm-color-red)] bg-white px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[var(--mm-color-red)]">
+      <span className="h-1.5 w-1.5 rounded-full bg-[var(--mm-color-red)]" aria-hidden="true" />
+      Només tu · {reason}
+    </span>
+  )
+}
+
 function TaskRow({ task, row, status, busy, open, onToggleOpen, onCycle, onFile, onSend }) {
   return (
     <li id={`plan-${task.id}`} className={status === 'done' ? 'opacity-60' : ''}>
@@ -185,6 +201,7 @@ function TaskRow({ task, row, status, busy, open, onToggleOpen, onCycle, onFile,
           <span className="min-w-0">
             <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
               <span className="text-sm font-medium text-gray-900">{task.title}</span>
+              {mineReason(task) && <MinePill reason={mineReason(task)} />}
               {task.aud.map((a) => (
                 <span key={a} className="rounded bg-gray-100 px-1.5 py-0.5 text-[10px] uppercase tracking-wide text-gray-500">{AUDIENCE[a] || a}</span>
               ))}
@@ -246,6 +263,7 @@ export default function PlanPanel() {
   const [open, setOpen] = useState({})
   const [openSections, setOpenSections] = useState({})
   const [pendingOnly, setPendingOnly] = useState(true)
+  const [mineOnly, setMineOnly] = useState(false)
 
   const load = useCallback(async () => {
     setLoading(true)
@@ -263,6 +281,7 @@ export default function PlanPanel() {
   useEffect(() => { load() }, [load])
 
   const next = useMemo(() => nextTask(state), [state])
+  const mine = useMemo(() => minePending(state), [state])
 
   // The section holding the next step opens itself. Ten collapsed sections
   // with nothing open is a plan you have to go looking into.
@@ -356,9 +375,11 @@ export default function PlanPanel() {
         )}
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         <Button variant={pendingOnly ? 'primary' : 'secondary'} size="sm" onClick={() => setPendingOnly(true)}>Pendents</Button>
         <Button variant={pendingOnly ? 'secondary' : 'primary'} size="sm" onClick={() => setPendingOnly(false)}>Totes</Button>
+        <Button variant={mineOnly ? 'primary' : 'secondary'} size="sm" onClick={() => setMineOnly((v) => !v)}>Només meves</Button>
+        <span className="text-xs text-gray-500">{mine.mine} de {mine.left} pendents no les farà la rutina</span>
       </div>
 
       {loading && <p className="text-sm text-gray-400">Carregant…</p>}
@@ -366,9 +387,11 @@ export default function PlanPanel() {
       {!loading && PLAN_SECTIONS.map((section) => {
         const all = section.tasks
         const sectionDone = all.filter((t) => taskStatus(t, state) === 'done').length
-        const shown = pendingOnly ? all.filter((t) => taskStatus(t, state) !== 'done') : all
+        const shown = all.filter(
+          (t) => (!pendingOnly || taskStatus(t, state) !== 'done') && (!mineOnly || mineReason(t)),
+        )
         const isOpen = openSections[section.id] ?? false
-        if (pendingOnly && !shown.length && !isOpen) return null
+        if ((pendingOnly || mineOnly) && !shown.length && !isOpen) return null
 
         return (
           <section key={section.id}>

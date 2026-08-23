@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { STATUSES } from '../src/authority.js'
-import { PLAN_SECTIONS, PLAN_TASKS, AUDIENCE, EFFORTS, PAYOFFS, nextTask, taskStatus } from '../../src/data/distribution-plan.js'
+import { PLAN_SECTIONS, PLAN_TASKS, AUDIENCE, EFFORTS, PAYOFFS, nextTask, taskStatus, mineReason, minePending } from '../../src/data/distribution-plan.js'
 
 describe('distribution plan', () => {
   it('gives every step the fields the panel renders', () => {
@@ -68,5 +68,36 @@ describe('distribution plan', () => {
 
   it('agrees with the Worker about what a status is', () => {
     expect(STATUSES).toEqual(['todo', 'doing', 'done', 'dropped'])
+  })
+})
+
+// Spec: src/data/distribution-plan.js
+//
+// Most of what is left in the plan is the operator's, and the panel has to
+// say which before the work starts rather than after. The routine already
+// reports it every morning in prose ("need your accounts", "wants an
+// interactive session"); this is the same fact on the step itself.
+describe('steps the routine will not take', () => {
+  it('names a reason for every step that is not a prompt', () => {
+    for (const t of PLAN_TASKS) {
+      const reason = mineReason(t)
+      if (t.action?.type === 'prompt' && !t.mine) {
+        expect(reason, `${t.id} is a prompt and should be the routine's`).toBeNull()
+      } else {
+        expect(reason, `${t.id} (${t.action?.type}) needs a reason`).toBeTruthy()
+      }
+    }
+  })
+
+  it('counts only what is still open', () => {
+    const { mine, left } = minePending()
+    expect(left).toBe(PLAN_TASKS.filter((t) => !t.done).length)
+    expect(mine).toBeGreaterThan(0)
+    expect(mine).toBeLessThanOrEqual(left)
+    // A step marked done in D1 leaves both counts.
+    const first = PLAN_TASKS.find((t) => !t.done && mineReason(t))
+    const after = minePending({ [first.id]: { status: 'done' } })
+    expect(after.mine).toBe(mine - 1)
+    expect(after.left).toBe(left - 1)
   })
 })
