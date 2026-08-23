@@ -120,6 +120,7 @@ export default function SampleFirstQuarterPage() {
             domainNs="fqDomains"
             labelNs="fqResults"
             facetCountLabel={t('fqResults.facetsCount')}
+            t={t}
             domainDescFn={(key) => {
               const score = domains[key]
               const v = score > 3.5 ? 'high' : score < 2.5 ? 'low' : null
