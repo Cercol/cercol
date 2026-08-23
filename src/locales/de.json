@@ -46,7 +46,7 @@
       "confirm": "Ja, wiederholen",
       "cancel": "Abbrechen"
     },
-    "contributionsHeading": "Beiträge als Zeuge/Zeugin",
+    "contributionsHeading": "Beiträge als Zeugin oder Zeuge",
     "contributionsEmpty": "Du hast noch keine Zeugensitzungen abgeschlossen.",
     "contributionItem": "{{name}} beschrieben",
     "newVersion": {
@@ -108,7 +108,7 @@
     "balance": {
       "topContributor": "Höchster:",
       "compensates": "kann das ausbalancieren",
-      "suggestRole": "Niemand kompensiert: erwägen Sie ein {{role}}-Profil",
+      "suggestRole": "Niemand kompensiert: erwäge ein {{role}}-Profil",
       "suggestRoles": "Diese Profile würden das Team stärken:",
       "notes": {
         "presence_balanced": "Präsenz ist ausgewogen. Energie und Zuhören koexistieren.",
@@ -203,7 +203,7 @@
       "heading": "Warum wir es erheben",
       "body": "Wir erheben Daten ausschließlich für drei Zwecke:",
       "function": "Um den Dienst bereitzustellen: deine E-Mail-Adresse wird benötigt, um dich zu authentifizieren; deine Ergebnisse werden gespeichert, damit du deine Historie einsehen kannst.",
-      "research": "Anonymisierte Forschung: Die de-identifizierten Werte dienen dazu, das Persönlichkeitsmodell zu verbessern und Normen über Populationen hinweg zu validieren, und werden als offener Datensatz veröffentlicht, damit andere Forschende damit arbeiten können. Die veröffentlichten Daten enthalten den Wert, das Instrument, die Sprache und das Datum, niemals Ihre E-Mail-Adresse, Ihr Konto oder etwas, das Sie identifizieren könnte.",
+      "research": "Anonymisierte Forschung: Die de-identifizierten Werte dienen dazu, das Persönlichkeitsmodell zu verbessern und Normen über Populationen hinweg zu validieren, und werden als offener Datensatz veröffentlicht, damit andere Forschende damit arbeiten können. Die veröffentlichten Daten enthalten den Wert, das Instrument, die Sprache und das Datum, niemals deine E-Mail-Adresse, dein Konto oder etwas, das dich identifizieren könnte.",
       "payment": "Um deine Zahlung zu verarbeiten, Stripe benötigt deine Kartendaten, um dir den Cèrcol des Vollmondes in Rechnung zu stellen. Wir erhalten nur eine Bestätigung.",
       "noAds": "Wir verkaufen keine Daten. Wir nutzen keine Daten für Werbung. Wir teilen keine Daten mit Dritten, außer wie oben beschrieben."
     },
@@ -341,7 +341,7 @@
     "lastQuarter": {
       "name": "Cèrcol des Letzten Viertels",
       "meta": "Teambericht",
-      "description": "Das Rollenprofil Ihres Teams: Balance, Narrativ und gemeinsame blinde Flecken."
+      "description": "Das Rollenprofil deines Teams: Balance, Narrativ und gemeinsame blinde Flecken."
     },
     "footnote": "Open Source · ",
     "viewOnGitHub": "Quellcode auf GitHub",
@@ -480,7 +480,7 @@
       "meta": "120 Fragen · ~20 Min.",
       "scale": "1–5 · Sehr unzutreffend → Sehr zutreffend",
       "guidance": "Du kennst dich selbst. Vertrau darauf.",
-      "partNote": "Dies ist Teil 1 eines zweiteiligen Instruments. Zeuge Cèrcol folgt nach deinen Ergebnissen.",
+      "partNote": "Dies ist Teil 1 eines zweiteiligen Instruments. Cèrcol des Zeugen folgt nach deinen Ergebnissen.",
       "cta": "Beginnen"
     },
     "alreadyCompleted": {
@@ -506,10 +506,10 @@
     "retake": "Von vorne beginnen",
     "disclaimer": "Die Ergebnisse spiegeln Tendenzen zum Zeitpunkt der Auswertung wider. Jedes Ende einer Dimension hat seine eigenen Stärken, kein Ergebnis ist gut oder schlecht.",
     "witnessCta": {
-      "eyebrow": "Zeuge Cèrcol",
+      "eyebrow": "Cèrcol des Zeugen",
       "heading": "Sieh dich von außen.",
       "body": "Bitte jemanden, der dich gut kennt, dich zu beschreiben. Es dauert 5 Minuten und zeigt dir, was du an dir selbst nicht sehen kannst.",
-      "cta": "Zeuge*in einladen",
+      "cta": "Zeugen einladen",
       "report": "Vollständigen Bericht ansehen"
     }
   },
@@ -1035,9 +1035,9 @@
     "setup": {
       "checking": "Zugang wird überprüft…",
       "title": "Lade deine Zeugen ein",
-      "subtitle": "Eine Zeuge/Zeugin sieht dich von außen. Füge bis zu 12 Personen hinzu, die dich gut kennen.",
+      "subtitle": "Zeuginnen und Zeugen sehen dich von außen. Füge bis zu 12 Personen hinzu, die dich gut kennen.",
       "addHeading": "Zeugen hinzufügen",
-      "addRow": "Weitere Zeuge*in hinzufügen",
+      "addRow": "Weitere Person hinzufügen",
       "generate": "Links generieren",
       "generating": "Links werden erstellt…",
       "linksHeading": "Deine Zeugen-Links",
@@ -1105,7 +1105,7 @@
   },
   "witnessResults": {
     "title": "Full Moon Bericht",
-    "subtitle": "Selbstbericht · Zeuge Cèrcol",
+    "subtitle": "Selbstbericht · Cèrcol des Zeugen",
     "loading": "Dein Bericht wird geladen…",
     "error": "Bericht konnte nicht geladen werden. Versuche es später erneut.",
     "noSelf": "Schließe zuerst Cèrcol des Vollmondes ab, um deinen Bericht zu sehen.",
@@ -1113,8 +1113,8 @@
     "selfSection": "Dein Selbstbericht",
     "selfRoleSection": "Deine Rolle · Selbst",
     "witnessSection": "Wie Zeugen dich sehen",
-    "witnessCount": "{{count}} Zeuge/Zeugin abgeschlossen",
-    "witnessCount_plural": "{{count}} Zeugen abgeschlossen",
+    "witnessCount": "{{count}} Zeugensitzung abgeschlossen",
+    "witnessCount_plural": "{{count}} Zeugensitzungen abgeschlossen",
     "pendingNote": "Du brauchst mindestens 2 abgeschlossene Zeugen, um diesen Abschnitt zu sehen.",
     "selfLabel": "Selbst",
     "witnessLabel": "Zeugen",
@@ -1123,7 +1123,7 @@
     "roleSection": "Deine Rolle · Zeugen",
     "setupCta": "Zeugen einladen",
     "disclaimer": "Zeugen-Ergebnisse spiegeln die Perspektive der Personen wider, die das Instrument abgeschlossen haben. Divergenz ist kein Fehler: sie ist Information.",
-    "definitiveLabel": "Zeuge einbezogen",
+    "definitiveLabel": "Zeugen einbezogen",
     "definitiveNote": "Das Zeugensignal reduziert die Unsicherheit bei der Rollenzuweisung. Dies ist dein vollständigstes Ergebnis.",
     "domainsSection": "Die fünf Dimensionen",
     "witnessSessionsSection": "Zeugen",
@@ -1261,9 +1261,9 @@
         "body": "120 Items über 5 Domänen und 30 Facetten, doppelte Auflösung im Vergleich zu Erstes Viertel. Bildet das primäre Rollenergebnis."
       },
       "witness": {
-        "heading": "Zeuge Cèrcol",
-        "body": "Eine Forced-Choice-Aufgabe, die jemanden erhält, der dich gut kennt. In jeder Runde sieht die Zeuge/Zeugin fünf Wörter und wählt die beste und die schlechteste Passung für dich, ein Adjektiv pro Dimension. Forced Choice eliminiert den sozialen Erwünschtheitseffekt, der Selbstberichte verzerrt.",
-        "idealWitness": "Eine ideale Zeuge/Zeugin hat mit dir gearbeitet, mit dir gelebt oder echte Zeit um dich herum verbracht. Nicht dein engster Verbündeter, nicht dein härtester Kritiker, jemand, der dich so sieht, wie du wirklich bist.",
+        "heading": "Cèrcol des Zeugen",
+        "body": "Eine Forced-Choice-Aufgabe, die jemanden erhält, der dich gut kennt. In jeder Runde sehen Zeuginnen und Zeugen fünf Wörter und wählen die beste und die schlechteste Passung für dich, ein Adjektiv pro Dimension. Forced Choice eliminiert den sozialen Erwünschtheitseffekt, der Selbstberichte verzerrt.",
+        "idealWitness": "Ideal ist eine Person, die mit dir gearbeitet, mit dir gelebt oder echte Zeit um dich herum verbracht hat. Nicht dein engster Verbündeter, nicht dein härtester Kritiker, jemand, der dich so sieht, wie du wirklich bist.",
         "blindSpots": "Das Zeugenergebnis wird mit dem Selbstbericht verglichen. Wo sie erheblich abweichen, wird ein blinder Fleck markiert, eine Dimension, die du anders siehst als die Menschen um dich herum."
       }
     },
@@ -1283,7 +1283,7 @@
       "milestones": {
         "n300": {
           "label": "N ≥ 300 Die Zählung beginnt von vorn, sobald sich das Instrument ändert, denn Antworten auf verschiedene Fragen lassen sich nicht zusammenzählen; am 22. August 2026 hat es sich geändert, also begann die Zählung dort neu.",
-          "desc": "Interne Konsistenz der Rollenzuweisungen bestätigen und Selbst- vs. Zeuge-Konvergenz vergleichen."
+          "desc": "Interne Konsistenz der Rollenzuweisungen bestätigen und Selbst- vs. Zeugen-Konvergenz vergleichen."
         },
         "n1000": {
           "label": "N ≥ 1 000",
@@ -1317,8 +1317,8 @@
       "a": "Die Fragen stammen aus begutachteten, weitgehend validierten Instrumenten. Die Fünf-Dimensionen-Ergebnisse sind für ein Selbstberichts-Tool dieser Länge zuverlässig. Die Rollenbewertung ist klar als Beta gekennzeichnet, sie verwendet theoretische Ausgangspunkte und wird genauer, wenn sich reale Daten akkumulieren. Nimm die Dimensionen ernst; behandle die Rolle als nützliche erste Schätzung."
     },
     "q3": {
-      "q": "Was ist die Zeuge/Zeugin und wen soll ich einladen?",
-      "a": "Die Zeuge/Zeugin ist jemand, den du einlädst, dich von außen zu beschreiben. Sie sehen Gruppen von Wörtern und wählen aus, welche am besten und schlechtesten zu dir passen, eine kurze Forced-Choice-Aufgabe, die etwa 5 Minuten dauert. Eine ideale Zeuge/Zeugin ist jemand, der echte Zeit mit dir verbracht hat: ein*e Kolleg*in, ein*e Mitbewohner*in, ein*e enge Freund*in. Nicht dein größter Fan, nicht dein härtester Kritiker. Jemand, der dich so sieht, wie du wirklich bist."
+      "q": "Was sind Zeuginnen und Zeugen, und wen soll ich einladen?",
+      "a": "Zeuginnen und Zeugen sind Menschen, die du einlädst, dich von außen zu beschreiben. Sie sehen Gruppen von Wörtern und wählen aus, welche am besten und schlechtesten zu dir passen, eine kurze Forced-Choice-Aufgabe, die etwa 5 Minuten dauert. Ideal ist jemand, der echte Zeit mit dir verbracht hat: ein*e Kolleg*in, ein*e Mitbewohner*in, ein*e enge*r Freund*in. Nicht dein größter Fan, nicht dein härtester Kritiker. Jemand, der dich so sieht, wie du wirklich bist."
     },
     "q4": {
       "q": "Was ist der Unterschied zwischen den drei Instrumenten?",
@@ -1338,23 +1338,23 @@
     },
     "q8": {
       "q": "Wie unterscheidet sich Cèrcol von Belbin, DISC oder StrengthsFinder?",
-      "a": "Drei Dinge unterscheiden Cèrcol. Erstens stammen die Items aus dem Big Five (OCEAN), dem am häufigsten replizierten Persönlichkeitsmodell der akademischen Forschung, nicht aus einem proprietären Rahmen. Zweitens sind der vollständige Itempool (IPIP) und die Bewertungspipeline gemeinfrei und prüfbar; keine schwarze Box. Drittens verwendet die Zeuge/Zeugin Cèrcol erzwungene Adjektivauswahl statt Likert-Skalen, was den Bias sozialer Erwünschtheit eliminiert, der die meisten 360-Feedback-Tools beeinträchtigt. Belbin und DISC verwenden geschlossene, proprietäre Methoden."
+      "a": "Drei Dinge unterscheiden Cèrcol. Erstens stammen die Items aus dem Big Five (OCEAN), dem am häufigsten replizierten Persönlichkeitsmodell der akademischen Forschung, nicht aus einem proprietären Rahmen. Zweitens sind der vollständige Itempool (IPIP) und die Bewertungspipeline gemeinfrei und prüfbar; keine schwarze Box. Drittens verwendet Cèrcol des Zeugen erzwungene Adjektivauswahl statt Likert-Skalen, was den Bias sozialer Erwünschtheit eliminiert, der die meisten 360-Feedback-Tools beeinträchtigt. Belbin und DISC verwenden geschlossene, proprietäre Methoden."
     },
     "q9": {
       "q": "Kann ich Cèrcol verwenden, um mein gesamtes Team zu bewerten?",
-      "a": "Ja. Erstelle eine Gruppe in deinem Konto und lade Teammitglieder per E-Mail ein. Sobald alle Vollmond Cèrcol abgeschlossen haben, steht der Teambericht des Letzten Viertels Cèrcol zur Verfügung: Er zeigt Rollenverteilung, Dimensionsbalance in der Gruppe, gemeinsame blinde Flecken und eine Team-Narration. Jedes Mitglied benötigt ein Vollmond-Ergebnis; Zeuge/Zeugin-Ergebnisse vertiefen die individuellen Profile im Bericht."
+      "a": "Ja. Erstelle eine Gruppe in deinem Konto und lade Teammitglieder per E-Mail ein. Sobald alle Vollmond Cèrcol abgeschlossen haben, steht der Teambericht des Letzten Viertels Cèrcol zur Verfügung: Er zeigt Rollenverteilung, Dimensionsbalance in der Gruppe, gemeinsame blinde Flecken und eine Team-Narration. Jedes Mitglied benötigt ein Vollmond-Ergebnis; Zeugenergebnisse vertiefen die individuellen Profile im Bericht."
     },
     "q10": {
       "q": "In welchen Sprachen ist Cèrcol verfügbar?",
       "a": "Cèrcol gibt es auf Englisch, Katalanisch, Spanisch, Französisch, Deutsch und Dänisch, und jede Aussage existiert in jeder Sprache. Sie haben nicht alle denselben Status, und die Wissenschaftsseite sagt, welchen jeweils. Dänisch ist die veröffentlichte Übersetzung von Vedel, Gøtzsche-Astrup und Holm, Französisch die von Gravel, Spanisch die von Frez Puente und Ortega Luque, alle drei unverändert übernommen. Katalanisch und Deutsch sind unsere eigenen. Französisch bietet neben dem veröffentlichten kanadischen Text eine europäische Anpassung, und du wählst vor dem Start."
     },
     "q11": {
-      "q": "Wie funktioniert die Zeuge/Zeugin-Bewertung genau?",
-      "a": "Sie senden einer Zeuge/Zeugin: jemand, der Sie gut kennt, einen einzigartigen Link. Sie sehen pro Runde fünf Adjektive, eines pro Persönlichkeitsdimension, und wählen das, das am besten zu Ihnen passt, und das, das am wenigsten passt. Dieses Format erzwungener Wahl eliminiert den Bias sozialer Erwünschtheit, der bei Likert-Bewertungen auftritt. Nach 20 Runden werden ihre Werte mit Ihrer Selbsteinschätzung verglichen. Dimensionen, bei denen die Differenz 0,8 Standardabweichungen überschreitet, werden als mögliche blinde Flecken markiert. Sie können bis zu 12 Zeugen/Zeuginnen einladen; die Werte werden gemittelt."
+      "q": "Wie funktioniert die Zeugenbewertung genau?",
+      "a": "Du sendest deinen Zeuginnen und Zeugen, also Menschen, die dich gut kennen, jeweils einen eigenen Link. Sie sehen pro Runde fünf Adjektive, eines pro Persönlichkeitsdimension, und wählen das, das am besten zu dir passt, und das, das am wenigsten passt. Dieses Format erzwungener Wahl eliminiert den Bias sozialer Erwünschtheit, der bei Likert-Bewertungen auftritt. Nach 20 Runden werden ihre Werte mit deiner Selbsteinschätzung verglichen. Dimensionen, bei denen die Differenz 0,8 Standardabweichungen überschreitet, werden als mögliche blinde Flecken markiert. Du kannst bis zu 12 Zeuginnen und Zeugen einladen; die Werte werden gemittelt."
     },
     "q12": {
       "q": "Was sind blinde Flecken?",
-      "a": "Ein blinder Fleck ist eine Persönlichkeitsdimension, in der Ihre Selbstwahrnehmung und die Wahrnehmung anderer erheblich abweichen, mehr als 0,8 Standardabweichungen. Wenn Sie sich beispielsweise bei Präsenz niedrig einschätzen, Ihre Zeugen/Zeuginnen Sie aber konsequent hoch einschätzen, ist diese Lücke ein blinder Fleck. Blinde Flecken sind weder gut noch schlecht. Sie sind Informationen: Sie zeigen, wo Selbstwahrnehmung und die Erfahrung, die andere mit Ihnen machen, nicht übereinstimmen, das ist oft nützlicher als der Score selbst."
+      "a": "Ein blinder Fleck ist eine Persönlichkeitsdimension, in der deine Selbstwahrnehmung und die Wahrnehmung anderer erheblich abweichen, mehr als 0,8 Standardabweichungen. Wenn du dich beispielsweise bei Präsenz niedrig einschätzt, deine Zeuginnen und Zeugen dich aber konsequent hoch einschätzen, ist diese Lücke ein blinder Fleck. Blinde Flecken sind weder gut noch schlecht. Sie sind Informationen: Sie zeigen, wo Selbstwahrnehmung und die Erfahrung, die andere mit dir machen, nicht übereinstimmen, das ist oft nützlicher als der Score selbst."
     }
   },
   "instruments": {
@@ -1412,12 +1412,12 @@
       },
       "part2": {
         "label": "Teil 2",
-        "heading": "Zeuge Cèrcol",
-        "whyHeading": "Warum eine Zeuge/Zeugin?",
-        "whyBody": "Selbstberichte haben eine bekannte Einschränkung: Wir nehmen uns nicht immer so wahr, wie wir auf andere wirken. Menschen mit hoher Tiefe könnten unterberichten, die Emotion fühlt sich von innen normal an. Menschen mit hoher Bindung könnten Wärme überberichten, die Absicht ist echt, aber die Wirkung kann abweichen. Selbstbeurteilung ist ein gefiltertes Signal. Die Zeuge/Zeugin fügt ein unabhängiges hinzu.",
+        "heading": "Cèrcol des Zeugen",
+        "whyHeading": "Warum Zeuginnen und Zeugen?",
+        "whyBody": "Selbstberichte haben eine bekannte Einschränkung: Wir nehmen uns nicht immer so wahr, wie wir auf andere wirken. Menschen mit hoher Tiefe könnten unterberichten, die Emotion fühlt sich von innen normal an. Menschen mit hoher Bindung könnten Wärme überberichten, die Absicht ist echt, aber die Wirkung kann abweichen. Selbstbeurteilung ist ein gefiltertes Signal. Zeuginnen und Zeugen fügen ein unabhängiges hinzu.",
         "howHeading": "Wie es funktioniert",
-        "howBody": "Jede Zeuge/Zeugin erhält einen einzigartigen Link. Die Aufgabe dauert etwa 5 Minuten. Sie sehen 20 Runden mit je 5 Wörtern, ein Adjektiv pro Dimension, und wählen das, das am besten passt, und das, das am wenigsten passt. Forced Choice: keine Likert-Skala, keine Möglichkeit, alle positiven Antworten zu geben.",
-        "whoHeading": "Wer ist eine ideale Zeuge/Zeugin?",
+        "howBody": "Alle Zeuginnen und Zeugen erhalten einen einzigartigen Link. Die Aufgabe dauert etwa 5 Minuten. Sie sehen 20 Runden mit je 5 Wörtern, ein Adjektiv pro Dimension, und wählen das, das am besten passt, und das, das am wenigsten passt. Forced Choice: keine Likert-Skala, keine Möglichkeit, alle positiven Antworten zu geben.",
+        "whoHeading": "Wer eignet sich als Zeugin oder Zeuge?",
         "whoBody": "Jemand, der mit dir gearbeitet hat, mit dir gelebt hat oder dich unter Druck gesehen hat. Nicht dein größter Befürworter: jemand ehrlich genug, um zu markieren, wo du Ecken hast. Du kannst bis zu 12 Zeugen einladen. Mehr Zeugen reduzieren Rauschen: die Ergebnisse werden gemittelt.",
         "privacyHeading": "Datenschutz",
         "privacyBody": "Zeugen sehen deine Ergebnisse niemals. Du siehst das gemittelte Ergebnis aller Zeugen, nicht einzelne Antworten.",
@@ -1541,7 +1541,7 @@
     },
     "fullMoon": {
       "title": "IPIP-NEO-120 Big-Five-Test mit Zeugen-Einschätzungen",
-      "description": "Die Big-Five-Erhebung (OCEAN) mit 120 Items auf Basis des gemeinfreien IPIP-NEO-120, mit Einschätzungen von bis zu zwölf Menschen, die Sie kennen."
+      "description": "Die Big-Five-Erhebung (OCEAN) mit 120 Items auf Basis des gemeinfreien IPIP-NEO-120, mit Einschätzungen von bis zu zwölf Menschen, die dich kennen."
     },
     "roles": {
       "title": "Die 12 Cèrcol-Teamrollen aus Big-Five-Facetten",
