@@ -36,7 +36,7 @@ import {
 import { Card, StatCard, Sparkline } from '../components/ui'
 import { colors } from '../design/tokens'
 import PlanPanel from '../components/PlanPanel'
-import { INSTRUMENT_VERSION } from '../data/instrument-version'
+import { INSTRUMENT_VERSION, VERSION_HISTORY } from '../data/instrument-version'
 
 // ---------------------------------------------------------------------------
 // Shared helpers
@@ -383,16 +383,12 @@ function UsersTab() {
                   <Td className="whitespace-nowrap text-xs text-gray-400">{fmt(u.created_at)}</Td>
                   <Td className="text-center font-medium">{u.result_count}</Td>
                   <Td className="whitespace-nowrap">
-                    {(u.versions ?? []).length === 0
+                    {u.latest_version == null
                       ? <span className="text-gray-300">—</span>
                       : (
-                        <div className="flex gap-1">
-                          {u.versions.map(v => (
-                            <Badge key={v} variant={v === INSTRUMENT_VERSION ? 'green' : 'yellow'}>
-                              v{v}
-                            </Badge>
-                          ))}
-                        </div>
+                        <Badge variant={u.latest_version === INSTRUMENT_VERSION ? 'green' : 'yellow'}>
+                          v{u.latest_version}
+                        </Badge>
                       )}
                   </Td>
                 </tr>
@@ -404,6 +400,32 @@ function UsersTab() {
         </table>
       </Card>
       <div ref={sentinelRef} className="h-1" />
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// Versions tab
+// ---------------------------------------------------------------------------
+
+function VersionsTab() {
+  return (
+    <div className="space-y-3 max-w-3xl">
+      {VERSION_HISTORY.map(v => (
+        <Card key={v.version} className="p-4">
+          <div className="flex items-center gap-2 mb-2">
+            <Badge variant={v.version === INSTRUMENT_VERSION ? 'green' : 'yellow'}>v{v.version}</Badge>
+            {v.version === INSTRUMENT_VERSION && (
+              <span className="text-xs font-semibold text-green-700">current</span>
+            )}
+            <span className="text-xs text-gray-400">from {v.from}</span>
+          </div>
+          <p className="text-sm text-gray-600 leading-relaxed">{v.summary}</p>
+        </Card>
+      ))}
+      <p className="text-xs text-gray-400">
+        Full record and reasoning: docs/policies/dataset-versions.md
+      </p>
     </div>
   )
 }
@@ -1302,6 +1324,7 @@ const TABS = [
   { id: 'norms',    label: 'Norms'    },
   { id: 'blog',     label: 'Blog'     },
   { id: 'authority', label: 'Pla' },
+  { id: 'versions', label: 'Versions' },
   { id: 'seo',      label: 'SEO'      },
 ]
 
@@ -1334,6 +1357,7 @@ export default function AdminDashboardPage() {
       {activeTab === 'norms'    && <NormsTab />}
       {activeTab === 'blog'     && <BlogTab />}
       {activeTab === 'authority' && <PlanPanel />}
+      {activeTab === 'versions' && <VersionsTab />}
       {activeTab === 'seo'      && <SeoTab />}
     </div>
   )
