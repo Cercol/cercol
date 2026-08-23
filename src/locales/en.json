@@ -1057,7 +1057,7 @@
       "loading": "Loading…",
       "intro": {
         "heading": "You've been asked to describe someone.",
-        "body": "You'll see groups of words and pick which one fits this person best, and which fits least. Takes about 5 minutes.",
+        "body": "You'll see groups of words and pick which one fits this person best, which comes second, and which fits least. Takes about 5 minutes.",
         "subjectLabel": "You're describing",
         "youAreLabel": "You are",
         "youArePlaceholder": "Your name",
@@ -1262,7 +1262,7 @@
       },
       "witness": {
         "heading": "Witness Cèrcol",
-        "body": "A forced-choice task given to someone who knows you well. Each round, the Witness sees five words and picks the best fit and worst fit for you, one adjective per dimension. Forced choice eliminates the social desirability bias that distorts self-report.",
+        "body": "A forced-choice task given to someone who knows you well. Each round, the Witness sees five words and picks the best fit, the second best, and the worst fit for you, one adjective per dimension. Forced choice eliminates the social desirability bias that distorts self-report.",
         "idealWitness": "An ideal Witness has worked with you, lived with you, or spent real time around you. Not your closest ally, not your harshest critic, someone who sees you as you actually are.",
         "blindSpots": "The Witness result is compared to the self-report. Where they diverge significantly, a blind spot is flagged, a dimension you see differently than the people around you do."
       }
@@ -1318,7 +1318,7 @@
     },
     "q3": {
       "q": "What is the Witness and who should I invite?",
-      "a": "The Witness is someone you invite to describe you from the outside. They see groups of words and pick which ones fit you best and worst, a short forced-choice task that takes about 5 minutes. An ideal Witness is someone who has spent real time with you: a colleague, a housemate, a close friend. Not your biggest fan, not your harshest critic. Someone who sees you as you actually are."
+      "a": "The Witness is someone you invite to describe you from the outside. They see groups of words and pick which fits you best, which comes second, and which fits worst, a short forced-choice task that takes about 5 minutes. An ideal Witness is someone who has spent real time with you: a colleague, a housemate, a close friend. Not your biggest fan, not your harshest critic. Someone who sees you as you actually are."
     },
     "q4": {
       "q": "What is the difference between the three instruments?",
@@ -1350,7 +1350,7 @@
     },
     "q11": {
       "q": "How does the Witness assessment work exactly?",
-      "a": "You send a Witness: someone who knows you well, a unique link. They see five adjectives per round, one for each personality dimension, and pick the one that best fits you and the one that least fits you. This forced-choice format eliminates the social desirability bias that appears in Likert-scale peer ratings. After 20 rounds, their scores are compared with your self-report. Dimensions where the gap exceeds 0.8 standard deviations are flagged as potential blind spots. You can invite up to 12 Witnesses; scores are averaged across all of them."
+      "a": "You send a Witness: someone who knows you well, a unique link. They see five adjectives per round, one for each personality dimension, and pick the one that best fits you, the second best, and the one that least fits you. This forced-choice format eliminates the social desirability bias that appears in Likert-scale peer ratings. After 13 rounds, their scores are compared with your self-report. Dimensions where the gap exceeds 0.8 standard deviations are flagged as potential blind spots. You can invite up to 12 Witnesses; scores are averaged across all of them."
     },
     "q12": {
       "q": "What are blind spots?",
@@ -1416,7 +1416,7 @@
         "whyHeading": "Why a Witness?",
         "whyBody": "Self-reports have a known limitation: we don't always perceive ourselves the way we come across to others. People high on Depth may under-report, the emotion feels normal from the inside. People high on Bond may over-report warmth, the intent is genuine but the impact can differ. Self-assessment is a filtered signal. The Witness adds an independent one.",
         "howHeading": "How it works",
-        "howBody": "Each Witness receives a unique link. The task takes about 5 minutes. They see 20 rounds of 5 words: one adjective per dimension, and pick the one that fits best and the one that fits least. Forced choice: no Likert scale, no ability to give all positive answers.",
+        "howBody": "Each Witness receives a unique link. The task takes about 5 minutes. They see 13 rounds of 5 words, one adjective per dimension, and pick the best fit, the second best, and the worst. Forced choice: no Likert scale, no ability to give all positive answers.",
         "whoHeading": "Who is an ideal Witness?",
         "whoBody": "Someone who has worked with you, lived with you, or seen you under pressure. Not your biggest advocate: someone honest enough to mark where you have edges. You can invite up to 12 Witnesses. More Witnesses reduce noise: the scores are averaged.",
         "privacyHeading": "Privacy",

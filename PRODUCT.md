@@ -82,11 +82,14 @@ assessment" in user-facing text or comments.
 
 Flow:
 - A person who knows the subject well is given a unique link
-- Each round: 3 adjectives shown; the Witness picks which fits best and which
-  fits least (forced choice — no Likert scale)
+- Each round: 5 adjectives shown, one per dimension; the Witness picks which
+  fits best, which comes second, and which fits least (forced choice, no
+  Likert scale). Three picks, not two: two picks of equal weight cannot
+  distinguish first from second, which is why an earlier "two best and two
+  worst" measured worse than what it replaced
 - Forced choice eliminates social desirability bias
 - 13 rounds total, fixed 75/25 positive/negative polarity sequence.
-  It was 20 rounds of 5 until 2026-08-04; the binding constraint on this
+  It was 20 rounds of 2 picks until 2026-08-04; the binding constraint on this
   instrument is not precision, it is whether someone finishes it for a friend
 - Up to 12 Witnesses per subject; scores are averaged across Witnesses
 

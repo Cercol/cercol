@@ -1057,7 +1057,7 @@
       "loading": "Indlæser…",
       "intro": {
         "heading": "Du er blevet bedt om at beskrive nogen.",
-        "body": "Du vil se grupper af ord og vælge, hvilet der passer bedst til denne person, og hvilet der passer mindst. Det tager ca. 5 minutter.",
+        "body": "Du vil se grupper af ord og vælge, hvilket der passer bedst til denne person, hvilket der er næstbedst, og hvilket der passer mindst. Det tager ca. 5 minutter.",
         "subjectLabel": "Du beskriver",
         "youAreLabel": "Du er",
         "youArePlaceholder": "Dit navn",
@@ -1262,7 +1262,7 @@
       },
       "witness": {
         "heading": "Vidne Cèrcol",
-        "body": "En tvungen-valg-opgave givet til nogen, der kender dig godt. I hver runde ser vidnet fem ord og vælger den bedst passende og mindst passende for dig, et adjektiv pr. dimension. Tvunget valg eliminerer den sociale ønskelighedsbias, der fordrejer selvrapporter.",
+        "body": "En tvungen-valg-opgave givet til nogen, der kender dig godt. I hver runde ser Vidnet fem ord og vælger den bedst passende, den næstbedst passende og den mindst passende for dig, et adjektiv pr. dimension. Tvunget valg eliminerer den sociale ønskelighedsbias, der fordrejer selvrapporter.",
         "idealWitness": "Et ideelt vidne har arbejdet med dig, boet med dig eller brugt reel tid omkring dig. Ikke din tætteste allierede, ikke din hårdeste kritiker, nogen, der ser dig, som du faktisk er.",
         "blindSpots": "Vidne-resultatet sammenlignes med selvrapporten. Hvor de afviger betydeligt, markeres en blind plet, en dimension, du ser anderledes end menneskene omkring dig."
       }
@@ -1318,7 +1318,7 @@
     },
     "q3": {
       "q": "Hvad er vidnet, og hvem skal jeg invitere?",
-      "a": "Vidnet er nogen, du inviterer til at beskrive dig udefra. De ser grupper af ord og vælger, hvilke der passer bedst og dårligst til dig, en kort tvungen-valg-opgave, der tager ca. 5 minutter. Et ideelt vidne er nogen, der har brugt reel tid med dig: en kollega, en bofælle, en nær ven. Ikke din største fan, ikke din hårdeste kritiker. Nogen, der ser dig, som du faktisk er."
+      "a": "Vidnet er nogen, du inviterer til at beskrive dig udefra. De ser grupper af ord og vælger, hvilket der passer bedst til dig, hvilket der er næstbedst, og hvilket der passer dårligst, en kort tvungen-valg-opgave, der tager ca. 5 minutter. Et ideelt Vidne er nogen, der har brugt reel tid med dig: en kollega, en bofælle, en nær ven. Ikke din største fan, ikke din hårdeste kritiker. Nogen, der ser dig, som du faktisk er."
     },
     "q4": {
       "q": "Hvad er forskellen mellem de tre instrumenter?",
@@ -1350,7 +1350,7 @@
     },
     "q11": {
       "q": "Hvordan fungerer Vidnet-vurderingen præcist?",
-      "a": "Du sender et Vidne: en der kender dig godt, et unikt link. De ser fem adjektiver per runde, ét per personlighedsdimension, og vælger det, der passer bedst på dig, og det, der passer mindst. Dette format med tvunget valg eliminerer den sociale ønskværdighedsbias, der opstår ved Likert-vurderinger. Efter 20 runder sammenlignes deres scores med din selvrapport. Dimensioner, hvor forskellen overstiger 0,8 standardafvigelser, markeres som mulige blinde pletter. Du kan invitere op til 12 Vidner; scores gennemsnittes."
+      "a": "Du sender et Vidne: en der kender dig godt, et unikt link. De ser fem adjektiver per runde, ét per personlighedsdimension, og vælger det, der passer bedst på dig, det næstbedste og det, der passer mindst. Dette format med tvunget valg eliminerer den sociale ønskværdighedsbias, der opstår ved Likert-vurderinger. Efter 13 runder sammenlignes deres scores med din selvrapport. Dimensioner, hvor forskellen overstiger 0,8 standardafvigelser, markeres som mulige blinde pletter. Du kan invitere op til 12 Vidner; scores gennemsnittes."
     },
     "q12": {
       "q": "Hvad er blinde pletter?",
@@ -1416,7 +1416,7 @@
         "whyHeading": "Hvorfor et vidne?",
         "whyBody": "Selvrapporter har en kendt begrænsning: vi opfatter ikke altid os selv, som vi fremstår for andre. Mennesker med høj Dybde kan underrapportere, følelsen virker normal indefra. Mennesker med høj Tilknytning kan overrapportere varme, hensigten er ægte, men påvirkningen kan variere. Selvvurdering er et filtreret signal. Vidnet tilføjer et uafhængigt.",
         "howHeading": "Sådan virker det",
-        "howBody": "Hvert vidne modtager et unikt link. Opgaven tager ca. 5 minutter. De ser 20 runder med 5 ord: et adjektiv pr. dimension: og vælger det, der passer bedst, og det, der passer mindst. Tvunget valg: ingen Likert-skala, ingen mulighed for at give alle positive svar.",
+        "howBody": "Hvert Vidne modtager et unikt link. Opgaven tager ca. 5 minutter. De ser 13 runder med 5 ord, et adjektiv pr. dimension, og vælger det, der passer bedst, det næstbedste og det, der passer mindst. Tvunget valg: ingen Likert-skala, ingen mulighed for at give alle positive svar.",
         "whoHeading": "Hvem er et ideelt vidne?",
         "whoBody": "Nogen, der har arbejdet med dig, boet med dig eller set dig under pres. Ikke din største fortaler: nogen ærlig nok til at markere, hvor du har kanter. Du kan invitere op til 12 vidner. Flere vidner reducerer støj: scorerne gennemsnitsberegnes.",
         "privacyHeading": "Privatliv",

@@ -1057,7 +1057,7 @@
       "loading": "Cargando…",
       "intro": {
         "heading": "Te han pedido que describas a alguien.",
-        "body": "Verás grupos de palabras y elegirás cuál encaja mejor con esta persona, y cuál encaja menos. Lleva unos 5 minutos.",
+        "body": "Verás grupos de palabras y elegirás cuál encaja mejor con esta persona, cuál en segundo lugar y cuál encaja menos. Lleva unos 5 minutos.",
         "subjectLabel": "Estás describiendo a",
         "youAreLabel": "Tú eres",
         "youArePlaceholder": "Tu nombre",
@@ -1262,7 +1262,7 @@
       },
       "witness": {
         "heading": "Testigo Cèrcol",
-        "body": "Una tarea de elección forzada dada a alguien que te conoce bien. En cada ronda, el testigo ve cinco palabras y elige la que mejor y peor te describe, un adjetivo por dimensión. La elección forzada elimina el sesgo de deseabilidad social que distorsiona el autoinforme.",
+        "body": "Una tarea de elección forzada dada a alguien que te conoce bien. En cada ronda, el Testigo ve cinco palabras y elige la que mejor te describe, la segunda y la que peor, un adjetivo por dimensión. La elección forzada elimina el sesgo de deseabilidad social que distorsiona el autoinforme.",
         "idealWitness": "Un testigo ideal ha trabajado contigo, ha vivido contigo o ha pasado tiempo real a tu alrededor. No tu mayor aliado/a, no tu crítico/a más severo/a, alguien que te ve como realmente eres.",
         "blindSpots": "El resultado del testigo se compara con el autoinforme. Donde divergen significativamente, se señala un punto ciego, una dimensión que percibes de manera diferente a las personas que te rodean."
       }
@@ -1318,7 +1318,7 @@
     },
     "q3": {
       "q": "¿Qué es el testigo y a quién debo invitar?",
-      "a": "El testigo es alguien a quien invitas a describir cómo eres desde fuera. Verá grupos de palabras y elegirá cuáles te describen mejor y peor, una tarea corta de elección forzada que lleva unos 5 minutos. Un testigo ideal es alguien que ha pasado tiempo real contigo: un/a compañero/a de trabajo, un/a compañero/a de piso, un/a amigo/a cercano/a. No tu mayor admirador/a, no tu crítico/a más severo/a. Alguien que te ve como realmente eres."
+      "a": "El Testigo es alguien a quien invitas a describir cómo eres desde fuera. Verá grupos de palabras y elegirá cuál te describe mejor, cuál en segundo lugar y cuál peor, una tarea corta de elección forzada que lleva unos 5 minutos. Un Testigo ideal es alguien que ha pasado tiempo real contigo: un/a compañero/a de trabajo, un/a compañero/a de piso, un/a amigo/a cercano/a. No tu mayor admirador/a, no tu crítico/a más severo/a. Alguien que te ve como realmente eres."
     },
     "q4": {
       "q": "¿Cuál es la diferencia entre los tres instrumentos?",
@@ -1350,7 +1350,7 @@
     },
     "q11": {
       "q": "¿Cómo funciona exactamente el Testigo?",
-      "a": "Envías a un Testigo: alguien que te conoce bien, un enlace único. Ve cinco adjetivos por ronda, uno por cada dimensión de personalidad, y elige el que mejor te describe y el que menos. Este formato de elección forzada elimina el sesgo de deseabilidad social que aparece en las valoraciones tipo Likert. Tras 20 rondas, sus puntuaciones se comparan con tu autoinforme. Las dimensiones donde la diferencia supera 0,8 desviaciones estándar se marcan como posibles puntos ciegos. Puedes invitar hasta 12 Testigos; las puntuaciones se promedian."
+      "a": "Envías a un Testigo: alguien que te conoce bien, un enlace único. Ve cinco adjetivos por ronda, uno por cada dimensión de personalidad, y elige el que mejor te describe, el segundo y el que menos. Este formato de elección forzada elimina el sesgo de deseabilidad social que aparece en las valoraciones tipo Likert. Tras 13 rondas, sus puntuaciones se comparan con tu autoinforme. Las dimensiones donde la diferencia supera 0,8 desviaciones estándar se marcan como posibles puntos ciegos. Puedes invitar hasta 12 Testigos; las puntuaciones se promedian."
     },
     "q12": {
       "q": "¿Qué son los puntos ciegos?",
@@ -1416,7 +1416,7 @@
         "whyHeading": "¿Por qué un testigo?",
         "whyBody": "Los autoinformes tienen una limitación conocida: no siempre nos percibimos como nos ven los demás. Las personas con alta Profundidad pueden informar menos, la emoción se siente normal desde dentro. Las personas con alto Vínculo pueden informar más calidez, la intención es genuina pero el impacto puede diferir. La autoevaluación es una señal filtrada. El testigo añade una independiente.",
         "howHeading": "Cómo funciona",
-        "howBody": "Cada testigo recibe un enlace único. La tarea lleva unos 5 minutos. Verán 20 rondas de 5 palabras: un adjetivo por dimensión, y elegirán el que mejor y peor encaja. Elección forzada: sin escala Likert, sin posibilidad de dar todas las respuestas positivas.",
+        "howBody": "Cada Testigo recibe un enlace único. La tarea lleva unos 5 minutos. Verán 13 rondas de 5 palabras: un adjetivo por dimensión, y elegirán el que mejor encaja, el segundo y el que peor. Elección forzada: sin escala Likert, sin posibilidad de dar todas las respuestas positivas.",
         "whoHeading": "¿Quién es un testigo ideal?",
         "whoBody": "Alguien que ha trabajado contigo, ha vivido contigo o te ha visto bajo presión. No tu mayor defensor/a: alguien lo suficientemente honesto/a como para marcar dónde tienes aristas. Puedes invitar hasta 12 testigos. Más testigos reducen el ruido: las puntuaciones se promedian.",
         "privacyHeading": "Privacidad",

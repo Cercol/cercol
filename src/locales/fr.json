@@ -1057,7 +1057,7 @@
       "loading": "Chargement…",
       "intro": {
         "heading": "On vous a demandé de décrire quelqu'un.",
-        "body": "Vous verrez des groupes de mots et choisirez lequel correspond le mieux à cette personne, et lequel correspond le moins. Cela prend environ 5 minutes.",
+        "body": "Vous verrez des groupes de mots et choisirez lequel correspond le mieux à cette personne, lequel vient ensuite et lequel correspond le moins. Cela prend environ 5 minutes.",
         "subjectLabel": "Vous décrivez",
         "youAreLabel": "Vous êtes",
         "youArePlaceholder": "Votre nom",
@@ -1262,7 +1262,7 @@
       },
       "witness": {
         "heading": "Témoin Cèrcol",
-        "body": "Une tâche à choix forcé donnée à quelqu'un qui vous connaît bien. À chaque tour, le·la témoin voit cinq mots et choisit celui qui vous correspond le mieux et le moins, un adjectif par dimension. Le choix forcé élimine le biais de désirabilité sociale qui fausse l'auto-évaluation.",
+        "body": "Une tâche à choix forcé donnée à quelqu'un qui vous connaît bien. À chaque tour, le·la Témoin voit cinq mots et choisit celui qui vous correspond le mieux, le deuxième et celui qui vous correspond le moins, un adjectif par dimension. Le choix forcé élimine le biais de désirabilité sociale qui fausse l'auto-évaluation.",
         "idealWitness": "Un·e témoin idéal·e a travaillé avec vous, vécu avec vous ou passé du vrai temps autour de vous. Pas votre plus grand·e allié·e, pas votre critique le·la plus sévère, quelqu'un qui vous voit tel·le que vous êtes vraiment.",
         "blindSpots": "Le résultat du·de la témoin est comparé à l'auto-évaluation. Là où ils divergent significativement, un angle mort est signalé, une dimension que vous percevez différemment de ceux qui vous entourent."
       }
@@ -1318,7 +1318,7 @@
     },
     "q3": {
       "q": "Qu'est-ce que le·la Témoin et qui dois-je inviter ?",
-      "a": "Le·la Témoin est quelqu'un que vous invitez à vous décrire de l'extérieur. Il ou elle verra des groupes de mots et choisira ceux qui vous correspondent le mieux et le moins, une courte tâche à choix forcé qui prend environ 5 minutes. Un·e témoin idéal·e est quelqu'un qui a passé du vrai temps avec vous : un·e collègue, un·e colocataire, un·e ami·e proche. Pas votre plus grand·e admirateur·trice, pas votre critique le·la plus sévère. Quelqu'un qui vous voit tel·le que vous êtes vraiment."
+      "a": "Le·la Témoin est quelqu'un que vous invitez à vous décrire de l'extérieur. Il ou elle verra des groupes de mots et choisira celui qui vous correspond le mieux, celui qui vient ensuite et celui qui vous correspond le moins, une courte tâche à choix forcé qui prend environ 5 minutes. Un·e Témoin idéal·e est quelqu'un qui a passé du vrai temps avec vous : un·e collègue, un·e colocataire, un·e ami·e proche. Pas votre plus grand·e admirateur·trice, pas votre critique le·la plus sévère. Quelqu'un qui vous voit tel·le que vous êtes vraiment."
     },
     "q4": {
       "q": "Quelle est la différence entre les trois instruments ?",
@@ -1350,7 +1350,7 @@
     },
     "q11": {
       "q": "Comment fonctionne exactement l'évaluation par le·la Témoin ?",
-      "a": "Vous envoyez à un·e Témoin : quelqu'un qui vous connaît bien, un lien unique. Il ou elle voit cinq adjectifs par tour, un par dimension de personnalité, et choisit celui qui vous correspond le mieux et celui qui vous correspond le moins. Ce format de choix forcé élimine le biais de désirabilité sociale qui apparaît dans les évaluations de type Likert. Après 20 tours, ses scores sont comparés à votre autoévaluation. Les dimensions où l'écart dépasse 0,8 écart-type sont signalées comme des angles morts potentiels. Vous pouvez inviter jusqu'à 12 Témoins ; les scores sont moyennés."
+      "a": "Vous envoyez à un·e Témoin : quelqu'un qui vous connaît bien, un lien unique. Il ou elle voit cinq adjectifs par tour, un par dimension de personnalité, et choisit celui qui vous correspond le mieux, le deuxième et celui qui vous correspond le moins. Ce format de choix forcé élimine le biais de désirabilité sociale qui apparaît dans les évaluations de type Likert. Après 13 tours, ses scores sont comparés à votre autoévaluation. Les dimensions où l'écart dépasse 0,8 écart-type sont signalées comme des angles morts potentiels. Vous pouvez inviter jusqu'à 12 Témoins ; les scores sont moyennés."
     },
     "q12": {
       "q": "Que sont les angles morts ?",
@@ -1416,7 +1416,7 @@
         "whyHeading": "Pourquoi un·e Témoin ?",
         "whyBody": "Les auto-évaluations ont une limitation connue : nous ne nous percevons pas toujours comme nous apparaissons aux autres. Les personnes à Profondeur élevée peuvent sous-rapporter, l'émotion semble normale de l'intérieur. Les personnes à Lien élevé peuvent sur-rapporter la chaleur, l'intention est authentique mais l'impact peut différer. L'auto-évaluation est un signal filtré. Le·la Témoin en ajoute un indépendant.",
         "howHeading": "Comment ça fonctionne",
-        "howBody": "Chaque Témoin reçoit un lien unique. La tâche prend environ 5 minutes. Il·elle verra 20 séries de 5 mots, un adjectif par dimension, et choisira celui qui correspond le mieux et le moins. Choix forcé : pas d'échelle de Likert, pas de possibilité de donner toutes les réponses positives.",
+        "howBody": "Chaque Témoin reçoit un lien unique. La tâche prend environ 5 minutes. Il·elle verra 13 séries de 5 mots, un adjectif par dimension, et choisira celui qui correspond le mieux, le deuxième et celui qui correspond le moins. Choix forcé : pas d'échelle de Likert, pas de possibilité de donner toutes les réponses positives.",
         "whoHeading": "Qui est un·e Témoin idéal·e ?",
         "whoBody": "Quelqu'un qui a travaillé avec vous, vécu avec vous ou vous a vu sous pression. Pas votre plus grand·e défenseur·e, quelqu'un d'assez honnête pour noter là où vous avez des angles. Vous pouvez inviter jusqu'à 12 Témoins. Plus de Témoins réduisent le bruit : les scores sont moyennés.",
         "privacyHeading": "Confidentialité",

@@ -1057,7 +1057,7 @@
       "loading": "Lädt…",
       "intro": {
         "heading": "Du wurdest gebeten, jemanden zu beschreiben.",
-        "body": "Du wirst Gruppen von Wörtern sehen und auswählen, welches am besten auf diese Person passt, und welches am wenigsten passt. Das dauert etwa 5 Minuten.",
+        "body": "Du wirst Gruppen von Wörtern sehen und auswählen, welches am besten auf diese Person passt, welches am zweitbesten und welches am wenigsten passt. Das dauert etwa 5 Minuten.",
         "subjectLabel": "Du beschreibst",
         "youAreLabel": "Du bist",
         "youArePlaceholder": "Dein Name",
@@ -1262,7 +1262,7 @@
       },
       "witness": {
         "heading": "Cèrcol des Zeugen",
-        "body": "Eine Forced-Choice-Aufgabe, die jemanden erhält, der dich gut kennt. In jeder Runde sehen Zeuginnen und Zeugen fünf Wörter und wählen die beste und die schlechteste Passung für dich, ein Adjektiv pro Dimension. Forced Choice eliminiert den sozialen Erwünschtheitseffekt, der Selbstberichte verzerrt.",
+        "body": "Eine Forced-Choice-Aufgabe, die jemanden erhält, der dich gut kennt. In jeder Runde sehen Zeuginnen und Zeugen fünf Wörter und wählen die beste, die zweitbeste und die schlechteste Passung für dich, ein Adjektiv pro Dimension. Forced Choice eliminiert den sozialen Erwünschtheitseffekt, der Selbstberichte verzerrt.",
         "idealWitness": "Ideal ist eine Person, die mit dir gearbeitet, mit dir gelebt oder echte Zeit um dich herum verbracht hat. Nicht dein engster Verbündeter, nicht dein härtester Kritiker, jemand, der dich so sieht, wie du wirklich bist.",
         "blindSpots": "Das Zeugenergebnis wird mit dem Selbstbericht verglichen. Wo sie erheblich abweichen, wird ein blinder Fleck markiert, eine Dimension, die du anders siehst als die Menschen um dich herum."
       }
@@ -1318,7 +1318,7 @@
     },
     "q3": {
       "q": "Was sind Zeuginnen und Zeugen, und wen soll ich einladen?",
-      "a": "Zeuginnen und Zeugen sind Menschen, die du einlädst, dich von außen zu beschreiben. Sie sehen Gruppen von Wörtern und wählen aus, welche am besten und schlechtesten zu dir passen, eine kurze Forced-Choice-Aufgabe, die etwa 5 Minuten dauert. Ideal ist jemand, der echte Zeit mit dir verbracht hat: ein*e Kolleg*in, ein*e Mitbewohner*in, ein*e enge*r Freund*in. Nicht dein größter Fan, nicht dein härtester Kritiker. Jemand, der dich so sieht, wie du wirklich bist."
+      "a": "Zeuginnen und Zeugen sind Menschen, die du einlädst, dich von außen zu beschreiben. Sie sehen Gruppen von Wörtern und wählen aus, welches am besten zu dir passt, welches am zweitbesten und welches am schlechtesten, eine kurze Forced-Choice-Aufgabe, die etwa 5 Minuten dauert. Ideal ist jemand, der echte Zeit mit dir verbracht hat: ein*e Kolleg*in, ein*e Mitbewohner*in, ein*e enge*r Freund*in. Nicht dein größter Fan, nicht dein härtester Kritiker. Jemand, der dich so sieht, wie du wirklich bist."
     },
     "q4": {
       "q": "Was ist der Unterschied zwischen den drei Instrumenten?",
@@ -1350,7 +1350,7 @@
     },
     "q11": {
       "q": "Wie funktioniert die Zeugenbewertung genau?",
-      "a": "Du sendest deinen Zeuginnen und Zeugen, also Menschen, die dich gut kennen, jeweils einen eigenen Link. Sie sehen pro Runde fünf Adjektive, eines pro Persönlichkeitsdimension, und wählen das, das am besten zu dir passt, und das, das am wenigsten passt. Dieses Format erzwungener Wahl eliminiert den Bias sozialer Erwünschtheit, der bei Likert-Bewertungen auftritt. Nach 20 Runden werden ihre Werte mit deiner Selbsteinschätzung verglichen. Dimensionen, bei denen die Differenz 0,8 Standardabweichungen überschreitet, werden als mögliche blinde Flecken markiert. Du kannst bis zu 12 Zeuginnen und Zeugen einladen; die Werte werden gemittelt."
+      "a": "Du sendest deinen Zeuginnen und Zeugen, also Menschen, die dich gut kennen, jeweils einen eigenen Link. Sie sehen pro Runde fünf Adjektive, eines pro Persönlichkeitsdimension, und wählen das, das am besten zu dir passt, das zweitpassendste und das, das am wenigsten passt. Dieses Format erzwungener Wahl eliminiert den Bias sozialer Erwünschtheit, der bei Likert-Bewertungen auftritt. Nach 13 Runden werden ihre Werte mit deiner Selbsteinschätzung verglichen. Dimensionen, bei denen die Differenz 0,8 Standardabweichungen überschreitet, werden als mögliche blinde Flecken markiert. Du kannst bis zu 12 Zeuginnen und Zeugen einladen; die Werte werden gemittelt."
     },
     "q12": {
       "q": "Was sind blinde Flecken?",
@@ -1416,7 +1416,7 @@
         "whyHeading": "Warum Zeuginnen und Zeugen?",
         "whyBody": "Selbstberichte haben eine bekannte Einschränkung: Wir nehmen uns nicht immer so wahr, wie wir auf andere wirken. Menschen mit hoher Tiefe könnten unterberichten, die Emotion fühlt sich von innen normal an. Menschen mit hoher Bindung könnten Wärme überberichten, die Absicht ist echt, aber die Wirkung kann abweichen. Selbstbeurteilung ist ein gefiltertes Signal. Zeuginnen und Zeugen fügen ein unabhängiges hinzu.",
         "howHeading": "Wie es funktioniert",
-        "howBody": "Alle Zeuginnen und Zeugen erhalten einen einzigartigen Link. Die Aufgabe dauert etwa 5 Minuten. Sie sehen 20 Runden mit je 5 Wörtern, ein Adjektiv pro Dimension, und wählen das, das am besten passt, und das, das am wenigsten passt. Forced Choice: keine Likert-Skala, keine Möglichkeit, alle positiven Antworten zu geben.",
+        "howBody": "Alle Zeuginnen und Zeugen erhalten einen eigenen Link. Die Aufgabe dauert etwa 5 Minuten. Sie sehen 13 Runden mit je 5 Wörtern, ein Adjektiv pro Dimension, und wählen das, das am besten passt, das zweitpassendste und das, das am wenigsten passt. Forced Choice: keine Likert-Skala, keine Möglichkeit, alle positiven Antworten zu geben.",
         "whoHeading": "Wer eignet sich als Zeugin oder Zeuge?",
         "whoBody": "Jemand, der mit dir gearbeitet hat, mit dir gelebt hat oder dich unter Druck gesehen hat. Nicht dein größter Befürworter: jemand ehrlich genug, um zu markieren, wo du Ecken hast. Du kannst bis zu 12 Zeugen einladen. Mehr Zeugen reduzieren Rauschen: die Ergebnisse werden gemittelt.",
         "privacyHeading": "Datenschutz",

@@ -1057,7 +1057,7 @@
       "loading": "Carregant…",
       "intro": {
         "heading": "Et demanen que descrigues algú.",
-        "body": "Veuràs grups de paraules i triaràs quina s'assembla més a aquesta persona, i quina menys. Uns 5 minuts.",
+        "body": "Veuràs grups de paraules i triaràs quina s'assembla més a aquesta persona, quina en segon lloc i quina menys. Uns 5 minuts.",
         "subjectLabel": "Estàs descrivint",
         "youAreLabel": "Tu ets",
         "youArePlaceholder": "El teu nom",
@@ -1262,7 +1262,7 @@
       },
       "witness": {
         "heading": "Testimoni Cèrcol",
-        "body": "Una tasca d'elecció forçada donada a algú que et coneix bé. En cada ronda, el Testimoni veu cinc paraules i tria la que millor i la que pitjor et descriu, un adjectiu per dimensió. L'elecció forçada elimina el biaix de desitjabilitat social que distorsiona l'autoinforme.",
+        "body": "Una tasca d'elecció forçada donada a algú que et coneix bé. En cada ronda, el Testimoni veu cinc paraules i tria la que millor et descriu, la segona i la que pitjor, un adjectiu per dimensió. L'elecció forçada elimina el biaix de desitjabilitat social que distorsiona l'autoinforme.",
         "idealWitness": "Un Testimoni ideal ha treballat amb tu, ha viscut amb tu o ha passat temps real al teu costat. No el teu aliat més proper, ni el teu crític més dur, algú que et veu com realment ets.",
         "blindSpots": "El resultat del Testimoni es compara amb l'autoinforme. On divergeixen significativament, es marca un punt cec, una dimensió que perceps de manera diferent a com ho fan els qui t'envolten."
       }
@@ -1318,7 +1318,7 @@
     },
     "q3": {
       "q": "Què és el Testimoni i a qui hauria de convidar?",
-      "a": "El Testimoni és algú que conyides a descriure't des de fora. Veu grups de paraules i tria quines t'encaixen millor i pitjor, una tasca curta d'elecció forçada que dura uns 5 minuts. Un Testimoni ideal és algú que ha passat temps real amb tu: un company de feina, un company de pis, un amic proper. No el teu fan número u, ni el teu crític més dur. Algú que et veu com realment ets."
+      "a": "El Testimoni és algú que convides a descriure't des de fora. Veu grups de paraules i tria quina t'encaixa millor, quina en segon lloc i quina pitjor, una tasca curta d'elecció forçada que dura uns 5 minuts. Un Testimoni ideal és algú que ha passat temps real amb tu: un company de feina, un company de pis, un amic proper. No el teu fan número u, ni el teu crític més dur. Algú que et veu com realment ets."
     },
     "q4": {
       "q": "Quina és la diferència entre els tres instruments?",
@@ -1350,7 +1350,7 @@
     },
     "q11": {
       "q": "Com funciona exactament el Testimoni?",
-      "a": "Envies a un Testimoni: algú que et coneix bé, un enllaç únic. Veu cinc adjectius per ronda, un per a cada dimensió de personalitat, i tria el que millor t'encaixa i el que menys. Aquest format de selecció forçada elimina el biaix de desitjabilitat social que apareix en les valoracions tipus Likert. Després de 20 rondes, les seues puntuacions es comparen amb el teu autoinforme. Les dimensions on la diferència supera 0,8 desviacions estàndard es marquen com a possibles punts cecs. Pots convidar fins a 12 Testimonis; les puntuacions es promitgen."
+      "a": "Envies a un Testimoni: algú que et coneix bé, un enllaç únic. Veu cinc adjectius per ronda, un per a cada dimensió de personalitat, i tria el que millor t'encaixa, el segon i el que menys. Aquest format de selecció forçada elimina el biaix de desitjabilitat social que apareix en les valoracions tipus Likert. Després de 13 rondes, les seues puntuacions es comparen amb el teu autoinforme. Les dimensions on la diferència supera 0,8 desviacions estàndard es marquen com a possibles punts cecs. Pots convidar fins a 12 Testimonis; les puntuacions es promitgen."
     },
     "q12": {
       "q": "Què són els punts cecs?",
@@ -1416,7 +1416,7 @@
         "whyHeading": "Per què un Testimoni?",
         "whyBody": "Els autoinformes tenen una limitació coneguda: no sempre ens percebem de la manera que apareixem als altres. Les persones amb Profunditat alta poden infravalorar-se, l'emoció sembla normal des de dins. Les persones amb Vincle alt poden sobreestimar la calidesa, la intenció és genuïna però l'impacte pot diferir. L'autoavaluació és un senyal filtrat. El Testimoni n'afegeix un d'independent.",
         "howHeading": "Com funciona",
-        "howBody": "Cada Testimoni rep un enllaç únic. La tasca dura uns 5 minuts. Veu 20 rondes de 5 paraules: un adjectiu per dimensió, i tria el que millor i el que menys s'ajusta. Elecció forçada: sense escala Likert, sense possibilitat de donar totes les respostes positives.",
+        "howBody": "Cada Testimoni rep un enllaç únic. La tasca dura uns 5 minuts. Veu 13 rondes de 5 paraules: un adjectiu per dimensió, i tria el que millor s'ajusta, el segon i el que menys. Elecció forçada: sense escala Likert, sense possibilitat de donar totes les respostes positives.",
         "whoHeading": "Qui és un Testimoni ideal?",
         "whoBody": "Algú que ha treballat amb tu, ha viscut amb tu o t'ha vist sota pressió. No el teu defensor més gran: algú prou honest per marcar on tens arestes. Pots convidar fins a 12 Testimonis. Més Testimonis redueixen el soroll: les puntuacions es fan la mitjana.",
         "privacyHeading": "Privacitat",

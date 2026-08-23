@@ -2,11 +2,13 @@
  * Witness Cèrcol scoring utilities.
  *
  * Each round shows 5 adjectives (one per OCEAN factor).
- * The witness picks one as BEST fit and one as WORST fit for the subject.
+ * The witness picks a BEST fit, a SECOND best, and a WORST fit for the
+ * subject. Three picks, not two: see RANK_WEIGHT below.
  *
  * Scoring per factor:
- *   BEST  pick → factor_votes += adjective.valence
- *   WORST pick → factor_votes -= adjective.valence
+ *   BEST   pick → factor_votes += adjective.valence
+ *   SECOND pick → factor_votes += adjective.valence * 0.5
+ *   WORST  pick → factor_votes -= adjective.valence
  *   Neither    → 0 contribution
  *
  * After N rounds, each factor has appeared N times (one adjective per round).
@@ -118,14 +120,14 @@ function shuffle(arr) {
  * This prevents witnesses from always avoiding the negative adjective
  * when it is mixed with positive ones — a key forced-choice design constraint.
  *
- * Fixed 20-round polarity sequence (15 positive, 5 negative):
+ * Fixed 13-round polarity sequence (15 positive, 5 negative):
  *   P P N P P P N P P N P P P N P P N P P P
  *
  * Adjective IDs encode polarity: second character is '+' or '−'.
  * N factor is inverted: N+ (anxious) = negative pole, N− (calm) = positive pole.
  *
- * @param {number} totalRounds - number of rounds (default 20)
- * @returns {Array} Array of { adjectives: [adj×5], best: null, worst: null }
+ * @param {number} totalRounds - number of rounds (default TOTAL_ROUNDS)
+ * @returns {Array} Array of { adjectives: [adj×5], best: null, second: null, worst: null }
  */
 
 // Which id sign goes into positive-pole rounds for each factor
@@ -190,7 +192,7 @@ export function buildRounds(totalRounds = TOTAL_ROUNDS) {
 /**
  * computeWitnessScores — convert completed rounds into domain scores.
  *
- * @param {Array} rounds - completed rounds with { adjectives, best: adjId, worst: adjId }
+ * @param {Array} rounds - completed rounds with { adjectives, best, second, worst }
  * @returns {Object} { presence, bond, discipline, depth, vision } on 1–5 scale
  */
 export function computeWitnessScores(rounds) {
