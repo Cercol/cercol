@@ -36,6 +36,7 @@ import {
 import { Card, StatCard, Sparkline } from '../components/ui'
 import { colors } from '../design/tokens'
 import PlanPanel from '../components/PlanPanel'
+import { INSTRUMENT_VERSION } from '../data/instrument-version'
 
 // ---------------------------------------------------------------------------
 // Shared helpers
@@ -346,6 +347,7 @@ function UsersTab() {
               <Th>Admin</Th>
               <Th>Registered</Th>
               <Th>Tests</Th>
+              <Th>Version</Th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-50">
@@ -380,6 +382,19 @@ function UsersTab() {
                   <Td>{isAdmin ? <Badge variant="blue">Admin</Badge> : null}</Td>
                   <Td className="whitespace-nowrap text-xs text-gray-400">{fmt(u.created_at)}</Td>
                   <Td className="text-center font-medium">{u.result_count}</Td>
+                  <Td className="whitespace-nowrap">
+                    {(u.versions ?? []).length === 0
+                      ? <span className="text-gray-300">—</span>
+                      : (
+                        <div className="flex gap-1">
+                          {u.versions.map(v => (
+                            <Badge key={v} variant={v === INSTRUMENT_VERSION ? 'green' : 'yellow'}>
+                              v{v}
+                            </Badge>
+                          ))}
+                        </div>
+                      )}
+                  </Td>
                 </tr>
               )
             })}

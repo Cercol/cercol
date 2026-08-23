@@ -95,7 +95,8 @@ export async function users(env, request) {
   const search = u.searchParams.get('search') || ''
   const like = `%${search}%`
   const { results: rows } = await env.DB.prepare(
-    `SELECT p.id, p.email, p.first_name, p.last_name, p.premium, p.is_admin, p.created_at, COUNT(r.id) AS result_count
+    `SELECT p.id, p.email, p.first_name, p.last_name, p.premium, p.is_admin, p.created_at, COUNT(r.id) AS result_count,
+            GROUP_CONCAT(DISTINCT r.instrument_version) AS versions
        FROM profiles p LEFT JOIN results r ON r.user_id = p.id
       WHERE ?3 = '' OR p.email LIKE ?4 OR p.first_name LIKE ?4 OR p.last_name LIKE ?4
       GROUP BY p.id ORDER BY p.created_at IS NULL, p.created_at DESC LIMIT ?1 OFFSET ?2`
@@ -106,6 +107,7 @@ export async function users(env, request) {
   const items = rows.slice(0, limit).map((r) => ({
     email: r.email, first_name: r.first_name, last_name: r.last_name, premium: bool(r.premium), is_admin: bool(r.is_admin),
     id: r.id, created_at: r.created_at, result_count: r.result_count,
+    versions: r.versions ? r.versions.split(',').map(Number).sort((a, b) => a - b) : [],
   }))
   return Response.json({ total, has_more: rows.length > limit, items })
 }
@@ -114,10 +116,11 @@ export async function users(env, request) {
 export async function usersCsv(env, request) {
   const a = await requireAdmin(env, request); if (a instanceof Response) return a
   const { results: rows } = await env.DB.prepare(
-    `SELECT p.id, p.email, p.first_name, p.last_name, p.premium, p.is_admin, p.created_at, COUNT(r.id) AS result_count
+    `SELECT p.id, p.email, p.first_name, p.last_name, p.premium, p.is_admin, p.created_at, COUNT(r.id) AS result_count,
+            GROUP_CONCAT(DISTINCT r.instrument_version) AS versions
        FROM profiles p LEFT JOIN results r ON r.user_id = p.id GROUP BY p.id ORDER BY p.created_at IS NULL, p.created_at DESC`).all()
-  let out = 'id,email,first_name,last_name,premium,is_admin,created_at,result_count\n'
-  for (const r of rows) out += [r.id, r.email, r.first_name, r.last_name, bool(r.premium), bool(r.is_admin), r.created_at, r.result_count].map(csv).join(',') + '\n'
+  let out = 'id,email,first_name,last_name,premium,is_admin,created_at,result_count,instrument_versions\n'
+  for (const r of rows) out += [r.id, r.email, r.first_name, r.last_name, bool(r.premium), bool(r.is_admin), r.created_at, r.result_count, r.versions || ''].map(csv).join(',') + '\n'
   return csvResponse(out, 'cercol_users.csv')
 }
 
