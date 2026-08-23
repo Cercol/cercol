@@ -4,6 +4,7 @@
 [![License](https://img.shields.io/badge/license-MIT-427c42)](./LICENSE)
 [![Instruments](https://img.shields.io/badge/instruments-IPIP%20public%20domain-f1c22f)](https://ipip.ori.org)
 [![Languages](https://img.shields.io/badge/languages-EN%20·%20CA%20·%20ES%20·%20FR%20·%20DE%20·%20DA-111111)](https://cercol.team)
+[![IPIP](https://img.shields.io/badge/IPIP-high--quality%20implementation-cf3339)](https://ipip.ori.org/IPIPImplementationsAroundTheWeb.htm)
 
 Cèrcol maps team personality using the **Big Five (OCEAN)** via the
 [IPIP public-domain item pool](https://ipip.ori.org/) (Goldberg et al. 2006).
@@ -13,6 +14,29 @@ Goldberg 1992) and the team composition literature (Bell 2007; Neuman & Wright 1
 *"Tot suma, ningú no és imprescindible, però tots som necessaris."*
 
 ---
+
+## Project maturity
+
+Cèrcol is a solo project with one reviewer, so the record of how it is built
+is kept in the open rather than in anyone's head.
+
+- **[22 architecture decisions](./docs/decisions/)** — why Supabase went, why
+  the JWT is self-hosted HS256, why the API runs on Cloudflare Workers. Each
+  one says what was rejected and on what evidence.
+- **[8 post-mortems](./docs/post-mortems/)** — including the one that matters
+  most: the instruments were once written from memory, and the Full Moon set
+  shared only 57 of its 120 items with the published IPIP-NEO-120. They were
+  rebuilt from source, and the norm corpus was reset to zero rather than
+  carried across.
+- **[Dataset versions](./docs/policies/dataset-versions.md)** — the instruments
+  are at version 7. A change to an item bumps the version, because answers to
+  two different item sets are not comparable and nothing can repair that
+  afterwards.
+- **[CHANGELOG.md](./CHANGELOG.md)** — what changed, month by month.
+
+No test-coverage badge: it is 45% of statements and 31% of functions, and a
+badge saying so would be decoration. The suite is 480 tests and runs on every
+push; the number is here so it is not a thing you have to go and find out.
 
 ## What makes it different
 
