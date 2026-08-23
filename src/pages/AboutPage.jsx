@@ -5,6 +5,7 @@
  */
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { navHref } from '../lib/navigation'
 import { Card, SectionLabel } from '../components/ui'
 import { DimensionIcon, ArrowRightIcon } from '../components/MoonIcons'
 import { usePageMeta } from '../hooks/usePageMeta'
@@ -38,7 +39,8 @@ function DimensionCard({ name, desc, accent, domainKey }) {
 }
 
 export default function AboutPage() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const lang = (i18n.language || 'en').slice(0, 2)
 
   usePageMeta({
     title: t('seo.about.title'),
@@ -94,19 +96,19 @@ export default function AboutPage() {
             <ExploreCard
               label={t('about.explore.instruments.label')}
               desc={t('about.explore.instruments.desc')}
-              to="/instruments"
+              to={navHref({ to: '/instruments' }, lang)}
               accent="text-amber-500"
             />
             <ExploreCard
               label={t('about.explore.roles.label')}
               desc={t('about.explore.roles.desc')}
-              to="/roles"
+              to={navHref({ to: '/roles' }, lang)}
               accent="text-[var(--mm-color-blue)]"
             />
             <ExploreCard
               label={t('about.explore.science.label')}
               desc={t('about.explore.science.desc')}
-              to="/science"
+              to={navHref({ to: '/science' }, lang)}
               accent="text-blue-600"
             />
           </div>

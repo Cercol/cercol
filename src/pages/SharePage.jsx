@@ -15,6 +15,7 @@
  */
 import { useParams, useSearchParams, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { navHref } from '../lib/navigation'
 import usePageMeta from '../hooks/usePageMeta'
 import { decodeScores } from '../utils/share-url'
 import { computeRole } from '../utils/role-scoring'
@@ -23,7 +24,8 @@ import RoleCard from '../components/report/RoleCard'
 
 export default function SharePage() {
   const { roleId: raw } = useParams()
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const lang = (i18n.language || 'en').slice(0, 2)
   const [params] = useSearchParams()
 
   const encoded = params.get('r')
@@ -50,7 +52,7 @@ export default function SharePage() {
       <div className="text-center">
         <p className="text-sm text-gray-500 mb-4">{t('share.tagline')}</p>
         <Link
-          to="/new-moon"
+          to={navHref({ to: '/new-moon' }, lang)}
           className="font-semibold inline-flex items-center justify-center transition-colors rounded text-sm px-5 py-2.5 bg-[var(--mm-color-blue)] text-white hover:opacity-90"
         >
           {t('share.cta')}

@@ -20,6 +20,7 @@
  */
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { navHref } from '../lib/navigation'
 import usePageMeta from '../hooks/usePageMeta'
 import {
   DimensionRow, FacetAccordion, MethodologyNote, RadarDataCard,
@@ -41,7 +42,8 @@ import { colors } from '../design/tokens'
 const DOMAIN_KEYS = Object.keys(FM_DOMAIN_META)
 
 export default function SampleReportPage() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const lang = (i18n.language || 'en').slice(0, 2)
 
   const selfResult = computeRole(SAMPLE_FM_DOMAINS, 'fullMoon')
   const witnessResult = computeRole(SAMPLE_WITNESS_DOMAINS, 'fullMoon')
@@ -166,14 +168,14 @@ export default function SampleReportPage() {
             {t('sample.whatThisIs')}
           </p>
           <Link
-            to="/new-moon"
+            to={navHref({ to: '/new-moon' }, lang)}
             className="font-semibold inline-flex items-center justify-center transition-colors rounded text-sm px-5 py-2.5 bg-[var(--mm-color-blue)] text-white hover:opacity-90"
           >
             {t('sample.cta')}
           </Link>
           <p className="mt-3 text-xs text-gray-500">{t('sample.cta_note')}</p>
           <p className="mt-5 text-xs">
-            <Link to="/instruments" className="text-[var(--mm-color-blue)] hover:underline">
+            <Link to={navHref({ to: '/instruments' }, lang)} className="text-[var(--mm-color-blue)] hover:underline">
               {t('sample.seeAll')}
             </Link>
           </p>

@@ -20,6 +20,7 @@
  */
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { navHref } from '../lib/navigation'
 import usePageMeta from '../hooks/usePageMeta'
 import {
   DimensionRow, FacetAccordion, MethodologyNote, RadarDataCard,
@@ -37,7 +38,8 @@ import { FirstQuarterIcon } from '../components/MoonIcons'
 import { colors } from '../design/tokens'
 
 export default function SampleFirstQuarterPage() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const lang = (i18n.language || 'en').slice(0, 2)
 
   const domains = SAMPLE_FM_DOMAINS
   const facets = SAMPLE_FM_FACETS
@@ -133,7 +135,7 @@ export default function SampleFirstQuarterPage() {
           <p className="text-sm text-gray-600">{t('sample.fq.closing')}</p>
           <div className="flex flex-wrap items-center gap-4">
             <Link
-              to="/first-quarter"
+              to={navHref({ to: '/first-quarter' }, lang)}
               className="inline-flex shrink-0 items-center rounded bg-[var(--mm-color-blue)] px-4 py-2 text-sm font-semibold text-white hover:opacity-90"
             >
               {t('sample.fq.cta')}

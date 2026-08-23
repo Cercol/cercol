@@ -5,6 +5,7 @@
  */
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { navHref } from '../lib/navigation'
 import { Card, Badge, SectionLabel } from '../components/ui'
 import { NewMoonIcon, FirstQuarterIcon, FullMoonIcon, ArrowRightIcon } from '../components/MoonIcons'
 import { usePageMeta } from '../hooks/usePageMeta'
@@ -55,7 +56,8 @@ function WitnessSection({ data }) {
 }
 
 export default function InstrumentsPage() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const lang = (i18n.language || 'en').slice(0, 2)
 
   usePageMeta({
     title: t('seo.instruments.title'),
@@ -111,13 +113,13 @@ export default function InstrumentsPage() {
             </div>
             <div className="border-t border-gray-100 px-6 py-4 flex items-center justify-between gap-3">
               <Link
-                to="/new-moon"
+                to={navHref({ to: '/new-moon' }, lang)}
                 className="text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors flex items-center gap-1.5"
               >
                 {t('instruments.newMoon.heading')}
                 <ArrowRightIcon size={14} />
               </Link>
-              <Link to="/sample" className="text-xs text-gray-400 underline hover:text-gray-600 transition-colors">
+              <Link to={navHref({ to: '/sample' }, lang)} className="text-xs text-gray-400 underline hover:text-gray-600 transition-colors">
                 {t('sample.eyebrow')}
               </Link>
             </div>
@@ -154,7 +156,7 @@ export default function InstrumentsPage() {
             </div>
             <div className="border-t border-gray-100 px-6 py-4">
               <Link
-                to="/first-quarter"
+                to={navHref({ to: '/first-quarter' }, lang)}
                 className="text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors flex items-center gap-1.5"
               >
                 {t('instruments.firstQuarter.heading')}
@@ -207,7 +209,7 @@ export default function InstrumentsPage() {
                   bounces an anonymous visitor to /auth), so it answers 404 to
                   a crawler. This page is the only public link to it. */}
               <Link
-                to="/full-moon"
+                to={navHref({ to: '/full-moon' }, lang)}
                 rel="nofollow"
                 className="text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors flex items-center gap-1.5"
               >

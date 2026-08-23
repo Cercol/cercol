@@ -18,6 +18,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { navHref } from '../lib/navigation'
 import { getBetaStatus } from '../lib/api'
 import { colors } from '../design/tokens'
 
@@ -91,7 +92,7 @@ export default function BetaBanner() {
             it had given them anything. The ask is the test itself, and
             First Quarter is the one whose responses the norms are built on. */}
         <Link
-          to="/first-quarter"
+          to={navHref({ to: '/first-quarter' }, lang)}
           rel="nofollow"
           className="shrink-0 text-xs font-bold text-gray-900 underline hover:no-underline"
         >
