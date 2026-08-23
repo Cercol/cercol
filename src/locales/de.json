@@ -920,7 +920,9 @@
       "subtitle": "Ein echter Bericht einer synthetischen Person. Sechzig Fragen, etwa zehn Minuten.",
       "closing": "Das ist, was die kostenlose Version liefert. Für deinen eigenen brauchst du kein Konto.",
       "cta": "Mach den Test selbst",
-      "seeFullMoon": "Oder den Vollmond-Bericht ansehen, mit Zeugenbewertungen"
+      "seeFullMoon": "Oder den Vollmond-Bericht ansehen, mit Zeugenbewertungen",
+      "eyebrow": "Ein Beispiel",
+      "closingHeading": "Lies deinen eigenen"
     }
   },
   "share": {

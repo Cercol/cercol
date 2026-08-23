@@ -920,7 +920,9 @@
       "subtitle": "En rigtig rapport fra en syntetisk person. Tres spørgsmål, cirka ti minutter.",
       "closing": "Det er, hvad gratisversionen giver. Du behøver ikke en konto for at læse din egen.",
       "cta": "Tag testen selv",
-      "seeFullMoon": "Eller se Fuldmåne-rapporten, med Vidne-vurderinger"
+      "seeFullMoon": "Eller se Fuldmåne-rapporten, med Vidne-vurderinger",
+      "eyebrow": "Et eksempel",
+      "closingHeading": "Læs din egen"
     }
   },
   "share": {

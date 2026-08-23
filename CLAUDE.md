@@ -193,6 +193,7 @@ Full SEO and LLM visibility strategy: SEO.md
 - Email, Resend and Stalwart: docs/ops/email.md
 - Code conventions and patterns: docs/policies/conventions.md
 - What the research data is, and why it needs no consent flow: docs/policies/research-data.md
+- What Cèrcol costs (nothing) and why the free claim is now true: docs/policies/pricing.md
 - Architecture decisions: docs/decisions/
 - Post-mortems: docs/post-mortems/
 

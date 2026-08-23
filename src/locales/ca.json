@@ -920,7 +920,9 @@
       "subtitle": "Un informe real d'una persona sintètica. Seixanta preguntes, uns deu minuts.",
       "closing": "Això és el que dona la versió gratuïta. No cal compte per llegir el teu.",
       "cta": "Fes-lo tu",
-      "seeFullMoon": "O mira l'informe de Lluna Plena, amb valoracions de Testimoni"
+      "seeFullMoon": "O mira l'informe de Lluna Plena, amb valoracions de Testimoni",
+      "eyebrow": "Una mostra",
+      "closingHeading": "Llegeix-ne un de teu"
     }
   },
   "share": {

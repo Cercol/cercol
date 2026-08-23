@@ -920,7 +920,9 @@
       "subtitle": "Un informe real de una persona sintética. Sesenta preguntas, unos diez minutos.",
       "closing": "Esto es lo que da la versión gratuita. No hace falta cuenta para leer el tuyo.",
       "cta": "Hazlo tú",
-      "seeFullMoon": "O mira el informe de Luna Llena, con valoraciones de Testigo"
+      "seeFullMoon": "O mira el informe de Luna Llena, con valoraciones de Testigo",
+      "eyebrow": "Una muestra",
+      "closingHeading": "Lee uno tuyo"
     }
   },
   "share": {

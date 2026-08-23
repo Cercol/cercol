@@ -27,7 +27,7 @@ import {
   ReportPageHeader, RoleCard,
 } from '../components/report'
 import RoleProbabilityBars from '../components/RoleProbabilityBars'
-import { Badge, SectionLabel } from '../components/ui'
+import { Badge, Card, SectionLabel } from '../components/ui'
 import { FQ_DOMAIN_META } from '../data/first-quarter'
 import { DOMAIN_KEYS } from '../data/domains'
 import { SAMPLE_FM_DOMAINS, SAMPLE_FM_FACETS } from '../data/sample-profile'
@@ -131,19 +131,36 @@ export default function SampleFirstQuarterPage() {
           />
         </section>
 
-        <section className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm text-gray-600">{t('sample.fq.closing')}</p>
-          <div className="flex flex-wrap items-center gap-4">
-            <Link
-              to={navHref({ to: '/first-quarter' }, lang)}
-              className="inline-flex shrink-0 items-center rounded bg-[var(--mm-color-blue)] px-4 py-2 text-sm font-semibold text-white hover:opacity-90"
-            >
-              {t('sample.fq.cta')}
-            </Link>
-            <Link to="/sample/full-moon" className="text-sm text-[var(--mm-color-blue)] hover:underline">
-              {t('sample.fq.seeFullMoon')}
-            </Link>
-          </div>
+        {/* The close. Modelled on InstrumentNudge, which is the house shape
+            for "here is the next step": accent card, icon, label, one line of
+            body, one button. The plain row this replaced put the sentence and
+            the button side by side with the secondary link stranded below,
+            which read as a form footer rather than an invitation. */}
+        <section>
+          <Card accent="blue" className="p-5">
+            <div className="flex items-start gap-3">
+              <FirstQuarterIcon size={22} className="text-[var(--mm-color-blue)] shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <SectionLabel color="blue" className="mb-1">{t('sample.fq.eyebrow')}</SectionLabel>
+                <h3 className="font-bold text-gray-900 mb-1">{t('sample.fq.closingHeading')}</h3>
+                <p className="text-sm text-gray-500 leading-relaxed mb-4">{t('sample.fq.closing')}</p>
+                <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+                  <Link
+                    to={navHref({ to: '/first-quarter' }, lang)}
+                    className="inline-flex shrink-0 items-center rounded bg-[var(--mm-color-blue)] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-90"
+                  >
+                    {t('sample.fq.cta')}
+                  </Link>
+                  <Link
+                    to={navHref({ to: '/sample/full-moon' }, lang)}
+                    className="text-sm text-[var(--mm-color-blue)] hover:underline"
+                  >
+                    {t('sample.fq.seeFullMoon')}
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </Card>
         </section>
 
         <MethodologyNote>{t('fqResults.disclaimer')}</MethodologyNote>

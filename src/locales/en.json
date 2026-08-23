@@ -920,7 +920,9 @@
       "subtitle": "A real report from a synthetic person. Sixty questions, about ten minutes.",
       "closing": "This is what the free version returns. No account is needed to read your own.",
       "cta": "Take it yourself",
-      "seeFullMoon": "Or see the Full Moon report, with Witness ratings"
+      "seeFullMoon": "Or see the Full Moon report, with Witness ratings",
+      "eyebrow": "A sample",
+      "closingHeading": "Read one of your own"
     }
   },
   "share": {
