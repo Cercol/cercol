@@ -20,8 +20,15 @@ describe('distribution plan', () => {
       if (a.type === 'prompt') expect(a.text?.length, t.id).toBeGreaterThan(20)
       if (a.type === 'do') expect(a.html?.length, t.id).toBeGreaterThan(10)
       if (a.type === 'email') {
-        // A mailto may carry several recipients, comma separated.
-        for (const to of a.to.split(',')) expect(to.trim(), t.id).toMatch(/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/)
+        // A mailto may carry several recipients, comma separated. An empty
+        // `to` is deliberate: a private person's address does not belong in
+        // this public file (2026-08-24, ct21), and mailto: with no recipient
+        // still opens a compose window with the subject and body — the
+        // operator adds the address. Published, professional addresses of
+        // researchers being contacted in that capacity may stay.
+        if (a.to !== '') {
+          for (const to of a.to.split(',')) expect(to.trim(), t.id).toMatch(/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/)
+        }
         expect(a.subject?.length, t.id).toBeGreaterThan(3)
         expect(a.body?.length, t.id).toBeGreaterThan(40)
       }

@@ -117,10 +117,17 @@
 | 20 | ✅ COMPLETE: Emancipation from the shared Hetzner box (2026-08-17/18). The whole of Cèrcol moved to Cloudflare free tier and Purelymail, ADR 0020. API as the Worker `cercol-api` (`worker/`) with D1 + KV, strangler pattern behind `WRITES_LIVE` and `origin.cercol.team`; 111 endpoints diffed against Hetzner with 0 differences; passwords retired (410), magic link + Google only. Seven scheduled jobs on five cron triggers, plus `POST /admin/jobs/<name>` to run any on demand. Frontend as Cloudflare static assets (`cercol-web`), cercol.team and www on the Worker, gh-pages kept as warm fallback. DNS moved from Porkbun to Cloudflare. Mail: Stalwart retired, six mailboxes (cercol.team and topquaranta.cat, 651 messages) copied to Purelymail, MX/SPF/DKIM/DMARC repointed. New: daily brief email at 04:00 UTC (`worker/src/jobs/daily.js`) with product numbers, search, and the free-plan caps with warnings at 70%; email design kit from mm-design tokens (`worker/src/email-ui.js`) shared by every email; crawler analytics from Cloudflare replacing the dead `crawl_logs`. `deploy-worker.yml` deploys the Worker on push. Decommissioned on 2026-08-19 after 40 hours with zero real requests at the origin: services stopped, Caddy block retired, final Postgres dump copied off the box and md5-verified, the Worker's proxy fallback and `deploy-backend.yml` removed, gh-pages fallback dropped. Closes "Cloudflare Pages migration" below and 17.9(b). | |
 ---
 
-## Publishing freeze (2026-08-23, in force)
+## Publishing freeze (PROPOSED 2026-08-23 — not decided)
 
-The blog is frozen at 108 published articles. Nothing new is written
-until the bridge from an article to an instrument works.
+A 2026-08-23 audit proposed freezing the blog at 108 published articles
+until the bridge from an article to an instrument works, and a session
+recorded it here as "in force" without the operator ever deciding it.
+Corrected on 2026-08-24: it is a proposal, the decision is the
+operator's, and it lives as plan step tc5 (issue #199, reopened). The
+operator's counter-argument is on record there: the articles are
+long-tail index surface, and at ~17 organic clicks/week the tail has
+not had time to prove anything. Until tc5 is decided by the operator,
+nothing here binds anyone.
 
 **Why.** Counted against D1 on 2026-08-23: 53 of the 108 articles have
 two views or fewer and 20 have none, while the seven most-read carry
