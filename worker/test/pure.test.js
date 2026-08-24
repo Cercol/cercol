@@ -578,3 +578,24 @@ describe('content wave ranking', () => {
     expect(parseBlogUrl('https://cercol.team/about/')).toBeNull()
   })
 })
+
+import { validateDraft } from '../src/jobs/outreach.js'
+describe('outreach draft rules', () => {
+  const now = Date.parse('2026-08-25T12:00:00Z')
+  const ok = { company: 'Acme', domain: 'acme.dk', email: 'hello@acme.dk', subject: 'Hi', text: 'x', prepared_at: '2026-08-24T10:00:00Z' }
+  it('accepts a generic address on the same domain after 24 h', () => {
+    expect(validateDraft(ok, now)).toBeNull()
+  })
+  it('hard-blocks personal-looking addresses', () => {
+    expect(validateDraft({ ...ok, email: 'jens.hansen@acme.dk' }, now)).toBe('not a generic address')
+  })
+  it('blocks an email that does not belong to the researched domain', () => {
+    expect(validateDraft({ ...ok, email: 'info@other.com' }, now)).toBe('email/domain mismatch')
+  })
+  it('holds drafts inside the 24 h veto window', () => {
+    expect(validateDraft({ ...ok, prepared_at: '2026-08-25T01:00:00Z' }, now)).toBe('too fresh')
+  })
+  it('rejects drafts missing fields', () => {
+    expect(validateDraft({ ...ok, subject: '' }, now)).toBe('missing fields')
+  })
+})

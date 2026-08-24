@@ -171,7 +171,15 @@ export async function gatherProduct(db, b) {
     ;(starters[id] ||= []).push({ name: r.name, n: r.n, pct: r.name === 'test_progress' ? r.pct : null, at: String(r.t0).slice(11, 16) })
   }
   const totals = { users: await count(db, `SELECT COUNT(*) AS n FROM auth_users`), tests: await count(db, `SELECT COUNT(*) AS n FROM results WHERE is_seed = 0`) }
-  return { signups, tests, pageViews, visitors, starts, byInstrument, byLang, topPages, newUsers, witness, top, takingOff, dropOff, starters, totals }
+  // Cold-outreach ledger (t76). Guarded: the table only exists once 006 runs.
+  let outreach = null
+  try {
+    outreach = await db.prepare(`SELECT COUNT(*) AS total,
+        SUM(created_at >= ?1 AND created_at < ?2) AS y,
+        SUM(status='replied') AS replied, SUM(status='bounced') AS bounced,
+        SUM(status='complained') AS complained FROM outreach`).bind(...Y).first()
+  } catch { /* not yet migrated */ }
+  return { signups, tests, pageViews, visitors, starts, byInstrument, byLang, topPages, newUsers, witness, top, takingOff, dropOff, starters, totals, outreach }
 }
 
 /** Latest day Search Console has exported (usually two days behind), and the day before it. */
@@ -435,6 +443,7 @@ export function dailyHtml(data, frontendUrl = 'https://cercol.team') {
   parts.push(p(`${fmt(pr.visitors[0])} visitors &rarr; ${fmt(pr.starts[0])} started a test &rarr; ${fmt(pr.tests[0])} finished (${pctOf(pr.tests[0], pr.starts[0])} of starters, ${pctOf(pr.tests[0], pr.visitors[0])} of visitors)`))
   if (pr.byLang.length) parts.push(p(`Visitors by language: ${pr.byLang.map(([l, n]) => `${l} ${fmt(n)}`).join(' &middot; ')}`, true))
   if (pr.byInstrument.length) parts.push(table(['Tests yesterday', 'Lang', 'N'], pr.byInstrument.map(([i, l, n]) => [i, l, fmt(n)]), ['left', 'left', 'right']))
+  if (pr.outreach?.total) parts.push(p(`Outreach: ${fmt(pr.outreach.y || 0)} sent yesterday &middot; ${fmt(pr.outreach.total)} total &middot; ${fmt(pr.outreach.replied || 0)} replied &middot; ${fmt(pr.outreach.bounced || 0)} bounced${pr.outreach.complained ? ` &middot; <span style="color:${C.red};">${fmt(pr.outreach.complained)} complained &mdash; sending is halted</span>` : ''}`, true))
 
   // 3. People
   let people = pr.newUsers.length

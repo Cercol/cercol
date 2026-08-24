@@ -14,7 +14,11 @@
     // Issue queues (daily brief, plan steps) and the plan itself live in the
     // private ops repo since 2026-08-24; the public repo keeps code + science.
     "GITHUB_REPO": "Cercol/cercol-ops",
-    "OPS_REPO": "Cercol/cercol-ops"
+    "OPS_REPO": "Cercol/cercol-ops",
+    // Cold outreach (ops plan t76): the routine prepares drafts in the ops
+    // repo, outreach-tick sends them. "0" keeps sending dark; flip to "1"
+    // only on the operator's explicit go.
+    "OUTREACH_ENABLED": "0"
   },
   "d1_databases": [
     { "binding": "DB", "database_name": "cercol", "database_id": "928ddbd6-5fc6-4e2b-9fd1-e7de66435ef6" }

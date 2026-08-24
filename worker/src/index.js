@@ -27,6 +27,7 @@ import {
   acceptInvitation, declineInvitation, reportData,
 } from './groups.js'
 import { createCheckout, stripeWebhook } from './stripe.js'
+import { outreachWebhook } from './jobs/outreach.js'
 import * as admin from './admin.js'
 import * as seo from './seo.js'
 import { createPost, updatePost, patchStatus, health, robots } from './blog-admin.js'
@@ -99,6 +100,7 @@ const ROUTES = [
   // Stripe.
   { method: 'POST', pattern: /^\/checkout$/, handler: (env, m, req) => createCheckout(env, req), gated: true },
   { method: 'POST', pattern: /^\/webhooks\/stripe$/, handler: (env, m, req) => stripeWebhook(env, req), gated: true },
+  { method: 'POST', pattern: /^\/webhooks\/resend$/, handler: (env, m, req) => outreachWebhook(env, req), gated: true },
   // Admin.
   { method: 'GET', pattern: /^\/admin\/stats$/, handler: (env, m, req) => admin.stats(env, req), gated: true },
   { method: 'GET', pattern: /^\/admin\/users$/, handler: (env, m, req) => admin.users(env, req), gated: true },
