@@ -85,8 +85,18 @@ export async function gatherD1(db, { ws, we, ps, pe }) {
   const aggs = DOMAINS.map((d) => `SUM(${d}) AS ${d}_s, SUM(${d}*${d}) AS ${d}_ss`).join(', ')
   const normRows = (await q(`SELECT instrument, language, COUNT(*) AS n, ${aggs} FROM results WHERE is_seed = 0 AND ${DOMAINS.map((d) => `${d} IS NOT NULL`).join(' AND ')} GROUP BY instrument, language ORDER BY instrument, language`))
     .map((r) => ({ ...r, ...Object.fromEntries(DOMAINS.map((d) => [`${d}_mean`, r.n ? r[`${d}_s`] / r.n : null])) }))
+  // The three-KPI row (plan step tz4). Share of profiles with at least one
+  // completed Witness session is a stock, not a flow, so both points are
+  // measured as-of the week boundaries rather than counted within the week.
+  const witnessShare = async (cutoff) => {
+    const subj = await count(db, `SELECT COUNT(DISTINCT subject_id) AS n FROM witness_sessions WHERE COALESCE(is_seed, 0) = 0 AND completed_at IS NOT NULL AND completed_at < ?`, cutoff)
+    const prof = await count(db, `SELECT COUNT(*) AS n FROM profiles WHERE created_at < ? OR created_at IS NULL`, cutoff)
+    return prof ? Math.round((subj / prof) * 100) : 0
+  }
+  const witnessPct = [await witnessShare(iso(we)), await witnessShare(iso(ws))]
+
   return {
-    kpis: { signups, tests, tests_4w: tests4w, page_views: pageViews, unique_visitors: visitors },
+    kpis: { signups, tests, tests_4w: tests4w, page_views: pageViews, unique_visitors: visitors, witness_pct: witnessPct },
     instruments, weekIl, roleRows, funnelRaw, people, chanRows, testsTotal: tests[0], topArticles, cumRows, normRows,
   }
 }
@@ -168,6 +178,9 @@ export async function gatherBigQuery(env, { ws, we, ps, pe }) {
   if (gscPresent) {
     const gt = `\`${p}.${sg}.searchdata_url_impression\``
     const totals = await bq(env, `SELECT SUM(impressions) AS impressions, SUM(clicks) AS clicks FROM ${gt} WHERE data_date BETWEEN '${cwS}' AND '${cwE}'`)
+    // Prior week, for the KPI row's week-over-week delta (plan step tz4).
+    const prevTotals = await bq(env, `SELECT SUM(clicks) AS clicks FROM ${gt} WHERE data_date BETWEEN '${pwS}' AND '${pwE}'`)
+    seo.clicks_prev = Number(prevTotals[0]?.clicks || 0)
     const tq = await bq(env, `SELECT query, SUM(impressions) AS impressions, SUM(clicks) AS clicks, AVG(sum_position/impressions) AS pos FROM ${gt} WHERE data_date BETWEEN '${cwS}' AND '${cwE}' AND query IS NOT NULL GROUP BY query ORDER BY impressions DESC LIMIT 10`)
     const movers = await bq(env, `WITH cur AS (SELECT url, SAFE_DIVIDE(SUM(sum_position), SUM(impressions)) AS pos FROM ${gt} WHERE data_date BETWEEN '${cwS}' AND '${cwE}' GROUP BY url),
       prev AS (SELECT url, SAFE_DIVIDE(SUM(sum_position), SUM(impressions)) AS pos FROM ${gt} WHERE data_date BETWEEN '${pwS}' AND '${pwE}' GROUP BY url)
@@ -180,6 +193,8 @@ export async function gatherBigQuery(env, { ws, we, ps, pe }) {
   } else {
     const bt = `\`${p}.${sd}.bing_query_stats\``
     const totals = await bq(env, `SELECT SUM(impressions) AS impressions, SUM(clicks) AS clicks FROM ${bt} WHERE date BETWEEN '${cwS}' AND '${cwE}'`)
+    const prevTotals = await bq(env, `SELECT SUM(clicks) AS clicks FROM ${bt} WHERE date BETWEEN '${pwS}' AND '${pwE}'`)
+    seo.clicks_prev = Number(prevTotals[0]?.clicks || 0)
     const tq = await bq(env, `SELECT query, SUM(impressions) AS impressions, SUM(clicks) AS clicks, AVG(avg_position) AS pos FROM ${bt} WHERE date BETWEEN '${cwS}' AND '${cwE}' GROUP BY query ORDER BY impressions DESC LIMIT 10`)
     const t = totals[0] || {}
     Object.assign(seo, { source: 'bing', impressions: Number(t.impressions || 0), clicks: Number(t.clicks || 0),
@@ -223,8 +238,18 @@ const baseEn = (content, frontendUrl) => shell(content, { frontendUrl, footer: '
 export function weeklyDigestHtml(data, frontendUrl = 'https://cercol.team') {
   const kpis = data.kpis || {}
   const card = (name, label) => { const [cur, prev] = kpis[name] || [0, 0]; return statCard(label, fmt(cur), deltaSpan(cur, prev)) }
+  // The three-KPI row goes first, above everything else (plan step tz4): if
+  // this row does not move, the rest of the email explains why.
+  const wPct = kpis.witness_pct || [0, 0]
+  const clicksPair = [Number(data.seo?.clicks || 0), Number(data.seo?.clicks_prev || 0)]
+  const kpiRow = metricRow([
+    statCard('Tests completed', fmt((kpis.tests || [0, 0])[0]), deltaSpan((kpis.tests || [0, 0])[0], (kpis.tests || [0, 0])[1])),
+    statCard('Profiles with a Witness', `${wPct[0]}%`, delta(wPct[0], wPct[1], ' pts vs last week')),
+    statCard('Organic clicks', fmt(clicksPair[0]), deltaSpan(clicksPair[0], clicksPair[1])),
+  ])
   const parts = [
     h1(`Weekly digest &mdash; ${data.week_label || ''}`),
+    kpiRow,
     northStar(kpis, data.weekly_pivot || {}, data.channels || []),
     p('How cercol.team performed last week (Mon&ndash;Sun, UTC).', true),
     metricRow([card('signups', 'Signups'), card('tests', 'Tests'), card('page_views', 'Page views'), card('unique_visitors', 'Visitors')]),
