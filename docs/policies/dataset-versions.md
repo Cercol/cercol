@@ -25,6 +25,16 @@ over the whole history at any time. This is the reason raw means are stored.
 
 **Copy, layout, and translations of the interface.** Only item text counts.
 
+**Administration order.** On 2026-08-24 the on-screen order inside each
+domain block changed from facet-grouped (each facet's twin items adjacent, an
+artifact of the audit-friendly item files) to facet-rotated
+(`src/utils/administration-order.js`), so consecutive items never probe the
+same facet — the design principle of the published inventories, whose literal
+sequence our sources do not carry. The items, their wording, their keying and
+the response scale are identical, answers are keyed by item id, and at the
+time of the change version 7 had a single respondent (the operator, that
+day), so this was deliberately not treated as a new version.
+
 **Scoring of derived outputs** (role fit, Witness comparison), which are
 recomputed from the stored scores rather than stored themselves.
 

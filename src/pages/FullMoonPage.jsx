@@ -19,6 +19,7 @@ import { useTranslation } from 'react-i18next'
 import { FM_ITEMS, FM_SCALE_LABELS } from '../data/full-moon'
 import { INSTRUMENT_DOMAIN_ORDER } from '../data/domains'
 import { computeFMScores } from '../utils/full-moon-scoring'
+import { rotateFacets } from '../utils/administration-order'
 import { useScaleLabels } from '../hooks/useScaleLabels'
 import { useTrackTestStart, useTrackTestProgress } from '../hooks/useTrackTestStart'
 import { usePageMeta } from '../hooks/usePageMeta'
@@ -37,7 +38,7 @@ import { FullMoonIcon, ArrowLeftIcon, ArrowRightIcon, DimensionIcon } from '../c
 const DOMAIN_ORDER = INSTRUMENT_DOMAIN_ORDER
 
 const BLOCKS = DOMAIN_ORDER.map((domain) =>
-  FM_ITEMS.filter((item) => item.domain === domain)
+  rotateFacets(FM_ITEMS.filter((item) => item.domain === domain))
 )
 
 const ITEMS_PER_BLOCK = 24

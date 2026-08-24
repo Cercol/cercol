@@ -22,6 +22,7 @@ import { useTrackTestStart, useTrackTestProgress } from '../hooks/useTrackTestSt
 import { usePageMeta } from '../hooks/usePageMeta'
 import { INSTRUMENT_DOMAIN_ORDER } from '../data/domains'
 import { computeFQScores } from '../utils/first-quarter-scoring'
+import { rotateFacets } from '../utils/administration-order'
 import { useFeedbackContext } from '../context/FeedbackContext'
 import { useAuth } from '../context/AuthContext'
 import { getMyResults, anonymiseResult } from '../lib/api'
@@ -60,7 +61,7 @@ function RedoConfirmModal({ t, onConfirm, onCancel, loading }) {
 const DOMAIN_ORDER = INSTRUMENT_DOMAIN_ORDER
 
 const BLOCKS = DOMAIN_ORDER.map((domain) =>
-  FQ_ITEMS.filter((item) => item.domain === domain)
+  rotateFacets(FQ_ITEMS.filter((item) => item.domain === domain))
 )
 
 const ITEMS_PER_BLOCK = 12
