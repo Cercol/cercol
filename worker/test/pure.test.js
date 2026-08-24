@@ -285,8 +285,20 @@ describe('daily tasks as a GitHub issue', () => {
 
 // Search Console is the only place that says whether Google will index a
 // page at all; the 307 regression went unseen for eleven days without it.
-import { indexingActions, freshProblems, SITEMAP_STALE_DAYS, RENOTIFY_DAYS, REPORTED_TTL_DAYS } from '../src/jobs/indexing.js'
+import { indexingActions, freshProblems, SITEMAP_STALE_DAYS, RENOTIFY_DAYS, REPORTED_TTL_DAYS, NON_PUBLIC_PATH } from '../src/jobs/indexing.js'
 describe('indexing', () => {
+  it('never asks Google about a page robots.txt keeps out of the index', () => {
+    // /admin is Disallow-ed in robots.txt; /auth and /my-results are gated
+    // SPA views that canonical to the home page. None can ever be indexed, so
+    // reporting one as "unknown to google" is noise. This is the rule the
+    // 2026-08-23 brief's /admin line asked for.
+    for (const p of ['/admin', '/admin/', '/admin/jobs', '/auth', '/auth/callback', '/my-results', '/ca/admin']) {
+      expect(NON_PUBLIC_PATH.test(p)).toBe(true)
+    }
+    for (const p of ['/', '/blog/what-is-a-facet-in-personality-psychology/', '/ca/blog/team-roles/', '/full-moon', '/administrators/']) {
+      expect(NON_PUBLIC_PATH.test(p)).toBe(false)
+    }
+  })
   it('says nothing at all until the service account has access', () => {
     expect(indexingActions({ pending: true })).toEqual([])
     expect(indexingActions({ pending: true, error: 'search console 403' })).toEqual([])

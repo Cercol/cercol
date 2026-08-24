@@ -54,6 +54,16 @@ export const SITEMAP_STALE_DAYS = 7
 // changes, so this holds only the identical verdict.
 export const RENOTIFY_DAYS = 14
 
+/**
+ * Paths that are never going to be in Google's index, so asking about one and
+ * reporting "url is unknown to google" is noise, not a task. robots.txt keeps
+ * /admin out by name; /auth and /my-results are gated SPA views that canonical
+ * to the home page. The 2026-08-23 brief spent a line on /admin because an
+ * operator's page views to it put it in the traffic-derived candidate list.
+ * A page dropped here is never inspected, so it can never be reported.
+ */
+export const NON_PUBLIC_PATH = /^(?:\/[a-z]{2})?\/(?:admin|auth|my-results)(?:\/|$)/
+
 /** Google's verdict strings, shortened for a line in an email. */
 const clean = (s) => String(s || '').replace(/_/g, ' ').toLowerCase()
 
@@ -86,10 +96,12 @@ export async function gatherIndexing(env, paths = [], { now = Date.now() } = {})
       out.sitemap = { path: sm.path, errors: Number(sm.errors || 0), warnings: Number(sm.warnings || 0), ageDays: age }
     }
 
-    // Unique, canonical (trailing slash) forms of the pages that had traffic.
+    // Unique, canonical (trailing slash) forms of the pages that had traffic,
+    // minus the ones Google is never going to index (see NON_PUBLIC_PATH).
     const seen = new Set()
     const urls = []
     for (const p of paths) {
+      if (NON_PUBLIC_PATH.test(p)) continue
       const url = `${origin}${p.endsWith('/') ? p : `${p}/`}`
       if (seen.has(url)) continue
       seen.add(url)

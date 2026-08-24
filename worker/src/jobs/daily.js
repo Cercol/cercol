@@ -99,7 +99,18 @@ export async function gatherProduct(db, b) {
   const tests = await pair(`SELECT COUNT(*) AS n FROM results WHERE is_seed = 0 AND created_at >= ? AND created_at < ?`)
   const pageViews = await pair(`SELECT COUNT(*) AS n FROM events WHERE name='page_view' AND created_at >= ? AND created_at < ?`)
   const visitors = await pair(`SELECT COUNT(DISTINCT anon_id) AS n FROM events WHERE name='page_view' AND anon_id IS NOT NULL AND created_at >= ? AND created_at < ?`)
-  const starts = await pair(`SELECT COUNT(DISTINCT anon_id) AS n FROM events WHERE name='test_start' AND created_at >= ? AND created_at < ?`)
+  // Starters, minus the site's own operators. Only an admin ever reaches
+  // /admin, so an anon_id that visited it the same day is someone testing the
+  // instrument from the panel, not a prospect who bounced. Their QA runs used
+  // to fire the "started a test and none finished" line every time (the
+  // 2026-08-23 brief, one starter, who had logged in, reached the results
+  // page and opened /admin twice). anon_id IS NOT NULL in the subquery so a
+  // single admin page view with no id can never NULL out the whole NOT IN.
+  const starts = await pair(`SELECT COUNT(DISTINCT anon_id) AS n FROM events
+     WHERE name='test_start' AND created_at >= ?1 AND created_at < ?2
+       AND anon_id NOT IN (
+         SELECT anon_id FROM events
+          WHERE path LIKE '/admin%' AND anon_id IS NOT NULL AND created_at >= ?1 AND created_at < ?2)`)
   const byInstrument = (await q(`SELECT instrument, language, COUNT(*) AS n FROM results WHERE is_seed = 0 AND created_at >= ? AND created_at < ? GROUP BY instrument, language ORDER BY n DESC`, ...Y))
     .map((r) => [LABELS[r.instrument] || r.instrument, r.language || '—', r.n])
   const byLang = (await q(`SELECT COALESCE(lang,'?') AS lang, COUNT(DISTINCT anon_id) AS n FROM events WHERE name='page_view' AND created_at >= ? AND created_at < ? GROUP BY lang ORDER BY n DESC`, ...Y)).map((r) => [r.lang, r.n])
