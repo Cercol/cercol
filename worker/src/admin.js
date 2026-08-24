@@ -140,8 +140,12 @@ export async function progress(env, request) {
   const u = new URL(request.url)
   const instrument = u.searchParams.get('instrument') || 'newMoon'
   const db = env.DB
+  // COALESCE(anon_id, id): early instrumentation logged test_start without a
+  // visitor id, and COUNT(DISTINCT anon_id) silently dropped those rows —
+  // which is how New Moon showed more completions than starts. A row with no
+  // visitor id counts as its own visitor instead.
   const { results: starts } = await db.prepare(
-    `SELECT COALESCE(lang, '') AS lang, COUNT(DISTINCT anon_id) AS n FROM events
+    `SELECT COALESCE(lang, '') AS lang, COUNT(DISTINCT COALESCE(anon_id, id)) AS n FROM events
       WHERE name = 'test_start' AND instrument = ?1 GROUP BY COALESCE(lang, '')`
   ).bind(instrument).all()
   // Abandon distribution only: visitors with a stored result are counted by
