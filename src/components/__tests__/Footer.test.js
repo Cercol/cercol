@@ -73,7 +73,7 @@ describe('Footer', () => {
 
 describe('navigation is defined once', () => {
   it('flattens groups into destinations and leaves group labels out', () => {
-    expect(NAV_LINKS.map((l) => l.key)).toEqual(['instruments', 'roles', 'science', 'blog', 'about', 'faq'])
+    expect(NAV_LINKS.map((l) => l.key)).toEqual(['instruments', 'roles', 'science', 'blog', 'about', 'faq', 'forOrgs', 'forFacilitators'])
     expect(NAV_LINKS.every((l) => l.to)).toBe(true)
   })
   it('prefixes only what is marked, and never English', () => {

@@ -1,7 +1,7 @@
 {
   "beta": {
-    "banner": "Launch promotion: Full Moon free while the beta lasts.",
-    "cta": "Get free access",
+    "banner": "Cèrcol is free, and stays free. {{count}} of {{target}} responses toward validating the twelve roles.",
+    "cta": "Take part",
     "badge": "Beta tester"
   },
   "nav": {
@@ -16,7 +16,9 @@
     "menuLearn": "Learn",
     "menuCompany": "Project",
     "privacy": "Privacy",
-    "menuAssess": "Assessments"
+    "menuAssess": "Assessments",
+    "forOrgs": "For organizations",
+    "forFacilitators": "For facilitators"
   },
   "myResults": {
     "link": "My results",
@@ -1341,6 +1343,10 @@
     "q12": {
       "q": "What are blind spots?",
       "a": "A blind spot is a personality dimension where how you see yourself and how others see you diverge significantly, more than 0.8 standard deviations apart. For example, if you rate yourself low on Presence but your Witnesses consistently rate you high, that gap is a blind spot. Blind spots are neither good nor bad. They are information: they show where your self-perception and others' experience of you don't match, which is often more useful than the score itself."
+    },
+    "q13": {
+      "q": "Will Cèrcol stay free?",
+      "a": "Yes. The instruments, personal results and the core team report are free and will stay free. If Cèrcol ever charges for anything, it will be optional extras for organizations — bulk administration, exports — announced in advance. Nothing that is free today will become paid."
     }
   },
   "instruments": {
@@ -1536,6 +1542,14 @@
     "privacy": {
       "title": "Cèrcol privacy: data, deletion rights and EU GDPR",
       "description": "How Cèrcol handles your data: what we store, what we never share, your GDPR rights, and how to delete your account. Plain language, no boilerplate."
+    },
+    "forOrgs": {
+      "title": "Cèrcol for organizations: free Big Five team assessment",
+      "description": "Run the free, open-source Big Five (IPIP) assessment across your teams. Free forever; optional admin conveniences for organizations may come later."
+    },
+    "forFacilitators": {
+      "title": "Cèrcol for facilitators: an open instrument for coaches",
+      "description": "Coaches and organizational psychologists: use Cèrcol's free, open-source Big Five (IPIP) instruments and team reports with clients, in six languages."
     }
   },
   "groupTools": {
@@ -1577,6 +1591,65 @@
     "variantNote": {
       "published": "These items are a published translation, used exactly as its authors published it.",
       "adapted": "These items are adapted from a published translation for readers of this variety. The source is named when you hover an option."
+    }
+  },
+  "forOrgs": {
+    "eyebrow": "For organizations",
+    "title": "Run Cèrcol across your teams",
+    "intro": "Every Cèrcol instrument is free — for individuals and for whole teams. If you run assessments across an organization, this page is for you.",
+    "freeForever": {
+      "heading": "Free forever",
+      "body": "The instruments, personal results and the team report are free and stay free. If Cèrcol ever charges for anything, it will be optional administrative conveniences for organizations — never the assessment itself, and never something you already use."
+    },
+    "today": {
+      "heading": "What you can already do, free",
+      "today1": "Create a group and invite your team by email.",
+      "today2": "Each member takes the instruments at their own pace, in six languages.",
+      "today3": "Invite Witnesses for the peer perspective on each profile.",
+      "today4": "Get the team report: role balance, shared blind spots, and a narrative you can discuss."
+    },
+    "later": {
+      "heading": "What might come next",
+      "note": "We are considering optional conveniences for organizations that run Cèrcol at scale. These would be paid; everything above stays free.",
+      "later1": "Bulk invitations and completion tracking across several teams.",
+      "later2": "An organization dashboard with admin roles.",
+      "later3": "Exports of aggregate reports (PDF/CSV).",
+      "later4": "Configurable data retention for your workspace."
+    },
+    "cta": {
+      "body": "Would any of this be useful to your organization? Tell us what you would need — it directly decides what gets built.",
+      "button": "Tell us what you need",
+      "subject": "Cèrcol for organizations",
+      "note": "Opens your email client. No forms, no tracking."
+    }
+  },
+  "forFacilitators": {
+    "eyebrow": "For facilitators",
+    "title": "Use Cèrcol with your clients",
+    "intro": "If you coach teams — as an organizational psychologist, team coach or trainer — Cèrcol gives you an open, documented instrument you can use with clients for free, in six languages.",
+    "today": {
+      "heading": "What you get today",
+      "today1": "Free instruments with published, public-domain items — your clients can verify every question.",
+      "today2": "The Witness peer assessment and a team report to build your session around.",
+      "today3": "A documented method: scoring, sources and limitations are public and citable.",
+      "today4": "Six languages, so a client team can answer in their own."
+    },
+    "honesty": {
+      "heading": "What we ask in return",
+      "body": "Honesty with your clients. The five dimensions rest on published research; the twelve team roles are a beta model pending validation and must not be presented as a validated diagnostic. That transparency is Cèrcol's difference — and it protects you too."
+    },
+    "later": {
+      "heading": "What might come next",
+      "note": "If enough professionals are interested, we will build practitioner materials — with qualified input — and a directory. Join the list and you'll shape them.",
+      "later1": "Session guides and workshop materials, reviewed by licensed professionals.",
+      "later2": "A directory of qualified practitioners that teams can find.",
+      "later3": "Tools for running Cèrcol across several client teams."
+    },
+    "cta": {
+      "body": "Interested? Join the waitlist — tell us who you work with and what you'd need.",
+      "button": "Join the waitlist",
+      "subject": "Cèrcol for facilitators",
+      "note": "Opens your email client. No forms, no tracking."
     }
   }
 }

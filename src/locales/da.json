@@ -1,7 +1,7 @@
 {
   "beta": {
-    "banner": "Lanceringstilbud: Fuldmåne gratis under betaen.",
-    "cta": "Få gratis adgang",
+    "banner": "Cèrcol er gratis og forbliver gratis. {{count}} af {{target}} svar på vej mod validering af de tolv roller.",
+    "cta": "Deltag",
     "badge": "Beta-tester"
   },
   "nav": {
@@ -16,7 +16,9 @@
     "menuLearn": "Ressourcer",
     "menuCompany": "Projektet",
     "privacy": "Privatlivspolitik",
-    "menuAssess": "Test"
+    "menuAssess": "Test",
+    "forOrgs": "Til organisationer",
+    "forFacilitators": "Til facilitatorer"
   },
   "myResults": {
     "link": "Mine resultater",
@@ -1341,6 +1343,10 @@
     "q12": {
       "q": "Hvad er blinde pletter?",
       "a": "En blind plet er en personlighedsdimension, hvor din selvopfattelse og andres opfattelse af dig afviger betydeligt, mere end 0,8 standardafvigelser. Hvis du f.eks. vurderer dig selv lavt på Tilstedeværelse, men dine Vidner konsekvent vurderer dig højt, er dette en blind plet. Blinde pletter er hverken gode eller dårlige. De er information: de viser, hvor din selvopfattelse og andres oplevelse af dig ikke stemmer overens, det er ofte mere nyttigt end selve scoren."
+    },
+    "q13": {
+      "q": "Forbliver Cèrcol gratis?",
+      "a": "Ja. Instrumenterne, de personlige resultater og den grundlæggende teamrapport er gratis og forbliver gratis. Hvis Cèrcol nogensinde tager betaling for noget, bliver det valgfrie ekstrafunktioner til organisationer — masseadministration, eksport — annonceret i god tid. Intet, der er gratis i dag, bliver betalt."
     }
   },
   "instruments": {
@@ -1536,6 +1542,14 @@
     "privacy": {
       "title": "Cèrcol privatliv: data, sletteret og GDPR",
       "description": "Sådan håndterer Cèrcol dine data: hvad vi gemmer, hvad vi aldrig deler, dine GDPR-rettigheder og hvordan du sletter din konto. Klart sprog, ingen jura."
+    },
+    "forOrgs": {
+      "title": "Cèrcol til organisationer: gratis Big Five-teamtest",
+      "description": "Brug den gratis open source Big Five-vurdering (IPIP) i alle dine teams. Gratis for altid; valgfrie ekstrafunktioner kommer måske senere."
+    },
+    "forFacilitators": {
+      "title": "Cèrcol til facilitatorer: et åbent instrument",
+      "description": "Coaches og organisationspsykologer: Brug Cèrcols gratis open source Big Five-instrumenter (IPIP) og teamrapporter med klienter, på seks sprog."
     }
   },
   "groupTools": {
@@ -1577,6 +1591,65 @@
     "variantNote": {
       "published": "Disse udsagn er en offentliggjort oversættelse, brugt præcis som forfatterne udgav den.",
       "adapted": "Disse udsagn er tilpasset fra en offentliggjort oversættelse til læsere af denne variant. Kilden vises, når du holder markøren over en mulighed."
+    }
+  },
+  "forOrgs": {
+    "eyebrow": "Til organisationer",
+    "title": "Brug Cèrcol i alle dine teams",
+    "intro": "Alle Cèrcols instrumenter er gratis — for enkeltpersoner og for hele teams. Hvis du kører vurderinger på organisationsniveau, er denne side til dig.",
+    "freeForever": {
+      "heading": "Gratis for altid",
+      "body": "Instrumenterne, de personlige resultater og teamrapporten er gratis og forbliver gratis. Hvis Cèrcol nogensinde tager betaling for noget, bliver det valgfrie administrative funktioner til organisationer — aldrig selve vurderingen og aldrig noget, du allerede bruger."
+    },
+    "today": {
+      "heading": "Hvad du allerede kan, gratis",
+      "today1": "Opret en gruppe og inviter dit team via e-mail.",
+      "today2": "Hvert medlem tager instrumenterne i eget tempo, på seks sprog.",
+      "today3": "Inviter Vidner for at få det udefrakommende perspektiv på hver profil.",
+      "today4": "Få teamrapporten: rollebalance, fælles blinde vinkler og en fortælling at diskutere."
+    },
+    "later": {
+      "heading": "Hvad der kan komme",
+      "note": "Vi overvejer valgfrie funktioner til organisationer, der bruger Cèrcol i stor skala. De ville koste penge; alt ovenfor forbliver gratis.",
+      "later1": "Masseinvitationer og fuldførelsesoverblik på tværs af flere teams.",
+      "later2": "Et organisationsdashboard med administratorroller.",
+      "later3": "Eksport af samlede rapporter (PDF/CSV).",
+      "later4": "Konfigurerbar dataopbevaring for dit arbejdsområde."
+    },
+    "cta": {
+      "body": "Ville noget af dette være nyttigt for din organisation? Fortæl os, hvad du ville have brug for — det afgør direkte, hvad der bliver bygget.",
+      "button": "Fortæl os, hvad du mangler",
+      "subject": "Cèrcol til organisationer",
+      "note": "Åbner dit e-mailprogram. Ingen formularer, ingen sporing."
+    }
+  },
+  "forFacilitators": {
+    "eyebrow": "Til facilitatorer",
+    "title": "Brug Cèrcol med dine klienter",
+    "intro": "Hvis du arbejder med teams — som organisationspsykolog, teamcoach eller underviser — giver Cèrcol dig et åbent, dokumenteret instrument, du kan bruge gratis med klienter, på seks sprog.",
+    "today": {
+      "heading": "Hvad du får i dag",
+      "today1": "Gratis instrumenter med publicerede public domain-items — dine klienter kan efterprøve hvert spørgsmål.",
+      "today2": "Vidne-vurderingen og en teamrapport at bygge din session på.",
+      "today3": "En dokumenteret metode: scoring, kilder og begrænsninger er offentlige og citerbare.",
+      "today4": "Seks sprog, så hvert klientteam kan svare på sit eget."
+    },
+    "honesty": {
+      "heading": "Hvad vi beder om til gengæld",
+      "body": "Ærlighed over for dine klienter. De fem dimensioner bygger på publiceret forskning; de tolv teamroller er en betamodel, der afventer validering, og må ikke præsenteres som en valideret diagnose. Den gennemsigtighed er Cèrcols forskel — og den beskytter også dig."
+    },
+    "later": {
+      "heading": "Hvad der kan komme",
+      "note": "Hvis nok fagfolk er interesserede, bygger vi materialer til praktikere — med kvalificeret input — og en fortegnelse. Skriv dig op, og vær med til at forme dem.",
+      "later1": "Sessionsguider og workshopmaterialer, gennemgået af autoriserede fagfolk.",
+      "later2": "En fortegnelse over kvalificerede praktikere, som teams kan finde.",
+      "later3": "Værktøjer til at bruge Cèrcol med flere klientteams."
+    },
+    "cta": {
+      "body": "Interesseret? Skriv dig på ventelisten — fortæl os, hvem du arbejder med, og hvad du ville have brug for.",
+      "button": "Skriv dig på ventelisten",
+      "subject": "Cèrcol til facilitatorer",
+      "note": "Åbner dit e-mailprogram. Ingen formularer, ingen sporing."
     }
   }
 }

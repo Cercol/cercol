@@ -68,6 +68,8 @@ export const NAV = [
     items: [
       { key: 'about', to: '/about' },
       { key: 'faq', to: '/faq' },
+      { key: 'forOrgs', to: '/for-organizations' },
+      { key: 'forFacilitators', to: '/for-facilitators' },
     ],
   },
 ]

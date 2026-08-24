@@ -47,6 +47,8 @@ const RolesPage       = lazy(() => import('./pages/RolesPage'))
 const SciencePage     = lazy(() => import('./pages/SciencePage'))
 const FaqPage         = lazy(() => import('./pages/FaqPage'))
 const PrivacyPage     = lazy(() => import('./pages/PrivacyPage'))
+const ForOrganizationsPage = lazy(() => import('./pages/ForOrganizationsPage'))
+const ForFacilitatorsPage  = lazy(() => import('./pages/ForFacilitatorsPage'))
 const SampleReportPage = lazy(() => import('./pages/SampleReportPage'))
 const SampleFirstQuarterPage = lazy(() => import('./pages/SampleFirstQuarterPage'))
 
@@ -108,6 +110,8 @@ const TOP_LEVEL_PAGES = [
   { path: '/privacy',     element: <PrivacyPage /> },
   { path: '/sample',      element: <SampleFirstQuarterPage /> },
   { path: '/sample/full-moon', element: <SampleReportPage /> },
+  { path: '/for-organizations', element: <ForOrganizationsPage /> },
+  { path: '/for-facilitators',  element: <ForFacilitatorsPage /> },
 ]
 
 /**
@@ -239,6 +243,10 @@ function AppContent() {
 
           {/* Legal */}
           <Route path="/privacy" element={<PrivacyPage />} />
+
+          {/* Painted doors: measure organizational and practitioner interest */}
+          <Route path="/for-organizations" element={<ForOrganizationsPage />} />
+          <Route path="/for-facilitators"  element={<ForFacilitatorsPage />} />
 
           {/* Path-based localized top-level pages: /es/, /es/about/, ... .
               EN keeps the unprefixed routes declared above; these add the

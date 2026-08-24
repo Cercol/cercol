@@ -1,7 +1,7 @@
 {
   "beta": {
-    "banner": "Promoción de lanzamiento: Luna Llena gratis durante la beta.",
-    "cta": "Consigue acceso gratuito",
+    "banner": "Cèrcol es gratuito, y lo seguirá siendo. {{count}} de {{target}} respuestas para validar los doce roles.",
+    "cta": "Participa",
     "badge": "Beta tester"
   },
   "nav": {
@@ -16,7 +16,9 @@
     "menuLearn": "Aprender",
     "menuCompany": "Proyecto",
     "privacy": "Privacidad",
-    "menuAssess": "Evaluaciones"
+    "menuAssess": "Evaluaciones",
+    "forOrgs": "Para organizaciones",
+    "forFacilitators": "Para facilitadores"
   },
   "myResults": {
     "link": "Mis resultados",
@@ -1341,6 +1343,10 @@
     "q12": {
       "q": "¿Qué son los puntos ciegos?",
       "a": "Un punto ciego es una dimensión de la personalidad donde cómo te ves tú y cómo te ven los demás diverge significativamente, más de 0,8 desviaciones estándar en esa dimensión. Por ejemplo, si te valoras bajo en Presencia pero tus Testigos te valoran alto de forma consistente, esa diferencia es un punto ciego. Los puntos ciegos no son buenos ni malos. Son información: muestran dónde la autopercepción y la experiencia que los demás tienen de ti no coinciden, lo que a menudo es más útil que la puntuación en sí."
+    },
+    "q13": {
+      "q": "¿Cèrcol seguirá siendo gratuito?",
+      "a": "Sí. Los instrumentos, los resultados personales y el informe de equipo básico son gratuitos y lo seguirán siendo. Si Cèrcol cobra alguna vez por algo, serán extras opcionales para organizaciones — administración masiva, exportaciones — anunciados con antelación. Nada de lo que hoy es gratuito pasará a ser de pago."
     }
   },
   "instruments": {
@@ -1536,6 +1542,14 @@
     "privacy": {
       "title": "Privacidad de Cèrcol: datos, derecho de supresión y RGPD",
       "description": "Cómo gestiona Cèrcol tus datos: qué almacenamos, qué no compartimos, tus derechos RGPD y cómo borrar la cuenta. Lenguaje claro, sin jerga legal."
+    },
+    "forOrgs": {
+      "title": "Cèrcol para organizaciones: test Big Five gratuito",
+      "description": "Usa la evaluación Big Five (IPIP) gratuita y de código abierto con todos tus equipos. Gratis para siempre; quizá lleguen extras para organizaciones."
+    },
+    "forFacilitators": {
+      "title": "Cèrcol para facilitadores: un instrumento abierto",
+      "description": "Coaches y psicólogos organizacionales: usad los instrumentos Big Five (IPIP) abiertos de Cèrcol y los informes de equipo con clientes, en seis idiomas."
     }
   },
   "groupTools": {
@@ -1577,6 +1591,65 @@
     "variantNote": {
       "published": "Estos ítems son una traducción publicada, utilizada tal como la publicaron sus autores.",
       "adapted": "Estos ítems están adaptados de una traducción publicada para los lectores de esta variedad. La fuente aparece al pasar el ratón por encima de cada opción."
+    }
+  },
+  "forOrgs": {
+    "eyebrow": "Para organizaciones",
+    "title": "Usa Cèrcol con todos tus equipos",
+    "intro": "Todos los instrumentos de Cèrcol son gratuitos, para personas y para equipos enteros. Si haces evaluaciones a escala de organización, esta página es para ti.",
+    "freeForever": {
+      "heading": "Gratis para siempre",
+      "body": "Los instrumentos, los resultados personales y el informe de equipo son gratuitos y lo seguirán siendo. Si Cèrcol cobra alguna vez por algo, serán comodidades administrativas opcionales para organizaciones — nunca la evaluación en sí, y nunca algo que ya uses."
+    },
+    "today": {
+      "heading": "Lo que ya puedes hacer, gratis",
+      "today1": "Crea un grupo e invita a tu equipo por correo.",
+      "today2": "Cada miembro hace los instrumentos a su ritmo, en seis idiomas.",
+      "today3": "Invita Testigos para la perspectiva externa de cada perfil.",
+      "today4": "Obtén el informe de equipo: equilibrio de roles, puntos ciegos compartidos y una narrativa para discutir."
+    },
+    "later": {
+      "heading": "Lo que podría venir",
+      "note": "Estamos considerando comodidades opcionales para organizaciones que usan Cèrcol a escala. Serían de pago; todo lo de arriba sigue gratis.",
+      "later1": "Invitaciones masivas y seguimiento de compleción entre varios equipos.",
+      "later2": "Un panel de organización con roles de administración.",
+      "later3": "Exportaciones de informes agregados (PDF/CSV).",
+      "later4": "Retención de datos configurable para tu espacio."
+    },
+    "cta": {
+      "body": "¿Algo de esto sería útil para tu organización? Dinos qué necesitarías — decide directamente qué se construye.",
+      "button": "Dinos qué necesitas",
+      "subject": "Cèrcol para organizaciones",
+      "note": "Abre tu cliente de correo. Sin formularios, sin rastreo."
+    }
+  },
+  "forFacilitators": {
+    "eyebrow": "Para facilitadores",
+    "title": "Usa Cèrcol con tus clientes",
+    "intro": "Si acompañas equipos — como psicólogo organizacional, coach de equipos o formador — Cèrcol te da un instrumento abierto y documentado para usar gratis con clientes, en seis idiomas.",
+    "today": {
+      "heading": "Lo que tienes hoy",
+      "today1": "Instrumentos gratuitos con ítems publicados y de dominio público — tus clientes pueden verificar cada pregunta.",
+      "today2": "La evaluación entre iguales del Testigo y un informe de equipo sobre el que construir tu sesión.",
+      "today3": "Un método documentado: puntuación, fuentes y limitaciones son públicas y citables.",
+      "today4": "Seis idiomas, para que cada equipo cliente responda en el suyo."
+    },
+    "honesty": {
+      "heading": "Lo que pedimos a cambio",
+      "body": "Honestidad con tus clientes. Las cinco dimensiones se basan en investigación publicada; los doce roles de equipo son un modelo beta pendiente de validación y no deben presentarse como un diagnóstico validado. Esa transparencia es la diferencia de Cèrcol — y también te protege a ti."
+    },
+    "later": {
+      "heading": "Lo que podría venir",
+      "note": "Si hay suficientes profesionales interesados, construiremos materiales para profesionales — con participación cualificada — y un directorio. Apúntate a la lista y les darás forma.",
+      "later1": "Guías de sesión y materiales de taller, revisados por profesionales colegiados.",
+      "later2": "Un directorio de profesionales cualificados que los equipos puedan encontrar.",
+      "later3": "Herramientas para usar Cèrcol con varios equipos clientes."
+    },
+    "cta": {
+      "body": "¿Te interesa? Apúntate a la lista de espera — dinos con quién trabajas y qué necesitarías.",
+      "button": "Apúntate a la lista",
+      "subject": "Cèrcol para facilitadores",
+      "note": "Abre tu cliente de correo. Sin formularios, sin rastreo."
     }
   }
 }

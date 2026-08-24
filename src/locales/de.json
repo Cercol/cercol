@@ -1,7 +1,7 @@
 {
   "beta": {
-    "banner": "Launch-Aktion: Vollmond während der Beta kostenlos.",
-    "cta": "Kostenlosen Zugang holen",
+    "banner": "Cèrcol ist kostenlos und bleibt es. {{count}} von {{target}} Antworten auf dem Weg zur Validierung der zwölf Rollen.",
+    "cta": "Mach mit",
     "badge": "Beta-Tester"
   },
   "nav": {
@@ -16,7 +16,9 @@
     "menuLearn": "Wissen",
     "menuCompany": "Projekt",
     "privacy": "Datenschutz",
-    "menuAssess": "Analyse"
+    "menuAssess": "Analyse",
+    "forOrgs": "Für Organisationen",
+    "forFacilitators": "Für Moderator:innen"
   },
   "myResults": {
     "link": "Meine Ergebnisse",
@@ -1341,6 +1343,10 @@
     "q12": {
       "q": "Was sind blinde Flecken?",
       "a": "Ein blinder Fleck ist eine Persönlichkeitsdimension, in der deine Selbstwahrnehmung und die Wahrnehmung anderer erheblich abweichen, mehr als 0,8 Standardabweichungen. Wenn du dich beispielsweise bei Präsenz niedrig einschätzt, deine Zeuginnen und Zeugen dich aber konsequent hoch einschätzen, ist diese Lücke ein blinder Fleck. Blinde Flecken sind weder gut noch schlecht. Sie sind Informationen: Sie zeigen, wo Selbstwahrnehmung und die Erfahrung, die andere mit dir machen, nicht übereinstimmen, das ist oft nützlicher als der Score selbst."
+    },
+    "q13": {
+      "q": "Bleibt Cèrcol kostenlos?",
+      "a": "Ja. Die Instrumente, die persönlichen Ergebnisse und der Team-Basisbericht sind kostenlos und bleiben es. Sollte Cèrcol je etwas berechnen, wären es optionale Extras für Organisationen — Massenverwaltung, Exporte — und zwar im Voraus angekündigt. Nichts, was heute kostenlos ist, wird kostenpflichtig."
     }
   },
   "instruments": {
@@ -1536,6 +1542,14 @@
     "privacy": {
       "title": "Datenschutz bei Cèrcol: Daten, Löschung und DSGVO",
       "description": "Wie Cèrcol mit deinen Daten umgeht: was wir speichern, was wir nie teilen, deine DSGVO-Rechte und wie du dein Konto löschst. Klare Sprache, keine Floskeln."
+    },
+    "forOrgs": {
+      "title": "Cèrcol für Organisationen: freier Big-Five-Teamtest",
+      "description": "Setze das kostenlose Open-Source-Big-Five-Assessment (IPIP) in allen Teams ein. Für immer kostenlos; optionale Extras für Organisationen kommen vielleicht."
+    },
+    "forFacilitators": {
+      "title": "Cèrcol für Moderatoren: ein offenes Instrument",
+      "description": "Coaches und Organisationspsycholog:innen: Nutzt Cèrcols offene Big-Five-Instrumente (IPIP) und Teamberichte mit Klienten, in sechs Sprachen."
     }
   },
   "groupTools": {
@@ -1577,6 +1591,65 @@
     "variantNote": {
       "published": "Diese Aussagen sind eine veröffentlichte Übersetzung, unverändert übernommen.",
       "adapted": "Diese Aussagen sind aus einer veröffentlichten Übersetzung für Leserinnen und Leser dieser Variante angepasst. Die Quelle erscheint, wenn du eine Option überfährst."
+    }
+  },
+  "forOrgs": {
+    "eyebrow": "Für Organisationen",
+    "title": "Nutze Cèrcol in all deinen Teams",
+    "intro": "Jedes Cèrcol-Instrument ist kostenlos — für Einzelpersonen und für ganze Teams. Wenn du Assessments in einer Organisation durchführst, ist diese Seite für dich.",
+    "freeForever": {
+      "heading": "Für immer kostenlos",
+      "body": "Die Instrumente, die persönlichen Ergebnisse und der Teambericht sind kostenlos und bleiben es. Sollte Cèrcol je etwas berechnen, wären es optionale Verwaltungsfunktionen für Organisationen — nie das Assessment selbst und nie etwas, das du bereits nutzt."
+    },
+    "today": {
+      "heading": "Was du heute schon kannst, kostenlos",
+      "today1": "Erstelle eine Gruppe und lade dein Team per E-Mail ein.",
+      "today2": "Jedes Mitglied macht die Instrumente im eigenen Tempo, in sechs Sprachen.",
+      "today3": "Lade Zeuginnen und Zeugen ein, für die Außenperspektive auf jedes Profil.",
+      "today4": "Erhalte den Teambericht: Rollenbalance, gemeinsame blinde Flecken und eine Erzählung zum Diskutieren."
+    },
+    "later": {
+      "heading": "Was kommen könnte",
+      "note": "Wir denken über optionale Funktionen für Organisationen nach, die Cèrcol im großen Stil nutzen. Diese wären kostenpflichtig; alles oben bleibt kostenlos.",
+      "later1": "Masseneinladungen und Abschluss-Tracking über mehrere Teams.",
+      "later2": "Ein Organisations-Dashboard mit Admin-Rollen.",
+      "later3": "Exporte aggregierter Berichte (PDF/CSV).",
+      "later4": "Konfigurierbare Datenaufbewahrung für deinen Arbeitsbereich."
+    },
+    "cta": {
+      "body": "Wäre etwas davon für deine Organisation nützlich? Sag uns, was du brauchen würdest — das entscheidet direkt, was gebaut wird.",
+      "button": "Sag uns, was du brauchst",
+      "subject": "Cèrcol für Organisationen",
+      "note": "Öffnet dein E-Mail-Programm. Keine Formulare, kein Tracking."
+    }
+  },
+  "forFacilitators": {
+    "eyebrow": "Für Moderator:innen",
+    "title": "Nutze Cèrcol mit deinen Klienten",
+    "intro": "Wenn du Teams begleitest — als Organisationspsycholog:in, Teamcoach oder Trainer:in — gibt dir Cèrcol ein offenes, dokumentiertes Instrument, kostenlos für die Arbeit mit Klienten, in sechs Sprachen.",
+    "today": {
+      "heading": "Was du heute bekommst",
+      "today1": "Kostenlose Instrumente mit veröffentlichten Public-Domain-Items — deine Klienten können jede Frage prüfen.",
+      "today2": "Das Peer-Assessment der Zeuginnen und Zeugen und ein Teambericht als Grundlage deiner Sitzung.",
+      "today3": "Eine dokumentierte Methode: Auswertung, Quellen und Grenzen sind öffentlich und zitierbar.",
+      "today4": "Sechs Sprachen, damit jedes Klienten-Team in seiner eigenen antwortet."
+    },
+    "honesty": {
+      "heading": "Was wir im Gegenzug erbitten",
+      "body": "Ehrlichkeit gegenüber deinen Klienten. Die fünf Dimensionen beruhen auf veröffentlichter Forschung; die zwölf Teamrollen sind ein Beta-Modell, dessen Validierung aussteht, und dürfen nicht als validierte Diagnostik präsentiert werden. Diese Transparenz ist Cèrcols Unterschied — und sie schützt auch dich."
+    },
+    "later": {
+      "heading": "Was kommen könnte",
+      "note": "Wenn genug Fachleute interessiert sind, bauen wir Praxismaterialien — mit qualifizierter Mitwirkung — und ein Verzeichnis. Trag dich ein und gestalte sie mit.",
+      "later1": "Sitzungsleitfäden und Workshop-Materialien, geprüft von approbierten Fachleuten.",
+      "later2": "Ein Verzeichnis qualifizierter Fachleute, das Teams finden können.",
+      "later3": "Werkzeuge, um Cèrcol mit mehreren Klienten-Teams zu nutzen."
+    },
+    "cta": {
+      "body": "Interessiert? Trag dich in die Warteliste ein — sag uns, mit wem du arbeitest und was du brauchen würdest.",
+      "button": "Auf die Warteliste",
+      "subject": "Cèrcol für Moderatoren",
+      "note": "Öffnet dein E-Mail-Programm. Keine Formulare, kein Tracking."
     }
   }
 }

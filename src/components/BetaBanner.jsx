@@ -1,21 +1,16 @@
 /**
- * BetaBanner — launch promotion strip shown below the header.
+ * BetaBanner — the participation strip shown below the header.
  *
- * Shown when:
- *   - Beta slots are still available (remaining > 0)
- *   - The visitor is not yet premium (either not logged in, or logged in without premium)
+ * Since 2026-08-24 it counts usable responses toward the N≥300
+ * role-validation threshold (plan step tg9). The launch-promotion wording
+ * ("Full Moon free while the beta lasts") had to go once everything became
+ * free forever (docs/policies/pricing.md): it promised an ending that will
+ * not come. An earlier counter attempt failed for using NORM_MIN_SAMPLE
+ * (200, an internal number) as the target; this one uses the validation
+ * threshold the science page already commits to publicly, and the copy asks
+ * for participation rather than promising anything at the finish line.
  *
  * Fetched once on mount. Hidden silently on error (never blocks the page).
- *
- * It is a launch promotion and says so. It briefly counted responses towards
- * the norms threshold instead, which was wrong three ways: 200 is
- * NORM_MIN_SAMPLE, an internal number with nothing to do with the promotion,
- * while the promotion is BETA_TOTAL = 500; "0 of 200" told every visitor that
- * nobody had taken the test; and it implied the free instruments stop being
- * free, which they do not. The earlier "488 licences remaining, help us find
- * bugs" was also wrong, for announcing emptiness and asking a stranger for
- * quality assurance. A promotion states the offer and keeps its own numbers
- * to itself.
  */
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
@@ -50,24 +45,21 @@ export default function BetaBanner() {
       .catch(() => {/* silently ignore — banner is best-effort */})
   }, [])
 
-  // Hide on the free-instrument pages, before the status has loaded, and once
-  // the promotion is over. userIsPremium is gone from the condition: it was
-  // hiding a sales pitch, and this is an offer a paying account has already
-  // taken.
+  // Hide on the free-instrument pages (the banner would be a third ask on a
+  // screen that already asks for the test) and before the corpus number has
+  // loaded: a counter without its number is noise.
   const lang = (i18n.language || 'en').split('-')[0]
-  if (SUPPRESSED_PATH.test(pathname) || !beta || beta.remaining <= 0) return null
+  if (SUPPRESSED_PATH.test(pathname) || beta?.corpus == null) return null
 
   return (
     <div style={{ backgroundColor: colors.yellow }}>
       <div className="max-w-5xl mx-auto px-4 sm:px-8 py-2.5 flex items-center justify-between gap-4 flex-wrap">
-        <span className="text-sm font-semibold text-gray-900">{t('beta.banner')}</span>
+        <span className="text-sm font-semibold text-gray-900">
+          {t('beta.banner', { count: beta.corpus, target: beta.target || 300 })}
+        </span>
 
-        {/* nofollow: /auth is not prerendered, and the banner sits on every
-            prerendered page, which once made it the largest single source of
-            crawled 404s. */}
         <Link
-          to={navHref({ to: '/auth' }, lang)}
-          rel="nofollow"
+          to={navHref({ to: '/instruments' }, lang)}
           className="shrink-0 text-xs font-bold text-gray-900 underline hover:no-underline"
         >
           {t('beta.cta')}

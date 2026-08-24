@@ -24,6 +24,8 @@ const STATIC_PAGES = [
   { path: '/science',   priority: '0.9', changefreq: 'monthly' },
   { path: '/faq',       priority: '0.7', changefreq: 'monthly' },
   { path: '/privacy',   priority: '0.4', changefreq: 'yearly' },
+  { path: '/for-organizations', priority: '0.6', changefreq: 'monthly' },
+  { path: '/for-facilitators',  priority: '0.6', changefreq: 'monthly' },
   // The two public instrument pages are the conversion destination, so they
   // carry the highest priority after the home. They were absent from both
   // this list and the prerender route list, which is why they answered HTTP

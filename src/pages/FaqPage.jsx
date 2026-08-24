@@ -11,7 +11,7 @@ import { usePageMeta } from '../hooks/usePageMeta'
 const SECTIONS = [
   { labelKey: 'faq.cat.data',        keys: ['q1', 'q10'] },
   { labelKey: 'faq.cat.science',     keys: ['q2', 'q7', 'q8'] },
-  { labelKey: 'faq.cat.instruments', keys: ['q3', 'q4', 'q5', 'q6', 'q11', 'q12'] },
+  { labelKey: 'faq.cat.instruments', keys: ['q3', 'q4', 'q5', 'q6', 'q11', 'q12', 'q13'] },
   { labelKey: 'faq.cat.teams',       keys: ['q9'] },
 ]
 

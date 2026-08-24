@@ -101,6 +101,8 @@ const STATIC_ROUTES = [
   // people; the Full Moon one, which needs an account and Witnesses, moved
   // down a level rather than being the first thing a curious reader sees.
   '/sample', '/sample/full-moon',
+  // Painted doors: organizational and practitioner interest pages.
+  '/for-organizations', '/for-facilitators',
   '/new-moon', '/first-quarter',
 ]
 const BLOG_LANGS = ['en', 'ca', 'es', 'fr', 'de', 'da']

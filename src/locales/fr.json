@@ -1,7 +1,7 @@
 {
   "beta": {
-    "banner": "Promotion de lancement : Pleine Lune gratuite pendant la bêta.",
-    "cta": "Obtenez un accès gratuit",
+    "banner": "Cèrcol est gratuit, et le restera. {{count}} réponses sur {{target}} vers la validation des douze rôles.",
+    "cta": "Participez",
     "badge": "Beta tester"
   },
   "nav": {
@@ -16,7 +16,9 @@
     "menuLearn": "Comprendre",
     "menuCompany": "Le projet",
     "privacy": "Confidentialité",
-    "menuAssess": "Évaluations"
+    "menuAssess": "Évaluations",
+    "forOrgs": "Pour les organisations",
+    "forFacilitators": "Pour les facilitateurs"
   },
   "myResults": {
     "link": "Mes résultats",
@@ -1341,6 +1343,10 @@
     "q12": {
       "q": "Que sont les angles morts ?",
       "a": "Un angle mort est une dimension de la personnalité où votre perception de vous-même et la perception des autres divergent significativement, plus de 0,8 écart-type sur cette dimension. Par exemple, si vous vous évaluez bas·se sur Présence mais que vos Témoins vous évaluent régulièrement haut·e, cet écart est un angle mort. Les angles morts ne sont ni bons ni mauvais. Ce sont des informations : ils montrent où votre auto-perception et l'expérience que les autres ont de vous ne coïncident pas, ce qui est souvent plus utile que le score lui-même."
+    },
+    "q13": {
+      "q": "Cèrcol restera-t-il gratuit ?",
+      "a": "Oui. Les instruments, les résultats personnels et le rapport d'équipe de base sont gratuits et le resteront. Si Cèrcol fait un jour payer quelque chose, ce seront des options pour organisations — administration en masse, exports — annoncées à l'avance. Rien de ce qui est gratuit aujourd'hui ne deviendra payant."
     }
   },
   "instruments": {
@@ -1536,6 +1542,14 @@
     "privacy": {
       "title": "Confidentialité Cèrcol : données, suppression et RGPD",
       "description": "Comment Cèrcol gère vos données : ce que nous stockons, ce que nous ne partageons jamais, vos droits RGPD et la suppression du compte. Langage clair."
+    },
+    "forOrgs": {
+      "title": "Cèrcol pour les organisations : test Big Five gratuit",
+      "description": "Déployez l'évaluation Big Five (IPIP) gratuite et open source dans toutes vos équipes. Gratuit pour toujours ; des options payantes viendront peut-être."
+    },
+    "forFacilitators": {
+      "title": "Cèrcol pour les facilitateurs : un instrument ouvert",
+      "description": "Coachs et psychologues du travail : utilisez les instruments Big Five (IPIP) ouverts de Cèrcol et les rapports d'équipe avec vos clients, en six langues."
     }
   },
   "groupTools": {
@@ -1577,6 +1591,65 @@
     "variantNote": {
       "published": "Ces énoncés sont une traduction publiée, reprise telle que ses auteurs l'ont publiée.",
       "adapted": "Ces énoncés sont adaptés d'une traduction publiée pour les lecteurs de cette variété. La source s'affiche au survol de chaque option."
+    }
+  },
+  "forOrgs": {
+    "eyebrow": "Pour les organisations",
+    "title": "Déployez Cèrcol dans toutes vos équipes",
+    "intro": "Tous les instruments de Cèrcol sont gratuits, pour les personnes comme pour les équipes entières. Si vous menez des évaluations à l'échelle d'une organisation, cette page est pour vous.",
+    "freeForever": {
+      "heading": "Gratuit pour toujours",
+      "body": "Les instruments, les résultats personnels et le rapport d'équipe sont gratuits et le resteront. Si Cèrcol fait un jour payer quelque chose, ce seront des commodités administratives optionnelles pour organisations — jamais l'évaluation elle-même, ni rien que vous utilisez déjà."
+    },
+    "today": {
+      "heading": "Ce que vous pouvez déjà faire, gratuitement",
+      "today1": "Créez un groupe et invitez votre équipe par e-mail.",
+      "today2": "Chaque membre passe les instruments à son rythme, en six langues.",
+      "today3": "Invitez des Témoins pour la perspective extérieure sur chaque profil.",
+      "today4": "Obtenez le rapport d'équipe : équilibre des rôles, angles morts partagés et une narration à discuter."
+    },
+    "later": {
+      "heading": "Ce qui pourrait venir",
+      "note": "Nous envisageons des commodités optionnelles pour les organisations qui utilisent Cèrcol à grande échelle. Elles seraient payantes ; tout ce qui précède reste gratuit.",
+      "later1": "Invitations en masse et suivi de complétion sur plusieurs équipes.",
+      "later2": "Un tableau de bord d'organisation avec des rôles d'administration.",
+      "later3": "Exports de rapports agrégés (PDF/CSV).",
+      "later4": "Rétention des données configurable pour votre espace."
+    },
+    "cta": {
+      "body": "L'une de ces options serait-elle utile à votre organisation ? Dites-nous ce qu'il vous faudrait — cela décide directement de ce qui sera construit.",
+      "button": "Dites-nous vos besoins",
+      "subject": "Cèrcol pour les organisations",
+      "note": "Ouvre votre client de messagerie. Sans formulaire, sans pistage."
+    }
+  },
+  "forFacilitators": {
+    "eyebrow": "Pour les facilitateurs",
+    "title": "Utilisez Cèrcol avec vos clients",
+    "intro": "Si vous accompagnez des équipes — comme psychologue du travail, coach d'équipe ou formateur·rice — Cèrcol vous donne un instrument ouvert et documenté, gratuit avec vos clients, en six langues.",
+    "today": {
+      "heading": "Ce que vous avez aujourd'hui",
+      "today1": "Des instruments gratuits aux items publiés et du domaine public — vos clients peuvent vérifier chaque question.",
+      "today2": "L'évaluation par les pairs du Témoin et un rapport d'équipe pour bâtir votre séance.",
+      "today3": "Une méthode documentée : notation, sources et limites sont publiques et citables.",
+      "today4": "Six langues, pour que chaque équipe cliente réponde dans la sienne."
+    },
+    "honesty": {
+      "heading": "Ce que nous demandons en retour",
+      "body": "L'honnêteté envers vos clients. Les cinq dimensions reposent sur des recherches publiées ; les douze rôles d'équipe sont un modèle bêta en attente de validation et ne doivent pas être présentés comme un diagnostic validé. Cette transparence est la différence de Cèrcol — et elle vous protège aussi."
+    },
+    "later": {
+      "heading": "Ce qui pourrait venir",
+      "note": "Si suffisamment de professionnel·le·s sont intéressé·e·s, nous construirons des supports pour praticiens — avec des contributions qualifiées — et un annuaire. Inscrivez-vous et vous les façonnerez.",
+      "later1": "Guides de séance et supports d’atelier, relus par des professionnels agréés.",
+      "later2": "Un annuaire de praticiens qualifiés que les équipes peuvent trouver.",
+      "later3": "Des outils pour utiliser Cèrcol avec plusieurs équipes clientes."
+    },
+    "cta": {
+      "body": "Intéressé·e ? Rejoignez la liste d'attente — dites-nous avec qui vous travaillez et ce qu'il vous faudrait.",
+      "button": "Rejoindre la liste d'attente",
+      "subject": "Cèrcol pour les facilitateurs",
+      "note": "Ouvre votre client de messagerie. Sans formulaire, sans pistage."
     }
   }
 }

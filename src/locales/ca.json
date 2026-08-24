@@ -1,7 +1,7 @@
 {
   "beta": {
-    "banner": "Promoció de llançament: la Lluna Plena és gratuïta durant la beta.",
-    "cta": "Aconsegueix accés gratuït",
+    "banner": "Cèrcol és gratuït, i ho seguirà sent. {{count}} de {{target}} respostes cap a validar els dotze rols.",
+    "cta": "Participa-hi",
     "badge": "Beta tester"
   },
   "nav": {
@@ -16,7 +16,9 @@
     "menuCompany": "Projecte",
     "admin": "Admin",
     "privacy": "Privadesa",
-    "menuAssess": "Avaluacions"
+    "menuAssess": "Avaluacions",
+    "forOrgs": "Per a organitzacions",
+    "forFacilitators": "Per a facilitadors"
   },
   "myResults": {
     "link": "Els meus resultats",
@@ -1341,6 +1343,10 @@
     "q12": {
       "q": "Què són els punts cecs?",
       "a": "Un punt cec és una dimensió de la personalitat on com et veus tu i com et veuen els altres divergeix significativament, més de 0,8 desviacions estàndard en aquella dimensió. Per exemple, si et valores baix en Presència però els teus Testimonis et valoren alt de manera consistent, aquesta diferència és un punt cec. Els punts cecs no són bons ni dolents. Són informació: mostren on l'autopercepció i l'experiència que els altres tenen de tu no coincideixen, cosa que sovint és més útil que la puntuació en si."
+    },
+    "q13": {
+      "q": "Cèrcol continuarà sent gratuït?",
+      "a": "Sí. Els instruments, els resultats personals i l'informe d'equip bàsic són gratuïts i ho continuaran sent. Si Cèrcol cobra mai per alguna cosa, seran extres opcionals per a organitzacions — administració massiva, exportacions — anunciats amb antelació. Res del que avui és gratuït passarà a ser de pagament."
     }
   },
   "instruments": {
@@ -1536,6 +1542,14 @@
     "privacy": {
       "title": "Privadesa de Cèrcol: dades, drets de supressió i RGPD",
       "description": "Com Cèrcol gestiona les teves dades: què emmagatzemem, què no compartim, els teus drets RGPD i com esborrar el compte. Llenguatge clar, sense floritures."
+    },
+    "forOrgs": {
+      "title": "Cèrcol per a organitzacions: test Big Five gratuït",
+      "description": "Fes servir l'avaluació Big Five (IPIP) gratuïta i de codi obert amb tots els teus equips. Gratuïta per sempre; potser vindran extres per a organitzacions."
+    },
+    "forFacilitators": {
+      "title": "Cèrcol per a facilitadors: un instrument obert",
+      "description": "Coaches i psicòlegs organitzacionals: useu els instruments Big Five (IPIP) oberts de Cèrcol i els informes d’equip amb clients, en sis llengües."
     }
   },
   "groupTools": {
@@ -1577,6 +1591,65 @@
     "variantNote": {
       "published": "Aquests ítems són una traducció publicada, utilitzada tal com la van publicar els seus autors.",
       "adapted": "Aquests ítems estan adaptats d'una traducció publicada per als lectors d'aquesta varietat. La font apareix en passar el ratolí per damunt de cada opció."
+    }
+  },
+  "forOrgs": {
+    "eyebrow": "Per a organitzacions",
+    "title": "Fes servir Cèrcol amb tots els teus equips",
+    "intro": "Tots els instruments de Cèrcol són gratuïts, per a persones i per a equips sencers. Si fas avaluacions a escala d'organització, aquesta pàgina és per a tu.",
+    "freeForever": {
+      "heading": "Gratuït per sempre",
+      "body": "Els instruments, els resultats personals i l'informe d'equip són gratuïts i ho continuaran sent. Si Cèrcol cobra mai per alguna cosa, seran comoditats administratives opcionals per a organitzacions — mai l'avaluació en si, i mai res que ja utilitzes."
+    },
+    "today": {
+      "heading": "El que ja pots fer, gratis",
+      "today1": "Crea un grup i convida el teu equip per correu.",
+      "today2": "Cada membre fa els instruments al seu ritme, en sis llengües.",
+      "today3": "Convida Testimonis per a la perspectiva externa de cada perfil.",
+      "today4": "Obtén l'informe d'equip: equilibri de rols, punts cecs compartits i una narrativa per discutir."
+    },
+    "later": {
+      "heading": "El que podria venir",
+      "note": "Estem considerant comoditats opcionals per a organitzacions que usen Cèrcol a escala. Serien de pagament; tot el de dalt continua gratuït.",
+      "later1": "Invitacions massives i seguiment de compleció entre diversos equips.",
+      "later2": "Un tauler d'organització amb rols d'administració.",
+      "later3": "Exportacions d'informes agregats (PDF/CSV).",
+      "later4": "Retenció de dades configurable per al teu espai."
+    },
+    "cta": {
+      "body": "Res d'això seria útil per a la teva organització? Digues-nos què necessitaries — decideix directament què es construeix.",
+      "button": "Digues-nos què necessites",
+      "subject": "Cèrcol per a organitzacions",
+      "note": "Obre el teu client de correu. Sense formularis, sense rastreig."
+    }
+  },
+  "forFacilitators": {
+    "eyebrow": "Per a facilitadors",
+    "title": "Fes servir Cèrcol amb els teus clients",
+    "intro": "Si acompanyes equips — com a psicòleg organitzacional, coach d’equips o formador — Cèrcol et dona un instrument obert i documentat per usar gratis amb clients, en sis llengües.",
+    "today": {
+      "heading": "El que tens avui",
+      "today1": "Instruments gratuïts amb ítems publicats i de domini públic — els teus clients poden verificar cada pregunta.",
+      "today2": "L'avaluació entre iguals del Testimoni i un informe d'equip per construir-hi la sessió.",
+      "today3": "Un mètode documentat: puntuació, fonts i limitacions són públiques i citables.",
+      "today4": "Sis llengües, perquè cada equip client responga en la seva."
+    },
+    "honesty": {
+      "heading": "El que demanem a canvi",
+      "body": "Honestedat amb els teus clients. Les cinc dimensions es basen en investigació publicada; els dotze rols d’equip són un model beta pendent de validació i no s’han de presentar com un diagnòstic validat. Aquesta transparència és la diferència de Cèrcol — i també et protegeix a tu."
+    },
+    "later": {
+      "heading": "El que podria venir",
+      "note": "Si hi ha prou professionals interessats, construirem materials per a professionals — amb participació qualificada — i un directori. Apunta’t a la llista i els donaràs forma.",
+      "later1": "Guies de sessió i materials de taller, revisats per professionals col·legiats.",
+      "later2": "Un directori de professionals qualificats que els equips puguen trobar.",
+      "later3": "Eines per usar Cèrcol amb diversos equips clients."
+    },
+    "cta": {
+      "body": "T’interessa? Apunta’t a la llista d’espera — digues-nos amb qui treballes i què necessitaries.",
+      "button": "Apunta’t a la llista",
+      "subject": "Cèrcol per a facilitadors",
+      "note": "Obre el teu client de correu. Sense formularis, sense rastreig."
     }
   }
 }

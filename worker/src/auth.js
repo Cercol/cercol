@@ -18,6 +18,7 @@
 import { issueAccessToken, verifyAccessToken, bearerFrom, randomToken } from './jwt.js'
 import { BETA_TOTAL, ensureProfile, httpError, jsonBody, now, uuid, bool } from './db.js'
 import { sendMagicLink } from './emails.js'
+import { usableCorpus } from './norms.js'
 
 const MAGIC_TTL_MS = 15 * 60 * 1000               // api/auth.py: _MAGIC_TTL
 const REFRESH_TTL_MS = 30 * 24 * 60 * 60 * 1000   // api/auth.py: _REFRESH_TTL
@@ -306,11 +307,23 @@ export async function anonymiseResult(env, request, resultId) {
   return Response.json({ ok: true })
 }
 
-/** GET /beta — public, drives the launch banner. */
+/**
+ * GET /beta — public, drives the participation banner.
+ *
+ * Since 2026-08-24 the banner counts usable responses toward the N≥300
+ * role-validation threshold (plan step tg9) instead of promoting a licence
+ * count: everything is free forever (docs/policies/pricing.md), so a
+ * "free while the beta lasts" promotion promised an ending that will not
+ * come. The corpus number is the same usable-corpus definition the norms
+ * are computed on, so it cannot drift from the one that matters. The old
+ * fields stay for cached bundles.
+ */
 export async function betaStatus(env) {
   const { n } = await env.DB.prepare(`SELECT COUNT(*) AS n FROM profiles WHERE is_beta = 1`).first()
   const remaining = Math.max(0, BETA_TOTAL - n)
-  return Response.json({ remaining, total: BETA_TOTAL, active: remaining > 0 })
+  const corpus = await usableCorpus(env.DB).then((c) => c.total).catch(() => null)
+  return Response.json({ remaining, total: BETA_TOTAL, active: remaining > 0,
+    corpus, target: 300 })
 }
 
 /** The retired password endpoints. 410 says "gone on purpose", not "broken". */
