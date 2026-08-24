@@ -16,9 +16,9 @@
     "GITHUB_REPO": "Cercol/cercol-ops",
     "OPS_REPO": "Cercol/cercol-ops",
     // Cold outreach (ops plan t76): the routine prepares drafts in the ops
-    // repo, outreach-tick sends them. "0" keeps sending dark; flip to "1"
-    // only on the operator's explicit go.
-    "OUTREACH_ENABLED": "0"
+    // repo, outreach-tick sends them. Enabled 2026-08-25 on the operator's
+    // explicit go; every draft still waits 24 h in the queue (the veto).
+    "OUTREACH_ENABLED": "1"
   },
   "d1_databases": [
     { "binding": "DB", "database_name": "cercol", "database_id": "928ddbd6-5fc6-4e2b-9fd1-e7de66435ef6" }
