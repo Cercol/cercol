@@ -248,8 +248,9 @@ imbalance correction to a team.
 Implemented in `src/utils/role-scoring.js`.
 
 **Step 1**: Normalise OCEAN scores to z-scores using per-domain published
-priors (Johnson 2014; Maples-Keller et al. 2019). Replace with sample
-statistics at N≥200.
+priors (Kajonius & Johnson 2019, Table A1 — see "Normative priors" below for
+the values and why the earlier attribution was withdrawn). Replace with
+sample statistics at N≥200.
 
 **Step 2**: Euclidean distance in 5D space (E, A, O, C, N) to all 12
 theoretical centroids.
@@ -370,8 +371,8 @@ with its own sample as soon as there is one.
 ### Replacement
 
 All priors are replaced by Cèrcol's own sample means and SDs at
-NORM_MIN_SAMPLE = 200 per instrument, via the Tier 1 and Tier 2 machinery in
-`api/scoring.py`.
+NORM_MIN_SAMPLE = 200 per instrument, via the norm machinery in
+`worker/src/scoring.js` and `worker/src/norms.js`.
 
 ---
 
@@ -524,8 +525,8 @@ The witness domain score formula
 produces a distribution centred at 3.0 across all five factors,
 regardless of the underlying personality the witness is reporting
 on. The IPIP-NEO normative means (used as self-report z-score
-priors) are not centred at 3.0: E=3.3, A=3.9, O=3.7, C=3.7,
-N=2.8 (see Normative priors).
+priors) are not centred at 3.0: E=3.42, A=3.72, O=3.43, C=3.74,
+N=2.78 (see Normative priors).
 
 Direct comparison of witness scores to self z-scores derived from
 IPIP-NEO priors therefore introduces a systematic offset per
@@ -534,11 +535,14 @@ witness-minus-self z-difference is approximately:
 
 | Dimension       | Offset (witness − self z) |
 |-----------------|---------------------------|
-| Bond (A)        | −1.55                     |
-| Vision (O)      | −1.17                     |
-| Discipline (C)  | −1.13                     |
-| Presence (E)    | −0.42                     |
-| Depth (N)       | +0.28                     |
+| Bond (A)        | −1.44                     |
+| Discipline (C)  | −1.25                     |
+| Vision (O)      | −0.83                     |
+| Presence (E)    | −0.71                     |
+| Depth (N)       | +0.33                     |
+
+(Computed as (3.0 − NORM_MEAN) / NORM_SD from the Kajonius & Johnson
+priors above; recomputed 2026-08-24 after the prior correction.)
 
 These offsets are an artefact of the comparison, not a property of
 the witness's perception. For this reason, the Full Moon report

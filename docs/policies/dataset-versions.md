@@ -50,7 +50,10 @@ Those seventeen are not the publishers'. Vedel translated the IPIP-NEO-120 and
 Frez Puente and Ortega Luque translated the IPIP-NEO-120, and Cèrcol's short
 form is the IPIP-NEO-60, which holds items the 120 does not. Nobody had ever
 translated them. They were written to match each publisher's hand and are
-listed in `CERCOL_SUPPLIED` in `src/data/instrument-variants.js`, so that
+listed in `CERCOL_SUPPLIED` in `src/data/instrument-variants.js` (16
+distinct strings covering the 17 item positions: "Make rash decisions." sits
+in both instruments, which is why this file counts seventeen items while the
+code lists sixteen strings), so that
 "Cèrcol's Danish is Vedel's" stays a true sentence with a known exception
 instead of a slightly false one. They are the first thing to replace if either
 publisher supplies them, and the letters in the plan ask.
