@@ -32,7 +32,7 @@ import {
 } from '../lib/api'
 import {
   ResponsiveContainer, LineChart, Line, BarChart, Bar,
-  XAxis, YAxis, Tooltip, CartesianGrid,
+  XAxis, YAxis, Tooltip, CartesianGrid, Legend,
 } from 'recharts'
 import { Card, StatCard, Sparkline } from '../components/ui'
 import { colors } from '../design/tokens'
@@ -409,30 +409,52 @@ function UsersTab() {
 // Progress tab
 // ---------------------------------------------------------------------------
 
-const PROGRESS_LANGS = ['en', 'ca', 'es', 'fr', 'de', 'da']
+const PROGRESS_COLORS = {
+  all: colors.textMuted,
+  en: colors.blue,
+  ca: colors.red,
+  es: colors.yellow,
+  fr: colors.green,
+  de: colors.black,
+  da: colors.primaryDark,
+}
+const PROGRESS_ORDER = ['all', 'en', 'ca', 'es', 'fr', 'de', 'da']
+
+/**
+ * Survival points for one series: at 0% everyone who started, at each exact
+ * percent the visitors whose furthest point was there or beyond, at 100% the
+ * stored results.
+ */
+function survivalAt(serie, pct) {
+  if (pct === 0) return serie.starts
+  if (pct === 100) return serie.completions
+  return serie.reached.reduce((acc, r) => acc + (r.pct >= pct ? r.n : 0), 0) + serie.completions
+}
 
 function ProgressTab() {
   const [instrument, setInstrument] = useState('newMoon')
-  const [lang, setLang] = useState('')
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     let alive = true
     setLoading(true)
-    getAdminProgress(instrument, lang)
+    getAdminProgress(instrument)
       .then(d => { if (alive) setData(d) })
       .catch(err => console.error('[AdminDashboard] getAdminProgress error', err))
       .finally(() => { if (alive) setLoading(false) })
     return () => { alive = false }
-  }, [instrument, lang])
+  }, [instrument])
 
-  const tenths = new Map((data?.tenths ?? []).map(t => [t.tenth, t.n]))
-  const rows = data ? [
-    { stage: 'Start', n: data.starts },
-    ...[10, 20, 30, 40, 50, 60, 70, 80, 90].map(t => ({ stage: `${t}%`, n: tenths.get(t) ?? 0 })),
-    { stage: 'Done', n: data.completions },
-  ] : []
+  const series = (data?.series ?? [])
+    .filter(s => s.starts || s.completions || s.reached.length)
+    .sort((a, b) => PROGRESS_ORDER.indexOf(a.lang) - PROGRESS_ORDER.indexOf(b.lang))
+  const points = []
+  for (let pct = 0; pct <= 100; pct++) {
+    const row = { pct }
+    for (const s of series) row[s.lang] = survivalAt(s, pct)
+    points.push(row)
+  }
 
   return (
     <div className="space-y-3 max-w-3xl">
@@ -446,17 +468,9 @@ function ProgressTab() {
             <option key={val} value={val}>{label}</option>
           ))}
         </select>
-        <select
-          value={lang}
-          onChange={e => setLang(e.target.value)}
-          className="text-sm px-3 py-1.5 rounded-lg border border-gray-200 focus:outline-none focus:border-[var(--mm-color-blue)] bg-white"
-        >
-          <option value="">All languages</option>
-          {PROGRESS_LANGS.map(l => <option key={l} value={l}>{l.toUpperCase()}</option>)}
-        </select>
-        {data && !loading && (
+        {data && !loading && series[0] && (
           <span className="text-xs text-gray-400 whitespace-nowrap">
-            {data.starts} started · {data.completions} completed
+            {series[0].starts} started · {series[0].completions} completed
           </span>
         )}
       </div>
@@ -464,21 +478,29 @@ function ProgressTab() {
         {loading
           ? <p className="text-sm text-gray-400">Loading…</p>
           : (
-            <ResponsiveContainer width="100%" height={260}>
-              <BarChart data={rows}>
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={points}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                <XAxis dataKey="stage" tick={{ fontSize: 12 }} />
+                <XAxis dataKey="pct" type="number" domain={[0, 100]} ticks={[0, 25, 50, 75, 100]}
+                  tickFormatter={v => `${v}%`} tick={{ fontSize: 12 }} />
                 <YAxis allowDecimals={false} tick={{ fontSize: 12 }} />
-                <Tooltip />
-                <Bar dataKey="n" fill={colors.blue} radius={[3, 3, 0, 0]} />
-              </BarChart>
+                <Tooltip labelFormatter={v => `reached ${v}%`} />
+                <Legend />
+                {series.map(s => (
+                  <Line key={s.lang} type="stepAfter" dataKey={s.lang} dot={false}
+                    stroke={PROGRESS_COLORS[s.lang] ?? colors.textMuted}
+                    strokeWidth={s.lang === 'all' ? 2 : 1.5}
+                    strokeDasharray={s.lang === 'all' ? '5 3' : undefined} />
+                ))}
+              </LineChart>
             </ResponsiveContainer>
           )}
       </Card>
       <p className="text-xs text-gray-400">
-        Distinct visitors reaching each tenth of the instrument (test_progress events); Done is
-        the count of stored results. Language is recorded on funnel events from 24 Aug 2026 —
-        older events only appear under All languages.
+        Each line is how many visitors got at least that far: everyone who started at 0%, the
+        exact furthest percent reached in between (test_progress events), stored results at
+        100%. Exact percents and per-language events are recorded from 24 Aug 2026 — older
+        events were logged in tenths, without language, and only feed the all line.
       </p>
     </div>
   )

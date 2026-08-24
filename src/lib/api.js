@@ -668,13 +668,12 @@ export async function getAdminUsers({ offset = 0, limit = 25, search = '' } = {}
 }
 
 /**
- * getAdminProgress — drop-off funnel per instrument and language.
+ * getAdminProgress — survival data for the drop-off curves, one series per
+ * language plus 'all'.
  * @param {string} instrument newMoon | firstQuarter | fullMoon
- * @param {string} [lang] '' for all languages
  */
-export async function getAdminProgress(instrument, lang = '') {
-  const q = new URLSearchParams({ instrument, ...(lang ? { lang } : {}) })
-  return authFetch(`/admin/progress?${q}`)
+export async function getAdminProgress(instrument) {
+  return authFetch(`/admin/progress?${new URLSearchParams({ instrument })}`)
 }
 
 /**

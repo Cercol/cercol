@@ -115,8 +115,9 @@ CREATE INDEX IF NOT EXISTS results_user_idx ON results (user_id) WHERE user_id I
 CREATE TABLE IF NOT EXISTS events (
   id          TEXT PRIMARY KEY,
   name        TEXT NOT NULL,
-  -- The article slug, except on test_progress rows, where it is the tenth of
-  -- the instrument the taker had reached ('10'..'90'). See worker/src/writes.js.
+  -- The article slug, except on test_progress rows, where it is the whole
+  -- percent of the instrument the taker had reached ('1'..'99'; rows logged
+  -- before 2026-08-24 carry deciles '10'..'90'). See worker/src/writes.js.
   slug        TEXT,
   instrument  TEXT,
   lang        TEXT,

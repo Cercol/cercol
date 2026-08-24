@@ -33,17 +33,22 @@ export function useTrackTestStart(instrument) {
 
 /**
  * useTrackTestProgress — fire one `test_progress` event each time the taker
- * crosses a new tenth of the instrument.
+ * crosses a new whole percent of the instrument.
  *
  * The funnel could say how many people started and how many finished, but
  * never where the ones in between gave up, which is the only part of it a
- * person can act on. Deciles keep it to at most nine rows per session: one
- * event per answered item would be 120 rows for a Full Moon sitting.
+ * person can act on. Until 2026-08-24 this fired per decile to cap the row
+ * count; the admin Progress curve needs the exact stop point (question 18 of
+ * 120 is 15%, not "the 10% bucket"), so it now fires per whole percent
+ * crossed: at most 99 rows per sitting, and for instruments shorter than 100
+ * items, one per answered item. At this scale that is far inside every D1
+ * and Worker free-plan cap.
  *
  * The milestone travels in the event's `slug` column as a bare percentage
- * ('10' .. '90'). It is the only free text column on `events` and adding one
- * for a number this small is not worth a D1 migration; the daily brief reads
- * it back with CAST(slug AS INTEGER).
+ * ('1' .. '99'). It is the only free text column on `events` and adding one
+ * for a number this small is not worth a D1 migration; readers take it back
+ * with CAST(slug AS INTEGER), which also still fits the decile-coded rows
+ * logged before the change.
  *
  * @param {'newMoon'|'firstQuarter'|'fullMoon'} instrument
  * @param {number} current 1-based index of the item on screen
@@ -53,20 +58,20 @@ export function useTrackTestProgress(instrument, current, total) {
   const { i18n } = useTranslation()
   const reached = useRef(0)
   useEffect(() => {
-    const decile = decileReached(current, total)
-    if (decile == null || decile <= reached.current) return
-    reached.current = decile
-    trackEvent('test_progress', { instrument, slug: String(decile * 10), lang: bareLang(i18n) })
+    const pct = pctReached(current, total)
+    if (pct == null || pct <= reached.current) return
+    reached.current = pct
+    trackEvent('test_progress', { instrument, slug: String(pct), lang: bareLang(i18n) })
   }, [instrument, current, total, i18n])
 }
 
 /**
- * The completed tenth an item index sits in, or null when there is nothing
- * to report: before the first tenth, and at the last item, where the
- * `results` row is the better record of a finish than a 100% milestone.
+ * The whole percent an item index has completed, or null when there is
+ * nothing to report: before 1%, and at the last item, where the `results`
+ * row is the better record of a finish than a 100% milestone.
  */
-export function decileReached(current, total) {
+export function pctReached(current, total) {
   if (!current || !total) return null
-  const decile = Math.floor((current / total) * 10)
-  return decile > 0 && decile < 10 ? decile : null
+  const pct = Math.floor((current / total) * 100)
+  return pct > 0 && current < total ? pct : null
 }

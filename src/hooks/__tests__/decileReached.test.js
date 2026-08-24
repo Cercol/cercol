@@ -1,22 +1,22 @@
 import { describe, it, expect } from 'vitest'
-import { decileReached } from '../useTrackTestStart'
+import { pctReached } from '../useTrackTestStart'
 
-describe('decileReached', () => {
-  it('reports a tenth only once it is complete', () => {
-    expect(decileReached(5, 60)).toBe(null)   // 8%, not there yet
-    expect(decileReached(6, 60)).toBe(1)      // exactly 10%
-    expect(decileReached(17, 60)).toBe(2)
-    expect(decileReached(59, 60)).toBe(9)
+describe('pctReached', () => {
+  it('reports the exact whole percent completed', () => {
+    expect(pctReached(18, 120)).toBe(15)
+    expect(pctReached(6, 60)).toBe(10)
+    expect(pctReached(17, 60)).toBe(28)
+    expect(pctReached(59, 60)).toBe(98)
   })
   it('says nothing on the last item or before the first', () => {
     // The results row records the finish; a 100% milestone would double-count.
-    expect(decileReached(60, 60)).toBe(null)
-    expect(decileReached(10, 10)).toBe(null)
-    expect(decileReached(0, 60)).toBe(null)
-    expect(decileReached(1, 0)).toBe(null)
+    expect(pctReached(60, 60)).toBe(null)
+    expect(pctReached(10, 10)).toBe(null)
+    expect(pctReached(0, 60)).toBe(null)
+    expect(pctReached(1, 0)).toBe(null)
   })
   it('works for the short instrument too', () => {
-    expect(decileReached(1, 10)).toBe(1)
-    expect(decileReached(9, 10)).toBe(9)
+    expect(pctReached(1, 10)).toBe(10)
+    expect(pctReached(9, 10)).toBe(90)
   })
 })

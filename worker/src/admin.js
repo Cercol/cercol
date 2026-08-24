@@ -125,32 +125,57 @@ export async function usersCsv(env, request) {
 }
 
 /**
- * GET /admin/progress?instrument&lang — how far takers get, in tenths.
- * Starters and tenths come from the funnel events; completions from results.
- * lang filters exactly on events.lang and by prefix on results.language, so
- * 'fr' also matches fr-FR/fr-CA variants. Events logged before 2026-08-24
- * carry no lang and only show under the all-languages view.
+ * GET /admin/progress?instrument — how far takers get, per language.
+ *
+ * One series per language plus 'all': how many started (test_start), the
+ * distribution of the furthest whole percent each visitor reached
+ * (test_progress, MAX per anon_id), and how many finished (results). The
+ * panel draws the survival curve from the distribution. Languages come from
+ * events.lang (funnel) and the first two letters of results.language, so
+ * fr-FR and fr-CA both land on 'fr'; events logged before 2026-08-24 carry
+ * no lang and count only toward 'all'.
  */
 export async function progress(env, request) {
   const a = await requireAdmin(env, request); if (a instanceof Response) return a
   const u = new URL(request.url)
   const instrument = u.searchParams.get('instrument') || 'newMoon'
-  const lang = u.searchParams.get('lang') || ''
-  const { n: starts } = await env.DB.prepare(
-    `SELECT COUNT(DISTINCT anon_id) AS n FROM events
-      WHERE name = 'test_start' AND instrument = ?1 AND (?2 = '' OR lang = ?2)`
-  ).bind(instrument, lang).first()
-  const { results: tenths } = await env.DB.prepare(
-    `SELECT CAST(slug AS INTEGER) AS tenth, COUNT(DISTINCT anon_id) AS n FROM events
-      WHERE name = 'test_progress' AND instrument = ?1 AND (?2 = '' OR lang = ?2)
-      GROUP BY slug ORDER BY tenth`
-  ).bind(instrument, lang).all()
-  const { n: completions } = await env.DB.prepare(
-    `SELECT COUNT(*) AS n FROM results
-      WHERE COALESCE(is_seed, 0) = 0 AND instrument = ?1 AND (?2 = '' OR language LIKE ?2 || '%')`
-  ).bind(instrument, lang).first()
-  return Response.json({ instrument, lang, starts: Number(starts || 0), completions: Number(completions || 0),
-    tenths: tenths.map((t) => ({ tenth: t.tenth, n: t.n })) })
+  const db = env.DB
+  const { results: starts } = await db.prepare(
+    `SELECT COALESCE(lang, '') AS lang, COUNT(DISTINCT anon_id) AS n FROM events
+      WHERE name = 'test_start' AND instrument = ?1 GROUP BY COALESCE(lang, '')`
+  ).bind(instrument).all()
+  // Abandon distribution only: visitors with a stored result are counted by
+  // `completions` (they reached 100%), so leaving them here too would count
+  // them twice on every percent below their furthest event.
+  const { results: reached } = await db.prepare(
+    `SELECT lang, m AS pct, COUNT(*) AS n FROM (
+       SELECT anon_id, COALESCE(lang, '') AS lang, MAX(CAST(slug AS INTEGER)) AS m FROM events
+        WHERE name = 'test_progress' AND instrument = ?1 AND anon_id IS NOT NULL
+          AND anon_id NOT IN (SELECT anon_id FROM results
+            WHERE instrument = ?1 AND anon_id IS NOT NULL AND COALESCE(is_seed, 0) = 0)
+        GROUP BY anon_id, COALESCE(lang, '')
+     ) GROUP BY lang, m`
+  ).bind(instrument).all()
+  const { results: completions } = await db.prepare(
+    `SELECT COALESCE(substr(language, 1, 2), '') AS lang, COUNT(*) AS n FROM results
+      WHERE COALESCE(is_seed, 0) = 0 AND instrument = ?1 GROUP BY COALESCE(substr(language, 1, 2), '')`
+  ).bind(instrument).all()
+
+  const series = new Map()
+  const at = (lang) => {
+    if (!series.has(lang)) series.set(lang, { lang, starts: 0, completions: 0, reached: [] })
+    return series.get(lang)
+  }
+  const all = at('all')
+  for (const r of starts) { all.starts += r.n; if (r.lang) at(r.lang).starts += r.n }
+  for (const r of completions) { all.completions += r.n; if (r.lang) at(r.lang).completions += r.n }
+  const allReached = new Map()
+  for (const r of reached) {
+    allReached.set(r.pct, (allReached.get(r.pct) || 0) + r.n)
+    if (r.lang) at(r.lang).reached.push({ pct: r.pct, n: r.n })
+  }
+  all.reached = [...allReached.entries()].map(([pct, n]) => ({ pct, n }))
+  return Response.json({ instrument, series: [...series.values()] })
 }
 
 /** GET /admin/results?offset&limit&instrument */
