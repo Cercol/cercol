@@ -226,7 +226,7 @@
     },
     "thirdParties": {
       "heading": "Tredjepartstjenester",
-      "hosting": "Dine kontodata og testresultater opbevares i en database hostet af Cloudflare, Inc. og placeret i Vesteuropa (EU). Transaktionsmails (login-links) sendes via Resend (Resend, Inc.), et amerikansk selskab der opererer under standardkontraktbestemmelser for EU-dataoverførsler. Autentificering er fuldt selvhostet, ingen tredjepart har adgang til dine loginoplysninger.",
+      "hosting": "Dine kontodata og resultater gemmes i en database hostet af Cloudflare, Inc. i Vesteuropa (EU). Transaktionsmails (login-links) sendes via Resend (Resend, Inc.), et amerikansk firma, der arbejder under standardkontraktbestemmelser for EU-dataoverførsler. Login fungerer via magisk link eller gennem Google, hvis du vælger at logge ind med din Google-konto — i så fald er det Google, der godkender dig; Cèrcol ser eller gemmer aldrig en adgangskode.",
       "noTrackers": "Ingen andre tredjepartstjenester modtager dine personoplysninger. Der er ingen analyseplattforme, reklamenetværk eller sociale medie-trackere på dette websted.",
       "noPayments": "Cèrcol modtager ingen betalinger: Alt er gratis, og der indsamles eller behandles ingen betalingsdata."
     },
@@ -272,15 +272,7 @@
       "error": "Noget gik galt. Prøv igen."
     },
     "security": {
-      "title": "Adgangskode og sikkerhed",
-      "noPasswordNote": "Din konto bruger Google. Du kan oprette en adgangskode for at logge ind med email.",
       "currentPasswordLabel": "Nuværende adgangskode",
-      "newPasswordLabel": "Ny adgangskode",
-      "saveButton": "Gem adgangskode",
-      "saving": "Gemmer…",
-      "saved": "Adgangskode gemt.",
-      "error": "Noget gik galt. Prøv igen.",
-      "minLength": "Adgangskoden skal være mindst 8 tegn.",
       "wrongCurrent": "Den nuværende adgangskode er forkert."
     }
   },
@@ -289,13 +281,8 @@
     "signOut": "Log ud",
     "emailLabel": "Din e-mail",
     "emailPlaceholder": "dig@eksempel.dk",
-    "passwordLabel": "Adgangskode",
-    "passwordPlaceholder": "Din adgangskode",
-    "passwordNewPlaceholder": "Vælg en adgangskode",
     "continueWithGoogle": "Fortsæt med Google",
     "or": "eller",
-    "methodPassword": "Adgangskode",
-    "methodMagic": "Magic link",
     "signInCta": "Log ind",
     "createAccount": "Opret konto",
     "noAccount": "Ingen konto endnu?",
@@ -309,8 +296,7 @@
     "sentNote": "Ingen e-mail? Tjek din spam-mappe.",
     "signingIn": "Logger dig ind…",
     "tryAgain": "Prøv igen",
-    "error": "Noget gik galt. Prøv igen.",
-    "forgotPassword": "Glemt adgangskode? Brug magic link."
+    "error": "Noget gik galt. Prøv igen."
   },
   "home": {
     "subtitle": "Seks sprog. Vi oplyser kilden til hvert spørgsmål.",
@@ -1145,7 +1131,7 @@
     "intro": {
       "eyebrow": "Open source personlighedsvurdering",
       "heading": "Se dig selv klarere.",
-      "body": "Cèrcol er tre instrumenter bygget på videnskab i det offentlige domæne. Hvert måler de samme fem dimensioner, på forskellige dybder. Ingen score fortæller dig, hvad du skal tænke. Intet resultat er godt eller dårligt.",
+      "body": "Cèrcol er fire instrumenter bygget på videnskab i det offentlige domæne. Tre måler de samme fem dimensioner i forskellige dybder; det fjerde læser dem på teamniveau.",
       "founding": "Hvert bidrag tæller. Ingen er uundværlig, men vi alle er nødvendige."
     },
     "philosophy": {
@@ -1321,7 +1307,7 @@
       "a": "Vidnet er nogen, du inviterer til at beskrive dig udefra. De ser grupper af ord og vælger, hvilket der passer bedst til dig, hvilket der er næstbedst, og hvilket der passer dårligst, en kort tvungen-valg-opgave, der tager ca. 5 minutter. Et ideelt Vidne er nogen, der har brugt reel tid med dig: en kollega, en bofælle, en nær ven. Ikke din største fan, ikke din hårdeste kritiker. Nogen, der ser dig, som du faktisk er."
     },
     "q4": {
-      "q": "Hvad er forskellen mellem de tre instrumenter?",
+      "q": "Hvad er forskellen mellem instrumenterne?",
       "a": "Nymåne er 10 spørgsmål og tager 2 minutter, en hurtig orientering. Første Kvarter er 60 spørgsmål og tager 10 minutter, et mere fuldstændigt billede med 30 facetter og et første blik på din rolle. Fuldmåne er 120 spørgsmål, inkluderer Vidne-vurderingen og er det definitive resultat. Hvert instrument er selvstændigt; du kan starte hvor som helst."
     },
     "q5": {
@@ -1360,7 +1346,7 @@
   "instruments": {
     "title": "Instrumenter",
     "intro": {
-      "heading": "Tre instrumenter. Fem dimensioner.",
+      "heading": "Fire instrumenter. Fem dimensioner.",
       "body": "Hvert instrument måler de samme fem dimensioner, ved forskellig dybde og opløsning. De er designet til at bruges i rækkefølge, men hvert stå alene."
     },
     "freeLabel": "Gratis",
@@ -1463,7 +1449,7 @@
   },
   "onboarding": {
     "heading": "Velkommen til Cèrcol",
-    "intro": "Tre instrumenter. Fem dimensioner. Start hvor du vil: hvert enkelt står alene.",
+    "intro": "Fire instrumenter. Fem dimensioner. Start hvor du vil: hvert enkelt står alene.",
     "newMoon": {
       "desc": "10 spørgsmål. Et hurtigt blik på dine fem dimensioner."
     },

@@ -226,7 +226,7 @@
     },
     "thirdParties": {
       "heading": "Third-party services",
-      "hosting": "Your account data and test results are stored in a database hosted by Cloudflare, Inc. and located in Western Europe (EU). Transactional emails (sign-in links) are sent via Resend (Resend, Inc.), a US-based company operating under standard contractual clauses for EU data transfers. Authentication is fully self-hosted, no third-party provider holds your credentials.",
+      "hosting": "Your account data and test results are stored in a database hosted by Cloudflare, Inc. and located in Western Europe (EU). Transactional emails (sign-in links) are sent via Resend (Resend, Inc.), a US-based company operating under standard contractual clauses for EU data transfers. Sign-in works by magic link, or through Google if you choose to sign in with your Google account — in that case Google authenticates you; Cèrcol never sees or stores a password.",
       "noTrackers": "No other third-party services receive your personal data. There are no analytics platforms, advertising networks, or social media trackers on this site.",
       "noPayments": "Cèrcol takes no payments: everything is free, and no payment data is collected or processed."
     },
@@ -272,15 +272,7 @@
       "error": "Something went wrong. Try again."
     },
     "security": {
-      "title": "Password & security",
-      "noPasswordNote": "Your account uses Google sign-in. You can also set a password to sign in with email.",
       "currentPasswordLabel": "Current password",
-      "newPasswordLabel": "New password",
-      "saveButton": "Save password",
-      "saving": "Saving…",
-      "saved": "Password saved.",
-      "error": "Something went wrong. Try again.",
-      "minLength": "Password must be at least 8 characters.",
       "wrongCurrent": "Current password is incorrect."
     }
   },
@@ -289,13 +281,8 @@
     "signOut": "Sign out",
     "emailLabel": "Your email",
     "emailPlaceholder": "you@example.com",
-    "passwordLabel": "Password",
-    "passwordPlaceholder": "Your password",
-    "passwordNewPlaceholder": "Choose a password",
     "continueWithGoogle": "Continue with Google",
     "or": "or",
-    "methodPassword": "Password",
-    "methodMagic": "Magic link",
     "signInCta": "Sign in",
     "createAccount": "Create account",
     "noAccount": "No account yet?",
@@ -309,8 +296,7 @@
     "sentNote": "No email? Check your spam folder.",
     "signingIn": "Signing you in…",
     "tryAgain": "Try again",
-    "error": "Something went wrong. Try again.",
-    "forgotPassword": "Forgot password? Use magic link to sign in."
+    "error": "Something went wrong. Try again."
   },
   "home": {
     "subtitle": "Six languages. Every question has a named source.",
@@ -1145,7 +1131,7 @@
     "intro": {
       "eyebrow": "Open-source personality assessment",
       "heading": "See yourself more clearly.",
-      "body": "Cèrcol is three instruments built on public-domain science. Each measures the same five dimensions, at different depths. No score tells you what to think. No result is good or bad.",
+      "body": "Cèrcol is four instruments built on public-domain science. Three measure the same five dimensions at different depths; the fourth reads them at team level.",
       "founding": "Every contribution matters. No one is indispensable, but all of us are necessary."
     },
     "philosophy": {
@@ -1321,7 +1307,7 @@
       "a": "The Witness is someone you invite to describe you from the outside. They see groups of words and pick which fits you best, which comes second, and which fits worst, a short forced-choice task that takes about 5 minutes. An ideal Witness is someone who has spent real time with you: a colleague, a housemate, a close friend. Not your biggest fan, not your harshest critic. Someone who sees you as you actually are."
     },
     "q4": {
-      "q": "What is the difference between the three instruments?",
+      "q": "What is the difference between the instruments?",
       "a": "New Moon is 10 questions and takes 2 minutes, a quick orientation. First Quarter is 60 questions and takes 10 minutes, a fuller picture with 30 facets and a first look at your role. Full Moon is 120 questions, includes the Witness assessment, it is the definitive result. Each instrument is standalone; you can start anywhere."
     },
     "q5": {
@@ -1360,7 +1346,7 @@
   "instruments": {
     "title": "Instruments",
     "intro": {
-      "heading": "Three instruments. Five dimensions.",
+      "heading": "Four instruments. Five dimensions.",
       "body": "Each instrument measures the same five dimensions, at different depth and resolution. They are designed to be used in sequence, but each stands alone."
     },
     "freeLabel": "Free",
@@ -1463,7 +1449,7 @@
   },
   "onboarding": {
     "heading": "Welcome to Cèrcol",
-    "intro": "Three instruments. Five dimensions. Start anywhere: each stands alone.",
+    "intro": "Four instruments. Five dimensions. Start anywhere: each stands alone.",
     "newMoon": {
       "desc": "10 questions. A quick look at your five dimensions."
     },

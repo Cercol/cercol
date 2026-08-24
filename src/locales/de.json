@@ -226,7 +226,7 @@
     },
     "thirdParties": {
       "heading": "Drittanbieterdienste",
-      "hosting": "Deine Kontodaten und Testergebnisse werden in einer Datenbank gespeichert, die von Cloudflare, Inc. gehostet wird und sich in Westeuropa (EU) befindet. Transaktions-E-Mails (Anmelde-Links) werden über Resend (Resend, Inc.) versendet, einem in den USA ansässigen Unternehmen, das Standardvertragsklauseln für EU-Datenübertragungen anwendet. Die Authentifizierung ist vollständig selbst gehostet, kein Drittanbieter besitzt deine Zugangsdaten.",
+      "hosting": "Deine Kontodaten und Ergebnisse werden in einer von Cloudflare, Inc. gehosteten Datenbank in Westeuropa (EU) gespeichert. Transaktionale E-Mails (Anmeldelinks) werden über Resend (Resend, Inc.) versendet, ein US-Unternehmen, das unter Standardvertragsklauseln für EU-Datenübermittlungen arbeitet. Die Anmeldung funktioniert per Magic Link oder über Google, wenn du dich mit deinem Google-Konto anmeldest — in dem Fall authentifiziert dich Google; Cèrcol sieht und speichert nie ein Passwort.",
       "noTrackers": "Keine anderen Drittanbieterdienste erhalten deine personenbezogenen Daten. Auf dieser Website gibt es keine Analyseplattformen, Werbenetzwerke oder Social-Media-Tracker.",
       "noPayments": "Cèrcol nimmt keine Zahlungen an: Alles ist kostenlos, und es werden keine Zahlungsdaten erhoben oder verarbeitet."
     },
@@ -272,15 +272,7 @@
       "error": "Etwas ist schiefgelaufen. Versuche es erneut."
     },
     "security": {
-      "title": "Passwort & Sicherheit",
-      "noPasswordNote": "Dein Konto nutzt Google. Du kannst ein Passwort festlegen, um dich per E-Mail anzumelden.",
       "currentPasswordLabel": "Aktuelles Passwort",
-      "newPasswordLabel": "Neues Passwort",
-      "saveButton": "Passwort speichern",
-      "saving": "Speichern…",
-      "saved": "Passwort gespeichert.",
-      "error": "Etwas ist schiefgelaufen. Versuche es erneut.",
-      "minLength": "Das Passwort muss mindestens 8 Zeichen lang sein.",
       "wrongCurrent": "Das aktuelle Passwort ist falsch."
     }
   },
@@ -289,13 +281,8 @@
     "signOut": "Abmelden",
     "emailLabel": "Deine E-Mail",
     "emailPlaceholder": "du@beispiel.de",
-    "passwordLabel": "Passwort",
-    "passwordPlaceholder": "Dein Passwort",
-    "passwordNewPlaceholder": "Passwort wählen",
     "continueWithGoogle": "Mit Google fortfahren",
     "or": "oder",
-    "methodPassword": "Passwort",
-    "methodMagic": "Magic Link",
     "signInCta": "Anmelden",
     "createAccount": "Konto erstellen",
     "noAccount": "Noch kein Konto?",
@@ -309,8 +296,7 @@
     "sentNote": "Keine E-Mail? Überprüfe deinen Spam-Ordner.",
     "signingIn": "Du wirst angemeldet…",
     "tryAgain": "Erneut versuchen",
-    "error": "Etwas ist schiefgelaufen. Versuche es erneut.",
-    "forgotPassword": "Passwort vergessen? Nutze den Magic Link."
+    "error": "Etwas ist schiefgelaufen. Versuche es erneut."
   },
   "home": {
     "subtitle": "Sechs Sprachen. Bei jeder Frage nennen wir die Quelle.",
@@ -1145,7 +1131,7 @@
     "intro": {
       "eyebrow": "Open-Source-Persönlichkeitsauswertung",
       "heading": "Sieh dich klarer.",
-      "body": "Cèrcol sind drei Instrumente, die auf Wissenschaft der öffentlichen Domäne aufgebaut sind. Jedes misst dieselben fünf Dimensionen, in unterschiedlichen Tiefen. Kein Ergebnis sagt dir, was du denken sollst. Kein Ergebnis ist gut oder schlecht.",
+      "body": "Cèrcol sind vier Instrumente, die auf Wissenschaft der öffentlichen Domäne aufgebaut sind. Drei messen dieselben fünf Dimensionen in unterschiedlicher Tiefe; das vierte liest sie auf Teamebene.",
       "founding": "Jeder Beitrag zählt. Niemand ist unersetzlich, aber wir alle sind notwendig."
     },
     "philosophy": {
@@ -1321,7 +1307,7 @@
       "a": "Zeuginnen und Zeugen sind Menschen, die du einlädst, dich von außen zu beschreiben. Sie sehen Gruppen von Wörtern und wählen aus, welches am besten zu dir passt, welches am zweitbesten und welches am schlechtesten, eine kurze Forced-Choice-Aufgabe, die etwa 5 Minuten dauert. Ideal ist jemand, der echte Zeit mit dir verbracht hat: ein*e Kolleg*in, ein*e Mitbewohner*in, ein*e enge*r Freund*in. Nicht dein größter Fan, nicht dein härtester Kritiker. Jemand, der dich so sieht, wie du wirklich bist."
     },
     "q4": {
-      "q": "Was ist der Unterschied zwischen den drei Instrumenten?",
+      "q": "Was ist der Unterschied zwischen den Instrumenten?",
       "a": "Neumond hat 10 Fragen und dauert 2 Minuten, eine schnelle Orientierung. Erstes Viertel hat 60 Fragen und dauert 10 Minuten, ein vollständigeres Bild mit 30 Facetten und einem ersten Blick auf deine Rolle. Vollmond hat 120 Fragen, umfasst die Zeugenbewertung und ist das definitive Ergebnis. Jedes Instrument ist eigenständig; du kannst überall beginnen."
     },
     "q5": {
@@ -1360,7 +1346,7 @@
   "instruments": {
     "title": "Instrumente",
     "intro": {
-      "heading": "Drei Instrumente. Fünf Dimensionen.",
+      "heading": "Vier Instrumente. Fünf Dimensionen.",
       "body": "Jedes Instrument misst dieselben fünf Dimensionen, bei unterschiedlicher Tiefe und Auflösung. Sie sind für die sequentielle Verwendung konzipiert, aber jedes steht für sich allein."
     },
     "freeLabel": "Kostenlos",
@@ -1463,7 +1449,7 @@
   },
   "onboarding": {
     "heading": "Willkommen bei Cèrcol",
-    "intro": "Drei Instrumente. Fünf Dimensionen. Beginne, wo du möchtest: jedes steht für sich.",
+    "intro": "Vier Instrumente. Fünf Dimensionen. Beginne, wo du möchtest: jedes steht für sich.",
     "newMoon": {
       "desc": "10 Fragen. Ein schneller Blick auf deine fünf Dimensionen."
     },

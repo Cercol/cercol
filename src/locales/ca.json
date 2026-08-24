@@ -226,7 +226,7 @@
     },
     "thirdParties": {
       "heading": "Serveis de tercers",
-      "hosting": "Les dades del teu compte i els resultats dels tests s'emmagatzemen en una base de dades allotjada a Cloudflare, Inc. i ubicada a l'Europa occidental (UE). Els correus transaccionals (enllaços d'accés) s'envien a través de Resend (Resend, Inc.), una empresa nord-americana que opera sota clàusules contractuals estàndard per a transferències de dades de la UE. L'autenticació és completament pròpia, cap proveïdor extern guarda les teues credencials.",
+      "hosting": "Les dades del teu compte i els resultats es guarden en una base de dades allotjada per Cloudflare, Inc. situada a l'Europa occidental (UE). Els correus transaccionals (enllaços d'accés) s'envien via Resend (Resend, Inc.), una empresa dels EUA que opera amb clàusules contractuals estàndard per a transferències de dades de la UE. L'accés funciona per enllaç màgic, o mitjançant Google si tries entrar amb el teu compte de Google — en eixe cas t'autentica Google; Cèrcol no veu ni guarda mai cap contrasenya.",
       "noTrackers": "Cap altre servei de tercers rep les teues dades personals. No hi ha plataformes analítiques, xarxes publicitàries ni rastrejadors de xarxes socials en aquest lloc.",
       "noPayments": "Cèrcol no cobra res: tot és gratuït i no es recull ni es processa cap dada de pagament."
     },
@@ -272,15 +272,7 @@
       "error": "Alguna cosa ha fallat. Torna-ho a provar."
     },
     "security": {
-      "title": "Contrasenya i seguretat",
-      "noPasswordNote": "El teu compte utilitza Google. Pots establir una contrasenya per entrar amb correu electrònic.",
       "currentPasswordLabel": "Contrasenya actual",
-      "newPasswordLabel": "Nova contrasenya",
-      "saveButton": "Desa la contrasenya",
-      "saving": "Desant…",
-      "saved": "Contrasenya desada.",
-      "error": "Quelcom ha anat malament. Torna-ho a intentar.",
-      "minLength": "La contrasenya ha de tenir almenys 8 caràcters.",
       "wrongCurrent": "La contrasenya actual és incorrecta."
     }
   },
@@ -289,13 +281,8 @@
     "signOut": "Tancar sessió",
     "emailLabel": "El teu correu",
     "emailPlaceholder": "tu@exemple.com",
-    "passwordLabel": "Contrasenya",
-    "passwordPlaceholder": "La teua contrasenya",
-    "passwordNewPlaceholder": "Tria una contrasenya",
     "continueWithGoogle": "Continua amb Google",
     "or": "o",
-    "methodPassword": "Contrasenya",
-    "methodMagic": "Enllaç màgic",
     "signInCta": "Iniciar sessió",
     "createAccount": "Crear compte",
     "noAccount": "Encara no tens compte?",
@@ -309,8 +296,7 @@
     "sentNote": "Sense correu? Comprova la carpeta de correu brossa.",
     "signingIn": "Iniciant sessió…",
     "tryAgain": "Torna-ho a intentar",
-    "error": "Alguna cosa ha fallat. Torna-ho a intentar.",
-    "forgotPassword": "Has oblidat la contrasenya? Utilitza l'enllaç màgic."
+    "error": "Alguna cosa ha fallat. Torna-ho a intentar."
   },
   "home": {
     "subtitle": "Sis llengües. Diem d'on ve cada pregunta.",
@@ -1145,7 +1131,7 @@
     "intro": {
       "eyebrow": "Avaluació de personalitat de codi obert",
       "heading": "Coneix-te millor.",
-      "body": "Cèrcol és tres instruments construïts sobre investigació de domini públic. Cadascun mesura les mateixes cinc dimensions, a diferent profunditat. Cap puntuació et diu el que has de pensar. Cap resultat és bo o dolent.",
+      "body": "Cèrcol és quatre instruments construïts sobre investigació de domini públic. Tres mesuren les mateixes cinc dimensions a profunditats diferents; el quart les llegeix a escala d'equip.",
       "founding": "Tot suma, ningú no és imprescindible, però tots som necessaris."
     },
     "philosophy": {
@@ -1321,7 +1307,7 @@
       "a": "El Testimoni és algú que convides a descriure't des de fora. Veu grups de paraules i tria quina t'encaixa millor, quina en segon lloc i quina pitjor, una tasca curta d'elecció forçada que dura uns 5 minuts. Un Testimoni ideal és algú que ha passat temps real amb tu: un company de feina, un company de pis, un amic proper. No el teu fan número u, ni el teu crític més dur. Algú que et veu com realment ets."
     },
     "q4": {
-      "q": "Quina és la diferència entre els tres instruments?",
+      "q": "Quina és la diferència entre els instruments?",
       "a": "La Lluna Nova són 10 preguntes i dura 2 minuts, una orientació ràpida. El Quart Creixent són 60 preguntes i dura 10 minuts, una imatge més completa amb 30 facetes i una primera mirada al teu rol. La Lluna Plena és 120 preguntes, inclou l'avaluació del Testimoni, és el resultat definitiu. Cada instrument és independent; pots començar des de qualsevol punt."
     },
     "q5": {
@@ -1360,7 +1346,7 @@
   "instruments": {
     "title": "Instruments",
     "intro": {
-      "heading": "Tres instruments. Cinc dimensions.",
+      "heading": "Quatre instruments. Cinc dimensions.",
       "body": "Cada instrument mesura les mateixes cinc dimensions, a diferent profunditat i resolució. Estan dissenyats per usar-se en seqüència, però cadascun és autònom."
     },
     "freeLabel": "Gratuït",
@@ -1463,7 +1449,7 @@
   },
   "onboarding": {
     "heading": "Benvingut a Cèrcol",
-    "intro": "Tres instruments. Cinc dimensions. Comença on vulgues: cadascun s'aguanta sol.",
+    "intro": "Quatre instruments. Cinc dimensions. Comença on vulgues: cadascun s'aguanta sol.",
     "newMoon": {
       "desc": "10 preguntes. Una mirada ràpida a les teues cinc dimensions."
     },

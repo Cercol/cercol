@@ -226,7 +226,7 @@
     },
     "thirdParties": {
       "heading": "Servicios de terceros",
-      "hosting": "Los datos de tu cuenta y tus resultados se almacenan en una base de datos alojada en Cloudflare, Inc. y ubicada en Europa occidental (UE). Los correos transaccionales (enlaces de acceso) se envían a través de Resend (Resend, Inc.), una empresa con sede en EE. UU. que opera bajo cláusulas contractuales estándar para las transferencias de datos de la UE. La autenticación es completamente propia, ningún proveedor externo guarda tus credenciales.",
+      "hosting": "Los datos de tu cuenta y los resultados se guardan en una base de datos alojada por Cloudflare, Inc. situada en Europa occidental (UE). Los correos transaccionales (enlaces de acceso) se envían vía Resend (Resend, Inc.), una empresa de EE. UU. que opera con cláusulas contractuales estándar para transferencias de datos de la UE. El acceso funciona por enlace mágico, o mediante Google si eliges entrar con tu cuenta de Google — en ese caso te autentica Google; Cèrcol nunca ve ni guarda ninguna contraseña.",
       "noTrackers": "Ningún otro servicio de terceros recibe tus datos personales. No hay plataformas de analítica, redes publicitarias ni rastreadores de redes sociales en este sitio.",
       "noPayments": "Cèrcol no cobra nada: todo es gratuito y no se recoge ni se procesa ningún dato de pago."
     },
@@ -272,15 +272,7 @@
       "error": "Algo ha fallado. Inténtalo de nuevo."
     },
     "security": {
-      "title": "Contraseña y seguridad",
-      "noPasswordNote": "Tu cuenta usa Google. Puedes establecer una contraseña para iniciar sesión con email.",
       "currentPasswordLabel": "Contraseña actual",
-      "newPasswordLabel": "Nueva contraseña",
-      "saveButton": "Guardar contraseña",
-      "saving": "Guardando…",
-      "saved": "Contraseña guardada.",
-      "error": "Algo salió mal. Inténtalo de nuevo.",
-      "minLength": "La contraseña debe tener al menos 8 caracteres.",
       "wrongCurrent": "La contraseña actual es incorrecta."
     }
   },
@@ -289,13 +281,8 @@
     "signOut": "Cerrar sesión",
     "emailLabel": "Tu correo electrónico",
     "emailPlaceholder": "tu@ejemplo.com",
-    "passwordLabel": "Contraseña",
-    "passwordPlaceholder": "Tu contraseña",
-    "passwordNewPlaceholder": "Elige una contraseña",
     "continueWithGoogle": "Continuar con Google",
     "or": "o",
-    "methodPassword": "Contraseña",
-    "methodMagic": "Enlace mágico",
     "signInCta": "Iniciar sesión",
     "createAccount": "Crear cuenta",
     "noAccount": "¿Aún no tienes cuenta?",
@@ -309,8 +296,7 @@
     "sentNote": "¿No recibes el correo? Revisa la carpeta de spam.",
     "signingIn": "Iniciando sesión…",
     "tryAgain": "Intentar de nuevo",
-    "error": "Algo salió mal. Inténtalo de nuevo.",
-    "forgotPassword": "¿Olvidaste la contraseña? Usa el enlace mágico."
+    "error": "Algo salió mal. Inténtalo de nuevo."
   },
   "home": {
     "subtitle": "Seis idiomas. Decimos de dónde viene cada pregunta.",
@@ -1145,7 +1131,7 @@
     "intro": {
       "eyebrow": "Evaluación de personalidad de código abierto",
       "heading": "Mírate con más claridad.",
-      "body": "Cèrcol son tres instrumentos construidos sobre ciencia de dominio público. Cada uno mide las mismas cinco dimensiones, a diferentes profundidades. Ninguna puntuación te dice qué pensar. Ningún resultado es bueno ni malo.",
+      "body": "Cèrcol son cuatro instrumentos construidos sobre ciencia de dominio público. Tres miden las mismas cinco dimensiones a distintas profundidades; el cuarto las lee a escala de equipo.",
       "founding": "Cada contribución importa. Nadie es indispensable, pero todos somos necesarios."
     },
     "philosophy": {
@@ -1321,7 +1307,7 @@
       "a": "El Testigo es alguien a quien invitas a describir cómo eres desde fuera. Verá grupos de palabras y elegirá cuál te describe mejor, cuál en segundo lugar y cuál peor, una tarea corta de elección forzada que lleva unos 5 minutos. Un Testigo ideal es alguien que ha pasado tiempo real contigo: un/a compañero/a de trabajo, un/a compañero/a de piso, un/a amigo/a cercano/a. No tu mayor admirador/a, no tu crítico/a más severo/a. Alguien que te ve como realmente eres."
     },
     "q4": {
-      "q": "¿Cuál es la diferencia entre los tres instrumentos?",
+      "q": "¿Cuál es la diferencia entre los instrumentos?",
       "a": "New Moon tiene 10 preguntas y lleva 2 minutos, una orientación rápida. First Quarter tiene 60 preguntas y lleva 10 minutos, una imagen más completa con 30 facetas y una primera lectura de tu rol. Full Moon tiene 120 preguntas, incluye la evaluación del Testigo y es el resultado definitivo. Cada instrumento es independiente; puedes empezar por cualquiera."
     },
     "q5": {
@@ -1360,7 +1346,7 @@
   "instruments": {
     "title": "Instrumentos",
     "intro": {
-      "heading": "Tres instrumentos. Cinco dimensiones.",
+      "heading": "Cuatro instrumentos. Cinco dimensiones.",
       "body": "Cada instrumento mide las mismas cinco dimensiones, a diferente profundidad y resolución. Están diseñados para usarse en secuencia, pero cada uno se sostiene solo."
     },
     "freeLabel": "Gratis",
@@ -1463,7 +1449,7 @@
   },
   "onboarding": {
     "heading": "Bienvenido a Cèrcol",
-    "intro": "Tres instrumentos. Cinco dimensiones. Empieza donde quieras: cada uno se sostiene solo.",
+    "intro": "Cuatro instrumentos. Cinco dimensiones. Empieza donde quieras: cada uno se sostiene solo.",
     "newMoon": {
       "desc": "10 preguntas. Una mirada rápida a tus cinco dimensiones."
     },

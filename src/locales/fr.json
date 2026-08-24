@@ -226,7 +226,7 @@
     },
     "thirdParties": {
       "heading": "Services tiers",
-      "hosting": "Les données de votre compte et vos résultats sont stockés dans une base de données hébergée par Cloudflare, Inc. et située en Europe de l'Ouest (UE). Les e-mails transactionnels (liens de connexion) sont envoyés via Resend (Resend, Inc.), une société américaine opérant sous des clauses contractuelles types pour les transferts de données de l'UE. L'authentification est entièrement auto-hébergée, aucun prestataire tiers ne détient vos identifiants.",
+      "hosting": "Les données de votre compte et vos résultats sont stockés dans une base de données hébergée par Cloudflare, Inc., située en Europe de l'Ouest (UE). Les e-mails transactionnels (liens de connexion) sont envoyés via Resend (Resend, Inc.), une société américaine opérant sous clauses contractuelles types pour les transferts de données de l'UE. La connexion se fait par lien magique, ou via Google si vous choisissez de vous connecter avec votre compte Google — dans ce cas, c'est Google qui vous authentifie ; Cèrcol ne voit ni ne stocke jamais de mot de passe.",
       "noTrackers": "Aucun autre service tiers ne reçoit vos données personnelles. Il n'y a aucune plateforme d'analyse, aucun réseau publicitaire ni traqueur de réseaux sociaux sur ce site.",
       "noPayments": "Cèrcol n’encaisse aucun paiement : tout est gratuit et aucune donnée de paiement n’est collectée ni traitée."
     },
@@ -272,15 +272,7 @@
       "error": "Une erreur est survenue. Réessayez."
     },
     "security": {
-      "title": "Mot de passe et sécurité",
-      "noPasswordNote": "Votre compte utilise Google. Vous pouvez définir un mot de passe pour vous connecter avec votre email.",
       "currentPasswordLabel": "Mot de passe actuel",
-      "newPasswordLabel": "Nouveau mot de passe",
-      "saveButton": "Enregistrer le mot de passe",
-      "saving": "Enregistrement…",
-      "saved": "Mot de passe enregistré.",
-      "error": "Quelque chose s'est mal passé. Réessayez.",
-      "minLength": "Le mot de passe doit comporter au moins 8 caractères.",
       "wrongCurrent": "Le mot de passe actuel est incorrect."
     }
   },
@@ -289,13 +281,8 @@
     "signOut": "Se déconnecter",
     "emailLabel": "Votre e-mail",
     "emailPlaceholder": "vous@exemple.com",
-    "passwordLabel": "Mot de passe",
-    "passwordPlaceholder": "Votre mot de passe",
-    "passwordNewPlaceholder": "Choisissez un mot de passe",
     "continueWithGoogle": "Continuer avec Google",
     "or": "ou",
-    "methodPassword": "Mot de passe",
-    "methodMagic": "Lien magique",
     "signInCta": "Se connecter",
     "createAccount": "Créer un compte",
     "noAccount": "Pas encore de compte ?",
@@ -309,8 +296,7 @@
     "sentNote": "Pas d'e-mail ? Vérifiez votre dossier de courrier indésirable.",
     "signingIn": "Connexion en cours…",
     "tryAgain": "Réessayer",
-    "error": "Une erreur s'est produite. Réessayez.",
-    "forgotPassword": "Mot de passe oublié ? Utilisez le lien magique."
+    "error": "Une erreur s'est produite. Réessayez."
   },
   "home": {
     "subtitle": "Six langues. Nous citons la source de chaque question.",
@@ -1145,7 +1131,7 @@
     "intro": {
       "eyebrow": "Évaluation de personnalité open source",
       "heading": "Voyez-vous plus clairement.",
-      "body": "Cèrcol est trois instruments construits sur une science du domaine public. Chacun mesure les mêmes cinq dimensions, à différentes profondeurs. Aucun score ne vous dit quoi penser. Aucun résultat n'est bon ou mauvais.",
+      "body": "Cèrcol est quatre instruments construits sur une science du domaine public. Trois mesurent les mêmes cinq dimensions à des profondeurs différentes ; le quatrième les lit à l'échelle de l'équipe.",
       "founding": "Chaque contribution compte. Personne n'est indispensable, mais nous sommes tous nécessaires."
     },
     "philosophy": {
@@ -1321,7 +1307,7 @@
       "a": "Le·la Témoin est quelqu'un que vous invitez à vous décrire de l'extérieur. Il ou elle verra des groupes de mots et choisira celui qui vous correspond le mieux, celui qui vient ensuite et celui qui vous correspond le moins, une courte tâche à choix forcé qui prend environ 5 minutes. Un·e Témoin idéal·e est quelqu'un qui a passé du vrai temps avec vous : un·e collègue, un·e colocataire, un·e ami·e proche. Pas votre plus grand·e admirateur·trice, pas votre critique le·la plus sévère. Quelqu'un qui vous voit tel·le que vous êtes vraiment."
     },
     "q4": {
-      "q": "Quelle est la différence entre les trois instruments ?",
+      "q": "Quelle est la différence entre les instruments ?",
       "a": "Nouvelle Lune comporte 10 questions et prend 2 minutes, une orientation rapide. Premier Quartier comporte 60 questions et prend 10 minutes, une image plus complète avec 30 facettes et un premier aperçu de votre rôle. Pleine Lune comporte 120 questions, inclut l'évaluation du·de la Témoin et c'est le résultat définitif. Chaque instrument est autonome ; vous pouvez commencer n'importe lequel."
     },
     "q5": {
@@ -1360,7 +1346,7 @@
   "instruments": {
     "title": "Instruments",
     "intro": {
-      "heading": "Trois instruments. Cinq dimensions.",
+      "heading": "Quatre instruments. Cinq dimensions.",
       "body": "Chaque instrument mesure les mêmes cinq dimensions, à différentes profondeurs et résolutions. Ils sont conçus pour être utilisés en séquence, mais chacun se tient seul."
     },
     "freeLabel": "Gratuit",
@@ -1463,7 +1449,7 @@
   },
   "onboarding": {
     "heading": "Bienvenue sur Cèrcol",
-    "intro": "Trois instruments. Cinq dimensions. Commencez où vous voulez : chacun se suffit à lui-même.",
+    "intro": "Quatre instruments. Cinq dimensions. Commencez où vous voulez : chacun se suffit à lui-même.",
     "newMoon": {
       "desc": "10 questions. Un aperçu rapide de vos cinq dimensions."
     },
