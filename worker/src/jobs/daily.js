@@ -268,7 +268,21 @@ export async function gatherWave(env, db) {
       `SELECT slug, lang, COUNT(*) AS n FROM events
         WHERE name = 'article_view' AND created_at >= datetime('now', '-28 days')
         GROUP BY slug, lang`).all()
-    return { pairs: rankWave(rows, reads) }
+    // Readers of this pair who went on to complete a test, ever (strictly
+    // ordered: the read precedes their first result). This is the wave's
+    // outcome metric — without it, repairs are acts of faith. Measured
+    // 2026-08-25: 6 of 942 identifiable readers ever converted, each from a
+    // different practical-intent article; the two most-read articles had
+    // converted nobody.
+    const { results: converts } = await db.prepare(
+      `WITH first_result AS (SELECT anon_id, MIN(created_at) AS t FROM results
+         WHERE COALESCE(is_seed, 0) = 0 AND anon_id IS NOT NULL GROUP BY anon_id)
+       SELECT e.slug, e.lang, COUNT(DISTINCT e.anon_id) AS n
+         FROM events e JOIN first_result fr ON fr.anon_id = e.anon_id
+        WHERE e.name = 'article_view' AND e.created_at < fr.t
+        GROUP BY e.slug, e.lang`).all()
+    const cmap = new Map(converts.map((r) => [`${r.lang || 'en'}|${r.slug}`, r.n]))
+    return { pairs: rankWave(rows, reads).map((p) => ({ ...p, converts: cmap.get(`${p.lang}|${p.slug}`) ?? 0 })) }
   } catch (e) { return { pending: true, error: e.message, pairs: [] } }
 }
 
@@ -530,7 +544,7 @@ function waveSection(pairs = []) {
     'One review per pair: indexing state, position and CTR, comparison with the other languages, glossary terms, prose quality, CTA and internal links. Skip pairs already in docs/content/review-ledger.md.', '']
   for (const w of pairs) {
     const sib = w.enImpressions == null ? '' : ` (en sibling: ${w.enImpressions} impr)`
-    out.push(`- \`${w.lang}\` · \`${w.slug}\` — ${w.impressions} impr, ${w.clicks} clicks, pos ${w.pos ?? '—'}, ${w.reads} reads${sib}`)
+    out.push(`- \`${w.lang}\` · \`${w.slug}\` — ${w.impressions} impr, ${w.clicks} clicks, pos ${w.pos ?? '—'}, ${w.reads} reads, ${w.converts ?? 0} readers ever converted to a completed test${sib}`)
   }
   out.push('')
   return out
