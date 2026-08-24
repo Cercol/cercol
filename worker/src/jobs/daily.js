@@ -106,8 +106,12 @@ export async function gatherProduct(db, b) {
   // 2026-08-23 brief, one starter, who had logged in, reached the results
   // page and opened /admin twice). anon_id IS NOT NULL in the subquery so a
   // single admin page view with no id can never NULL out the whole NOT IN.
+  // Witness sittings are tracked for the admin progress curves but produce a
+  // witness_sessions row, not a results row, so they must not count as test
+  // starts here or the start-to-finish conversion would read low forever.
   const starts = await pair(`SELECT COUNT(DISTINCT anon_id) AS n FROM events
      WHERE name='test_start' AND created_at >= ?1 AND created_at < ?2
+       AND COALESCE(instrument, '') != 'witness'
        AND anon_id NOT IN (
          SELECT anon_id FROM events
           WHERE path LIKE '/admin%' AND anon_id IS NOT NULL AND created_at >= ?1 AND created_at < ?2)`)
@@ -156,7 +160,8 @@ export async function gatherProduct(db, b) {
   const trails = (await q(`SELECT anon_id, name, COUNT(*) AS n, MAX(CAST(slug AS INTEGER)) AS pct, MIN(created_at) AS t0
       FROM events
      WHERE created_at >= ?1 AND created_at < ?2 AND anon_id IN (
-           SELECT anon_id FROM events WHERE name='test_start' AND created_at >= ?1 AND created_at < ?2 AND anon_id IS NOT NULL)
+           SELECT anon_id FROM events WHERE name='test_start' AND created_at >= ?1 AND created_at < ?2 AND anon_id IS NOT NULL
+              AND COALESCE(instrument, '') != 'witness')
      GROUP BY anon_id, name ORDER BY anon_id, t0 LIMIT 60`, ...Y))
   const starters = {}
   for (const r of trails) {

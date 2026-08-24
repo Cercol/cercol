@@ -160,10 +160,16 @@ export async function progress(env, request) {
         GROUP BY anon_id, COALESCE(lang, '')
      ) GROUP BY lang, m`
   ).bind(instrument).all()
-  const { results: completions } = await db.prepare(
-    `SELECT COALESCE(substr(language, 1, 2), '') AS lang, COUNT(*) AS n FROM results
-      WHERE COALESCE(is_seed, 0) = 0 AND instrument = ?1 GROUP BY COALESCE(substr(language, 1, 2), '')`
-  ).bind(instrument).all()
+  // A Witness sitting completes into witness_sessions, not results; it has
+  // no language column, so its completions land on the 'all' line only.
+  const { results: completions } = instrument === 'witness'
+    ? await db.prepare(
+        `SELECT '' AS lang, COUNT(*) AS n FROM witness_sessions
+          WHERE COALESCE(is_seed, 0) = 0 AND completed_at IS NOT NULL`).all()
+    : await db.prepare(
+        `SELECT COALESCE(substr(language, 1, 2), '') AS lang, COUNT(*) AS n FROM results
+          WHERE COALESCE(is_seed, 0) = 0 AND instrument = ?1 GROUP BY COALESCE(substr(language, 1, 2), '')`
+      ).bind(instrument).all()
 
   const series = new Map()
   const at = (lang) => {

@@ -16,9 +16,12 @@ const bareLang = (i18n) => (i18n.language || 'en').slice(0, 2)
  * call never throws.
  *
  * Intentionally NOT used by the Last Quarter team report (/groups/:id, an
- * aggregate view) or the Witness peer assessment: neither produces a `results`
- * row, so a `test_start` there would have no matching `test_complete` and would
- * distort the start-to-completion conversion in the weekly digest funnel.
+ * aggregate view): it produces no `results` row, so a `test_start` there
+ * would have no matching finish and would distort the start-to-completion
+ * conversion in the weekly digest funnel. The Witness sitting fires its own
+ * `test_start` from WitnessPage's begin handler (a sitting completes into
+ * `witness_sessions`, and the daily/weekly funnels exclude the 'witness'
+ * instrument on their side).
  *
  * @param {'newMoon'|'firstQuarter'|'fullMoon'} instrument
  */

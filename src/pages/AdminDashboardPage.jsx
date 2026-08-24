@@ -419,6 +419,9 @@ const PROGRESS_COLORS = {
   da: colors.primaryDark,
 }
 const PROGRESS_ORDER = ['all', 'en', 'ca', 'es', 'fr', 'de', 'da']
+// Witness sittings complete into witness_sessions rather than results, so
+// they live here but not in the Results tab's instrument filter.
+const PROGRESS_INSTRUMENTS = { ...INSTRUMENT_LABELS, witness: 'Witness' }
 
 /**
  * Survival points for one series: at 0% everyone who started, at each exact
@@ -464,7 +467,7 @@ function ProgressTab() {
           onChange={e => setInstrument(e.target.value)}
           className="text-sm px-3 py-1.5 rounded-lg border border-gray-200 focus:outline-none focus:border-[var(--mm-color-blue)] bg-white"
         >
-          {Object.entries(INSTRUMENT_LABELS).map(([val, label]) => (
+          {Object.entries(PROGRESS_INSTRUMENTS).map(([val, label]) => (
             <option key={val} value={val}>{label}</option>
           ))}
         </select>
@@ -477,6 +480,8 @@ function ProgressTab() {
       <Card className="p-4">
         {loading
           ? <p className="text-sm text-gray-400">Loading…</p>
+          : series.length === 0
+          ? <p className="text-sm text-gray-400">Nothing recorded for this instrument yet. The curves appear with the first sitting.</p>
           : (
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={points}>

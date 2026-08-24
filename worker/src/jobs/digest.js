@@ -72,8 +72,11 @@ export async function gatherD1(db, { ws, we, ps, pe }) {
     .map((r) => [LABELS[r.instrument] || r.instrument || 'unknown', r.n])
   const weekIl = await q(`SELECT instrument, language, COUNT(*) AS n FROM results WHERE is_seed = 0 AND created_at >= ? AND created_at < ? GROUP BY instrument, language ORDER BY n DESC`, ...W)
   const roleRows = await q(`SELECT instrument, presence, bond, discipline, depth, vision FROM results WHERE is_seed = 0 AND created_at >= ? AND created_at < ? AND presence IS NOT NULL AND bond IS NOT NULL AND discipline IS NOT NULL AND depth IS NOT NULL AND vision IS NOT NULL`, ...W)
-  const funnelRaw = Object.fromEntries((await q(`SELECT name, COUNT(*) AS n FROM events WHERE created_at >= ? AND created_at < ? AND name IN ('page_view','article_view','test_start','cta_click') GROUP BY name`, ...W)).map((r) => [r.name, r.n]))
-  const people = Object.fromEntries((await q(`SELECT name, COUNT(DISTINCT anon_id) AS n FROM events WHERE created_at >= ? AND created_at < ? AND anon_id IS NOT NULL AND name IN ('page_view','article_view','test_start','cta_click') GROUP BY name`, ...W)).map((r) => [r.name, r.n]))
+  // Witness sittings never produce a results row, so their test_start events
+  // stay out of the start-to-finish funnel (they live in the admin Progress
+  // curves instead).
+  const funnelRaw = Object.fromEntries((await q(`SELECT name, COUNT(*) AS n FROM events WHERE created_at >= ? AND created_at < ? AND name IN ('page_view','article_view','test_start','cta_click') AND NOT (name = 'test_start' AND instrument = 'witness') GROUP BY name`, ...W)).map((r) => [r.name, r.n]))
+  const people = Object.fromEntries((await q(`SELECT name, COUNT(DISTINCT anon_id) AS n FROM events WHERE created_at >= ? AND created_at < ? AND anon_id IS NOT NULL AND name IN ('page_view','article_view','test_start','cta_click') AND NOT (name = 'test_start' AND instrument = 'witness') GROUP BY name`, ...W)).map((r) => [r.name, r.n]))
   people.test_complete = await count(db, `SELECT COUNT(DISTINCT anon_id) AS n FROM results WHERE is_seed = 0 AND anon_id IS NOT NULL AND created_at >= ? AND created_at < ?`, ...W)
   const chanRows = await q(`SELECT utm_source, referrer FROM results WHERE is_seed = 0 AND created_at >= ? AND created_at < ?`, ...W)
   const topArticles = (await q(`SELECT e.slug AS slug, COUNT(*) AS reads, (SELECT json_extract(b.title, '$.en') FROM blog_posts b WHERE b.slug = e.slug) AS title FROM events e WHERE e.name='article_view' AND e.slug IS NOT NULL AND e.created_at >= ? AND e.created_at < ? GROUP BY e.slug ORDER BY reads DESC LIMIT 10`, ...W))

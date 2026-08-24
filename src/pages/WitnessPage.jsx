@@ -22,6 +22,7 @@ import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
 import { getWitnessSession, completeWitnessSession, trackEvent } from '../lib/api'
 import { TOTAL_ROUNDS as WITNESS_ROUNDS, buildRounds, computeWitnessScores } from '../utils/witness-scoring'
+import { useTrackTestProgress } from '../hooks/useTrackTestStart'
 import { computeRole } from '../utils/role-scoring'
 import WitnessRoleCheck from '../components/WitnessRoleCheck'
 import { Card, Button, SectionLabel } from '../components/ui'
@@ -118,7 +119,15 @@ export default function WitnessPage() {
       })
   }, [token]) // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Feeds the admin Progress curves. Deliberately fired from handleStart and
+  // not on mount like the result-producing instruments: opening a Witness
+  // link is reading an invitation, not starting to answer. The daily and
+  // weekly funnels exclude instrument 'witness' from test_start on their
+  // side, because a sitting completes into witness_sessions, not results.
+  useTrackTestProgress('witness', phase === 'instrument' ? currentRound + 1 : 0, TOTAL_ROUNDS)
+
   function handleStart() {
+    trackEvent('test_start', { instrument: 'witness', lang: (lang || 'en').slice(0, 2) })
     const generated = buildRounds(TOTAL_ROUNDS)
     setRounds(generated)
     setCurrentRound(0)
