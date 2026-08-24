@@ -1,7 +1,5 @@
 {
   "beta": {
-    "banner": "Cèrcol ist kostenlos und bleibt es. {{count}} von {{target}} Antworten auf dem Weg zur Validierung der zwölf Rollen.",
-    "cta": "Mach mit",
     "badge": "Beta-Tester"
   },
   "nav": {

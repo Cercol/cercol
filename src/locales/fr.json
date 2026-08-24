@@ -1,7 +1,5 @@
 {
   "beta": {
-    "banner": "Cèrcol est gratuit, et le restera. {{count}} réponses sur {{target}} vers la validation des douze rôles.",
-    "cta": "Participez",
     "badge": "Beta tester"
   },
   "nav": {

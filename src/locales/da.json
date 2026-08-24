@@ -1,7 +1,5 @@
 {
   "beta": {
-    "banner": "Cèrcol er gratis og forbliver gratis. {{count}} af {{target}} svar på vej mod validering af de tolv roller.",
-    "cta": "Deltag",
     "badge": "Beta-tester"
   },
   "nav": {

@@ -25,7 +25,6 @@ import { useTranslation } from 'react-i18next'
 import AccountButton from './AccountButton'
 import LanguageToggle from './LanguageToggle'
 import CercolLogo from './CercolLogo'
-import BetaBanner from './BetaBanner'
 import { colors } from '../design/tokens'
 import Footer from './Footer'
 import { NAV, navHref, isEntryActive, isHomePath } from '../lib/navigation'
@@ -212,7 +211,6 @@ export default function Layout({ children }) {
       </header>
 
       {/* ── Beta launch banner ── */}
-      <BetaBanner />
 
       {/* ── Mobile dropdown nav ── */}
       {menuOpen && (
