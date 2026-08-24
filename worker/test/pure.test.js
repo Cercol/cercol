@@ -553,3 +553,28 @@ describe('what counts toward a norm', () => {
     expect(admin).toContain('usableCorpus(env.DB)')
   })
 })
+
+import { parseBlogUrl, rankWave } from '../src/jobs/daily.js'
+describe('content wave ranking', () => {
+  it('groups GSC URLs by article-language pair, keeps the English sibling as context, ranks by exposure', () => {
+    const gsc = [
+      { url: 'https://cercol.team/blog/how-to-read/', impressions: 100, clicks: 2, pos: 12 },
+      { url: 'https://cercol.team/es/blog/how-to-read/', impressions: 80, clicks: 0, pos: 30 },
+      { url: 'https://cercol.team/es/blog/how-to-read/#anchor', impressions: 20, clicks: 0, pos: 50 },
+      { url: 'https://cercol.team/da/blog/other/', impressions: 5, clicks: 0, pos: 8 },
+      { url: 'https://cercol.team/blog/', impressions: 999, clicks: 9, pos: 1 }, // index page: not a pair
+    ]
+    const reads = [{ slug: 'how-to-read', lang: 'es', n: 3 }, { slug: 'unseen', lang: 'ca', n: 1 }]
+    const out = rankWave(gsc, reads)
+    expect(out[0]).toMatchObject({ lang: 'es', slug: 'how-to-read', impressions: 100, reads: 3, enImpressions: 100 })
+    expect(out[0].pos).toBe(34) // impressions-weighted across the fragment variant
+    expect(out[1]).toMatchObject({ lang: 'en', slug: 'how-to-read', enImpressions: null })
+    expect(out.find((w) => w.slug === 'unseen')).toMatchObject({ lang: 'ca', impressions: 0, reads: 1, enImpressions: 0 })
+    expect(out.some((w) => w.slug === '')).toBe(false)
+  })
+  it('parses the language prefix and defaults to English', () => {
+    expect(parseBlogUrl('https://cercol.team/de/blog/x/')).toEqual({ lang: 'de', slug: 'x' })
+    expect(parseBlogUrl('https://cercol.team/blog/x?utm=1')).toEqual({ lang: 'en', slug: 'x' })
+    expect(parseBlogUrl('https://cercol.team/about/')).toBeNull()
+  })
+})

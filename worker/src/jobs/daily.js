@@ -208,6 +208,65 @@ export async function gatherSearch(env) {
   } catch (e) { return { pending: true, error: e.message } }
 }
 
+/** Language-prefixed blog URL → { lang, slug }, or null for anything else. */
+export function parseBlogUrl(url) {
+  const m = String(url).match(/^https:\/\/cercol\.team\/(?:(ca|es|fr|de|da)\/)?blog\/([^/#?]+)/)
+  return m ? { lang: m[1] || 'en', slug: m[2] } : null
+}
+
+/**
+ * The content wave: which article-language pairs deserve the next review,
+ * ranked by exposure. A page Google already shows is where a defect costs
+ * the most and a fix pays the fastest, so the order is 28-day impressions;
+ * reads and the English sibling's impressions ride along as context. The
+ * "already reviewed" filter is NOT applied here: the review ledger lives in
+ * the repository (docs/content/review-ledger.md), which the Worker cannot
+ * read, so the consumer of this list skips reviewed pairs itself.
+ */
+export function rankWave(gscRows, readRows, limit = 8) {
+  const pairs = new Map()
+  for (const r of gscRows || []) {
+    const at = parseBlogUrl(r.url)
+    if (!at) continue
+    const key = `${at.lang}|${at.slug}`
+    const cur = pairs.get(key) || { lang: at.lang, slug: at.slug, impressions: 0, clicks: 0, posW: 0, reads: 0 }
+    const impr = Number(r.impressions || 0)
+    cur.impressions += impr
+    cur.clicks += Number(r.clicks || 0)
+    cur.posW += (r.pos == null ? 0 : Number(r.pos)) * impr
+    pairs.set(key, cur)
+  }
+  for (const r of readRows || []) {
+    const key = `${r.lang || 'en'}|${r.slug}`
+    const cur = pairs.get(key) || { lang: r.lang || 'en', slug: r.slug, impressions: 0, clicks: 0, posW: 0, reads: 0 }
+    cur.reads += Number(r.n || 0)
+    pairs.set(key, cur)
+  }
+  const en = new Map([...pairs.values()].filter((x) => x.lang === 'en').map((x) => [x.slug, x.impressions]))
+  return [...pairs.values()]
+    .map((x) => ({ lang: x.lang, slug: x.slug, impressions: x.impressions, clicks: x.clicks,
+      pos: x.impressions ? Math.round((x.posW / x.impressions) * 10) / 10 : null,
+      reads: x.reads, enImpressions: x.lang === 'en' ? null : en.get(x.slug) ?? 0 }))
+    .sort((a, b) => b.impressions - a.impressions || b.reads - a.reads)
+    .slice(0, limit)
+}
+
+export async function gatherWave(env, db) {
+  const pr = env.BIGQUERY_PROJECT || 'cercol', sg = env.BIGQUERY_DATASET_GSC || 'searchconsole'
+  const gt = `\`${pr}.${sg}.searchdata_url_impression\``
+  try {
+    const rows = await bq(env, `SELECT url, SUM(impressions) AS impressions, SUM(clicks) AS clicks,
+      SAFE_DIVIDE(SUM(sum_position), SUM(impressions)) AS pos FROM ${gt}
+      WHERE data_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 28 DAY) AND url LIKE '%/blog/%'
+      GROUP BY url ORDER BY impressions DESC LIMIT 300`)
+    const { results: reads } = await db.prepare(
+      `SELECT slug, lang, COUNT(*) AS n FROM events
+        WHERE name = 'article_view' AND created_at >= datetime('now', '-28 days')
+        GROUP BY slug, lang`).all()
+    return { pairs: rankWave(rows, reads) }
+  } catch (e) { return { pending: true, error: e.message, pairs: [] } }
+}
+
 async function gql(env, query) {
   const res = await fetch('https://api.cloudflare.com/client/v4/graphql', { method: 'POST', headers: { authorization: `Bearer ${env.CF_ANALYTICS_TOKEN}`, 'content-type': 'application/json' }, body: JSON.stringify({ query }) })
   const d = await res.json()
@@ -380,6 +439,12 @@ export function dailyHtml(data, frontendUrl = 'https://cercol.team') {
   if (nonArticle.length) content += `<div style="margin-top:12px;">${table(['Top pages (non-blog)', 'Views'], nonArticle.map(([pth, n]) => [`<span style="font-size:12px;">${esc(pth)}</span>`, fmt(n)]), ['left', 'right'])}</div>`
   parts.push(section('Content', content, C.yellow))
 
+  const wv = data.wave
+  if (wv?.pairs?.length) {
+    const rows = wv.pairs.map((w) => [w.lang, esc(w.slug), fmt(w.impressions), fmt(w.clicks), w.pos ?? '—', fmt(w.reads)])
+    parts.push(section('Content wave &middot; next review candidates (28d)', table(['Lang', 'Article', 'Impr.', 'Clicks', 'Pos.', 'Reads'], rows, ['left', 'left', 'right', 'right', 'right', 'right']), C.yellow))
+  }
+
   // 5. Search
   if (se && !se.pending) {
     let s = statRow([stat('Clicks', fmt(se.clicks[0]), delta(se.clicks[0], se.clicks[1]) + `<span style="font-size:11px;color:${C.muted};"> vs day before</span>`, C.blue), stat('Impressions', fmt(se.impressions[0]), delta(se.impressions[0], se.impressions[1]) + `<span style="font-size:11px;color:${C.muted};"> vs day before</span>`, C.green)])
@@ -453,8 +518,21 @@ function evidenceSection({ starters = {} } = {}) {
  * Silent no-op without GITHUB_TOKEN, and a failure here never fails the
  * brief: the mail is the channel that must go out.
  */
+/** The wave rows, as a markdown block for the issue body. */
+function waveSection(pairs = []) {
+  if (!pairs.length) return []
+  const out = ['## Content wave — next review candidates (28d, by exposure)', '',
+    'One review per pair: indexing state, position and CTR, comparison with the other languages, glossary terms, prose quality, CTA and internal links. Skip pairs already in docs/content/review-ledger.md.', '']
+  for (const w of pairs) {
+    const sib = w.enImpressions == null ? '' : ` (en sibling: ${w.enImpressions} impr)`
+    out.push(`- \`${w.lang}\` · \`${w.slug}\` — ${w.impressions} impr, ${w.clicks} clicks, pos ${w.pos ?? '—'}, ${w.reads} reads${sib}`)
+  }
+  out.push('')
+  return out
+}
+
 export async function fileTasks(env, dayIso, todo, evidence = {}) {
-  if (!env.GITHUB_TOKEN || !todo.length) return null
+  if (!env.GITHUB_TOKEN || (!todo.length && !(evidence.wave || []).length)) return null
   const repo = env.GITHUB_REPO || 'Cercol/cercol'
   const body = [
     `From the daily brief for ${dayIso}. Each line is what the numbers said, not a verdict:`,
@@ -462,6 +540,7 @@ export async function fileTasks(env, dayIso, todo, evidence = {}) {
     ...todo.map((t, i) => `${i + 1}. [ ] ${plainAction(t)}`),
     '',
     ...evidenceSection(evidence),
+    ...waveSection(evidence.wave),
     'Close with a reason if an item turns out to be noise; that reason is what tells us which rule to fix.',
   ].join('\n')
   try {
@@ -488,10 +567,11 @@ export async function runDaily(env, { send = true } = {}) {
   // Same arrangement: computed at 05:00 over 28 days, read here.
   const languages = env.NORMS ? await env.NORMS.get(LANGUAGES_KEY, 'json') : null
   const decommissioned = env.HETZNER_DECOMMISSIONED === '1'
+  const wave = await gatherWave(env, env.DB)
   const warns = warnings(platform, { today: day(b.y1), decommissioned })
   const decommissionIn = decommissioned ? 0 : Math.ceil((Date.parse(DECOMMISSION_DUE) - b.y1.getTime()) / 86400e3)
-  const data = { day: day(b.y0), product, platform, search, indexing, languages, warns, decommissionIn }
-  const issue = send ? await fileTasks(env, data.day, actions(data, env.FRONTEND_URL), { starters: product.starters }) : null
+  const data = { day: day(b.y0), product, platform, search, indexing, languages, warns, decommissionIn, wave }
+  const issue = send ? await fileTasks(env, data.day, actions(data, env.FRONTEND_URL), { starters: product.starters, wave: wave.pairs }) : null
   // A to-do list that quietly failed to be filed is worse than no list at
   // all: the brief would look normal and the tasks would exist nowhere.
   if (issue?.error) data.warns.push(`The task list could not be filed as an issue (${issue.error}). Check the GITHUB_TOKEN secret on the Worker.`)
