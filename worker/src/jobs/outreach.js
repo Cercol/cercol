@@ -19,6 +19,21 @@ const GENERIC = /^(info|hello|contact|hi|hej|hola|mail|post|team|office|kontakt)
 const MAX_SEND = 3
 const MAX_READ = 8 // subrequest budget: 1 list + 8 reads + 3 sends + a few D1
 
+/**
+ * Facilitator drafts (outreach/facilitators/) are prepared by the routine
+ * but sent only after the operator sets "approved": true in the file —
+ * validate-and-veto, 2026-08-25. The explicit approval replaces both the
+ * generic-address rule and the 24 h window: these are personal addresses
+ * on purpose, and a human decided each one.
+ */
+export function validateFacilitatorDraft(d) {
+  if (!d || !d.email || !d.subject || !d.text) return 'missing fields'
+  if (d.approved !== true) return 'not approved'
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) return 'bad email'
+  if (d.subject.length > 150 || d.text.length > 5000) return 'oversized'
+  return null
+}
+
 /** The rules a draft must pass regardless of what the routine wrote. */
 export function validateDraft(d, now = Date.now()) {
   if (!d || !d.domain || !d.email || !d.subject || !d.text) return 'missing fields'
@@ -64,6 +79,30 @@ export async function runOutreach(env, { dry = false } = {}) {
         .bind(d.company || d.domain, d.domain.toLowerCase(), d.email, d.lang || 'en', d.source || null, d.subject, f.path, sent?.id || null).run()
     }
     out.sent++
+  }
+
+  // Facilitator lane: suppression is per-address (coaches share mail hosts),
+  // stored in the same UNIQUE domain column with the full email as the key.
+  const fl = await fetch(`https://api.github.com/repos/${repo}/contents/outreach/facilitators`, { headers: gh })
+  if (fl.ok) {
+    for (const f of (await fl.json()).filter((x) => x.name.endsWith('.json')).slice(0, 5)) {
+      if (out.sent >= MAX_SEND) break
+      const res = await fetch(f.url, { headers: { ...gh, accept: 'application/vnd.github.raw+json' } })
+      if (!res.ok) continue
+      let d
+      try { d = await res.json() } catch { out.skipped.push([f.name, 'bad json']); continue }
+      const err = validateFacilitatorDraft(d)
+      if (err) { if (err !== 'not approved') out.skipped.push([f.name, err]); continue }
+      const dup = await env.DB.prepare(`SELECT 1 AS x FROM outreach WHERE domain = ?`).bind(d.email.toLowerCase()).first()
+      if (dup) continue
+      if (!dry) {
+        const sent = await sendAsMiquel(env, { to: d.email, subject: d.subject, text: d.text })
+        await env.DB.prepare(
+          `INSERT INTO outreach (company, domain, email, lang, source, subject, queue_file, note) VALUES (?,?,?,?,?,?,?,?)`)
+          .bind(d.company || d.name || d.email, d.email.toLowerCase(), d.email, d.lang || 'en', 'facilitators', d.subject, f.path, sent?.id || null).run()
+      }
+      out.sent++
+    }
   }
   return out
 }

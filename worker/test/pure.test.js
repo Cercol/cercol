@@ -599,3 +599,15 @@ describe('outreach draft rules', () => {
     expect(validateDraft({ ...ok, subject: '' }, now)).toBe('missing fields')
   })
 })
+
+import { validateFacilitatorDraft } from '../src/jobs/outreach.js'
+describe('facilitator draft rules', () => {
+  const ok = { name: 'Jane', email: 'jane@janecoaching.dk', subject: 'Hi', text: 'x', approved: true }
+  it('accepts an operator-approved personal address', () => {
+    expect(validateFacilitatorDraft(ok)).toBeNull()
+  })
+  it('holds anything the operator has not approved', () => {
+    expect(validateFacilitatorDraft({ ...ok, approved: undefined })).toBe('not approved')
+    expect(validateFacilitatorDraft({ ...ok, approved: 'yes' })).toBe('not approved')
+  })
+})
