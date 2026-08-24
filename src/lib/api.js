@@ -668,6 +668,16 @@ export async function getAdminUsers({ offset = 0, limit = 25, search = '' } = {}
 }
 
 /**
+ * getAdminProgress — drop-off funnel per instrument and language.
+ * @param {string} instrument newMoon | firstQuarter | fullMoon
+ * @param {string} [lang] '' for all languages
+ */
+export async function getAdminProgress(instrument, lang = '') {
+  const q = new URLSearchParams({ instrument, ...(lang ? { lang } : {}) })
+  return authFetch(`/admin/progress?${q}`)
+}
+
+/**
  * getAdminResults — paginated results list.
  * @param {{ offset?: number, limit?: number, instrument?: string }} params
  */

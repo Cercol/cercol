@@ -1,5 +1,10 @@
 import { useEffect, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { trackEvent } from '../lib/api'
+
+// The bare language code ('es', not 'es-ES'): events.lang feeds the admin
+// progress funnel, which filters on the six site languages.
+const bareLang = (i18n) => (i18n.language || 'en').slice(0, 2)
 
 /**
  * useTrackTestStart — fire one first-party `test_start` funnel event when an
@@ -18,8 +23,9 @@ import { trackEvent } from '../lib/api'
  * @param {'newMoon'|'firstQuarter'|'fullMoon'} instrument
  */
 export function useTrackTestStart(instrument) {
+  const { i18n } = useTranslation()
   useEffect(() => {
-    trackEvent('test_start', { instrument })
+    trackEvent('test_start', { instrument, lang: bareLang(i18n) })
     // Fire once on mount only.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -44,13 +50,14 @@ export function useTrackTestStart(instrument) {
  * @param {number} total   items in the whole instrument, block layout aside
  */
 export function useTrackTestProgress(instrument, current, total) {
+  const { i18n } = useTranslation()
   const reached = useRef(0)
   useEffect(() => {
     const decile = decileReached(current, total)
     if (decile == null || decile <= reached.current) return
     reached.current = decile
-    trackEvent('test_progress', { instrument, slug: String(decile * 10) })
-  }, [instrument, current, total])
+    trackEvent('test_progress', { instrument, slug: String(decile * 10), lang: bareLang(i18n) })
+  }, [instrument, current, total, i18n])
 }
 
 /**

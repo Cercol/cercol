@@ -124,6 +124,35 @@ export async function usersCsv(env, request) {
   return csvResponse(out, 'cercol_users.csv')
 }
 
+/**
+ * GET /admin/progress?instrument&lang — how far takers get, in tenths.
+ * Starters and tenths come from the funnel events; completions from results.
+ * lang filters exactly on events.lang and by prefix on results.language, so
+ * 'fr' also matches fr-FR/fr-CA variants. Events logged before 2026-08-24
+ * carry no lang and only show under the all-languages view.
+ */
+export async function progress(env, request) {
+  const a = await requireAdmin(env, request); if (a instanceof Response) return a
+  const u = new URL(request.url)
+  const instrument = u.searchParams.get('instrument') || 'newMoon'
+  const lang = u.searchParams.get('lang') || ''
+  const { n: starts } = await env.DB.prepare(
+    `SELECT COUNT(DISTINCT anon_id) AS n FROM events
+      WHERE name = 'test_start' AND instrument = ?1 AND (?2 = '' OR lang = ?2)`
+  ).bind(instrument, lang).first()
+  const { results: tenths } = await env.DB.prepare(
+    `SELECT CAST(slug AS INTEGER) AS tenth, COUNT(DISTINCT anon_id) AS n FROM events
+      WHERE name = 'test_progress' AND instrument = ?1 AND (?2 = '' OR lang = ?2)
+      GROUP BY slug ORDER BY tenth`
+  ).bind(instrument, lang).all()
+  const { n: completions } = await env.DB.prepare(
+    `SELECT COUNT(*) AS n FROM results
+      WHERE COALESCE(is_seed, 0) = 0 AND instrument = ?1 AND (?2 = '' OR language LIKE ?2 || '%')`
+  ).bind(instrument, lang).first()
+  return Response.json({ instrument, lang, starts: Number(starts || 0), completions: Number(completions || 0),
+    tenths: tenths.map((t) => ({ tenth: t.tenth, n: t.n })) })
+}
+
 /** GET /admin/results?offset&limit&instrument */
 export async function results(env, request) {
   const a = await requireAdmin(env, request); if (a instanceof Response) return a

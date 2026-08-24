@@ -24,6 +24,7 @@ import {
   createBlogPost,
   updateBlogPost,
   patchBlogPostStatus,
+  getAdminProgress,
   getSeoSources,
   getSeoHealth,
   getSeoQueries,
@@ -400,6 +401,85 @@ function UsersTab() {
         </table>
       </Card>
       <div ref={sentinelRef} className="h-1" />
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// Progress tab
+// ---------------------------------------------------------------------------
+
+const PROGRESS_LANGS = ['en', 'ca', 'es', 'fr', 'de', 'da']
+
+function ProgressTab() {
+  const [instrument, setInstrument] = useState('newMoon')
+  const [lang, setLang] = useState('')
+  const [data, setData] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    let alive = true
+    setLoading(true)
+    getAdminProgress(instrument, lang)
+      .then(d => { if (alive) setData(d) })
+      .catch(err => console.error('[AdminDashboard] getAdminProgress error', err))
+      .finally(() => { if (alive) setLoading(false) })
+    return () => { alive = false }
+  }, [instrument, lang])
+
+  const tenths = new Map((data?.tenths ?? []).map(t => [t.tenth, t.n]))
+  const rows = data ? [
+    { stage: 'Start', n: data.starts },
+    ...[10, 20, 30, 40, 50, 60, 70, 80, 90].map(t => ({ stage: `${t}%`, n: tenths.get(t) ?? 0 })),
+    { stage: 'Done', n: data.completions },
+  ] : []
+
+  return (
+    <div className="space-y-3 max-w-3xl">
+      <div className="flex items-center gap-3 flex-wrap">
+        <select
+          value={instrument}
+          onChange={e => setInstrument(e.target.value)}
+          className="text-sm px-3 py-1.5 rounded-lg border border-gray-200 focus:outline-none focus:border-[var(--mm-color-blue)] bg-white"
+        >
+          {Object.entries(INSTRUMENT_LABELS).map(([val, label]) => (
+            <option key={val} value={val}>{label}</option>
+          ))}
+        </select>
+        <select
+          value={lang}
+          onChange={e => setLang(e.target.value)}
+          className="text-sm px-3 py-1.5 rounded-lg border border-gray-200 focus:outline-none focus:border-[var(--mm-color-blue)] bg-white"
+        >
+          <option value="">All languages</option>
+          {PROGRESS_LANGS.map(l => <option key={l} value={l}>{l.toUpperCase()}</option>)}
+        </select>
+        {data && !loading && (
+          <span className="text-xs text-gray-400 whitespace-nowrap">
+            {data.starts} started · {data.completions} completed
+          </span>
+        )}
+      </div>
+      <Card className="p-4">
+        {loading
+          ? <p className="text-sm text-gray-400">Loading…</p>
+          : (
+            <ResponsiveContainer width="100%" height={260}>
+              <BarChart data={rows}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                <XAxis dataKey="stage" tick={{ fontSize: 12 }} />
+                <YAxis allowDecimals={false} tick={{ fontSize: 12 }} />
+                <Tooltip />
+                <Bar dataKey="n" fill={colors.blue} radius={[3, 3, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          )}
+      </Card>
+      <p className="text-xs text-gray-400">
+        Distinct visitors reaching each tenth of the instrument (test_progress events); Done is
+        the count of stored results. Language is recorded on funnel events from 24 Aug 2026 —
+        older events only appear under All languages.
+      </p>
     </div>
   )
 }
@@ -1321,6 +1401,7 @@ const TABS = [
   { id: 'overview', label: 'Overview' },
   { id: 'users',    label: 'Users'    },
   { id: 'results',  label: 'Results'  },
+  { id: 'progress', label: 'Progress' },
   { id: 'norms',    label: 'Norms'    },
   { id: 'blog',     label: 'Blog'     },
   { id: 'authority', label: 'Pla' },
@@ -1354,6 +1435,7 @@ export default function AdminDashboardPage() {
       {activeTab === 'overview' && <OverviewTab />}
       {activeTab === 'users'    && <UsersTab />}
       {activeTab === 'results'  && <ResultsTab />}
+      {activeTab === 'progress' && <ProgressTab />}
       {activeTab === 'norms'    && <NormsTab />}
       {activeTab === 'blog'     && <BlogTab />}
       {activeTab === 'authority' && <PlanPanel />}
