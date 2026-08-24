@@ -69,7 +69,7 @@ surfacing any archetype one side sees but the other does not (a **surprise**).
 | 🌑 | New Moon Cèrcol (TIPI-based) | 10 | ~2 min | Free |
 | 🌓 | First Quarter Cèrcol (IPIP-NEO-60) | 60 | ~10 min | Free |
 | 🌕 | Full Moon Cèrcol (IPIP-NEO-120 + Witness + ICAR g) | 120+ | ~25 min | One-time payment |
-| 🌗 | Last Quarter Cèrcol (team report) | — | — | Planned |
+| 🌗 | Last Quarter Cèrcol (team report) | — | — | Free |
 
 New Moon and First Quarter are always free — no account required, no payment,
 no card. Full Moon produces a definitive role result, Witness peer assessment,
