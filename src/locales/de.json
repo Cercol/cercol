@@ -195,7 +195,6 @@
       "email": "Deine E-Mail-Adresse: wenn du ein Konto erstellst oder dich anmeldest.",
       "results": "Deine Testergebnisse: Punkte, die mit deinem Konto verknüpft sind, wenn du angemeldet bist. Anonyme Punkte (ohne Konto) werden ohne jegliche identifizierende Informationen gespeichert.",
       "profile": "Profilangaben, die du freiwillig machst: Vorname, Nachname, Land, Muttersprache. Alle optional außer dem Vornamen.",
-      "payment": "Zahlungsdaten: vollständig von Stripe verarbeitet. Cèrcol sieht oder speichert deine Kartendaten niemals.",
       "anonymous": "Anonyme Nutzungsdaten: wenn du eine Auswertung ohne Konto abschließt, werden nur die Punkte gespeichert. Kein Name, keine E-Mail, keine IP, keine Geräteinformationen.",
       "attribution": "Besuchsquelle: die verweisende Website und etwaige Kampagnen-Tags (utm) aus dem Link, über den du gekommen bist, gespeichert mit einem abgeschlossenen Test. Nur Erstanbieter, niemals geteilt und niemals mit deiner Identität verknüpft."
     },
@@ -204,15 +203,13 @@
       "body": "Wir erheben Daten ausschließlich für drei Zwecke:",
       "function": "Um den Dienst bereitzustellen: deine E-Mail-Adresse wird benötigt, um dich zu authentifizieren; deine Ergebnisse werden gespeichert, damit du deine Historie einsehen kannst.",
       "research": "Anonymisierte Forschung: Die de-identifizierten Werte dienen dazu, das Persönlichkeitsmodell zu verbessern und Normen über Populationen hinweg zu validieren, und werden als offener Datensatz veröffentlicht, damit andere Forschende damit arbeiten können. Die veröffentlichten Daten enthalten den Wert, das Instrument, die Sprache und das Datum, niemals deine E-Mail-Adresse, dein Konto oder etwas, das dich identifizieren könnte.",
-      "payment": "Um deine Zahlung zu verarbeiten, Stripe benötigt deine Kartendaten, um dir den Cèrcol des Vollmondes in Rechnung zu stellen. Wir erhalten nur eine Bestätigung.",
       "noAds": "Wir verkaufen keine Daten. Wir nutzen keine Daten für Werbung. Wir teilen keine Daten mit Dritten, außer wie oben beschrieben."
     },
     "retention": {
       "heading": "Wie lange wir sie aufbewahren",
       "body": "Wir bewahren deine Daten so lange auf, wie dein Konto aktiv ist. Im Einzelnen:",
       "account": "Kontodaten (E-Mail, Profil, Ergebnisse), bis zur Löschung deines Kontos aufbewahrt.",
-      "anonymous": "Anonyme Testergebnisse: auf unbestimmte Zeit als Forschungsdaten aufbewahrt, ohne Verknüpfung zu einer Person.",
-      "payment": "Zahlungsaufzeichnungen: von Stripe gemäß ihrer eigenen Richtlinie aufbewahrt (in der Regel 7 Jahre für steuerliche Compliance)."
+      "anonymous": "Anonyme Testergebnisse: auf unbestimmte Zeit als Forschungsdaten aufbewahrt, ohne Verknüpfung zu einer Person."
     },
     "cookies": {
       "heading": "Cookies",
@@ -230,8 +227,8 @@
     "thirdParties": {
       "heading": "Drittanbieterdienste",
       "hosting": "Deine Kontodaten und Testergebnisse werden in einer Datenbank gespeichert, die von Cloudflare, Inc. gehostet wird und sich in Westeuropa (EU) befindet. Transaktions-E-Mails (Anmelde-Links) werden über Resend (Resend, Inc.) versendet, einem in den USA ansässigen Unternehmen, das Standardvertragsklauseln für EU-Datenübertragungen anwendet. Die Authentifizierung ist vollständig selbst gehostet, kein Drittanbieter besitzt deine Zugangsdaten.",
-      "stripe": "Zahlungen werden von Stripe (Stripe, Inc.) abgewickelt, einem in den USA ansässigen Unternehmen mit EU-konformer Datenübertragung. Cèrcol erhält keine Zahlungskartendaten, nur eine Transaktionsbestätigung.",
-      "noTrackers": "Keine anderen Drittanbieterdienste erhalten deine personenbezogenen Daten. Auf dieser Website gibt es keine Analyseplattformen, Werbenetzwerke oder Social-Media-Tracker."
+      "noTrackers": "Keine anderen Drittanbieterdienste erhalten deine personenbezogenen Daten. Auf dieser Website gibt es keine Analyseplattformen, Werbenetzwerke oder Social-Media-Tracker.",
+      "noPayments": "Cèrcol nimmt keine Zahlungen an: Alles ist kostenlos, und es werden keine Zahlungsdaten erhoben oder verarbeitet."
     },
     "contact": {
       "heading": "Kontakt",
@@ -450,18 +447,6 @@
   },
   "fm": {
     "subtitle": "Cèrcol des Vollmondes",
-    "paywall": {
-      "heading": "Cèrcol des Vollmondes",
-      "body": "Dasselbe Porträt, erstellt aus 120 Fragen statt 60. Jede Facette in voller Auflösung gemessen.",
-      "includes": "30 Facetten · Rollenergebnis · Dauerhaft verfügbar",
-      "cta": "Cèrcol des Vollmondes freischalten",
-      "loading": "Du wirst zur Zahlung weitergeleitet…",
-      "processing": "Zahlung erhalten. Dein Zugang wird eingerichtet…",
-      "processingTimeout": "Deine Zahlung wird verarbeitet.",
-      "processingTimeoutNote": "Aktualisiere diese Seite in einem Moment, um zu beginnen.",
-      "error": "Etwas ist schiefgelaufen. Versuche es erneut.",
-      "permanentNote": "Einmalige Zahlung. Der Zugang ist dauerhaft."
-    },
     "blockProgress": "{{current}} von {{total}} in diesem Block",
     "blockLabel": "Block {{current}} von {{total}}",
     "overallProgress": "{{current}} von {{total}} insgesamt",
@@ -918,7 +903,7 @@
     "fq": {
       "title": "Ein Bericht des Ersten Viertels",
       "subtitle": "Ein echter Bericht einer synthetischen Person. Sechzig Fragen, etwa zehn Minuten.",
-      "closing": "Das ist, was die kostenlose Version liefert. Für deinen eigenen brauchst du kein Konto.",
+      "closing": "Das liefert das Erste Viertel. Für deinen eigenen brauchst du kein Konto.",
       "cta": "Mach den Test selbst",
       "seeFullMoon": "Oder den Vollmond-Bericht ansehen, mit Zeugenbewertungen",
       "eyebrow": "Ein Beispiel",
@@ -1340,7 +1325,7 @@
       "a": "Neumond hat 10 Fragen und dauert 2 Minuten, eine schnelle Orientierung. Erstes Viertel hat 60 Fragen und dauert 10 Minuten, ein vollständigeres Bild mit 30 Facetten und einem ersten Blick auf deine Rolle. Vollmond hat 120 Fragen, umfasst die Zeugenbewertung und ist das definitive Ergebnis. Jedes Instrument ist eigenständig; du kannst überall beginnen."
     },
     "q5": {
-      "q": "Lohnt es sich, für den Vollmond zu zahlen?",
+      "q": "Was bietet der Vollmond?",
       "a": "Wenn Erstes Viertel unzureichend erscheint, wenn du eine bestimmte Facette tiefer verstehen möchtest, siehst, wie andere dich wahrnehmen, oder ein zuverlässiges Rollenergebnis erhalten möchtest, dann ja. Der Zeugenvergleich ist der markanteste Teil: Er zeigt, wo deine Selbstwahrnehmung mit der Außensicht übereinstimmt und wo nicht. Diese Lücke ist oft der Ort, wo die nützlichsten Informationen liegen."
     },
     "q6": {

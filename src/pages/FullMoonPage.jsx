@@ -5,16 +5,15 @@
  *
  * Gate (pre-test):
  *   - Not logged in → redirect to /auth
- *   - Logged in, not premium → paywall screen with Stripe CTA
- *   - ?payment=success → poll profiles.premium until set (up to ~12s)
- *   - Premium confirmed → show test
+ *   - Logged in with a prior result → completed screen with redo option
+ *   - Logged in otherwise → show test (nothing is paid; pricing.md)
  *
  * Test states (post-gate):
  *   answering  — showing a question within a block
  *   transition — brief screen between blocks
  */
 import { useEffect, useRef, useState } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { FM_ITEMS, FM_SCALE_LABELS } from '../data/full-moon'
 import { INSTRUMENT_DOMAIN_ORDER } from '../data/domains'
@@ -26,7 +25,7 @@ import { usePageMeta } from '../hooks/usePageMeta'
 import { useInstrumentKeyboard } from '../hooks/useInstrumentKeyboard'
 import { useFeedbackContext } from '../context/FeedbackContext'
 import { useAuth } from '../context/AuthContext'
-import { createCheckoutSession, getMyProfile, getMyResults, anonymiseResult } from '../lib/api'
+import { getMyResults, anonymiseResult } from '../lib/api'
 import QuestionCard from '../components/QuestionCard'
 import VariantPicker from '../components/VariantPicker'
 import ProgressBar from '../components/ProgressBar'
@@ -46,14 +45,11 @@ const TOTAL_ITEMS = FM_ITEMS.length
 const TOTAL_BLOCKS = BLOCKS.length
 const SCALE_POINTS = 5
 
-const MAX_POLL_ATTEMPTS = 8
-const POLL_INTERVAL_MS  = 1500
 
 
 export default function FullMoonPage() {
   const navigate = useNavigate()
   useTrackTestStart('fullMoon')
-  const [searchParams] = useSearchParams()
   const { t } = useTranslation()
 
   // Unlike New Moon and First Quarter this route is not pre-rendered and not
@@ -70,19 +66,15 @@ export default function FullMoonPage() {
   const { user, loading: authLoading } = useAuth()
 
   // ── Gate state ─────────────────────────────────────────────────
-  // 'checking'   — waiting for auth + premium check
-  // 'paywall'    — logged in, not premium
-  // 'processing' — payment=success in URL, polling for premium
-  // 'completed'  — premium, but user already has a fullMoon result
-  // 'ready'      — premium confirmed, no prior result, show test
+  // 'checking'   — waiting for auth
+  // 'completed'  — user already has a fullMoon result
+  // 'ready'      — signed in, no prior result, show test
+  // Nothing is paid (docs/policies/pricing.md): the gate only asks for a
+  // signed-in user, so results and Witness invitations belong to someone.
   const [gateState,       setGateState]       = useState('checking')
   // The language variety the items are read in. Chosen before starting,
   // because it changes every item and cannot be switched halfway.
   const [variant, setVariant] = useState(null)
-  const [checkoutLoading, setCheckoutLoading] = useState(false)
-  const [checkoutError,   setCheckoutError]   = useState(null)
-  const [pollTimedOut,    setPollTimedOut]     = useState(false)
-  const pollTimerRef = useRef(null)
 
   // ── Redo state (for 'completed' screen) ────────────────────────
   const [existingResultId,  setExistingResultId]  = useState(null)
@@ -99,45 +91,21 @@ export default function FullMoonPage() {
 
     let cancelled = false
 
-    async function checkPremium(attempt = 0) {
-      const profile = await getMyProfile().catch(() => null)
-
+    async function checkExisting() {
+      const results = await getMyResults().catch(() => [])
       if (cancelled) return
-
-      if (profile?.premium) {
-        // Check if the user already has a Full Moon result
-        const results = await getMyResults().catch(() => [])
-        if (cancelled) return
-        const fullMoonResult = results.find(r => r.instrument === 'fullMoon')
-        if (fullMoonResult) {
-          setExistingResultId(fullMoonResult.id)
-          setGateState('completed')
-        } else {
-          setGateState('ready')
-        }
-        return
+      const fullMoonResult = results.find(r => r.instrument === 'fullMoon')
+      if (fullMoonResult) {
+        setExistingResultId(fullMoonResult.id)
+        setGateState('completed')
+      } else {
+        setGateState('ready')
       }
-
-      const paymentInUrl = searchParams.get('payment') === 'success'
-      if (paymentInUrl && attempt < MAX_POLL_ATTEMPTS) {
-        setGateState('processing')
-        pollTimerRef.current = setTimeout(() => checkPremium(attempt + 1), POLL_INTERVAL_MS)
-        return
-      }
-
-      if (paymentInUrl && attempt >= MAX_POLL_ATTEMPTS) {
-        setPollTimedOut(true)
-        setGateState('processing')
-        return
-      }
-
-      setGateState('paywall')
     }
 
-    checkPremium()
+    checkExisting()
     return () => {
       cancelled = true
-      clearTimeout(pollTimerRef.current)
     }
   }, [user, authLoading]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -154,18 +122,6 @@ export default function FullMoonPage() {
       setRedoError(true)
     } finally {
       setRedoLoading(false)
-    }
-  }
-
-  async function handleUnlock() {
-    setCheckoutLoading(true)
-    setCheckoutError(null)
-    try {
-      const { url } = await createCheckoutSession()
-      window.location.href = url
-    } catch {
-      setCheckoutError(t('fm.paywall.error'))
-      setCheckoutLoading(false)
     }
   }
 
@@ -273,23 +229,6 @@ export default function FullMoonPage() {
     return <main className="min-h-[calc(100vh-4rem)]" />
   }
 
-  if (gateState === 'processing') {
-    return (
-      <main className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)]">
-        <div className="w-full max-w-md text-center">
-          {pollTimedOut ? (
-            <>
-              <p className="text-gray-700 font-medium mb-2">{t('fm.paywall.processingTimeout')}</p>
-              <p className="text-sm text-gray-400">{t('fm.paywall.processingTimeoutNote')}</p>
-            </>
-          ) : (
-            <p className="text-gray-500 text-sm">{t('fm.paywall.processing')}</p>
-          )}
-        </div>
-      </main>
-    )
-  }
-
   if (gateState === 'completed') {
     return (
       <main className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)]">
@@ -340,50 +279,6 @@ export default function FullMoonPage() {
             </div>
           </div>
         )}
-      </main>
-    )
-  }
-
-  if (gateState === 'paywall') {
-    return (
-      <main className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)]">
-        <div className="w-full max-w-md">
-          <Card className="shadow-sm p-8">
-
-            <div className="text-center mb-6">
-              <FullMoonIcon size={36} className="mb-3 mx-auto" style={{ color: colors.blue }} />
-              <h1 className="text-2xl font-bold text-gray-900 mb-2">
-                {t('fm.paywall.heading')}
-              </h1>
-              <p className="text-gray-500 text-sm leading-relaxed">
-                {t('fm.paywall.body')}
-              </p>
-            </div>
-
-            <div className="bg-gray-50 rounded px-4 py-3 mb-6">
-              <p className="text-sm font-medium text-gray-700 text-center">
-                {t('fm.paywall.includes')}
-              </p>
-            </div>
-
-            <Button
-              variant="primary"
-              onClick={handleUnlock}
-              disabled={checkoutLoading}
-              className={`w-full shadow-sm${checkoutLoading ? ' cursor-not-allowed' : ''}`}
-            >
-              {checkoutLoading ? t('fm.paywall.loading') : t('fm.paywall.cta')}
-            </Button>
-
-            {checkoutError && (
-              <p className="mt-3 text-sm text-red-500 text-center">{checkoutError}</p>
-            )}
-
-            <p className="mt-4 text-xs text-gray-400 text-center">
-              {t('fm.paywall.permanentNote')}
-            </p>
-          </Card>
-        </div>
       </main>
     )
   }

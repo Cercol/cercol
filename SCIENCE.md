@@ -184,9 +184,10 @@ No study has integrated AB5C and g to define team roles. Adding g to centroids w
 evidence of the AB5C×g interaction would introduce arbitrariness disguised as
 precision.
 
-g is collected via ICAR as contextual data. At N≥300, the regression
-g ~ assigned_role will determine whether g has predictive power over role
-assignment beyond OCEAN. Until then, g does not enter the role calculation.
+g is not collected. An ICAR-based measure was once planned as contextual
+data and was never built; the product gathers no cognitive-ability data, and
+g does not enter the role calculation. If it is ever collected, the test
+would be whether g predicts role assignment beyond OCEAN.
 
 ### System structure: 12 roles in 5D space
 
@@ -666,8 +667,8 @@ excluded from every threshold below.
 
 - N≥300: run k-means (k=12) in 5D space; compare empirical vs theoretical
   centroids; adjust if divergence is systematic
-- N≥300: regression g ~ assigned_role; if g has significant predictive power
-  beyond OCEAN, integrate into centroid calculation
+- (Dropped: a planned g ~ assigned_role regression required the ICAR
+  cognitive measure, which was never built; no g data exists to regress.)
 - If k-means suggests k≠12: revise taxonomy before any product changes
 
 **Critical limitation**: the ground truth for validation is not the role

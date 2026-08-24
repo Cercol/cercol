@@ -41,8 +41,9 @@ Current instruments:
 
 Cèrcol uses four lunar phases as instrument names.
 Each phase is a standalone user experience with increasing depth.
-Witness Cèrcol and ICAR cognitive ability are components of Full Moon,
-not standalone phases. Never use "observer" in user-facing text or code
+Witness Cèrcol is a component of Full Moon, not a standalone phase. (An ICAR
+cognitive ability component was once planned and was never built; no cognitive
+data is collected.) Never use "observer" in user-facing text or code
 comments — it is Belbin terminology. Always use "Witness" (EN) / "Testimoni" (CA)
 / "Testigo" (ES) / "Témoin" (FR) / "Zeuge/Zeugin" (DE) / "Vidne" (DA).
 
@@ -50,8 +51,8 @@ comments — it is Belbin terminology. Always use "Witness" (EN) / "Testimoni" (
 |-------|--------------|-------------------------|-------------------------------|----------------------------------------|---------|
 | 🌑    | NewMoon      | New Moon Cèrcol         | Cèrcol de Lluna Nova          | TIPI — 10 items, 7-point, 5 domains   | Live    |
 | 🌓    | FirstQuarter | First Quarter Cèrcol    | Cèrcol de Quart Creixent      | IPIP-NEO-60 — 60 items, 5-point, 30 facets | Live |
-| 🌕    | FullMoon     | Full Moon Cèrcol        | Cèrcol de Lluna Plena         | IPIP-NEO-120 + Witness Cèrcol + ICAR g | Live   |
-| 🌗    | LastQuarter  | Last Quarter Cèrcol     | Cèrcol de Quart Minvant       | Team report (members FullMoon)         | Planned |
+| 🌕    | FullMoon     | Full Moon Cèrcol        | Cèrcol de Lluna Plena         | IPIP-NEO-120 + Witness Cèrcol          | Live    |
+| 🌗    | LastQuarter  | Last Quarter Cèrcol     | Cèrcol de Quart Minvant       | Team report (groups of members)        | Live    |
 
 ES/FR/DE display names: see instrument naming table above.
 
@@ -71,14 +72,16 @@ Never use generic names like TestPage.jsx or RadarPage.jsx.
 
 ## Full Moon + Witness Cèrcol design (definitive)
 
-Full Moon = IPIP-NEO-120 (self-report, 120 items, 5-point Likert)
-          + ICAR cognitive ability measure
+Full Moon = IPIP-NEO-120 (self-report, 120 items, 5-point accuracy scale —
+            Very Inaccurate → Very Accurate, the IPIP-NEO format)
           + Witness Cèrcol (CA: Testimoni Cèrcol)
 
 ### Witness Cèrcol
-Adaptive forced-choice adjective selection based on AB5C lexical markers
-from the public-domain IPIP item pool (Goldberg). Never called "observer
-assessment" in user-facing text or comments.
+Forced-choice adjective selection over a fixed, pre-generated 13-round
+sequence (buildRounds in src/utils/witness-scoring.js — not adaptive). The
+adjective corpus is 30 Saucier (1994) Mini-Marker adjectives plus 70 everyday
+synonyms written for Cèrcol (see SCIENCE.md, "The adjective corpus"). Never
+called "observer assessment" in user-facing text or comments.
 
 Flow:
 - A person who knows the subject well is given a unique link
@@ -87,7 +90,7 @@ Flow:
   Likert scale). Three picks, not two: two picks of equal weight cannot
   distinguish first from second, which is why an earlier "two best and two
   worst" measured worse than what it replaced
-- Forced choice eliminates social desirability bias
+- Forced choice reduces social desirability bias
 - 13 rounds total, fixed 75/25 positive/negative polarity sequence.
   It was 20 rounds of 2 picks until 2026-08-04; the binding constraint on this
   instrument is not precision, it is whether someone finishes it for a friend
@@ -100,16 +103,14 @@ Output of Full Moon + Witness:
   Witness) are compared. Shared archetypes are shown, plus "surprises", meaning
   an archetype relevant on one side but not on the other
 
-### Freemium model (authoritative)
+### Pricing (authoritative: docs/policies/pricing.md)
 
-FREE (always):
-- New Moon Cèrcol — 10 items, 5 domains, quick snapshot
-- First Quarter Cèrcol — 60 items, 5 domains, 30 facets, full portrait
-
-PAID (one-time payment):
-- Full Moon Cèrcol — IPIP-NEO-120 + Witness Cèrcol + ICAR cognitive ability;
-  definitive role result and team report.
-  Stripe infrastructure (checkout endpoint, webhook, premium column) in place.
+Nothing is paid. Every instrument — New Moon, First Quarter, Full Moon with
+Witness, and the Last Quarter team report — is free, with no card and no
+tier. Full Moon and team features require a free account, because results
+and Witness invitations have to belong to someone. The surviving Stripe code
+(checkout endpoint, webhook, premium column) is dormant machinery, kept
+because deleting it buys nothing; it is not a plan.
 
 ---
 

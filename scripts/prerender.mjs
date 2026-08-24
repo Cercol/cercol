@@ -98,7 +98,7 @@ const CONCURRENCY = 4
 const STATIC_ROUTES = [
   '/', '/about', '/instruments', '/roles', '/science', '/faq', '/privacy',
   // /sample is the First Quarter report, which is where the blog cards send
-  // people; the Full Moon one, which costs money and four Witnesses, moved
+  // people; the Full Moon one, which needs an account and Witnesses, moved
   // down a level rather than being the first thing a curious reader sees.
   '/sample', '/sample/full-moon',
   '/new-moon', '/first-quarter',

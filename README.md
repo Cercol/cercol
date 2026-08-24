@@ -53,9 +53,10 @@ push; the number is here so it is not a thing you have to go and find out.
 
 ### Witness peer assessment
 Cèrcol's peer assessment (**Witness Cèrcol**) uses **forced-choice adjective
-selection** — the assessor picks one best-fit and one worst-fit adjective per
-round from a set covering all five OCEAN factors. Forced choice eliminates social
-desirability bias that corrupts Likert-scale peer ratings. Up to 12 Witnesses per
+selection** — in each of 13 rounds the assessor sees five adjectives, one per
+OCEAN factor, and picks the best fit, the second-best fit and the worst fit.
+Forced choice reduces the social desirability bias that corrupts Likert-scale
+peer ratings. Up to 12 Witnesses per
 subject; scores are averaged. The self and peer profiles are each mapped to
 their relevant role archetype(s), and the report compares the two archetype sets,
 surfacing any archetype one side sees but the other does not (a **surprise**).
@@ -68,12 +69,14 @@ surfacing any archetype one side sees but the other does not (a **surprise**).
 |-------|-----------|-------|------|-------|
 | 🌑 | New Moon Cèrcol (TIPI-based) | 10 | ~2 min | Free |
 | 🌓 | First Quarter Cèrcol (IPIP-NEO-60) | 60 | ~10 min | Free |
-| 🌕 | Full Moon Cèrcol (IPIP-NEO-120 + Witness + ICAR g) | 120+ | ~25 min | One-time payment |
+| 🌕 | Full Moon Cèrcol (IPIP-NEO-120 + Witness) | 120+ | ~25 min | Free |
 | 🌗 | Last Quarter Cèrcol (team report) | — | — | Free |
 
-New Moon and First Quarter are always free — no account required, no payment,
-no card. Full Moon produces a definitive role result, Witness peer assessment,
-and team report.
+Everything is free — no payment, no card, nothing gated behind a price
+(docs/policies/pricing.md is the authority). New Moon and First Quarter need
+no account. Full Moon produces a definitive role result and the Witness peer
+assessment, and feeds the Last Quarter team report; it needs a free account
+because results and Witness invitations have to belong to someone.
 
 ---
 
@@ -171,11 +174,13 @@ Full item pool: https://ipip.ori.org
 
 ## Privacy
 
-No account required for any instrument. No personal data collected during assessment.
+No account required for New Moon or First Quarter. No personal data collected
+during assessment.
 
 Anonymous scores are logged: instrument name, language, five domain z-scores.
-Nothing that identifies you. Account creation is optional (saves result history
-and unlocks Full Moon features). Data is stored in a Cloudflare D1 database
+Nothing that identifies you. An account (magic link or Google, no passwords)
+is needed for Full Moon and team features, so results and Witness invitations
+belong to you; it also saves result history. Data is stored in a Cloudflare D1 database
 in the EU jurisdiction of the Cloudflare account. No third-party analytics.
 
 ---

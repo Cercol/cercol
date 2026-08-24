@@ -57,7 +57,6 @@ export default function PrivacyPage() {
             p('collected.email'),
             p('collected.results'),
             p('collected.profile'),
-            p('collected.payment'),
             p('collected.anonymous'),
             p('collected.attribution'),
           ]} />
@@ -68,7 +67,6 @@ export default function PrivacyPage() {
           <UL items={[
             p('why.function'),
             p('why.research'),
-            p('why.payment'),
           ]} />
           <P>{p('why.noAds')}</P>
         </Section>
@@ -78,7 +76,6 @@ export default function PrivacyPage() {
           <UL items={[
             p('retention.account'),
             p('retention.anonymous'),
-            p('retention.payment'),
           ]} />
         </Section>
 
@@ -99,7 +96,7 @@ export default function PrivacyPage() {
 
         <Section label={p('thirdParties.heading')}>
           <P>{p('thirdParties.hosting')}</P>
-          <P>{p('thirdParties.stripe')}</P>
+          <P>{p('thirdParties.noPayments')}</P>
           <P>{p('thirdParties.noTrackers')}</P>
         </Section>
 

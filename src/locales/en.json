@@ -195,7 +195,6 @@
       "email": "Your email address: when you create an account or sign in.",
       "results": "Your test results: scores linked to your account when you are signed in. Anonymous scores (no account) are stored without any identifying information.",
       "profile": "Profile fields you provide voluntarily: first name, last name, country, native language. All optional except first name.",
-      "payment": "Payment data: processed entirely by Stripe. Cèrcol never sees or stores your card details.",
       "anonymous": "Anonymous usage data: if you complete an assessment without an account, only the scores are stored. No name, email, IP, or device information.",
       "attribution": "Visit source: the referring website and any campaign tags (utm) from the link you arrived through, stored with a completed test. First-party only, never shared, and never linked to your identity."
     },
@@ -204,15 +203,13 @@
       "body": "We collect data for three purposes only:",
       "function": "To provide the service: your email is needed to authenticate you; your results are stored so you can view your history.",
       "research": "Anonymised research: de-identified scores are used to improve the personality model and validate norms across populations, and are published as an open dataset for other researchers. The published data carries the scores, the instrument, the language and the date, and never your email, your account, or anything that could identify you.",
-      "payment": "To process your payment: Stripe needs your card details to charge you for Full Moon Cèrcol. We receive only a confirmation.",
       "noAds": "We do not sell data. We do not use data for advertising. We do not share data with third parties except as described above."
     },
     "retention": {
       "heading": "How long we keep it",
       "body": "We keep your data for as long as your account is active. Specifically:",
       "account": "Account data (email, profile, results), retained until you delete your account.",
-      "anonymous": "Anonymous test scores: retained indefinitely as research data, with no link to any individual.",
-      "payment": "Payment records: retained by Stripe according to their own policy (typically 7 years for tax compliance)."
+      "anonymous": "Anonymous test scores: retained indefinitely as research data, with no link to any individual."
     },
     "cookies": {
       "heading": "Cookies",
@@ -230,8 +227,8 @@
     "thirdParties": {
       "heading": "Third-party services",
       "hosting": "Your account data and test results are stored in a database hosted by Cloudflare, Inc. and located in Western Europe (EU). Transactional emails (sign-in links) are sent via Resend (Resend, Inc.), a US-based company operating under standard contractual clauses for EU data transfers. Authentication is fully self-hosted, no third-party provider holds your credentials.",
-      "stripe": "Payments are handled by Stripe (Stripe, Inc.), a US-based company with EU data transfer compliance. Cèrcol receives no payment card data, only a transaction confirmation.",
-      "noTrackers": "No other third-party services receive your personal data. There are no analytics platforms, advertising networks, or social media trackers on this site."
+      "noTrackers": "No other third-party services receive your personal data. There are no analytics platforms, advertising networks, or social media trackers on this site.",
+      "noPayments": "Cèrcol takes no payments: everything is free, and no payment data is collected or processed."
     },
     "contact": {
       "heading": "Contact",
@@ -450,18 +447,6 @@
   },
   "fm": {
     "subtitle": "Full Moon Cèrcol",
-    "paywall": {
-      "heading": "Full Moon Cèrcol",
-      "body": "The same portrait, built from 120 questions instead of 60. Every facet measured at full resolution.",
-      "includes": "30 facets · Role result · Yours to keep",
-      "cta": "Unlock Full Moon Cèrcol",
-      "loading": "Taking you to payment…",
-      "processing": "Payment received. Setting up your access…",
-      "processingTimeout": "Your payment is being processed.",
-      "processingTimeoutNote": "Refresh this page in a moment to begin.",
-      "error": "Something went wrong. Try again.",
-      "permanentNote": "One-time payment. Access is permanent."
-    },
     "blockProgress": "{{current}} of {{total}} in this block",
     "blockLabel": "Block {{current}} of {{total}}",
     "overallProgress": "{{current}} of {{total}} overall",
@@ -918,7 +903,7 @@
     "fq": {
       "title": "A First Quarter report",
       "subtitle": "A real report from a synthetic person. Sixty questions, about ten minutes.",
-      "closing": "This is what the free version returns. No account is needed to read your own.",
+      "closing": "This is what First Quarter returns. No account is needed to read your own.",
       "cta": "Take it yourself",
       "seeFullMoon": "Or see the Full Moon report, with Witness ratings",
       "eyebrow": "A sample",
@@ -1340,7 +1325,7 @@
       "a": "New Moon is 10 questions and takes 2 minutes, a quick orientation. First Quarter is 60 questions and takes 10 minutes, a fuller picture with 30 facets and a first look at your role. Full Moon is 120 questions, includes the Witness assessment, it is the definitive result. Each instrument is standalone; you can start anywhere."
     },
     "q5": {
-      "q": "Is Full Moon worth paying for?",
+      "q": "What does Full Moon add?",
       "a": "If First Quarter feels insufficient, if you want to understand a specific facet more deeply, see how others perceive you, or get a reliable role result, then yes. The Witness comparison is the most distinctive part: it shows where your self-perception matches the outside view and where it doesn't. That gap is often where the most useful information lives."
     },
     "q6": {

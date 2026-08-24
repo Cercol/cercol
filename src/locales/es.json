@@ -195,7 +195,6 @@
       "email": "Tu dirección de correo electrónico, cuando creas una cuenta o inicias sesión.",
       "results": "Tus resultados de las pruebas: puntuaciones vinculadas a tu cuenta cuando estás conectado/a. Las puntuaciones anónimas (sin cuenta) se almacenan sin ninguna información identificativa.",
       "profile": "Campos de perfil que proporcionas voluntariamente: nombre, apellidos, país, idioma nativo. Todos opcionales excepto el nombre.",
-      "payment": "Datos de pago: procesados íntegramente por Stripe. Cèrcol nunca ve ni almacena los datos de tu tarjeta.",
       "anonymous": "Datos de uso anónimos: si completas una evaluación sin cuenta, solo se almacenan las puntuaciones. Sin nombre, correo electrónico, IP ni información del dispositivo.",
       "attribution": "Origen de la visita: el sitio web que te refirió y cualquier etiqueta de campaña (utm) del enlace por el que llegaste, almacenado con un test completado. Solo de origen propio, nunca compartido y nunca vinculado a tu identidad."
     },
@@ -204,15 +203,13 @@
       "body": "Recopilamos datos con tres fines únicamente:",
       "function": "Para ofrecer el servicio: tu correo electrónico es necesario para autenticarte; tus resultados se almacenan para que puedas consultar tu historial.",
       "research": "Investigación anonimizada: las puntuaciones desidentificadas sirven para mejorar el modelo de personalidad y validar los baremos entre poblaciones, y se publican como conjunto de datos abierto para que otros investigadores puedan trabajar con ellas. Los datos publicados llevan la puntuación, el instrumento, el idioma y la fecha, y nunca tu correo, tu cuenta ni nada que pueda identificarte.",
-      "payment": "Para procesar tu pago: Stripe necesita los datos de tu tarjeta para cobrarte por Cèrcol de Luna Llena. Solo recibimos una confirmación.",
       "noAds": "No vendemos datos. No usamos datos para publicidad. No compartimos datos con terceros salvo lo descrito anteriormente."
     },
     "retention": {
       "heading": "Cuánto tiempo los conservamos",
       "body": "Conservamos tus datos mientras tu cuenta esté activa. Concretamente:",
       "account": "Datos de cuenta (correo electrónico, perfil, resultados), conservados hasta que elimines tu cuenta.",
-      "anonymous": "Puntuaciones anónimas de pruebas, conservadas indefinidamente como datos de investigación, sin vinculación a ninguna persona.",
-      "payment": "Registros de pago: conservados por Stripe según su propia política (normalmente 7 años por cumplimiento fiscal)."
+      "anonymous": "Puntuaciones anónimas de pruebas, conservadas indefinidamente como datos de investigación, sin vinculación a ninguna persona."
     },
     "cookies": {
       "heading": "Cookies",
@@ -230,8 +227,8 @@
     "thirdParties": {
       "heading": "Servicios de terceros",
       "hosting": "Los datos de tu cuenta y tus resultados se almacenan en una base de datos alojada en Cloudflare, Inc. y ubicada en Europa occidental (UE). Los correos transaccionales (enlaces de acceso) se envían a través de Resend (Resend, Inc.), una empresa con sede en EE. UU. que opera bajo cláusulas contractuales estándar para las transferencias de datos de la UE. La autenticación es completamente propia, ningún proveedor externo guarda tus credenciales.",
-      "stripe": "Los pagos son gestionados por Stripe (Stripe, Inc.), una empresa con sede en EE. UU. con cumplimiento de transferencia de datos de la UE. Cèrcol no recibe ningún dato de tarjeta de pago, solo una confirmación de transacción.",
-      "noTrackers": "Ningún otro servicio de terceros recibe tus datos personales. No hay plataformas de analítica, redes publicitarias ni rastreadores de redes sociales en este sitio."
+      "noTrackers": "Ningún otro servicio de terceros recibe tus datos personales. No hay plataformas de analítica, redes publicitarias ni rastreadores de redes sociales en este sitio.",
+      "noPayments": "Cèrcol no cobra nada: todo es gratuito y no se recoge ni se procesa ningún dato de pago."
     },
     "contact": {
       "heading": "Contacto",
@@ -450,18 +447,6 @@
   },
   "fm": {
     "subtitle": "Cèrcol de Luna Llena",
-    "paywall": {
-      "heading": "Cèrcol de Luna Llena",
-      "body": "El mismo retrato, construido a partir de 120 preguntas en lugar de 60. Cada faceta medida a plena resolución.",
-      "includes": "30 facetas · Resultado de rol · Tuyo para siempre",
-      "cta": "Desbloquear Cèrcol de Luna Llena",
-      "loading": "Llevándote al pago…",
-      "processing": "Pago recibido. Configurando tu acceso…",
-      "processingTimeout": "Tu pago está siendo procesado.",
-      "processingTimeoutNote": "Actualiza esta página en un momento para comenzar.",
-      "error": "Algo salió mal. Inténtalo de nuevo.",
-      "permanentNote": "Pago único. El acceso es permanente."
-    },
     "blockProgress": "{{current}} de {{total}} en este bloque",
     "blockLabel": "Bloque {{current}} de {{total}}",
     "overallProgress": "{{current}} de {{total}} en total",
@@ -918,7 +903,7 @@
     "fq": {
       "title": "Un informe de Cuarto Creciente",
       "subtitle": "Un informe real de una persona sintética. Sesenta preguntas, unos diez minutos.",
-      "closing": "Esto es lo que da la versión gratuita. No hace falta cuenta para leer el tuyo.",
+      "closing": "Esto es lo que da Cuarto Creciente. No hace falta cuenta para leer el tuyo.",
       "cta": "Hazlo tú",
       "seeFullMoon": "O mira el informe de Luna Llena, con valoraciones de Testigo",
       "eyebrow": "Una muestra",
@@ -1340,7 +1325,7 @@
       "a": "New Moon tiene 10 preguntas y lleva 2 minutos, una orientación rápida. First Quarter tiene 60 preguntas y lleva 10 minutos, una imagen más completa con 30 facetas y una primera lectura de tu rol. Full Moon tiene 120 preguntas, incluye la evaluación del Testigo y es el resultado definitivo. Cada instrumento es independiente; puedes empezar por cualquiera."
     },
     "q5": {
-      "q": "¿Vale la pena pagar por Full Moon?",
+      "q": "¿Qué aporta la Luna Llena?",
       "a": "Si First Quarter te parece insuficiente, si quieres entender una faceta específica más en profundidad, ver cómo te perciben los demás u obtener un resultado de rol fiable, entonces sí. La comparación con el testigo es la parte más distintiva: muestra dónde tu autopercepción coincide con la visión exterior y dónde no. Esa brecha es a menudo donde vive la información más útil."
     },
     "q6": {

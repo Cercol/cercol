@@ -195,7 +195,6 @@
       "email": "La teua adreça de correu electrònic, quan crees un compte o inicies sessió.",
       "results": "Els teus resultats: puntuacions vinculades al teu compte quan has iniciat sessió. Les puntuacions anònimes (sense compte) s'emmagatzemen sense cap informació d'identificació.",
       "profile": "Camps de perfil que proporciones voluntàriament: nom, cognoms, país, llengua materna. Tots opcionals excepte el nom.",
-      "payment": "Dades de pagament: processades íntegrament per Stripe. Cèrcol no veu ni emmagatzema mai les dades de la teua targeta.",
       "anonymous": "Dades d'ús anònimes: si completes una avaluació sense compte, només s'emmagatzemen les puntuacions. Cap nom, correu, IP ni informació del dispositiu.",
       "attribution": "Origen de la visita: el lloc web que t'ha referit i qualsevol etiqueta de campanya (utm) de l'enllaç pel qual has arribat, desat amb un test completat. Només de primera part, mai compartit i mai vinculat a la teva identitat."
     },
@@ -204,15 +203,13 @@
       "body": "Recopilem dades amb tres finalitats úniques:",
       "function": "Per proporcionar el servei: el teu correu és necessari per autenticar-te; els teus resultats s'emmagatzemen perquè pugues veure el teu historial.",
       "research": "Recerca anonimitzada: les puntuacions desidentificades serveixen per millorar el model de personalitat i validar els barems entre poblacions, i es publiquen com a conjunt de dades obert perquè altres investigadors hi puguen treballar. Les dades publicades porten la puntuació, l'instrument, la llengua i la data, i mai el teu correu, el teu compte ni res que et puga identificar.",
-      "payment": "Per processar el teu pagament: Stripe necessita les dades de la teua targeta per cobrar-te el Cèrcol de Lluna Plena. Nosaltres només rebem una confirmació.",
       "noAds": "No venem dades. No les fem servir per a publicitat. No les compartim amb tercers excepte com es descriu més amunt."
     },
     "retention": {
       "heading": "Quant temps les guardem",
       "body": "Guardem les teues dades mentre el teu compte estigui actiu. Concretament:",
       "account": "Dades del compte (correu, perfil, resultats), es conserven fins que elimines el teu compte.",
-      "anonymous": "Puntuacions de test anònimes: es conserven indefinidament com a dades de recerca, sense cap vinculació amb cap persona.",
-      "payment": "Registres de pagament: conservats per Stripe d'acord amb la seua pròpia política (normalment 7 anys per a compliment fiscal)."
+      "anonymous": "Puntuacions de test anònimes: es conserven indefinidament com a dades de recerca, sense cap vinculació amb cap persona."
     },
     "cookies": {
       "heading": "Galetes",
@@ -230,8 +227,8 @@
     "thirdParties": {
       "heading": "Serveis de tercers",
       "hosting": "Les dades del teu compte i els resultats dels tests s'emmagatzemen en una base de dades allotjada a Cloudflare, Inc. i ubicada a l'Europa occidental (UE). Els correus transaccionals (enllaços d'accés) s'envien a través de Resend (Resend, Inc.), una empresa nord-americana que opera sota clàusules contractuals estàndard per a transferències de dades de la UE. L'autenticació és completament pròpia, cap proveïdor extern guarda les teues credencials.",
-      "stripe": "Els pagaments estan a càrrec de Stripe (Stripe, Inc.), una empresa nord-americana amb compliment de transferència de dades de la UE. Cèrcol no rep dades de targetes de pagament, únicament una confirmació de la transacció.",
-      "noTrackers": "Cap altre servei de tercers rep les teues dades personals. No hi ha plataformes analítiques, xarxes publicitàries ni rastrejadors de xarxes socials en aquest lloc."
+      "noTrackers": "Cap altre servei de tercers rep les teues dades personals. No hi ha plataformes analítiques, xarxes publicitàries ni rastrejadors de xarxes socials en aquest lloc.",
+      "noPayments": "Cèrcol no cobra res: tot és gratuït i no es recull ni es processa cap dada de pagament."
     },
     "contact": {
       "heading": "Contacte",
@@ -450,18 +447,6 @@
   },
   "fm": {
     "subtitle": "Cèrcol de Lluna Plena",
-    "paywall": {
-      "heading": "Cèrcol de Lluna Plena",
-      "body": "El mateix retrat, construït a partir de 120 preguntes en lloc de 60. Cada faceta mesurada a resolució completa.",
-      "includes": "30 facetes · Resultat de rol · Per sempre teu",
-      "cta": "Desbloqueja el Cèrcol de Lluna Plena",
-      "loading": "Redirigint al pagament…",
-      "processing": "Pagament rebut. Configurant el teu accés…",
-      "processingTimeout": "El teu pagament s'està processant.",
-      "processingTimeoutNote": "Refresca aquesta pàgina en un moment per començar.",
-      "error": "Alguna cosa ha fallat. Torna-ho a intentar.",
-      "permanentNote": "Pagament únic. L'accés és permanent."
-    },
     "blockProgress": "{{current}} de {{total}} en aquest bloc",
     "blockLabel": "Bloc {{current}} de {{total}}",
     "overallProgress": "{{current}} de {{total}} en total",
@@ -918,7 +903,7 @@
     "fq": {
       "title": "Un informe de Quart Creixent",
       "subtitle": "Un informe real d'una persona sintètica. Seixanta preguntes, uns deu minuts.",
-      "closing": "Això és el que dona la versió gratuïta. No cal compte per llegir el teu.",
+      "closing": "Això és el que dona el Quart Creixent. No cal compte per llegir el teu.",
       "cta": "Fes-lo tu",
       "seeFullMoon": "O mira l'informe de Lluna Plena, amb valoracions de Testimoni",
       "eyebrow": "Una mostra",
@@ -1340,7 +1325,7 @@
       "a": "La Lluna Nova són 10 preguntes i dura 2 minuts, una orientació ràpida. El Quart Creixent són 60 preguntes i dura 10 minuts, una imatge més completa amb 30 facetes i una primera mirada al teu rol. La Lluna Plena és 120 preguntes, inclou l'avaluació del Testimoni, és el resultat definitiu. Cada instrument és independent; pots començar des de qualsevol punt."
     },
     "q5": {
-      "q": "Val la pena pagar per la Lluna Plena?",
+      "q": "Què aporta la Lluna Plena?",
       "a": "Si el Quart Creixent se't queda curt, si vols entendre una faceta específica més profundament, veure com els altres et perceben, o obtenir un resultat de rol fiable, sí. La comparació amb el Testimoni és la part més distintiva: mostra on la teua autopercepció coincideix amb la visió exterior i on no. Aquesta bretxa és sovint on viu la informació més útil."
     },
     "q6": {

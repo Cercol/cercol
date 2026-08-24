@@ -195,7 +195,6 @@
       "email": "Votre adresse e-mail : lorsque vous créez un compte ou vous connectez.",
       "results": "Vos résultats aux tests : des scores liés à votre compte lorsque vous êtes connecté·e. Les scores anonymes (sans compte) sont stockés sans aucune information d'identification.",
       "profile": "Les champs de profil que vous fournissez volontairement : prénom, nom, pays, langue maternelle. Tous optionnels sauf le prénom.",
-      "payment": "Données de paiement : traitées entièrement par Stripe. Cèrcol ne voit ni ne stocke jamais les détails de votre carte.",
       "anonymous": "Données d'utilisation anonymes : si vous complétez une évaluation sans compte, seuls les scores sont stockés. Aucun nom, e-mail, IP ou information sur l'appareil.",
       "attribution": "Source de la visite : le site web qui vous a référé et les éventuelles étiquettes de campagne (utm) du lien par lequel vous êtes arrivé, enregistrées avec un test complété. Première partie uniquement, jamais partagé et jamais lié à votre identité."
     },
@@ -204,15 +203,13 @@
       "body": "Nous collectons des données à trois fins uniquement :",
       "function": "Pour fournir le service : votre e-mail est nécessaire pour vous authentifier ; vos résultats sont stockés pour que vous puissiez consulter votre historique.",
       "research": "Recherche anonymisée : les scores dépersonnalisés servent à améliorer le modèle de personnalité et à valider les normes entre populations, et sont publiés sous forme de jeu de données ouvert pour que d'autres chercheurs puissent les exploiter. Les données publiées comportent le score, l'instrument, la langue et la date, et jamais votre adresse e-mail, votre compte ni quoi que ce soit qui puisse vous identifier.",
-      "payment": "Pour traiter votre paiement : Stripe a besoin des détails de votre carte pour vous facturer Cèrcol de Pleine Lune. Nous ne recevons qu'une confirmation.",
       "noAds": "Nous ne vendons pas de données. Nous n'utilisons pas les données à des fins publicitaires. Nous ne partageons pas les données avec des tiers sauf tel que décrit ci-dessus."
     },
     "retention": {
       "heading": "Combien de temps nous les conservons",
       "body": "Nous conservons vos données tant que votre compte est actif. Plus précisément :",
       "account": "Données du compte (e-mail, profil, résultats), conservées jusqu'à ce que vous supprimiez votre compte.",
-      "anonymous": "Scores de tests anonymes : conservés indéfiniment en tant que données de recherche, sans lien avec aucune personne.",
-      "payment": "Dossiers de paiement : conservés par Stripe selon leur propre politique (généralement 7 ans pour la conformité fiscale)."
+      "anonymous": "Scores de tests anonymes : conservés indéfiniment en tant que données de recherche, sans lien avec aucune personne."
     },
     "cookies": {
       "heading": "Cookies",
@@ -230,8 +227,8 @@
     "thirdParties": {
       "heading": "Services tiers",
       "hosting": "Les données de votre compte et vos résultats sont stockés dans une base de données hébergée par Cloudflare, Inc. et située en Europe de l'Ouest (UE). Les e-mails transactionnels (liens de connexion) sont envoyés via Resend (Resend, Inc.), une société américaine opérant sous des clauses contractuelles types pour les transferts de données de l'UE. L'authentification est entièrement auto-hébergée, aucun prestataire tiers ne détient vos identifiants.",
-      "stripe": "Les paiements sont gérés par Stripe (Stripe, Inc.), une société américaine conforme aux transferts de données de l'UE. Cèrcol ne reçoit aucune donnée de carte de paiement, seulement une confirmation de transaction.",
-      "noTrackers": "Aucun autre service tiers ne reçoit vos données personnelles. Il n'y a aucune plateforme d'analyse, aucun réseau publicitaire ni traqueur de réseaux sociaux sur ce site."
+      "noTrackers": "Aucun autre service tiers ne reçoit vos données personnelles. Il n'y a aucune plateforme d'analyse, aucun réseau publicitaire ni traqueur de réseaux sociaux sur ce site.",
+      "noPayments": "Cèrcol n’encaisse aucun paiement : tout est gratuit et aucune donnée de paiement n’est collectée ni traitée."
     },
     "contact": {
       "heading": "Contact",
@@ -450,18 +447,6 @@
   },
   "fm": {
     "subtitle": "Cèrcol de Pleine Lune",
-    "paywall": {
-      "heading": "Cèrcol de Pleine Lune",
-      "body": "Le même portrait, construit à partir de 120 questions au lieu de 60. Chaque facette mesurée en pleine résolution.",
-      "includes": "30 facettes · Résultat de rôle · À vous pour toujours",
-      "cta": "Débloquer Cèrcol de Pleine Lune",
-      "loading": "Redirection vers le paiement…",
-      "processing": "Paiement reçu. Configuration de votre accès…",
-      "processingTimeout": "Votre paiement est en cours de traitement.",
-      "processingTimeoutNote": "Rafraîchissez cette page dans un moment pour commencer.",
-      "error": "Une erreur s'est produite. Réessayez.",
-      "permanentNote": "Paiement unique. L'accès est permanent."
-    },
     "blockProgress": "{{current}} sur {{total}} dans ce bloc",
     "blockLabel": "Bloc {{current}} sur {{total}}",
     "overallProgress": "{{current}} sur {{total}} au total",
@@ -918,7 +903,7 @@
     "fq": {
       "title": "Un rapport Premier Quartier",
       "subtitle": "Un vrai rapport d'une personne synthétique. Soixante questions, environ dix minutes.",
-      "closing": "Voilà ce que donne la version gratuite. Aucun compte n'est nécessaire pour lire le vôtre.",
+      "closing": "Voilà ce que donne le Premier Quartier. Aucun compte n’est nécessaire pour lire le vôtre.",
       "cta": "Faites-le vous-même",
       "seeFullMoon": "Ou voir le rapport Pleine Lune, avec les évaluations de Témoin",
       "eyebrow": "Un exemple",
@@ -1340,7 +1325,7 @@
       "a": "Nouvelle Lune comporte 10 questions et prend 2 minutes, une orientation rapide. Premier Quartier comporte 60 questions et prend 10 minutes, une image plus complète avec 30 facettes et un premier aperçu de votre rôle. Pleine Lune comporte 120 questions, inclut l'évaluation du·de la Témoin et c'est le résultat définitif. Chaque instrument est autonome ; vous pouvez commencer n'importe lequel."
     },
     "q5": {
-      "q": "Cèrcol de Pleine Lune vaut-il le coup de payer ?",
+      "q": "Qu’apporte la Pleine Lune ?",
       "a": "Si Premier Quartier vous semble insuffisant, si vous voulez comprendre une facette spécifique plus en profondeur, voir comment les autres vous perçoivent, ou obtenir un résultat de rôle fiable, alors oui. La comparaison avec le·la témoin est la partie la plus distinctive : elle montre où votre auto-perception correspond à la vision extérieure et où elle ne le fait pas. Cet écart est souvent là où réside l'information la plus utile."
     },
     "q6": {

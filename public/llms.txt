@@ -2,7 +2,7 @@
 
 > Cèrcol is an open-source team personality assessment platform based on the Big Five (OCEAN) and the IPIP public-domain item pool (Goldberg et al. 2006). 12 team roles are derived from the AB5C circumplex (Hofstee et al. 1992) and team composition research (Bell 2007).
 
-Cèrcol is available at https://cercol.team and is free for New Moon (10-item Big Five snapshot) and First Quarter (60-item IPIP-NEO-60, 30 facets). Full Moon (120-item IPIP-NEO-120 + Witness peer assessment + ICAR cognitive ability) requires a one-time payment.
+Cèrcol is available at https://cercol.team and every instrument is free: New Moon (10-item Big Five snapshot), First Quarter (60-item IPIP-NEO-60, 30 facets), Full Moon (120-item IPIP-NEO-120 plus the Witness peer assessment; needs a free account), and the Last Quarter team report (role distribution and balance for a group).
 
 ## Key facts
 
