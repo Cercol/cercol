@@ -10,7 +10,11 @@
   ],
   "vars": {
     "FRONTEND_URL": "https://cercol.team",
-    "BACKEND_URL": "https://api.cercol.team"
+    "BACKEND_URL": "https://api.cercol.team",
+    // Issue queues (daily brief, plan steps) and the plan itself live in the
+    // private ops repo since 2026-08-24; the public repo keeps code + science.
+    "GITHUB_REPO": "Cercol/cercol-ops",
+    "OPS_REPO": "Cercol/cercol-ops"
   },
   "d1_databases": [
     { "binding": "DB", "database_name": "cercol", "database_id": "928ddbd6-5fc6-4e2b-9fd1-e7de66435ef6" }

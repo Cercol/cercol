@@ -1,7 +1,7 @@
 /**
  * PlanPanel — the distribution plan, made operable.
  *
- * The plan itself lives in src/data/distribution-plan.js: ten sections and
+ * The plan lives in the private ops repo and arrives via GET /admin/plan;
  * ninety-one steps, each one carrying why it matters, who it is for, what it
  * pays back, what it costs, and an action. This component only does the four
  * things a document cannot: show what is left, put the next step in front,
@@ -17,8 +17,8 @@
  * lists. The progress moon is the product's own metaphor, not a new one.
  */
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { PLAN_SECTIONS, PLAN_TASKS, AUDIENCE, nextTask, taskStatus, mineReason, minePending } from '../data/distribution-plan'
-import { getAuthorityStatus, setAuthorityStatus, fileAuthorityIssue, sendPlanEmail } from '../lib/api'
+import { flattenTasks, AUDIENCE, nextTask, taskStatus, mineReason, minePending } from '../data/plan-model'
+import { getAuthorityStatus, setAuthorityStatus, fileAuthorityIssue, sendPlanEmail, getAdminPlan } from '../lib/api'
 import { Badge, Button, SectionLabel } from './ui'
 import {
   CheckIcon, ChevronRightIcon, ExternalLinkIcon,
@@ -217,7 +217,7 @@ function TaskRow({ task, row, status, busy, open, onToggleOpen, onCycle, onFile,
         <div className="flex shrink-0 flex-wrap items-center gap-2">
           {row.issue_number ? (
             <a
-              href={`https://github.com/cercol/cercol/issues/${row.issue_number}`}
+              href={`https://github.com/cercol/cercol-ops/issues/${row.issue_number}`}
               target="_blank"
               rel="noreferrer"
               className="rounded border border-gray-300 px-2.5 py-1 text-xs text-gray-600 hover:border-gray-400"
@@ -265,12 +265,17 @@ export default function PlanPanel() {
   const [pendingOnly, setPendingOnly] = useState(true)
   const [mineOnly, setMineOnly] = useState(false)
 
+  // The plan itself comes from the private ops repo through the Worker; it
+  // deliberately does not ship in this bundle.
+  const [sections, setSections] = useState([])
+
   const load = useCallback(async () => {
     setLoading(true)
     setError(null)
     try {
-      const { items } = await getAuthorityStatus()
+      const [{ items }, planSections] = await Promise.all([getAuthorityStatus(), getAdminPlan()])
       setState(Object.fromEntries(items.map((r) => [r.id, r])))
+      setSections(planSections)
     } catch (err) {
       setError(err.message)
     } finally {
@@ -280,8 +285,9 @@ export default function PlanPanel() {
 
   useEffect(() => { load() }, [load])
 
-  const next = useMemo(() => nextTask(state), [state])
-  const mine = useMemo(() => minePending(state), [state])
+  const tasks = useMemo(() => flattenTasks(sections), [sections])
+  const next = useMemo(() => nextTask(tasks, state), [tasks, state])
+  const mine = useMemo(() => minePending(tasks, state), [tasks, state])
 
   // The section holding the next step opens itself. Ten collapsed sections
   // with nothing open is a plan you have to go looking into.
@@ -289,8 +295,8 @@ export default function PlanPanel() {
     if (next) setOpenSections((s) => (s[next.section] === undefined ? { ...s, [next.section]: true } : s))
   }, [next])
 
-  const done = PLAN_TASKS.filter((t) => taskStatus(t, state) === 'done').length
-  const pct = Math.round((done / PLAN_TASKS.length) * 100)
+  const done = tasks.filter((t) => taskStatus(t, state) === 'done').length
+  const pct = tasks.length ? Math.round((done / tasks.length) * 100) : 0
 
   const cycle = async (task) => {
     const current = taskStatus(task, state)
@@ -352,7 +358,7 @@ export default function PlanPanel() {
         <div className="flex flex-wrap items-center gap-3">
           <ProgressMoon pct={pct} />
           <div className="min-w-0 flex-1">
-            <p className="text-sm font-medium text-gray-900">{done} de {PLAN_TASKS.length} passes fetes · {pct}%</p>
+            <p className="text-sm font-medium text-gray-900">{done} de {tasks.length} passes fetes · {pct}%</p>
             <div className="mt-2 h-1 w-full overflow-hidden rounded bg-gray-100">
               <div className="h-full rounded bg-[var(--mm-color-green)]" style={{ width: `${pct}%` }} />
             </div>
@@ -384,7 +390,7 @@ export default function PlanPanel() {
 
       {loading && <p className="text-sm text-gray-400">Carregant…</p>}
 
-      {!loading && PLAN_SECTIONS.map((section) => {
+      {!loading && sections.map((section) => {
         const all = section.tasks
         const sectionDone = all.filter((t) => taskStatus(t, state) === 'done').length
         const shown = all.filter(

@@ -3,7 +3,7 @@
  *
  * # Spec: docs/architecture/seo-pipeline.md
  *
- * The plan itself lives in the frontend bundle (src/data/distribution-plan.js)
+ * The plan lives in the private ops repo (plan-sections.json)
  * because it is content and belongs under review. This module owns only the
  * parts that change: what state each step is in, and whether it has been filed
  * as a GitHub issue.
@@ -74,7 +74,7 @@ export async function file(env, request, id) {
     b.url ? `**Where:** ${b.url}` : '',
     b.contact ? `**Who:** ${b.contact}` : '',
     '',
-    `Filed from the plan panel. Plan step \`${id}\` in \`src/data/distribution-plan.js\`.`,
+    `Filed from the plan panel. Plan step \`${id}\` in the ops repo plan (plan-sections.json).`,
   ].filter(Boolean).join('\n')
 
   const repo = env.GITHUB_REPO || 'Cercol/cercol'

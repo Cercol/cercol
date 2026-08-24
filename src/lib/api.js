@@ -676,6 +676,14 @@ export async function getAdminUsers({ offset = 0, limit = 25, search = '' } = {}
 }
 
 /**
+ * getAdminPlan — the distribution plan sections, from the private ops repo
+ * via the Worker. Admin only; the plan never ships in the public bundle.
+ */
+export async function getAdminPlan() {
+  return authFetch('/admin/plan')
+}
+
+/**
  * getAdminProgress — survival data for the drop-off curves, one series per
  * language plus 'all'.
  * @param {string} instrument newMoon | firstQuarter | fullMoon
@@ -735,7 +743,7 @@ export async function getAdminActivity({ days = 30 } = {}) {
 /**
  * Plan panel — progress through the distribution plan.
  *
- * The plan itself never leaves the bundle (src/data/distribution-plan.js);
+ * The plan lives in the private ops repo (served via GET /admin/plan);
  * only the state travels. `fileAuthorityIssue` posts the step's own text so
  * the Worker never needs a second copy of it.
  */

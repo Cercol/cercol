@@ -188,6 +188,22 @@ export async function progress(env, request) {
   return Response.json({ instrument, series: [...series.values()] })
 }
 
+/**
+ * GET /admin/plan — the distribution plan, served from the private ops
+ * repository. The plan is strategy (outreach letters, tactics, self-audits)
+ * and must not ship in the public bundle or repo; the Worker fetches it with
+ * its GitHub token and hands it only to an admin. Progress stays in D1.
+ */
+export async function planSections(env, request) {
+  const a = await requireAdmin(env, request); if (a instanceof Response) return a
+  const repo = env.OPS_REPO || 'Cercol/cercol-ops'
+  const res = await fetch(`https://api.github.com/repos/${repo}/contents/plan-sections.json`, {
+    headers: { authorization: `Bearer ${env.GITHUB_TOKEN}`, accept: 'application/vnd.github.raw+json', 'user-agent': 'cercol-api' },
+  })
+  if (!res.ok) return httpError(502, `ops repo answered ${res.status}`)
+  return new Response(await res.text(), { headers: { 'content-type': 'application/json' } })
+}
+
 /** GET /admin/results?offset&limit&instrument */
 export async function results(env, request) {
   const a = await requireAdmin(env, request); if (a instanceof Response) return a

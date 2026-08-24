@@ -41,7 +41,7 @@ CI (`ci.yml`) runs on every push and PR: build, bundle sanity, frontend + worker
 ### Manual deploy (emergency only)
 API: `CLOUDFLARE_API_TOKEN=… CLOUDFLARE_ACCOUNT_ID=… npx wrangler deploy --config worker/wrangler.jsonc`
 Frontend: same with `web/wrangler.jsonc` after `npm run build:full`.
-Avoid manual deploys: they desync local and deployed state. Runbook: `docs/ops/runbook.md`.
+Avoid manual deploys: they desync local and deployed state. Runbook: private ops repo (Cercol/cercol-ops).
 
 ### Scheduled jobs
 Five cron triggers on `cercol-api` (`worker/src/scheduled.js`): 04:00 daily (purge-tokens, group-nudge, links-tick, daily-brief), 05:00 daily (seo-anomalies, seo-indexing, seo-languages), Sun 03:00 (bing-ingest), Sun 04:00 (pagespeed-ingest), Mon 09:00 (weekly-digest). Run any now: `POST /admin/jobs/<name>?dry_run=1` with an admin JWT.
@@ -154,10 +154,13 @@ When adding a new language to Cèrcol:
 - `.github/workflows/` - `ci.yml`, `ci-docs.yml`, `deploy-frontend.yml`, `deploy-worker.yml`.
 - `docs/` - living docs (`policies/`, `architecture/`, `decisions/`, `post-mortems/`, `ops/`) plus `archive/` for decayed content.
 - `scripts/` - sitemap, prerender, deploy-api, docs-coherence and spec-path validators, blog article updaters.
-- Authority roadmap: the catalogue of where Cèrcol should appear lives in
-  `src/data/authority-targets.js` (research, reviewable in a PR); progress
-  lives in D1 `authority_status` and is edited from Admin → Authority. Filing
-  a target opens a GitHub issue, the same queue the daily brief writes to.
+- Distribution plan and authority roadmap: the plan (sections + steps,
+  including where Cèrcol should appear) lives in the PRIVATE ops repo
+  (Cercol/cercol-ops, `plan-sections.json`) and reaches the admin panel via
+  `GET /admin/plan`; it must never ship in the public repo or bundle
+  (2026-08-24 exposure audit). Progress lives in D1 `authority_status`,
+  edited from Admin → Pla. Filing a step opens a GitHub issue on the ops
+  repo, the same private queue the daily brief writes to (`GITHUB_REPO`).
 - `sql/`, `db/migrations/` - PostgreSQL seeds and migrations (001 through 094), frozen history. New schema goes in `worker/schema/`; content changes go through the blog admin endpoints or `wrangler d1 execute cercol --remote`.
 
 ## SEO conventions
@@ -180,16 +183,16 @@ REQUIRED in SEO contexts so search engines and LLMs can index Cèrcol correctly.
 - i18n locale keys (src/locales/*.json)
 - Code comments (use Cèrcol dimension names)
 
-Full SEO and LLM visibility strategy: SEO.md
+Full SEO and LLM visibility strategy: private ops repo (Cercol/cercol-ops), SEO.md
 
 ## Extended documentation
 - Phase history and roadmap: ROADMAP.md
 - Scientific foundation and scoring: SCIENCE.md
 - Product vocabulary, instruments and copy: PRODUCT.md
-- SEO and LLM visibility strategy: SEO.md
+- SEO and LLM visibility strategy: private ops repo (Cercol/cercol-ops)
 - Backend architecture: docs/architecture/backend.md
 - Auth architecture: docs/architecture/auth.md
-- Operations runbook: docs/ops/runbook.md
+- Operations runbook: private ops repo (Cercol/cercol-ops)
 - Email, Resend and Stalwart: docs/ops/email.md
 - Code conventions and patterns: docs/policies/conventions.md
 - What the research data is, and why it needs no consent flow: docs/policies/research-data.md

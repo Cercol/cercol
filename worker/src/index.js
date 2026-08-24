@@ -104,6 +104,7 @@ const ROUTES = [
   { method: 'GET', pattern: /^\/admin\/users$/, handler: (env, m, req) => admin.users(env, req), gated: true },
   { method: 'GET', pattern: /^\/admin\/users\/export\.csv$/, handler: (env, m, req) => admin.usersCsv(env, req), gated: true },
   { method: 'PATCH', pattern: /^\/admin\/users\/([^/]+)$/, handler: (env, m, req) => admin.patchUser(env, req, m[1]), gated: true },
+  { method: 'GET', pattern: /^\/admin\/plan$/, handler: (env, m, req) => admin.planSections(env, req), gated: true },
   { method: 'GET', pattern: /^\/admin\/progress$/, handler: (env, m, req) => admin.progress(env, req), gated: true },
   { method: 'GET', pattern: /^\/admin\/results$/, handler: (env, m, req) => admin.results(env, req), gated: true },
   { method: 'GET', pattern: /^\/admin\/results\/export\.csv$/, handler: (env, m, req) => admin.resultsCsv(env, req), gated: true },
