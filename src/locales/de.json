@@ -1053,7 +1053,9 @@
       "linkedNote": "Wenn deine Zeugen angemeldet sind, können sie die Sitzung mit ihrem Profil für künftige Team-Funktionen verknüpfen.",
       "witnessLabel": "Zeuge",
       "emailPlaceholder": "E-Mail (optional)",
-      "copied": "Kopiert"
+      "copied": "Kopiert",
+      "resetAll": "Alle Zeuginnen und Zeugen entfernen",
+      "resetConfirm": "Alle Zeuginnen und Zeugen entfernen? Ihre Einladungslinks funktionieren dann nicht mehr und abgeschlossene Antworten werden gelöscht. Das lässt sich nicht rückgängig machen."
     },
     "page": {
       "loading": "Lädt…",
@@ -1589,7 +1591,8 @@
     "option": "{{value}} von 5",
     "low": "Gar nicht ich",
     "high": "Genau ich",
-    "thanks": "Danke. Das hilft uns zu prüfen, ob die Profile tragen."
+    "thanks": "Danke. Das hilft uns zu prüfen, ob die Profile tragen.",
+    "dismiss": "Jetzt nicht"
   },
   "footer": {
     "label": "Fußzeile",

@@ -175,6 +175,26 @@ export async function roleCheck(env, request, token) {
 }
 
 /** GET /witness/my-sessions — the subject's sessions plus the guarded aggregate. */
+/**
+ * DELETE /witness/sessions — the reset button: remove every Witness session
+ * the caller has created, completed or not, responses included. Their
+ * invitation links die with them. Scoped hard to the caller's subject_id;
+ * the responses go explicitly rather than trusting cascade enforcement.
+ */
+export async function resetSessions(env, request) {
+  const user = await requirePremium(env, request)
+  if (user instanceof Response) return user
+  const db = env.DB
+  await db.prepare(
+    `DELETE FROM witness_responses WHERE session_id IN
+       (SELECT id FROM witness_sessions WHERE subject_id = ?)`
+  ).bind(user.sub).run()
+  const { meta } = await db.prepare(
+    `DELETE FROM witness_sessions WHERE subject_id = ?`
+  ).bind(user.sub).run()
+  return Response.json({ deleted: meta?.changes ?? 0 })
+}
+
 export async function mySessions(env, request) {
   const user = await requirePremium(env, request)
   if (user instanceof Response) return user

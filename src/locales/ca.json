@@ -1053,7 +1053,9 @@
       "linkedNote": "Si els teus testimonis tenen sessió iniciada, podran vincular la sessió al seu perfil per a futures funcions d'equip.",
       "witnessLabel": "Testimoni",
       "emailPlaceholder": "Correu (opcional)",
-      "copied": "Copiat"
+      "copied": "Copiat",
+      "resetAll": "Esborrar tots els testimonis",
+      "resetConfirm": "Vols esborrar tots els testimonis? Els seus enllaços deixaran de funcionar i les respostes completades es perdran. No es pot desfer."
     },
     "page": {
       "loading": "Carregant…",
@@ -1589,7 +1591,8 @@
     "option": "{{value}} de 5",
     "low": "No sóc jo",
     "high": "Sóc jo",
-    "thanks": "Gràcies. Això ens ajuda a comprovar si els perfils funcionen."
+    "thanks": "Gràcies. Això ens ajuda a comprovar si els perfils funcionen.",
+    "dismiss": "Ara no"
   },
   "footer": {
     "label": "Peu de pàgina",

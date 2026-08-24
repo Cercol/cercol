@@ -13,7 +13,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
-import { createWitnessSessions, getMyWitnessSessions } from '../lib/api'
+import { createWitnessSessions, getMyWitnessSessions, resetWitnessSessions } from '../lib/api'
 import { Card, Button, SectionLabel } from '../components/ui'
 import { FullMoonIcon, CheckIcon, CloseIcon } from '../components/MoonIcons'
 
@@ -133,6 +133,15 @@ export default function WitnessSetupPage() {
       .then((res) => setSessions(res.sessions ?? []))
       .catch(() => setSessionsError(t('witness.setup.error')))
   }, [gateState]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Irreversible on the server, so the browser confirm carries the whole
+  // warning; nothing happens on cancel.
+  function handleReset() {
+    if (!window.confirm(t('witness.setup.resetConfirm'))) return
+    resetWitnessSessions()
+      .then(() => setSessions([]))
+      .catch(() => setSessionsError(t('witness.setup.error')))
+  }
 
   // ── Form handlers ──────────────────────────────────────────────────────
   function handleChange(index, field, value) {
@@ -307,6 +316,13 @@ export default function WitnessSetupPage() {
                 </div>
               ))}
             </div>
+            <button
+              type="button"
+              onClick={handleReset}
+              className="mt-3 text-xs text-red-600 hover:text-red-700 underline"
+            >
+              {t('witness.setup.resetAll')}
+            </button>
           </section>
         )}
 

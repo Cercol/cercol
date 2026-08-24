@@ -210,6 +210,14 @@ export async function createCheckoutSession() {
  * @param {Array<{name: string, email?: string}>} witnesses
  * @returns {Promise<Array<{token, name, link}>>}
  */
+/**
+ * resetWitnessSessions — delete every Witness session of the signed-in
+ * subject, responses included. Irreversible; the caller confirms first.
+ */
+export async function resetWitnessSessions() {
+  return authFetch('/witness/sessions', { method: 'DELETE' })
+}
+
 export async function createWitnessSessions(witnesses) {
   return authFetch('/witness/sessions', {
     method: 'POST',

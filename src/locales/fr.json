@@ -1053,7 +1053,9 @@
       "linkedNote": "Si vos témoins sont connectés, ils pourront lier la session à leur profil pour les futures fonctionnalités d'équipe.",
       "witnessLabel": "Témoin",
       "emailPlaceholder": "E-mail (optionnel)",
-      "copied": "Copié"
+      "copied": "Copié",
+      "resetAll": "Supprimer tous les témoins",
+      "resetConfirm": "Supprimer tous les témoins ? Leurs liens cesseront de fonctionner et les réponses complétées seront perdues. Cette action est irréversible."
     },
     "page": {
       "loading": "Chargement…",
@@ -1589,7 +1591,8 @@
     "option": "{{value}} sur 5",
     "low": "Pas du tout moi",
     "high": "C'est moi",
-    "thanks": "Merci. Cela nous aide à vérifier si les profils tiennent la route."
+    "thanks": "Merci. Cela nous aide à vérifier si les profils tiennent la route.",
+    "dismiss": "Pas maintenant"
   },
   "footer": {
     "label": "Pied de page",

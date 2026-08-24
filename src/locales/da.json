@@ -1053,7 +1053,9 @@
       "linkedNote": "Hvis dine vidner er logget ind, kan de knytte sessionen til deres profil til fremtidige teamfunktioner.",
       "witnessLabel": "Vidne",
       "emailPlaceholder": "E-mail (valgfri)",
-      "copied": "Kopieret"
+      "copied": "Kopieret",
+      "resetAll": "Fjern alle vidner",
+      "resetConfirm": "Vil du fjerne alle vidner? Deres invitationslinks holder op med at virke, og fuldførte svar slettes. Det kan ikke fortrydes."
     },
     "page": {
       "loading": "Indlæser…",
@@ -1589,7 +1591,8 @@
     "option": "{{value}} ud af 5",
     "low": "Slet ikke mig",
     "high": "Det er mig",
-    "thanks": "Tak. Det hjælper os med at tjekke, om profilerne holder."
+    "thanks": "Tak. Det hjælper os med at tjekke, om profilerne holder.",
+    "dismiss": "Ikke nu"
   },
   "footer": {
     "label": "Sidefod",

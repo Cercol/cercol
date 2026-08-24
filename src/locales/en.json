@@ -1053,7 +1053,9 @@
       "linkedNote": "If your witnesses are signed in, they can link the session to their profile for future team features.",
       "witnessLabel": "Witness",
       "emailPlaceholder": "Email (optional)",
-      "copied": "Copied"
+      "copied": "Copied",
+      "resetAll": "Remove all witnesses",
+      "resetConfirm": "Remove all witnesses? Their invitation links stop working and their completed answers are deleted. This cannot be undone."
     },
     "page": {
       "loading": "Loading…",
@@ -1589,7 +1591,8 @@
     "option": "{{value}} out of 5",
     "low": "Not me at all",
     "high": "That is me",
-    "thanks": "Thank you. This helps us check whether the profiles hold up."
+    "thanks": "Thank you. This helps us check whether the profiles hold up.",
+    "dismiss": "Not now"
   },
   "footer": {
     "label": "Site footer",

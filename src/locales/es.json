@@ -1053,7 +1053,9 @@
       "linkedNote": "Si tus testigos tienen sesión iniciada, podrán vincular la sesión a su perfil para futuras funciones de equipo.",
       "witnessLabel": "Testigo",
       "emailPlaceholder": "Correo (opcional)",
-      "copied": "Copiado"
+      "copied": "Copiado",
+      "resetAll": "Borrar todos los testigos",
+      "resetConfirm": "¿Quieres borrar todos los testigos? Sus enlaces dejarán de funcionar y las respuestas completadas se perderán. No se puede deshacer."
     },
     "page": {
       "loading": "Cargando…",
@@ -1589,7 +1591,8 @@
     "option": "{{value}} de 5",
     "low": "No soy yo",
     "high": "Soy yo",
-    "thanks": "Gracias. Esto nos ayuda a comprobar si los perfiles funcionan."
+    "thanks": "Gracias. Esto nos ayuda a comprobar si los perfiles funcionan.",
+    "dismiss": "Ahora no"
   },
   "footer": {
     "label": "Pie de página",
