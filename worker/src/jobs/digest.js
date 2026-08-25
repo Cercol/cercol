@@ -94,10 +94,18 @@ export async function gatherD1(db, { ws, we, ps, pe }) {
     return prof ? Math.round((subj / prof) * 100) : 0
   }
   const witnessPct = [await witnessShare(iso(we)), await witnessShare(iso(ws))]
+  // The deepest tenth each sitter reached this week, one row per (sitter,
+  // instrument), from the test_progress milestones the instrument pages emit
+  // (the percentage travels in `slug`, see worker/src/writes.js). Feeds the
+  // intra-test drop-off table (plan step tg12): where people stop, per
+  // instrument, without a hand-run D1 query.
+  const dropOffRows = await q(`SELECT instrument, MAX(CAST(slug AS INTEGER)) AS pct
+      FROM events WHERE name='test_progress' AND created_at >= ? AND created_at < ?
+     GROUP BY anon_id, instrument`, ...W)
 
   return {
     kpis: { signups, tests, tests_4w: tests4w, page_views: pageViews, unique_visitors: visitors, witness_pct: witnessPct },
-    instruments, weekIl, roleRows, funnelRaw, people, chanRows, testsTotal: tests[0], topArticles, cumRows, normRows,
+    instruments, weekIl, roleRows, funnelRaw, people, chanRows, testsTotal: tests[0], topArticles, cumRows, normRows, dropOffRows,
   }
 }
 
@@ -133,6 +141,31 @@ export function buildNorms(normRows) {
     const drift = empirical ? DOMAINS.map((d) => [d, Number(r[`${d}_mean`]), Number(r[`${d}_mean`]) - prior.mean[inv[d]]]) : null
     return { instrument: LABELS[r.instrument] || r.instrument || 'unknown', lang: r.language || '—', n, threshold: NORM_MIN_SAMPLE, empirical, drift }
   })
+}
+
+/**
+ * The intra-test drop-off curve (plan step tg12): of the sitters who emitted
+ * test_progress this week, how many got at least as far as each tenth, one
+ * row per instrument. Cumulative on purpose: with single-digit sitters the
+ * shape ("whoever clears the first questions finishes") is the finding, and
+ * a survival curve shows it where a histogram of exit points would not.
+ * Witness sittings emit test_progress too and appear as their own row; they
+ * are kept out of the start-to-finish funnel, not out of this curve.
+ *
+ * @param {{instrument: string, pct: number}[]} rows deepest tenth per sitter
+ */
+export function buildDropOff(rows) {
+  const by = {}
+  for (const r of rows || []) {
+    const inst = LABELS[r.instrument] || r.instrument || 'unknown'
+    const b = (by[inst] ||= { sitters: 0, tenths: Array(9).fill(0) })
+    b.sitters += 1
+    const deepest = Math.min(9, Math.floor(Number(r.pct) / 10))
+    for (let t = 1; t <= deepest; t++) b.tenths[t - 1] += 1
+  }
+  return Object.entries(by)
+    .map(([instrument, v]) => ({ instrument, sitters: v.sitters, tenths: v.tenths }))
+    .sort((a, b) => b.sitters - a.sitters)
 }
 
 const SEARCH = ['google.', 'bing.', 'duckduckgo.', 'yahoo.', 'yandex.', 'ecosia.', 'baidu.', 'startpage.']
@@ -276,6 +309,12 @@ export function weeklyDigestHtml(data, frontendUrl = 'https://cercol.team') {
     const conv = (f.conversions || []).map(([l, v]) => p(`${l}: <strong>${v}</strong>`, true)).join('')
     parts.push(section('Funnel', table(['Stage', 'Events', 'People'], rows, ['left', 'right', 'right']) + conv))
   } else parts.push(section('Funnel', empty('No funnel events this week.')))
+  const doff = data.drop_off || []
+  parts.push(section('Inside the test &middot; sitters reaching each tenth', doff.length
+    ? table(['Instrument', 'Sitters', ...Array.from({ length: 9 }, (_, i) => `${(i + 1) * 10}%`)],
+        doff.map((r) => [r.instrument, fmt(r.sitters), ...r.tenths.map((n) => fmt(n))]),
+        ['left', 'right', ...Array(9).fill('right')])
+    : empty('No test progress recorded this week.')))
   const arts = data.top_articles || []
   parts.push(section('Top articles (reads)', arts.length ? table(['Article', 'Reads'], arts.map(([t, n]) => [t, fmt(n)]), ['left', 'right']) : empty('No article reads recorded this week.')))
   const seo = data.seo || {}
@@ -313,7 +352,7 @@ export async function runDigest(env, { send = true } = {}) {
   const data = {
     week_label: weekLabel(b.ws, b.we), kpis: pg.kpis, instruments: pg.instruments,
     weekly_pivot: buildCumulative(pg.weekIl), roles: computeRoleCounts(pg.roleRows),
-    funnel: buildFunnel(pg.funnelRaw, pg.testsTotal, pg.people), channels: buildChannels(pg.chanRows),
+    funnel: buildFunnel(pg.funnelRaw, pg.testsTotal, pg.people), channels: buildChannels(pg.chanRows), drop_off: buildDropOff(pg.dropOffRows),
     top_articles: pg.topArticles, cumulative: buildCumulative(pg.cumRows), norms: buildNorms(pg.normRows),
     seo: bqd.seo, pagespeed: bqd.pagespeed, broken_links: bqd.broken_links, gsc_lag_note: bqd.seo.source === 'gsc', crawlers,
   }
