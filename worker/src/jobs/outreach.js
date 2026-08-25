@@ -14,6 +14,8 @@
  */
 
 import { sendAsMiquel } from '../emails.js'
+import { requireAdmin } from '../admin.js'
+import { httpError, jsonBody } from '../db.js'
 
 const GENERIC = /^(info|hello|contact|hi|hej|hola|mail|post|team|office|kontakt)@/i
 const MAX_SEND = 3
@@ -21,14 +23,13 @@ const MAX_READ = 8 // subrequest budget: 1 list + 8 reads + 3 sends + a few D1
 
 /**
  * Facilitator drafts (outreach/facilitators/) are prepared by the routine
- * but sent only after the operator sets "approved": true in the file —
- * validate-and-veto, 2026-08-25. The explicit approval replaces both the
- * generic-address rule and the 24 h window: these are personal addresses
- * on purpose, and a human decided each one.
+ * and sent ONLY from the admin panel: the operator's click on a specific
+ * draft IS the approval (validate-and-veto, 2026-08-25). The cron never
+ * touches this directory — these are personal addresses on purpose, and a
+ * human decides each one.
  */
 export function validateFacilitatorDraft(d) {
   if (!d || !d.email || !d.subject || !d.text) return 'missing fields'
-  if (d.approved !== true) return 'not approved'
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) return 'bad email'
   if (d.subject.length > 150 || d.text.length > 5000) return 'oversized'
   return null
@@ -80,31 +81,66 @@ export async function runOutreach(env, { dry = false } = {}) {
     }
     out.sent++
   }
-
-  // Facilitator lane: suppression is per-address (coaches share mail hosts),
-  // stored in the same UNIQUE domain column with the full email as the key.
-  const fl = await fetch(`https://api.github.com/repos/${repo}/contents/outreach/facilitators`, { headers: gh })
-  if (fl.ok) {
-    for (const f of (await fl.json()).filter((x) => x.name.endsWith('.json')).slice(0, 5)) {
-      if (out.sent >= MAX_SEND) break
-      const res = await fetch(f.url, { headers: { ...gh, accept: 'application/vnd.github.raw+json' } })
-      if (!res.ok) continue
-      let d
-      try { d = await res.json() } catch { out.skipped.push([f.name, 'bad json']); continue }
-      const err = validateFacilitatorDraft(d)
-      if (err) { if (err !== 'not approved') out.skipped.push([f.name, err]); continue }
-      const dup = await env.DB.prepare(`SELECT 1 AS x FROM outreach WHERE domain = ?`).bind(d.email.toLowerCase()).first()
-      if (dup) continue
-      if (!dry) {
-        const sent = await sendAsMiquel(env, { to: d.email, subject: d.subject, text: d.text })
-        await env.DB.prepare(
-          `INSERT INTO outreach (company, domain, email, lang, source, subject, queue_file, note) VALUES (?,?,?,?,?,?,?,?)`)
-          .bind(d.company || d.name || d.email, d.email.toLowerCase(), d.email, d.lang || 'en', 'facilitators', d.subject, f.path, sent?.id || null).run()
-      }
-      out.sent++
-    }
-  }
   return out
+}
+
+const ghHeaders = (env, raw = false) => ({
+  authorization: `Bearer ${env.GITHUB_TOKEN}`,
+  accept: raw ? 'application/vnd.github.raw+json' : 'application/vnd.github+json',
+  'user-agent': 'cercol-api',
+})
+
+/**
+ * GET /admin/outreach/facilitators — the routine's facilitator drafts,
+ * rendered for the panel with each one's sent state from D1. Suppression is
+ * per-address (coaches share mail hosts): the UNIQUE domain column carries
+ * the full email as the key for this lane.
+ */
+export async function facilitatorDrafts(env, request) {
+  const a = await requireAdmin(env, request); if (a instanceof Response) return a
+  const repo = env.OPS_REPO || 'Cercol/cercol-ops'
+  const list = await fetch(`https://api.github.com/repos/${repo}/contents/outreach/facilitators`, { headers: ghHeaders(env) })
+  if (list.status === 404) return Response.json({ drafts: [] })
+  if (!list.ok) return httpError(502, `ops repo answered ${list.status}`)
+  const files = (await list.json()).filter((f) => f.name.endsWith('.json')).slice(0, 15)
+  const drafts = []
+  for (const f of files) {
+    const res = await fetch(f.url, { headers: ghHeaders(env, true) })
+    if (!res.ok) continue
+    let d
+    try { d = await res.json() } catch { continue }
+    drafts.push({ file: f.path, name: d.name || d.company || '', email: d.email || '', lang: d.lang || 'en', subject: d.subject || '', text: d.text || '' })
+  }
+  if (drafts.length) {
+    const marks = drafts.map(() => '?').join(',')
+    const { results } = await env.DB.prepare(
+      `SELECT domain, created_at FROM outreach WHERE domain IN (${marks})`)
+      .bind(...drafts.map((d) => d.email.toLowerCase())).all()
+    const sentAt = Object.fromEntries(results.map((r) => [r.domain, r.created_at]))
+    for (const d of drafts) d.sent_at = sentAt[d.email.toLowerCase()] || null
+  }
+  return Response.json({ drafts })
+}
+
+/** POST /admin/outreach/facilitators/send { file } — the click that approves and sends one draft. */
+export async function facilitatorSend(env, request) {
+  const a = await requireAdmin(env, request); if (a instanceof Response) return a
+  const b = (await jsonBody(request)) || {}
+  if (!/^outreach\/facilitators\/[\w.-]+\.json$/.test(b.file || '')) return httpError(422, 'Invalid file path')
+  const repo = env.OPS_REPO || 'Cercol/cercol-ops'
+  const res = await fetch(`https://api.github.com/repos/${repo}/contents/${b.file}`, { headers: ghHeaders(env, true) })
+  if (!res.ok) return httpError(502, `ops repo answered ${res.status}`)
+  let d
+  try { d = await res.json() } catch { return httpError(422, 'Draft is not valid JSON') }
+  const err = validateFacilitatorDraft(d)
+  if (err) return httpError(422, err)
+  const dup = await env.DB.prepare(`SELECT created_at FROM outreach WHERE domain = ?`).bind(d.email.toLowerCase()).first()
+  if (dup) return Response.json({ alreadySent: true, sent_at: dup.created_at })
+  const sent = await sendAsMiquel(env, { to: d.email, subject: d.subject, text: d.text })
+  await env.DB.prepare(
+    `INSERT INTO outreach (company, domain, email, lang, source, subject, queue_file, note) VALUES (?,?,?,?,?,?,?,?)`)
+    .bind(d.name || d.company || d.email, d.email.toLowerCase(), d.email, d.lang || 'en', 'facilitators', d.subject, b.file, sent?.id || null).run()
+  return Response.json({ sent: true })
 }
 
 /**

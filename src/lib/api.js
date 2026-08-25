@@ -769,6 +769,23 @@ export async function sendPlanEmail(id, { to, subject, text }) {
   })
 }
 
+/**
+ * Facilitator outreach drafts, prepared daily by the routine in the private
+ * ops repo. Read here, sent one by one from the panel: the click is the
+ * operator's approval, and the Worker records each send so no address is
+ * ever written to twice.
+ */
+export async function getFacilitatorDrafts() {
+  return authFetch('/admin/outreach/facilitators')
+}
+
+export async function sendFacilitatorDraft(file) {
+  return authFetch('/admin/outreach/facilitators/send', {
+    method: 'POST',
+    body: JSON.stringify({ file }),
+  })
+}
+
 export async function fileAuthorityIssue(target) {
   return authFetch(`/admin/authority/${target.id}/issue`, {
     method: 'POST',

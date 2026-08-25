@@ -602,12 +602,12 @@ describe('outreach draft rules', () => {
 
 import { validateFacilitatorDraft } from '../src/jobs/outreach.js'
 describe('facilitator draft rules', () => {
-  const ok = { name: 'Jane', email: 'jane@janecoaching.dk', subject: 'Hi', text: 'x', approved: true }
-  it('accepts an operator-approved personal address', () => {
+  const ok = { name: 'Jane', email: 'jane@janecoaching.dk', subject: 'Hi', text: 'x' }
+  it('accepts a complete draft (the panel click is the approval)', () => {
     expect(validateFacilitatorDraft(ok)).toBeNull()
   })
-  it('holds anything the operator has not approved', () => {
-    expect(validateFacilitatorDraft({ ...ok, approved: undefined })).toBe('not approved')
-    expect(validateFacilitatorDraft({ ...ok, approved: 'yes' })).toBe('not approved')
+  it('rejects incomplete or malformed drafts', () => {
+    expect(validateFacilitatorDraft({ ...ok, text: '' })).toBe('missing fields')
+    expect(validateFacilitatorDraft({ ...ok, email: 'not-an-email' })).toBe('bad email')
   })
 })

@@ -1649,5 +1649,12 @@
       "subject": "Cèrcol for facilitators",
       "note": "Opens your email client. No forms, no tracking."
     }
+  },
+  "notFound": {
+    "title": "Page not found · Cèrcol",
+    "heading": "This page does not exist",
+    "body": "The address may be mistyped, or the page may have moved. Nothing is lost: everything Cèrcol offers is one click away.",
+    "home": "Go to the home page",
+    "instruments": "See the instruments"
   }
 }

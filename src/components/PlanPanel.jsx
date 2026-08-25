@@ -18,7 +18,7 @@
  */
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { flattenTasks, AUDIENCE, nextTask, taskStatus, mineReason, minePending } from '../data/plan-model'
-import { getAuthorityStatus, setAuthorityStatus, fileAuthorityIssue, sendPlanEmail, getAdminPlan } from '../lib/api'
+import { getAuthorityStatus, setAuthorityStatus, fileAuthorityIssue, sendPlanEmail, getAdminPlan, getFacilitatorDrafts, sendFacilitatorDraft } from '../lib/api'
 import { Badge, Button, SectionLabel } from './ui'
 import {
   CheckIcon, ChevronRightIcon, ExternalLinkIcon,
@@ -255,6 +255,77 @@ function TaskRow({ task, row, status, busy, open, onToggleOpen, onCycle, onFile,
   )
 }
 
+/**
+ * The routine's facilitator drafts (t74): read them here, send each with one
+ * click. The click is the approval; nothing in this list is ever sent by a
+ * machine on its own, because these are personal addresses.
+ */
+function FacilitatorDrafts() {
+  const [drafts, setDrafts] = useState(null)
+  const [busy, setBusy] = useState({})
+  const [openDraft, setOpenDraft] = useState({})
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    getFacilitatorDrafts().then(({ drafts }) => setDrafts(drafts)).catch((e) => setError(e.message))
+  }, [])
+
+  const sendOne = async (d) => {
+    setBusy((b) => ({ ...b, [d.file]: true }))
+    try {
+      await sendFacilitatorDraft(d.file)
+      setDrafts((ds) => ds.map((x) => (x.file === d.file ? { ...x, sent_at: new Date().toISOString() } : x)))
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setBusy((b) => ({ ...b, [d.file]: false }))
+    }
+  }
+
+  if (error) return <p className="text-xs text-[var(--mm-color-red)]">Esborranys de facilitadors: {error}</p>
+  if (!drafts || !drafts.length) return null
+
+  const pending = drafts.filter((d) => !d.sent_at).length
+  return (
+    <div className="rounded border border-gray-200 bg-white p-4">
+      <SectionLabel color="blue" className="mb-1">Facilitadors · esborranys de la rutina</SectionLabel>
+      <p className="mb-3 text-xs leading-relaxed text-gray-500">
+        {pending ? `${pending} per revisar.` : 'Tots enviats o revisats.'} El clic és l'aprovació: cap d'estos correus ix mai sol.
+      </p>
+      <ul className="flex flex-col divide-y divide-gray-100 border-y border-gray-100">
+        {drafts.map((d) => (
+          <li key={d.file} className="py-2">
+            <button
+              type="button"
+              onClick={() => setOpenDraft((o) => ({ ...o, [d.file]: !o[d.file] }))}
+              className="flex w-full items-baseline gap-2 text-left"
+            >
+              <span className="text-sm font-medium text-gray-900">{d.name || d.email}</span>
+              <span className="min-w-0 flex-1 truncate text-xs text-gray-500">{d.email} · {d.lang}</span>
+              {d.sent_at
+                ? <span className="shrink-0 text-xs text-[var(--mm-color-green)]">enviat</span>
+                : <span className="shrink-0 text-xs text-[var(--mm-color-blue)]">per revisar</span>}
+            </button>
+            {openDraft[d.file] && (
+              <div className="mt-2">
+                <p className="mb-1 text-xs font-medium text-gray-700">{d.subject}</p>
+                <pre className="max-h-56 overflow-auto whitespace-pre-wrap rounded bg-gray-50 p-3 text-xs leading-relaxed text-gray-700">{d.text}</pre>
+                {!d.sent_at && (
+                  <div className="mt-2">
+                    <Button size="sm" disabled={busy[d.file]} onClick={() => sendOne(d)}>
+                      {busy[d.file] ? 'enviant…' : 'Envia des de miquel@cercol.team'}
+                    </Button>
+                  </div>
+                )}
+              </div>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
 export default function PlanPanel() {
   const [state, setState] = useState({})
   const [loading, setLoading] = useState(true)
@@ -380,6 +451,8 @@ export default function PlanPanel() {
           </button>
         )}
       </div>
+
+      <FacilitatorDrafts />
 
       <div className="flex flex-wrap items-center gap-2">
         <Button variant={pendingOnly ? 'primary' : 'secondary'} size="sm" onClick={() => setPendingOnly(true)}>Pendents</Button>

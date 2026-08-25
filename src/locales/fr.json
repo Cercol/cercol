@@ -1649,5 +1649,12 @@
       "subject": "Cèrcol pour les facilitateurs",
       "note": "Ouvre votre client de messagerie. Sans formulaire, sans pistage."
     }
+  },
+  "notFound": {
+    "title": "Page introuvable · Cèrcol",
+    "heading": "Cette page n'existe pas",
+    "body": "L'adresse est peut-être mal écrite, ou la page a été déplacée. Rien n'est perdu : tout ce que propose Cèrcol est à un clic.",
+    "home": "Aller à l'accueil",
+    "instruments": "Voir les instruments"
   }
 }

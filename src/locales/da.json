@@ -1649,5 +1649,12 @@
       "subject": "Cèrcol til facilitatorer",
       "note": "Åbner dit e-mailprogram. Ingen formularer, ingen sporing."
     }
+  },
+  "notFound": {
+    "title": "Siden blev ikke fundet · Cèrcol",
+    "heading": "Denne side findes ikke",
+    "body": "Måske er adressen stavet forkert, eller siden er flyttet. Intet er gået tabt: alt, hvad Cèrcol tilbyder, er ét klik væk.",
+    "home": "Gå til forsiden",
+    "instruments": "Se instrumenterne"
   }
 }

@@ -1649,5 +1649,12 @@
       "subject": "Cèrcol para facilitadores",
       "note": "Abre tu cliente de correo. Sin formularios, sin rastreo."
     }
+  },
+  "notFound": {
+    "title": "Página no encontrada · Cèrcol",
+    "heading": "Esta página no existe",
+    "body": "Puede que la dirección esté mal escrita o que la página se haya movido. No se ha perdido nada: todo lo que ofrece Cèrcol está a un clic.",
+    "home": "Ir al inicio",
+    "instruments": "Ver los instrumentos"
   }
 }

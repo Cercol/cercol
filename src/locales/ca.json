@@ -1649,5 +1649,12 @@
       "subject": "Cèrcol per a facilitadors",
       "note": "Obre el teu client de correu. Sense formularis, sense rastreig."
     }
+  },
+  "notFound": {
+    "title": "Pàgina no trobada · Cèrcol",
+    "heading": "Aquesta pàgina no existeix",
+    "body": "Potser l'adreça està mal escrita, o la pàgina s'ha mogut. No s'ha perdut res: tot el que ofereix Cèrcol és a un clic.",
+    "home": "Vés a l'inici",
+    "instruments": "Mira els instruments"
   }
 }

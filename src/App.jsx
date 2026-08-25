@@ -61,6 +61,7 @@ const SharePage = lazy(() => import('./pages/SharePage'))
 
 // ── Admin (never part of the public bundle) ───────────────────────────────────
 const AdminDashboardPage = lazy(() => import('./pages/AdminDashboardPage'))
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'))
 
 
 /** Top-level error boundary — catches unexpected render errors and shows a minimal fallback. */
@@ -260,6 +261,10 @@ function AppContent() {
 
           {/* Admin — guarded by AdminRoute, invisible to non-admins */}
           <Route path="/admin" element={<AdminRoute><AdminDashboardPage /></AdminRoute>} />
+
+          {/* Catch-all: the assets server answers every unknown path with the
+              app (single-page-application mode), so this route is the 404. */}
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>
       <FeedbackButton itemId={itemContext.itemId} itemText={itemContext.itemText} />

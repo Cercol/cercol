@@ -1649,5 +1649,12 @@
       "subject": "Cèrcol für Moderatoren",
       "note": "Öffnet dein E-Mail-Programm. Keine Formulare, kein Tracking."
     }
+  },
+  "notFound": {
+    "title": "Seite nicht gefunden · Cèrcol",
+    "heading": "Diese Seite gibt es nicht",
+    "body": "Vielleicht ist die Adresse falsch geschrieben, oder die Seite wurde verschoben. Nichts ist verloren: Alles, was Cèrcol bietet, ist einen Klick entfernt.",
+    "home": "Zur Startseite",
+    "instruments": "Zu den Instrumenten"
   }
 }
