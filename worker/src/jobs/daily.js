@@ -118,7 +118,11 @@ export async function gatherProduct(db, b) {
   const byInstrument = (await q(`SELECT instrument, language, COUNT(*) AS n FROM results WHERE is_seed = 0 AND created_at >= ? AND created_at < ? GROUP BY instrument, language ORDER BY n DESC`, ...Y))
     .map((r) => [LABELS[r.instrument] || r.instrument, r.language || '—', r.n])
   const byLang = (await q(`SELECT COALESCE(lang,'?') AS lang, COUNT(DISTINCT anon_id) AS n FROM events WHERE name='page_view' AND created_at >= ? AND created_at < ? GROUP BY lang ORDER BY n DESC`, ...Y)).map((r) => [r.lang, r.n])
-  const topPages = (await q(`SELECT path, COUNT(*) AS n FROM events WHERE name='page_view' AND path IS NOT NULL AND created_at >= ? AND created_at < ? GROUP BY path ORDER BY n DESC LIMIT 8`, ...Y)).map((r) => [r.path, r.n])
+  // /admin is the operator's own panel: only an admin ever reaches it, so its
+  // page views are QA traffic, never a page a reader saw. Left in, a QA day
+  // makes it the "most-visited page" and the funnel line below asks somebody
+  // to go check what /admin asks the reader to do next (2026-08-24 brief).
+  const topPages = (await q(`SELECT path, COUNT(*) AS n FROM events WHERE name='page_view' AND path IS NOT NULL AND path NOT LIKE '/admin%' AND created_at >= ? AND created_at < ? GROUP BY path ORDER BY n DESC LIMIT 8`, ...Y)).map((r) => [r.path, r.n])
   const newUsers = await q(`SELECT u.email, p.first_name, p.last_name, p.native_language, u.created_at,
       (SELECT COUNT(*) FROM results r WHERE r.user_id = u.id AND r.is_seed = 0) AS tests
     FROM auth_users u LEFT JOIN profiles p ON p.id = u.id WHERE u.created_at >= ? AND u.created_at < ? ORDER BY u.created_at`, ...Y)
@@ -150,18 +154,28 @@ export async function gatherProduct(db, b) {
   // ponytail: visitors with no anon_id share one bucket. At this volume that
   // is one row, and giving them ids is a privacy decision, not a fix.
   const dropOff = (await q(`SELECT instrument, MAX(CAST(slug AS INTEGER)) AS pct
-      FROM events WHERE name='test_progress' AND created_at >= ? AND created_at < ?
+      FROM events WHERE name='test_progress' AND created_at >= ?1 AND created_at < ?2
+       AND (anon_id IS NULL OR anon_id NOT IN (
+         SELECT anon_id FROM events
+          WHERE path LIKE '/admin%' AND anon_id IS NOT NULL AND created_at >= ?1 AND created_at < ?2))
      GROUP BY anon_id, instrument ORDER BY pct DESC LIMIT 5`, ...Y))
     .map((r) => [LABELS[r.instrument] || r.instrument, r.pct])
   // What each person who started a test actually did that day, summarised.
   // "One lone test_start" and "read two articles, then started" are the same
   // line in the funnel and completely different events; whoever reads the
   // task list needs to be able to tell them apart without the database.
+  // Same admin exclusion as `starts` above: a QA run the funnel already
+  // discounts must not resurface here as evidence, or the issue says "nobody
+  // started a test" and then lists a starter who reached 99% (the 2026-08-24
+  // brief, whose one starter was the operator testing from the panel).
   const trails = (await q(`SELECT anon_id, name, COUNT(*) AS n, MAX(CAST(slug AS INTEGER)) AS pct, MIN(created_at) AS t0
       FROM events
      WHERE created_at >= ?1 AND created_at < ?2 AND anon_id IN (
            SELECT anon_id FROM events WHERE name='test_start' AND created_at >= ?1 AND created_at < ?2 AND anon_id IS NOT NULL
-              AND COALESCE(instrument, '') != 'witness')
+              AND COALESCE(instrument, '') != 'witness'
+              AND anon_id NOT IN (
+                SELECT anon_id FROM events
+                 WHERE path LIKE '/admin%' AND anon_id IS NOT NULL AND created_at >= ?1 AND created_at < ?2))
      GROUP BY anon_id, name ORDER BY anon_id, t0 LIMIT 60`, ...Y))
   const starters = {}
   for (const r of trails) {
