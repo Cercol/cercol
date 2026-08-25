@@ -17,7 +17,11 @@ import { ensureProfile, httpError, jsonBody, now, uuid } from './db.js'
 // ('10'..'90'): it is the only free text column on `events`, one number does
 // not earn a D1 migration, and no other event name uses slug for anything but
 // an article. See src/hooks/useTrackTestStart.js.
-const EVENT_NAMES = new Set(['article_view', 'cta_click', 'test_start', 'test_progress', 'page_view'])
+// witness_cta is the "take your own test" click on the Witness thank-you
+// screen (plan step tg11). Its own name, not a cta_click: cta_click means an
+// instrument card clicked from an article, and the witness-to-taker loop has
+// to be countable without a path filter.
+const EVENT_NAMES = new Set(['article_view', 'cta_click', 'test_start', 'test_progress', 'page_view', 'witness_cta'])
 
 // api/blog.py: _AUTOMATED_UA. Every entry is a self-identifying token; a bare
 // "bot" is deliberately absent because it matches the CUBOT phone brand.

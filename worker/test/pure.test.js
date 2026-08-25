@@ -11,7 +11,7 @@ import { issueAccessToken, verifyAccessToken, bearerFrom } from '../src/jwt.js'
 import { extractLinkTargets, extractDois, isInternal, langsWithContent, doiUrl } from '../src/links.js'
 import { scoreForReport, zscoresFor } from '../src/scoring.js'
 import { validateResult } from '../src/writes.js'
-import { classifyChannel, buildChannels, buildFunnel, buildCumulative, weekBounds, weekLabel } from '../src/jobs/digest.js'
+import { classifyChannel, buildChannels, buildFunnel, buildCumulative, buildDropOff, weekBounds, weekLabel } from '../src/jobs/digest.js'
 import { zeroClickFloor, actions } from '../src/jobs/daily.js'
 import { choosePerOwner } from '../src/jobs/nudge.js'
 import { classifyBroken } from '../src/jobs/links.js'
@@ -113,6 +113,17 @@ describe('digest builders', () => {
     expect(c.languages).toEqual(['en', 'fr', '—'])
     expect(c.rows[0]).toMatchObject({ instrument: 'New Moon', total: 19 })
     expect(c.grand_total).toBe(29)
+  })
+  it('drop-off is a survival curve per instrument, deepest tenth per sitter', () => {
+    // Three First Quarter sitters stop at 18%, 30% and 96%: everyone clears
+    // 10%, one clears 90%. A sitter under 10% counts as a sitter, no tenth.
+    const d = buildDropOff([
+      { instrument: 'firstQuarter', pct: 18 }, { instrument: 'firstQuarter', pct: 30 },
+      { instrument: 'firstQuarter', pct: 96 }, { instrument: 'newMoon', pct: 4 },
+    ])
+    expect(d[0]).toEqual({ instrument: 'First Quarter', sitters: 3, tenths: [3, 2, 2, 1, 1, 1, 1, 1, 1] })
+    expect(d[1]).toEqual({ instrument: 'New Moon', sitters: 1, tenths: [0, 0, 0, 0, 0, 0, 0, 0, 0] })
+    expect(buildDropOff([])).toEqual([])
   })
 })
 

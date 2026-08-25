@@ -237,7 +237,9 @@ export default function WitnessPage() {
 
   if (phase === 'complete') {
     function handleTakeTest() {
-      trackEvent('cta_click', { path: '/witness/complete' })
+      // Its own event name (see worker/src/writes.js): the witness-to-taker
+      // loop is a funnel of its own, not an article CTA.
+      trackEvent('witness_cta', { path: '/witness/complete' })
       navigate('/new-moon')
     }
     return (
