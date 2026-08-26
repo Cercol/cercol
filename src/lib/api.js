@@ -407,7 +407,7 @@ export async function logResult({
   // First-touch channel attribution + opaque visitor id, so a completed test
   // can be traced to its source. First-party, never linked to identity.
   const ft = getFirstTouch()
-  return fetcher('/results', {
+  const res = await fetcher('/results', {
     method: 'POST',
     body: JSON.stringify({
       instrument, language, presence, bond, discipline, depth, vision, facets,
@@ -419,6 +419,50 @@ export async function logResult({
       utm_campaign: ft.utm_campaign,
       referrer: ft.referrer,
     }),
+  })
+  // An ownerless row now exists; remember that so the next sign-in in this
+  // browser offers it to claimMyResults. See markUnclaimedResult.
+  if (!useAuth && res?.id) markUnclaimedResult()
+  return res
+}
+
+// ── Anonymous-to-account bridge ───────────────────────────────────────────────
+//
+// A result logged without a session has user_id NULL and only the browser's
+// anon_id on it. The flag below marks this browser as holding such results;
+// AuthContext checks it after every session start and calls claimMyResults,
+// which adopts them in one UPDATE keyed on the anon_id. The flag, not an
+// unconditional call, is what keeps signed-in visitors from paying one extra
+// API request per page load forever.
+
+const UNCLAIMED_KEY = 'cercol_unclaimed'
+
+/** Remember that this browser logged a result no account owns yet. */
+export function markUnclaimedResult() {
+  try { localStorage.setItem(UNCLAIMED_KEY, '1') } catch { /* storage blocked */ }
+}
+
+/** Whether a claim is worth attempting on the next session start. */
+export function hasUnclaimedResults() {
+  try { return localStorage.getItem(UNCLAIMED_KEY) === '1' } catch { return false }
+}
+
+/** Forget the marker once a claim has gone through. */
+export function clearUnclaimedResults() {
+  try { localStorage.removeItem(UNCLAIMED_KEY) } catch { /* storage blocked */ }
+}
+
+/**
+ * claimMyResults — link this browser's anonymous results to the signed-in
+ * account. Resolves to { claimed: n }; without a stored anon_id there is
+ * nothing to present as proof, so it resolves to zero without a request.
+ */
+export async function claimMyResults() {
+  const anonId = getAnonId()
+  if (!anonId) return { claimed: 0 }
+  return authFetch('/me/results/claim', {
+    method: 'POST',
+    body: JSON.stringify({ anon_id: anonId }),
   })
 }
 

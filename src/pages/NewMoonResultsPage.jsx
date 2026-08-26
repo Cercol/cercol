@@ -20,6 +20,7 @@ import { Card, Button, SectionLabel } from '../components/ui'
 import { NewMoonIcon } from '../components/MoonIcons'
 import { DimensionRow, ReportPageHeader, RadarDataCard, MethodologyNote } from '../components/report'
 import InstrumentNudge from '../components/InstrumentNudge'
+import SaveResultCard from '../components/SaveResultCard'
 
 
 export default function NewMoonResultsPage() {
@@ -118,6 +119,10 @@ export default function NewMoonResultsPage() {
             </div>
           </RadarDataCard>
         </section>
+
+        {/* ── Save-to-account bridge: only for a result just taken, which is
+             the one that exists in the database with no owner ── */}
+        {fromTest && <SaveResultCard instrument="newMoon" />}
 
         {/* ── Next instrument nudge ── */}
         <InstrumentNudge target="firstQuarter" />

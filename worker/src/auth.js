@@ -297,13 +297,53 @@ export async function myResults(env, request) {
   return Response.json(results.map((r) => ({ ...r, facets: r.facets == null ? null : JSON.parse(r.facets) })))
 }
 
+/**
+ * POST /me/results/claim — adopt this browser's anonymous results.
+ *
+ * The inverse of anonymiseResult, and the bridge the funnel was missing:
+ * most results are logged with user_id NULL because the taker had no
+ * account at the time. The browser's anon_id (localStorage, see
+ * getAnonId in src/lib/api.js) is on those rows, so presenting it after
+ * sign-in is proof of possession of the browser that took the test.
+ * Idempotent: rows already owned by anyone are never touched, so a
+ * result someone explicitly anonymised is not silently re-linked unless
+ * it was theirs to begin with and still unowned.
+ */
+export async function claimResults(env, request) {
+  const user = await requireUser(env, request)
+  if (user instanceof Response) return user
+  const body = (await jsonBody(request)) || {}
+  const anonId = validAnonId(body.anon_id)
+  if (!anonId) return httpError(422, 'Invalid anon_id')
+  await ensureProfile(env.DB, user.sub, user.email)
+  const r = await env.DB.prepare(
+    `UPDATE results SET user_id = ? WHERE anon_id = ? AND user_id IS NULL AND is_seed = 0`
+  ).bind(user.sub, anonId).run()
+  return Response.json({ claimed: r.meta?.changes ?? 0 })
+}
+
+/**
+ * The anon_id a claim accepts: a non-empty opaque string of sane length.
+ * getAnonId issues crypto.randomUUID(), but older visitors may carry other
+ * shapes, so the check is length, not format.
+ */
+export function validAnonId(v) {
+  if (typeof v !== 'string') return null
+  const s = v.trim()
+  return s.length > 0 && s.length <= 64 ? s : null
+}
+
 /** DELETE /me/results/<id> — anonymise, keep the scores for the norms. */
 export async function anonymiseResult(env, request, resultId) {
   const user = await requireUser(env, request)
   if (user instanceof Response) return user
   const row = await env.DB.prepare(`SELECT id FROM results WHERE id = ? AND user_id = ?`).bind(resultId, user.sub).first()
   if (!row) return httpError(404, 'Result not found')
-  await env.DB.prepare(`UPDATE results SET user_id = NULL WHERE id = ?`).bind(resultId).run()
+  // anon_id goes too: claimResults adopts unowned rows by anon_id, and a
+  // result someone explicitly unlinked must stay unlinked through any later
+  // claim from the same browser. "Permanently unlinked" is what the confirm
+  // dialog promises.
+  await env.DB.prepare(`UPDATE results SET user_id = NULL, anon_id = NULL WHERE id = ?`).bind(resultId).run()
   return Response.json({ ok: true })
 }
 

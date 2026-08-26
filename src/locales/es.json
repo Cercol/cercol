@@ -1480,6 +1480,12 @@
       "cta": "Comenzar Luna Llena Cèrcol"
     }
   },
+  "saveResult": {
+    "label": "Tuyo para siempre",
+    "heading": "Guarda este resultado en una cuenta gratuita",
+    "body": "Ahora mismo este resultado solo vive en este navegador. Una cuenta gratuita lo conserva, te permite invitar a testigos para ver cómo te describen los demás y abre las comparaciones de grupo.",
+    "cta": "Guardar mi resultado"
+  },
   "blog.label": "Blog",
   "blog.heading": "Ciencia de la personalidad y evaluación de equipos",
   "blog.subtitle": "Artículos basados en investigación sobre personalidad, equipos y medición abierta. Escritos para ser citables, honestos y útiles.",

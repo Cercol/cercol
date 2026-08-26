@@ -1480,6 +1480,12 @@
       "cta": "Comença la Lluna Plena Cèrcol"
     }
   },
+  "saveResult": {
+    "label": "Teu per sempre",
+    "heading": "Guarda aquest resultat en un compte gratuït",
+    "body": "Ara mateix aquest resultat només viu en aquest navegador. Un compte gratuït el conserva, et permet convidar Testimonis per veure com et descriuen els altres i obre les comparacions de grup.",
+    "cta": "Guarda el meu resultat"
+  },
   "blog.label": "Blog",
   "blog.heading": "Ciència de la personalitat i avaluació d'equips",
   "blog.subtitle": "Articles basats en recerca sobre personalitat, equips i mesura oberta. Escrits per ser citables, honestos i útils.",

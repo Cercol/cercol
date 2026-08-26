@@ -1480,6 +1480,12 @@
       "cta": "Vollmond Cèrcol beginnen"
     }
   },
+  "saveResult": {
+    "label": "Zum Behalten",
+    "heading": "Speichere dieses Ergebnis in einem kostenlosen Konto",
+    "body": "Noch existiert dieses Ergebnis nur in diesem Browser. Ein kostenloses Konto bewahrt es auf, lässt dich Zeugen einladen, um zu sehen, wie andere dich beschreiben, und ermöglicht Gruppenvergleiche.",
+    "cta": "Mein Ergebnis speichern"
+  },
   "blog.label": "Blog",
   "blog.heading": "Persönlichkeitswissenschaft und Teambewertung",
   "blog.subtitle": "Forschungsbasierte Artikel über Persönlichkeit, Teams und offene Messung. Geschrieben, um zitierbar, ehrlich und nützlich zu sein.",

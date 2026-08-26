@@ -1480,6 +1480,12 @@
       "cta": "Begin Full Moon Cèrcol"
     }
   },
+  "saveResult": {
+    "label": "Yours to keep",
+    "heading": "Save this result to a free account",
+    "body": "Right now this result lives only in this browser. A free account keeps it, lets you invite Witnesses to see how others describe you, and opens group comparisons.",
+    "cta": "Save my result"
+  },
   "blog.label": "Blog",
   "blog.heading": "Personality science and team assessment",
   "blog.subtitle": "Science-grounded articles on personality, teams, and open measurement. Written to be citable, honest, and useful.",

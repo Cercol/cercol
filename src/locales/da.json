@@ -1480,6 +1480,12 @@
       "cta": "Begynd Fuldmåne Cèrcol"
     }
   },
+  "saveResult": {
+    "label": "Dit resultat",
+    "heading": "Gem dette resultat på en gratis konto",
+    "body": "Lige nu er resultatet kun gemt i denne browser. En gratis konto gemmer det permanent, lader dig invitere Vidner, så du kan se, hvordan andre beskriver dig, og åbner for gruppesammenligninger.",
+    "cta": "Gem mit resultat"
+  },
   "blog.label": "Blog",
   "blog.heading": "Personlighedsvidenskab og teamvurdering",
   "blog.subtitle": "Forskningsbaserede artikler om personlighed, teams og åben måling. Skrevet til at være citerbare, ærlige og nyttige.",
