@@ -162,7 +162,7 @@ describe('jobs parsing', () => {
 // Font stacks from mm-design carry double quotes; inside style="..." they
 // would end the attribute and drop every rule after them (that shipped once).
 import { DISPLAY, SANS, stat, shell } from '../src/email-ui.js'
-import { warnings, actions, CAPS, dayBounds, CTA_CLAIM_MIN_READS } from '../src/jobs/daily.js'
+import { warnings, actions, CAPS, dayBounds, CTA_CLAIM_MIN_READS, ZERO_START_MIN_VISITORS } from '../src/jobs/daily.js'
 describe('email kit', () => {
   it('font stacks contain no double quotes', () => {
     expect(DISPLAY).not.toMatch(/"/); expect(SANS).not.toMatch(/"/)
@@ -218,8 +218,14 @@ describe('daily brief', () => {
     // Nobody starting is a different failure from starting and dropping out.
     // No progress events at all: say so rather than implying a known point.
     expect(actions({ ...data, product: { ...data.product, dropOff: [] }, warns: [], search: null })[0]).toContain('nobody reached the first tenth')
-    const cold = { ...data, product: { ...data.product, starts: [0, 0] }, warns: [], search: null }
+    // A start-less day only becomes a task once there were enough visitors
+    // for zero starts to be surprising at the site's own visitor-to-start
+    // rate: see ZERO_START_MIN_VISITORS. Below the floor the funnel table
+    // already carries the numbers.
+    const cold = { ...data, product: { ...data.product, starts: [0, 0], visitors: [ZERO_START_MIN_VISITORS, 3] }, warns: [], search: null }
     expect(actions(cold)[0]).toContain('nobody started a test')
+    const chilly = { ...data, product: { ...data.product, starts: [0, 0], visitors: [ZERO_START_MIN_VISITORS - 1, 3] }, warns: [], search: null }
+    expect(actions(chilly).some((l) => l.includes('nobody started a test'))).toBe(false)
     // A quiet, healthy day produces an empty list, and the brief says so.
     expect(actions({ warns: [], product: { visitors: [3, 1], starts: [0, 0], tests: [0, 0], topPages: [], takingOff: [] }, search: null })).toEqual([])
     // A page nobody clicked but nobody really saw either is not a task.

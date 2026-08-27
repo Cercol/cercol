@@ -82,6 +82,16 @@ export function zeroClickFloor(pos) {
 // with no click stops being the likeliest outcome; below it the line reports
 // the reads and keeps its opinion to itself.
 export const CTA_CLAIM_MIN_READS = 150
+// Visitors one day needs before "nobody started a test" says anything about
+// the site. Cèrcol converts a visitor to a test starter about 1.8% of the
+// time (27 starters in 1,487 distinct visitors, all time to 2026-08-27), so
+// a 22-visitor day predicts 0.4 starts: a start-less day is the likeliest
+// outcome, and the line fired on it anyway (the 2026-08-26 brief pointed at
+// an article the wave had reviewed the day before). At that rate 165
+// visitors is where a day with no start stops being explainable by chance
+// (p < 0.05); below it the funnel table already carries the numbers without
+// raising a task.
+export const ZERO_START_MIN_VISITORS = 165
 
 export function dayBounds(now = new Date()) {
   const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()))
@@ -400,7 +410,7 @@ export function actions(d, frontendUrl = 'https://cercol.team') {
   if (pr.starts[0] > 0 && pr.tests[0] === 0) {
     const where = (pr.dropOff || []).map(([inst, pct]) => `${inst} at ${pct}%`).join(', ')
     out.push(`${fmt(pr.starts[0])} started a test and none finished${where ? `, getting as far as ${where}` : ' (nobody reached the first tenth)'}. Take that instrument from there and watch the console.`)
-  } else if (pr.starts[0] === 0 && pr.visitors[0] >= 10) {
+  } else if (pr.starts[0] === 0 && pr.visitors[0] >= ZERO_START_MIN_VISITORS) {
     const [path] = pr.topPages[0] || []
     out.push(`${fmt(pr.visitors[0])} visitors, nobody started a test. Most-visited page: ${path ? link(frontendUrl + path, path) : 'none recorded'} &mdash; check what it asks the reader to do next.`)
   }
