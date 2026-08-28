@@ -1480,6 +1480,12 @@
       "cta": "Commencer Pleine Lune Cèrcol"
     }
   },
+  "saveResult": {
+    "label": "À enregistrer",
+    "heading": "Enregistrez ce résultat dans un compte gratuit",
+    "body": "Pour l'instant, ce résultat ne vit que dans ce navigateur. Un compte gratuit le conserve, vous permet d'inviter des Témoins pour voir comment ils vous voient et ouvre les comparaisons de groupe.",
+    "cta": "Enregistrer mon résultat"
+  },
   "blog.label": "Blog",
   "blog.heading": "Science de la personnalité et évaluation d'équipes",
   "blog.subtitle": "Articles fondés sur la recherche sur la personnalité, les équipes et la mesure ouverte. Écrits pour être citables, honnêtes et utiles.",

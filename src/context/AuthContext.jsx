@@ -25,7 +25,10 @@ import {
   getAccessToken, setAccessToken, clearAccessToken,
   getRefreshToken, setRefreshToken, clearRefreshToken,
 } from '../lib/tokens'
-import { getMyProfile, updateMyProfile } from '../lib/api'
+import {
+  getMyProfile, updateMyProfile,
+  claimMyResults, hasUnclaimedResults, clearUnclaimedResults,
+} from '../lib/api'
 
 const API_URL = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '')
 
@@ -75,6 +78,17 @@ export function AuthProvider({ children }) {
     }
   }, [])
 
+  // Adopt results this browser logged before the account existed (or while
+  // the session was not yet restored). Fire-and-forget on every session
+  // start; the localStorage marker keeps it to browsers that actually hold
+  // an ownerless result, and survives a failed attempt for the next one.
+  const _claimAnonResults = useCallback(() => {
+    if (!hasUnclaimedResults()) return
+    claimMyResults()
+      .then(() => clearUnclaimedResults())
+      .catch(() => { /* keep the marker; retried on the next session start */ })
+  }, [])
+
   // ── Bootstrap: restore session from stored refresh token ───────────────────
 
   useEffect(() => {
@@ -93,6 +107,7 @@ export function AuthProvider({ children }) {
         if (!res.ok) throw new Error('Refresh failed')
         const data = await res.json()
         _applyTokens(data.access_token, data.refresh_token)
+        _claimAnonResults()
         await fetchProfile()
       } catch {
         _clearSession()
@@ -113,6 +128,7 @@ export function AuthProvider({ children }) {
    */
   async function applySession(accessToken, refreshToken) {
     _applyTokens(accessToken, refreshToken)
+    _claimAnonResults()
     await fetchProfile()
   }
 

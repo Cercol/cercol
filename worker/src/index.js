@@ -19,7 +19,7 @@
 import { recordEvent, incrementView, logResult, translationFeedback } from './writes.js'
 import {
   magicLinkRequest, magicLinkVerify, refresh, signout, googleStart, googleCallback,
-  me, getProfile, patchProfile, myResults, anonymiseResult, betaStatus, passwordGone,
+  me, getProfile, patchProfile, myResults, claimResults, anonymiseResult, betaStatus, passwordGone,
 } from './auth.js'
 import { createSessions, getSession, completeSession, roleCheck, mySessions, myContributions, resetSessions } from './witness.js'
 import {
@@ -72,6 +72,7 @@ const ROUTES = [
   { method: 'GET', pattern: /^\/me\/profile$/, handler: (env, m, req) => getProfile(env, req), gated: true },
   { method: 'PATCH', pattern: /^\/me\/profile$/, handler: (env, m, req) => patchProfile(env, req), gated: true },
   { method: 'GET', pattern: /^\/me\/results$/, handler: (env, m, req) => myResults(env, req), gated: true },
+  { method: 'POST', pattern: /^\/me\/results\/claim$/, handler: (env, m, req) => claimResults(env, req), gated: true },
   { method: 'DELETE', pattern: /^\/me\/results\/([^/]+)$/, handler: (env, m, req) => anonymiseResult(env, req, m[1]), gated: true },
   { method: 'GET', pattern: /^\/beta$/, handler: (env) => betaStatus(env), gated: true },
   // Witness (Testimoni).

@@ -27,6 +27,7 @@ import RoleProbabilityBars from '../components/RoleProbabilityBars'
 import { Card, Button, Badge, SectionLabel } from '../components/ui'
 import { DimensionRow, FacetAccordion, ReportPageHeader, RoleCard, RadarDataCard, MethodologyNote } from '../components/report'
 import InstrumentNudge from '../components/InstrumentNudge'
+import SaveResultCard from '../components/SaveResultCard'
 import { answeredIn } from '../data/instrument-variants'
 
 
@@ -162,6 +163,10 @@ export default function FirstQuarterResultsPage() {
             />
           </section>
         )}
+
+        {/* ── Save-to-account bridge: only for a result just taken, which is
+             the one that exists in the database with no owner ── */}
+        {fromTest && <SaveResultCard instrument="firstQuarter" />}
 
         {/* ── Section 4: Full Moon nudge ── */}
         <InstrumentNudge target="fullMoon" />

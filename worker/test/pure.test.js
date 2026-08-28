@@ -278,6 +278,21 @@ describe('automated clients', () => {
   })
 })
 
+import { validAnonId } from '../src/auth.js'
+describe('claiming anonymous results', () => {
+  it('accepts an opaque id and rejects what could not be one', () => {
+    // The shape getAnonId actually issues.
+    expect(validAnonId('a3f0c1d2-4b5e-6789-abcd-ef0123456789')).toBe('a3f0c1d2-4b5e-6789-abcd-ef0123456789')
+    expect(validAnonId('  padded  ')).toBe('padded')
+    expect(validAnonId('')).toBe(null)
+    expect(validAnonId('   ')).toBe(null)
+    expect(validAnonId(null)).toBe(null)
+    expect(validAnonId(42)).toBe(null)
+    // Longer than any id this site ever wrote is not an id, it is a payload.
+    expect(validAnonId('x'.repeat(65))).toBe(null)
+  })
+})
+
 import { plainAction, fileTasks } from '../src/jobs/daily.js'
 describe('daily tasks as a GitHub issue', () => {
   it('turns the email markup back into something readable in an issue', () => {
