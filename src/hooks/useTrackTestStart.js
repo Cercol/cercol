@@ -7,13 +7,19 @@ import { trackEvent } from '../lib/api'
 const bareLang = (i18n) => (i18n.language || 'en').slice(0, 2)
 
 /**
- * useTrackTestStart — fire one first-party `test_start` funnel event when an
- * instrument page mounts.
+ * useTrackTestStart — fire one first-party `test_start` funnel event the
+ * first time an instrument page is ready to be answered.
  *
  * Shared across the result-producing instruments (New Moon, First Quarter,
  * Full Moon) so they all emit identically and cannot drift. trackEvent is
  * prerender-guarded and fire-and-forget, so the build pass is excluded and the
  * call never throws.
+ *
+ * `ready` exists for the gated instrument: Full Moon redirects an anonymous
+ * visitor to /auth and shows an already-finished taker a completed screen,
+ * and neither of those mounts is a start — the visitor never sees an item.
+ * Counting them made the funnel report abandoned sittings that never began.
+ * The ungated pages omit the argument and keep firing on mount.
  *
  * Intentionally NOT used by the Last Quarter team report (/groups/:id, an
  * aggregate view): it produces no `results` row, so a `test_start` there
@@ -24,14 +30,18 @@ const bareLang = (i18n) => (i18n.language || 'en').slice(0, 2)
  * instrument on their side).
  *
  * @param {'newMoon'|'firstQuarter'|'fullMoon'} instrument
+ * @param {boolean} [ready] gate verdict; the event waits until it is true
  */
-export function useTrackTestStart(instrument) {
+export function useTrackTestStart(instrument, ready = true) {
   const { i18n } = useTranslation()
+  const fired = useRef(false)
   useEffect(() => {
+    if (!ready || fired.current) return
+    fired.current = true
     trackEvent('test_start', { instrument, lang: bareLang(i18n) })
-    // Fire once on mount only.
+    // Fire once, on the first render where the gate lets the taker through.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [ready])
 }
 
 /**

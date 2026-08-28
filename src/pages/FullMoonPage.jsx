@@ -49,7 +49,6 @@ const SCALE_POINTS = 5
 
 export default function FullMoonPage() {
   const navigate = useNavigate()
-  useTrackTestStart('fullMoon')
   const { t } = useTranslation()
 
   // Unlike New Moon and First Quarter this route is not pre-rendered and not
@@ -72,6 +71,10 @@ export default function FullMoonPage() {
   // Nothing is paid (docs/policies/pricing.md): the gate only asks for a
   // signed-in user, so results and Witness invitations belong to someone.
   const [gateState,       setGateState]       = useState('checking')
+  // Only a mount that gets past the gate is a start: an anonymous visitor is
+  // redirected to /auth and an already-finished taker sees the completed
+  // screen, and neither ever reaches an item.
+  useTrackTestStart('fullMoon', gateState === 'ready')
   // The language variety the items are read in. Chosen before starting,
   // because it changes every item and cannot be switched halfway.
   const [variant, setVariant] = useState(null)
