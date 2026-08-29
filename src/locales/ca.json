@@ -432,6 +432,11 @@
     }
   },
   "fm": {
+    "gate": {
+      "heading": "La Lluna Plena necessita un compte gratuït",
+      "body": "La Lluna Plena és el Cèrcol a fons: el seu resultat recull les teves trenta facetes i obre les invitacions a Testimonis i les comparacions de grup, així que ha de ser d'algú. Amb un compte gratuït n'hi ha prou. A Cèrcol no es paga res, mai. Inicia la sessió i tornaràs directament a aquesta pàgina.",
+      "cta": "Inicia la sessió o crea un compte gratuït"
+    },
     "subtitle": "Cèrcol de Lluna Plena",
     "blockProgress": "{{current}} de {{total}} en aquest bloc",
     "blockLabel": "Bloc {{current}} de {{total}}",

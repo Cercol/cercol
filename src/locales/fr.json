@@ -432,6 +432,11 @@
     }
   },
   "fm": {
+    "gate": {
+      "heading": "La Pleine Lune demande un compte gratuit",
+      "body": "La Pleine Lune est le Cèrcol approfondi : son résultat contient vos trente facettes et donne accès aux invitations de Témoins et aux comparaisons de groupe, il doit donc appartenir à quelqu'un. Un compte gratuit suffit. Rien n'est payant sur Cèrcol, jamais. Connectez-vous et vous revenez directement sur cette page.",
+      "cta": "Se connecter ou créer un compte gratuit"
+    },
     "subtitle": "Cèrcol de Pleine Lune",
     "blockProgress": "{{current}} sur {{total}} dans ce bloc",
     "blockLabel": "Bloc {{current}} sur {{total}}",

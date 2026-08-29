@@ -432,6 +432,11 @@
     }
   },
   "fm": {
+    "gate": {
+      "heading": "Fuldmånen kræver en gratis konto",
+      "body": "Fuldmånen er det grundige Cèrcol: Resultatet rummer dine tredive facetter og åbner for Vidne-invitationer og gruppesammenligninger, så det skal tilhøre nogen. En gratis konto er nok. Intet på Cèrcol koster nogensinde noget. Log ind, og du kommer direkte tilbage hertil.",
+      "cta": "Log ind eller opret en gratis konto"
+    },
     "subtitle": "Fuldmåne Cèrcol",
     "blockProgress": "{{current}} af {{total}} i denne blok",
     "blockLabel": "Blok {{current}} af {{total}}",

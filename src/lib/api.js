@@ -452,6 +452,33 @@ export function clearUnclaimedResults() {
   try { localStorage.removeItem(UNCLAIMED_KEY) } catch { /* storage blocked */ }
 }
 
+// ── Post-sign-in return path ──────────────────────────────────────────────────
+//
+// The Full Moon gate sends an anonymous visitor to /auth; without a marker
+// every sign-in flow lands on '/' and the visitor has to find the instrument
+// again. localStorage rather than router state because the magic link
+// completes in a fresh tab. Stale markers expire so a sign-in days later
+// does not teleport someone to a page they no longer expect.
+
+const NEXT_KEY = 'cercol_next'
+const NEXT_TTL_MS = 30 * 60 * 1000
+
+/** Remember where sign-in should return to. Internal paths only. */
+export function rememberNextPath(path) {
+  if (typeof path !== 'string' || !path.startsWith('/')) return
+  try { localStorage.setItem(NEXT_KEY, JSON.stringify({ path, at: Date.now() })) } catch { /* storage blocked */ }
+}
+
+/** Take (and clear) the stored return path; null when absent, invalid or stale. */
+export function takeNextPath() {
+  try {
+    const raw = localStorage.getItem(NEXT_KEY)
+    localStorage.removeItem(NEXT_KEY)
+    const { path, at } = JSON.parse(raw)
+    return typeof path === 'string' && path.startsWith('/') && Date.now() - at < NEXT_TTL_MS ? path : null
+  } catch { return null }
+}
+
 /**
  * claimMyResults — link this browser's anonymous results to the signed-in
  * account. Resolves to { claimed: n }; without a stored anon_id there is
