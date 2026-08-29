@@ -432,6 +432,11 @@
     }
   },
   "fm": {
+    "gate": {
+      "heading": "La Luna Llena necesita una cuenta gratuita",
+      "body": "La Luna Llena es el Cèrcol a fondo: su resultado recoge tus treinta facetas y da acceso a las invitaciones a testigos y a las comparaciones de grupo, así que tiene que pertenecer a alguien. Con una cuenta gratuita basta. En Cèrcol no se paga nada, nunca. Inicia sesión y volverás directamente a esta página.",
+      "cta": "Inicia sesión o crea una cuenta gratuita"
+    },
     "subtitle": "Cèrcol de Luna Llena",
     "blockProgress": "{{current}} de {{total}} en este bloque",
     "blockLabel": "Bloque {{current}} de {{total}}",

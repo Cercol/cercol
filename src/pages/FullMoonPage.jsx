@@ -25,7 +25,7 @@ import { usePageMeta } from '../hooks/usePageMeta'
 import { useInstrumentKeyboard } from '../hooks/useInstrumentKeyboard'
 import { useFeedbackContext } from '../context/FeedbackContext'
 import { useAuth } from '../context/AuthContext'
-import { getMyResults, anonymiseResult } from '../lib/api'
+import { getMyResults, anonymiseResult, rememberNextPath } from '../lib/api'
 import QuestionCard from '../components/QuestionCard'
 import VariantPicker from '../components/VariantPicker'
 import ProgressBar from '../components/ProgressBar'
@@ -88,7 +88,10 @@ export default function FullMoonPage() {
   useEffect(() => {
     if (authLoading) return
     if (!user) {
-      navigate('/auth')
+      // Not a silent bounce to /auth: the 'account' screen says why the Full
+      // Moon is the one instrument that asks for a (free) account, and the
+      // CTA remembers this path so sign-in returns straight here.
+      setGateState('account')
       return
     }
 
@@ -227,9 +230,35 @@ export default function FullMoonPage() {
     onContinueBlockRef: handleContinueToNextBlockRef,
   })
 
+  function handleGateSignIn() {
+    rememberNextPath('/full-moon')
+    navigate('/auth')
+  }
+
   // ── Gate screens ───────────────────────────────────────────────
   if (gateState === 'checking') {
     return <main className="min-h-[calc(100vh-4rem)]" />
+  }
+
+  if (gateState === 'account') {
+    return (
+      <main className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)]">
+        <div className="w-full max-w-md">
+          <Card className="shadow-sm p-8 text-center">
+            <FullMoonIcon size={36} className="mb-4 mx-auto" style={{ color: colors.blue }} />
+            <h1 className="text-xl font-bold text-gray-900 mb-3">
+              {t('fm.gate.heading')}
+            </h1>
+            <p className="text-sm text-gray-500 leading-relaxed mb-6">
+              {t('fm.gate.body')}
+            </p>
+            <Button variant="primary" className="w-full" onClick={handleGateSignIn}>
+              {t('fm.gate.cta')}
+            </Button>
+          </Card>
+        </div>
+      </main>
+    )
   }
 
   if (gateState === 'completed') {

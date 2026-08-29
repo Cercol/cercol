@@ -432,6 +432,11 @@
     }
   },
   "fm": {
+    "gate": {
+      "heading": "Der Vollmond braucht ein kostenloses Konto",
+      "body": "Der Vollmond ist das ausführliche Cèrcol: Sein Ergebnis enthält deine dreißig Facetten und schaltet Zeugen-Einladungen und Gruppenvergleiche frei, also muss es jemandem gehören. Ein kostenloses Konto genügt. Auf Cèrcol ist nichts kostenpflichtig, nie. Melde dich an und du kommst direkt hierher zurück.",
+      "cta": "Anmelden oder kostenloses Konto erstellen"
+    },
     "subtitle": "Cèrcol des Vollmondes",
     "blockProgress": "{{current}} von {{total}} in diesem Block",
     "blockLabel": "Block {{current}} von {{total}}",

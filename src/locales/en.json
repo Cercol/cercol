@@ -432,6 +432,11 @@
     }
   },
   "fm": {
+    "gate": {
+      "heading": "The Full Moon needs a free account",
+      "body": "The Full Moon is the in-depth Cèrcol: its result carries your thirty facets and opens Witness invitations and group comparisons, so it has to belong to someone. A free account is all it takes. Nothing on Cèrcol is paid, ever. Sign in and you come straight back to this page.",
+      "cta": "Sign in or create a free account"
+    },
     "subtitle": "Full Moon Cèrcol",
     "blockProgress": "{{current}} of {{total}} in this block",
     "blockLabel": "Block {{current}} of {{total}}",

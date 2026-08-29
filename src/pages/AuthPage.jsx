@@ -12,6 +12,7 @@ import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { takeNextPath } from '../lib/api'
 import { Card, Button } from '../components/ui'
 
 const INPUT_CLASS =
@@ -27,10 +28,11 @@ export default function AuthPage() {
   const [status,   setStatus]   = useState('idle')        // 'idle' | 'busy' | 'sent' | 'confirmed'
   const [errorMsg, setErrorMsg] = useState('')
 
-  // Redirect home once signed in. 'sent' holds on the "check your email" card
-  // because the magic link has not been clicked yet.
+  // Redirect once signed in: back to where the sign-in started (the Full
+  // Moon gate leaves a marker) or home. 'sent' holds on the "check your
+  // email" card because the magic link has not been clicked yet.
   useEffect(() => {
-    if (user && status !== 'sent') navigate('/', { replace: true })
+    if (user && status !== 'sent') navigate(takeNextPath() || '/', { replace: true })
   }, [user, status, navigate])
 
   function setError(msg) { setStatus('idle'); setErrorMsg(msg) }
