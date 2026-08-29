@@ -419,12 +419,17 @@ describe('evidence in the filed issue', () => {
       a1b2c3d4: [{ name: 'page_view', n: 4, at: '09:12' }, { name: 'article_view', n: 2, at: '09:14' }, { name: 'test_start', n: 1, at: '09:20' }, { name: 'test_progress', n: 3, pct: 30, at: '09:21' }],
       ffffffff: [{ name: 'test_start', n: 1, at: '03:02' }],
     }
-    const res = await fileTasks({ GITHUB_TOKEN: 'x' }, '2026-08-20', ['something real'], { starters })
+    // Completion is a results row, not an event: without the finished map a
+    // finisher's line ends at "reached 90%" and reads as a drop-off (the
+    // 2026-08-28 brief needed a production D1 query to tell).
+    const finished = { a1b2c3d4: ['First Quarter at 09:31'] }
+    const res = await fileTasks({ GITHUB_TOKEN: 'x' }, '2026-08-20', ['something real'], { starters, finished })
     globalThis.fetch = realFetch
     expect(res).toEqual({ number: 7 })
     expect(sent.body).toContain('`a1b2c3d4`: page_view x4')
-    expect(sent.body).toContain('reached 30%')
+    expect(sent.body).toContain('reached 30%, **finished** First Quarter at 09:31')
     expect(sent.body).toContain('`ffffffff`: test_start x1')
+    expect(sent.body).not.toContain('`ffffffff`: test_start x1 (first at 03:02), **finished**')
     // The full id never leaves the Worker: the issue is public.
     expect(sent.body).not.toContain('a1b2c3d4-')
   })
