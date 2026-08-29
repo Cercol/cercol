@@ -194,6 +194,15 @@ export async function gatherProduct(db, b) {
     const id = String(r.anon_id).slice(0, 8)
     ;(starters[id] ||= []).push({ name: r.name, n: r.n, pct: r.name === 'test_progress' ? r.pct : null, at: String(r.t0).slice(11, 16) })
   }
+  // Completion has no event of its own: it is the results row. Without this
+  // join the summary above reads "reached 90%" for someone who finished (the
+  // 2026-08-28 brief; telling them apart took a production D1 query, which
+  // is exactly what this section exists to spare the reader).
+  const finished = {}
+  for (const r of await q(`SELECT anon_id, instrument, created_at FROM results
+      WHERE is_seed = 0 AND anon_id IS NOT NULL AND created_at >= ? AND created_at < ?`, ...Y)) {
+    ;(finished[String(r.anon_id).slice(0, 8)] ||= []).push(`${LABELS[r.instrument] || r.instrument} at ${String(r.created_at).slice(11, 16)}`)
+  }
   const totals = { users: await count(db, `SELECT COUNT(*) AS n FROM auth_users`), tests: await count(db, `SELECT COUNT(*) AS n FROM results WHERE is_seed = 0`) }
   // Cold-outreach ledger (t76). Guarded: the table only exists once 006 runs.
   let outreach = null
@@ -203,7 +212,7 @@ export async function gatherProduct(db, b) {
         SUM(status='replied') AS replied, SUM(status='bounced') AS bounced,
         SUM(status='complained') AS complained FROM outreach`).bind(...Y).first()
   } catch { /* not yet migrated */ }
-  return { signups, tests, pageViews, visitors, starts, byInstrument, byLang, topPages, newUsers, witness, top, takingOff, dropOff, starters, totals, outreach }
+  return { signups, tests, pageViews, visitors, starts, byInstrument, byLang, topPages, newUsers, witness, top, takingOff, dropOff, starters, finished, totals, outreach }
 }
 
 /** Latest day Search Console has exported (usually two days behind), and the day before it. */
@@ -544,7 +553,7 @@ export function plainAction(html) {
  * database, so whoever picks the list up does not have to be trusted with a
  * production credential to tell a person from a crawler.
  */
-function evidenceSection({ starters = {} } = {}) {
+function evidenceSection({ starters = {}, finished = {} } = {}) {
   const ids = Object.keys(starters)
   if (!ids.length) return []
   const out = ['<details><summary>What each person who started a test did that day</summary>', '']
@@ -553,6 +562,8 @@ function evidenceSection({ starters = {} } = {}) {
       if (e.name === 'test_progress') return `reached ${e.pct}%`
       return `${e.name} x${e.n} (first at ${e.at})`
     })
+    // "reached 90%" alone reads as a drop-off; say it when they finished.
+    for (const f of finished[id] || []) parts.push(`**finished** ${f}`)
     out.push(`- \`${id}\`: ${parts.join(', ')}`)
   }
   out.push('', 'A visitor with nothing but a single test_start is very likely automated.', '</details>', '')
@@ -623,7 +634,7 @@ export async function runDaily(env, { send = true } = {}) {
   const warns = warnings(platform, { today: day(b.y1), decommissioned })
   const decommissionIn = decommissioned ? 0 : Math.ceil((Date.parse(DECOMMISSION_DUE) - b.y1.getTime()) / 86400e3)
   const data = { day: day(b.y0), product, platform, search, indexing, languages, warns, decommissionIn, wave }
-  const issue = send ? await fileTasks(env, data.day, actions(data, env.FRONTEND_URL), { starters: product.starters, wave: wave.pairs }) : null
+  const issue = send ? await fileTasks(env, data.day, actions(data, env.FRONTEND_URL), { starters: product.starters, finished: product.finished, wave: wave.pairs }) : null
   // A to-do list that quietly failed to be filed is worse than no list at
   // all: the brief would look normal and the tasks would exist nowhere.
   if (issue?.error) data.warns.push(`The task list could not be filed as an issue (${issue.error}). Check the GITHUB_TOKEN secret on the Worker.`)
