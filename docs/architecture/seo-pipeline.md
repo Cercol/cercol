@@ -614,6 +614,18 @@ days so that a job that stops running makes the brief go quiet rather
 than repeat an old verdict as this morning's, and a fourteen-day hold
 kept in a three-day key stops holding on the fourth day.
 
+At most half of `INSPECT_LIMIT` goes to the language-gap list (below)
+before the traffic pages, because a version that took no impressions is
+where "is this even indexed" is an open question. That list is ordered
+by expected impressions and the order is stable, so the slots are not
+its head: fresh gaps (the ones the next brief will carry) go first, and
+a URL whose identical verdict is still inside its `RENOTIFY_DAYS` hold
+gives its slot to one that has no verdict yet. Before that rule, the
+same top gaps were re-inspected every morning to no effect, and on
+2026-08-27 and 2026-08-28 the brief reported a gap whose URL the
+inspector had never asked about, sending the operator to Search Console
+for a verdict the job exists to fetch (`gapInspectionPaths`).
+
 Both use the BigQuery service account, which is why `accessToken` in
 `worker/src/bigquery.js` takes a scope and caches one token per scope: a
 token minted for BigQuery is refused by searchconsole.googleapis.com.

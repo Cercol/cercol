@@ -317,7 +317,7 @@ describe('daily tasks as a GitHub issue', () => {
 
 // Search Console is the only place that says whether Google will index a
 // page at all; the 307 regression went unseen for eleven days without it.
-import { indexingActions, freshProblems, SITEMAP_STALE_DAYS, RENOTIFY_DAYS, REPORTED_TTL_DAYS, NON_PUBLIC_PATH } from '../src/jobs/indexing.js'
+import { indexingActions, freshProblems, gapInspectionPaths, SITEMAP_STALE_DAYS, RENOTIFY_DAYS, REPORTED_TTL_DAYS, NON_PUBLIC_PATH } from '../src/jobs/indexing.js'
 describe('indexing', () => {
   it('never asks Google about a page robots.txt keeps out of the index', () => {
     // /admin is Disallow-ed in robots.txt; /auth and /my-results are gated
@@ -396,6 +396,51 @@ describe('indexing', () => {
   it('the brief reads fresh when the snapshot carries it, problems when it predates the memory', () => {
     expect(indexingActions({ problems: [prob], fresh: [], sitemap: null })).toEqual([])
     expect(indexingActions({ problems: [prob], sitemap: null })).toHaveLength(1)
+  })
+
+  // The gap list is sorted by expected impressions and that order is stable,
+  // so taking its head re-inspected the same URLs every morning: on
+  // 2026-08-27 and 2026-08-28 the brief reported a fresh gap the inspector
+  // never asked about, and the operator was sent to Search Console for a
+  // verdict the job exists to fetch.
+  describe('gap inspection slots', () => {
+    const held = { url: 'https://cercol.team/da/blog/held-slug/', state: 'discovered - currently not indexed', googleCanonical: null }
+    const snapshot = {
+      gaps: [
+        { lang: 'da', slug: 'held-slug', expected: 9 },
+        { lang: 'es', slug: 'old-gap', expected: 7 },
+        { lang: 'de', slug: 'new-gap', expected: 5 },
+      ],
+      fresh: [{ lang: 'de', slug: 'new-gap', expected: 5 }],
+    }
+    it('spends slots on fresh gaps first, then unheld ones, without duplicates', () => {
+      const reported = { [`${held.url}|${held.state}|`]: new Date(now).toISOString() }
+      expect(gapInspectionPaths(snapshot, reported, { now: now + 86400e3 })).toEqual([
+        '/de/blog/new-gap/',
+        '/es/blog/old-gap/',
+      ])
+    })
+    it('gives a held URL its slot back once the hold expires', () => {
+      const reported = { [`${held.url}|${held.state}|`]: new Date(now).toISOString() }
+      expect(gapInspectionPaths(snapshot, reported, { now: now + (RENOTIFY_DAYS + 1) * 86400e3 })).toEqual([
+        '/de/blog/new-gap/',
+        '/da/blog/held-slug/',
+        '/es/blog/old-gap/',
+      ])
+    })
+    it('keeps the old head-of-list behavior when nothing is held or fresh', () => {
+      expect(gapInspectionPaths({ gaps: snapshot.gaps }, {}, { now })).toEqual([
+        '/da/blog/held-slug/',
+        '/es/blog/old-gap/',
+        '/de/blog/new-gap/',
+      ])
+      expect(gapInspectionPaths(null, {}, { now })).toEqual([])
+      expect(gapInspectionPaths({ gaps: [] }, undefined, { now })).toEqual([])
+    })
+    it('never spends more than half the inspection budget', () => {
+      const many = { gaps: Array.from({ length: 9 }, (_, i) => ({ lang: 'fr', slug: `s${i}` })) }
+      expect(gapInspectionPaths(many, {}, { now })).toHaveLength(3)
+    })
   })
 })
 

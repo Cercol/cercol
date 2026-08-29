@@ -172,6 +172,34 @@ export function freshProblems(problems, reported = {}, { now = Date.now(), renot
 }
 
 /**
+ * The gap paths worth spending inspection slots on today. The gap list is
+ * sorted by expected impressions and that order is stable, so slicing its
+ * head would pin the budget to the same URLs every morning: on 2026-08-27
+ * and 2026-08-28 the brief reported a fresh gap whose URL the inspector
+ * never asked about, because the top three gaps already had their verdicts
+ * held under RENOTIFY_DAYS. Fresh gaps (the ones the next brief will carry)
+ * go first, and a URL whose problem is already in the reported memory and
+ * still inside its hold gives up its slot to one without a verdict.
+ */
+export function gapInspectionPaths(snapshot, reported = {}, { now = Date.now(), renotifyDays = RENOTIFY_DAYS, limit = Math.floor(INSPECT_LIMIT / 2), origin = 'https://cercol.team' } = {}) {
+  const held = new Set()
+  for (const [k, at] of Object.entries(reported)) {
+    if (now - Date.parse(at) < renotifyDays * 86400e3) held.add(k.slice(0, k.indexOf('|')))
+  }
+  const seen = new Set()
+  const out = []
+  for (const g of [...(snapshot?.fresh || []), ...(snapshot?.gaps || [])]) {
+    const path = `/${g.lang}/blog/${g.slug}/`
+    if (seen.has(path)) continue
+    seen.add(path)
+    if (held.has(`${origin}${path}`)) continue
+    out.push(path)
+    if (out.length >= limit) break
+  }
+  return out
+}
+
+/**
  * Gather and leave the snapshot in KV for the next brief to read. The pages
  * worth inspecting are the ones that had traffic: one D1 query, rather than
  * making the caller pass them in and pay for it inside its own budget.
@@ -183,7 +211,8 @@ export async function runIndexing(env) {
   // indexed, and asking Google about it confirms what we already know. Half
   // the budget at most, so a long gap list cannot crowd out the home page.
   const gaps = env.NORMS ? await env.NORMS.get(LANGUAGES_KEY, 'json') : null
-  const gapPaths = (gaps?.gaps || []).slice(0, Math.floor(INSPECT_LIMIT / 2)).map((g) => `/${g.lang}/blog/${g.slug}/`)
+  const prev = env.NORMS ? await env.NORMS.get(REPORTED_KEY, 'json') : null
+  const gapPaths = gapInspectionPaths(gaps, prev || {}, { origin: env.FRONTEND_URL || 'https://cercol.team' })
   const since = new Date(Date.now() - 2 * 86400e3).toISOString()
   const { results } = await env.DB.prepare(
     `SELECT path, COUNT(*) AS n FROM events
@@ -193,7 +222,6 @@ export async function runIndexing(env) {
   const out = await gatherIndexing(env, ['/', ...gapPaths, ...results.map((r) => r.path)])
   // A pending run (permission missing, API down) keeps yesterday's memory:
   // wiping it would make the next good run re-report everything as news.
-  const prev = env.NORMS ? await env.NORMS.get(REPORTED_KEY, 'json') : null
   const { fresh, reported } = out.pending
     ? { fresh: [], reported: prev || {} }
     : freshProblems(out.problems, prev, { inspected: out.inspected })
