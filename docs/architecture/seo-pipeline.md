@@ -619,12 +619,23 @@ before the traffic pages, because a version that took no impressions is
 where "is this even indexed" is an open question. That list is ordered
 by expected impressions and the order is stable, so the slots are not
 its head: fresh gaps (the ones the next brief will carry) go first, and
-a URL whose identical verdict is still inside its `RENOTIFY_DAYS` hold
-gives its slot to one that has no verdict yet. Before that rule, the
-same top gaps were re-inspected every morning to no effect, and on
-2026-08-27 and 2026-08-28 the brief reported a gap whose URL the
+a URL inspected inside the last `RENOTIFY_DAYS`, whatever Google
+answered, gives its slot to one that has no verdict yet. Before that
+rule, the same top gaps were re-inspected every morning to no effect,
+and on 2026-08-27 and 2026-08-28 the brief reported a gap whose URL the
 inspector had never asked about, sending the operator to Search Console
 for a verdict the job exists to fetch (`gapInspectionPaths`).
+
+The hold on a slot is keyed by inspection, not by reported problem, and
+that needs a memory of its own (`seo:indexing:inspected`, one ISO stamp
+per URL asked). Holding only reported problems was tried first and was
+not enough: a gap URL that came back healthy left nothing in the
+reported memory and re-took its slot the next morning, and a morning
+with several brand-new gaps handed every slot to them, so on 2026-08-30
+the three gaps the previous briefs had already sent the operator to
+Search Console for had still never been inspected. The stamp map prunes
+itself past `REPORTED_TTL_DAYS`, and costs the 05:00 trigger one KV get
+and one KV put.
 
 Both use the BigQuery service account, which is why `accessToken` in
 `worker/src/bigquery.js` takes a scope and caches one token per scope: a
