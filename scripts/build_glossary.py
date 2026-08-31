@@ -123,8 +123,8 @@ def build(lang: str) -> str:
         "",
         "Cèrcol's own dimension names, in the table at the top of this file, go",
         "in the target language everywhere. The two are different things:",
-        "Bindung is a Cèrcol dimension, Agreeableness is the academic factor it",
-        "maps onto.",
+        f"{dict(dimensions).get('Bond', 'Bond')} is a Cèrcol dimension, Agreeableness is the academic",
+        "factor it maps onto.",
         "",
     ]
     # Collapse blank-line runs rather than tuning the spacing of every

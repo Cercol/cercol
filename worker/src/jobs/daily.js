@@ -264,12 +264,18 @@ export function parseBlogUrl(url) {
  * The content wave: which article-language pairs deserve the next review,
  * ranked by exposure. A page Google already shows is where a defect costs
  * the most and a fix pays the fastest, so the order is 28-day impressions;
- * reads and the English sibling's impressions ride along as context. The
- * "already reviewed" filter is NOT applied here: the review ledger lives in
- * the repository (docs/content/review-ledger.md), which the Worker cannot
- * read, so the consumer of this list skips reviewed pairs itself.
+ * reads and the English sibling's impressions ride along as context.
+ *
+ * Pairs the review ledger already covers are excluded before the cap, not
+ * after: with a cap of eight and no exclusion, two days of reviews turned
+ * the wave into the same eight already-reviewed pairs every morning
+ * (2026-08-30 and 08-31 both proposed zero reviewable pairs while the
+ * unreviewed corpus waited), and it would have stayed empty until the
+ * ledger's re-review window aged the top of the ranking out. The consumer
+ * still skips reviewed pairs itself: the ledger fetch can fail, and then
+ * this list arrives unfiltered.
  */
-export function rankWave(gscRows, readRows, limit = 8) {
+export function rankWave(gscRows, readRows, limit = 8, exclude = new Set()) {
   const pairs = new Map()
   for (const r of gscRows || []) {
     const at = parseBlogUrl(r.url)
@@ -290,11 +296,32 @@ export function rankWave(gscRows, readRows, limit = 8) {
   }
   const en = new Map([...pairs.values()].filter((x) => x.lang === 'en').map((x) => [x.slug, x.impressions]))
   return [...pairs.values()]
+    .filter((x) => !exclude.has(`${x.lang}|${x.slug}`))
     .map((x) => ({ lang: x.lang, slug: x.slug, impressions: x.impressions, clicks: x.clicks,
       pos: x.impressions ? Math.round((x.posW / x.impressions) * 10) / 10 : null,
       reads: x.reads, enImpressions: x.lang === 'en' ? null : en.get(x.slug) ?? 0 }))
     .sort((a, b) => b.impressions - a.impressions || b.reads - a.reads)
     .slice(0, limit)
+}
+
+// The review ledger is repository content, but the repository is public:
+// its raw URL answers without a token, and one fetch on the 04:00 trigger
+// is affordable. Only the table rows count as reviews; the prose and the
+// translation-pass section are context, not wave coverage.
+export const LEDGER_URL = 'https://raw.githubusercontent.com/Cercol/cercol/main/docs/content/review-ledger.md'
+export const REVIEW_WINDOW_DAYS = 56 // the routine's 8-week re-review window
+
+/** Ledger markdown → Set of "lang|slug" pairs reviewed inside the window. */
+export function parseLedger(md, now = Date.now(), windowDays = REVIEW_WINDOW_DAYS) {
+  const reviewed = new Set()
+  const cutoff = now - windowDays * 86400e3
+  for (const line of String(md || '').split('\n')) {
+    const m = line.match(/^\|\s*(\d{4}-\d{2}-\d{2})\s*\|\s*([a-z]{2})\s*\|\s*([\w-]+)\s*\|/)
+    if (!m) continue
+    const t = Date.parse(m[1])
+    if (Number.isFinite(t) && t >= cutoff) reviewed.add(`${m[2]}|${m[3]}`)
+  }
+  return reviewed
 }
 
 export async function gatherWave(env, db) {
@@ -323,7 +350,12 @@ export async function gatherWave(env, db) {
         WHERE e.name = 'article_view' AND e.created_at < fr.t
         GROUP BY e.slug, e.lang`).all()
     const cmap = new Map(converts.map((r) => [`${r.lang || 'en'}|${r.slug}`, r.n]))
-    return { pairs: rankWave(rows, reads).map((p) => ({ ...p, converts: cmap.get(`${p.lang}|${p.slug}`) ?? 0 })) }
+    let reviewed = new Set()
+    try {
+      const lr = await fetch(LEDGER_URL)
+      if (lr.ok) reviewed = parseLedger(await lr.text())
+    } catch { /* ledger unreachable: propose unfiltered, the consumer skips */ }
+    return { pairs: rankWave(rows, reads, 8, reviewed).map((p) => ({ ...p, converts: cmap.get(`${p.lang}|${p.slug}`) ?? 0 })) }
   } catch (e) { return { pending: true, error: e.message, pairs: [] } }
 }
 

@@ -2,9 +2,11 @@
 
 One row per article-language pair that has been through a wave review. The
 daily brief proposes candidates ranked by exposure ("Content wave" section,
-built by `gatherWave` in `worker/src/jobs/daily.js`); the daily maintainer
-routine skips any pair reviewed in the last 8 weeks, reviews the rest, and
-appends its row here in the same pull request as the fixes.
+built by `gatherWave` in `worker/src/jobs/daily.js`, which fetches this
+file and drops any pair in the table reviewed in the last 8 weeks before
+capping the list); the daily maintainer routine skips reviewed pairs again
+itself (the fetch can fail, and then the list arrives unfiltered), reviews
+the rest, and appends its row here in the same pull request as the fixes.
 
 The unit is the pair, not the article: `es · how-to-read` and `da ·
 how-to-read` are different work with different defects. English pairs get the
