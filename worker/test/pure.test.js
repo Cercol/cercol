@@ -173,14 +173,16 @@ describe('email kit', () => {
 describe('daily brief', () => {
   it('warns at 70% of a cap, on killed requests, and on faults', () => {
     const ok = { d1: { rowsRead: 1, rowsWritten: 1 }, kv: { write: 1 }, worker: { requests: 1, errors: 0, cpuP99: 1, byStatus: [] }, mailCredit: 5 }
-    expect(warnings(ok)).toEqual([])
+    // decommissioned: true pins the calls past DECOMMISSION_DUE; without it
+    // these tests started failing on the real date 2026-08-31.
+    expect(warnings(ok, { decommissioned: true })).toEqual([])
     const bad = { ...ok, d1: { rowsRead: CAPS.d1RowsRead * 0.7, rowsWritten: 1 }, worker: { requests: 1, errors: 3, cpuP99: 12, byStatus: [['exceededResources', 3], ['scriptThrewException', 3]] }, mailCredit: 0.1 }
-    expect(warnings(bad)).toHaveLength(4)
+    expect(warnings(bad, { decommissioned: true })).toHaveLength(4)
     expect(warnings({ pending: true })).toHaveLength(1)
   })
   it('a CPU p99 over budget is not a warning unless requests were actually killed', () => {
     const hot = { d1: { rowsRead: 1, rowsWritten: 1 }, kv: { write: 1 }, worker: { requests: 1, errors: 0, cpuP99: 85.7, byStatus: [['clientDisconnected', 2]] }, mailCredit: 5 }
-    expect(warnings(hot)).toEqual([])
+    expect(warnings(hot, { decommissioned: true })).toEqual([])
   })
   it('actions lead with the warnings, then the funnel, the hot article and the clickless query', () => {
     const data = {
