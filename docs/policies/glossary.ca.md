@@ -78,5 +78,5 @@ they carry no grammar and the coordinates are drawn for those strings.
 
 Cèrcol's own dimension names, in the table at the top of this file, go
 in the target language everywhere. The two are different things:
-Bindung is a Cèrcol dimension, Agreeableness is the academic factor it
-maps onto.
+Vincle is a Cèrcol dimension, Agreeableness is the academic
+factor it maps onto.

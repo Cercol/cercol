@@ -172,13 +172,15 @@ describe('email kit', () => {
 })
 describe('daily brief', () => {
   it('warns at 70% of a cap, on killed requests, and on faults', () => {
+    // decommissioned matches production (HETZNER_DECOMMISSIONED=1 since
+    // 2026-08-19); without it these tests would start failing the day the
+    // wall clock reaches DECOMMISSION_DUE, which it did on 2026-08-31.
+    const done = { decommissioned: true }
     const ok = { d1: { rowsRead: 1, rowsWritten: 1 }, kv: { write: 1 }, worker: { requests: 1, errors: 0, cpuP99: 1, byStatus: [] }, mailCredit: 5 }
-    // decommissioned: true pins the calls past DECOMMISSION_DUE; without it
-    // these tests started failing on the real date 2026-08-31.
-    expect(warnings(ok, { decommissioned: true })).toEqual([])
+    expect(warnings(ok, done)).toEqual([])
     const bad = { ...ok, d1: { rowsRead: CAPS.d1RowsRead * 0.7, rowsWritten: 1 }, worker: { requests: 1, errors: 3, cpuP99: 12, byStatus: [['exceededResources', 3], ['scriptThrewException', 3]] }, mailCredit: 0.1 }
-    expect(warnings(bad, { decommissioned: true })).toHaveLength(4)
-    expect(warnings({ pending: true })).toHaveLength(1)
+    expect(warnings(bad, done)).toHaveLength(4)
+    expect(warnings({ pending: true }, done)).toHaveLength(1)
   })
   it('a CPU p99 over budget is not a warning unless requests were actually killed', () => {
     const hot = { d1: { rowsRead: 1, rowsWritten: 1 }, kv: { write: 1 }, worker: { requests: 1, errors: 0, cpuP99: 85.7, byStatus: [['clientDisconnected', 2]] }, mailCredit: 5 }
@@ -660,6 +662,37 @@ describe('content wave ranking', () => {
     expect(parseBlogUrl('https://cercol.team/de/blog/x/')).toEqual({ lang: 'de', slug: 'x' })
     expect(parseBlogUrl('https://cercol.team/blog/x?utm=1')).toEqual({ lang: 'en', slug: 'x' })
     expect(parseBlogUrl('https://cercol.team/about/')).toBeNull()
+  })
+  it('drops ledger-reviewed pairs before the cap, so the next unreviewed pairs surface', () => {
+    const gsc = Array.from({ length: 10 }, (_, i) => (
+      { url: `https://cercol.team/blog/a${i}/`, impressions: 100 - i, clicks: 0, pos: 10 }))
+    const exclude = new Set(['en|a0', 'en|a1'])
+    const out = rankWave(gsc, [], 8, exclude)
+    expect(out).toHaveLength(8)
+    expect(out.map((w) => w.slug)).toEqual(['a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'a9'])
+  })
+})
+
+import { parseLedger } from '../src/jobs/daily.js'
+describe('review ledger parsing', () => {
+  const now = Date.parse('2026-08-31T04:00:00Z')
+  const md = [
+    '| Date | Lang | Slug | Verdict | Notes |',
+    '|---|---|---|---|---|',
+    '| 2026-08-25 | en | fresh-pair | clean | inside the window |',
+    '| 2026-05-01 | fr | aged-out | fixed | past 8 weeks, due a re-review |',
+    'prose mentioning | 2026-08-25 | en | not-a-row mid-line',
+  ].join('\n')
+  it('keeps pairs reviewed inside the window and ages the rest out', () => {
+    const set = parseLedger(md, now)
+    expect(set.has('en|fresh-pair')).toBe(true)
+    expect(set.has('fr|aged-out')).toBe(false)
+    expect(set.size).toBe(1)
+  })
+  it('ignores the header, separators and prose, and survives an empty or missing file', () => {
+    expect(parseLedger(md, now).has('Date|Lang')).toBe(false)
+    expect(parseLedger('', now).size).toBe(0)
+    expect(parseLedger(null, now).size).toBe(0)
   })
 })
 
