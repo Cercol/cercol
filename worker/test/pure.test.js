@@ -162,7 +162,7 @@ describe('jobs parsing', () => {
 // Font stacks from mm-design carry double quotes; inside style="..." they
 // would end the attribute and drop every rule after them (that shipped once).
 import { DISPLAY, SANS, stat, shell } from '../src/email-ui.js'
-import { warnings, actions, CAPS, dayBounds, CTA_CLAIM_MIN_READS, ZERO_START_MIN_VISITORS } from '../src/jobs/daily.js'
+import { warnings, CAPS, dayBounds, CTA_CLAIM_MIN_READS, ZERO_START_MIN_VISITORS, NONE_FINISHED_MIN_STARTERS } from '../src/jobs/daily.js'
 describe('email kit', () => {
   it('font stacks contain no double quotes', () => {
     expect(DISPLAY).not.toMatch(/"/); expect(SANS).not.toMatch(/"/)
@@ -189,7 +189,7 @@ describe('daily brief', () => {
   it('actions lead with the warnings, then the funnel, the hot article and the clickless query', () => {
     const data = {
       warns: ['Top up Purelymail.'],
-      product: { signups: [0, 0], tests: [0, 0], visitors: [22, 3], starts: [1, 0], topPages: [['/', 4]],
+      product: { signups: [0, 0], tests: [0, 0], visitors: [22, 3], starts: [NONE_FINISHED_MIN_STARTERS, 0], topPages: [['/', 4]],
         takingOff: [['Limits', 'limits', 8, 0]], dropOff: [['First Quarter', 30]] },
       search: { zeroClick: ['https://cercol.team/blog/facet/', 24, 4.5] },
     }
@@ -222,6 +222,14 @@ describe('daily brief', () => {
     // Nobody starting is a different failure from starting and dropping out.
     // No progress events at all: say so rather than implying a known point.
     expect(actions({ ...data, product: { ...data.product, dropOff: [] }, warns: [], search: null })[0]).toContain('nobody reached the first tenth')
+    // A day with fewer starters than NONE_FINISHED_MIN_STARTERS and no finish
+    // is the expected outcome at the site's own ~75% per-starter completion
+    // rate, not a task: the 2026-08-31 brief sent someone to watch the
+    // console over one visitor who answered for 47 seconds. The starter
+    // summary in the evidence section still says who got how far.
+    const lone = { ...data, warns: [], search: null,
+      product: { ...data.product, starts: [NONE_FINISHED_MIN_STARTERS - 1, 0] } }
+    expect(actions(lone).some((l) => l.includes('none finished'))).toBe(false)
     // A start-less day only becomes a task once there were enough visitors
     // for zero starts to be surprising at the site's own visitor-to-start
     // rate: see ZERO_START_MIN_VISITORS. Below the floor the funnel table
