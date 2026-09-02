@@ -95,16 +95,38 @@ export async function query(env, sql, { project = env.BIGQUERY_PROJECT || 'cerco
   return rows
 }
 
-/** Streaming insert (tabledata.insertAll) — what bing/pagespeed/crawl ingest use. */
+/**
+ * Batch load (NDJSON load job) — what bing/pagespeed/links/anomalies ingest use.
+ *
+ * Was tabledata.insertAll, but streaming inserts are the one BigQuery SKU
+ * with no free tier (billed per row, 1 KB minimum), and they were the whole
+ * monthly invoice. Load jobs are free of charge, and their rows land outside
+ * the streaming buffer, so the delete-then-insert pattern can always delete
+ * them (streamed rows are undeletable for ~30 min).
+ */
 export async function insertRows(env, dataset, table, rows, { project = env.BIGQUERY_PROJECT || 'cercol' } = {}) {
   if (!rows.length) return { inserted: 0 }
   const tok = await accessToken(env)
-  const res = await fetch(`https://bigquery.googleapis.com/bigquery/v2/projects/${project}/datasets/${dataset}/tables/${table}/insertAll`, {
-    method: 'POST', headers: { authorization: `Bearer ${tok}`, 'content-type': 'application/json' },
-    body: JSON.stringify({ rows: rows.map((json) => ({ json })) }),
+  const boundary = 'cercol-bq-load'
+  const meta = { configuration: { load: { destinationTable: { projectId: project, datasetId: dataset, tableId: table }, sourceFormat: 'NEWLINE_DELIMITED_JSON' } } }
+  const body = [
+    `--${boundary}`, 'content-type: application/json', '', JSON.stringify(meta),
+    `--${boundary}`, 'content-type: application/octet-stream', '', rows.map((r) => JSON.stringify(r)).join('\n'),
+    `--${boundary}--`,
+  ].join('\r\n')
+  let res = await fetch(`https://bigquery.googleapis.com/upload/bigquery/v2/projects/${project}/jobs?uploadType=multipart`, {
+    method: 'POST', headers: { authorization: `Bearer ${tok}`, 'content-type': `multipart/related; boundary=${boundary}` }, body,
   })
-  const body = await res.json()
-  if (!res.ok || body.insertErrors?.length) throw new Error(`bigquery insertAll: ${JSON.stringify(body.insertErrors || body.error).slice(0, 300)}`)
+  if (!res.ok) throw new Error(`bigquery load ${res.status}: ${await res.text()}`)
+  let job = await res.json()
+  const { jobId, location } = job.jobReference
+  while (job.status?.state !== 'DONE') {
+    await new Promise((r) => setTimeout(r, 500))
+    res = await fetch(`https://bigquery.googleapis.com/bigquery/v2/projects/${project}/jobs/${jobId}?location=${location}`, { headers: { authorization: `Bearer ${tok}` } })
+    if (!res.ok) throw new Error(`bigquery load poll ${res.status}: ${await res.text()}`)
+    job = await res.json()
+  }
+  if (job.status.errorResult) throw new Error(`bigquery load: ${JSON.stringify(job.status.errors || job.status.errorResult).slice(0, 300)}`)
   return { inserted: rows.length }
 }
 
