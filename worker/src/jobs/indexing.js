@@ -257,13 +257,16 @@ export async function runIndexing(env) {
   return { pending: !!out.pending, error: out.error || null, problems: out.problems?.length || 0, fresh: fresh.length }
 }
 
-/** The lines the brief should act on, most costly first. Empty when healthy. */
-export function indexingActions(ix) {
+/** The lines the brief should act on, most costly first. Empty when healthy.
+ * A URL in omit is left out because another line already carries its verdict
+ * (the language-gap line, see languageActions in jobs/languages.js). */
+export function indexingActions(ix, { omit = [] } = {}) {
   if (!ix || ix.pending) return []
   const out = []
   // fresh is the problems not already reported in the last RENOTIFY_DAYS;
   // a snapshot from before the memory existed carries only problems.
   for (const p of ix.fresh || ix.problems) {
+    if (omit.includes(p.url)) continue
     out.push(p.googleCanonical
       ? `Google indexes ${p.googleCanonical} instead of ${p.url} (${p.state}). Whatever points at the second one is spending its authority on a URL that is not in the index.`
       : `${p.url} is not indexed: ${p.state}.`)

@@ -413,6 +413,10 @@ describe('indexing', () => {
     expect(indexingActions({ problems: [prob], fresh: [], sitemap: null })).toEqual([])
     expect(indexingActions({ problems: [prob], sitemap: null })).toHaveLength(1)
   })
+  it('leaves out a URL whose verdict another line already carries', () => {
+    expect(indexingActions({ problems: [prob], sitemap: null }, { omit: [prob.url] })).toEqual([])
+    expect(indexingActions({ problems: [prob], sitemap: null }, { omit: ['https://cercol.team/other/'] })).toHaveLength(1)
+  })
 
   // The gap list is sorted by expected impressions and that order is stable,
   // so taking its head re-inspected the same URLs every morning: on
@@ -527,7 +531,7 @@ describe('evidence in the filed issue', () => {
 
 // An article compared against itself: the one content signal that is a
 // defect rather than an opinion.
-import { languageGaps, freshGaps, languageActions, MIN_ARTICLE_IMPRESSIONS } from '../src/jobs/languages.js'
+import { languageGaps, freshGaps, languageActions, languageGapUrl, MIN_ARTICLE_IMPRESSIONS } from '../src/jobs/languages.js'
 describe('language gaps', () => {
   // A blog whose impressions run 60% English, 20% Spanish, 20% German.
   const site = [
@@ -581,6 +585,30 @@ describe('language gaps', () => {
     expect(line).toContain('https://cercol.team/de/blog/b/')
     expect(languageActions({ fresh: [] })).toEqual([])
     expect(languageActions(null)).toEqual([])
+  })
+
+  // The gap queues its own URL for inspection, so the morning both jobs fire
+  // the brief carried the question and the inspector's answer as two separate
+  // to-dos for the same page (two of the 2026-09-02 brief's three lines).
+  it('carries the indexing verdict instead of asking, when the snapshot has one', () => {
+    const ix = { problems: [{ url: 'https://cercol.team/de/blog/b/', state: 'crawled - currently not indexed', googleCanonical: null }] }
+    const [line] = languageActions({ fresh: [gap] }, 'https://cercol.team', ix)
+    expect(line).toContain('predict about 10')
+    expect(line).toContain('crawled - currently not indexed')
+    expect(line).not.toContain('check it is indexed')
+    // A verdict for some other page changes nothing.
+    const other = { problems: [{ url: 'https://cercol.team/fr/blog/x/', state: 'crawled - currently not indexed', googleCanonical: null }] }
+    expect(languageActions({ fresh: [gap] }, 'https://cercol.team', other)[0]).toContain('check it is indexed')
+  })
+  it('names the canonical Google chose when the verdict carries one', () => {
+    const ix = { problems: [{ url: 'https://cercol.team/de/blog/b/', state: 'page with redirect', googleCanonical: 'https://cercol.team/de/blog/b' }] }
+    const [line] = languageActions({ fresh: [gap] }, 'https://cercol.team', ix)
+    expect(line).toContain('indexes https://cercol.team/de/blog/b instead')
+  })
+  it('hands the caller the URL its line absorbs', () => {
+    expect(languageGapUrl({ fresh: [gap] })).toBe('https://cercol.team/de/blog/b/')
+    expect(languageGapUrl({ fresh: [] })).toBeNull()
+    expect(languageGapUrl(null)).toBeNull()
   })
 })
 
