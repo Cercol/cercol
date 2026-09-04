@@ -30,7 +30,7 @@
 
 import { query as bq } from '../bigquery.js'
 import { KV_KEY as INDEXING_KEY, indexingActions } from './indexing.js'
-import { KV_KEY as LANGUAGES_KEY, languageActions } from './languages.js'
+import { KV_KEY as LANGUAGES_KEY, languageActions, languageGapUrl } from './languages.js'
 import { C, fmt, esc, h1, sub, p, section, empty, delta, stat, statRow, table, bar, callout, shell } from '../email-ui.js'
 
 const LABELS = { newMoon: 'New Moon', firstQuarter: 'First Quarter', fullMoon: 'Full Moon' }
@@ -444,7 +444,10 @@ const link = (href, t) => `<a href="${href}" style="color:${C.blue};text-decorat
  */
 export function actions(d, frontendUrl = 'https://cercol.team') {
   const { product: pr, search: se } = d
-  const out = [...(d.warns || []), ...indexingActions(d.indexing), ...languageActions(d.languages, frontendUrl)]
+  // The language-gap line absorbs the indexing verdict for its own URL, so
+  // the same page does not appear as both a question and an answer.
+  const gapUrl = languageGapUrl(d.languages, frontendUrl)
+  const out = [...(d.warns || []), ...indexingActions(d.indexing, { omit: gapUrl ? [gapUrl] : [] }), ...languageActions(d.languages, frontendUrl, d.indexing)]
 
   // A day the bulk export never delivered. This goes first because it is the
   // only line in the brief with a deadline: Google retries for about a week

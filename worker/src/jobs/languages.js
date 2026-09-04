@@ -124,14 +124,37 @@ export async function runLanguages(env, { query } = {}) {
 
 const NAME = { ca: 'Catalan', es: 'Spanish', fr: 'French', de: 'German', da: 'Danish' }
 
+/** The URL of the gap languageActions would report, for callers that need
+ * to know which indexing line it absorbs. Null when there is nothing fresh. */
+export function languageGapUrl(snapshot, frontendUrl = 'https://cercol.team') {
+  const g = snapshot?.fresh?.[0]
+  return g ? `${frontendUrl}/${g.lang}/blog/${g.slug}/` : null
+}
+
 /**
  * One line, for the worst gap that has not been reported yet. One and not
  * all of them: the brief is a to-do list, and a list of nine translations to
  * look at is a list nobody starts.
+ *
+ * The gap is what queues its URL for inspection (gapInspectionPaths), so on
+ * the morning both jobs fire the brief used to carry the question ("check it
+ * is indexed") and, two lines up, the inspector's answer ("crawled -
+ * currently not indexed") as two separate to-dos for the same page: the
+ * 2026-09-02 brief spent two of its three lines that way. When the snapshot
+ * already holds Google's verdict for this URL, the line carries it instead
+ * of asking, and the caller drops the plain indexing line for the same URL.
  */
-export function languageActions(snapshot, frontendUrl = 'https://cercol.team') {
+export function languageActions(snapshot, frontendUrl = 'https://cercol.team', indexing = null) {
   const g = snapshot?.fresh?.[0]
   if (!g) return []
   const url = `${frontendUrl}/${g.lang}/blog/${g.slug}/`
-  return [`The ${NAME[g.lang] || g.lang} version of ${g.slug} took no impressions in 28 days, where the article's own numbers predict about ${g.expected}. Its siblings are fine, so this is that version: <a href="${url}" style="text-decoration:underline;">check it is indexed, then read its title</a>.`]
+  const head = `The ${NAME[g.lang] || g.lang} version of ${g.slug} took no impressions in 28 days, where the article's own numbers predict about ${g.expected}.`
+  const verdict = (indexing?.problems || []).find((p) => p.url === url)
+  if (verdict) {
+    const why = verdict.googleCanonical
+      ? `${verdict.state}, and Google indexes ${verdict.googleCanonical} instead`
+      : verdict.state
+    return [`${head} <a href="${url}" style="text-decoration:underline;">Google's verdict on the page</a> says why: ${why}.`]
+  }
+  return [`${head} Its siblings are fine, so this is that version: <a href="${url}" style="text-decoration:underline;">check it is indexed, then read its title</a>.`]
 }
