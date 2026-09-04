@@ -92,6 +92,16 @@ export const CTA_CLAIM_MIN_READS = 150
 // (p < 0.05); below it the funnel table already carries the numbers without
 // raising a task.
 export const ZERO_START_MIN_VISITORS = 165
+// Starters one day needs before "none finished" says anything about the
+// instrument. A Cèrcol starter finishes about 75% of the time (12 completed
+// tests for 16 distinct starters, 28 days to 2026-09-01), so a lone starter
+// abandoning is the expected outcome one day in four — and the line fired on
+// one anyway (the 2026-08-31 brief sent someone to watch the console over a
+// single visitor who answered for 47 seconds and left at 11%). At that rate
+// three starters is where a day nobody finishes stops being explainable by
+// chance (0.25^3 < 0.05); below the floor the starter summary in the
+// evidence section already says who got how far.
+export const NONE_FINISHED_MIN_STARTERS = 3
 
 export function dayBounds(now = new Date()) {
   const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()))
@@ -447,8 +457,10 @@ export function actions(d, frontendUrl = 'https://cercol.team') {
   }
 
   // Funnel. Two different failures, never both: nobody starts, or they
-  // start and drop out. The second one usually means a broken instrument.
-  if (pr.starts[0] > 0 && pr.tests[0] === 0) {
+  // start and drop out. The second one usually means a broken instrument —
+  // but only once there are enough starters for zero finishes to be
+  // surprising: see NONE_FINISHED_MIN_STARTERS.
+  if (pr.starts[0] >= NONE_FINISHED_MIN_STARTERS && pr.tests[0] === 0) {
     const where = (pr.dropOff || []).map(([inst, pct]) => `${inst} at ${pct}%`).join(', ')
     out.push(`${fmt(pr.starts[0])} started a test and none finished${where ? `, getting as far as ${where}` : ' (nobody reached the first tenth)'}. Take that instrument from there and watch the console.`)
   } else if (pr.starts[0] === 0 && pr.visitors[0] >= ZERO_START_MIN_VISITORS) {
