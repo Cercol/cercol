@@ -37,6 +37,11 @@ gets fixed, in exposure order.
 | 2026-09-01 | en | personality-and-job-fit-how-to-think-about-person-environment-fit | fixed | Closing CTA linked the home page as an absolute URL; now routes to /first-quarter. Copy and internal links otherwise sound; 0 clicks on 218 impressions at position 7.9 is at the noise edge, no copy defect found to pin it on |
 | 2026-09-01 | en | does-personality-composition-predict-team-performance | fixed | Closing CTA linked the home page as an absolute URL; now routes to /first-quarter. Copy and internal links otherwise sound |
 | 2026-09-01 | en | personality-of-successful-ceos-what-research-says | clean | CTA already routes to /first-quarter; copy, links and structure sound; 1 click on 171 impressions at position 8.7 within positional expectation |
+| 2026-09-02 | en | personality-and-job-fit-how-to-think-about-person-environment-fit | clean | Copy, links and CTA sound; 0 clicks on 226 impressions at position 7.7 is below positional expectation but no defect found to pin it on |
+| 2026-09-02 | en | personality-of-entrepreneurs-what-research-says | fixed | Closing CTA linked /roles as an absolute URL; now relative. Duplicate italic Further-reading line above the list is harmless and left; stat cards style values with inline hex, a corpus-wide pattern (23 posts) noted for the operator |
+| 2026-09-02 | en | does-personality-composition-predict-team-performance | fixed | Title was H2, so the page rendered no H1; "of.19" missing a space; absolute /instruments URL made relative; stat-card label said "meta-analytic studies reviewed" where the article itself cites one meta-analysis of 60 studies. Unsourced r = 0.27 stat card left for the operator |
+| 2026-09-02 | en | personality-of-successful-ceos-what-research-says | fixed | Table row on low Neuroticism named the reversed pole ("high Depth can indicate resilience"); now "low Depth". Absolute /roles URL made relative |
+| 2026-09-02 | en | how-to-read-a-big-five-personality-report | fixed | Two false pay-once sentences (Full Moon as "a one-time payment") corrected to the free wording per docs/policies/pricing.md; "≈.20" missing a space. ES sibling out-clicks EN (5/233 vs 0/166 at the same position) with no EN defect found to explain it |
 
 ## Translation passes
 
