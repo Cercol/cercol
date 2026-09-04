@@ -328,10 +328,14 @@ describe('indexing', () => {
     // SPA views that canonical to the home page. None can ever be indexed, so
     // reporting one as "unknown to google" is noise. This is the rule the
     // 2026-08-23 brief's /admin line asked for.
-    for (const p of ['/admin', '/admin/', '/admin/jobs', '/auth', '/auth/callback', '/my-results', '/ca/admin']) {
+    // The results views, /profile and /groups canonical to the home page,
+    // and /witness pages exist only behind a personal invitation token; the
+    // 2026-08-30 run spent a slot on /new-moon/results because visitors'
+    // page views put it in the traffic-derived candidate list.
+    for (const p of ['/admin', '/admin/', '/admin/jobs', '/auth', '/auth/callback', '/my-results', '/ca/admin', '/new-moon/results', '/new-moon/results/', '/first-quarter/results/', '/full-moon/results', '/profile', '/groups', '/groups/7', '/witness/abc123', '/witness-setup', '/es/full-moon/results/']) {
       expect(NON_PUBLIC_PATH.test(p)).toBe(true)
     }
-    for (const p of ['/', '/blog/what-is-a-facet-in-personality-psychology/', '/ca/blog/team-roles/', '/full-moon', '/administrators/']) {
+    for (const p of ['/', '/blog/what-is-a-facet-in-personality-psychology/', '/ca/blog/team-roles/', '/full-moon', '/new-moon', '/first-quarter/', '/administrators/', '/for-organizations']) {
       expect(NON_PUBLIC_PATH.test(p)).toBe(false)
     }
   })
@@ -444,6 +448,26 @@ describe('indexing', () => {
     it('never spends more than half the inspection budget', () => {
       const many = { gaps: Array.from({ length: 9 }, (_, i) => ({ lang: 'fr', slug: `s${i}` })) }
       expect(gapInspectionPaths(many, {}, { now })).toHaveLength(3)
+    })
+    // Holding only reported problems was not enough: a gap URL inspected and
+    // found healthy (PASS) left nothing in the reported memory, so it re-took
+    // its slot the next morning ahead of gaps never asked about. On
+    // 2026-08-30 the three gaps the briefs of 08-27 to 08-29 sent the
+    // operator to Search Console for had still never been inspected.
+    it('a URL inspected recently gives up its slot, healthy or not', () => {
+      const inspectedAt = { 'https://cercol.team/da/blog/held-slug/': new Date(now).toISOString() }
+      expect(gapInspectionPaths(snapshot, {}, { now: now + 86400e3, inspectedAt })).toEqual([
+        '/de/blog/new-gap/',
+        '/es/blog/old-gap/',
+      ])
+    })
+    it('competes again once the inspection is older than the hold', () => {
+      const inspectedAt = { 'https://cercol.team/da/blog/held-slug/': new Date(now).toISOString() }
+      expect(gapInspectionPaths(snapshot, {}, { now: now + (RENOTIFY_DAYS + 1) * 86400e3, inspectedAt })).toEqual([
+        '/de/blog/new-gap/',
+        '/da/blog/held-slug/',
+        '/es/blog/old-gap/',
+      ])
     })
   })
 })

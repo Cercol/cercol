@@ -57,12 +57,15 @@ export const RENOTIFY_DAYS = 14
 /**
  * Paths that are never going to be in Google's index, so asking about one and
  * reporting "url is unknown to google" is noise, not a task. robots.txt keeps
- * /admin out by name; /auth and /my-results are gated SPA views that canonical
- * to the home page. The 2026-08-23 brief spent a line on /admin because an
- * operator's page views to it put it in the traffic-derived candidate list.
- * A page dropped here is never inspected, so it can never be reported.
+ * /admin out by name; /auth, /my-results, /profile, /groups and the per-test
+ * results views are gated or personal SPA views that canonical to the home
+ * page, and /witness pages exist only behind a personal invitation token.
+ * The 2026-08-23 brief spent a line on /admin because an operator's page
+ * views to it put it in the traffic-derived candidate list, and the
+ * 2026-08-30 run spent a slot on /new-moon/results the same way. A page
+ * dropped here is never inspected, so it can never be reported.
  */
-export const NON_PUBLIC_PATH = /^(?:\/[a-z]{2})?\/(?:admin|auth|my-results)(?:\/|$)/
+export const NON_PUBLIC_PATH = /^(?:\/[a-z]{2})?\/(?:admin|auth|my-results|profile|groups|witness|witness-setup|(?:new-moon|first-quarter|full-moon|last-quarter)\/results)(?:\/|$)/
 
 /** Google's verdict strings, shortened for a line in an email. */
 const clean = (s) => String(s || '').replace(/_/g, ' ').toLowerCase()
@@ -140,6 +143,14 @@ export const KV_KEY = 'seo:indexing'
 // implements quietly stops holding. One key cannot have both lifetimes.
 export const REPORTED_KEY = 'seo:indexing:reported'
 export const REPORTED_TTL_DAYS = RENOTIFY_DAYS + 7
+// When each URL was last actually asked about, whatever Google answered.
+// The reported memory above only remembers problems, so a gap URL that came
+// back healthy (PASS) was forgotten by the next morning and competed for a
+// slot again, while gap URLs still waiting for their first verdict lost
+// theirs: on 2026-08-30 three brand-new gaps took all three slots and the
+// three gaps the briefs of 08-27 to 08-29 had already sent the operator to
+// Search Console for had still never been inspected.
+export const INSPECTED_KEY = 'seo:indexing:inspected'
 
 /**
  * The problems not reported recently, and the reported-set to store back.
@@ -178,13 +189,18 @@ export function freshProblems(problems, reported = {}, { now = Date.now(), renot
  * and 2026-08-28 the brief reported a fresh gap whose URL the inspector
  * never asked about, because the top three gaps already had their verdicts
  * held under RENOTIFY_DAYS. Fresh gaps (the ones the next brief will carry)
- * go first, and a URL whose problem is already in the reported memory and
- * still inside its hold gives up its slot to one without a verdict.
+ * go first, and a URL inspected inside the hold, whatever Google answered,
+ * gives up its slot to one without a verdict. Holding only reported
+ * problems was not enough: a gap URL that came back healthy re-took its
+ * slot the next morning, ahead of gaps never asked about at all.
  */
-export function gapInspectionPaths(snapshot, reported = {}, { now = Date.now(), renotifyDays = RENOTIFY_DAYS, limit = Math.floor(INSPECT_LIMIT / 2), origin = 'https://cercol.team' } = {}) {
+export function gapInspectionPaths(snapshot, reported = {}, { now = Date.now(), renotifyDays = RENOTIFY_DAYS, limit = Math.floor(INSPECT_LIMIT / 2), origin = 'https://cercol.team', inspectedAt = {} } = {}) {
   const held = new Set()
   for (const [k, at] of Object.entries(reported)) {
     if (now - Date.parse(at) < renotifyDays * 86400e3) held.add(k.slice(0, k.indexOf('|')))
+  }
+  for (const [url, at] of Object.entries(inspectedAt)) {
+    if (now - Date.parse(at) < renotifyDays * 86400e3) held.add(url)
   }
   const seen = new Set()
   const out = []
@@ -212,7 +228,8 @@ export async function runIndexing(env) {
   // the budget at most, so a long gap list cannot crowd out the home page.
   const gaps = env.NORMS ? await env.NORMS.get(LANGUAGES_KEY, 'json') : null
   const prev = env.NORMS ? await env.NORMS.get(REPORTED_KEY, 'json') : null
-  const gapPaths = gapInspectionPaths(gaps, prev || {}, { origin: env.FRONTEND_URL || 'https://cercol.team' })
+  const inspectedAt = (env.NORMS ? await env.NORMS.get(INSPECTED_KEY, 'json') : null) || {}
+  const gapPaths = gapInspectionPaths(gaps, prev || {}, { origin: env.FRONTEND_URL || 'https://cercol.team', inspectedAt })
   const since = new Date(Date.now() - 2 * 86400e3).toISOString()
   const { results } = await env.DB.prepare(
     `SELECT path, COUNT(*) AS n FROM events
@@ -228,6 +245,14 @@ export async function runIndexing(env) {
   if (env.NORMS) {
     await env.NORMS.put(KV_KEY, JSON.stringify({ ...out, fresh, at: new Date().toISOString() }), { expirationTtl: 3 * 86400 })
     await env.NORMS.put(REPORTED_KEY, JSON.stringify(reported), { expirationTtl: REPORTED_TTL_DAYS * 86400 })
+    if (!out.pending) {
+      // Stamp this run's inspections and drop stamps too old to hold
+      // anything, so the map cannot grow without bound.
+      const nowIso = new Date().toISOString()
+      const keep = Object.fromEntries(Object.entries(inspectedAt).filter(([, at]) => Date.now() - Date.parse(at) < REPORTED_TTL_DAYS * 86400e3))
+      for (const url of out.inspected || []) keep[url] = nowIso
+      await env.NORMS.put(INSPECTED_KEY, JSON.stringify(keep), { expirationTtl: REPORTED_TTL_DAYS * 86400 })
+    }
   }
   return { pending: !!out.pending, error: out.error || null, problems: out.problems?.length || 0, fresh: fresh.length }
 }
