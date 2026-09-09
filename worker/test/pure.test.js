@@ -189,7 +189,8 @@ describe('daily brief', () => {
   it('actions lead with the warnings, then the funnel, the hot article and the clickless query', () => {
     const data = {
       warns: ['Top up Purelymail.'],
-      product: { signups: [0, 0], tests: [0, 0], visitors: [22, 3], starts: [NONE_FINISHED_MIN_STARTERS, 0], topPages: [['/', 4]],
+      product: { signups: [0, 0], tests: [0, 0], visitors: [22, 3], starts: [NONE_FINISHED_MIN_STARTERS, 0],
+        answeredStarts: [NONE_FINISHED_MIN_STARTERS, 0], topPages: [['/', 4]],
         takingOff: [['Limits', 'limits', 8, 0]], dropOff: [['First Quarter', 30]] },
       search: { zeroClick: ['https://cercol.team/blog/facet/', 24, 4.5] },
     }
@@ -228,15 +229,24 @@ describe('daily brief', () => {
     // console over one visitor who answered for 47 seconds. The starter
     // summary in the evidence section still says who got how far.
     const lone = { ...data, warns: [], search: null,
-      product: { ...data.product, starts: [NONE_FINISHED_MIN_STARTERS - 1, 0] } }
+      product: { ...data.product, starts: [NONE_FINISHED_MIN_STARTERS - 1, 0],
+        answeredStarts: [NONE_FINISHED_MIN_STARTERS - 1, 0] } }
     expect(actions(lone).some((l) => l.includes('none finished'))).toBe(false)
+    // Starters who never answered anything are not starters for this line: a
+    // bare page load of an instrument page already logs test_start plus the
+    // first item's progress percent, so a day of load-and-leave visitors (the
+    // 2026-09-08 brief: four at the mount floor, three of them same-second
+    // bursts) must not send anyone to watch the console.
+    const mounted = { ...data, warns: [], search: null,
+      product: { ...data.product, starts: [NONE_FINISHED_MIN_STARTERS + 1, 0], answeredStarts: [0, 0] } }
+    expect(actions(mounted).some((l) => l.includes('none finished'))).toBe(false)
     // A start-less day only becomes a task once there were enough visitors
     // for zero starts to be surprising at the site's own visitor-to-start
     // rate: see ZERO_START_MIN_VISITORS. Below the floor the funnel table
     // already carries the numbers.
-    const cold = { ...data, product: { ...data.product, starts: [0, 0], visitors: [ZERO_START_MIN_VISITORS, 3] }, warns: [], search: null }
+    const cold = { ...data, product: { ...data.product, starts: [0, 0], answeredStarts: [0, 0], visitors: [ZERO_START_MIN_VISITORS, 3] }, warns: [], search: null }
     expect(actions(cold)[0]).toContain('nobody started a test')
-    const chilly = { ...data, product: { ...data.product, starts: [0, 0], visitors: [ZERO_START_MIN_VISITORS - 1, 3] }, warns: [], search: null }
+    const chilly = { ...data, product: { ...data.product, starts: [0, 0], answeredStarts: [0, 0], visitors: [ZERO_START_MIN_VISITORS - 1, 3] }, warns: [], search: null }
     expect(actions(chilly).some((l) => l.includes('nobody started a test'))).toBe(false)
     // A quiet, healthy day produces an empty list, and the brief says so.
     expect(actions({ warns: [], product: { visitors: [3, 1], starts: [0, 0], tests: [0, 0], topPages: [], takingOff: [] }, search: null })).toEqual([])

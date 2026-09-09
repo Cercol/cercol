@@ -135,6 +135,25 @@ export async function gatherProduct(db, b) {
        AND anon_id NOT IN (
          SELECT anon_id FROM events
           WHERE path LIKE '/admin%' AND anon_id IS NOT NULL AND created_at >= ?1 AND created_at < ?2)`)
+  // Starters who answered anything at all. useTrackTestProgress fires when a
+  // question renders, so a bare page load of an instrument page already emits
+  // one progress row at the first item's percent: 10 on the ten-item New
+  // Moon, 1 on the sixty-item First Quarter, nothing on the 120-item Full
+  // Moon (floor(1/120) is 0, which the hook drops). A visitor who never got
+  // past that floor answered no questions -- the 2026-09-08 brief's four
+  // "starters" were all at the floor, and three of them were same-second
+  // page_view + test_start + first-progress bursts, one repeating the burst
+  // identically three times over four hours. Only progress past the mount
+  // floor is evidence a question was answered, and only that kind of starter
+  // says anything about the instrument when nobody finishes.
+  const answeredStarts = await pair(`SELECT COUNT(DISTINCT anon_id) AS n FROM events
+     WHERE name='test_progress' AND anon_id IS NOT NULL
+       AND created_at >= ?1 AND created_at < ?2
+       AND COALESCE(instrument, '') != 'witness'
+       AND CAST(slug AS INTEGER) > CASE instrument WHEN 'newMoon' THEN 10 WHEN 'firstQuarter' THEN 1 ELSE 0 END
+       AND anon_id NOT IN (
+         SELECT anon_id FROM events
+          WHERE path LIKE '/admin%' AND anon_id IS NOT NULL AND created_at >= ?1 AND created_at < ?2)`)
   const byInstrument = (await q(`SELECT instrument, language, COUNT(*) AS n FROM results WHERE is_seed = 0 AND created_at >= ? AND created_at < ? GROUP BY instrument, language ORDER BY n DESC`, ...Y))
     .map((r) => [LABELS[r.instrument] || r.instrument, r.language || '—', r.n])
   const byLang = (await q(`SELECT COALESCE(lang,'?') AS lang, COUNT(DISTINCT anon_id) AS n FROM events WHERE name='page_view' AND created_at >= ? AND created_at < ? GROUP BY lang ORDER BY n DESC`, ...Y)).map((r) => [r.lang, r.n])
@@ -226,7 +245,7 @@ export async function gatherProduct(db, b) {
         SUM(status='replied') AS replied, SUM(status='bounced') AS bounced,
         SUM(status='complained') AS complained FROM outreach`).bind(...Y).first()
   } catch { /* not yet migrated */ }
-  return { signups, tests, pageViews, visitors, starts, byInstrument, byLang, topPages, newUsers, witness, top, takingOff, dropOff, starters, finished, totals, outreach }
+  return { signups, tests, pageViews, visitors, starts, answeredStarts, byInstrument, byLang, topPages, newUsers, witness, top, takingOff, dropOff, starters, finished, totals, outreach }
 }
 
 /** Latest day Search Console has exported (usually two days behind), and the day before it. */
@@ -466,10 +485,13 @@ export function actions(d, frontendUrl = 'https://cercol.team') {
   // Funnel. Two different failures, never both: nobody starts, or they
   // start and drop out. The second one usually means a broken instrument —
   // but only once there are enough starters for zero finishes to be
-  // surprising: see NONE_FINISHED_MIN_STARTERS.
-  if (pr.starts[0] >= NONE_FINISHED_MIN_STARTERS && pr.tests[0] === 0) {
+  // surprising: see NONE_FINISHED_MIN_STARTERS. Gated on answeredStarts,
+  // not raw starts: a mounted first question already logs a start and a
+  // progress row (see gatherProduct), so a day of load-and-leave visitors
+  // says nothing about whether the instrument works.
+  if ((pr.answeredStarts?.[0] || 0) >= NONE_FINISHED_MIN_STARTERS && pr.tests[0] === 0) {
     const where = (pr.dropOff || []).map(([inst, pct]) => `${inst} at ${pct}%`).join(', ')
-    out.push(`${fmt(pr.starts[0])} started a test and none finished${where ? `, getting as far as ${where}` : ' (nobody reached the first tenth)'}. Take that instrument from there and watch the console.`)
+    out.push(`${fmt(pr.answeredStarts[0])} answered at least one question of a test and none finished${where ? `, getting as far as ${where}` : ' (nobody reached the first tenth)'}. Take that instrument from there and watch the console.`)
   } else if (pr.starts[0] === 0 && pr.visitors[0] >= ZERO_START_MIN_VISITORS) {
     const [path] = pr.topPages[0] || []
     out.push(`${fmt(pr.visitors[0])} visitors, nobody started a test. Most-visited page: ${path ? link(frontendUrl + path, path) : 'none recorded'} &mdash; check what it asks the reader to do next.`)
@@ -617,7 +639,7 @@ function evidenceSection({ starters = {}, finished = {} } = {}) {
     for (const f of finished[id] || []) parts.push(`**finished** ${f}`)
     out.push(`- \`${id}\`: ${parts.join(', ')}`)
   }
-  out.push('', 'A visitor with nothing but a single test_start is very likely automated.', '</details>', '')
+  out.push('', 'A bare page load already logs test_start plus a first progress row (New Moon reports 10%, First Quarter 1%) before anything is answered, so a same-minute page_view/test_start/progress burst that stops at that floor answered nothing and is very likely automated or an instant bounce.', '</details>', '')
   return out
 }
 
