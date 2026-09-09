@@ -151,11 +151,15 @@ export async function gatherProduct(db, b) {
     completed: await count(db, `SELECT COUNT(*) AS n FROM witness_sessions WHERE is_seed = 0 AND completed_at >= ? AND completed_at < ?`, ...Y),
     groups: await count(db, `SELECT COUNT(*) AS n FROM groups WHERE is_seed = 0 AND created_at >= ? AND created_at < ?`, ...Y),
   }
-  // Reads yesterday vs the article's own 7-day daily average.
+  // Readers yesterday vs the article's own 7-day daily average. Distinct
+  // people, not raw views: one visitor reloading an article eleven times
+  // read the 2026-09-05 brief as "taking off" when three people had been
+  // there, and the takeoff threshold below is calibrated in people. A view
+  // without an anon_id keeps counting as its own reader via the row id.
   const reads = await q(`
     SELECT slug,
-           SUM(CASE WHEN created_at >= ?1 AND created_at < ?2 THEN 1 ELSE 0 END) AS y,
-           SUM(CASE WHEN created_at >= ?3 AND created_at < ?1 THEN 1 ELSE 0 END) / 7.0 AS avg7
+           COUNT(DISTINCT CASE WHEN created_at >= ?1 AND created_at < ?2 THEN COALESCE(anon_id, 'r' || id) END) AS y,
+           COUNT(DISTINCT CASE WHEN created_at >= ?3 AND created_at < ?1 THEN COALESCE(anon_id, 'r' || id) END) / 7.0 AS avg7
       FROM events WHERE name='article_view' AND slug IS NOT NULL AND created_at >= ?3 AND created_at < ?2
      GROUP BY slug ORDER BY y DESC LIMIT 40`, iso(b.y0), iso(b.y1), iso(b.avg0))
   const titles = Object.fromEntries((await q(`SELECT slug, json_extract(title, '$.en') AS t FROM blog_posts`)).map((r) => [r.slug, r.t]))
@@ -489,7 +493,7 @@ export function actions(d, frontendUrl = 'https://cercol.team') {
       : y >= CTA_CLAIM_MIN_READS
         ? ' Not one of them went on to an instrument: both cards are on the page, so it is the copy on them that is not landing.'
         : ''
-    out.push(`${link(`${frontendUrl}/blog/${slug}/`, t)} is taking off: ${fmt(y)} reads ${pace}.${bridge}`)
+    out.push(`${link(`${frontendUrl}/blog/${slug}/`, t)} is taking off: ${fmt(y)} readers ${pace}.${bridge}`)
   }
 
   // Ranking on page one and getting nothing: a title and description problem.
@@ -540,7 +544,7 @@ export function dailyHtml(data, frontendUrl = 'https://cercol.team') {
   // average is a 10x that means nothing. Show a multiplier only above that.
   const pace = (y, avg) => (y < 3 ? `<span style="color:${C.muted};">&ndash;</span>` : avg < 0.1 ? '<span style="color:' + C.muted + ';">new</span>' : y >= 2 * avg ? `<span style="color:${C.green};">&#9650; ${(y / avg).toFixed(1)}&times;</span>` : y <= 0.5 * avg ? `<span style="color:${C.muted};">&#9660; ${(y / avg).toFixed(1)}&times;</span>` : `<span style="color:${C.muted};">&asymp;</span>`)
   let content = pr.top.length
-    ? table(['Top articles', 'Reads', 'vs own pace'], pr.top.map(([t, s, y, a]) => [art(t, s), fmt(y), pace(y, a)]), ['left', 'right', 'right'])
+    ? table(['Top articles', 'Readers', 'vs own pace'], pr.top.map(([t, s, y, a]) => [art(t, s), fmt(y), pace(y, a)]), ['left', 'right', 'right'])
     : empty('No article reads recorded yesterday.')
   // Top pages minus the blog ones: those are already the table above.
   const nonArticle = pr.topPages.filter(([pth]) => !pth.includes('/blog/')).slice(0, 5)
