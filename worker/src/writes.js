@@ -24,7 +24,11 @@ import { ensureProfile, httpError, jsonBody, now, uuid } from './db.js'
 // save_result_cta is the "save this result" click on a results page (plan
 // step tg13, the anonymous-to-account bridge). Also its own name: whether
 // the offer of an account convinces anyone is the number the step watches.
-const EVENT_NAMES = new Set(['article_view', 'cta_click', 'test_start', 'test_progress', 'page_view', 'witness_cta', 'save_result_cta'])
+// witness_invite_cta is the Full Moon nudge click on a solo finisher's
+// results page (the how-others-see-you card). The front end of the witness
+// funnel, where witness_cta is its back end; the day-15 review found the
+// funnel had no entry lever at all.
+const EVENT_NAMES = new Set(['article_view', 'cta_click', 'test_start', 'test_progress', 'page_view', 'witness_cta', 'save_result_cta', 'witness_invite_cta'])
 
 // api/blog.py: _AUTOMATED_UA. Every entry is a self-identifying token; a bare
 // "bot" is deliberately absent because it matches the CUBOT phone brand.

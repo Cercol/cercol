@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Card, Button, SectionLabel } from './ui'
 import { FirstQuarterIcon, FullMoonIcon } from './MoonIcons'
+import { trackEvent } from '../lib/api'
 
 const CONFIG = {
   firstQuarter: {
@@ -18,13 +19,21 @@ const CONFIG = {
   fullMoon: {
     Icon:  FullMoonIcon,
     route: '/full-moon',
+    // The witness funnel's entry point (witness_cta is its exit): a solo
+    // finisher clicking through to the instrument that adds Witnesses.
+    event: 'witness_invite_cta',
   },
 }
 
 export default function InstrumentNudge({ target }) {
   const { t }    = useTranslation()
   const navigate = useNavigate()
-  const { Icon, route } = CONFIG[target]
+  const { Icon, route, event } = CONFIG[target]
+
+  function handleClick() {
+    if (event) trackEvent(event, { path: window.location.pathname })
+    navigate(route)
+  }
 
   return (
     <Card accent="blue" className="p-5">
@@ -45,7 +54,7 @@ export default function InstrumentNudge({ target }) {
           </p>
           <Button
             variant="primary"
-            onClick={() => navigate(route)}
+            onClick={handleClick}
             className="shadow-sm"
           >
             {t(`nudge.${target}.cta`)}
