@@ -251,6 +251,36 @@ export function proseClickHandler(slug, lang) {
   }
 }
 
+/**
+ * Order the fallback candidates for the related-articles section.
+ *
+ * The /blog list arrives newest-first, and slicing its head meant every
+ * article whose prose links nothing pointed its three fallback slots at the
+ * same newest posts: the head of the list collected inbound links from
+ * hundreds of pages while most of the corpus received no link from any
+ * article page at all. A page no article links to is the commonest cause of
+ * "crawled - currently not indexed" on the translated versions (2026-09-08
+ * brief: three four-month-old pages with zero in-prose inbound links).
+ *
+ * Ring order fixes the in-degree: sort the candidates by slug, same
+ * category first, then the rest, and start each group just past the current
+ * article's slug, wrapping around. Every article is then linked from its
+ * ring neighbours, and the choice is stable across renders and prerenders
+ * because it depends only on the current slug and the candidate set.
+ */
+export function relatedFallback(current, candidates) {
+  const bySlug = (a, b) => (a.slug < b.slug ? -1 : a.slug > b.slug ? 1 : 0)
+  const ring = (list) => {
+    const sorted = [...list].sort(bySlug)
+    const at = sorted.findIndex(p => p.slug > current.slug)
+    return at <= 0 ? sorted : [...sorted.slice(at), ...sorted.slice(0, at)]
+  }
+  const cat = current.category ?? 'general'
+  const same = candidates.filter(p => (p.category ?? 'general') === cat)
+  const rest = candidates.filter(p => (p.category ?? 'general') !== cat)
+  return [...ring(same), ...ring(rest)]
+}
+
 /** Parse ## and ### headings from markdown content for ToC. */
 function extractHeadings(markdown) {
   if (!markdown) return []
@@ -365,7 +395,8 @@ export default function BlogArticlePage() {
   }
 
   // Fetch related posts: articles explicitly linked from the text come first;
-  // recent articles fill the remaining slots up to 3. Scales to any number of articles.
+  // ring-ordered category neighbours (relatedFallback) fill the remaining
+  // slots up to 3, so every article in the corpus receives inbound links.
   useEffect(() => {
     if (!post) return
     getBlogPosts()
@@ -374,7 +405,7 @@ export default function BlogArticlePage() {
         const linkedSlugs = extractLinkedSlugs(post.content)
         const linked   = data.filter(p => p.slug !== slug && linkedSlugs.includes(p.slug))
         const fallback = data.filter(p => p.slug !== slug && !linkedSlugs.includes(p.slug))
-        setRelatedPosts([...linked, ...fallback].slice(0, 3))
+        setRelatedPosts([...linked, ...relatedFallback({ slug, category: post.category }, fallback)].slice(0, 3))
       })
       .catch(() => {})
   }, [slug, post])
