@@ -11,8 +11,9 @@
  * prevents icon overlaps.
  */
 import { useState, useEffect } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { navHref } from '../lib/navigation'
 import { colors } from '../design/tokens'
 import { NewMoonIcon, FirstQuarterIcon, FullMoonIcon, LastQuarterIcon, RoleIcon } from '../components/MoonIcons'
 import { usePageMeta } from '../hooks/usePageMeta'
@@ -92,7 +93,7 @@ function generateWallpaper() {
  * InstrumentCard — white card with colored left border.
  * On hover: fills with accentColor; text inverts (white, or black on yellow).
  */
-function InstrumentCard({ icon, name, description, meta, accentColor, titleColor, darkHover = false, paymentLabel, onClick }) {
+function InstrumentCard({ icon, name, description, meta, accentColor, titleColor, darkHover = false, paymentLabel, to, rel }) {
   const [hovered, setHovered] = useState(false)
 
   const textColor = hovered ? (darkHover ? colors.black : colors.white) : colors.black
@@ -101,12 +102,17 @@ function InstrumentCard({ icon, name, description, meta, accentColor, titleColor
   // darker variant as titleColor when the default accentColor is inaccessible.
   const defaultTitleColor = titleColor ?? accentColor
 
+  // A real anchor, not a button with onClick: the cards are the home page's
+  // only path to the instrument pages, and a click handler is invisible to a
+  // crawler. The prerendered home carried no link at all to /first-quarter/,
+  // which Google reported as discovered but never crawled.
   return (
-    <button
-      onClick={onClick}
+    <Link
+      to={to}
+      rel={rel}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="text-left w-full p-8 cursor-pointer"
+      className="text-left block w-full p-8 cursor-pointer"
       style={{
         backgroundColor: hovered ? accentColor : colors.white,
         color: textColor,
@@ -146,12 +152,11 @@ function InstrumentCard({ icon, name, description, meta, accentColor, titleColor
           </span>
         )}
       </div>
-    </button>
+    </Link>
   )
 }
 
 export default function HomePage() {
-  const navigate = useNavigate()
   const { t, i18n } = useTranslation()
   const lang = i18n.language?.slice(0, 2) || 'en'
   // Keep the SEO-rich English title/description from the index.html shell
@@ -198,7 +203,7 @@ export default function HomePage() {
             description={t('home.newMoon.description')}
             meta={t('home.newMoon.meta')}
             accentColor={colors.red}
-            onClick={() => navigate('/new-moon')}
+            to={navHref({ to: '/new-moon' }, lang)}
           />
           <InstrumentCard
             icon={<FirstQuarterIcon size={80} />}
@@ -206,7 +211,7 @@ export default function HomePage() {
             description={t('home.firstQuarter.description')}
             meta={t('home.firstQuarter.meta')}
             accentColor={colors.green}
-            onClick={() => navigate('/first-quarter')}
+            to={navHref({ to: '/first-quarter' }, lang)}
           />
           <InstrumentCard
             icon={<FullMoonIcon size={80} />}
@@ -217,7 +222,8 @@ export default function HomePage() {
             titleColor="#8a6100"  // WCAG AA accessibility: yellow #f1c22f on white is 1.65:1; #8a6100 is 5.12:1
             darkHover
             paymentLabel={t('home.fullMoon.paid')}
-            onClick={() => navigate('/full-moon')}
+            to={navHref({ to: '/full-moon' }, lang)}
+            rel="nofollow"
           />
           <InstrumentCard
             icon={<LastQuarterIcon size={80} />}
@@ -225,7 +231,8 @@ export default function HomePage() {
             description={t('home.lastQuarter.description')}
             meta={t('home.lastQuarter.meta')}
             accentColor={colors.black}
-            onClick={() => navigate('/groups')}
+            to={navHref({ to: '/groups' }, lang)}
+            rel="nofollow"
           />
         </div>
       </div>
