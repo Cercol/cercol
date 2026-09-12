@@ -535,6 +535,23 @@ banner links `/auth` from all 168 of them. Both links carry
 `rel="nofollow"` now. Prerendering them was rejected for the reason
 given in scripts/prerender.mjs.
 
+### English-only pages (2026-09-12)
+
+`/new-moon` and `/first-quarter` are public and prerendered, but only at
+the unprefixed path: the router declares no `/<lang>` route for the
+instrument-taking pages. Until 2026-09-12 navHref, prerender and the
+sitemap all pretended otherwise, so every localized page linked
+`/fr/new-moon/` and its siblings, prerender baked the 404 page into
+dist for those ten URLs as HTTP 200 soft 404s, and the sitemap
+advertised them; Search Console reported "discovered - currently not
+indexed". The shared list in `scripts/lib/en-only-routes.mjs` now keeps
+prerender, generate-sitemap and validate_sitemap agreeing that these
+pages get one URL each, with no localized variants and no hreflang;
+navHref sends a localized reader there as `/new-moon?lang=<code>`,
+which useLocaleSync turns into the right interface language, and
+usePageMeta (`localized: false`) canonicalises the query form back to
+the bare path.
+
 ### The guard had never run
 
 `test_internal_links_integrity.py` skips unless `dist/` is prerendered.

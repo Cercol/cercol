@@ -10,6 +10,7 @@
 import { writeFileSync } from 'fs'
 import { fileURLToPath } from 'url'
 import { dirname, resolve } from 'path'
+import { EN_ONLY_PAGES } from './lib/en-only-routes.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const OUT = resolve(__dirname, '../public/sitemap.xml')
@@ -26,17 +27,25 @@ const STATIC_PAGES = [
   { path: '/privacy',   priority: '0.4', changefreq: 'yearly' },
   { path: '/for-organizations', priority: '0.6', changefreq: 'monthly' },
   { path: '/for-facilitators',  priority: '0.6', changefreq: 'monthly' },
-  // The two public instrument pages are the conversion destination, so they
-  // carry the highest priority after the home. They were absent from both
-  // this list and the prerender route list, which is why they answered HTTP
-  // 404 and never entered the index. Keep the two lists in step.
-  //
-  // /full-moon is not listed: it redirects an anonymous visitor to /auth, so
-  // a crawler following it would be bounced, and the sitemap would be
-  // advertising a page no reader can see. /instruments covers it publicly.
-  { path: '/new-moon',      priority: '0.9', changefreq: 'monthly' },
-  { path: '/first-quarter', priority: '0.9', changefreq: 'monthly' },
 ]
+
+// The two public instrument pages are the conversion destination, so they
+// carry the highest priority after the home. They were absent from both
+// this list and the prerender route list, which is why they answered HTTP
+// 404 and never entered the index. Keep the two lists in step.
+//
+// English-only: the router declares no /<lang> route for them, so the
+// localized <loc>s this file used to emit pointed at prerendered 404 pages
+// (Search Console: "discovered - currently not indexed"). One <loc> each,
+// no hreflang alternates; a localized reader arrives via ?lang=. The list
+// itself is shared with prerender.mjs and validate_sitemap.mjs.
+//
+// /full-moon is not listed: it redirects an anonymous visitor to /auth, so
+// a crawler following it would be bounced, and the sitemap would be
+// advertising a page no reader can see. /instruments covers it publicly.
+const EN_ONLY_STATIC_PAGES = EN_ONLY_PAGES.map(path => (
+  { path, priority: '0.9', changefreq: 'monthly' }
+))
 
 // Trailing slash required: GitHub Pages serves <path>/index.html and
 // 301-redirects any URL without a trailing slash. Sitemap entries pointing
@@ -62,15 +71,17 @@ function hreflangAlts(path) {
   `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${BASE}${p}"/>`
 }
 
-function urlEntry(path, { priority, changefreq, lastmod, loc }) {
+function urlEntry(path, { priority, changefreq, lastmod, loc, alts = true }) {
   const p = withTrailingSlash(path)
   const locUrl = loc || `${BASE}${p}`
   const lm = lastmod ? `\n    <lastmod>${lastmod}</lastmod>` : ''
+  // alts: false for English-only pages, which have no language alternates
+  // to declare (the prefixed URLs would render the 404 page).
+  const altBlock = alts ? `\n${hreflangAlts(p)}` : ''
   return `  <url>
     <loc>${locUrl}</loc>${lm}
     <changefreq>${changefreq}</changefreq>
-    <priority>${priority}</priority>
-${hreflangAlts(p)}
+    <priority>${priority}</priority>${altBlock}
   </url>`
 }
 
@@ -118,6 +129,11 @@ async function main() {
     }
   }
 
+  // The English-only pages get exactly one <loc> and no alternates.
+  for (const { path, priority, changefreq } of EN_ONLY_STATIC_PAGES) {
+    parts.push(urlEntry(path, { priority, changefreq, alts: false }))
+  }
+
   parts.push('', '  <!-- Blog index (one entry per language) -->')
   for (const lang of LANGS) {
     parts.push(urlEntry('/blog', { priority: '0.8', changefreq: 'weekly', loc: langUrl('/blog', lang) }))
@@ -148,7 +164,7 @@ async function main() {
 
   parts.push('', '</urlset>', '')
 
-  const total = (STATIC_PAGES.length + 1 + posts.length) * LANGS.length
+  const total = (STATIC_PAGES.length + 1 + posts.length) * LANGS.length + EN_ONLY_STATIC_PAGES.length
   writeFileSync(OUT, parts.join('\n'), 'utf8')
   console.log(`[sitemap] written to ${OUT} — ${total} entries`)
 }
