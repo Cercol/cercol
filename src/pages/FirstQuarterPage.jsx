@@ -81,6 +81,9 @@ export default function FirstQuarterPage() {
     title: t('seo.firstQuarter.title'),
     description: t('seo.firstQuarter.description'),
     path: '/first-quarter/',
+    // English-only route: readers arrive as /first-quarter?lang=<code>, and
+    // the prefixed variants are not routes, so no locale canonical or hreflang.
+    localized: false,
   })
   const { setItemContext } = useFeedbackContext()
   const { user, loading: authLoading } = useAuth()

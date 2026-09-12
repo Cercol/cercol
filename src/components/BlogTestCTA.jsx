@@ -152,8 +152,9 @@ export default function BlogTestCTA({ slug, lang = 'en', category, compact = fal
 
   // The end-of-article card sends the reader to the longer instrument; the
   // early one keeps the two-minute promise it makes. Both in the language the
-  // article is in: a French reader who reached the end of a French article was
-  // being handed an English test, and /fr/first-quarter/ has existed all along.
+  // article is in, carried as ?lang= by navHref: the test pages have no
+  // /fr/first-quarter route (linking one handed the reader the 404 page),
+  // but they render in the reader's language from the query.
   //
   // Except when the heading promises facets. New Moon reports five dimension
   // scores and no facet breakdown, so a compact card on a facet article was

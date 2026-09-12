@@ -17,6 +17,7 @@ import { readFileSync } from 'node:fs'
 import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { describe, it, expect } from 'vitest'
+import { EN_ONLY_PAGES } from '../lib/en-only-routes.mjs'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const read = (f) => readFileSync(resolve(here, '..', f), 'utf8')
@@ -49,14 +50,22 @@ describe('static route lists', () => {
     expect(missing).toEqual([])
   })
 
-  it('pre-renders the two public instrument pages', () => {
+  it('pre-renders the two public instrument pages, English-only', () => {
     // Named explicitly rather than left to the containment rule above: these
     // are the conversion destination of every blog CTA, and dropping them
-    // from both lists at once would satisfy containment while restoring the
-    // original bug.
-    const rendered = new Set(prerenderRoutes())
-    for (const route of ['/new-moon', '/first-quarter']) {
-      expect(rendered.has(route), `${route} must be pre-rendered`).toBe(true)
+    // everywhere at once would satisfy containment while restoring the
+    // original bug. They live in the shared EN_ONLY_PAGES list (the router
+    // has no /<lang> route for them), which both prerender.mjs and
+    // generate-sitemap.mjs consume; putting them back into STATIC_ROUTES or
+    // STATIC_PAGES would resurrect the ten prerendered 404 pages.
+    expect(EN_ONLY_PAGES).toContain('/new-moon')
+    expect(EN_ONLY_PAGES).toContain('/first-quarter')
+    for (const route of EN_ONLY_PAGES) {
+      expect(prerenderRoutes(), `${route} must not be localized`).not.toContain(route)
+      expect(sitemapPaths(), `${route} must not be localized`).not.toContain(route)
+    }
+    for (const script of ['prerender.mjs', 'generate-sitemap.mjs']) {
+      expect(read(script)).toContain('en-only-routes.mjs')
     }
   })
 
