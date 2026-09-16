@@ -21,10 +21,14 @@
 
 import { readFileSync, existsSync } from 'fs'
 import { join } from 'path'
+import { EN_ONLY_PAGES } from './lib/en-only-routes.mjs'
 
 const DIST = new URL('../dist/', import.meta.url).pathname
 const BASE = 'https://cercol.team'
 export const LANGS = ['en', 'ca', 'es', 'fr', 'de', 'da']
+
+/** Pages advertised in English only, with the trailing slash locs carry. */
+const EN_ONLY = new Set(EN_ONLY_PAGES.map((p) => `${p}/`))
 
 /** Every <loc> in the sitemap, as site-relative paths. */
 export function locs(xml) {
@@ -46,6 +50,9 @@ export function languageCoverage(paths) {
   }
   const incomplete = []
   for (const [rest, langs] of Object.entries(seen)) {
+    // The English-only pages are meant to appear exactly once: their
+    // localized URLs are not routes, so "missing" languages are correct.
+    if (EN_ONLY.has(rest)) continue
     const missing = LANGS.filter((l) => !langs.has(l))
     if (missing.length) incomplete.push({ path: rest, missing })
   }

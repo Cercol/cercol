@@ -60,6 +60,9 @@ export default function FullMoonPage() {
     title: t('seo.fullMoon.title'),
     description: t('seo.fullMoon.description'),
     path: '/full-moon/',
+    // English-only route, like NewMoonPage: the prefixed variants are not
+    // routes, so no locale canonical or hreflang.
+    localized: false,
   })
   const { setItemContext } = useFeedbackContext()
   const { user, loading: authLoading } = useAuth()

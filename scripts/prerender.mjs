@@ -68,6 +68,7 @@ import { join, resolve } from 'path'
 import { fileURLToPath, pathToFileURL } from 'url'
 import { normalizeUnsplashUrl } from '../src/utils/unsplash.js'
 import { canonicaliseInternalHrefs } from './lib/canonical-links.mjs'
+import { EN_ONLY_PAGES } from './lib/en-only-routes.mjs'
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url))
 const DIST_DIR   = resolve(__dirname, '../dist')
@@ -80,11 +81,12 @@ const CONCURRENCY = 4
 // Static routes to prerender — auth-gated routes are excluded.
 //
 // New Moon and First Quarter are public (no auth, no purchase gate) and are
-// the destination of every blog CTA, so they belong here. Omitting them made
-// GitHub Pages serve public/404.html — a JS redirect shim — which means the
-// pages answered HTTP 404 to Googlebot, to Slack/LinkedIn/WhatsApp link
-// previews and to LLM crawlers, while still working for a human with JS.
-// The product was unindexable for as long as that list lacked them.
+// the destination of every blog CTA, so they are prerendered too, in
+// EN_ONLY_STATIC_ROUTES below. Omitting them made GitHub Pages serve
+// public/404.html — a JS redirect shim — which means the pages answered
+// HTTP 404 to Googlebot, to Slack/LinkedIn/WhatsApp link previews and to
+// LLM crawlers, while still working for a human with JS. The product was
+// unindexable for as long as the route list lacked them.
 // useTrackTestStart is safe here: trackEvent returns early on
 // window.__PRERENDER__, so the build pass emits no funnel events.
 //
@@ -103,8 +105,17 @@ const STATIC_ROUTES = [
   '/sample', '/sample/full-moon',
   // Painted doors: organizational and practitioner interest pages.
   '/for-organizations', '/for-facilitators',
-  '/new-moon', '/first-quarter',
 ]
+
+// Public routes that exist ONLY unprefixed. The router declares no
+// /<lang>/new-moon or /<lang>/first-quarter route (App.jsx excludes the
+// instrument-taking pages from TOP_LEVEL_PAGES on purpose), so localizing
+// them here rendered the NotFoundPage and baked it into dist as an HTTP 200
+// soft 404, ten URLs' worth, which Search Console then reported as
+// "discovered - currently not indexed". A localized reader reaches these
+// via ?lang= (navHref), which needs no prerender of its own. The list is
+// shared with the sitemap generator and validator.
+const EN_ONLY_STATIC_ROUTES = EN_ONLY_PAGES
 const BLOG_LANGS = ['en', 'ca', 'es', 'fr', 'de', 'da']
 
 // ---------------------------------------------------------------------------
@@ -305,6 +316,9 @@ function buildRoutes(slugs) {
       const localized = route === '/' ? `/${lang}` : `/${lang}${route}`
       staticRoutes.push({ route: localized, lang })
     }
+  }
+  for (const route of EN_ONLY_STATIC_ROUTES) {
+    staticRoutes.push({ route, lang: 'en' })
   }
   for (const lang of BLOG_LANGS) {
     const prefix = lang === 'en' ? '' : `/${lang}`

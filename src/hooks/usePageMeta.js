@@ -23,6 +23,13 @@
  * @param {string=}  opts.ogTitle       og:title / twitter:title content (defaults to title)
  * @param {string=}  opts.ogDescription og:description / twitter:description content (defaults to description)
  * @param {string}   opts.path          route path with trailing slash, e.g. "/about/"
+ * @param {boolean=} opts.localized     false for pages that exist only at the
+ *                                      unprefixed path (the instrument-taking
+ *                                      pages): the canonical then ignores the
+ *                                      reader's locale and no hreflang
+ *                                      alternates are emitted, because the
+ *                                      prefixed URLs they would point at are
+ *                                      not routes. Defaults to true.
  */
 import { useEffect } from 'react'
 import { ALL_LANGS, localeForCanonical, localizedPath } from '../utils/locale'
@@ -41,13 +48,16 @@ function currentLocale() {
   return localeForCanonical(window.location.pathname, window.location.search)
 }
 
-export function usePageMeta({ title, description, ogTitle, ogDescription, image, path }) {
+export function usePageMeta({ title, description, ogTitle, ogDescription, image, path, localized = true }) {
   useEffect(() => {
     // `path` is the language-neutral page path (e.g. "/about/"). The
     // canonical points to the locale-prefixed version that owns this view,
     // so /es/about/ and /about?lang=es both canonicalise to /es/about/.
+    // An English-only page (localized: false) canonicalises to the bare
+    // path whatever the reader's language: /new-moon?lang=fr must not
+    // claim /fr/new-moon/, which is not a route.
     const cleanPath = withTrailingSlash(path)
-    const locale = currentLocale()
+    const locale = localized ? currentLocale() : 'en'
     const canonicalUrl = `${BASE}${withTrailingSlash(localizedPath(cleanPath, locale))}`
 
     // Title
@@ -120,10 +130,15 @@ export function usePageMeta({ title, description, ogTitle, ogDescription, image,
       document.head.appendChild(link)
       added.push(link)
     }
-    LANGS.forEach(l => {
-      makeAlt(l, `${BASE}${withTrailingSlash(localizedPath(cleanPath, l))}`)
-    })
-    makeAlt('x-default', `${BASE}${cleanPath}`)
+    // An English-only page has no language alternates to declare: emitting
+    // them advertised /ca|es|fr|de|da/new-moon/ to crawlers, ten URLs that
+    // render the 404 page.
+    if (localized) {
+      LANGS.forEach(l => {
+        makeAlt(l, `${BASE}${withTrailingSlash(localizedPath(cleanPath, l))}`)
+      })
+      makeAlt('x-default', `${BASE}${cleanPath}`)
+    }
 
     return () => {
       document.title = prevTitle
@@ -131,7 +146,7 @@ export function usePageMeta({ title, description, ogTitle, ogDescription, image,
       socialPrev.forEach(({ el, prev }) => prev !== null && el.setAttribute('content', prev))
       added.forEach(el => el.remove())
     }
-  }, [title, description, ogTitle, ogDescription, image, path])
+  }, [title, description, ogTitle, ogDescription, image, path, localized])
 }
 
 export default usePageMeta

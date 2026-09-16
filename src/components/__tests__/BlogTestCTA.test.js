@@ -38,11 +38,14 @@ describe('BlogTestCTA', () => {
 
   it('keeps a non-English reader in their language', () => {
     // A French reader who reached the end of a French article was handed an
-    // English test, and /fr/first-quarter/ has existed all along.
+    // English test. The test pages have no /fr/first-quarter route (the
+    // prefixed link rendered the 404 page), so the language travels as
+    // ?lang= on the unprefixed path; /fr/sample is a real route and keeps
+    // its prefix.
     for (const lang of ['ca', 'es', 'fr', 'de', 'da']) {
-      expect(htmlWith({ lang }), lang).toContain(`href="/${lang}/first-quarter"`)
+      expect(htmlWith({ lang }), lang).toContain(`href="/first-quarter?lang=${lang}"`)
       expect(htmlWith({ lang }), lang).toContain(`href="/${lang}/sample"`)
-      expect(htmlWith({ lang, compact: true }), lang).toContain(`href="/${lang}/new-moon"`)
+      expect(htmlWith({ lang, compact: true }), lang).toContain(`href="/new-moon?lang=${lang}"`)
     }
     // English keeps the bare path, and an unknown language falls back to it.
     expect(htmlWith({ lang: 'en' })).toContain('href="/first-quarter"')

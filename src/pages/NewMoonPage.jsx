@@ -92,6 +92,9 @@ export default function NewMoonPage() {
     title: t('seo.newMoon.title'),
     description: t('seo.newMoon.description'),
     path: '/new-moon/',
+    // English-only route: readers arrive as /new-moon?lang=<code>, and the
+    // prefixed variants are not routes, so no locale canonical or hreflang.
+    localized: false,
   })
 
   async function handleRedo() {

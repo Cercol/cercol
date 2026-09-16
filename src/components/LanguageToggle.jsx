@@ -12,13 +12,15 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { GlobeIcon } from './MoonIcons'
 import { colors } from '../design/tokens'
 import { stripLocale, localizedPath } from '../utils/locale'
+import { LOCALIZED_PATHS } from '../lib/navigation'
 
 // Language-neutral paths that exist as a real per-locale path, so switching
 // language navigates instead of only swapping copy in place. Blog paths are
-// matched separately by prefix.
-const LOCALIZABLE_PATHS = new Set([
-  '/', '/about', '/instruments', '/roles', '/science', '/faq', '/privacy',
-])
+// matched separately by prefix. The list lives in navigation.js: this
+// component kept a private copy that lacked /sample and the painted-door
+// pages, so switching language there navigated nowhere and useLocaleSync
+// snapped the language straight back to the path's.
+const LOCALIZABLE_PATHS = new Set(LOCALIZED_PATHS)
 
 const STORAGE_KEY = 'cercol-lang'
 const LANGS = [

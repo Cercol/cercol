@@ -100,23 +100,49 @@ export const META_LINKS = [
 ]
 
 /**
+ * The destinations that exist as a prefixed path per locale. Mirrors
+ * TOP_LEVEL_PAGES in App.jsx plus the home page and the blog, which is
+ * everything the router declares under /<lang> and the prerenderer emits
+ * per locale; a sync test in src/lib/__tests__/navigation.test.js keeps
+ * the two lists identical. The instrument-taking pages and the account
+ * pages are deliberately not routed per locale (interactive, not SEO
+ * targets), so they are not here.
+ */
+export const LOCALIZED_PATHS = [
+  '/', '/about', '/instruments', '/roles', '/science', '/faq', '/privacy',
+  '/sample', '/sample/full-moon', '/for-organizations', '/for-facilitators',
+  '/blog',
+]
+
+/** True when `to` has a real /<lang> route (blog articles included). */
+function hasLocalizedRoute(to) {
+  return LOCALIZED_PATHS.includes(to) || to.startsWith('/blog/')
+}
+
+/**
  * The path to link to, for a reader currently in `lang`.
  *
- * Every internal destination gets the prefix. Until 2026-08-22 only the blog
- * did, and the result was a footer that dropped a French reader back into
- * English on every link but one: /fr/instruments/ pointed at /instruments/,
- * /roles/, /science/, /about/, /faq/, /privacy/ and /sample/. All five locales
- * have all eight of those pages, prerendered and in the sitemap, so the
- * prefixed link was always the right one; the flag was a deferral, not a
- * policy.
+ * Destinations with a per-locale route get the prefix. Until 2026-08-22 only
+ * the blog did, and the result was a footer that dropped a French reader back
+ * into English on every link but one: /fr/instruments/ pointed at
+ * /instruments/, /roles/, /science/, /about/, /faq/, /privacy/ and /sample/.
+ * All five locales have all eight of those pages, prerendered and in the
+ * sitemap, so the prefixed link was always the right one there. It also
+ * starved the non-English clusters of internal links, which is the one lever
+ * that moves a page out of "crawled, currently not indexed".
  *
- * It also starved the non-English clusters of internal links, which is the
- * one lever that moves a page out of "crawled, currently not indexed". That
- * verdict on /fr/blog/ is what sent us looking.
+ * Destinations without a per-locale route keep the English path and carry
+ * the language as ?lang=, which useLocaleSync honours. Until 2026-09-12
+ * everything got the prefix, so every localized page linked /fr/new-moon/
+ * and nineteen siblings that no route serves: the reader who clicked "take
+ * the test" got the 404 page, and Google got a soft 404 ("discovered -
+ * currently not indexed" on /fr/new-moon/ is what sent us looking).
  */
 export function navHref({ to }, lang = 'en') {
   const code = String(lang || 'en').slice(0, 2)
-  return LOCALES.includes(code) ? `/${code}${to}` : to
+  if (!LOCALES.includes(code)) return to
+  if (hasLocalizedRoute(to)) return `/${code}${to}`
+  return `${to}?lang=${code}`
 }
 
 /** True when `pathname` is inside this entry, for the active state. */

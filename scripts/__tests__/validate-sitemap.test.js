@@ -19,4 +19,10 @@ describe('validate_sitemap', () => {
     const { incomplete } = languageCoverage(['/blog/a/'])
     expect(incomplete).toEqual([{ path: '/blog/a/', missing: ['ca', 'es', 'fr', 'de', 'da'] }])
   })
+  it('exempts the English-only instrument pages from language coverage', () => {
+    // /new-moon and /first-quarter have no /<lang> route: one <loc> each is
+    // the correct shape, not a coverage gap.
+    const { incomplete } = languageCoverage(['/new-moon/', '/first-quarter/'])
+    expect(incomplete).toEqual([])
+  })
 })
