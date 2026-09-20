@@ -250,6 +250,15 @@ describe('daily brief', () => {
     expect(actions(chilly).some((l) => l.includes('nobody started a test'))).toBe(false)
     // A quiet, healthy day produces an empty list, and the brief says so.
     expect(actions({ warns: [], product: { visitors: [3, 1], starts: [0, 0], tests: [0, 0], topPages: [], takingOff: [] }, search: null })).toEqual([])
+    // A wave that failed to compute is a task, not a quiet day: on a
+    // zero-warning day it would otherwise file no issue at all, leaving a
+    // BigQuery failure indistinguishable from a finished corpus.
+    const waveDown = { warns: [], product: { visitors: [3, 1], starts: [0, 0], tests: [0, 0], topPages: [], takingOff: [] }, search: null, wave: { pending: true, error: 'bigquery 503', pairs: [] } }
+    expect(actions(waveDown)).toHaveLength(1)
+    expect(actions(waveDown)[0]).toContain('content wave could not be computed')
+    expect(actions(waveDown)[0]).toContain('bigquery 503')
+    // A wave that computed, with or without candidates, adds no line.
+    expect(actions({ warns: [], product: { visitors: [3, 1], starts: [0, 0], tests: [0, 0], topPages: [], takingOff: [] }, search: null, wave: { pairs: [] } })).toEqual([])
     // A page nobody clicked but nobody really saw either is not a task.
     expect(actions({ warns: [], product: { visitors: [3, 1], starts: [0, 0], tests: [0, 0], topPages: [], takingOff: [] }, search: { zeroClick: null } })).toEqual([])
   })
