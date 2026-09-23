@@ -482,6 +482,17 @@ export function actions(d, frontendUrl = 'https://cercol.team') {
     out.push(`Search Console never exported ${days.length === 1 ? days[0] : `${days.length} days (${days.join(', ')})`} to BigQuery. Google retries for about a week from each date and then gives up, so ${last} is the one still worth saving. Check that billing is active on the Cloud project and that search-console-data-export@system.gserviceaccount.com still has BigQuery Job User on it and Data Editor on the dataset. The days are not lost from Search Console itself, only from the mirror the brief reads.`)
   }
 
+  // A wave that failed to compute must not look like a wave with nothing
+  // left to review: gatherWave returns pending with empty pairs on a
+  // BigQuery failure, and until this line existed a zero-warning day then
+  // filed no issue at all (fileTasks skips on empty todo plus empty wave)
+  // while the email read "nothing needs you today". The 2026-09-19 brief
+  // went missing without a trace, and nothing could say which of a clean
+  // day, a wave failure or a dead cron it was.
+  if (d.wave?.pending) {
+    out.push(`The content wave could not be computed${d.wave.error ? ` (${esc(d.wave.error)})` : ''}: today's review candidates are unknown, not zero. If this repeats tomorrow, check BigQuery and the Search Console export mirror.`)
+  }
+
   // Funnel. Two different failures, never both: nobody starts, or they
   // start and drop out. The second one usually means a broken instrument —
   // but only once there are enough starters for zero finishes to be
