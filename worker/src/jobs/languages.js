@@ -143,8 +143,16 @@ export function languageGapUrl(snapshot, frontendUrl = 'https://cercol.team') {
  * 2026-09-02 brief spent two of its three lines that way. When the snapshot
  * already holds Google's verdict for this URL, the line carries it instead
  * of asking, and the caller drops the plain indexing line for the same URL.
+ *
+ * The snapshot only holds the URLs inspected that morning, but a verdict
+ * fetched on an earlier morning is still a verdict: it lives in the reported
+ * memory (seo:indexing:reported, keys of url|state|canonical) for the length
+ * of its re-report hold. The 2026-09-26 brief asked the operator to "check it
+ * is indexed" for a URL whose "discovered - currently not indexed" verdict
+ * the inspector had fetched, reported and put on hold two days earlier, so
+ * the memory is consulted before falling back to the question.
  */
-export function languageActions(snapshot, frontendUrl = 'https://cercol.team', indexing = null) {
+export function languageActions(snapshot, frontendUrl = 'https://cercol.team', indexing = null, reported = null) {
   const g = snapshot?.fresh?.[0]
   if (!g) return []
   const url = `${frontendUrl}/${g.lang}/blog/${g.slug}/`
@@ -155,6 +163,12 @@ export function languageActions(snapshot, frontendUrl = 'https://cercol.team', i
       ? `${verdict.state}, and Google indexes ${verdict.googleCanonical} instead`
       : verdict.state
     return [`${head} <a href="${url}" style="text-decoration:underline;">Google's verdict on the page</a> says why: ${why}.`]
+  }
+  for (const [k, at] of Object.entries(reported || {})) {
+    if (k.slice(0, k.indexOf('|')) !== url) continue
+    const [state, canonical] = k.slice(k.indexOf('|') + 1).split('|')
+    const why = canonical ? `${state}, and Google indexes ${canonical} instead` : state
+    return [`${head} <a href="${url}" style="text-decoration:underline;">Google's verdict on the page</a> (from the ${String(at).slice(0, 10)} inspection) says why: ${why}.`]
   }
   return [`${head} Its siblings are fine, so this is that version: <a href="${url}" style="text-decoration:underline;">check it is indexed, then read its title</a>.`]
 }

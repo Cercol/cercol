@@ -628,6 +628,28 @@ describe('language gaps', () => {
     const [line] = languageActions({ fresh: [gap] }, 'https://cercol.team', ix)
     expect(line).toContain('indexes https://cercol.team/de/blog/b instead')
   })
+  // A verdict fetched on an earlier morning rotates out of the day's snapshot
+  // but survives in the reported memory under its re-report hold. The
+  // 2026-09-26 brief asked "check it is indexed" for a URL whose verdict the
+  // inspector had reported two days earlier; the memory answers instead.
+  it('carries a verdict held in the reported memory when the snapshot has rotated on', () => {
+    const reported = { 'https://cercol.team/de/blog/b/|discovered - currently not indexed|': '2026-09-24T05:01:00.000Z' }
+    const [line] = languageActions({ fresh: [gap] }, 'https://cercol.team', { problems: [] }, reported)
+    expect(line).toContain('discovered - currently not indexed')
+    expect(line).toContain('2026-09-24')
+    expect(line).not.toContain('check it is indexed')
+    // A held verdict for some other page changes nothing.
+    const other = { 'https://cercol.team/fr/blog/x/|crawled - currently not indexed|': '2026-09-24T05:01:00.000Z' }
+    expect(languageActions({ fresh: [gap] }, 'https://cercol.team', { problems: [] }, other)[0]).toContain('check it is indexed')
+    // A held verdict that carries a canonical names it.
+    const withCanonical = { 'https://cercol.team/de/blog/b/|page with redirect|https://cercol.team/de/blog/b': '2026-09-24T05:01:00.000Z' }
+    expect(languageActions({ fresh: [gap] }, 'https://cercol.team', { problems: [] }, withCanonical)[0]).toContain('indexes https://cercol.team/de/blog/b instead')
+    // The day's snapshot still wins over the memory when both know the URL.
+    const ix = { problems: [{ url: 'https://cercol.team/de/blog/b/', state: 'crawled - currently not indexed', googleCanonical: null }] }
+    const [fresh] = languageActions({ fresh: [gap] }, 'https://cercol.team', ix, reported)
+    expect(fresh).toContain('crawled - currently not indexed')
+    expect(fresh).not.toContain('2026-09-24')
+  })
   it('hands the caller the URL its line absorbs', () => {
     expect(languageGapUrl({ fresh: [gap] })).toBe('https://cercol.team/de/blog/b/')
     expect(languageGapUrl({ fresh: [] })).toBeNull()
