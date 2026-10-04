@@ -29,7 +29,7 @@
  */
 
 import { query as bq } from '../bigquery.js'
-import { KV_KEY as INDEXING_KEY, indexingActions } from './indexing.js'
+import { KV_KEY as INDEXING_KEY, REPORTED_KEY as INDEXING_REPORTED_KEY, indexingActions } from './indexing.js'
 import { KV_KEY as LANGUAGES_KEY, languageActions, languageGapUrl } from './languages.js'
 import { C, fmt, esc, h1, sub, p, section, empty, delta, stat, statRow, table, bar, callout, shell } from '../email-ui.js'
 
@@ -470,7 +470,7 @@ export function actions(d, frontendUrl = 'https://cercol.team') {
   // The language-gap line absorbs the indexing verdict for its own URL, so
   // the same page does not appear as both a question and an answer.
   const gapUrl = languageGapUrl(d.languages, frontendUrl)
-  const out = [...(d.warns || []), ...indexingActions(d.indexing, { omit: gapUrl ? [gapUrl] : [] }), ...languageActions(d.languages, frontendUrl, d.indexing)]
+  const out = [...(d.warns || []), ...indexingActions(d.indexing, { omit: gapUrl ? [gapUrl] : [] }), ...languageActions(d.languages, frontendUrl, d.indexing, d.indexingReported)]
 
   // A day the bulk export never delivered. This goes first because it is the
   // only line in the brief with a deadline: Google retries for about a week
@@ -711,13 +711,16 @@ export async function runDaily(env, { send = true } = {}) {
   // Written by seo-indexing on the 05:00 trigger: asking Google directly
   // costs nine subrequests and this invocation cannot spare them.
   const indexing = env.NORMS ? await env.NORMS.get(INDEXING_KEY, 'json') : null
+  // The verdicts already reported and on hold, for the language-gap line to
+  // carry when the day's snapshot has rotated on to other URLs.
+  const indexingReported = env.NORMS ? await env.NORMS.get(INDEXING_REPORTED_KEY, 'json') : null
   // Same arrangement: computed at 05:00 over 28 days, read here.
   const languages = env.NORMS ? await env.NORMS.get(LANGUAGES_KEY, 'json') : null
   const decommissioned = env.HETZNER_DECOMMISSIONED === '1'
   const wave = await gatherWave(env, env.DB)
   const warns = warnings(platform, { today: day(b.y1), decommissioned })
   const decommissionIn = decommissioned ? 0 : Math.ceil((Date.parse(DECOMMISSION_DUE) - b.y1.getTime()) / 86400e3)
-  const data = { day: day(b.y0), product, platform, search, indexing, languages, warns, decommissionIn, wave }
+  const data = { day: day(b.y0), product, platform, search, indexing, indexingReported, languages, warns, decommissionIn, wave }
   const issue = send ? await fileTasks(env, data.day, actions(data, env.FRONTEND_URL), { starters: product.starters, finished: product.finished, wave: wave.pairs }) : null
   // A to-do list that quietly failed to be filed is worse than no list at
   // all: the brief would look normal and the tasks would exist nowhere.
