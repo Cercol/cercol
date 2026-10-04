@@ -45,6 +45,11 @@ jobs:
           #   everyone, browsers included, for stretches at a time; avl
           #   has been down since 2026-08-20 and turned this job red on
           #   every PR. The links are correct and stay in the docs.
+          # - termcat.cat: the fourth language authority. Its Consulteca
+          #   fitxa URLs started answering 401 to every client, browsers
+          #   and curl with a browser User-Agent included (first seen
+          #   2026-10-04, turned this job red on main). Same treatment
+          #   as the other three: the citation is correct and stays.
           # - ipip.ori.org and projects.ori.org: return "Connection
           #   reset by peer" to lychee from a runner. Both are
           #   authoritative Oregon Research Institute hosts, ipip for
@@ -83,6 +88,7 @@ jobs:
             --exclude 'dlc\.iec\.cat'
             --exclude 'gencat\.cat'
             --exclude 'avl\.gva\.es'
+            --exclude 'termcat\.cat'
             --exclude-path 'docs/seo/links-audit-*.md'
             --exclude-path 'docs/seo/links-audit-20260528.md'
             './**/*.md'
