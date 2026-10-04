@@ -45,12 +45,20 @@ jobs:
           #   everyone, browsers included, for stretches at a time; avl
           #   has been down since 2026-08-20 and turned this job red on
           #   every PR. The links are correct and stay in the docs.
+<<<<<<< HEAD
+          # - termcat.cat: the fourth language authority. Its Consulteca
+          #   fitxa URLs started answering 401 to every client, browsers
+          #   and curl with a browser User-Agent included (first seen
+          #   2026-10-04, turned this job red on main). Same treatment
+          #   as the other three: the citation is correct and stays.
+=======
           # - termcat.cat: the Catalan terminology centre, same class as
           #   the three above. Started answering 401 Unauthorized to
           #   every non-session request (a browser User-Agent gets the
           #   same 401 from a runner) some time before 2026-10-04, which
           #   turned this job red on main. The dictionary entries are
           #   correct and stay in the docs.
+>>>>>>> origin/main
           # - ipip.ori.org and projects.ori.org: return "Connection
           #   reset by peer" to lychee from a runner. Both are
           #   authoritative Oregon Research Institute hosts, ipip for
