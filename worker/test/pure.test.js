@@ -261,6 +261,15 @@ describe('daily brief', () => {
     expect(actions({ warns: [], product: { visitors: [3, 1], starts: [0, 0], tests: [0, 0], topPages: [], takingOff: [] }, search: null, wave: { pairs: [] } })).toEqual([])
     // A page nobody clicked but nobody really saw either is not a task.
     expect(actions({ warns: [], product: { visitors: [3, 1], starts: [0, 0], tests: [0, 0], topPages: [], takingOff: [] }, search: { zeroClick: null } })).toEqual([])
+    // A zero-click page whose pair the wave reviewed inside the window is
+    // not a task either: its title was just judged, and the impressions the
+    // line reads predate the change (the 2026-10-07 brief re-indicted a
+    // title replaced on 09-25). Another pair of the same slug stays loud.
+    const base = { warns: [], product: { visitors: [3, 1], starts: [0, 0], tests: [0, 0], topPages: [], takingOff: [] } }
+    const zc = { search: { zeroClick: ['https://cercol.team/es/blog/facet/', 90, 6.1] } }
+    expect(actions({ ...base, ...zc, wave: { pairs: [], reviewed: ['es|facet'] } })).toEqual([])
+    expect(actions({ ...base, ...zc, wave: { pairs: [], reviewed: ['en|facet'] } })).toHaveLength(1)
+    expect(actions({ ...base, ...zc, wave: { pairs: [] } })).toHaveLength(1)
   })
   it('nags about the Hetzner decommission from the due date until silenced', () => {
     const ok = { d1: { rowsRead: 1, rowsWritten: 1 }, kv: { write: 1 }, worker: { requests: 1, errors: 0, cpuP99: 1, byStatus: [] }, mailCredit: 5 }
