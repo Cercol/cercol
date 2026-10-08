@@ -388,7 +388,9 @@ export async function gatherWave(env, db) {
       const lr = await fetch(LEDGER_URL)
       if (lr.ok) reviewed = parseLedger(await lr.text())
     } catch { /* ledger unreachable: propose unfiltered, the consumer skips */ }
-    return { pairs: rankWave(rows, reads, 8, reviewed).map((p) => ({ ...p, converts: cmap.get(`${p.lang}|${p.slug}`) ?? 0 })) }
+    // reviewed rides along so actions() can hold the zero-click line for a
+    // pair whose title the wave already judged inside the window.
+    return { pairs: rankWave(rows, reads, 8, reviewed).map((p) => ({ ...p, converts: cmap.get(`${p.lang}|${p.slug}`) ?? 0 })), reviewed: [...reviewed] }
   } catch (e) { return { pending: true, error: e.message, pairs: [] } }
 }
 
@@ -530,9 +532,18 @@ export function actions(d, frontendUrl = 'https://cercol.team') {
   }
 
   // Ranking on page one and getting nothing: a title and description problem.
+  // Unless the wave already reviewed the pair inside its re-review window:
+  // then the title was just judged (replaced or deliberately left), Search
+  // Console's data lags days behind the copy and Google re-picks titles
+  // slowly, so the impressions the line reads predate the fix. The
+  // 2026-10-07 brief re-indicted a title that had been replaced on 09-25.
   if (se?.zeroClick) {
     const [url, impr, pos] = se.zeroClick
-    out.push(`${link(url, new URL(url).pathname)} took ${fmt(impr)} impressions at position ${pos.toFixed(1)} yesterday and not one click. Its title and description are what a searcher decides on.`)
+    const at = parseBlogUrl(url)
+    const reviewed = new Set(d.wave?.reviewed || [])
+    if (!at || !reviewed.has(`${at.lang}|${at.slug}`)) {
+      out.push(`${link(url, new URL(url).pathname)} took ${fmt(impr)} impressions at position ${pos.toFixed(1)} yesterday and not one click. Its title and description are what a searcher decides on.`)
+    }
   }
   return out.slice(0, 5)
 }
