@@ -294,6 +294,37 @@ export function parseBlogUrl(url) {
 }
 
 /**
+ * Days inside which a zero-click line is held after the post's copy changed.
+ * The impressions the line reads are from the latest exported Search Console
+ * day, itself about two days behind; the prerendered page only picks a new
+ * title up at the next nightly build, and Google re-reads titles slower
+ * still. So for a week after a copy write the line can only re-indict the
+ * wording that was already replaced: the 2026-10-09 brief did exactly that,
+ * the morning after the title it complained about had been rewritten. After
+ * a week the data is looking at the new copy and silence is a finding again.
+ */
+export const ZERO_CLICK_EDIT_HOLD_DAYS = 7
+
+/**
+ * Drop the zero-click candidate while its post was edited inside the hold
+ * window. The ledger-based hold in actions() covers pairs the wave reviewed;
+ * this covers the title and description writes made outside the wave, which
+ * never reach the ledger. A post that cannot be looked up keeps its line: a
+ * missing row or an unreadable table must not silence a real finding.
+ */
+export async function holdFreshlyEdited(db, search, now = Date.now()) {
+  if (!search?.zeroClick) return search
+  const at = parseBlogUrl(search.zeroClick[0])
+  if (!at) return search
+  try {
+    const row = await db.prepare('SELECT updated_at FROM blog_posts WHERE slug = ?1').bind(at.slug).first()
+    const ts = row?.updated_at ? Date.parse(row.updated_at) : NaN
+    if (Number.isFinite(ts) && now - ts < ZERO_CLICK_EDIT_HOLD_DAYS * 86400e3) return { ...search, zeroClick: null }
+  } catch { /* table unreadable: keep the line */ }
+  return search
+}
+
+/**
  * The content wave: which article-language pairs deserve the next review,
  * ranked by exposure. A page Google already shows is where a defect costs
  * the most and a fix pays the fastest, so the order is 28-day impressions;
@@ -707,7 +738,7 @@ export async function runDaily(env, { send = true } = {}) {
   const b = dayBounds()
   const product = await gatherProduct(env.DB, b)
   const platform = await gatherPlatform(env, b)
-  const search = await gatherSearch(env)
+  const search = await holdFreshlyEdited(env.DB, await gatherSearch(env))
   // Written by seo-indexing on the 05:00 trigger: asking Google directly
   // costs nine subrequests and this invocation cannot spare them.
   const indexing = env.NORMS ? await env.NORMS.get(INDEXING_KEY, 'json') : null

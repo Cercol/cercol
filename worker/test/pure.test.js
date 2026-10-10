@@ -12,7 +12,7 @@ import { extractLinkTargets, extractDois, isInternal, langsWithContent, doiUrl }
 import { scoreForReport, zscoresFor } from '../src/scoring.js'
 import { validateResult } from '../src/writes.js'
 import { classifyChannel, buildChannels, buildFunnel, buildCumulative, buildDropOff, weekBounds, weekLabel } from '../src/jobs/digest.js'
-import { zeroClickFloor, actions } from '../src/jobs/daily.js'
+import { zeroClickFloor, actions, holdFreshlyEdited } from '../src/jobs/daily.js'
 import { choosePerOwner } from '../src/jobs/nudge.js'
 import { classifyBroken } from '../src/jobs/links.js'
 import { normaliseDate, parseQueryStats } from '../src/jobs/bing.js'
@@ -690,6 +690,41 @@ describe('zero-click floor', () => {
 
   it('never asks for fewer than the old flat floor', () => {
     for (const pos of [1, 2, 3, 5, 7, 8, 10]) expect(zeroClickFloor(pos)).toBeGreaterThanOrEqual(10)
+  })
+})
+
+describe('zero-click hold after a copy edit', () => {
+  const NOW = Date.parse('2026-10-10T04:00:00Z')
+  const search = { zeroClick: ['https://cercol.team/blog/history/', 90, 5.4], clicks: [1, 2] }
+  const dbWith = (updated_at) => ({ prepare: () => ({ bind: () => ({ first: async () => ({ updated_at }) }) }) })
+
+  it('holds the line while the edit is younger than the window', async () => {
+    // The 2026-10-09 brief re-indicted a title rewritten the morning before:
+    // the impressions it read were from the exported day before the write.
+    const held = await holdFreshlyEdited(dbWith('2026-10-09T05:14:36.000Z'), search, NOW)
+    expect(held.zeroClick).toBeNull()
+    expect(held.clicks).toEqual([1, 2])
+  })
+
+  it('reports again once the data has had the window to react', async () => {
+    const out = await holdFreshlyEdited(dbWith('2026-10-01T05:00:00.000Z'), search, NOW)
+    expect(out.zeroClick).toEqual(search.zeroClick)
+  })
+
+  it('keeps the line when the post cannot be looked up', async () => {
+    const missing = { prepare: () => ({ bind: () => ({ first: async () => null }) }) }
+    expect((await holdFreshlyEdited(missing, search, NOW)).zeroClick).toEqual(search.zeroClick)
+    const broken = { prepare: () => { throw new Error('no such table') } }
+    expect((await holdFreshlyEdited(broken, search, NOW)).zeroClick).toEqual(search.zeroClick)
+    expect((await holdFreshlyEdited(dbWith(null), search, NOW)).zeroClick).toEqual(search.zeroClick)
+  })
+
+  it('leaves a non-blog URL and an empty day alone', async () => {
+    const page = { zeroClick: ['https://cercol.team/science', 50, 3] }
+    const db = { prepare: () => { throw new Error('must not be queried') } }
+    expect((await holdFreshlyEdited(db, page, NOW)).zeroClick).toEqual(page.zeroClick)
+    expect(await holdFreshlyEdited(db, { zeroClick: null }, NOW)).toEqual({ zeroClick: null })
+    expect(await holdFreshlyEdited(db, null, NOW)).toBeNull()
   })
 })
 
