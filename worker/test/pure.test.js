@@ -212,6 +212,18 @@ describe('daily brief', () => {
     const clicked = actions({ ...data, warns: [], search: null,
       product: { ...data.product, takingOff: [['Limits', 'limits', 8, 0, 2]] } })
     expect(clicked[1]).toContain('2 of them went on to an instrument.')
+    // The spike is detected per slug but read per language. When most of the
+    // readers were on a translation, the line links that page (the 2026-10-13
+    // brief sent someone to the English page over six German readers) and
+    // shows the split; a single-language spike keeps the plain line.
+    const german = actions({ ...data, warns: [], search: null,
+      product: { ...data.product, takingOff: [['Limits', 'limits', 8, 0, 0, [['de', 6], ['en', 2]]]] } })
+    expect(german[1]).toContain('/de/blog/limits/')
+    expect(german[1]).toContain('8 readers (6 de, 2 en)')
+    const enOnly = actions({ ...data, warns: [], search: null,
+      product: { ...data.product, takingOff: [['Limits', 'limits', 8, 0, 0, [['en', 8]]]] } })
+    expect(enOnly[1]).toContain('https://cercol.team/blog/limits/')
+    expect(enOnly[1]).not.toContain('(8 en)')
     // Above CTA_CLAIM_MIN_READS a silent day stops being the likeliest
     // outcome, and the copy is a fair thing to point at.
     const loud = actions({ ...data, warns: [], search: null,

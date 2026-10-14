@@ -191,6 +191,20 @@ export async function gatherProduct(db, b) {
       WHERE name='cta_click' AND slug IS NOT NULL AND created_at >= ? AND created_at < ? GROUP BY slug`, ...Y))
     .map((r) => [r.slug, Number(r.n)]))
   const takingOff = reads.filter((r) => r.y >= 5 && r.y >= 3 * r.avg7).map((r) => [titles[r.slug] || r.slug, r.slug, r.y, r.avg7, ctaBySlug[r.slug] || 0])
+  // The takeoff is detected per slug because a story spiking is one story,
+  // but the readers arrive per language, and the line used to credit them
+  // all to the English page: on 2026-10-13 six of the eight readers it sent
+  // someone to look at /blog/... for were reading the German translation.
+  // The split lets the renderer link the language that actually took off and
+  // show where the readers were. One extra query, only on a spike day, and
+  // only for the one slug the renderer reports.
+  if (takingOff.length) {
+    const split = await q(`SELECT COALESCE(lang, 'en') AS lang,
+             COUNT(DISTINCT COALESCE(anon_id, 'r' || id)) AS n
+        FROM events WHERE name='article_view' AND slug = ? AND created_at >= ? AND created_at < ?
+       GROUP BY lang ORDER BY n DESC`, takingOff[0][1], ...Y)
+    takingOff[0].push(split.map((r) => [r.lang, Number(r.n)]))
+  }
   // How far the ones who did not finish got: the deepest tenth each visitor
   // reached, from the test_progress events the instrument pages emit. The
   // slug column carries the percentage (see worker/src/writes.js).
@@ -552,14 +566,20 @@ export function actions(d, frontendUrl = 'https://cercol.team') {
   // only worth reporting once there were enough reads for a click to have
   // been expected at all: see CTA_CLAIM_MIN_READS.
   if (pr.takingOff.length) {
-    const [t, slug, y, avg, cta = 0] = pr.takingOff[0]
+    const [t, slug, y, avg, cta = 0, langs = []] = pr.takingOff[0]
     const pace = avg < 0.1 ? 'in its first week out' : `against ${avg.toFixed(1)}/day`
     const bridge = cta > 0
       ? ` ${fmt(cta)} of them went on to an instrument.`
       : y >= CTA_CLAIM_MIN_READS
         ? ' Not one of them went on to an instrument: both cards are on the page, so it is the copy on them that is not landing.'
         : ''
-    out.push(`${link(`${frontendUrl}/blog/${slug}/`, t)} is taking off: ${fmt(y)} readers ${pace}.${bridge}`)
+    // Link the language most of the readers were actually on, not English by
+    // default, and show the split when the readers came from more than one:
+    // the page to go improve is the one that took off.
+    const topLang = langs[0]?.[0]
+    const url = topLang && topLang !== 'en' ? `${frontendUrl}/${topLang}/blog/${slug}/` : `${frontendUrl}/blog/${slug}/`
+    const split = langs.length > 1 ? ` (${langs.map(([l, n]) => `${fmt(n)} ${l}`).join(', ')})` : ''
+    out.push(`${link(url, t)} is taking off: ${fmt(y)} readers${split} ${pace}.${bridge}`)
   }
 
   // Ranking on page one and getting nothing: a title and description problem.
