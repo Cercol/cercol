@@ -25,7 +25,12 @@
  * Silent no-op until the service account in GOOGLE_SA_JSON is added as a
  * user of the Search Console property (Settings, Users and permissions,
  * Restricted is enough). Until then every call is a 403 and the brief simply
- * says nothing, rather than nagging daily about a permission.
+ * says nothing, rather than nagging daily about a permission. A pipeline
+ * that WAS delivering and then starts failing is different: after
+ * PENDING_REPORT_DAYS of consecutive failures the brief says so, because a
+ * brief with no indexing section reads as healthy when it is actually
+ * blind (the 2026-10-16 snapshot failed on a Google 500 and nothing would
+ * ever have said so).
  *
  * Runs on the 05:00 trigger and leaves its answer in KV, rather than inside
  * the 04:00 one that sends the brief. The free plan allows 50 subrequests
@@ -37,6 +42,7 @@
  */
 
 import { accessToken } from '../bigquery.js'
+import { esc } from '../email-ui.js'
 import { KV_KEY as LANGUAGES_KEY } from './languages.js'
 
 const SCOPE = 'https://www.googleapis.com/auth/webmasters.readonly'
@@ -53,6 +59,13 @@ export const SITEMAP_STALE_DAYS = 7
 // asked for it again unchanged. A page is said again the moment its state
 // changes, so this holds only the identical verdict.
 export const RENOTIFY_DAYS = 14
+// How many consecutive days the snapshot may fail before the brief says its
+// indexing section is blind rather than healthy. One day is Google having a
+// bad morning (the 2026-10-16 run died on a Search Console 500); two in a
+// row is a pipeline worth a line. Applies only when the run actually failed
+// (an error is recorded): the unconfigured case stays silent, see the
+// module comment.
+export const PENDING_REPORT_DAYS = 2
 
 /**
  * Paths that are never going to be in Google's index, so asking about one and
@@ -235,6 +248,11 @@ export async function runIndexing(env) {
   // the budget at most, so a long gap list cannot crowd out the home page.
   const gaps = env.NORMS ? await env.NORMS.get(LANGUAGES_KEY, 'json') : null
   const prev = env.NORMS ? await env.NORMS.get(REPORTED_KEY, 'json') : null
+  // Yesterday's snapshot, only for how long the runs have been failing: a
+  // pending run keeps (or starts) the pendingSince stamp, a good run drops
+  // it. The snapshot's own three-day TTL bounds the stamp the same way it
+  // bounds a stale verdict.
+  const prevSnap = env.NORMS ? await env.NORMS.get(KV_KEY, 'json') : null
   const inspectedAt = (env.NORMS ? await env.NORMS.get(INSPECTED_KEY, 'json') : null) || {}
   const gapPaths = gapInspectionPaths(gaps, prev || {}, { origin: env.FRONTEND_URL || 'https://cercol.team', inspectedAt })
   const since = new Date(Date.now() - 2 * 86400e3).toISOString()
@@ -249,8 +267,9 @@ export async function runIndexing(env) {
   const { fresh, reported } = out.pending
     ? { fresh: [], reported: prev || {} }
     : freshProblems(out.problems, prev, { inspected: out.inspected })
+  const pendingSince = out.pending ? (prevSnap?.pendingSince || new Date().toISOString()) : undefined
   if (env.NORMS) {
-    await env.NORMS.put(KV_KEY, JSON.stringify({ ...out, fresh, at: new Date().toISOString() }), { expirationTtl: 3 * 86400 })
+    await env.NORMS.put(KV_KEY, JSON.stringify({ ...out, fresh, pendingSince, at: new Date().toISOString() }), { expirationTtl: 3 * 86400 })
     await env.NORMS.put(REPORTED_KEY, JSON.stringify(reported), { expirationTtl: REPORTED_TTL_DAYS * 86400 })
     if (!out.pending) {
       // Stamp this run's inspections and drop stamps too old to hold
@@ -267,8 +286,18 @@ export async function runIndexing(env) {
 /** The lines the brief should act on, most costly first. Empty when healthy.
  * A URL in omit is left out because another line already carries its verdict
  * (the language-gap line, see languageActions in jobs/languages.js). */
-export function indexingActions(ix, { omit = [] } = {}) {
-  if (!ix || ix.pending) return []
+export function indexingActions(ix, { omit = [], now = Date.now() } = {}) {
+  if (!ix || ix.pending) {
+    // A run that failed (error recorded) for PENDING_REPORT_DAYS in a row is
+    // a blind section, not a healthy one, and the brief says so. A first
+    // failure, and the unconfigured case (pending with no error), stay
+    // silent: see the module comment.
+    if (ix?.pending && ix.error && ix.pendingSince && now - Date.parse(ix.pendingSince) >= PENDING_REPORT_DAYS * 86400e3) {
+      const days = Math.round((now - Date.parse(ix.pendingSince)) / 86400e3)
+      return [`The Search Console snapshot has failed for ${days} days, so the indexing verdicts here are unknown, not healthy. Last error: <code>${esc(String(ix.error).slice(0, 160))}</code>. If it is not Google's own (a 5xx), check the service account's access under Search Console, Settings, Users and permissions.`]
+    }
+    return []
+  }
   const out = []
   // fresh is the problems not already reported in the last RENOTIFY_DAYS;
   // a snapshot from before the memory existed carries only problems.
