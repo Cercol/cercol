@@ -221,6 +221,23 @@ export default {
 }
 
 /**
+ * SQL CASE expression deciding whether `content` holds a non-empty body for
+ * one language key, by GLOB over the raw column. The stored JSON comes in
+ * two shapes: compact `"fr":"..."` (written by the Worker) and spaced
+ * `"fr": "..."` (rows carried over from the Postgres era), so each test is
+ * made against both separators — matching only the compact form made every
+ * spaced row report `languages: []`, and localizeBlogLinks then kept the
+ * English URL for that article on every localized page.
+ *
+ * Exported for unit testing.
+ */
+export function langPresenceCase(l) {
+  const present = (sep) =>
+    `(b.content GLOB '*"${l}":${sep}"[^"]*' AND b.content NOT GLOB '*"${l}":${sep}""*' AND b.content NOT GLOB '*"${l}":${sep}" *')`
+  return `CASE WHEN ${present('')} OR ${present(' ')} THEN '${l}' END`
+}
+
+/**
  * GET /blog — every published post, list projection.
  *
  * `languages` is the set of language keys whose body is non-empty once
@@ -242,9 +259,7 @@ async function listPosts(env) {
   // when the JSON object holds it with a non-empty string value. Regex over
   // the raw column, no parse; the bodies never leave the database.
   const langs = ['en', 'ca', 'es', 'fr', 'de', 'da']
-  const cases = langs.map((l) =>
-    `CASE WHEN b.content GLOB '*"${l}":"[^"]*' AND b.content NOT GLOB '*"${l}":""*' AND b.content NOT GLOB '*"${l}":" *' THEN '${l}' END AS has_${l}`
-  ).join(', ')
+  const cases = langs.map((l) => `${langPresenceCase(l)} AS has_${l}`).join(', ')
   const { results } = await env.DB.prepare(
     `SELECT b.slug, b.status, b.title, b.description, b.cover_url, b.author, b.published_at,
             b.view_count, b.category, b.complexity, ${cases}
