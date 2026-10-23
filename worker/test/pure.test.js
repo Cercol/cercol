@@ -369,7 +369,7 @@ describe('daily tasks as a GitHub issue', () => {
 
 // Search Console is the only place that says whether Google will index a
 // page at all; the 307 regression went unseen for eleven days without it.
-import { indexingActions, freshProblems, gapInspectionPaths, SITEMAP_STALE_DAYS, RENOTIFY_DAYS, REPORTED_TTL_DAYS, NON_PUBLIC_PATH } from '../src/jobs/indexing.js'
+import { indexingActions, freshProblems, gapInspectionPaths, SITEMAP_STALE_DAYS, RENOTIFY_DAYS, REPORTED_TTL_DAYS, PENDING_REPORT_DAYS, NON_PUBLIC_PATH } from '../src/jobs/indexing.js'
 describe('indexing', () => {
   it('never asks Google about a page robots.txt keeps out of the index', () => {
     // /admin is Disallow-ed in robots.txt; /auth and /my-results are gated
@@ -395,6 +395,27 @@ describe('indexing', () => {
     expect(indexingActions({ pending: true })).toEqual([])
     expect(indexingActions({ pending: true, error: 'search console 403' })).toEqual([])
     expect(indexingActions(null)).toEqual([])
+  })
+  it('says the section is blind once the runs have been failing for days', () => {
+    // The 2026-10-16 run died on a Search Console 500 and nothing would ever
+    // have said so: a brief with no indexing section reads as healthy. One
+    // failed morning stays silent (Google having a bad day); two in a row is
+    // a line. The unconfigured case carries no error and no pendingSince and
+    // stays silent forever, per the first test above.
+    const t0 = Date.parse('2026-10-16T05:00:00Z')
+    const failing = { pending: true, error: 'search console 500: {"error":{"code":500}}', pendingSince: new Date(t0).toISOString() }
+    // Read the same morning, and the morning after: silent.
+    expect(indexingActions(failing, { now: t0 })).toEqual([])
+    expect(indexingActions(failing, { now: t0 + 86400e3 - 3600e3 })).toEqual([])
+    // Two full days of failures: one line, error escaped for the email.
+    const [line] = indexingActions(failing, { now: t0 + PENDING_REPORT_DAYS * 86400e3 })
+    expect(line).toContain('unknown, not healthy')
+    expect(line).toContain('search console 500')
+    expect(line).not.toContain('{"error"')
+    expect(line).toContain('&quot;error&quot;')
+    // A failing run with no pendingSince stamp (snapshot written before the
+    // stamp existed) stays silent rather than guessing at a duration.
+    expect(indexingActions({ pending: true, error: 'x' }, { now: t0 + 9 * 86400e3 })).toEqual([])
   })
   it('reports a canonical Google picked over ours, which is what a 307 looks like', () => {
     const [line] = indexingActions({
