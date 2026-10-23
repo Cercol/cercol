@@ -910,3 +910,26 @@ describe('facilitator draft rules', () => {
     expect(validateFacilitatorDraft({ ...ok, email: 'not-an-email' })).toBe('bad email')
   })
 })
+
+import { langPresenceCase } from '../src/index.js'
+describe('langPresenceCase', () => {
+  // 16 of the published rows carry the Postgres-era `"fr": "` separator
+  // (space after the colon); matching only the compact Worker-written form
+  // made every one of them report `languages: []`, so localizeBlogLinks
+  // kept English URLs for those articles on every localized page.
+  it('tests both the compact and the spaced key separator', () => {
+    const sql = langPresenceCase('fr')
+    expect(sql).toContain(`b.content GLOB '*"fr":"[^"]*'`)
+    expect(sql).toContain(`b.content GLOB '*"fr": "[^"]*'`)
+  })
+  it('excludes empty and whitespace-led bodies in both forms', () => {
+    const sql = langPresenceCase('da')
+    for (const sep of ['', ' ']) {
+      expect(sql).toContain(`NOT GLOB '*"da":${sep}""*'`)
+      expect(sql).toContain(`NOT GLOB '*"da":${sep}" *'`)
+    }
+  })
+  it('yields the language code when present', () => {
+    expect(langPresenceCase('es')).toMatch(/THEN 'es' END$/)
+  })
+})
