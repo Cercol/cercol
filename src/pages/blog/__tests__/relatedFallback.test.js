@@ -11,7 +11,7 @@
 
 import { describe, expect, it } from 'vitest'
 
-import { relatedFallback } from '../BlogArticlePage.jsx'
+import { relatedFallback, relatedPicks } from '../BlogArticlePage.jsx'
 
 const P = (slug, category) => ({ slug, category })
 
@@ -57,5 +57,44 @@ describe('relatedFallback', () => {
     const current = P('z', 'guides')
     const out = relatedFallback(current, [P('a', 'guides'), P('b', 'guides')])
     expect(out.map(p => p.slug)).toEqual(['a', 'b'])
+  })
+})
+
+describe('relatedPicks', () => {
+  it('caps prose-linked articles at two so the ring always keeps a slot', () => {
+    const posts = ['a', 'b', 'c', 'd', 'e'].map(s => P(s, 'guides'))
+    const out = relatedPicks(P('c', 'guides'), posts, ['a', 'b', 'e'])
+    // Prose links in list order fill two slots; the third is the ring
+    // successor (d), not the third prose link (e).
+    expect(out.map(p => p.slug)).toEqual(['a', 'b', 'd'])
+  })
+
+  it('keeps the ring over prose-linked candidates, deduplicating at assembly', () => {
+    const posts = ['a', 'b', 'c', 'd'].map(s => P(s, 'guides'))
+    // d, the ring successor of c, is also prose-linked: it must appear once,
+    // not be excluded from the ring (the old filter dropped it entirely when
+    // two newer prose links took the linked slots).
+    const out = relatedPicks(P('c', 'guides'), posts, ['a', 'b', 'd'])
+    expect(out.map(p => p.slug)).toEqual(['a', 'b', 'd'])
+  })
+
+  it('excludes the current article and fills entirely from the ring without prose links', () => {
+    const posts = ['a', 'b', 'c', 'd', 'e'].map(s => P(s, 'guides'))
+    const out = relatedPicks(P('c', 'guides'), posts, [])
+    expect(out.map(p => p.slug)).toEqual(['d', 'e', 'a'])
+  })
+
+  it('guarantees every article at least one inbound link however dense the prose links', () => {
+    // Worst case for the old assembly: every article prose-links the same
+    // three newest posts, so fallback never rendered and the rest of the
+    // corpus had zero related-section inbound links.
+    const slugs = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+    const posts = slugs.map(s => P(s, 'guides'))
+    const inbound = Object.fromEntries(slugs.map(s => [s, 0]))
+    for (const current of posts) {
+      const linkedSlugs = ['a', 'b', 'c'].filter(s => s !== current.slug)
+      for (const p of relatedPicks(current, posts, linkedSlugs)) inbound[p.slug] += 1
+    }
+    for (const s of slugs) expect(inbound[s]).toBeGreaterThan(0)
   })
 })

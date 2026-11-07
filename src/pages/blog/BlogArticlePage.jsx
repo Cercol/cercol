@@ -268,6 +268,38 @@ export function proseClickHandler(slug, lang) {
  * ring neighbours, and the choice is stable across renders and prerenders
  * because it depends only on the current slug and the candidate set.
  */
+/**
+ * Pick the three related articles for the current one.
+ *
+ * In-prose linked articles come first, but at most two of them: with all
+ * three slots given to prose links, a page whose prose links three or more
+ * articles contributed no ring link at all, and as prose cross-links
+ * accumulated across the corpus the ring stopped rendering on most pages.
+ * On 2026-11-07, 39 of 108 articles received no related-section inbound
+ * link from any page, and the pages Search Console reported as "crawled -
+ * currently not indexed" were all among them.
+ *
+ * The ring is computed over every candidate, prose-linked or not, and
+ * duplicates are dropped at assembly. Excluding prose-linked articles from
+ * the ring (as the previous filter did) broke the in-degree guarantee a
+ * second way: an article prose-linked BY its ring predecessor vanished
+ * from that predecessor's ring, and if it also lost the two prose slots to
+ * newer links it received nothing from the one page built to link it.
+ * With the ring intact, every article's category predecessor either shows
+ * it as a prose card or as its first ring card, so every article keeps at
+ * least one related-section inbound link.
+ */
+export function relatedPicks(current, candidates, linkedSlugs) {
+  const others = candidates.filter(p => p.slug !== current.slug)
+  const linked = others.filter(p => linkedSlugs.includes(p.slug))
+  const out = []
+  for (const p of [...linked.slice(0, 2), ...relatedFallback(current, others)]) {
+    if (!out.some(q => q.slug === p.slug)) out.push(p)
+    if (out.length === 3) break
+  }
+  return out
+}
+
 export function relatedFallback(current, candidates) {
   const bySlug = (a, b) => (a.slug < b.slug ? -1 : a.slug > b.slug ? 1 : 0)
   const ring = (list) => {
@@ -394,18 +426,16 @@ export default function BlogArticlePage() {
     return [...new Set(matches.map(m => m[1]))]
   }
 
-  // Fetch related posts: articles explicitly linked from the text come first;
-  // ring-ordered category neighbours (relatedFallback) fill the remaining
-  // slots up to 3, so every article in the corpus receives inbound links.
+  // Fetch related posts: up to two articles explicitly linked from the text,
+  // then ring-ordered category neighbours (relatedPicks), so every article
+  // in the corpus receives at least one related-section inbound link.
   useEffect(() => {
     if (!post) return
     getBlogPosts()
       .then(data => {
         if (!Array.isArray(data)) return
         const linkedSlugs = extractLinkedSlugs(post.content)
-        const linked   = data.filter(p => p.slug !== slug && linkedSlugs.includes(p.slug))
-        const fallback = data.filter(p => p.slug !== slug && !linkedSlugs.includes(p.slug))
-        setRelatedPosts([...linked, ...relatedFallback({ slug, category: post.category }, fallback)].slice(0, 3))
+        setRelatedPosts(relatedPicks({ slug, category: post.category }, data, linkedSlugs))
       })
       .catch(() => {})
   }, [slug, post])
