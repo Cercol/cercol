@@ -51,7 +51,11 @@ const API = 'https://searchconsole.googleapis.com'
 export const INSPECT_LIMIT = 6
 // A sitemap Google has not fetched in this long is a sitemap it has lost
 // interest in, or one that started answering something other than 200.
-export const SITEMAP_STALE_DAYS = 7
+// Google's observed cadence for this site is weekly: four briefs between
+// 2026-10-17 and 2026-11-10 fired at ageDays exactly 7 and every one
+// self-healed by the next morning's snapshot, so the threshold must sit
+// above the healthy cadence, not on it.
+export const SITEMAP_STALE_DAYS = 10
 // A problem already reported is held this long, then said again if still
 // there. Google sits on a fix for days or weeks, and the brief re-reporting
 // the same URL every morning until the verdict moves is noise, not a task:
