@@ -167,14 +167,24 @@ export const KV_KEY = 'seo:indexing'
 // implements quietly stops holding. One key cannot have both lifetimes.
 export const REPORTED_KEY = 'seo:indexing:reported'
 export const REPORTED_TTL_DAYS = RENOTIFY_DAYS + 7
-// When each URL was last actually asked about, whatever Google answered.
+// When each URL was last actually asked about, and what Google answered.
 // The reported memory above only remembers problems, so a gap URL that came
 // back healthy (PASS) was forgotten by the next morning and competed for a
 // slot again, while gap URLs still waiting for their first verdict lost
 // theirs: on 2026-08-30 three brand-new gaps took all three slots and the
 // three gaps the briefs of 08-27 to 08-29 had already sent the operator to
 // Search Console for had still never been inspected.
+// Values were bare ISO timestamps until 2026-11-13; they are now
+// { at, state, googleCanonical } so a PASS survives somewhere readable.
+// Keeping only the stamp threw the answer away: the 2026-11-12 and -13
+// briefs both asked the operator to "check it is indexed" for gap URLs the
+// inspector may already have asked Google about, because a PASS verdict was
+// recorded nowhere (see answeredGap in jobs/languages.js). Readers accept
+// both shapes while old stamps age out under REPORTED_TTL_DAYS.
 export const INSPECTED_KEY = 'seo:indexing:inspected'
+
+/** The ISO timestamp of an inspected-memory entry, either shape. */
+export const inspectedStampAt = (v) => (typeof v === 'string' ? v : v?.at)
 
 /**
  * The problems not reported recently, and the reported-set to store back.
@@ -223,8 +233,9 @@ export function gapInspectionPaths(snapshot, reported = {}, { now = Date.now(), 
   for (const [k, at] of Object.entries(reported)) {
     if (now - Date.parse(at) < renotifyDays * 86400e3) held.add(k.slice(0, k.indexOf('|')))
   }
-  for (const [url, at] of Object.entries(inspectedAt)) {
-    if (now - Date.parse(at) < renotifyDays * 86400e3) held.add(url)
+  for (const [url, v] of Object.entries(inspectedAt)) {
+    const at = inspectedStampAt(v)
+    if (at && now - Date.parse(at) < renotifyDays * 86400e3) held.add(url)
   }
   const seen = new Set()
   const out = []
@@ -276,11 +287,21 @@ export async function runIndexing(env) {
     await env.NORMS.put(KV_KEY, JSON.stringify({ ...out, fresh, pendingSince, at: new Date().toISOString() }), { expirationTtl: 3 * 86400 })
     await env.NORMS.put(REPORTED_KEY, JSON.stringify(reported), { expirationTtl: REPORTED_TTL_DAYS * 86400 })
     if (!out.pending) {
-      // Stamp this run's inspections and drop stamps too old to hold
-      // anything, so the map cannot grow without bound.
+      // Stamp this run's inspections with what Google answered, and drop
+      // stamps too old to hold anything, so the map cannot grow without
+      // bound. A URL inspected but not in problems passed: that answer has
+      // to live here, because neither the snapshot (rotates in three days)
+      // nor the reported memory (problems only) keeps it.
       const nowIso = new Date().toISOString()
-      const keep = Object.fromEntries(Object.entries(inspectedAt).filter(([, at]) => Date.now() - Date.parse(at) < REPORTED_TTL_DAYS * 86400e3))
-      for (const url of out.inspected || []) keep[url] = nowIso
+      const keep = Object.fromEntries(Object.entries(inspectedAt).filter(([, v]) => {
+        const at = inspectedStampAt(v)
+        return at && Date.now() - Date.parse(at) < REPORTED_TTL_DAYS * 86400e3
+      }))
+      const problemByUrl = new Map((out.problems || []).map((p) => [p.url, p]))
+      for (const url of out.inspected || []) {
+        const p = problemByUrl.get(url)
+        keep[url] = p ? { at: nowIso, state: p.state, googleCanonical: p.googleCanonical } : { at: nowIso, state: 'pass' }
+      }
       await env.NORMS.put(INSPECTED_KEY, JSON.stringify(keep), { expirationTtl: REPORTED_TTL_DAYS * 86400 })
     }
   }

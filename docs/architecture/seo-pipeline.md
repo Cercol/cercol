@@ -644,8 +644,8 @@ inspector had never asked about, sending the operator to Search Console
 for a verdict the job exists to fetch (`gapInspectionPaths`).
 
 The hold on a slot is keyed by inspection, not by reported problem, and
-that needs a memory of its own (`seo:indexing:inspected`, one ISO stamp
-per URL asked). Holding only reported problems was tried first and was
+that needs a memory of its own (`seo:indexing:inspected`, one stamp per
+URL asked). Holding only reported problems was tried first and was
 not enough: a gap URL that came back healthy left nothing in the
 reported memory and re-took its slot the next morning, and a morning
 with several brand-new gaps handed every slot to them, so on 2026-08-30
@@ -653,6 +653,19 @@ the three gaps the previous briefs had already sent the operator to
 Search Console for had still never been inspected. The stamp map prunes
 itself past `REPORTED_TTL_DAYS`, and costs the 05:00 trigger one KV get
 and one KV put.
+
+Since 2026-11-13 each stamp carries Google's answer alongside the time
+(`{ at, state, googleCanonical }`, with `state: 'pass'` for a PASS whose
+chosen canonical is the URL itself; stamps written earlier are bare ISO
+strings and both shapes hold a slot while the old ones age out). The
+time alone threw the one verdict nowhere else keeps away: problems live
+in the snapshot and the reported hold, but a PASS lived nowhere, so the
+language-gap line fell back to "check it is indexed" for a URL the
+inspector had already asked about, and the briefs of 2026-11-12 and
+2026-11-13 each sent the operator to Search Console for a page whose
+mechanical audit was clean. With the answer remembered, a pass turns
+that line into a copy question instead (`languageActions`), and the
+04:00 brief pays one extra KV get to read it.
 
 Both use the BigQuery service account, which is why `accessToken` in
 `worker/src/bigquery.js` takes a scope and caches one token per scope: a
