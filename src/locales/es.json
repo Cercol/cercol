@@ -1030,6 +1030,8 @@
       "witnessLabel": "Testigo",
       "emailPlaceholder": "Correo (opcional)",
       "copied": "Copiado",
+      "quickLink": "Crea un enlace para compartir",
+      "quickHint": "Sin nombre ni correo. Cada clic crea un enlace para una persona; vuelve a hacer clic para la siguiente.",
       "resetAll": "Borrar todos los testigos",
       "resetConfirm": "¿Quieres borrar todos los testigos? Sus enlaces dejarán de funcionar y las respuestas completadas se perderán. No se puede deshacer."
     },

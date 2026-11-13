@@ -1030,6 +1030,8 @@
       "witnessLabel": "Witness",
       "emailPlaceholder": "Email (optional)",
       "copied": "Copied",
+      "quickLink": "Create a link to share",
+      "quickHint": "No name needed. One click makes one link for one person; click again for the next.",
       "resetAll": "Remove all witnesses",
       "resetConfirm": "Remove all witnesses? Their invitation links stop working and their completed answers are deleted. This cannot be undone."
     },

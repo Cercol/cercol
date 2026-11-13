@@ -1030,6 +1030,8 @@
       "witnessLabel": "Zeuge",
       "emailPlaceholder": "E-Mail (optional)",
       "copied": "Kopiert",
+      "quickLink": "Link zum Teilen erstellen",
+      "quickHint": "Ohne Namen und E-Mail. Jeder Klick erstellt einen Link für eine Person; klicke erneut für die nächste.",
       "resetAll": "Alle Zeuginnen und Zeugen entfernen",
       "resetConfirm": "Alle Zeuginnen und Zeugen entfernen? Ihre Einladungslinks funktionieren dann nicht mehr und abgeschlossene Antworten werden gelöscht. Das lässt sich nicht rückgängig machen."
     },

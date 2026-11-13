@@ -172,11 +172,36 @@ export default function WitnessSetupPage() {
       const created = await createWitnessSessions(valid)
       setNewLinks(created)
       // Refresh session list
+      // The endpoint answers { sessions, ... }. Storing the whole object here
+      // made the render below throw on sessions.filter, so the page crashed
+      // at the exact moment the new links should have appeared.
       const updated = await getMyWitnessSessions()
-      setSessions(updated)
+      setSessions(updated.sessions ?? [])
       // Reset form
       nextId.current = 1
       setWitnesses([{ id: nextId.current++, name: '', email: '' }])
+    } catch {
+      setFormError(t('witness.setup.error'))
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  // The quick path past the form: one click, one link, no name or email to
+  // type. The session still needs a name, so it gets the next ordinal
+  // ("Witness 3"); the Witness can overwrite it on their own page.
+  async function handleQuickLink() {
+    setSubmitting(true)
+    setFormError(null)
+    try {
+      const name = `${t('witness.setup.witnessLabel')} ${sessions.length + 1}`
+      const created = await createWitnessSessions([{ name }])
+      setNewLinks(prev => [...created, ...prev])
+      // Best effort: some browsers refuse the clipboard after an await, and
+      // the Copy button beside the link is still there.
+      if (created[0]) navigator.clipboard?.writeText(created[0].link).catch(() => {})
+      const updated = await getMyWitnessSessions()
+      setSessions(updated.sessions ?? [])
     } catch {
       setFormError(t('witness.setup.error'))
     } finally {
@@ -234,6 +259,20 @@ export default function WitnessSetupPage() {
           </Card>
         )}
 
+        {/* Quick link: no form */}
+        <Card className="shadow-sm p-5 flex flex-col gap-2">
+          <Button
+            type="button"
+            variant="primary"
+            onClick={handleQuickLink}
+            disabled={submitting || sessions.length >= MAX_WITNESSES}
+            className="w-full shadow-sm"
+          >
+            {t('witness.setup.quickLink')}
+          </Button>
+          <p className="text-xs text-gray-500">{t('witness.setup.quickHint')}</p>
+        </Card>
+
         {/* Add witnesses form */}
         <Card className="shadow-sm p-5">
           <h2 className="font-semibold text-gray-900 mb-4">{t('witness.setup.addHeading')}</h2>
@@ -267,7 +306,7 @@ export default function WitnessSetupPage() {
 
             <Button
               type="submit"
-              variant="primary"
+              variant="secondary"
               disabled={submitting || !witnesses.some(w => w.name.trim())}
               className="mt-1 w-full shadow-sm"
             >

@@ -1030,6 +1030,8 @@
       "witnessLabel": "Témoin",
       "emailPlaceholder": "E-mail (optionnel)",
       "copied": "Copié",
+      "quickLink": "Créer un lien à partager",
+      "quickHint": "Sans nom ni e-mail. Chaque clic crée un lien pour une personne ; cliquez à nouveau pour la suivante.",
       "resetAll": "Supprimer tous les témoins",
       "resetConfirm": "Supprimer tous les témoins ? Leurs liens cesseront de fonctionner et les réponses complétées seront perdues. Cette action est irréversible."
     },

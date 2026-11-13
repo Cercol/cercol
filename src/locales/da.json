@@ -1030,6 +1030,8 @@
       "witnessLabel": "Vidne",
       "emailPlaceholder": "E-mail (valgfri)",
       "copied": "Kopieret",
+      "quickLink": "Opret et link til deling",
+      "quickHint": "Uden navn og e-mail. Hvert klik opretter et link til én person; klik igen for den næste.",
       "resetAll": "Fjern alle vidner",
       "resetConfirm": "Vil du fjerne alle vidner? Deres invitationslinks holder op med at virke, og fuldførte svar slettes. Det kan ikke fortrydes."
     },

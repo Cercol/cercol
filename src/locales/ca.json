@@ -1030,6 +1030,8 @@
       "witnessLabel": "Testimoni",
       "emailPlaceholder": "Correu (opcional)",
       "copied": "Copiat",
+      "quickLink": "Crea un enllaç per compartir",
+      "quickHint": "Sense nom ni correu. Cada clic crea un enllaç per a una persona; torna a clicar per a la següent.",
       "resetAll": "Esborrar tots els testimonis",
       "resetConfirm": "Vols esborrar tots els testimonis? Els seus enllaços deixaran de funcionar i les respostes completades es perdran. No es pot desfer."
     },
