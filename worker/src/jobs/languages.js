@@ -151,8 +151,16 @@ export function languageGapUrl(snapshot, frontendUrl = 'https://cercol.team') {
  * is indexed" for a URL whose "discovered - currently not indexed" verdict
  * the inspector had fetched, reported and put on hold two days earlier, so
  * the memory is consulted before falling back to the question.
+ *
+ * A PASS is a verdict too. The reported memory holds only problems, so a
+ * gap URL the inspector asked about and found indexed fell through to
+ * "check it is indexed" exactly as if it had never been asked: the
+ * 2026-11-12 and 2026-11-13 briefs both sent the operator to Search Console
+ * for gap URLs whose mechanical audits were clean. The inspected memory
+ * (seo:indexing:inspected) now stamps each URL with Google's answer, and a
+ * pass turns the line from an indexing question into a copy question.
  */
-export function languageActions(snapshot, frontendUrl = 'https://cercol.team', indexing = null, reported = null) {
+export function languageActions(snapshot, frontendUrl = 'https://cercol.team', indexing = null, reported = null, inspected = null) {
   const g = snapshot?.fresh?.[0]
   if (!g) return []
   const url = `${frontendUrl}/${g.lang}/blog/${g.slug}/`
@@ -169,6 +177,12 @@ export function languageActions(snapshot, frontendUrl = 'https://cercol.team', i
     const [state, canonical] = k.slice(k.indexOf('|') + 1).split('|')
     const why = canonical ? `${state}, and Google indexes ${canonical} instead` : state
     return [`${head} <a href="${url}" style="text-decoration:underline;">Google's verdict on the page</a> (from the ${String(at).slice(0, 10)} inspection) says why: ${why}.`]
+  }
+  // Problem states in the inspected memory are already carried by the
+  // snapshot or the reported hold above; only a pass says something new.
+  const asked = inspected?.[url]
+  if (asked && typeof asked === 'object' && asked.state === 'pass') {
+    return [`${head} The ${String(asked.at).slice(0, 10)} inspection found <a href="${url}" style="text-decoration:underline;">the page</a> indexed and competing as itself, so indexing is not the block: read its title and description against the queries its siblings win.`]
   }
   return [`${head} Its siblings are fine, so this is that version: <a href="${url}" style="text-decoration:underline;">check it is indexed, then read its title</a>.`]
 }

@@ -546,6 +546,25 @@ describe('indexing', () => {
         '/es/blog/old-gap/',
       ])
     })
+    // Since 2026-11-13 the stamps carry Google's answer ({ at, state }),
+    // and stamps written before that are bare ISO strings. Both shapes must
+    // hold a slot, or the format change would spend the budget re-asking
+    // every URL the old stamps already covered.
+    it('holds a slot under either stamp shape', () => {
+      const object = { 'https://cercol.team/da/blog/held-slug/': { at: new Date(now).toISOString(), state: 'pass' } }
+      expect(gapInspectionPaths(snapshot, {}, { now: now + 86400e3, inspectedAt: object })).toEqual([
+        '/de/blog/new-gap/',
+        '/es/blog/old-gap/',
+      ])
+      expect(gapInspectionPaths(snapshot, {}, { now: now + (RENOTIFY_DAYS + 1) * 86400e3, inspectedAt: object })).toEqual([
+        '/de/blog/new-gap/',
+        '/da/blog/held-slug/',
+        '/es/blog/old-gap/',
+      ])
+      // A malformed entry (no timestamp either way) holds nothing.
+      const broken = { 'https://cercol.team/da/blog/held-slug/': { state: 'pass' } }
+      expect(gapInspectionPaths(snapshot, {}, { now: now + 86400e3, inspectedAt: broken })).toContain('/da/blog/held-slug/')
+    })
   })
 })
 
@@ -691,6 +710,33 @@ describe('language gaps', () => {
     const [fresh] = languageActions({ fresh: [gap] }, 'https://cercol.team', ix, reported)
     expect(fresh).toContain('crawled - currently not indexed')
     expect(fresh).not.toContain('2026-09-24')
+  })
+  // The reported memory holds only problems, so a gap URL inspected and
+  // found indexed (PASS) fell through to "check it is indexed" exactly as
+  // if it had never been asked: the 2026-11-12 and 2026-11-13 briefs both
+  // sent the operator to Search Console for gap URLs with clean mechanical
+  // audits. The inspected memory's answer turns the line into a copy task.
+  it('carries a pass from the inspected memory instead of asking', () => {
+    const inspected = { 'https://cercol.team/de/blog/b/': { at: '2026-11-10T05:01:00.000Z', state: 'pass' } }
+    const [line] = languageActions({ fresh: [gap] }, 'https://cercol.team', { problems: [] }, {}, inspected)
+    expect(line).toContain('predict about 10')
+    expect(line).toContain('2026-11-10')
+    expect(line).toContain('indexed and competing as itself')
+    expect(line).not.toContain('check it is indexed')
+    // A pre-2026-11-13 stamp (bare ISO string) carries no answer and
+    // cannot claim one.
+    const legacy = { 'https://cercol.team/de/blog/b/': '2026-11-10T05:01:00.000Z' }
+    expect(languageActions({ fresh: [gap] }, 'https://cercol.team', { problems: [] }, {}, legacy)[0]).toContain('check it is indexed')
+    // An answer for some other page changes nothing.
+    const other = { 'https://cercol.team/fr/blog/x/': { at: '2026-11-10T05:01:00.000Z', state: 'pass' } }
+    expect(languageActions({ fresh: [gap] }, 'https://cercol.team', { problems: [] }, {}, other)[0]).toContain('check it is indexed')
+    // A problem state here is the snapshot's and the reported hold's job;
+    // this memory only ever adds the pass.
+    const problem = { 'https://cercol.team/de/blog/b/': { at: '2026-11-10T05:01:00.000Z', state: 'crawled - currently not indexed' } }
+    expect(languageActions({ fresh: [gap] }, 'https://cercol.team', { problems: [] }, {}, problem)[0]).toContain('check it is indexed')
+    // The day's snapshot wins over a stale pass: the verdict moved.
+    const ix = { problems: [{ url: 'https://cercol.team/de/blog/b/', state: 'crawled - currently not indexed', googleCanonical: null }] }
+    expect(languageActions({ fresh: [gap] }, 'https://cercol.team', ix, {}, inspected)[0]).toContain('crawled - currently not indexed')
   })
   it('hands the caller the URL its line absorbs', () => {
     expect(languageGapUrl({ fresh: [gap] })).toBe('https://cercol.team/de/blog/b/')
