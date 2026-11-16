@@ -253,6 +253,15 @@ constraint restricts it to exactly four values: `page_view`,
 `test_completed` event, and completions are never counted from
 `events`.
 
+Series break (2026-11-16): the client now sends a funnel event only after
+a sign of a person on the page, the first scroll, pointer or key press, or
+15 seconds of the tab being visible (`whenEngaged` in `src/lib/api.js`).
+Before that date an untouched page load counted, and renderers with an
+ordinary browser user agent made up most of the article reads: 1,763
+"readers" in 28 days against roughly 250 Search Console clicks. Visitors,
+article reads and test starts from before and after this date are not
+comparable; completed tests (`results`) are unaffected.
+
 False-alarm correction (Jul 2026): a prior ad-hoc query reported
 "the events table has zero rows for `cta_click` and `test_completed`".
 That was a query artifact — it filtered on `event_type` (the column is

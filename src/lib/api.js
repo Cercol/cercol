@@ -580,6 +580,10 @@ export async function trackBlogView(slug) {
   // runtime (never serialized into the saved HTML), so this guard suppresses
   // the build-time view inflation while real users still count.
   if (typeof window !== 'undefined' && window.__PRERENDER__) return
+  // Read before waiting: the path must be the article's, not wherever the
+  // reader's first click took them.
+  const path = typeof window !== 'undefined' ? (window.location?.pathname ?? null) : null
+  await whenEngaged()
   try {
     await publicFetch(`/blog/${slug}/view`, { method: 'POST' })
   } catch {
@@ -591,7 +595,6 @@ export async function trackBlogView(slug) {
   // recoverable from the path prefix, but only by a query that has to know
   // that /blog/ means English and /fr/blog/ does not, which is the kind of
   // thing that is wrong in one of the four places it gets rewritten.
-  const path = typeof window !== 'undefined' ? (window.location?.pathname ?? null) : null
   trackEvent('article_view', { slug, path, lang: langFromPath(path) })
 }
 
@@ -618,6 +621,42 @@ export function getAnonId() {
   }
 }
 
+// How long a page must stay visible, with no interaction at all, before its
+// visitor counts anyway (someone reading the first screen without scrolling).
+const ENGAGED_MS = 15000
+let engaged = null
+
+/**
+ * whenEngaged — resolves once per document, at the first sign of a person:
+ * a scroll, a pointer or key press, or ENGAGED_MS of the tab being visible.
+ *
+ * Every funnel event waits on it. The server-side filter only drops clients
+ * that name themselves in the user agent, and a renderer with an ordinary
+ * browser UA walked straight through: over the 28 days to 2026-11-16 the
+ * events table held 1,763 "readers" against roughly 250 Search Console
+ * clicks, 1,688 of them with a single page and no return, spread over 410
+ * pages at a flat 50 to 110 an hour around the clock. A page loaded and
+ * left untouched is not a visit, whoever loaded it.
+ *
+ * Without a DOM (tests, SSR) there is nothing to wait for.
+ */
+export function whenEngaged() {
+  if (typeof window === 'undefined' || !window.addEventListener) return Promise.resolve()
+  return (engaged ??= new Promise((resolve) => {
+    const signals = ['scroll', 'pointerdown', 'keydown', 'touchstart']
+    let visibleMs = 0
+    const done = () => {
+      signals.forEach((e) => window.removeEventListener(e, done))
+      clearInterval(timer)
+      resolve()
+    }
+    signals.forEach((e) => window.addEventListener(e, done, { passive: true }))
+    const timer = setInterval(() => {
+      if (document.visibilityState === 'visible' && (visibleMs += 1000) >= ENGAGED_MS) done()
+    }, 1000)
+  }))
+}
+
 /**
  * trackEvent — fire-and-forget first-party funnel event POST to /events.
  * Never throws — any error is silently swallowed, so it safely no-ops until
@@ -627,6 +666,7 @@ export function getAnonId() {
  */
 export async function trackEvent(name, payload = {}) {
   if (typeof window !== 'undefined' && window.__PRERENDER__) return
+  await whenEngaged()
   try {
     // Attach the visitor id to every funnel event (not just page_view) so the
     // digest can stitch reads -> cta_click -> test_start per visitor. An explicit
